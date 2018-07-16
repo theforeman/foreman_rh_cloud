@@ -58,7 +58,7 @@ has more information about writing code with i18n support.
 The Foreman developers IRC channel and mailing list are the best places to get help:
 
 * Freenode: #theforeman-dev
-* Google Groups: foreman-dev@googlegroups.com
+* Community Discourse: <https://community.theforeman.org/>
 
 ## Copyright
 
