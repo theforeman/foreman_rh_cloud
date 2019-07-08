@@ -9,3 +9,6 @@ locale/*.mo
 locale/*/*.edit.po
 locale/*/*.po.time_stamp
 locale/*/*.pox
+node_modules/*
+coverage/*
+package-lock.json
