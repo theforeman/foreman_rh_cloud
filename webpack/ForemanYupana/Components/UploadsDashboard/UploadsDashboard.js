@@ -9,9 +9,10 @@ import {
 } from 'patternfly-react';
 import ReportGenerate from '../ReportGenerate';
 import './uploadsDashboard.scss';
+import ReportUpload from '../ReportUpload/ReportUpload';
 
 const UploadsDashboard = () => (
-  <TabContainer id="basic-tabs-pf" defaultActiveKey={1}>
+  <TabContainer id="basic-tabs-pf" defaultActiveKey={2}>
     <div className="uploads-dashboard">
       <Nav bsClass="nav nav-tabs nav-tabs-pf nav-justified">
         <NavItem eventKey={1}>
@@ -27,7 +28,9 @@ const UploadsDashboard = () => (
         <TabPane eventKey={1}>
           <ReportGenerate />
         </TabPane>
-        <TabPane eventKey={2}>Tab 2 content</TabPane>
+        <TabPane eventKey={2}>
+          <ReportUpload />
+        </TabPane>
       </TabContent>
     </div>
   </TabContainer>
