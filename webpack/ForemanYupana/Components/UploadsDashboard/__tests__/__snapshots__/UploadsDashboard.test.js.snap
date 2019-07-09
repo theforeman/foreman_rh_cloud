@@ -55,7 +55,9 @@ exports[`UploadsDashboard rendering render without Props 1`] = `
         bsClass="tab-pane"
         eventKey={1}
       >
-        Tab 1 content
+        <ReportGenerate
+          exitCode={0}
+        />
       </TabPane>
       <TabPane
         bsClass="tab-pane"

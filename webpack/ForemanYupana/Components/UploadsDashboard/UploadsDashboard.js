@@ -7,6 +7,7 @@ import {
   TabPane,
   Icon,
 } from 'patternfly-react';
+import ReportGenerate from '../ReportGenerate';
 import './uploadsDashboard.scss';
 
 const UploadsDashboard = () => (
@@ -23,7 +24,9 @@ const UploadsDashboard = () => (
         </NavItem>
       </Nav>
       <TabContent animation>
-        <TabPane eventKey={1}>Tab 1 content</TabPane>
+        <TabPane eventKey={1}>
+          <ReportGenerate />
+        </TabPane>
         <TabPane eventKey={2}>Tab 2 content</TabPane>
       </TabContent>
     </div>
