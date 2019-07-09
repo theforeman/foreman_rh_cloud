@@ -9,47 +9,21 @@ exports[`UploadsDashboard rendering render without Props 1`] = `
   >
     <Step
       active={true}
+      icon="database"
     >
-      <Icon
-        name="file"
-        size="2x"
-        type="fa"
-      />
-      <StepContent>
-        <StepTitle>
-          Generating
-        </StepTitle>
-        <StepDescription />
-      </StepContent>
+      Retrieving Data
     </Step>
     <Step
       disabled={true}
+      icon="cloud-upload"
     >
-      <Icon
-        name="cloud-upload"
-        size="2x"
-        type="fa"
-      />
-      <StepContent>
-        <StepTitle>
-          Uploading
-        </StepTitle>
-        <StepDescription />
-      </StepContent>
+      Uploading
     </Step>
     <Step
       disabled={true}
+      icon="check"
     >
-      <Icon
-        name="check"
-        size="2x"
-        type="fa"
-      />
-      <StepContent>
-        <StepTitle>
-          Complete
-        </StepTitle>
-      </StepContent>
+      Complete
     </Step>
   </StepGroup>
   <Segment
