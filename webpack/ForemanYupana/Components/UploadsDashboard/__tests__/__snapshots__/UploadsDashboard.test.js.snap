@@ -2,7 +2,7 @@
 
 exports[`UploadsDashboard rendering render without Props 1`] = `
 <Uncontrolled(TabContainer)
-  defaultActiveKey={1}
+  defaultActiveKey={2}
   id="basic-tabs-pf"
 >
   <div
@@ -63,7 +63,9 @@ exports[`UploadsDashboard rendering render without Props 1`] = `
         bsClass="tab-pane"
         eventKey={2}
       >
-        Tab 2 content
+        <ReportUpload
+          exitCode={0}
+        />
       </TabPane>
     </TabContent>
   </div>

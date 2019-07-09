@@ -1,0 +1,30 @@
+.report-upload {
+  padding: 20px;
+
+  .row {
+    margin-bottom: 20px;
+  }
+
+  .tab-header {
+    button {
+      float: right;
+    }
+  }
+
+  .terminal {
+    height: 300px;
+    background-color: #3a3a3a;
+    border: 5px solid #aaaaaa;
+    padding: 10px 0;
+
+    p {
+      color: white;
+    }
+  }
+
+  .tab-footer {
+    button {
+      float: right;
+    }
+  }
+}
