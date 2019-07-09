@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReportGenerate rendering render without Props 1`] = `
+<div
+  className="report-generate"
+>
+  <Grid
+    bsClass="container"
+    componentClass="div"
+    fluid={true}
+  >
+    <Row
+      bsClass="row"
+      className="tab-header"
+      componentClass="div"
+    >
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={4}
+      >
+        <h1>
+          # Exit Code: 
+          0
+        </h1>
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={4}
+        smOffset={4}
+      >
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="primary"
+          disabled={false}
+        >
+          Restart
+        </Button>
+      </Col>
+    </Row>
+    <Row
+      bsClass="row"
+      componentClass="div"
+    >
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={12}
+      >
+        <div
+          className="terminal"
+        >
+          <Grid
+            bsClass="container"
+            componentClass="div"
+            fluid={true}
+          >
+            <Row
+              bsClass="row"
+              componentClass="div"
+            >
+              <Col
+                bsClass="col"
+                componentClass="div"
+                sm={12}
+              >
+                <p>
+                  Generating...
+                </p>
+              </Col>
+            </Row>
+          </Grid>
+        </div>
+      </Col>
+    </Row>
+    <Row
+      bsClass="row"
+      componentClass="div"
+    >
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={12}
+      >
+        <div
+          className="tab-footer"
+        >
+          <p>
+            <Icon
+              name="calendar"
+              size="2x"
+              type="fa"
+            />
+            Next report generating is schedule to run at 23:30
+          </p>
+        </div>
+      </Col>
+    </Row>
+  </Grid>
+</div>
+`;
