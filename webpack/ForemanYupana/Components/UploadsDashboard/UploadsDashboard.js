@@ -1,39 +1,25 @@
 import React from 'react';
-import { Image, Segment, Step } from 'semantic-ui-react';
-import { Icon } from 'patternfly-react';
+import { Image, Segment, Step as suiStep } from 'semantic-ui-react';
+import Step from './Components/Step';
 import './uploadsDashboard.scss';
 
-const StepExampleAttached = () => (
+const UploadsDashboard = () => (
   <div className="uploads">
-    <Step.Group attached="top">
-      <Step active>
-        <Icon name="file" size="2x" />
-        <Step.Content>
-          <Step.Title>Generating</Step.Title>
-          <Step.Description></Step.Description>
-        </Step.Content>
+    <suiStep.Group attached="top">
+      <Step active icon="database">
+        Retrieving Data
       </Step>
-
-      <Step disabled>
-        <Icon name="cloud-upload" size="2x" />
-        <Step.Content>
-          <Step.Title>Uploading</Step.Title>
-          <Step.Description></Step.Description>
-        </Step.Content>
+      <Step disabled icon="cloud-upload">
+        Uploading
       </Step>
-
-      <Step disabled>
-        <Icon name="check" size="2x" />
-        <Step.Content>
-          <Step.Title>Complete</Step.Title>
-        </Step.Content>
+      <Step disabled icon="check">
+        Complete
       </Step>
-    </Step.Group>
-
+    </suiStep.Group>
     <Segment attached>
       <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
     </Segment>
   </div>
 );
 
-export default StepExampleAttached;
+export default UploadsDashboard;
