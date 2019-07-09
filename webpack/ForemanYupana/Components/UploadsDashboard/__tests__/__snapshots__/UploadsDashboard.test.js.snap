@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UploadsDashboard rendering render without Props 1`] = `
+<div
+  className="uploads"
+>
+  <StepGroup
+    attached="top"
+  >
+    <Step
+      active={true}
+    >
+      <Icon
+        name="file"
+        size="2x"
+        type="fa"
+      />
+      <StepContent>
+        <StepTitle>
+          Generating
+        </StepTitle>
+        <StepDescription />
+      </StepContent>
+    </Step>
+    <Step
+      disabled={true}
+    >
+      <Icon
+        name="cloud-upload"
+        size="2x"
+        type="fa"
+      />
+      <StepContent>
+        <StepTitle>
+          Uploading
+        </StepTitle>
+        <StepDescription />
+      </StepContent>
+    </Step>
+    <Step
+      disabled={true}
+    >
+      <Icon
+        name="check"
+        size="2x"
+        type="fa"
+      />
+      <StepContent>
+        <StepTitle>
+          Complete
+        </StepTitle>
+      </StepContent>
+    </Step>
+  </StepGroup>
+  <Segment
+    attached={true}
+  >
+    <Image
+      as="img"
+      src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
+      ui={true}
+    />
+  </Segment>
+</div>
+`;
