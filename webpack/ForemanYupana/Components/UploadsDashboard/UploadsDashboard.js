@@ -1,25 +1,33 @@
 import React from 'react';
-import { Image, Segment, Step as suiStep } from 'semantic-ui-react';
-import Step from './Components/Step';
+import {
+  TabContainer,
+  Nav,
+  NavItem,
+  TabContent,
+  TabPane,
+  Icon,
+} from 'patternfly-react';
 import './uploadsDashboard.scss';
 
 const UploadsDashboard = () => (
-  <div className="uploads">
-    <suiStep.Group attached="top">
-      <Step active icon="database">
-        Retrieving Data
-      </Step>
-      <Step disabled icon="cloud-upload">
-        Uploading
-      </Step>
-      <Step disabled icon="check">
-        Complete
-      </Step>
-    </suiStep.Group>
-    <Segment attached>
-      <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
-    </Segment>
-  </div>
+  <TabContainer id="basic-tabs-pf" defaultActiveKey={1}>
+    <div className="uploads-dashboard">
+      <Nav bsClass="nav nav-tabs nav-tabs-pf nav-justified">
+        <NavItem eventKey={1}>
+          <Icon name="database" size="2x" />
+          <p>Generating</p>
+        </NavItem>
+        <NavItem eventKey={2}>
+          <Icon name="cloud-upload" size="2x" />
+          <p>Uploading</p>
+        </NavItem>
+      </Nav>
+      <TabContent animation>
+        <TabPane eventKey={1}>Tab 1 content</TabPane>
+        <TabPane eventKey={2}>Tab 2 content</TabPane>
+      </TabContent>
+    </div>
+  </TabContainer>
 );
 
 export default UploadsDashboard;

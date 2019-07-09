@@ -1,39 +1,69 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`UploadsDashboard rendering render without Props 1`] = `
-<div
-  className="uploads"
+<Uncontrolled(TabContainer)
+  defaultActiveKey={1}
+  id="basic-tabs-pf"
 >
-  <StepGroup
-    attached="top"
+  <div
+    className="uploads-dashboard"
   >
-    <Step
-      active={true}
-      icon="database"
+    <Nav
+      bsClass="nav nav-tabs nav-tabs-pf nav-justified"
+      justified={false}
+      pullLeft={false}
+      pullRight={false}
+      stacked={false}
     >
-      Retrieving Data
-    </Step>
-    <Step
-      disabled={true}
-      icon="cloud-upload"
+      <NavItem
+        active={false}
+        disabled={false}
+        eventKey={1}
+      >
+        <Icon
+          name="database"
+          size="2x"
+          type="fa"
+        />
+        <p>
+          Generating
+        </p>
+      </NavItem>
+      <NavItem
+        active={false}
+        disabled={false}
+        eventKey={2}
+      >
+        <Icon
+          name="cloud-upload"
+          size="2x"
+          type="fa"
+        />
+        <p>
+          Uploading
+        </p>
+      </NavItem>
+    </Nav>
+    <TabContent
+      animation={true}
+      bsClass="tab"
+      componentClass="div"
+      mountOnEnter={false}
+      unmountOnExit={false}
     >
-      Uploading
-    </Step>
-    <Step
-      disabled={true}
-      icon="check"
-    >
-      Complete
-    </Step>
-  </StepGroup>
-  <Segment
-    attached={true}
-  >
-    <Image
-      as="img"
-      src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-      ui={true}
-    />
-  </Segment>
-</div>
+      <TabPane
+        bsClass="tab-pane"
+        eventKey={1}
+      >
+        Tab 1 content
+      </TabPane>
+      <TabPane
+        bsClass="tab-pane"
+        eventKey={2}
+      >
+        Tab 2 content
+      </TabPane>
+    </TabContent>
+  </div>
+</Uncontrolled(TabContainer)>
 `;
