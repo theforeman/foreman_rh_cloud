@@ -1,13 +1,7 @@
 import React from 'react';
-import { ButtonGroup, Button } from 'patternfly-react';
+import 'semantic-ui-css/semantic.min.css';
+import UploadsDashboard from './Components/UploadsDashboard';
 
-const ForemanYupana = () => (
-    <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
-      <ButtonGroup bsSize="large">
-        <Button bsStyle="link">index-tasks-page</Button>
-        <Button bsStyle="link">show-task-page</Button>
-      </ButtonGroup>
-    </div>
-);
+const ForemanYupana = () => <UploadsDashboard />;
 
 export default ForemanYupana;
