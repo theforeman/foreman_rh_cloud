@@ -1,10 +1,12 @@
 .terminal {
   height: 300px;
-  background-color: #3a3a3a;
+  background-color: #222;
   border: 5px solid #aaa;
   padding: 10px 0;
 
   p {
-    color: white;
+    font-family: monospace;
+    font-size: 16px;
+    color: #22da26;
   }
 }

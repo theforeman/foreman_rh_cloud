@@ -2,7 +2,7 @@
 
 exports[`UploadsDashboard rendering render without Props 1`] = `
 <Uncontrolled(TabContainer)
-  defaultActiveKey={2}
+  defaultActiveKey={1}
   id="basic-tabs-pf"
 >
   <div
@@ -57,6 +57,13 @@ exports[`UploadsDashboard rendering render without Props 1`] = `
       >
         <ReportGenerate
           exitCode={0}
+          logs={
+            Array [
+              "No running process",
+            ]
+          }
+          onRestart={[Function]}
+          processScheduledTime="00:00"
         />
       </TabPane>
       <TabPane
@@ -65,7 +72,118 @@ exports[`UploadsDashboard rendering render without Props 1`] = `
       >
         <ReportUpload
           exitCode={0}
-          files={Array []}
+          files={
+            Array [
+              "213783213",
+              "213213213",
+              "101763276",
+              "12387892712",
+            ]
+          }
+          logs={
+            Array [
+              "No running process",
+            ]
+          }
+          onDownload={[Function]}
+          onRestart={[Function]}
+        />
+      </TabPane>
+    </TabContent>
+  </div>
+</Uncontrolled(TabContainer)>
+`;
+
+exports[`UploadsDashboard rendering with props 1`] = `
+<Uncontrolled(TabContainer)
+  defaultActiveKey={1}
+  id="basic-tabs-pf"
+>
+  <div
+    className="uploads-dashboard"
+  >
+    <Nav
+      bsClass="nav nav-tabs nav-tabs-pf nav-justified"
+      justified={false}
+      pullLeft={false}
+      pullRight={false}
+      stacked={false}
+    >
+      <NavItem
+        active={false}
+        disabled={false}
+        eventKey={1}
+      >
+        <Icon
+          name="database"
+          size="2x"
+          type="fa"
+        />
+        <p>
+          Generating
+        </p>
+      </NavItem>
+      <NavItem
+        active={false}
+        disabled={false}
+        eventKey={2}
+      >
+        <Icon
+          name="cloud-upload"
+          size="2x"
+          type="fa"
+        />
+        <p>
+          Uploading
+        </p>
+      </NavItem>
+    </Nav>
+    <TabContent
+      animation={true}
+      bsClass="tab"
+      componentClass="div"
+      mountOnEnter={false}
+      unmountOnExit={false}
+    >
+      <TabPane
+        bsClass="tab-pane"
+        eventKey={1}
+      >
+        <ReportGenerate
+          exitCode={0}
+          logs={
+            Array [
+              "Generating...",
+              "Hosts: 10,000",
+              "writing host 1 / 10,000",
+              "writing host 2 / 10,000",
+            ]
+          }
+          onRestart={[Function]}
+          processScheduledTime="23:45"
+        />
+      </TabPane>
+      <TabPane
+        bsClass="tab-pane"
+        eventKey={2}
+      >
+        <ReportUpload
+          exitCode={0}
+          files={
+            Array [
+              "213783213",
+              "213213213",
+              "101763276",
+              "12387892712",
+            ]
+          }
+          logs={
+            Array [
+              "No running process",
+            ]
+          }
+          onDownload={[Function]}
+          onRestart={[Function]}
         />
       </TabPane>
     </TabContent>

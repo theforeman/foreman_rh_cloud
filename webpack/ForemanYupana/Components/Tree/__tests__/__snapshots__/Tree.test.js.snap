@@ -6,6 +6,11 @@ exports[`Tree rendering render without Props 1`] = `
   componentClass="div"
   sm={9}
 >
+  <p>
+    There are currently 
+    0
+     report files ready
+  </p>
   <Tree
     canHide={true}
     content="Reports"
