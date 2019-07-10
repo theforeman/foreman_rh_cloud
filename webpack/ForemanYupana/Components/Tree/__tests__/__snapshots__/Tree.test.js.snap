@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tree rendering render without Props 1`] = `
+<Col
+  bsClass="col"
+  componentClass="div"
+  sm={9}
+>
+  <Tree
+    canHide={true}
+    content="Reports"
+    open={true}
+    visible={true}
+  />
+</Col>
+`;

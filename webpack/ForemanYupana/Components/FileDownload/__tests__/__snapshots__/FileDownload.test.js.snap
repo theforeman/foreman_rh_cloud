@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FileDownload rendering render without Props 1`] = `
+<Col
+  bsClass="col"
+  componentClass="div"
+  sm={3}
+>
+  <Button
+    active={false}
+    block={false}
+    bsClass="btn"
+    bsStyle="default"
+    disabled={false}
+    onClick={[Function]}
+  >
+    Download Files 
+    <Icon
+      name="download"
+      type="fa"
+    />
+  </Button>
+</Col>
+`;
