@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StatusChart rendering render without Props 1`] = `
+<Col
+  bsClass="col"
+  componentClass="div"
+  sm={4}
+>
+  <div
+    className="status-chart"
+  >
+    <CircularProgressbar
+      background={false}
+      backgroundPadding={0}
+      circleRatio={1}
+      className=""
+      classes={
+        Object {
+          "background": "CircularProgressbar-background",
+          "path": "CircularProgressbar-path",
+          "root": "CircularProgressbar",
+          "text": "CircularProgressbar-text",
+          "trail": "CircularProgressbar-trail",
+        }
+      }
+      counterClockwise={false}
+      maxValue={100}
+      minValue={0}
+      strokeWidth={5}
+      styles={
+        Object {
+          "background": Object {},
+          "path": Object {},
+          "root": Object {},
+          "text": Object {},
+          "trail": Object {},
+        }
+      }
+      text="0%"
+      value={0}
+    />
+  </div>
+</Col>
+`;

@@ -1,35 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Terminal rendering render without Props 1`] = `
-<Row
-  bsClass="row"
+<Col
+  bsClass="col"
   componentClass="div"
+  sm={8}
 >
-  <Col
-    bsClass="col"
-    componentClass="div"
-    sm={12}
+  <div
+    className="terminal"
   >
-    <div
-      className="terminal"
+    <Grid
+      bsClass="container"
+      componentClass="div"
+      fluid={true}
     >
-      <Grid
-        bsClass="container"
+      <Row
+        bsClass="row"
         componentClass="div"
-        fluid={true}
       >
-        <Row
-          bsClass="row"
+        <Col
+          bsClass="col"
           componentClass="div"
-        >
-          <Col
-            bsClass="col"
-            componentClass="div"
-            sm={12}
-          />
-        </Row>
-      </Grid>
-    </div>
-  </Col>
-</Row>
+          sm={12}
+        />
+      </Row>
+    </Grid>
+  </div>
+</Col>
 `;

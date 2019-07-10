@@ -12,3 +12,4 @@ locale/*/*.pox
 node_modules/*
 coverage/*
 package-lock.json
+.storybook-dist/*
