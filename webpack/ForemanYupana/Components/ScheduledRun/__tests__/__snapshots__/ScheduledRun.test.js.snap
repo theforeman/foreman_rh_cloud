@@ -12,7 +12,7 @@ exports[`ScheduledRun rendering render without Props 1`] = `
       size="2x"
       type="fa"
     />
-    Next report generating is schedule to run at 
+    Next report generating is scheduled to run on 
     00:00
   </p>
 </Col>

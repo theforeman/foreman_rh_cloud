@@ -7,7 +7,7 @@ const ScheduledRun = ({ time }) => (
   <Grid.Col sm={12}>
     <p>
       <Icon name="calendar" size="2x" />
-      Next report generating is schedule to run at {time}
+      Next report generating is scheduled to run on {time}
     </p>
   </Grid.Col>
 );

@@ -4,9 +4,13 @@ import { default as RATTree } from 'react-animated-tree';
 import { Grid } from 'patternfly-react';
 
 const Tree = ({ files }) => {
-  const fileTrees = files.map(file => <RATTree content={file} />);
+  const filesAmount = files.length;
+  const fileTrees = files.map((file, index) => (
+    <RATTree key={index} content={file} />
+  ));
   return (
     <Grid.Col sm={9}>
+      <p>There are currently {filesAmount} report files ready</p>
       <RATTree content="Reports" open canHide visible>
         {fileTrees}
       </RATTree>

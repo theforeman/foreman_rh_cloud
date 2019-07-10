@@ -1,3 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ForemanYupana render without Props 1`] = `<UploadsDashboard />`;
+exports[`ForemanYupana render without Props 1`] = `
+<UploadsDashboard
+  generating={
+    Object {
+      "exitCode": 0,
+      "logs": Array [
+        "No running process",
+      ],
+      "onRestart": [Function],
+      "processScheduledTime": "00:00",
+    }
+  }
+  uploading={
+    Object {
+      "exitCode": 0,
+      "files": Array [
+        "213783213",
+        "213213213",
+        "101763276",
+        "12387892712",
+      ],
+      "logs": Array [
+        "No running process",
+      ],
+      "onDownload": [Function],
+      "onRestart": [Function],
+    }
+  }
+/>
+`;

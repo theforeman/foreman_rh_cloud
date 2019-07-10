@@ -6,9 +6,12 @@ exports[`ReportUpload rendering render without Props 1`] = `
 >
   <TabHeader
     exitCode={0}
+    onRestart={[Function]}
     onRestartClick={[Function]}
   />
-  <Terminal />
+  <Terminal>
+    No running process
+  </Terminal>
   <TabFooter>
     <Tree
       files={Array []}
