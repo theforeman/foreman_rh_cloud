@@ -5,8 +5,8 @@ export const generating = {
   logs: [
     'Generating...',
     'Hosts: 10,000',
-    'writing host 1 / 10,000',
-    'writing host 2 / 10,000',
+    'writing host 1/1000',
+    'writing host 2/1000',
   ],
   processScheduledTime: '23:45',
   onRestart: noop,

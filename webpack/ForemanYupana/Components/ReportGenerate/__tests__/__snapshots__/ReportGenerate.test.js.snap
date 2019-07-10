@@ -9,9 +9,14 @@ exports[`ReportGenerate rendering render without Props 1`] = `
     onRestart={[Function]}
     onRestartClick={[Function]}
   />
-  <Terminal>
-    No running process
-  </Terminal>
+  <TabBody
+    logs={
+      Array [
+        "No running process",
+      ]
+    }
+    percentage={0}
+  />
   <TabFooter>
     <ScheduledRun
       time="00:00"
