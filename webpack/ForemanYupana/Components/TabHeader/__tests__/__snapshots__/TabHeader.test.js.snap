@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TabHeader rendering render without Props 1`] = `
+<Row
+  bsClass="row"
+  className="tab-header"
+  componentClass="div"
+>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    sm={4}
+  >
+    <h1>
+      # Exit Code: 
+    </h1>
+  </Col>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    sm={4}
+    smOffset={4}
+  >
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Restart
+    </Button>
+  </Col>
+</Row>
+`;

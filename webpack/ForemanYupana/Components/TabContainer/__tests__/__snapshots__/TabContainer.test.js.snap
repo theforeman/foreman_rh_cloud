@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TabContainer rendering render without Props 1`] = `
+<div
+  className=""
+>
+  <Grid
+    bsClass="container"
+    componentClass="div"
+    fluid={true}
+  />
+</div>
+`;

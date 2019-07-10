@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TabFooter rendering render without Props 1`] = `
+<Row
+  bsClass="row"
+  componentClass="div"
+>
+  <div
+    className="tab-footer"
+  />
+</Row>
+`;
