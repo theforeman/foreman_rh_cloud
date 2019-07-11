@@ -9,9 +9,15 @@ exports[`ReportUpload rendering render without Props 1`] = `
     onRestart={[Function]}
     onRestartClick={[Function]}
   />
-  <Terminal>
+  <TabBody
+    logs={
+      Array [
+        "No running process",
+      ]
+    }
+  >
     No running process
-  </Terminal>
+  </TabBody>
   <TabFooter>
     <Tree
       files={Array []}

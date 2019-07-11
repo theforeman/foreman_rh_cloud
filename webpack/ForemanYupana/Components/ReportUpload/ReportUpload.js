@@ -4,7 +4,7 @@ import { noop } from 'patternfly-react';
 import TabContainer from '../TabContainer';
 import TabHeader from '../TabHeader';
 import TabFooter from '../TabFooter';
-import Terminal from '../Terminal';
+import TabBody from '../TabBody';
 import Tree from '../Tree';
 import FileDownload from '../FileDownload';
 import './reportUpload.scss';
@@ -12,7 +12,7 @@ import './reportUpload.scss';
 const ReportUpload = ({ exitCode, files, logs, onRestart, onDownload }) => (
   <TabContainer className="report-upload">
     <TabHeader exitCode={exitCode} onRestart={onRestart} />
-    <Terminal>{logs}</Terminal>
+    <TabBody>{logs}</TabBody>
     <TabFooter>
       <Tree files={files} />
       <FileDownload onClick={onDownload} />

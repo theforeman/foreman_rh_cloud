@@ -27,7 +27,7 @@ exports[`Terminal rendering render without Props 1`] = `
             className=""
             inline={true}
             inverse={true}
-            loading={true}
+            loading={null}
             size="xs"
           />
         </Col>
