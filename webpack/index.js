@@ -4,7 +4,7 @@
 import componentRegistry from 'foremanReact/components/componentRegistry';
 import { registerReducer } from 'foremanReact/common/MountingService';
 import reducers from './ForemanYupana/ForemanYupanaReducers';
-import UploadsDashboard from './ForemanYupana/Components/UploadsDashboard';
+import ForemanYupana from './ForemanYupana';
 
 // register reducers
 Object.entries(reducers).forEach(([key, reducer]) =>
@@ -13,6 +13,6 @@ Object.entries(reducers).forEach(([key, reducer]) =>
 
 // register components
 componentRegistry.register({
-  name: 'UploadsDashboard',
-  type: UploadsDashboard,
+  name: 'ForemanYupana',
+  type: ForemanYupana,
 });
