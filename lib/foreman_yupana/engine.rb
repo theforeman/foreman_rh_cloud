@@ -26,12 +26,10 @@ module ForemanYupana
         # Add a new role called 'Discovery' if it doesn't exist
         role 'ForemanYupana', [:view_foreman_yupana]
 
-        # add menu entry
-        menu :top_menu, :template,
-             url_hash: { controller: :'foreman_yupana/hosts', action: :new_action },
-             caption: 'ForemanYupana',
-             parent: :hosts_menu,
-             after: :hosts
+        # Adding a sub menu after hosts menu
+        sub_menu :top_menu, :Yupana, :caption=> N_('Yupana'), :icon => 'fa fa-align-justify' do
+          menu :top_menu, :level1, :caption=>N_('Manage'), :url_hash => { controller: :'foreman_yupana/react', :action=>:index}
+        end
 
         # add dashboard widget
         widget 'foreman_yupana_widget', name: N_('Foreman plugin template widget'), sizex: 4, sizey: 1

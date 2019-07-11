@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  get 'new_action', to: 'foreman_yupana/hosts#new_action'
+  get 'index', to: 'foreman_yupana/react#index'
 end
