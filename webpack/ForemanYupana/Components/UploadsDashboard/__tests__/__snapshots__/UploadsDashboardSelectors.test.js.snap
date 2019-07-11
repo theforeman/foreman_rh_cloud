@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UploadsDashboard selectors should return UploadsDashboard 1`] = `
+Object {
+  "bool": false,
+}
+`;
+
+exports[`UploadsDashboard selectors should return UploadsDashboard bool 1`] = `false`;

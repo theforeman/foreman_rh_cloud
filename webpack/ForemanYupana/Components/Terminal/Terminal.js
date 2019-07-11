@@ -23,7 +23,12 @@ class Terminal extends React.Component {
             <Grid.Row>
               <Grid.Col sm={12}>
                 {logs}
-                <Spinner loading={logs && logs.length > 1} inverse inline size="xs" />
+                <Spinner
+                  loading={logs && logs.length > 1}
+                  inverse
+                  inline
+                  size="xs"
+                />
               </Grid.Col>
             </Grid.Row>
           </Grid>

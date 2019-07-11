@@ -1,15 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ForemanYupana render without Props 1`] = `
-<UploadsDashboard
+<Connect(UploadsDashboard)
   generating={
     Object {
       "exitCode": 0,
       "logs": Array [
-        "No running process",
+        "Generating...",
+        "Hosts: 1000",
+        "writing host 1/1000",
+        "writing host 2/1000",
       ],
       "onRestart": [Function],
-      "processScheduledTime": "00:00",
+      "processScheduledTime": "23:45",
     }
   }
   uploading={
