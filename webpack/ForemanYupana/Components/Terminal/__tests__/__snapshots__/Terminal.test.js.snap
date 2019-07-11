@@ -22,7 +22,15 @@ exports[`Terminal rendering render without Props 1`] = `
           bsClass="col"
           componentClass="div"
           sm={12}
-        />
+        >
+          <Spinner
+            className=""
+            inline={true}
+            inverse={true}
+            loading={true}
+            size="xs"
+          />
+        </Col>
       </Row>
     </Grid>
   </div>

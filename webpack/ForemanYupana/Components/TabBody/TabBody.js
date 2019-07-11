@@ -23,12 +23,10 @@ const TabBody = ({ logs }) => {
 };
 
 TabBody.propTypes = {
-  percentage: PropTypes.number,
-  logs: PropTypes.arrayOf(PropTypes.string)
+  logs: PropTypes.arrayOf(PropTypes.string),
 };
 
 TabBody.defaultProps = {
-  percentage: 0,
   logs: ['No running process'],
 };
 

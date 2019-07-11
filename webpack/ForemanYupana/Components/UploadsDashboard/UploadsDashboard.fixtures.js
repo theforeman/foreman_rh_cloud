@@ -4,7 +4,7 @@ export const generating = {
   exitCode: 0,
   logs: [
     'Generating...',
-    'Hosts: 10,000',
+    'Hosts: 1000',
     'writing host 1/1000',
     'writing host 2/1000',
   ],
