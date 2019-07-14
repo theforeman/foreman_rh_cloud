@@ -6,6 +6,7 @@ module ForemanYupana
     config.autoload_paths += Dir["#{config.root}/app/helpers/concerns"]
     config.autoload_paths += Dir["#{config.root}/app/models/concerns"]
     config.autoload_paths += Dir["#{config.root}/app/overrides"]
+    config.autoload_paths += Dir["#{config.root}/lib"]
 
     # Add any db migrations
     initializer 'foreman_yupana.load_app_instance_data' do |app|
@@ -27,8 +28,8 @@ module ForemanYupana
         role 'ForemanYupana', [:view_foreman_yupana]
 
         # Adding a sub menu after hosts menu
-        sub_menu :top_menu, :Yupana, :caption=> N_('Yupana'), :icon => 'fa fa-align-justify' do
-          menu :top_menu, :level1, :caption=>N_('Manage'), :url_hash => { controller: :'foreman_yupana/react', :action=>:index}
+        sub_menu :top_menu, :Yupana, :caption => N_('Yupana'), :icon => 'fa fa-align-justify' do
+          menu :top_menu, :level1, :caption => N_('Manage'), :url_hash => { controller: :'foreman_yupana/react', :action=>:index}
         end
 
         # add dashboard widget
@@ -53,7 +54,7 @@ module ForemanYupana
     end
 
     initializer 'foreman_yupana.register_gettext', after: :load_config_initializers do |_app|
-      locale_dir = File.join(File.expand_path('../../..', __FILE__), 'locale')
+      locale_dir = File.join(File.expand_path('../..', __dir__), 'locale')
       locale_domain = 'foreman_yupana'
       Foreman::Gettext::Support.add_text_domain locale_domain, locale_dir
     end
