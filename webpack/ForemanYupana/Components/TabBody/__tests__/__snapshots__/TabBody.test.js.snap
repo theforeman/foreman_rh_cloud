@@ -8,8 +8,6 @@ exports[`TabBody rendering render without Props 1`] = `
   <StatusChart
     percentage={0}
   />
-  <Terminal>
-    No running process
-  </Terminal>
+  <Connect(Terminal) />
 </Row>
 `;

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Terminal selectors should return Terminal 1`] = `
+Object {
+  "logs": Array [],
+}
+`;
+
+exports[`Terminal selectors should return Terminal Logs 1`] = `Array []`;

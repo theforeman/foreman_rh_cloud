@@ -23,11 +23,16 @@ exports[`Terminal rendering render without Props 1`] = `
           componentClass="div"
           sm={12}
         >
+          <p
+            key="0"
+          >
+            No running process
+          </p>
           <Spinner
             className=""
             inline={true}
             inverse={true}
-            loading={null}
+            loading={false}
             size="xs"
           />
         </Col>
