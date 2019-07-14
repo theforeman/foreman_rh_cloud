@@ -5,11 +5,11 @@ exports[`TabBody rendering render without Props 1`] = `
   bsClass="row"
   componentClass="div"
 >
-  <Terminal>
-    No running process
-  </Terminal>
   <StatusChart
     percentage={0}
   />
+  <Terminal>
+    No running process
+  </Terminal>
 </Row>
 `;

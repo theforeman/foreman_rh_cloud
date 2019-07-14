@@ -9,35 +9,65 @@ exports[`StatusChart rendering render without Props 1`] = `
   <div
     className="status-chart"
   >
-    <CircularProgressbar
-      background={false}
-      backgroundPadding={0}
-      circleRatio={1}
-      className=""
-      classes={
+    <DonutChart
+      className="donut-chart-pf"
+      color={
         Object {
-          "background": "CircularProgressbar-background",
-          "path": "CircularProgressbar-path",
-          "root": "CircularProgressbar",
-          "text": "CircularProgressbar-text",
-          "trail": "CircularProgressbar-trail",
+          "pattern": Array [
+            "#0088ce",
+            "#d1d1d1",
+          ],
         }
       }
-      counterClockwise={false}
-      maxValue={100}
-      minValue={0}
-      strokeWidth={5}
-      styles={
+      data={
         Object {
-          "background": Object {},
-          "path": Object {},
-          "root": Object {},
-          "text": Object {},
-          "trail": Object {},
+          "columns": Array [
+            Array [
+              "Completed",
+              0,
+            ],
+            Array [
+              "Remain",
+              100,
+            ],
+          ],
+          "order": "asc",
         }
       }
-      text="0%"
-      value={0}
+      donut={
+        Object {
+          "label": Object {
+            "show": false,
+          },
+          "title": undefined,
+          "width": 11,
+        }
+      }
+      id="donunt-chart-1"
+      legend={
+        Object {
+          "show": false,
+        }
+      }
+      size={
+        Object {
+          "height": 210,
+          "width": 210,
+        }
+      }
+      title={
+        Object {
+          "primary": "0%",
+          "secondary": "Completed",
+          "type": "percent",
+        }
+      }
+      tooltip={
+        Object {
+          "contents": [Function],
+        }
+      }
+      type="donut"
     />
   </div>
 </Col>

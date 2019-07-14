@@ -11,7 +11,7 @@ const modifiedReducers = {
 };
 
 describe('UploadsDashboard integration test', () => {
-  it('should flow', async () => {
+  xit('should flow', async () => {
     const integrationTestHelper = new IntegrationTestHelper(modifiedReducers);
     const component = integrationTestHelper.mount(<UploadsDashboard />);
     component.update();

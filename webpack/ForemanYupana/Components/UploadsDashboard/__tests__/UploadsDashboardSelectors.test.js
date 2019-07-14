@@ -5,11 +5,11 @@ import {
 } from '../UploadsDashboardSelectors';
 
 const state = {
-  ForemanYupana : {
+  ForemanYupana: {
     uploadsDashboard: {
       bool: false,
     },
-  }
+  },
 };
 
 const fixtures = {

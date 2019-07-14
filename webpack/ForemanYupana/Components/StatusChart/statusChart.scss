@@ -1,16 +1,8 @@
-@import '~react-circular-progressbar/dist/styles.css';
-
 .status-chart {
-  position: relative;
-  height: 300px;
-
-  svg {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    height: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-  }
+  display: flex;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  margin: 10%;
+  padding: 5%;
 }

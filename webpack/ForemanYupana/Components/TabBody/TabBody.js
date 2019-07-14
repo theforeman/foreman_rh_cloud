@@ -16,8 +16,8 @@ const TabBody = ({ logs }) => {
 
   return (
     <Grid.Row>
-      <Terminal>{logs}</Terminal>
       <StatusChart percentage={percentage} />
+      <Terminal>{logs}</Terminal>
     </Grid.Row>
   );
 };
