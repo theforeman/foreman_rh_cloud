@@ -5,7 +5,7 @@ import './tabContainer.scss';
 
 const TabContainer = ({ children, className }) => (
   <div className={className}>
-    <Grid fluid>{children}</Grid>
+    <Grid>{children}</Grid>
   </div>
 );
 

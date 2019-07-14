@@ -7,7 +7,7 @@ exports[`TabContainer rendering render without Props 1`] = `
   <Grid
     bsClass="container"
     componentClass="div"
-    fluid={true}
+    fluid={false}
   />
 </div>
 `;
