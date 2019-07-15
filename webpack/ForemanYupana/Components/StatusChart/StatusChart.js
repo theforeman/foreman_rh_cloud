@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Grid, DonutChart } from 'patternfly-react';
 import './statusChart.scss';
 
-const StatusChart = ({ percentage }) => {
+const StatusChart = ({ completed }) => {
   const donutConfigData = {
-    columns: [['Completed', percentage], ['Remain', 100 - percentage]],
-    order: 'asc',
+    columns: [['Completed', completed], ['Remain', 100 - completed]],
+    order: null,
   };
 
   const pfGetUtilizationDonutTooltipContents = d => {
@@ -33,7 +33,7 @@ const StatusChart = ({ percentage }) => {
           tooltip={donutConfigTooltip}
           title={{
             type: 'percent',
-            primary: `${percentage}%`,
+            primary: `${completed}%`,
             secondary: 'Completed',
           }}
         />
@@ -43,11 +43,11 @@ const StatusChart = ({ percentage }) => {
 };
 
 StatusChart.propTypes = {
-  percentage: PropTypes.number,
+  completed: PropTypes.number,
 };
 
 StatusChart.defaultProps = {
-  percentage: 0,
+  completed: 0,
 };
 
 export default StatusChart;
