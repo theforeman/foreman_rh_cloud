@@ -7,9 +7,16 @@ exports[`ReportUpload rendering render without Props 1`] = `
   <TabHeader
     exitCode={0}
     onRestart={[Function]}
-    onRestartClick={[Function]}
   />
-  <TabBody>
+  <TabBody
+    completed={0}
+    loading={false}
+    logs={
+      Array [
+        "No running process",
+      ]
+    }
+  >
     No running process
   </TabBody>
   <TabFooter>

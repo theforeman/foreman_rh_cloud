@@ -6,8 +6,15 @@ exports[`TabBody rendering render without Props 1`] = `
   componentClass="div"
 >
   <StatusChart
-    percentage={0}
+    completed={0}
   />
-  <Connect(Terminal) />
+  <Terminal
+    loading={false}
+    logs={
+      Array [
+        "No running process",
+      ]
+    }
+  />
 </Row>
 `;

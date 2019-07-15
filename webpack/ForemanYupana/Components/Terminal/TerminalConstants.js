@@ -1,1 +1,0 @@
-export const TERMINAL_GET_LOGS = 'TERMINAL_GET_LOGS';

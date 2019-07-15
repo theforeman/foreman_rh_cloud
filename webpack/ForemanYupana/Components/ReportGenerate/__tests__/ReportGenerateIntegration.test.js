@@ -1,12 +1,12 @@
 import React from 'react';
 import { IntegrationTestHelper } from 'react-redux-test-utils';
 
-import Terminal, { reducers } from '../index';
+import ReportGenerate, { reducers } from '../index';
 
-describe('Terminal integration test', () => {
-  it('should flow', async () => {
+describe('ReportGenerate integration test', () => {
+  xit('should flow', async () => {
     const integrationTestHelper = new IntegrationTestHelper(reducers);
-    const component = integrationTestHelper.mount(<Terminal />);
+    const component = integrationTestHelper.mount(<ReportGenerate />);
     component.update();
     /** Create a Flow test */
   });

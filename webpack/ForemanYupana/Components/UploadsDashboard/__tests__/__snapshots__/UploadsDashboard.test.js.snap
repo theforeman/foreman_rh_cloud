@@ -55,7 +55,7 @@ exports[`UploadsDashboard rendering render without Props 1`] = `
         bsClass="tab-pane"
         eventKey={1}
       >
-        <ReportGenerate
+        <Connect(ReportGenerate)
           exitCode={0}
           logs={
             Array [
@@ -149,7 +149,7 @@ exports[`UploadsDashboard rendering with props 1`] = `
         bsClass="tab-pane"
         eventKey={1}
       >
-        <ReportGenerate
+        <Connect(ReportGenerate)
           exitCode={0}
           logs={
             Array [

@@ -31,7 +31,7 @@ exports[`StatusChart rendering render without Props 1`] = `
               100,
             ],
           ],
-          "order": "asc",
+          "order": null,
         }
       }
       donut={
