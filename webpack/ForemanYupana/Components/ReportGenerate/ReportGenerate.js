@@ -15,15 +15,25 @@ class ReportGenerate extends React.Component {
   }
 
   componentDidMount() {
-    const { startProcess, fetchLogs } = this.props;
+    const { startProcess, startPolling, fetchLogs } = this.props;
     startProcess();
-    setInterval(fetchLogs, 3700);
+    const pollingProcessID = setInterval(
+      () => fetchLogs(pollingProcessID),
+      2000
+    );
+    startPolling(pollingProcessID);
   }
 
   async handleRestart() {
-    const { processID, startProcess, stopProcess } = this.props;
+    const { startProcess, stopProcess, processID, restartProcess } = this.props;
+    restartProcess();
     await stopProcess(processID);
     startProcess();
+  }
+
+  componentWillUnmount() {
+    const { pollingProcessID, stopPolling } = this.props;
+    stopPolling(pollingProcessID);
   }
 
   render() {
@@ -57,6 +67,10 @@ ReportGenerate.propTypes = {
   loading: PropTypes.bool,
   logs: PropTypes.arrayOf(PropTypes.string),
   completed: PropTypes.number,
+  startPolling: PropTypes.func,
+  restartProcess: PropTypes.func,
+  pollingProcessID: PropTypes.number,
+  stopPolling: PropTypes.func,
 };
 
 ReportGenerate.defaultProps = {
@@ -69,6 +83,10 @@ ReportGenerate.defaultProps = {
   loading: false,
   logs: ['No running process'],
   completed: 0,
+  startPolling: noop,
+  restartProcess: noop,
+  pollingProcessID: 0,
+  stopPolling: noop,
 };
 
 export default ReportGenerate;

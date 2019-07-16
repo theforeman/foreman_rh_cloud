@@ -2,42 +2,47 @@ import Immutable from 'seamless-immutable';
 
 import {
   REPORT_GENERATE_LOGS_POLLING,
-  REPORT_GENERATE_START,
-  REPORT_GENERATE_STOP,
-  REPORT_GENERATE_FINISH,
+  REPORT_GENERATE_LOGS_POLLING_START,
+  REPORT_GENERATE_PROCESS_START,
+  REPORT_GENERATE_PROCESS_STOP,
+  REPORT_GENERATE_PROCESS_FINISH,
 } from './ReportGenerateConstants';
 
 const initialState = Immutable({
   /** insert ReportGenerate state here */
   processID: 0,
+  pollingProcessID: 0,
   logs: ['No running process'],
   completed: 0,
   status: 'stopped',
 });
 
 export default (state = initialState, action) => {
-  const { payload: { processID, logs, completed, status } = {} } = action;
-
+  const {
+    payload: { processID, logs, completed, status, pollingProcessID } = {},
+  } = action;
   switch (action.type) {
+    case REPORT_GENERATE_LOGS_POLLING_START:
+      return state.merge({
+        pollingProcessID,
+      });
     case REPORT_GENERATE_LOGS_POLLING:
       return state.merge({
         logs,
         completed,
       });
-    case REPORT_GENERATE_START:
+    case REPORT_GENERATE_PROCESS_START:
       return state.merge({
         processID,
-        logs,
-        completed,
         status,
       });
-    case REPORT_GENERATE_STOP:
+    case REPORT_GENERATE_PROCESS_STOP:
       return state.merge({
         logs,
         completed,
         status,
       });
-    case REPORT_GENERATE_FINISH:
+    case REPORT_GENERATE_PROCESS_FINISH:
       return state.merge({
         status,
       });

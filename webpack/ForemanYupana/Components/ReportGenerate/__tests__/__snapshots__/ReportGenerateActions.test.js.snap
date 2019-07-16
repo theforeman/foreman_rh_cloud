@@ -1,17 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ReportGenerate actions should fetchLogs 1`] = `
-Array [
-  Array [
-    Object {
-      "payload": Object {
-        "completed": undefined,
-        "logs": undefined,
-      },
-      "type": "YUPANA/REPORT_GENERATE_LOGS_POLLING",
-    },
-  ],
-]
+Object {
+  "payload": Object {
+    "completed": undefined,
+    "logs": Array [
+      "some-logs",
+    ],
+  },
+  "type": "YUPANA/REPORT_GENERATE_LOGS_POLLING",
+}
 `;
 
 exports[`ReportGenerate actions should startProcess 1`] = `
@@ -19,17 +17,10 @@ Array [
   Array [
     Object {
       "payload": Object {
-        "completed": undefined,
-        "logs": Array [
-          "Generating...",
-          "Hosts: 20",
-          "writing host 1/20",
-          "writing host 2/20",
-        ],
-        "processID": 4,
+        "processID": 6,
         "status": "running",
       },
-      "type": "YUPANA/REPORT_GENERATE_START",
+      "type": "YUPANA/REPORT_GENERATE_PROCESS_START",
     },
   ],
 ]
@@ -42,11 +33,13 @@ Array [
       "payload": Object {
         "completed": 0,
         "logs": Array [
+          "some-logs",
           "No running process",
+          "--------------------",
         ],
         "status": "stopped",
       },
-      "type": "YUPANA/REPORT_GENERATE_STOP",
+      "type": "YUPANA/REPORT_GENERATE_PROCESS_STOP",
     },
   ],
 ]
