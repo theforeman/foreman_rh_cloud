@@ -4,9 +4,13 @@ import { processID } from '../ReportGenerate.fixtures';
 
 const fixtures = {
   'should fetchLogs': () => fetchLogs(),
-  'should startProcess': () => startProcess({}),
+  'should startProcess': () => startProcess(),
   'should stopProcess': () => stopProcess(processID),
 };
+
+beforeEach(() => {
+  window.generatingLogs = ['some-logs'];
+});
 
 describe('ReportGenerate actions', () =>
   testActionSnapshotWithFixtures(fixtures));

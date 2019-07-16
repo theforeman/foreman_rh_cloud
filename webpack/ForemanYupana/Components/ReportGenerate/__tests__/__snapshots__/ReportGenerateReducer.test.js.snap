@@ -1,11 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ReportGenerate reducer should handle REPORT_GENERATE_LOGS_POLLING 1`] = `
+exports[`ReportGenerate reducer should handle REPORT_GENERATE_LOGS_POLLING_START 1`] = `
 Object {
-  "completed": 10,
-  "logs": Array [
-    "some-logs",
-  ],
+  "completed": undefined,
+  "logs": undefined,
+  "pollingProcessID": 0,
   "processID": 0,
   "status": "stopped",
 }
@@ -17,6 +16,7 @@ Object {
   "logs": Array [
     "No running process",
   ],
+  "pollingProcessID": 0,
   "processID": 0,
   "status": "stopped",
 }
