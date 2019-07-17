@@ -3,6 +3,7 @@ import {
   REPORT_UPLOAD_PROCESS_STOP,
   REPORT_UPLOAD_PROCESS_FINISH,
   REPORT_UPLOAD_PROCESS_RESTART,
+  REPORT_UPLOAD_FILES_DOWNLOAD,
 } from './ReportUploadConstants';
 import { seperator } from '../Dashboard/DashboardHelper';
 
@@ -74,4 +75,20 @@ export const restartProcess = () => {
   return {
     type: REPORT_UPLOAD_PROCESS_RESTART,
   };
+};
+
+export const downloadReports = () => dispatch => {
+  // TODO: Add API call here
+  setTimeout(() => {
+    const response = {
+      file:
+        'https://download.fedoraproject.org/pub/fedora/linux/releases/30/Workstation/x86_64/iso/Fedora-Workstation-netinst-x86_64-30-1.2.iso',
+    };
+    // server sent the url to the file!
+    // now, let's download:
+    window.location.href = response.file;
+  }, 100);
+  dispatch({
+    type: REPORT_UPLOAD_FILES_DOWNLOAD,
+  });
 };
