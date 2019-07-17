@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReportUpload reducer should handle REPORT_UPLOAD_LOGS_POLLING_START 1`] = `
+Object {
+  "completed": undefined,
+  "logs": undefined,
+  "pollingProcessID": 0,
+  "processID": 0,
+  "status": "stopped",
+}
+`;
+
+exports[`ReportUpload reducer should return the initial state 1`] = `
+Object {
+  "completed": 0,
+  "logs": Array [
+    "No running process",
+  ],
+  "pollingProcessID": 0,
+  "processID": 0,
+  "status": "stopped",
+}
+`;

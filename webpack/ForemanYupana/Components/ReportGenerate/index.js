@@ -29,7 +29,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 // export reducers
-export const reducers = { reportGenerate: reducer };
+export const reducers = { generating: reducer };
 
 // export connected component
 export default connect(

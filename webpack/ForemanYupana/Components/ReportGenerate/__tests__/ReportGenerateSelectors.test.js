@@ -9,7 +9,7 @@ import {
 import { logs, completed, processID, status } from '../ReportGenerate.fixtures';
 
 const state = {
-  reportGenerate: {
+  generating: {
     processID,
     logs,
     completed,
