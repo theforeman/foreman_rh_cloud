@@ -4,7 +4,7 @@ import { noop } from 'patternfly-react';
 import ReportGenerate from '../ReportGenerate';
 import ReportUpload from '../ReportUpload';
 import NavContainer from '../NavContainer';
-import './Dashboard.scss';
+import './dashboard.scss';
 
 const Dashboard = ({ generating, uploading }) => (
   <NavContainer
