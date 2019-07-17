@@ -1,7 +1,7 @@
 import { selectForemanYupana } from '../../ForemanYupanaSelectors';
 
 export const selectReportGenerate = state =>
-  selectForemanYupana(state).reportGenerate;
+  selectForemanYupana(state).generating;
 export const selectProcessID = state => selectReportGenerate(state).processID;
 export const selectPollingProcessID = state =>
   selectReportGenerate(state).pollingProcessID;

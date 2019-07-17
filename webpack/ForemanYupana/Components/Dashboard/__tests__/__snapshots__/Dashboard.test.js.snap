@@ -70,7 +70,7 @@ exports[`Dashboard rendering render without Props 1`] = `
         bsClass="tab-pane"
         eventKey={2}
       >
-        <ReportUpload
+        <Connect(ReportUpload)
           exitCode={0}
           files={
             Array [
@@ -167,7 +167,7 @@ exports[`Dashboard rendering with props 1`] = `
         bsClass="tab-pane"
         eventKey={2}
       >
-        <ReportUpload
+        <Connect(ReportUpload)
           exitCode={0}
           files={
             Array [

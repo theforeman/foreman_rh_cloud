@@ -16,9 +16,7 @@ exports[`ReportUpload rendering render without Props 1`] = `
         "No running process",
       ]
     }
-  >
-    No running process
-  </TabBody>
+  />
   <TabFooter>
     <Tree
       files={Array []}

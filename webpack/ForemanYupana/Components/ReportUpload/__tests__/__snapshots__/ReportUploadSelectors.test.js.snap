@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReportUpload selectors should return ReportUpload 1`] = `
+Object {
+  "completed": 10,
+  "logs": Array [
+    "some-logs",
+  ],
+  "processID": 0,
+  "status": "some-status",
+}
+`;
+
+exports[`ReportUpload selectors should return ReportUpload completed 1`] = `10`;
+
+exports[`ReportUpload selectors should return ReportUpload loading 1`] = `false`;
+
+exports[`ReportUpload selectors should return ReportUpload logs 1`] = `
+Array [
+  "some-logs",
+]
+`;
+
+exports[`ReportUpload selectors should return ReportUpload processID 1`] = `0`;
