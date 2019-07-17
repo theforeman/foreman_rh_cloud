@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ForemanYupana render without Props 1`] = `
-<Dashboard
+<Connect(Dashboard)
   generating={
     Object {
       "exitCode": 0,

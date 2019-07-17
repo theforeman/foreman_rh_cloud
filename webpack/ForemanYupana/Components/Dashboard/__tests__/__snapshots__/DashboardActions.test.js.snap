@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard actions should changeBool 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "bool": true,
+      },
+      "type": "DASHBOARD_CHANGE_BOOL",
+    },
+  ],
+]
+`;
