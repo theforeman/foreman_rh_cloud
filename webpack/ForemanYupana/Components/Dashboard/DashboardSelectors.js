@@ -5,3 +5,4 @@ export const selectCompleted = state => selectDashboard(state).completed;
 export const selectLogs = state => selectDashboard(state).logs;
 export const selectPollingProcessID = state =>
   selectDashboard(state).pollingProcessID;
+export const selectFiles = state => selectDashboard(state).files;

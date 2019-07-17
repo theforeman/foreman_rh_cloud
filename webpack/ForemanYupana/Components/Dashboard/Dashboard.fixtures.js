@@ -1,19 +1,4 @@
-import { noop } from 'patternfly-react';
 import { seperator } from './DashboardHelper';
-
-export const generating = {
-  exitCode: 0,
-
-  processScheduledTime: '23:45',
-  onRestart: noop,
-};
-
-export const uploading = {
-  exitCode: 0,
-  files: ['213783213', '213213213', '101763276', '12387892712'],
-  onRestart: noop,
-  onDownload: noop,
-};
 
 export const pollingProcessID = 1;
 
@@ -27,7 +12,9 @@ export const completed = {
   uploading: 25,
 };
 
-export const yupana = { logs, completed };
+export const yupana = { logs, completed, files };
+
+export const files = ['some-file'];
 
 export const initialState = {
   logs: {

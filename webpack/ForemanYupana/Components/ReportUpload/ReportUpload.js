@@ -27,6 +27,11 @@ class ReportUpload extends React.Component {
     startProcess();
   }
 
+  componentWillUnmount() {
+    const { stopProcess, processID } = this.props;
+    stopProcess(processID);
+  }
+
   render() {
     const {
       exitCode,

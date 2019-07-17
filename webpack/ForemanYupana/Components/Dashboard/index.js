@@ -5,12 +5,9 @@ import * as actions from './DashboardActions';
 import reducer from './DashboardReducer';
 
 import Dashboard from './Dashboard';
-import { selectPollingProcessID } from './DashboardSelectors';
 
 // map state to props
-const mapStateToProps = state => ({
-  pollingProcessID: selectPollingProcessID(state),
-});
+const mapStateToProps = state => ({});
 
 // map action dispatchers to props
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

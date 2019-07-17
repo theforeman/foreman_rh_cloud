@@ -11,10 +11,8 @@ export const selectPollingProcessID = state =>
 export const selectLogs = state => selectDashboardLogs(state).uploading;
 export const selectCompleted = state =>
   selectDashboardCompleted(state).uploading;
-
 export const selectLoading = state =>
   selectReportUpload(state).status === 'running';
-
 export const selectExitCode = state => {
   const { status } = selectReportUpload(state);
   let exitCode;
