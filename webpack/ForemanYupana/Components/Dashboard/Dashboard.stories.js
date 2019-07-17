@@ -3,17 +3,17 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { Provider } from 'react-redux';
 import configureStore from '../../../stories/configureStore';
-import UploadsDashboard from './index';
-import { generating, uploading } from './UploadsDashboard.fixtures';
+import Dashboard from './index';
+import { generating, uploading } from './Dashboard.fixtures';
 
 const store = configureStore();
 
-storiesOf('UploadsDashboard', module)
+storiesOf('Dashboard', module)
   .addDecorator(withKnobs)
-  .add('UploadsDashboard', () => (
+  .add('Dashboard', () => (
     <div style={{ margin: '20px' }}>
       <Provider store={store}>
-        <UploadsDashboard generating={generating} uploading={uploading} />
+        <Dashboard generating={generating} uploading={uploading} />
       </Provider>
     </div>
   ));

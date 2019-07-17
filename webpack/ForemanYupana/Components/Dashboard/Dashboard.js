@@ -11,9 +11,9 @@ import {
 } from 'patternfly-react';
 import ReportGenerate from '../ReportGenerate';
 import ReportUpload from '../ReportUpload';
-import './uploadsDashboard.scss';
+import './Dashboard.scss';
 
-const UploadsDashboard = ({ generating, uploading }) => (
+const Dashboard = ({ generating, uploading }) => (
   <TabContainer id="basic-tabs-pf" defaultActiveKey={1}>
     <div className="uploads-dashboard">
       <Nav bsClass="nav nav-tabs nav-tabs-pf nav-justified">
@@ -38,7 +38,7 @@ const UploadsDashboard = ({ generating, uploading }) => (
   </TabContainer>
 );
 
-UploadsDashboard.propTypes = {
+Dashboard.propTypes = {
   generating: PropTypes.shape({
     exitCode: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     logs: PropTypes.arrayOf(PropTypes.string),
@@ -54,7 +54,7 @@ UploadsDashboard.propTypes = {
   }),
 };
 
-UploadsDashboard.defaultProps = {
+Dashboard.defaultProps = {
   generating: {
     exitCode: 0,
     logs: ['No running process'],
@@ -70,4 +70,4 @@ UploadsDashboard.defaultProps = {
   },
 };
 
-export default UploadsDashboard;
+export default Dashboard;

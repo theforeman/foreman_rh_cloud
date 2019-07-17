@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`UploadsDashboard rendering render without Props 1`] = `
+exports[`Dashboard rendering render without Props 1`] = `
 <Uncontrolled(TabContainer)
   defaultActiveKey={1}
   id="basic-tabs-pf"
@@ -94,7 +94,7 @@ exports[`UploadsDashboard rendering render without Props 1`] = `
 </Uncontrolled(TabContainer)>
 `;
 
-exports[`UploadsDashboard rendering with props 1`] = `
+exports[`Dashboard rendering with props 1`] = `
 <Uncontrolled(TabContainer)
   defaultActiveKey={1}
   id="basic-tabs-pf"
