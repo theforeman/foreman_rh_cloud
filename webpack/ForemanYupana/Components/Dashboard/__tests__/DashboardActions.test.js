@@ -1,8 +1,11 @@
 import { testActionSnapshotWithFixtures } from 'react-redux-test-utils';
-import { changeBool } from '../DashboardActions';
+import { startPolling, stopPolling, fetchLogs } from '../DashboardActions';
+import { pollingProcessID } from '../Dashboard.fixtures';
 
 const fixtures = {
-  'should changeBool': () => changeBool({ bool: true }),
+  'should startPolling': () => startPolling(pollingProcessID),
+  'should stopPolling': () => stopPolling(pollingProcessID),
+  'should fetchLogs': () => fetchLogs(),
 };
 
 describe('Dashboard actions', () => testActionSnapshotWithFixtures(fixtures));

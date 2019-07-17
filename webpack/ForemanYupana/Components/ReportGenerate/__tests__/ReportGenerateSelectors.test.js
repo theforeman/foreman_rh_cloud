@@ -6,14 +6,17 @@ import {
   selectCompleted,
   selectLoading,
 } from '../ReportGenerateSelectors';
-import { logs, completed, processID, status } from '../ReportGenerate.fixtures';
+import { processID, status } from '../ReportGenerate.fixtures';
+import { logs, completed } from '../../Dashboard/Dashboard.fixtures';
 
 const state = {
   generating: {
     processID,
+    status,
+  },
+  dashboard: {
     logs,
     completed,
-    status,
   },
 };
 

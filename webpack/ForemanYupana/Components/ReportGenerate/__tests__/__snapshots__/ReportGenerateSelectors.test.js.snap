@@ -2,22 +2,18 @@
 
 exports[`ReportGenerate selectors should return ReportGenerate 1`] = `
 Object {
-  "completed": 10,
-  "logs": Array [
-    "some-logs",
-  ],
   "processID": 0,
   "status": "some-status",
 }
 `;
 
-exports[`ReportGenerate selectors should return ReportGenerate completed 1`] = `10`;
+exports[`ReportGenerate selectors should return ReportGenerate completed 1`] = `50`;
 
 exports[`ReportGenerate selectors should return ReportGenerate loading 1`] = `false`;
 
 exports[`ReportGenerate selectors should return ReportGenerate logs 1`] = `
 Array [
-  "some-logs",
+  "some-logs...",
 ]
 `;
 

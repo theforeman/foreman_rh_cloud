@@ -2,8 +2,38 @@
 
 exports[`Dashboard selectors should return Dashboard 1`] = `
 Object {
-  "bool": false,
+  "completed": Object {
+    "generating": 50,
+    "uploading": 25,
+  },
+  "logs": Object {
+    "generating": Array [
+      "some-logs...",
+    ],
+    "uploading": Array [
+      "some-logs...",
+    ],
+  },
+  "pollingProcessID": 1,
 }
 `;
 
-exports[`Dashboard selectors should return Dashboard bool 1`] = `false`;
+exports[`Dashboard selectors should return Dashboard completed 1`] = `
+Object {
+  "generating": 50,
+  "uploading": 25,
+}
+`;
+
+exports[`Dashboard selectors should return Dashboard logs 1`] = `
+Object {
+  "generating": Array [
+    "some-logs...",
+  ],
+  "uploading": Array [
+    "some-logs...",
+  ],
+}
+`;
+
+exports[`Dashboard selectors should return Dashboard pollingProcessID 1`] = `1`;

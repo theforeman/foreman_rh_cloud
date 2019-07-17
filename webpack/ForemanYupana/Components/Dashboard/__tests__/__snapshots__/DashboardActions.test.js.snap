@@ -1,14 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Dashboard actions should changeBool 1`] = `
-Array [
-  Array [
-    Object {
-      "payload": Object {
-        "bool": true,
-      },
-      "type": "DASHBOARD_CHANGE_BOOL",
+exports[`Dashboard actions should fetchLogs 1`] = `
+Object {
+  "payload": Object {
+    "completed": Object {
+      "generating": 0,
+      "uploading": 0,
     },
-  ],
-]
+    "logs": Object {
+      "generating": Array [
+        "No running process",
+        "--------------------",
+      ],
+      "uploading": Array [
+        "No running process",
+        "--------------------",
+      ],
+    },
+  },
+  "type": "YUPANA_POLLING",
+}
+`;
+
+exports[`Dashboard actions should startPolling 1`] = `
+Object {
+  "payload": Object {
+    "pollingProcessID": 1,
+  },
+  "type": "YUPANA_POLLING_START",
+}
+`;
+
+exports[`Dashboard actions should stopPolling 1`] = `
+Object {
+  "type": "YUPANA_POLLING_STOP",
+}
 `;

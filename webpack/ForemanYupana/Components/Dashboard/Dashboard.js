@@ -6,22 +6,41 @@ import ReportUpload from '../ReportUpload';
 import NavContainer from '../NavContainer';
 import './dashboard.scss';
 
-const Dashboard = ({ generating, uploading }) => (
-  <NavContainer
-    items={[
-      {
-        icon: 'database',
-        name: 'Generating',
-        component: () => <ReportGenerate {...generating} />,
-      },
-      {
-        icon: 'cloud-upload',
-        name: 'Uploading',
-        component: () => <ReportUpload {...uploading} />,
-      },
-    ]}
-  />
-);
+class Dashboard extends React.Component {
+  componentDidMount() {
+    const { startPolling, fetchLogs } = this.props;
+    const pollingProcessID = setInterval(
+      () => fetchLogs(pollingProcessID),
+      2000
+    );
+    startPolling(pollingProcessID);
+  }
+
+  componentWillUnmount() {
+    const { pollingProcessID, stopPolling } = this.props;
+    stopPolling(pollingProcessID);
+  }
+
+  render() {
+    const { generating, uploading } = this.props;
+    return (
+      <NavContainer
+        items={[
+          {
+            icon: 'database',
+            name: 'Generating',
+            component: () => <ReportGenerate {...generating} />,
+          },
+          {
+            icon: 'cloud-upload',
+            name: 'Uploading',
+            component: () => <ReportUpload {...uploading} />,
+          },
+        ]}
+      />
+    );
+  }
+}
 
 Dashboard.propTypes = {
   generating: PropTypes.shape({
@@ -37,6 +56,10 @@ Dashboard.propTypes = {
     onRestart: PropTypes.func,
     onDownload: PropTypes.func,
   }),
+  startPolling: PropTypes.func,
+  fetchLogs: PropTypes.func,
+  stopPolling: PropTypes.func,
+  pollingProcessID: PropTypes.number,
 };
 
 Dashboard.defaultProps = {
@@ -53,6 +76,10 @@ Dashboard.defaultProps = {
     onRestart: noop,
     onDownload: noop,
   },
+  startPolling: noop,
+  fetchLogs: noop,
+  stopPolling: noop,
+  pollingProcessID: 0,
 };
 
 export default Dashboard;
