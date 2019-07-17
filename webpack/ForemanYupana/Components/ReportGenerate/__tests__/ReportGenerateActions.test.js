@@ -1,15 +1,15 @@
 import { testActionSnapshotWithFixtures } from 'react-redux-test-utils';
-import { fetchLogs, startProcess, stopProcess } from '../ReportGenerateActions';
+import { startProcess, stopProcess } from '../ReportGenerateActions';
 import { processID } from '../ReportGenerate.fixtures';
+import { yupana } from '../../Dashboard/Dashboard.fixtures';
 
 const fixtures = {
-  'should fetchLogs': () => fetchLogs(),
   'should startProcess': () => startProcess(),
   'should stopProcess': () => stopProcess(processID),
 };
 
 beforeEach(() => {
-  window.generatingLogs = ['some-logs'];
+  window.__yupana__ = yupana;
 });
 
 describe('ReportGenerate actions', () =>

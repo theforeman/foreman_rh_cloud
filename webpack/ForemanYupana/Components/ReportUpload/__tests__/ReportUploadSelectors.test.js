@@ -6,14 +6,17 @@ import {
   selectCompleted,
   selectLoading,
 } from '../ReportUploadSelectors';
-import { logs, completed, processID, status } from '../ReportUpload.fixtures';
+import { processID, status } from '../ReportUpload.fixtures';
+import { logs, completed } from '../../Dashboard/Dashboard.fixtures';
 
 const state = {
   uploading: {
     processID,
+    status,
+  },
+  dashboard: {
     logs,
     completed,
-    status,
   },
 };
 

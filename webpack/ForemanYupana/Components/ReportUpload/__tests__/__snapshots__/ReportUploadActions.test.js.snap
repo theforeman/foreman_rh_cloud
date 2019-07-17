@@ -1,21 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ReportUpload actions should fetchLogs 1`] = `
-Object {
-  "payload": Object {
-    "completed": undefined,
-    "logs": undefined,
-  },
-  "type": "YUPANA/REPORT_UPLOAD_LOGS_POLLING",
-}
-`;
-
 exports[`ReportUpload actions should startProcess 1`] = `
 Array [
   Array [
     Object {
       "payload": Object {
-        "processID": 6,
+        "processID": 3,
         "status": "running",
       },
       "type": "YUPANA/REPORT_UPLOAD_PROCESS_START",
@@ -29,8 +19,6 @@ Array [
   Array [
     Object {
       "payload": Object {
-        "completed": 0,
-        "logs": undefined,
         "status": "stopped",
       },
       "type": "YUPANA/REPORT_UPLOAD_PROCESS_STOP",

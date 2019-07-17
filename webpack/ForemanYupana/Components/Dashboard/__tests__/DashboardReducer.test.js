@@ -1,15 +1,30 @@
 import { testReducerSnapshotWithFixtures } from 'react-redux-test-utils';
 
-import { DASHBOARD_CHANGE_BOOL } from '../DashboardConstants';
+import { YUPANA_POLLING_START, YUPANA_POLLING } from '../DashboardConstants';
 import reducer from '../DashboardReducer';
+import {
+  pollingProcessID,
+  logs,
+  completed,
+  initialState,
+} from '../Dashboard.fixtures';
 
 const fixtures = {
-  'should return the initial state': {},
-  'should handle DASHBOARD_CHANGE_BOOL': {
+  'should return the initial state': initialState,
+  'should handle YUPANA_POLLING_START': {
     action: {
-      type: DASHBOARD_CHANGE_BOOL,
+      type: YUPANA_POLLING_START,
       payload: {
-        bool: true,
+        pollingProcessID,
+      },
+    },
+  },
+  'should handle YUPANA_POLLING': {
+    action: {
+      type: YUPANA_POLLING,
+      payload: {
+        logs,
+        completed,
       },
     },
   },

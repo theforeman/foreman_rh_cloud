@@ -1,13 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Dashboard reducer should handle DASHBOARD_CHANGE_BOOL 1`] = `
+exports[`Dashboard reducer should handle YUPANA_POLLING 1`] = `
 Object {
-  "bool": true,
+  "completed": Object {
+    "generating": 50,
+    "uploading": 25,
+  },
+  "logs": Object {
+    "generating": Array [
+      "some-logs...",
+    ],
+    "uploading": Array [
+      "some-logs...",
+    ],
+  },
+  "pollingProcessID": 0,
+}
+`;
+
+exports[`Dashboard reducer should handle YUPANA_POLLING_START 1`] = `
+Object {
+  "completed": Object {
+    "generating": 0,
+    "uploading": 0,
+  },
+  "logs": Object {
+    "generating": Array [
+      "No running process",
+      "--------------------",
+    ],
+    "uploading": Array [
+      "No running process",
+      "--------------------",
+    ],
+  },
+  "pollingProcessID": 1,
 }
 `;
 
 exports[`Dashboard reducer should return the initial state 1`] = `
 Object {
-  "bool": false,
+  "completed": Object {
+    "generating": 0,
+    "uploading": 0,
+  },
+  "logs": Object {
+    "generating": Array [
+      "No running process",
+      "--------------------",
+    ],
+    "uploading": Array [
+      "No running process",
+      "--------------------",
+    ],
+  },
+  "pollingProcessID": 0,
 }
 `;

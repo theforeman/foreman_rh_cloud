@@ -5,12 +5,6 @@ exports[`ForemanYupana render without Props 1`] = `
   generating={
     Object {
       "exitCode": 0,
-      "logs": Array [
-        "Generating...",
-        "Hosts: 1000",
-        "writing host 1/1000",
-        "writing host 2/1000",
-      ],
       "onRestart": [Function],
       "processScheduledTime": "23:45",
     }
@@ -23,9 +17,6 @@ exports[`ForemanYupana render without Props 1`] = `
         "213213213",
         "101763276",
         "12387892712",
-      ],
-      "logs": Array [
-        "No running process",
       ],
       "onDownload": [Function],
       "onRestart": [Function],

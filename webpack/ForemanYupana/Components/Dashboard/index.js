@@ -3,14 +3,13 @@ import { connect } from 'react-redux';
 
 import * as actions from './DashboardActions';
 import reducer from './DashboardReducer';
-import { selectBool } from './DashboardSelectors';
 
 import Dashboard from './Dashboard';
+import { selectPollingProcessID } from './DashboardSelectors';
 
 // map state to props
 const mapStateToProps = state => ({
-  /** add state keys here */
-  bool: selectBool(state),
+  pollingProcessID: selectPollingProcessID(state),
 });
 
 // map action dispatchers to props
