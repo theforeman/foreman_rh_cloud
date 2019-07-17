@@ -1,26 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ForemanYupana render without Props 1`] = `
-<Connect(Dashboard)
-  generating={
-    Object {
-      "exitCode": 0,
-      "onRestart": [Function],
-      "processScheduledTime": "23:45",
-    }
-  }
-  uploading={
-    Object {
-      "exitCode": 0,
-      "files": Array [
-        "213783213",
-        "213213213",
-        "101763276",
-        "12387892712",
-      ],
-      "onDownload": [Function],
-      "onRestart": [Function],
-    }
-  }
-/>
-`;
+exports[`ForemanYupana render without Props 1`] = `<Connect(Dashboard) />`;

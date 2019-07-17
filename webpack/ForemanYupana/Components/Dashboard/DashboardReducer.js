@@ -14,10 +14,11 @@ const initialState = Immutable({
     uploading: 0,
   },
   pollingProcessID: 0,
+  files: [],
 });
 
 export default (state = initialState, action) => {
-  const { payload: { pollingProcessID, logs, completed } = {} } = action;
+  const { payload: { pollingProcessID, logs, completed, files } = {} } = action;
 
   switch (action.type) {
     case YUPANA_POLLING_START:
@@ -28,6 +29,7 @@ export default (state = initialState, action) => {
       return state.merge({
         logs,
         completed,
+        files,
       });
     }
     default:

@@ -13,6 +13,7 @@ import {
   selectLoading,
   selectExitCode,
 } from './ReportUploadSelectors';
+import { selectFiles } from '../Dashboard/DashboardSelectors';
 
 // map state to props
 const mapStateToProps = state => ({
@@ -23,6 +24,7 @@ const mapStateToProps = state => ({
   completed: selectCompleted(state),
   loading: selectLoading(state),
   exitCode: selectExitCode(state),
+  files: selectFiles(state),
 });
 
 // map action dispatchers to props

@@ -7,6 +7,7 @@ Object {
       "generating": 0,
       "uploading": 0,
     },
+    "files": Array [],
     "logs": Object {
       "generating": Array [
         "No running process",
@@ -28,11 +29,5 @@ Object {
     "pollingProcessID": 1,
   },
   "type": "YUPANA_POLLING_START",
-}
-`;
-
-exports[`Dashboard actions should stopPolling 1`] = `
-Object {
-  "type": "YUPANA_POLLING_STOP",
 }
 `;

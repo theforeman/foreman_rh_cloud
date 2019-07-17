@@ -49,6 +49,12 @@ export const startProcess = () => dispatch => {
     window.__yupana__.completed.uploading = parseFloat(
       ((nextAmount * 100) / total).toFixed(2)
     );
+    window.__yupana__.files = [
+      '213783213',
+      '213213213',
+      '101763276',
+      '12387892712',
+    ];
   }, 3000);
 
   dispatch({

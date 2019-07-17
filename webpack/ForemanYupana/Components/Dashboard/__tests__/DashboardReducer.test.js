@@ -7,6 +7,7 @@ import {
   logs,
   completed,
   initialState,
+  files,
 } from '../Dashboard.fixtures';
 
 const fixtures = {
@@ -25,6 +26,7 @@ const fixtures = {
       payload: {
         logs,
         completed,
+        files,
       },
     },
   },

@@ -6,6 +6,9 @@ Object {
     "generating": 50,
     "uploading": 25,
   },
+  "files": Array [
+    "some-file",
+  ],
   "logs": Object {
     "generating": Array [
       "some-logs...",
@@ -24,6 +27,7 @@ Object {
     "generating": 0,
     "uploading": 0,
   },
+  "files": Array [],
   "logs": Object {
     "generating": Array [
       "No running process",
@@ -44,6 +48,7 @@ Object {
     "generating": 0,
     "uploading": 0,
   },
+  "files": Array [],
   "logs": Object {
     "generating": Array [
       "No running process",

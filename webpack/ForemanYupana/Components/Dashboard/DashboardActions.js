@@ -4,6 +4,7 @@ import {
   YUPANA_POLLING,
 } from './DashboardConstants';
 import { seperator } from './DashboardHelper';
+import { selectPollingProcessID } from './DashboardSelectors';
 
 export const startPolling = pollingProcessID => {
   window.__yupana__ = {
@@ -15,6 +16,7 @@ export const startPolling = pollingProcessID => {
       generating: 0,
       uploading: 0,
     },
+    files: [],
   };
   return {
     type: YUPANA_POLLING_START,
@@ -24,18 +26,23 @@ export const startPolling = pollingProcessID => {
   };
 };
 
-export const stopPolling = pollingProcessID => {
+export const stopPolling = () => (dispatch, getState) => {
+  const pollingProcessID = selectPollingProcessID(getState());
   clearInterval(pollingProcessID);
-  return {
+  dispatch({
     type: YUPANA_POLLING_STOP,
-  };
+  });
 };
 
-export const fetchLogs = () => ({
-  // TODO: Add API call here
-  type: YUPANA_POLLING,
-  payload: {
-    logs: window.__yupana__.logs,
-    completed: window.__yupana__.completed,
-  },
-});
+export const fetchLogs = () => {
+  const { logs, completed, files } = window.__yupana__;
+  return {
+    // TODO: Add API call here
+    type: YUPANA_POLLING,
+    payload: {
+      logs,
+      completed,
+      files,
+    },
+  };
+};
