@@ -21,7 +21,7 @@ module ForemanYupana
 
         # Add permissions
         security_block :foreman_yupana do
-          permission :view_foreman_yupana, :'foreman_yupana/hosts' => [:new_action]
+          permission :view_foreman_yupana, :'foreman_yupana/reports' => [:last]
         end
 
         # Add a new role called 'Discovery' if it doesn't exist
