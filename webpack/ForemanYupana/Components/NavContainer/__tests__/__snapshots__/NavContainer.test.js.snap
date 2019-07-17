@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavContainer rendering render without Props 1`] = `
+<Uncontrolled(TabContainer)
+  defaultActiveKey={1}
+  id="basic-tabs-pf"
+>
+  <div
+    className="dashboard"
+  >
+    <Nav
+      bsClass="nav nav-tabs nav-tabs-pf nav-justified"
+      justified={false}
+      pullLeft={false}
+      pullRight={false}
+      stacked={false}
+    />
+    <TabContent
+      animation={true}
+      bsClass="tab"
+      componentClass="div"
+      mountOnEnter={false}
+      unmountOnExit={false}
+    />
+  </div>
+</Uncontrolled(TabContainer)>
+`;

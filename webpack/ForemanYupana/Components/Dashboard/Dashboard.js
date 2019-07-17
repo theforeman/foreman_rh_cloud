@@ -1,41 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  TabContainer,
-  Nav,
-  NavItem,
-  TabContent,
-  TabPane,
-  Icon,
-  noop,
-} from 'patternfly-react';
+import { noop } from 'patternfly-react';
 import ReportGenerate from '../ReportGenerate';
 import ReportUpload from '../ReportUpload';
+import NavContainer from '../NavContainer';
 import './Dashboard.scss';
 
 const Dashboard = ({ generating, uploading }) => (
-  <TabContainer id="basic-tabs-pf" defaultActiveKey={1}>
-    <div className="uploads-dashboard">
-      <Nav bsClass="nav nav-tabs nav-tabs-pf nav-justified">
-        <NavItem eventKey={1}>
-          <Icon name="database" size="2x" />
-          <p>Generating</p>
-        </NavItem>
-        <NavItem eventKey={2}>
-          <Icon name="cloud-upload" size="2x" />
-          <p>Uploading</p>
-        </NavItem>
-      </Nav>
-      <TabContent animation>
-        <TabPane eventKey={1}>
-          <ReportGenerate {...generating} />
-        </TabPane>
-        <TabPane eventKey={2}>
-          <ReportUpload {...uploading} />
-        </TabPane>
-      </TabContent>
-    </div>
-  </TabContainer>
+  <NavContainer
+    items={[
+      {
+        icon: 'database',
+        name: 'Generating',
+        component: () => <ReportGenerate {...generating} />,
+      },
+      {
+        icon: 'cloud-upload',
+        name: 'Uploading',
+        component: () => <ReportUpload {...uploading} />,
+      },
+    ]}
+  />
 );
 
 Dashboard.propTypes = {
