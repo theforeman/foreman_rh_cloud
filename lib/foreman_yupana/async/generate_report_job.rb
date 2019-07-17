@@ -5,6 +5,8 @@ module ForemanYupana
         @result_file = result_file
 
         super(output_label)
+
+        QueueForUploadJob.perform_async(result_file)
       end
 
       def command

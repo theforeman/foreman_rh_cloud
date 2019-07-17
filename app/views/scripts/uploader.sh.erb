@@ -1,0 +1,27 @@
+#! /bin/sh
+
+DEST=<%= params[:upload_url] %>
+FILES=<%= params[:uploads_folder] %>
+
+if [ -z "$RH_USERNAME" ]
+then
+        IFS= read -rp "Enter username: " RH_USERNAME
+fi
+
+if [ -z "$RH_PASSWORD" ]
+then
+        IFS= read -rsp "Enter password: " RH_PASSWORD
+fi
+
+
+mkdir -p done
+
+for f in $FILES
+do
+  curl -vvv -F "file=@$f" $DEST -u $(RH_USERNAME):$(RH_PASSWORD)
+  if [$? -eq 0]; then
+    mv $f done/
+    echo "Done: $f"
+  fi
+done
+echo "Uploaded files moved to done/ folder"

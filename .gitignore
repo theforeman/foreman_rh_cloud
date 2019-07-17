@@ -13,3 +13,5 @@ node_modules/*
 coverage/*
 package-lock.json
 .storybook-dist/*
+Gemfile.lock
+*.gem
