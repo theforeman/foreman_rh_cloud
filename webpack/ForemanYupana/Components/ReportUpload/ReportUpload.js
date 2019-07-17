@@ -34,7 +34,7 @@ class ReportUpload extends React.Component {
       logs,
       completed,
       files,
-      onDownload,
+      downloadReports,
     } = this.props;
 
     return (
@@ -43,7 +43,7 @@ class ReportUpload extends React.Component {
         <TabBody loading={loading} logs={logs} completed={completed} />
         <TabFooter>
           <Tree files={files} />
-          <FileDownload onClick={onDownload} />
+          <FileDownload onClick={downloadReports} />
         </TabFooter>
       </TabContainer>
     );
@@ -60,7 +60,7 @@ ReportUpload.propTypes = {
   completed: PropTypes.number,
   restartProcess: PropTypes.func,
   files: PropTypes.arrayOf(PropTypes.string),
-  onDownload: PropTypes.func,
+  downloadReports: PropTypes.func,
 };
 
 ReportUpload.defaultProps = {
@@ -73,7 +73,7 @@ ReportUpload.defaultProps = {
   completed: 0,
   restartProcess: noop,
   files: [],
-  onDownload: noop,
+  downloadReports: noop,
 };
 
 export default ReportUpload;
