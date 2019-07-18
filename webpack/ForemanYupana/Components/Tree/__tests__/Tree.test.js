@@ -1,10 +1,11 @@
 import { testComponentSnapshotsWithFixtures } from 'react-redux-test-utils';
 
 import Tree from '../Tree';
+import { props } from '../Tree.fixtures';
 
 const fixtures = {
   'render without Props': {},
-  /** fixtures, props for the component */
+  'render with props': props,
 };
 
 describe('Tree', () => {
