@@ -7,8 +7,6 @@ import {
 export const selectReportGenerate = state =>
   selectForemanYupana(state).generating;
 export const selectProcessID = state => selectReportGenerate(state).processID;
-export const selectPollingProcessID = state =>
-  selectReportGenerate(state).pollingProcessID;
 export const selectLogs = state => selectDashboardLogs(state).generating;
 export const selectCompleted = state =>
   selectDashboardCompleted(state).generating;

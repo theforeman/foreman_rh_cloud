@@ -18,3 +18,9 @@ Array [
 `;
 
 exports[`ReportGenerate selectors should return ReportGenerate processID 1`] = `0`;
+
+exports[`ReportGenerate selectors should return ReportUpload exitCode 0 1`] = `"0"`;
+
+exports[`ReportGenerate selectors should return ReportUpload exitCode 1`] = `"--"`;
+
+exports[`ReportGenerate selectors should return ReportUpload exitCode 1 1`] = `"1"`;
