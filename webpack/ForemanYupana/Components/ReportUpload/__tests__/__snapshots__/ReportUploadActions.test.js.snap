@@ -1,5 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ReportUpload actions should downloadReports 1`] = `
+Array [
+  Array [
+    Object {
+      "type": "REPORT_UPLOAD_FILES_DOWNLOAD",
+    },
+  ],
+]
+`;
+
+exports[`ReportUpload actions should restartProcess 1`] = `
+Object {
+  "type": "YUPANA/REPORT_UPLOAD_PROCESS_RESTART",
+}
+`;
+
 exports[`ReportUpload actions should startProcess 1`] = `
 Array [
   Array [

@@ -5,7 +5,7 @@ import './fileDownload.scss';
 
 const FileDownload = ({ onClick }) => (
   <Grid.Col sm={3}>
-    <Button onClick={onClick}>
+    <Button onClick={onClick} className="download-button">
       Download Files <Icon name="download" />
     </Button>
   </Grid.Col>

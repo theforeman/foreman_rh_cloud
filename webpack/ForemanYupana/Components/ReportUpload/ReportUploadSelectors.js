@@ -6,8 +6,6 @@ import {
 
 export const selectReportUpload = state => selectForemanYupana(state).uploading;
 export const selectProcessID = state => selectReportUpload(state).processID;
-export const selectPollingProcessID = state =>
-  selectReportUpload(state).pollingProcessID;
 export const selectLogs = state => selectDashboardLogs(state).uploading;
 export const selectCompleted = state =>
   selectDashboardCompleted(state).uploading;
