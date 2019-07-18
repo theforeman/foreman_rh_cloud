@@ -1,5 +1,62 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Terminal rendering render with props 1`] = `
+<Col
+  bsClass="col"
+  componentClass="div"
+  sm={8}
+>
+  <div
+    className="terminal"
+  >
+    <Grid
+      bsClass="container"
+      componentClass="div"
+      fluid={true}
+    >
+      <Row
+        bsClass="row"
+        componentClass="div"
+      >
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={12}
+        >
+          <p
+            key="0"
+          >
+            Generating...
+          </p>
+          <p
+            key="1"
+          >
+            Hosts: 1000
+          </p>
+          <p
+            key="2"
+          >
+            writing host 1/1000
+          </p>
+          <p
+            key="3"
+          >
+            writing host 2/1000
+          </p>
+          <Spinner
+            className=""
+            inline={true}
+            inverse={true}
+            loading={true}
+            size="xs"
+          />
+        </Col>
+      </Row>
+    </Grid>
+  </div>
+</Col>
+`;
+
 exports[`Terminal rendering render without Props 1`] = `
 <Col
   bsClass="col"

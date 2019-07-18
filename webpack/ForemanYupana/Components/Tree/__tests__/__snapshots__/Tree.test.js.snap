@@ -1,5 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Tree rendering render with props 1`] = `
+<Col
+  bsClass="col"
+  componentClass="div"
+  sm={9}
+>
+  <p>
+    There are currently 
+    3
+     report files ready
+  </p>
+  <Tree
+    canHide={true}
+    content="Reports"
+    open={true}
+    visible={true}
+  >
+    <Tree
+      canHide={false}
+      content="file1"
+      key="0"
+      open={false}
+      visible={true}
+    />
+    <Tree
+      canHide={false}
+      content="file2"
+      key="1"
+      open={false}
+      visible={true}
+    />
+    <Tree
+      canHide={false}
+      content="file3"
+      key="2"
+      open={false}
+      visible={true}
+    />
+  </Tree>
+</Col>
+`;
+
 exports[`Tree rendering render without Props 1`] = `
 <Col
   bsClass="col"
