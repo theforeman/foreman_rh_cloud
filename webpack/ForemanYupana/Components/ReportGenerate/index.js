@@ -8,7 +8,6 @@ import ReportGenerate from './ReportGenerate';
 import {
   selectLogs,
   selectProcessID,
-  selectPollingProcessID,
   selectCompleted,
   selectLoading,
   selectExitCode,
@@ -18,7 +17,6 @@ import {
 const mapStateToProps = state => ({
   /** add state keys here */
   processID: selectProcessID(state),
-  pollingProcessID: selectPollingProcessID(state),
   logs: selectLogs(state),
   completed: selectCompleted(state),
   loading: selectLoading(state),
