@@ -1,10 +1,11 @@
 import { testComponentSnapshotsWithFixtures } from 'react-redux-test-utils';
 
 import NavContainer from '../NavContainer';
+import { props } from '../NavContainer.fixtures';
 
 const fixtures = {
   'render without Props': {},
-  /** fixtures, props for the component */
+  'render with Props': props,
 };
 
 describe('NavContainer', () => {

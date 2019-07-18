@@ -5,6 +5,7 @@ import { pollingProcessID } from '../Dashboard.fixtures';
 const fixtures = {
   'should startPolling': () => startPolling(pollingProcessID),
   'should fetchLogs': () => fetchLogs(),
+  /**  TypeError: getState is not a function */
   // 'should stopPolling': () => stopPolling(pollingProcessID),
 };
 
