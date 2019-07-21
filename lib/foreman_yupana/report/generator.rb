@@ -105,24 +105,28 @@ module ForemanYupana
         simple_field('bios_vendor', fact_value(host, 'dmi::bios::vendor'))
         simple_field('bios_version', fact_value(host, 'dmi::bios::version'))
         simple_field('bios_release_date', fact_value(host, 'dmi::bios::relase_date'))
-        array_field('cpu_flags') do
-          @out << fact_value(host, 'lscpu::flags').split.map do |flag|
-            stringify_value(flag)
-          end.join(', ')
+        if (cpu_flags = fact_value(host, 'lscpu::flags'))
+          array_field('cpu_flags') do
+            @out << cpu_flags.split.map do |flag|
+              stringify_value(flag)
+            end.join(', ')
+          end
         end
         simple_field('os_release', fact_value(host, 'distribution::name'))
         simple_field('os_kernel_version', fact_value(host, 'uname::release'))
-        simple_field('arch', host.architecture.name)
+        simple_field('arch', host.architecture&.name)
         simple_field('subscription_status', host.subscription_status_label)
-        simple_field('katello_agent_running', host.content_facet.katello_agent_installed?)
+        simple_field('katello_agent_running', host.content_facet&.katello_agent_installed?)
         simple_field('satellite_managed', true)
-        array_field('installed_products') do
-          @out << host.subscription_facet.installed_products.map do |product|
-            {
-              'name': product.name,
-              'id': product.cp_product_id
-            }.to_json
-          end.join(', ')
+        unless (installed_products = host.subscription_facet&.installed_products).empty?
+          array_field('installed_products') do
+            @out << installed_products.map do |product|
+              {
+                'name': product.name,
+                'id': product.cp_product_id
+              }.to_json
+            end.join(', ')
+          end
         end
         array_field('installed_packages', :last) do
           first = true
@@ -151,7 +155,7 @@ module ForemanYupana
 
       def fact_value(host, fact_name)
         value_record = host.fact_values.find { |fact_value| fact_value.fact_name_id == fact_names[fact_name] }
-        value_record.value
+        value_record&.value
       end
 
       def array
@@ -167,7 +171,7 @@ module ForemanYupana
       end
 
       def simple_field(name, value, last = false)
-        @out << "\"#{name}\": #{stringify_value(value)}#{last ? '' : ','}"
+        @out << "\"#{name}\": #{stringify_value(value)}#{last ? '' : ','}" unless value.nil?
       end
 
       def array_field(name, last = false, &block)
