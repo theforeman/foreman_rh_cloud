@@ -2,21 +2,22 @@ import {
   YUPANA_POLLING_START,
   YUPANA_POLLING_STOP,
   YUPANA_POLLING,
+  YUPANA_TAB_CHANGED,
 } from './DashboardConstants';
 import { seperator } from './DashboardHelper';
-import { selectPollingProcessID } from './DashboardSelectors';
+import { selectPollingProcessID, selectActiveTab } from './DashboardSelectors';
 
 export const startPolling = pollingProcessID => {
   window.__yupana__ = {
-    logs: {
-      generating: ['No running process', seperator],
-      uploading: ['No running process', seperator],
+    generating: {
+      logs: ['No running process', seperator],
+      completed: 0,
     },
-    completed: {
-      generating: 0,
-      uploading: 0,
+    uploading: {
+      logs: ['No running process', seperator],
+      completed: 0,
+      files: [],
     },
-    files: [],
   };
   return {
     type: YUPANA_POLLING_START,
@@ -34,15 +35,21 @@ export const stopPolling = () => (dispatch, getState) => {
   });
 };
 
-export const fetchLogs = () => {
-  const { logs, completed, files } = window.__yupana__;
-  return {
+export const fetchLogs = () => (dispatch, getState) => {
+  const activeTab = selectActiveTab(getState());
+  const activeLogs = window.__yupana__[activeTab];
+  dispatch({
     // TODO: Add API call here
     type: YUPANA_POLLING,
     payload: {
-      logs,
-      completed,
-      files,
+      ...activeLogs,
     },
-  };
+  });
 };
+
+export const setActiveTab = tabName => ({
+  type: YUPANA_TAB_CHANGED,
+  payload: {
+    activeTab: tabName,
+  },
+});

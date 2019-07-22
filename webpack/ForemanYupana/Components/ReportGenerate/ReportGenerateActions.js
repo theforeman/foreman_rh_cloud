@@ -4,7 +4,9 @@ import {
   REPORT_GENERATE_PROCESS_FINISH,
   REPORT_GENERATE_PROCESS_RESTART,
 } from './ReportGenerateConstants';
-import { seperator } from '../Dashboard/DashboardHelper';
+import { seperator, addLogs } from '../Dashboard/DashboardHelper';
+
+const addGeneratingLogs = logs => addLogs('generating', logs);
 
 export const startProcess = () => dispatch => {
   // TODO: Add API call here
@@ -15,11 +17,12 @@ export const startProcess = () => dispatch => {
       seperator,
       'writing host 1/20',
     ];
-    const { generating } = window.__yupana__.logs;
-    const getLastLog = () => generating[generating.length - 1];
+
+    const { generating } = window.__yupana__;
+    const getLastLog = () => generating.logs[generating.logs.length - 1];
 
     if (getLastLog() === seperator) {
-      generating.push(...mockLogs);
+      addGeneratingLogs(mockLogs);
     }
 
     const splittedWords = getLastLog().split(' ');
@@ -33,7 +36,7 @@ export const startProcess = () => dispatch => {
     }
     if (total > 0 && amount === total) {
       clearInterval(processID);
-      generating.push('Done!', seperator);
+      addGeneratingLogs(['Done!', seperator]);
       dispatch({
         type: REPORT_GENERATE_PROCESS_FINISH,
         payload: { status: 'success' },
@@ -44,10 +47,8 @@ export const startProcess = () => dispatch => {
     const newLog = `${splittedWords[0]} ${
       splittedWords[1]
     } ${nextAmount}/${total}`;
-    generating.push(newLog);
-    window.__yupana__.completed.generating = parseFloat(
-      ((nextAmount * 100) / total).toFixed(2)
-    );
+    addGeneratingLogs([newLog]);
+    generating.completed = parseFloat(((nextAmount * 100) / total).toFixed(2));
   }, 1500);
 
   dispatch({
@@ -62,7 +63,7 @@ export const startProcess = () => dispatch => {
 export const stopProcess = processID => dispatch => {
   // TODO: Add API call here
   clearInterval(processID);
-  window.__yupana__.logs.generating.push('No running process', seperator);
+  addGeneratingLogs(['No running process', seperator]);
   dispatch({
     type: REPORT_GENERATE_PROCESS_STOP,
     payload: { status: 'stopped' },
@@ -70,7 +71,7 @@ export const stopProcess = processID => dispatch => {
 };
 
 export const restartProcess = () => {
-  window.__yupana__.logs.generating.push('Restarting...', seperator);
+  addGeneratingLogs(['Restarting...', seperator]);
   return {
     type: REPORT_GENERATE_PROCESS_RESTART,
   };

@@ -5,24 +5,25 @@ import {
   REPORT_UPLOAD_PROCESS_RESTART,
   REPORT_UPLOAD_FILES_DOWNLOAD,
 } from './ReportUploadConstants';
-import { seperator } from '../Dashboard/DashboardHelper';
+import { seperator, addLogs } from '../Dashboard/DashboardHelper';
+
+const addUploadingLogs = logs => addLogs('uploading', logs);
 
 export const startProcess = () => dispatch => {
   // TODO: Add API call here
   const processID = setInterval(() => {
     const mockLogs = [
       'Uploading...',
-      'Reports: 4',
+      'Reports: 10',
       seperator,
-      'writing report 1/4',
+      'writing report 1/10',
     ];
 
-    const { uploading } = window.__yupana__.logs;
-    const getLastLog = () => uploading[uploading.length - 1];
+    const { uploading } = window.__yupana__;
+    const getLastLog = () => uploading.logs[uploading.logs.length - 1];
     if (getLastLog() === seperator) {
-      uploading.push(...mockLogs);
+      addUploadingLogs(mockLogs);
     }
-
     const splittedWords = getLastLog().split(' ');
     const lastWord = splittedWords.pop();
     let amount;
@@ -34,7 +35,7 @@ export const startProcess = () => dispatch => {
     }
     if (total > 0 && amount === total) {
       clearInterval(processID);
-      uploading.push('Done!', seperator);
+      addUploadingLogs(['Done!', seperator]);
       dispatch({
         type: REPORT_UPLOAD_PROCESS_FINISH,
         payload: { status: 'success' },
@@ -45,16 +46,9 @@ export const startProcess = () => dispatch => {
     const newLog = `${splittedWords[0]} ${
       splittedWords[1]
     } ${nextAmount}/${total}`;
-    uploading.push(newLog);
-    window.__yupana__.completed.uploading = parseFloat(
-      ((nextAmount * 100) / total).toFixed(2)
-    );
-    window.__yupana__.files = [
-      '213783213',
-      '213213213',
-      '101763276',
-      '12387892712',
-    ];
+    addUploadingLogs([newLog]);
+    uploading.completed = parseFloat(((nextAmount * 100) / total).toFixed(2));
+    uploading.files = ['213783213', '213213213', '101763276', '12387892712'];
   }, 3000);
 
   dispatch({
@@ -69,7 +63,7 @@ export const startProcess = () => dispatch => {
 export const stopProcess = processID => dispatch => {
   // TODO: Add API call here
   clearInterval(processID);
-  window.__yupana__.logs.uploading.push('No running process', seperator);
+  addUploadingLogs(['No running process', seperator]);
   dispatch({
     type: REPORT_UPLOAD_PROCESS_STOP,
     payload: { status: 'stopped' },
@@ -77,7 +71,7 @@ export const stopProcess = processID => dispatch => {
 };
 
 export const restartProcess = () => {
-  window.__yupana__.logs.uploading.push('Restarting...', seperator);
+  addUploadingLogs(['Restarting', seperator]);
   return {
     type: REPORT_UPLOAD_PROCESS_RESTART,
   };

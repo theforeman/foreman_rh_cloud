@@ -19,20 +19,22 @@ class Dashboard extends React.Component {
   }
 
   render() {
+    const { setActiveTab } = this.props;
     return (
       <NavContainer
         items={[
           {
             icon: 'database',
             name: 'Generating',
-            component: () => <ReportGenerate />,
+            component: ReportGenerate,
           },
           {
             icon: 'cloud-upload',
             name: 'Uploading',
-            component: () => <ReportUpload />,
+            component: ReportUpload,
           },
         ]}
+        onTabClick={setActiveTab}
       />
     );
   }
@@ -42,12 +44,14 @@ Dashboard.propTypes = {
   startPolling: PropTypes.func,
   fetchLogs: PropTypes.func,
   stopPolling: PropTypes.func,
+  setActiveTab: PropTypes.func,
 };
 
 Dashboard.defaultProps = {
   startPolling: noop,
   fetchLogs: noop,
   stopPolling: noop,
+  setActiveTab: noop,
 };
 
 export default Dashboard;

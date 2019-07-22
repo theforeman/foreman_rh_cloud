@@ -1,28 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Dashboard actions should fetchLogs 1`] = `
-Object {
-  "payload": Object {
-    "completed": Object {
-      "generating": 0,
-      "uploading": 0,
-    },
-    "files": Array [],
-    "logs": Object {
-      "generating": Array [
-        "No running process",
-        "--------------------",
-      ],
-      "uploading": Array [
-        "No running process",
-        "--------------------",
-      ],
-    },
-  },
-  "type": "YUPANA_POLLING",
-}
-`;
-
 exports[`Dashboard actions should startPolling 1`] = `
 Object {
   "payload": Object {

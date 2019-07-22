@@ -7,7 +7,7 @@ Object {
 }
 `;
 
-exports[`ReportGenerate selectors should return ReportGenerate completed 1`] = `50`;
+exports[`ReportGenerate selectors should return ReportGenerate completed 1`] = `25`;
 
 exports[`ReportGenerate selectors should return ReportGenerate loading 1`] = `false`;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, bindMethods } from 'patternfly-react';
+import { noop } from 'patternfly-react';
 import TabContainer from '../TabContainer';
 import TabHeader from '../TabHeader';
 import TabFooter from '../TabFooter';
@@ -9,22 +9,17 @@ import TabBody from '../TabBody';
 import './reportGenerate.scss';
 
 class ReportGenerate extends React.Component {
-  constructor(props) {
-    super(props);
-    bindMethods(this, ['handleRestart']);
-  }
-
   componentDidMount() {
     const { startProcess } = this.props;
     startProcess();
   }
 
-  async handleRestart() {
+  handleRestart = async () => {
     const { startProcess, stopProcess, processID, restartProcess } = this.props;
     restartProcess();
     await stopProcess(processID);
     startProcess();
-  }
+  };
 
   componentWillUnmount() {
     const { stopProcess, processID } = this.props;

@@ -11,8 +11,8 @@ import {
   selectCompleted,
   selectLoading,
   selectExitCode,
+  selectFiles,
 } from './ReportUploadSelectors';
-import { selectFiles } from '../Dashboard/DashboardSelectors';
 
 // map state to props
 const mapStateToProps = state => ({

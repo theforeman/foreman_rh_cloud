@@ -9,14 +9,22 @@ import {
   TabPane,
   Icon,
 } from 'patternfly-react';
+import { noop } from 'patternfly-react/dist/js/common/helpers';
 
-const NavContainer = ({ items }) => {
-  const navItems = items.map((item, index) => (
-    <NavItem key={index} eventKey={index}>
-      <Icon name={item.icon} size="2x" />
-      <p>{item.name}</p>
-    </NavItem>
-  ));
+const NavContainer = ({ items, onTabClick }) => {
+  const navItems = items.map((item, index) => {
+    const { name, icon } = item;
+    return (
+      <NavItem
+        key={index}
+        eventKey={index}
+        onClick={() => onTabClick(name.toLowerCase())}
+      >
+        <Icon name={icon} size="2x" />
+        <p>{name}</p>
+      </NavItem>
+    );
+  });
   const tabComponents = items.map((Item, index) => (
     <TabPane key={index} eventKey={index}>
       <Item.component />
@@ -40,10 +48,12 @@ NavContainer.propTypes = {
       component: PropTypes.func,
     })
   ),
+  onTabClick: PropTypes.func,
 };
 
 NavContainer.defaultProps = {
   items: [],
+  onTabClick: noop,
 };
 
 export default NavContainer;

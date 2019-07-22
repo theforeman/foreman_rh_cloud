@@ -2,38 +2,41 @@
 
 exports[`Dashboard selectors should return Dashboard 1`] = `
 Object {
-  "completed": Object {
-    "generating": 50,
-    "uploading": 25,
-  },
-  "logs": Object {
-    "generating": Array [
-      "some-logs...",
-    ],
-    "uploading": Array [
+  "activeTab": "uploading",
+  "generating": Object {
+    "completed": 25,
+    "logs": Array [
       "some-logs...",
     ],
   },
   "pollingProcessID": 1,
+  "uploading": Object {
+    "completed": 25,
+    "logs": Array [
+      "some-logs...",
+    ],
+  },
 }
 `;
 
-exports[`Dashboard selectors should return Dashboard completed 1`] = `
-Object {
-  "generating": 50,
-  "uploading": 25,
-}
-`;
+exports[`Dashboard selectors should return Dashboard activeTab 1`] = `"uploading"`;
 
-exports[`Dashboard selectors should return Dashboard logs 1`] = `
+exports[`Dashboard selectors should return Dashboard generating 1`] = `
 Object {
-  "generating": Array [
-    "some-logs...",
-  ],
-  "uploading": Array [
+  "completed": 25,
+  "logs": Array [
     "some-logs...",
   ],
 }
 `;
 
 exports[`Dashboard selectors should return Dashboard pollingProcessID 1`] = `1`;
+
+exports[`Dashboard selectors should return Dashboard uploading 1`] = `
+Object {
+  "completed": 25,
+  "logs": Array [
+    "some-logs...",
+  ],
+}
+`;

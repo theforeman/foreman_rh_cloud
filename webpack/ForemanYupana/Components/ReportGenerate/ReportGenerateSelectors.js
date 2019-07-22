@@ -1,15 +1,11 @@
 import { selectForemanYupana } from '../../ForemanYupanaSelectors';
-import {
-  selectLogs as selectDashboardLogs,
-  selectCompleted as selectDashboardCompleted,
-} from '../Dashboard/DashboardSelectors';
+import { selectGenerating } from '../Dashboard/DashboardSelectors';
 
 export const selectReportGenerate = state =>
   selectForemanYupana(state).generating;
 export const selectProcessID = state => selectReportGenerate(state).processID;
-export const selectLogs = state => selectDashboardLogs(state).generating;
-export const selectCompleted = state =>
-  selectDashboardCompleted(state).generating;
+export const selectLogs = state => selectGenerating(state).logs;
+export const selectCompleted = state => selectGenerating(state).completed;
 
 export const selectLoading = state =>
   selectReportGenerate(state).status === 'running';

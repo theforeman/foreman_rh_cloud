@@ -16,8 +16,10 @@ const state = {
     status,
   },
   dashboard: {
-    logs,
-    completed,
+    generating: {
+      logs,
+      completed,
+    },
   },
 };
 
