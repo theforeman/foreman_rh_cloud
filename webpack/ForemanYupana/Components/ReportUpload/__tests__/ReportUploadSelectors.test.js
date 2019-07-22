@@ -6,12 +6,14 @@ import {
   selectCompleted,
   selectLoading,
   selectExitCode,
+  selectFiles,
 } from '../ReportUploadSelectors';
 import { processID, status } from '../ReportUpload.fixtures';
 import {
   logs,
   completed,
   pollingProcessID,
+  files,
 } from '../../Dashboard/Dashboard.fixtures';
 
 const state = {
@@ -20,8 +22,11 @@ const state = {
     status,
   },
   dashboard: {
-    logs,
-    completed,
+    uploading: {
+      logs,
+      completed,
+      files,
+    },
     pollingProcessID,
   },
 };
@@ -31,6 +36,7 @@ const fixtures = {
   'should return ReportUpload processID': () => selectProcessID(state),
   'should return ReportUpload logs': () => selectLogs(state),
   'should return ReportUpload completed': () => selectCompleted(state),
+  'should return ReportUpload files': () => selectFiles(state),
   'should return ReportUpload loading': () => selectLoading(state),
   'should return ReportUpload exitCode': () => selectExitCode(state),
   'should return ReportUpload exitCode 0': () =>

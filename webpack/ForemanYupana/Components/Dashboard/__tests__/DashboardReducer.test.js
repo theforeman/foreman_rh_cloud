@@ -1,6 +1,10 @@
 import { testReducerSnapshotWithFixtures } from 'react-redux-test-utils';
 
-import { YUPANA_POLLING_START, YUPANA_POLLING } from '../DashboardConstants';
+import {
+  YUPANA_POLLING_START,
+  YUPANA_POLLING,
+  YUPANA_TAB_CHANGED,
+} from '../DashboardConstants';
 import reducer from '../DashboardReducer';
 import {
   pollingProcessID,
@@ -8,6 +12,7 @@ import {
   completed,
   initialState,
   files,
+  activeTab,
 } from '../Dashboard.fixtures';
 
 const fixtures = {
@@ -27,6 +32,14 @@ const fixtures = {
         logs,
         completed,
         files,
+      },
+    },
+  },
+  'should handle YUPANA_TAB_CHANGED': {
+    action: {
+      type: YUPANA_TAB_CHANGED,
+      payload: {
+        activeTab,
       },
     },
   },

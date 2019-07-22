@@ -16,6 +16,7 @@ exports[`Dashboard rendering render without Props 1`] = `
       },
     ]
   }
+  onTabClick={[Function]}
 />
 `;
 
@@ -35,5 +36,6 @@ exports[`Dashboard rendering with props 1`] = `
       },
     ]
   }
+  onTabClick={[Function]}
 />
 `;

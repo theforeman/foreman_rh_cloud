@@ -1,37 +1,41 @@
 import Immutable from 'seamless-immutable';
 
-import { YUPANA_POLLING_START, YUPANA_POLLING } from './DashboardConstants';
+import {
+  YUPANA_POLLING_START,
+  YUPANA_POLLING,
+  YUPANA_TAB_CHANGED,
+} from './DashboardConstants';
 import { seperator } from './DashboardHelper';
 
 const initialState = Immutable({
   /** insert Dashboard state here */
-  logs: {
-    generating: ['No running process', seperator],
-    uploading: ['No running process', seperator],
+  generating: {
+    logs: ['No running process', seperator],
+    completed: 0,
   },
-  completed: {
-    generating: 0,
-    uploading: 0,
+  uploading: {
+    logs: ['No running process', seperator],
+    completed: 0,
+    files: [],
   },
   pollingProcessID: 0,
-  files: [],
+  activeTab: 'uploading',
 });
 
 export default (state = initialState, action) => {
-  const { payload: { pollingProcessID, logs, completed, files } = {} } = action;
+  const { payload } = action;
 
   switch (action.type) {
     case YUPANA_POLLING_START:
       return state.merge({
-        pollingProcessID,
+        pollingProcessID: payload.pollingProcessID,
       });
-    case YUPANA_POLLING: {
+    case YUPANA_POLLING:
+      return state.setIn([state.activeTab], payload);
+    case YUPANA_TAB_CHANGED:
       return state.merge({
-        logs,
-        completed,
-        files,
+        activeTab: payload.activeTab,
       });
-    }
     default:
       return state;
   }

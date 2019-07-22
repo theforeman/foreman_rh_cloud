@@ -1,23 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Spinner, bindMethods } from 'patternfly-react';
+import { Grid, Spinner } from 'patternfly-react';
 import './terminal.scss';
 
 class Terminal extends React.Component {
   constructor(props) {
     super(props);
     this.terminal = React.createRef();
-    bindMethods(this, ['handleScroll']);
   }
 
   componentDidUpdate() {
     this.handleScroll();
   }
 
-  handleScroll() {
+  handleScroll = () => {
     const element = this.terminal.current;
     element.scrollTop = element.scrollHeight;
-  }
+  };
 
   render() {
     const { loading, logs } = this.props;
