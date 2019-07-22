@@ -6,7 +6,11 @@ module ForemanYupana
   end
 
   def self.uploads_folder
-    File.join(ForemanYupana.base_folder, 'uploads/')
+    @uploads_folder ||= ensure_folder(File.join(ForemanYupana.base_folder, 'uploads/'))
+  end
+
+  def self.outputs_folder
+    @outputs_folder ||= ensure_folder(File.join(ForemanYupana.base_folder, 'outputs/'))
   end
 
   def self.upload_script_file
@@ -19,5 +23,10 @@ module ForemanYupana
 
   def self.uploader_output
     'uploader_output'
+  end
+
+  def self.ensure_folder(folder)
+    FileUtils.mkdir_p(folder)
+    folder
   end
 end
