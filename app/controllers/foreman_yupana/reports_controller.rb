@@ -1,7 +1,7 @@
 module ForemanYupana
   class ReportsController < ::ApplicationController
     def last
-      output = ForemanYupana::Async::ProgressOutput.registry[:report_generator]&.full_output
+      output = ForemanYupana::Async::ProgressOutput.get(:report_generator)&.full_output
 
       render json: {
         status: 'Unknown',
