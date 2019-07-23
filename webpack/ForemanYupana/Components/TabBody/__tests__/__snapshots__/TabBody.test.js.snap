@@ -9,6 +9,7 @@ exports[`TabBody rendering render without Props 1`] = `
     completed={0}
   />
   <Terminal
+    error={null}
     loading={false}
     logs={
       Array [

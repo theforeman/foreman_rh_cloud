@@ -12,6 +12,7 @@ import {
   selectLoading,
   selectExitCode,
 } from './ReportGenerateSelectors';
+import { selectError } from '../ReportUpload/ReportUploadSelectors';
 
 // map state to props
 const mapStateToProps = state => ({
@@ -21,6 +22,7 @@ const mapStateToProps = state => ({
   completed: selectCompleted(state),
   loading: selectLoading(state),
   exitCode: selectExitCode(state),
+  error: selectError(state),
 });
 
 // map action dispatchers to props

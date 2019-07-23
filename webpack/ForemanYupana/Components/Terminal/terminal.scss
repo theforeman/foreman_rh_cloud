@@ -8,6 +8,10 @@
     font-family: monospace;
     font-size: 16px;
     color: #22da26;
+
+    &.terminal_error {
+      color: #f00;
+    }
   }
 
   &::-webkit-scrollbar {

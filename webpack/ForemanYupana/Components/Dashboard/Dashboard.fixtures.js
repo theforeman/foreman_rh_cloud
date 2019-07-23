@@ -6,6 +6,8 @@ export const logs = ['some-logs...'];
 
 export const completed = 25;
 
+export const error = 'some-error';
+
 export const yupana = {
   generating: {
     logs,

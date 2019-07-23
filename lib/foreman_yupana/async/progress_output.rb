@@ -15,7 +15,11 @@ module ForemanYupana
       end
 
       def buffer
-        @buffer ||= File.open(@label, file_mode)
+        @buffer ||= begin
+                      File.open(@label, file_mode)
+                    rescue Errno::ENOENT
+                      StringIO.new
+                    end
       end
 
       def full_output

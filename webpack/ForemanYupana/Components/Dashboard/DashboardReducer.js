@@ -4,6 +4,7 @@ import {
   YUPANA_POLLING_START,
   YUPANA_POLLING,
   YUPANA_TAB_CHANGED,
+  YUPANA_POLLING_ERROR,
 } from './DashboardConstants';
 import { seperator } from './DashboardHelper';
 
@@ -12,11 +13,13 @@ const initialState = Immutable({
   generating: {
     logs: ['No running process', seperator],
     completed: 0,
+    error: null,
   },
   uploading: {
     logs: ['No running process', seperator],
     completed: 0,
     files: [],
+    error: null,
   },
   pollingProcessID: 0,
   activeTab: 'uploading',
@@ -35,6 +38,11 @@ export default (state = initialState, action) => {
     case YUPANA_TAB_CHANGED:
       return state.merge({
         activeTab: payload.activeTab,
+      });
+    case YUPANA_POLLING_ERROR:
+      return state.setIn([state.activeTab], {
+        ...state[state.activeTab],
+        error: payload.error,
       });
     default:
       return state;

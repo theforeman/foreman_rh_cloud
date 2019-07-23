@@ -4,6 +4,7 @@ import {
   YUPANA_POLLING_START,
   YUPANA_POLLING,
   YUPANA_TAB_CHANGED,
+  YUPANA_POLLING_ERROR,
 } from '../DashboardConstants';
 import reducer from '../DashboardReducer';
 import {
@@ -13,6 +14,7 @@ import {
   initialState,
   files,
   activeTab,
+  error,
 } from '../Dashboard.fixtures';
 
 const fixtures = {
@@ -40,6 +42,14 @@ const fixtures = {
       type: YUPANA_TAB_CHANGED,
       payload: {
         activeTab,
+      },
+    },
+  },
+  'should handle YUPANA_POLLING_ERROR': {
+    action: {
+      type: YUPANA_POLLING_ERROR,
+      payload: {
+        error,
       },
     },
   },

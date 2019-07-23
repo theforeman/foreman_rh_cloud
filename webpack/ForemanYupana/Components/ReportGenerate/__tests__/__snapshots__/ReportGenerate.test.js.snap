@@ -10,6 +10,7 @@ exports[`ReportGenerate rendering render without Props 1`] = `
   />
   <TabBody
     completed={0}
+    error={null}
     loading={false}
     logs={
       Array [
