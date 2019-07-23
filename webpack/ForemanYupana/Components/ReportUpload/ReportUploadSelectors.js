@@ -8,6 +8,7 @@ export const selectCompleted = state => selectUploading(state).completed;
 export const selectLoading = state =>
   selectReportUpload(state).status === 'running';
 export const selectFiles = state => selectUploading(state).files;
+export const selectError = state => selectUploading(state).error;
 export const selectExitCode = state => {
   const { status } = selectReportUpload(state);
   let exitCode;

@@ -12,6 +12,7 @@ import {
   selectLoading,
   selectExitCode,
   selectFiles,
+  selectError,
 } from './ReportUploadSelectors';
 
 // map state to props
@@ -23,6 +24,7 @@ const mapStateToProps = state => ({
   loading: selectLoading(state),
   exitCode: selectExitCode(state),
   files: selectFiles(state),
+  error: selectError(state),
 });
 
 // map action dispatchers to props

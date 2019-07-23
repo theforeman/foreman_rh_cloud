@@ -9,7 +9,7 @@ import './dashboard.scss';
 class Dashboard extends React.Component {
   componentDidMount() {
     const { startPolling, fetchLogs } = this.props;
-    const pollingProcessID = setInterval(fetchLogs, 2000);
+    const pollingProcessID = setInterval(fetchLogs, 5000);
     startPolling(pollingProcessID);
   }
 

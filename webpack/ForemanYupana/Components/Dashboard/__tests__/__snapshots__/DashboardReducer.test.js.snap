@@ -5,6 +5,7 @@ Object {
   "activeTab": "uploading",
   "generating": Object {
     "completed": 0,
+    "error": null,
     "logs": Array [
       "No running process",
       "--------------------",
@@ -23,11 +24,36 @@ Object {
 }
 `;
 
+exports[`Dashboard reducer should handle YUPANA_POLLING_ERROR 1`] = `
+Object {
+  "activeTab": "uploading",
+  "generating": Object {
+    "completed": 0,
+    "error": null,
+    "logs": Array [
+      "No running process",
+      "--------------------",
+    ],
+  },
+  "pollingProcessID": 0,
+  "uploading": Object {
+    "completed": 0,
+    "error": "some-error",
+    "files": Array [],
+    "logs": Array [
+      "No running process",
+      "--------------------",
+    ],
+  },
+}
+`;
+
 exports[`Dashboard reducer should handle YUPANA_POLLING_START 1`] = `
 Object {
   "activeTab": "uploading",
   "generating": Object {
     "completed": 0,
+    "error": null,
     "logs": Array [
       "No running process",
       "--------------------",
@@ -36,6 +62,7 @@ Object {
   "pollingProcessID": 1,
   "uploading": Object {
     "completed": 0,
+    "error": null,
     "files": Array [],
     "logs": Array [
       "No running process",
@@ -50,6 +77,7 @@ Object {
   "activeTab": "uploading",
   "generating": Object {
     "completed": 0,
+    "error": null,
     "logs": Array [
       "No running process",
       "--------------------",
@@ -58,6 +86,7 @@ Object {
   "pollingProcessID": 0,
   "uploading": Object {
     "completed": 0,
+    "error": null,
     "files": Array [],
     "logs": Array [
       "No running process",
@@ -72,6 +101,7 @@ Object {
   "activeTab": "uploading",
   "generating": Object {
     "completed": 0,
+    "error": null,
     "logs": Array [
       "No running process",
       "--------------------",
@@ -80,6 +110,7 @@ Object {
   "pollingProcessID": 0,
   "uploading": Object {
     "completed": 0,
+    "error": null,
     "files": Array [],
     "logs": Array [
       "No running process",

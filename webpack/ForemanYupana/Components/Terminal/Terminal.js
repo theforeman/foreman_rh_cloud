@@ -19,9 +19,15 @@ class Terminal extends React.Component {
   };
 
   render() {
-    const { loading, logs } = this.props;
-    const modifiedLogs =
-      logs.length > 0 && logs.map((log, index) => <p key={index}>{log}</p>);
+    const { loading, logs, error } = this.props;
+    let modifiedLogs = null;
+    if (error !== null) {
+      modifiedLogs = <p className="terminal_error">{error}</p>;
+    } else if (Array.isArray(logs)) {
+      modifiedLogs = logs.map((log, index) => <p key={index}>{log}</p>);
+    } else {
+      modifiedLogs = <p>{logs}</p>;
+    }
     return (
       <Grid.Col sm={8}>
         <div className="terminal" ref={this.terminal}>
@@ -40,13 +46,18 @@ class Terminal extends React.Component {
 }
 
 Terminal.propTypes = {
-  logs: PropTypes.arrayOf(PropTypes.string),
+  logs: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.string,
+  ]),
   loading: PropTypes.bool,
+  error: PropTypes.string,
 };
 
 Terminal.defaultProps = {
   logs: ['No running process'],
   loading: false,
+  error: null,
 };
 
 export default Terminal;

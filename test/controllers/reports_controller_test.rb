@@ -7,7 +7,7 @@ class ReportsControllerTest < ActionController::TestCase
     progress_output = mock('progress_output')
     ForemanYupana::Async::ProgressOutput
       .expects(:get)
-      .with(:report_generator)
+      .with('report_generator')
       .returns(progress_output)
     progress_output.expects(:full_output).returns('test output')
 

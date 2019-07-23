@@ -1,8 +1,10 @@
+import API from 'foremanReact/API';
 import {
   YUPANA_POLLING_START,
   YUPANA_POLLING_STOP,
   YUPANA_POLLING,
   YUPANA_TAB_CHANGED,
+  YUPANA_POLLING_ERROR,
 } from './DashboardConstants';
 import { seperator } from './DashboardHelper';
 import { selectPollingProcessID, selectActiveTab } from './DashboardSelectors';
@@ -35,16 +37,28 @@ export const stopPolling = () => (dispatch, getState) => {
   });
 };
 
-export const fetchLogs = () => (dispatch, getState) => {
+export const fetchLogs = () => async (dispatch, getState) => {
   const activeTab = selectActiveTab(getState());
-  const activeLogs = window.__yupana__[activeTab];
-  dispatch({
-    // TODO: Add API call here
-    type: YUPANA_POLLING,
-    payload: {
-      ...activeLogs,
-    },
-  });
+  try {
+    const requestController = activeTab === 'uploading' ? 'uploads' : 'reports';
+    const {
+      data: { output, status },
+    } = await API.get(`${requestController}/last`);
+    dispatch({
+      type: YUPANA_POLLING,
+      payload: {
+        logs: output,
+        exitCode: status,
+      },
+    });
+  } catch (error) {
+    dispatch({
+      type: YUPANA_POLLING_ERROR,
+      payload: {
+        error: error.message,
+      },
+    });
+  }
 };
 
 export const setActiveTab = tabName => ({

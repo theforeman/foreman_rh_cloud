@@ -33,12 +33,18 @@ class ReportGenerate extends React.Component {
       loading,
       logs,
       completed,
+      error,
     } = this.props;
 
     return (
       <TabContainer className="report-generate">
         <TabHeader exitCode={exitCode} onRestart={this.handleRestart} />
-        <TabBody loading={loading} logs={logs} completed={completed} />
+        <TabBody
+          loading={loading}
+          logs={logs}
+          completed={completed}
+          error={error}
+        />
         <TabFooter>
           <ScheduledRun time={processScheduledTime} />
         </TabFooter>
@@ -54,9 +60,13 @@ ReportGenerate.propTypes = {
   processID: PropTypes.number,
   stopProcess: PropTypes.func,
   loading: PropTypes.bool,
-  logs: PropTypes.arrayOf(PropTypes.string),
+  logs: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.string,
+  ]),
   completed: PropTypes.number,
   restartProcess: PropTypes.func,
+  error: PropTypes.string,
 };
 
 ReportGenerate.defaultProps = {
@@ -69,6 +79,7 @@ ReportGenerate.defaultProps = {
   logs: ['No running process'],
   completed: 0,
   restartProcess: noop,
+  error: null,
 };
 
 export default ReportGenerate;
