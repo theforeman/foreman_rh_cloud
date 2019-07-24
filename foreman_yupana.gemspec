@@ -14,6 +14,8 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib,locale}/**/*'] + ['LICENSE', 'Rakefile', 'README.md']
   s.test_files = Dir['test/**/*']
 
+  s.add_dependency 'katello'
+  s.add_dependency 'redhat_access'
   s.add_dependency 'sucker_punch'
 
   s.add_development_dependency 'rdoc'

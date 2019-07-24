@@ -1,5 +1,62 @@
-language: node_js
+language: ruby
+cache:
+  - npm
+  - bundler
+rvm:
+  - 2.3
 node_js:
   - '10'
   - '12'
-script: ./script/travis_run_js_tests.sh
+install:
+  - unset BUNDLE_GEMFILE
+  - cd ..
+  - git clone https://github.com/theforeman/foreman.git -b ${FOREMAN_CORE_BRANCH} --depth 1
+  - cd ${FOREMAN_PLUGIN_NAME}
+  - gem install bundler
+  - bundle install --jobs=3 --retry=3
+  - npm install eslint
+  - cd ../foreman
+  - echo "gemspec :path => '../${FOREMAN_PLUGIN_NAME}'" > bundler.d/${FOREMAN_PLUGIN_NAME}.local.rb
+  - echo "gem 'katello'" > bundler.d/katello.local.rb
+  - ln -s settings.yaml.test config/settings.yaml
+  - ln -s database.yml.example config/database.yml
+  - bundle install --jobs=3 --retry=3 --without journald development postgresql mysql2 console journald
+  - npm install
+  - bundle exec rake webpack:compile
+  - bundle exec rake db:migrate RAILS_ENV=test
+script:
+  - cd ../foreman
+  - bundle exec rake test:${FOREMAN_PLUGIN_NAME}
+  - bundle exec rake "plugin:assets:precompile[${FOREMAN_PLUGIN_NAME}]" RAILS_ENV=production
+  - cd ../${FOREMAN_PLUGIN_NAME}
+  - # bundle exec rubocop
+  - npm run test;
+  - npm run coveralls;
+  - npm run lint;
+env:
+  global:
+    - TESTOPTS=-v
+    - FOREMAN_PLUGIN_NAME=foreman_yupana
+  matrix:
+    - FOREMAN_CORE_BRANCH=develop
+addons:
+  apt:
+    sources:
+    - sourceline: 'ppa:qpid/released'
+    packages:
+    - nodejs
+    - git
+    - libsqlite3-dev
+    - zlib1g-dev
+    - libvirt-dev
+    - libqpid-proton-core10
+    - libqpidbroker-dev
+    - libqpidbroker2
+    - libqpidclient-dev
+    - libqpidclient2
+    - libqpidcommon-dev
+    - libqpidcommon2
+    - libqpidmessaging-dev
+    - libqpidmessaging2
+    - libqpidtypes-dev
+    - libqpidtypes1
