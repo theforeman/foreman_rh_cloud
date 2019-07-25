@@ -19,7 +19,12 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const { setActiveTab } = this.props;
+    const {
+      setActiveTab,
+      uploading,
+      restartProcess,
+      downloadReports,
+    } = this.props;
     return (
       <NavContainer
         items={[
@@ -27,14 +32,16 @@ class Dashboard extends React.Component {
             icon: 'database',
             name: 'Generating',
             component: ReportGenerate,
+            onClick: () => setActiveTab('reports'),
           },
           {
             icon: 'cloud-upload',
             name: 'Uploading',
             component: ReportUpload,
+            props: { ...uploading, restartProcess, downloadReports },
+            onClick: () => setActiveTab('uploads'),
           },
         ]}
-        onTabClick={setActiveTab}
       />
     );
   }
@@ -45,13 +52,30 @@ Dashboard.propTypes = {
   fetchLogs: PropTypes.func,
   stopPolling: PropTypes.func,
   setActiveTab: PropTypes.func,
+  uploading: PropTypes.shape({
+    exitCode: PropTypes.string,
+    loading: PropTypes.bool,
+    logs: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.string,
+    ]),
+    completed: PropTypes.number,
+    files: PropTypes.arrayOf(PropTypes.string),
+    downloadReports: PropTypes.func,
+    error: PropTypes.string,
+  }),
+  restartProcess: PropTypes.func,
+  downloadReports: PropTypes.func,
 };
 
 Dashboard.defaultProps = {
+  uploading: {},
   startPolling: noop,
   fetchLogs: noop,
   stopPolling: noop,
   setActiveTab: noop,
+  restartProcess: noop,
+  downloadReports: noop,
 };
 
 export default Dashboard;

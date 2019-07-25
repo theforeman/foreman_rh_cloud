@@ -1,5 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ReportUpload rendering render with Props 1`] = `
+<TabContainer
+  className="report-upload"
+>
+  <TabHeader
+    exitCode={0}
+    onRestart={[Function]}
+  />
+  <TabBody
+    completed={0}
+    error={null}
+    loading={false}
+    logs={
+      Array [
+        "No running process",
+      ]
+    }
+  />
+  <TabFooter>
+    <Tree
+      files={
+        Array [
+          "some-file",
+        ]
+      }
+    />
+    <FileDownload
+      onClick={[Function]}
+    />
+  </TabFooter>
+</TabContainer>
+`;
+
 exports[`ReportUpload rendering render without Props 1`] = `
 <TabContainer
   className="report-upload"

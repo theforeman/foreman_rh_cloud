@@ -11,8 +11,8 @@ import {
   selectCompleted,
   selectLoading,
   selectExitCode,
+  selectError,
 } from './ReportGenerateSelectors';
-import { selectError } from '../ReportUpload/ReportUploadSelectors';
 
 // map state to props
 const mapStateToProps = state => ({

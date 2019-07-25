@@ -22,26 +22,26 @@ const initialState = Immutable({
     error: null,
   },
   pollingProcessID: 0,
-  activeTab: 'uploading',
+  activeTab: 'uploads',
 });
 
 export default (state = initialState, action) => {
   const { payload } = action;
-
+  const activeTab = state.activeTab === 'reports' ? 'generating' : 'uploading';
   switch (action.type) {
     case YUPANA_POLLING_START:
       return state.merge({
         pollingProcessID: payload.pollingProcessID,
       });
     case YUPANA_POLLING:
-      return state.setIn([state.activeTab], payload);
+      return state.setIn([activeTab], payload);
     case YUPANA_TAB_CHANGED:
       return state.merge({
         activeTab: payload.activeTab,
       });
     case YUPANA_POLLING_ERROR:
-      return state.setIn([state.activeTab], {
-        ...state[state.activeTab],
+      return state.setIn([activeTab], {
+        ...state[activeTab],
         error: payload.error,
       });
     default:

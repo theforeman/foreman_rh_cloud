@@ -2,7 +2,7 @@
 
 exports[`Dashboard reducer should handle YUPANA_POLLING 1`] = `
 Object {
-  "activeTab": "uploading",
+  "activeTab": "uploads",
   "generating": Object {
     "completed": 0,
     "error": null,
@@ -26,7 +26,7 @@ Object {
 
 exports[`Dashboard reducer should handle YUPANA_POLLING_ERROR 1`] = `
 Object {
-  "activeTab": "uploading",
+  "activeTab": "uploads",
   "generating": Object {
     "completed": 0,
     "error": null,
@@ -50,7 +50,7 @@ Object {
 
 exports[`Dashboard reducer should handle YUPANA_POLLING_START 1`] = `
 Object {
-  "activeTab": "uploading",
+  "activeTab": "uploads",
   "generating": Object {
     "completed": 0,
     "error": null,
@@ -98,7 +98,7 @@ Object {
 
 exports[`Dashboard reducer should return the initial state 1`] = `
 Object {
-  "activeTab": "uploading",
+  "activeTab": "uploads",
   "generating": Object {
     "completed": 0,
     "error": null,
