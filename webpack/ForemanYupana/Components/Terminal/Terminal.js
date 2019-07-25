@@ -29,7 +29,7 @@ class Terminal extends React.Component {
       modifiedLogs = <p>{logs}</p>;
     }
     return (
-      <Grid.Col sm={8}>
+      <Grid.Col sm={12}>
         <div className="terminal" ref={this.terminal}>
           <Grid fluid>
             <Grid.Row>
