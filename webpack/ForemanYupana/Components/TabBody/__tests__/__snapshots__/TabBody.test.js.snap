@@ -5,9 +5,6 @@ exports[`TabBody rendering render without Props 1`] = `
   bsClass="row"
   componentClass="div"
 >
-  <StatusChart
-    completed={0}
-  />
   <Terminal
     error={null}
     loading={false}

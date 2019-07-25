@@ -4,7 +4,7 @@ exports[`Terminal rendering render with props 1`] = `
 <Col
   bsClass="col"
   componentClass="div"
-  sm={8}
+  sm={12}
 >
   <div
     className="terminal"
@@ -61,7 +61,7 @@ exports[`Terminal rendering render without Props 1`] = `
 <Col
   bsClass="col"
   componentClass="div"
-  sm={8}
+  sm={12}
 >
   <div
     className="terminal"

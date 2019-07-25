@@ -5,7 +5,11 @@ import './tabContainer.scss';
 
 const TabContainer = ({ children, className }) => (
   <div className={className}>
-    <Grid>{children}</Grid>
+    <Grid>
+      <Grid.Col sm={12} lg={8} lgOffset={2}>
+        {children}
+      </Grid.Col>
+    </Grid>
   </div>
 );
 
