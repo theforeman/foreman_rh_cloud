@@ -17,8 +17,8 @@ describe('NavContainer', () => {
     const onTabClick = jest.fn();
     const modifiedProps = {
       ...props,
-      onTabClick,
     };
+    modifiedProps.items[0].onClick = onTabClick;
     const wrapper = mount(<NavContainer {...modifiedProps} />);
     wrapper.find('NavItem a').simulate('click');
     expect(onTabClick).toBeCalled();

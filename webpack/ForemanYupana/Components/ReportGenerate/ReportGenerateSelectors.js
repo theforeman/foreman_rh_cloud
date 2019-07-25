@@ -6,7 +6,7 @@ export const selectReportGenerate = state =>
 export const selectProcessID = state => selectReportGenerate(state).processID;
 export const selectLogs = state => selectGenerating(state).logs;
 export const selectCompleted = state => selectGenerating(state).completed;
-export const selectError = state => selectError(state).error;
+export const selectError = state => selectGenerating(state).error;
 export const selectLoading = state =>
   selectReportGenerate(state).status === 'running';
 
