@@ -5,11 +5,12 @@ import * as actions from './DashboardActions';
 import reducer from './DashboardReducer';
 
 import Dashboard from './Dashboard';
-import { selectUploading } from './DashboardSelectors';
+import { selectUploading, selectGenerating } from './DashboardSelectors';
 
 // map state to props
 const mapStateToProps = state => ({
   uploading: selectUploading(state),
+  generating: selectGenerating(state),
 });
 
 // map action dispatchers to props

@@ -9,6 +9,9 @@ exports[`Dashboard rendering render without Props 1`] = `
         "icon": "database",
         "name": "Generating",
         "onClick": [Function],
+        "props": Object {
+          "restartProcess": [Function],
+        },
       },
       Object {
         "component": [Function],
@@ -34,6 +37,9 @@ exports[`Dashboard rendering with props 1`] = `
         "icon": "database",
         "name": "Generating",
         "onClick": [Function],
+        "props": Object {
+          "restartProcess": [Function],
+        },
       },
       Object {
         "component": [Function],

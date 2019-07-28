@@ -22,6 +22,7 @@ class Dashboard extends React.Component {
     const {
       setActiveTab,
       uploading,
+      generating,
       restartProcess,
       downloadReports,
     } = this.props;
@@ -32,6 +33,7 @@ class Dashboard extends React.Component {
             icon: 'database',
             name: 'Generating',
             component: ReportGenerate,
+            props: { ...generating, restartProcess },
             onClick: () => setActiveTab('reports'),
           },
           {
@@ -61,7 +63,16 @@ Dashboard.propTypes = {
     ]),
     completed: PropTypes.number,
     files: PropTypes.arrayOf(PropTypes.string),
-    downloadReports: PropTypes.func,
+    error: PropTypes.string,
+  }),
+  generating: PropTypes.shape({
+    exitCode: PropTypes.string,
+    loading: PropTypes.bool,
+    logs: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.string,
+    ]),
+    completed: PropTypes.number,
     error: PropTypes.string,
   }),
   restartProcess: PropTypes.func,
@@ -70,6 +81,7 @@ Dashboard.propTypes = {
 
 Dashboard.defaultProps = {
   uploading: {},
+  generating: {},
   startPolling: noop,
   fetchLogs: noop,
   stopPolling: noop,
