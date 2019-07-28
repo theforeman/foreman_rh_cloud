@@ -74,7 +74,7 @@ Object {
 
 exports[`Dashboard reducer should handle YUPANA_TAB_CHANGED 1`] = `
 Object {
-  "activeTab": "uploading",
+  "activeTab": "uploads",
   "generating": Object {
     "completed": 0,
     "error": null,

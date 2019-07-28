@@ -14,8 +14,8 @@ class Dashboard extends React.Component {
   }
 
   componentWillUnmount() {
-    const { stopPolling } = this.props;
-    stopPolling();
+    const { stopPolling, pollingProcessID } = this.props;
+    stopPolling(pollingProcessID);
   }
 
   render() {
@@ -77,6 +77,7 @@ Dashboard.propTypes = {
   }),
   restartProcess: PropTypes.func,
   downloadReports: PropTypes.func,
+  pollingProcessID: PropTypes.number,
 };
 
 Dashboard.defaultProps = {
@@ -88,6 +89,7 @@ Dashboard.defaultProps = {
   setActiveTab: noop,
   restartProcess: noop,
   downloadReports: noop,
+  pollingProcessID: 0,
 };
 
 export default Dashboard;

@@ -1,5 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Dashboard actions should downloadReports 1`] = `
+Array [
+  Array [
+    Object {
+      "type": "YUPANA_REPORTS_DOWNLOAD",
+    },
+  ],
+]
+`;
+
+exports[`Dashboard actions should fetchLogs 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "exitCode": 0,
+        "logs": Array [
+          "some-logs...",
+        ],
+      },
+      "type": "YUPANA_POLLING",
+    },
+  ],
+]
+`;
+
+exports[`Dashboard actions should restartProcess 1`] = `
+Object {
+  "type": "YUPANA_PROCESS_RESTART",
+}
+`;
+
+exports[`Dashboard actions should setActiveTab 1`] = `
+Object {
+  "payload": Object {
+    "activeTab": "uploads",
+  },
+  "type": "YUPANA_TAB_CHANGED",
+}
+`;
+
 exports[`Dashboard actions should startPolling 1`] = `
 Object {
   "payload": Object {
@@ -7,4 +48,14 @@ Object {
   },
   "type": "YUPANA_POLLING_START",
 }
+`;
+
+exports[`Dashboard actions should stopPolling 1`] = `
+Array [
+  Array [
+    Object {
+      "type": "YUPANA_POLLING_STOP",
+    },
+  ],
+]
 `;

@@ -2,7 +2,7 @@
 
 exports[`Dashboard selectors should return Dashboard 1`] = `
 Object {
-  "activeTab": "uploading",
+  "activeTab": "uploads",
   "generating": Object {
     "completed": 25,
     "logs": Array [
@@ -19,7 +19,7 @@ Object {
 }
 `;
 
-exports[`Dashboard selectors should return Dashboard activeTab 1`] = `"uploading"`;
+exports[`Dashboard selectors should return Dashboard activeTab 1`] = `"uploads"`;
 
 exports[`Dashboard selectors should return Dashboard generating 1`] = `
 Object {

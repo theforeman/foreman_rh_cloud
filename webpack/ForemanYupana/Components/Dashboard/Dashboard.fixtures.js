@@ -20,11 +20,15 @@ export const yupana = {
   },
 };
 
+export const exitCode = 0;
+
 export const files = ['some-file'];
 
-export const activeTab = 'uploading';
+export const activeTab = 'uploads';
 
 const initialLog = ['No running process', seperator];
+
+export const serverMock = { data: { output: logs, status: exitCode } };
 
 export const initialState = {
   generating: {
