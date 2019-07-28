@@ -8,7 +8,7 @@ import {
   YUPANA_PROCESS_RESTART,
   YUPANA_REPORTS_DOWNLOAD,
 } from './DashboardConstants';
-import { selectPollingProcessID, selectActiveTab } from './DashboardSelectors';
+import { selectActiveTab } from './DashboardSelectors';
 
 export const startPolling = pollingProcessID => ({
   type: YUPANA_POLLING_START,
@@ -17,8 +17,7 @@ export const startPolling = pollingProcessID => ({
   },
 });
 
-export const stopPolling = () => (dispatch, getState) => {
-  const pollingProcessID = selectPollingProcessID(getState());
+export const stopPolling = pollingProcessID => dispatch => {
   clearInterval(pollingProcessID);
   dispatch({
     type: YUPANA_POLLING_STOP,
