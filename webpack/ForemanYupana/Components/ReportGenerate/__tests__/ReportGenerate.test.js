@@ -1,10 +1,11 @@
 import { testComponentSnapshotsWithFixtures } from 'react-redux-test-utils';
 
 import ReportGenerate from '../ReportGenerate';
+import { props } from '../ReportGenerate.fixtures';
 
 const fixtures = {
   'render without Props': {},
-  /** fixtures, props for the component */
+  'render with Props': props,
 };
 
 describe('ReportGenerate', () => {

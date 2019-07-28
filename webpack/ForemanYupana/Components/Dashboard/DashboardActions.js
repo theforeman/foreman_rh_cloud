@@ -8,28 +8,14 @@ import {
   YUPANA_PROCESS_RESTART,
   YUPANA_REPORTS_DOWNLOAD,
 } from './DashboardConstants';
-import { seperator } from './DashboardHelper';
 import { selectPollingProcessID, selectActiveTab } from './DashboardSelectors';
 
-export const startPolling = pollingProcessID => {
-  window.__yupana__ = {
-    generating: {
-      logs: ['No running process', seperator],
-      completed: 0,
-    },
-    uploading: {
-      logs: ['No running process', seperator],
-      completed: 0,
-      files: [],
-    },
-  };
-  return {
-    type: YUPANA_POLLING_START,
-    payload: {
-      pollingProcessID,
-    },
-  };
-};
+export const startPolling = pollingProcessID => ({
+  type: YUPANA_POLLING_START,
+  payload: {
+    pollingProcessID,
+  },
+});
 
 export const stopPolling = () => (dispatch, getState) => {
   const pollingProcessID = selectPollingProcessID(getState());
