@@ -1,6 +1,6 @@
 require 'test_plugin_helper'
 
-class ReportGeneratorTest < ActiveSupport::TestCase
+class ArchivedReportGeneratorTest < ActiveSupport::TestCase
   setup do
     User.current = User.find_by(login: 'secret_admin')
 
@@ -44,33 +44,17 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     ]
   end
 
-  test 'generates an empty report' do
-    generator = ForemanYupana::Report::Generator.new
-    generator.expects(:batched_hosts).returns(Host.none.in_batches)
-
-    json_str = generator.render
-    actual = JSON.parse(json_str.join("\n"))
-
-    assert_not_nil actual['report_id']
-    assert_equal 'Satellite', actual['source']
-    assert_equal [], actual['report_slices']
-  end
-
   test 'generates a report for a single host' do
-    generator = ForemanYupana::Report::Generator.new
-    generator.expects(:batched_hosts).returns(Host.where(id: @host.id).in_batches)
+    batches = Host.where(id: @host.id).in_batches
 
-    json_str = generator.render
-    actual = JSON.parse(json_str.join("\n"))
+    ForemanYupana::Generators::Queries.expects(:for_report).returns(batches)
+    Dir.mktmpdir do |tmpdir|
+      target = File.join(tmpdir, 'test.tar.gz')
+      generator = ForemanYupana::Generators::ArchivedReport.new(target, Logger.new(STDOUT))
+      generator.render
 
-    assert_not_nil actual['report_id']
-    assert_equal 'Satellite', actual['source']
-    assert_not_nil(slices = actual['report_slices'])
-    assert_not_nil(slice = slices.first)
-    assert_not_nil slice['report_slice_id']
-    assert_not_nil(actual_host = slice['hosts'].first)
-    assert_equal @host.name, actual_host['display_name']
-    assert_equal @host.fqdn, actual_host['fqdn']
-    assert_equal '1234', actual_host['account']
+      files = Dir["#{tmpdir}/*"]
+      assert_equal "#{tmpdir}/test.tar.gz", files.first
+    end
   end
 end
