@@ -1,6 +1,6 @@
 import { noop } from 'patternfly-react';
 
-export const files = ['some-file'];
+export const files = { queue: ['some-file'], error: null };
 export const exitCode = 0;
 export const loading = false;
 export const logs = ['No running process'];

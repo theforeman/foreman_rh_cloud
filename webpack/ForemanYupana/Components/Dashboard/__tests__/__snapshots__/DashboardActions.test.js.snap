@@ -26,6 +26,19 @@ Array [
 ]
 `;
 
+exports[`Dashboard actions should getReportsQueue 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "queue": undefined,
+      },
+      "type": "YUPANA_QUEUE",
+    },
+  ],
+]
+`;
+
 exports[`Dashboard actions should restartProcess 1`] = `
 Object {
   "type": "YUPANA_PROCESS_RESTART",

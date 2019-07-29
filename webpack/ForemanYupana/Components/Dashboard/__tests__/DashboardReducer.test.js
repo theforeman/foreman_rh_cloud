@@ -5,6 +5,7 @@ import {
   YUPANA_POLLING,
   YUPANA_TAB_CHANGED,
   YUPANA_POLLING_ERROR,
+  YUPANA_QUEUE,
 } from '../DashboardConstants';
 import reducer from '../DashboardReducer';
 import {
@@ -50,6 +51,14 @@ const fixtures = {
       type: YUPANA_POLLING_ERROR,
       payload: {
         error,
+      },
+    },
+  },
+  'should handle YUPANA_QUEUE': {
+    action: {
+      type: YUPANA_QUEUE,
+      payload: {
+        files,
       },
     },
   },

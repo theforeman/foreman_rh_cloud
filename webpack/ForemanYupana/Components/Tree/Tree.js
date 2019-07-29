@@ -2,10 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { default as RATTree } from 'react-animated-tree';
 import { Grid } from 'patternfly-react';
+import './tree.scss';
 
-const Tree = ({ files }) => {
-  const filesAmount = files.length;
-  const fileTrees = files.map((file, index) => (
+const Tree = ({ files: { queue, error } }) => {
+  if (error !== null) {
+    return (
+      <Grid.Col sm={9}>
+        <p>Tried to get the uploads queue, but instead got:</p>
+        <p className="queue_error">{error}</p>
+      </Grid.Col>
+    );
+  }
+  const filesAmount = queue.length;
+  const fileTrees = queue.map((file, index) => (
     <RATTree key={index} content={file} />
   ));
   return (
@@ -19,11 +28,17 @@ const Tree = ({ files }) => {
 };
 
 Tree.propTypes = {
-  files: PropTypes.arrayOf(PropTypes.string),
+  files: PropTypes.shape({
+    queue: PropTypes.arrayOf(PropTypes.string),
+    error: PropTypes.string,
+  }),
 };
 
 Tree.defaultProps = {
-  files: [],
+  files: {
+    queue: [],
+    error: null,
+  },
 };
 
 export default Tree;
