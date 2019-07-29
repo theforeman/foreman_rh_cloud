@@ -6,7 +6,6 @@ import TabHeader from '../TabHeader';
 import TabFooter from '../TabFooter';
 import TabBody from '../TabBody';
 import Tree from '../Tree';
-import FileDownload from '../FileDownload';
 import './reportUpload.scss';
 
 const ReportUpload = ({
@@ -28,8 +27,7 @@ const ReportUpload = ({
       error={error}
     />
     <TabFooter>
-      <Tree files={files} />
-      <FileDownload onClick={downloadReports} />
+      <Tree files={files} itemDownload={downloadReports} />
     </TabFooter>
   </TabContainer>
 );

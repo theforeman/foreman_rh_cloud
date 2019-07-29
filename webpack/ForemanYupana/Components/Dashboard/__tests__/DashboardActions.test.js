@@ -7,7 +7,7 @@ import {
   setActiveTab,
   downloadReports,
   restartProcess,
-  getReportsQueue
+  getReportsQueue,
 } from '../DashboardActions';
 import { pollingProcessID, serverMock, activeTab } from '../Dashboard.fixtures';
 

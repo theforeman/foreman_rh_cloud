@@ -28,9 +28,7 @@ exports[`ReportUpload rendering render with Props 1`] = `
           ],
         }
       }
-    />
-    <FileDownload
-      onClick={[Function]}
+      itemDownload={[Function]}
     />
   </TabFooter>
 </TabContainer>
@@ -62,9 +60,7 @@ exports[`ReportUpload rendering render without Props 1`] = `
           "queue": Array [],
         }
       }
-    />
-    <FileDownload
-      onClick={[Function]}
+      itemDownload={[Function]}
     />
   </TabFooter>
 </TabContainer>

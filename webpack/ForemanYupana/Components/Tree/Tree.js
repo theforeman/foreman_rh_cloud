@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { default as RATTree } from 'react-animated-tree';
-import { Grid } from 'patternfly-react';
+import { Icon, Grid, noop } from 'patternfly-react';
 import './tree.scss';
 
-const Tree = ({ files: { queue, error } }) => {
+const Tree = ({ files: { queue, error }, itemDownload }) => {
   if (error !== null) {
     return (
       <Grid.Col sm={9}>
@@ -14,15 +13,16 @@ const Tree = ({ files: { queue, error } }) => {
     );
   }
   const filesAmount = queue.length;
-  const fileTrees = queue && queue.map((file, index) => (
-    <RATTree key={index} content={file} />
+  const queueTree = queue.map((file, index) => (
+    <div className="item" key={index}>
+      <Icon name="download" onClick={() => itemDownload(file)} />
+      {file}
+    </div>
   ));
   return (
     <Grid.Col sm={9}>
       <p>There are currently {filesAmount} report files ready</p>
-      <RATTree content="Reports" open canHide visible>
-        {fileTrees}
-      </RATTree>
+      <div className="reports_queue">{queueTree}</div>
     </Grid.Col>
   );
 };
@@ -32,6 +32,7 @@ Tree.propTypes = {
     queue: PropTypes.arrayOf(PropTypes.string),
     error: PropTypes.string,
   }),
+  itemDownload: PropTypes.func,
 };
 
 Tree.defaultProps = {
@@ -39,6 +40,7 @@ Tree.defaultProps = {
     queue: [],
     error: null,
   },
+  itemDownload: noop,
 };
 
 export default Tree;
