@@ -7,6 +7,7 @@ import {
   setActiveTab,
   downloadReports,
   restartProcess,
+  getReportsQueue
 } from '../DashboardActions';
 import { pollingProcessID, serverMock, activeTab } from '../Dashboard.fixtures';
 
@@ -28,6 +29,7 @@ const fixtures = {
   'should setActiveTab': () => setActiveTab(activeTab),
   'should downloadReports': () => downloadReports(),
   'should restartProcess': () => restartProcess(),
+  'should getReportsQueue': () => getReportsQueue(),
 };
 
 describe('Dashboard actions', () => testActionSnapshotWithFixtures(fixtures));

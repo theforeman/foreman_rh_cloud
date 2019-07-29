@@ -22,7 +22,7 @@ export const yupana = {
 
 export const exitCode = 0;
 
-export const files = ['some-file'];
+export const files = { queue: ['some-file'], error: null };
 
 export const activeTab = 'uploads';
 

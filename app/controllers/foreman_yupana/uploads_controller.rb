@@ -8,5 +8,15 @@ module ForemanYupana
         output: output
       }, status: :ok
     end
+
+    def queue
+      directory = Dir["../foreman/#{ForemanYupana.uploads_folder}*"]
+                  .select { |f| File.file? f }
+                  .map { |f| File.basename f }
+
+      render json: {
+        queue: directory
+      }, status: :ok
+    end
   end
 end

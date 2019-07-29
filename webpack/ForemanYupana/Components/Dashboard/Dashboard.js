@@ -8,9 +8,10 @@ import './dashboard.scss';
 
 class Dashboard extends React.Component {
   componentDidMount() {
-    const { startPolling, fetchLogs } = this.props;
+    const { startPolling, fetchLogs, getReportsQueue } = this.props;
     const pollingProcessID = setInterval(fetchLogs, 5000);
     startPolling(pollingProcessID);
+    getReportsQueue();
   }
 
   componentWillUnmount() {
@@ -62,7 +63,10 @@ Dashboard.propTypes = {
       PropTypes.string,
     ]),
     completed: PropTypes.number,
-    files: PropTypes.arrayOf(PropTypes.string),
+    files: PropTypes.shape({
+      queue: PropTypes.arrayOf(PropTypes.string),
+      error: PropTypes.string,
+    }),
     error: PropTypes.string,
   }),
   generating: PropTypes.shape({
@@ -78,6 +82,7 @@ Dashboard.propTypes = {
   restartProcess: PropTypes.func,
   downloadReports: PropTypes.func,
   pollingProcessID: PropTypes.number,
+  getReportsQueue: PropTypes.func,
 };
 
 Dashboard.defaultProps = {
@@ -90,6 +95,7 @@ Dashboard.defaultProps = {
   restartProcess: noop,
   downloadReports: noop,
   pollingProcessID: 0,
+  getReportsQueue: noop,
 };
 
 export default Dashboard;

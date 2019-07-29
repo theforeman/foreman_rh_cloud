@@ -1,3 +1,3 @@
 export const props = {
-  files: ['file1', 'file2', 'file3'],
+  files: { queue: ['file1', 'file2', 'file3'], error: null },
 };

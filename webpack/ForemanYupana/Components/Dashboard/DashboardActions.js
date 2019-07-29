@@ -7,6 +7,8 @@ import {
   YUPANA_POLLING_ERROR,
   YUPANA_PROCESS_RESTART,
   YUPANA_REPORTS_DOWNLOAD,
+  YUPANA_QUEUE,
+  YUPANA_QUEUE_ERROR,
 } from './DashboardConstants';
 import { selectActiveTab } from './DashboardSelectors';
 
@@ -40,6 +42,27 @@ export const fetchLogs = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: YUPANA_POLLING_ERROR,
+      payload: {
+        error: error.message,
+      },
+    });
+  }
+};
+
+export const getReportsQueue = () => async dispatch => {
+  try {
+    const {
+      data: { queue },
+    } = await API.get('uploads/queue');
+    dispatch({
+      type: YUPANA_QUEUE,
+      payload: {
+        queue,
+      },
+    });
+  } catch (error) {
+    dispatch({
+      type: YUPANA_QUEUE_ERROR,
       payload: {
         error: error.message,
       },

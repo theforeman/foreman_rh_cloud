@@ -14,9 +14,13 @@ Object {
   "pollingProcessID": 0,
   "uploading": Object {
     "completed": 25,
-    "files": Array [
-      "some-file",
-    ],
+    "error": null,
+    "files": Object {
+      "error": null,
+      "queue": Array [
+        "some-file",
+      ],
+    },
     "logs": Array [
       "some-logs...",
     ],
@@ -39,7 +43,10 @@ Object {
   "uploading": Object {
     "completed": 0,
     "error": "some-error",
-    "files": Array [],
+    "files": Object {
+      "error": null,
+      "queue": Array [],
+    },
     "logs": Array [
       "No running process",
       "--------------------",
@@ -63,7 +70,37 @@ Object {
   "uploading": Object {
     "completed": 0,
     "error": null,
-    "files": Array [],
+    "files": Object {
+      "error": null,
+      "queue": Array [],
+    },
+    "logs": Array [
+      "No running process",
+      "--------------------",
+    ],
+  },
+}
+`;
+
+exports[`Dashboard reducer should handle YUPANA_QUEUE 1`] = `
+Object {
+  "activeTab": "uploads",
+  "generating": Object {
+    "completed": 0,
+    "error": null,
+    "logs": Array [
+      "No running process",
+      "--------------------",
+    ],
+  },
+  "pollingProcessID": 0,
+  "uploading": Object {
+    "completed": 0,
+    "error": null,
+    "files": Object {
+      "error": null,
+      "queue": undefined,
+    },
     "logs": Array [
       "No running process",
       "--------------------",
@@ -87,7 +124,10 @@ Object {
   "uploading": Object {
     "completed": 0,
     "error": null,
-    "files": Array [],
+    "files": Object {
+      "error": null,
+      "queue": Array [],
+    },
     "logs": Array [
       "No running process",
       "--------------------",
@@ -111,7 +151,10 @@ Object {
   "uploading": Object {
     "completed": 0,
     "error": null,
-    "files": Array [],
+    "files": Object {
+      "error": null,
+      "queue": Array [],
+    },
     "logs": Array [
       "No running process",
       "--------------------",

@@ -43,7 +43,10 @@ ReportUpload.propTypes = {
   ]),
   completed: PropTypes.number,
   restartProcess: PropTypes.func,
-  files: PropTypes.arrayOf(PropTypes.string),
+  files: PropTypes.shape({
+    queue: PropTypes.arrayOf(PropTypes.string),
+    error: PropTypes.string,
+  }),
   downloadReports: PropTypes.func,
   error: PropTypes.string,
 };
@@ -54,7 +57,10 @@ ReportUpload.defaultProps = {
   logs: ['No running process'],
   completed: 0,
   restartProcess: noop,
-  files: [],
+  files: {
+    queue: [],
+    error: null,
+  },
   downloadReports: noop,
   error: null,
 };
