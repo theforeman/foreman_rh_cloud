@@ -3,14 +3,11 @@ import PropTypes from 'prop-types';
 import { noop } from 'patternfly-react';
 import TabContainer from '../TabContainer';
 import TabHeader from '../TabHeader';
-import TabFooter from '../TabFooter';
-import ScheduledRun from '../ScheduledRun';
 import TabBody from '../TabBody';
 import './reportGenerate.scss';
 
 const ReportGenerate = ({
   exitCode,
-  processScheduledTime,
   loading,
   logs,
   completed,
@@ -25,15 +22,11 @@ const ReportGenerate = ({
       completed={completed}
       error={error}
     />
-    <TabFooter>
-      <ScheduledRun time={processScheduledTime} />
-    </TabFooter>
   </TabContainer>
 );
 
 ReportGenerate.propTypes = {
   exitCode: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  processScheduledTime: PropTypes.string,
   loading: PropTypes.bool,
   logs: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
@@ -46,7 +39,6 @@ ReportGenerate.propTypes = {
 
 ReportGenerate.defaultProps = {
   exitCode: 0,
-  processScheduledTime: '00:00',
   loading: false,
   logs: ['No running process'],
   completed: 0,

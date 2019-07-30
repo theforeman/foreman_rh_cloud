@@ -18,11 +18,6 @@ exports[`ReportGenerate rendering render with Props 1`] = `
       ]
     }
   />
-  <TabFooter>
-    <ScheduledRun
-      time="00:00"
-    />
-  </TabFooter>
 </TabContainer>
 `;
 
@@ -44,10 +39,5 @@ exports[`ReportGenerate rendering render without Props 1`] = `
       ]
     }
   />
-  <TabFooter>
-    <ScheduledRun
-      time="00:00"
-    />
-  </TabFooter>
 </TabContainer>
 `;
