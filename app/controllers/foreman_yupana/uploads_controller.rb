@@ -1,10 +1,10 @@
 module ForemanYupana
   class UploadsController < ::ApplicationController
     def last
-      output = ForemanYupana::Async::ProgressOutput.get(ForemanYupana.uploader_output)&.full_output
+      label = ForemanYupana::Async::UploadReportJob.output_label(params[:portal_user])
+      output = ForemanYupana::Async::ProgressOutput.get(label)&.full_output
 
       render json: {
-        status: 'Unknown',
         output: output
       }, status: :ok
     end

@@ -6,10 +6,10 @@ module ForemanYupana
         @logger = logger
       end
 
-      def render
+      def render(portal_user)
         Dir.mktmpdir do |tmpdir|
           @logger.info "Started generating hosts report in #{tmpdir}"
-          host_batches = ForemanYupana::Generators::Queries.for_report
+          host_batches = ForemanYupana::Generators::Queries.for_report(portal_user)
           File.open(File.join(tmpdir, 'metadata.json'), 'w') do |metadata_out|
             metadata_generator = ForemanYupana::Generators::Metadata.new(metadata_out)
             metadata_generator.render do |inner_generator|

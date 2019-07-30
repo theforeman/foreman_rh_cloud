@@ -5,8 +5,8 @@ module ForemanYupana
     'red_hat_inventory/'
   end
 
-  def self.uploads_folder
-    @uploads_folder ||= ensure_folder(File.join(ForemanYupana.base_folder, 'uploads/'))
+  def self.uploads_folder(group)
+    @uploads_folder ||= ensure_folder(File.join(ForemanYupana.base_folder, 'uploads/', "#{group}/"))
   end
 
   def self.outputs_folder
@@ -14,15 +14,11 @@ module ForemanYupana
   end
 
   def self.upload_script_file
-    File.join(uploads_folder, 'uploader.sh')
+    'uploader.sh'
   end
 
   def self.upload_url
     'https://cloud.redhat.com/'
-  end
-
-  def self.uploader_output
-    'uploader_output'
   end
 
   def self.ensure_folder(folder)

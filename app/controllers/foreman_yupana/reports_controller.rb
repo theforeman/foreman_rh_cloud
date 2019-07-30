@@ -1,10 +1,10 @@
 module ForemanYupana
   class ReportsController < ::ApplicationController
     def last
-      output = ForemanYupana::Async::ProgressOutput.get('report_generator')&.full_output
+      label = ForemanYupana::Async::GenerateReportJob.output_label(params[:portal_user])
+      output = ForemanYupana::Async::ProgressOutput.get(label)&.full_output
 
       render json: {
-        status: 'Unknown',
         output: output
       }, status: :ok
     end

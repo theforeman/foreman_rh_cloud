@@ -3,23 +3,34 @@ module ForemanYupana
     class QueueForUploadJob
       include SuckerPunch::Job
 
-      def perform(facts_file)
+      def perform(report_file, portal_user)
+        @portal_user = portal_user
         SuckerPunch.logger.debug('Ensuring objects')
         ensure_ouput_folder
         ensure_output_script
-        SuckerPunch.logger.debug("Copying #{facts_file} to #{ForemanYupana.uploads_folder}")
-        FileUtils.mv(facts_file, ForemanYupana.uploads_folder)
-        SuckerPunch.logger.debug("Done copying #{facts_file} to #{ForemanYupana.uploads_folder}")
+        SuckerPunch.logger.debug("Copying #{report_file} to #{uploads_folder}")
+        FileUtils.mv(report_file, uploads_folder)
+        SuckerPunch.logger.debug("Done copying #{report_file} to #{uploads_folder}")
 
-        UploadReportJob.perform_async(ForemanYupana.uploader_output)
+        enqueued_file_name = File.join(uploads_folder, File.basename(report_file))
+
+        UploadReportJob.perform_async(enqueued_file_name, portal_user)
+      end
+
+      def uploads_folder
+        @uploads_folder ||= ForemanYupana.uploads_folder(@portal_user)
+      end
+
+      def script_file
+        @script_file ||= File.join(uploads_folder, ForemanYupana.upload_script_file)
       end
 
       def ensure_ouput_folder
-        FileUtils.mkdir_p(ForemanYupana.uploads_folder)
+        FileUtils.mkdir_p(uploads_folder)
       end
 
       def ensure_output_script
-        return if File.exits?(ForemanYupana.upload_script_file)
+        return if File.exits?(script_file)
 
         template_src = Foreman::Renderer::Source::String(File.read('app/views/scripts/uploader.sh.erb'))
         scope = Foreman::Renderer.get_scope(
@@ -27,7 +38,7 @@ module ForemanYupana
           klass: Foreman::Renderer::Scope::Base,
           params: {
             upload_url: ForemanYupana.upload_url,
-            uploads_folder: ForemanYupana.uploads_folder
+            rh_username: @portal_user
           }
         )
         script_source = Foreman::Renderer.render(template_src, scope)

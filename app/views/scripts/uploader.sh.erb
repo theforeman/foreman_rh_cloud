@@ -1,7 +1,7 @@
 #! /bin/sh
 
 DEST=<%= params[:upload_url] %>
-FILES=<%= params[:uploads_folder] %>
+RH_USERNAME=<%= params[:rh_username] %>
 
 if [ -z "$RH_USERNAME" ]
 then
@@ -13,6 +13,10 @@ then
         IFS= read -rsp "Enter password: " RH_PASSWORD
 fi
 
+if [ -z "$FILES" ]
+then
+        FILES=./*.tar.gz
+fi
 
 mkdir -p done
 

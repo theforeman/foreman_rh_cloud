@@ -36,8 +36,15 @@ module ForemanYupana
           .merge(fact_values)
       end
 
-      def self.for_report
-        for_slice(Host.all).in_batches(of: 1_000)
+      def self.for_report(portal_user)
+        org_ids = Organization
+                  .where(
+                    telemetry_configuration: {
+                      portal_user: portal_user,
+                      enable_telemetry: true
+                    }
+                  ).select(:id)
+        for_slice(Host.where(organization_id: org_ids)).in_batches(of: 1_000)
       end
     end
   end

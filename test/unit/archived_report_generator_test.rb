@@ -46,12 +46,13 @@ class ArchivedReportGeneratorTest < ActiveSupport::TestCase
 
   test 'generates a report for a single host' do
     batches = Host.where(id: @host.id).in_batches
+    portal_user = 'test_portal_user'
 
-    ForemanYupana::Generators::Queries.expects(:for_report).returns(batches)
+    ForemanYupana::Generators::Queries.expects(:for_report).with(portal_user).returns(batches)
     Dir.mktmpdir do |tmpdir|
       target = File.join(tmpdir, 'test.tar.gz')
       generator = ForemanYupana::Generators::ArchivedReport.new(target, Logger.new(STDOUT))
-      generator.render
+      generator.render(portal_user)
 
       files = Dir["#{tmpdir}/*"]
       assert_equal "#{tmpdir}/test.tar.gz", files.first

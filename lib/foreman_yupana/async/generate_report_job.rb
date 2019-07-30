@@ -1,12 +1,17 @@
 module ForemanYupana
   module Async
     class GenerateReportJob < ShellProcess
-      def perform(output_label, result_file)
+      def self.output_label(portal_user)
+        "report_for_#{portal_user}"
+      end
+
+      def perform(result_file, portal_user)
         @result_file = result_file
+        @portal_user = portal_user
 
-        super(output_label)
+        super(GenerateReportJob.output_label)
 
-        QueueForUploadJob.perform_async(result_file)
+        QueueForUploadJob.perform_async(result_file, portal_user)
       end
 
       def command
@@ -15,7 +20,8 @@ module ForemanYupana
 
       def env
         super.merge(
-          'target' => @result_file
+          'target' => @result_file,
+          'portal_user' => @portal_user
         )
       end
     end
