@@ -1,27 +1,35 @@
 module ForemanYupana
   module Async
     class UploadReportJob < ShellProcess
-      def perform(output_label)
-        super(output_label)
+      def self.output_label(portal_user)
+        "upload_for_#{portal_user}"
+      end
+
+      def perform(filename, portal_user)
+        @portal_user = portal_user
+        @filename = filename
+
+        super(UploadReportJob.output_label(portal_user))
       end
 
       def command
-        ForemanYupana.upload_script_file
+        File.join(File.dirname(@filename), ForemanYupana.upload_script_file)
       end
 
       def env
         super.merge(
           'RH_USERNAME' => rh_username,
-          'RH_PASSWORD' => rh_password
+          'RH_PASSWORD' => rh_password,
+          'FILES' => @filename
         )
       end
 
       def rh_credentials
-        @rh_credentials ||= RedhatAccess::TelemetryConfiguration.not.where(portal_user: nil).last
+        @rh_credentials ||= RedhatAccess::TelemetryConfiguration.where(portal_user: @portal_user).last
       end
 
       def rh_username
-        rh_credentials.portal_user
+        @portal_user
       end
 
       def rh_password

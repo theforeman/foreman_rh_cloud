@@ -16,7 +16,7 @@ module ForemanYupana
 
       def buffer
         @buffer ||= begin
-                      File.open(@label, file_mode)
+                      File.open(file_name, file_mode)
                     rescue Errno::ENOENT
                       StringIO.new
                     end

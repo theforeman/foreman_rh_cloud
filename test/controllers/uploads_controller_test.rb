@@ -5,13 +5,14 @@ class UploadsControllerTest < ActionController::TestCase
 
   test 'Returns latest upload status' do
     progress_output = mock('progress_output')
+    test_portal_user = 'test_portal_user'
     ForemanYupana::Async::ProgressOutput
       .expects(:get)
-      .with(ForemanYupana.uploader_output)
+      .with(ForemanYupana::Async::UploadReportJob.output_label(test_portal_user))
       .returns(progress_output)
     progress_output.expects(:full_output).returns('test output')
 
-    get :last, session: set_session_user
+    get :last, params: { portal_user: test_portal_user }, session: set_session_user
 
     assert_response :success
     actual = JSON.parse(response.body)
