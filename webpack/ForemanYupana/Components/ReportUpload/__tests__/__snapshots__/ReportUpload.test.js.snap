@@ -19,13 +19,6 @@ exports[`ReportUpload rendering render with Props 1`] = `
     }
   />
   <TabFooter>
-    <Tree
-      files={
-        Array [
-          "some-file",
-        ]
-      }
-    />
     <FileDownload
       onClick={[Function]}
     />
@@ -52,9 +45,6 @@ exports[`ReportUpload rendering render without Props 1`] = `
     }
   />
   <TabFooter>
-    <Tree
-      files={Array []}
-    />
     <FileDownload
       onClick={[Function]}
     />

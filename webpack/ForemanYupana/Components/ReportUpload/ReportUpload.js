@@ -5,7 +5,6 @@ import TabContainer from '../TabContainer';
 import TabHeader from '../TabHeader';
 import TabFooter from '../TabFooter';
 import TabBody from '../TabBody';
-import Tree from '../Tree';
 import FileDownload from '../FileDownload';
 import './reportUpload.scss';
 
@@ -14,7 +13,6 @@ const ReportUpload = ({
   loading,
   logs,
   completed,
-  files,
   downloadReports,
   restartProcess,
   error,
@@ -28,7 +26,6 @@ const ReportUpload = ({
       error={error}
     />
     <TabFooter>
-      <Tree files={files} />
       <FileDownload onClick={downloadReports} />
     </TabFooter>
   </TabContainer>
@@ -43,7 +40,6 @@ ReportUpload.propTypes = {
   ]),
   completed: PropTypes.number,
   restartProcess: PropTypes.func,
-  files: PropTypes.arrayOf(PropTypes.string),
   downloadReports: PropTypes.func,
   error: PropTypes.string,
 };
@@ -54,7 +50,6 @@ ReportUpload.defaultProps = {
   logs: ['No running process'],
   completed: 0,
   restartProcess: noop,
-  files: [],
   downloadReports: noop,
   error: null,
 };
