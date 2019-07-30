@@ -4,9 +4,9 @@ import { noop, Grid, Button, Icon } from 'patternfly-react';
 import './fileDownload.scss';
 
 const FileDownload = ({ onClick }) => (
-  <Grid.Col sm={3}>
+  <Grid.Col sm={12}>
     <Button onClick={onClick} className="download-button">
-      Download Files <Icon name="download" />
+      Download Report <Icon name="download" />
     </Button>
   </Grid.Col>
 );

@@ -4,7 +4,7 @@ exports[`FileDownload rendering render without Props 1`] = `
 <Col
   bsClass="col"
   componentClass="div"
-  sm={3}
+  sm={12}
 >
   <Button
     active={false}
@@ -15,7 +15,7 @@ exports[`FileDownload rendering render without Props 1`] = `
     disabled={false}
     onClick={[Function]}
   >
-    Download Files 
+    Download Report 
     <Icon
       name="download"
       type="fa"
