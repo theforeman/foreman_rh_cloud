@@ -10,29 +10,36 @@ import {
 } from './DashboardConstants';
 import { selectActiveTab } from './DashboardSelectors';
 
-export const startPolling = pollingProcessID => ({
+export const startPolling = (accountID, pollingProcessID) => ({
   type: YUPANA_POLLING_START,
   payload: {
+    accountID,
     pollingProcessID,
   },
 });
 
-export const stopPolling = pollingProcessID => dispatch => {
+export const stopPolling = (accountID, pollingProcessID) => dispatch => {
   clearInterval(pollingProcessID);
   dispatch({
     type: YUPANA_POLLING_STOP,
+    payload: {
+      accountID,
+    },
   });
 };
 
-export const fetchLogs = () => async (dispatch, getState) => {
-  const activeTab = selectActiveTab(getState());
+export const fetchLogs = accountID => async (dispatch, getState) => {
+  const activeTab = selectActiveTab(getState(), accountID);
   try {
+    const processController = activeTab === 'uploading' ? 'uploads' : 'reports';
     const {
       data: { output, status },
-    } = await API.get(`${activeTab}/last`);
+    } = await API.get(`${accountID}/${processController}/last`);
     dispatch({
       type: YUPANA_POLLING,
       payload: {
+        accountID,
+        activeTab,
         logs: output,
         exitCode: status,
       },
@@ -41,27 +48,33 @@ export const fetchLogs = () => async (dispatch, getState) => {
     dispatch({
       type: YUPANA_POLLING_ERROR,
       payload: {
+        accountID,
+        activeTab,
         error: error.message,
       },
     });
   }
 };
 
-export const setActiveTab = tabName => ({
+export const setActiveTab = (accountID, tabName) => ({
   type: YUPANA_TAB_CHANGED,
   payload: {
+    accountID,
     activeTab: tabName,
   },
 });
 
-export const restartProcess = () =>
+export const restartProcess = accountID =>
   // const activeTab = selectActiveTab(getState());
   // TODO: add API call here.
   ({
     type: YUPANA_PROCESS_RESTART,
+    payload: {
+      accountID,
+    },
   });
 
-export const downloadReports = () => dispatch => {
+export const downloadReports = accountID => dispatch => {
   // TODO: Add API call here
   setTimeout(() => {
     const response = {
@@ -74,5 +87,8 @@ export const downloadReports = () => dispatch => {
   }, 100);
   dispatch({
     type: YUPANA_REPORTS_DOWNLOAD,
+    payload: {
+      accountID,
+    },
   });
 };

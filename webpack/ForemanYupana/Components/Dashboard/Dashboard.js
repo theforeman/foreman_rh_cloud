@@ -8,24 +8,33 @@ import './dashboard.scss';
 
 class Dashboard extends React.Component {
   componentDidMount() {
-    const { startPolling, fetchLogs } = this.props;
-    const pollingProcessID = setInterval(fetchLogs, 5000);
-    startPolling(pollingProcessID);
+    const { startPolling, fetchLogs, accountID } = this.props;
+    const pollingProcessID = setInterval(() => fetchLogs(accountID), 5000);
+    startPolling(accountID, pollingProcessID);
   }
 
   componentWillUnmount() {
-    const { stopPolling, pollingProcessID } = this.props;
-    stopPolling(pollingProcessID);
+    const { stopPolling, pollingProcessID, accountID } = this.props;
+    stopPolling(accountID, pollingProcessID);
   }
 
+  handleDownload = () => {
+    const { downloadReports, accountID } = this.props;
+    downloadReports(accountID);
+  };
+
+  handleRestart = () => {
+    const { restartProcess, accountID } = this.props;
+    restartProcess(accountID);
+  };
+
+  handleTabChange = tabName => {
+    const { setActiveTab, accountID } = this.props;
+    setActiveTab(accountID, tabName);
+  };
+
   render() {
-    const {
-      setActiveTab,
-      uploading,
-      generating,
-      restartProcess,
-      downloadReports,
-    } = this.props;
+    const { uploading, generating } = this.props;
     return (
       <NavContainer
         items={[
@@ -33,15 +42,19 @@ class Dashboard extends React.Component {
             icon: 'database',
             name: 'Generating',
             component: ReportGenerate,
-            props: { ...generating, restartProcess },
-            onClick: () => setActiveTab('reports'),
+            props: { ...generating, restartProcess: this.handleRestart },
+            onClick: () => this.handleTabChange('generating'),
           },
           {
             icon: 'cloud-upload',
             name: 'Uploading',
             component: ReportUpload,
-            props: { ...uploading, restartProcess, downloadReports },
-            onClick: () => setActiveTab('uploads'),
+            props: {
+              ...uploading,
+              restartProcess: this.handleRestart,
+              downloadReports: this.handleDownload,
+            },
+            onClick: () => this.handleTabChange('uploading'),
           },
         ]}
       />
@@ -50,6 +63,8 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
+  accountID: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
   startPolling: PropTypes.func,
   fetchLogs: PropTypes.func,
   stopPolling: PropTypes.func,

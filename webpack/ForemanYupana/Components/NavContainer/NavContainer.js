@@ -26,7 +26,7 @@ const NavContainer = ({ items }) => {
     </TabPane>
   ));
   return (
-    <TabContainer id="basic-tabs-pf" defaultActiveKey={1}>
+    <TabContainer id="basic-tabs-pf" defaultActiveKey={0}>
       <div className="dashboard">
         <Nav bsClass="nav nav-tabs nav-tabs-pf nav-justified">{navItems}</Nav>
         <TabContent animation>{tabComponents}</TabContent>

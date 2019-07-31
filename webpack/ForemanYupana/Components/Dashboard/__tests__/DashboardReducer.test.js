@@ -10,11 +10,11 @@ import reducer from '../DashboardReducer';
 import {
   pollingProcessID,
   logs,
-  completed,
   initialState,
-  files,
   activeTab,
   error,
+  accountID,
+  exitCode,
 } from '../Dashboard.fixtures';
 
 const fixtures = {
@@ -24,6 +24,7 @@ const fixtures = {
       type: YUPANA_POLLING_START,
       payload: {
         pollingProcessID,
+        accountID,
       },
     },
   },
@@ -32,8 +33,9 @@ const fixtures = {
       type: YUPANA_POLLING,
       payload: {
         logs,
-        completed,
-        files,
+        exitCode,
+        accountID,
+        activeTab,
       },
     },
   },
@@ -42,6 +44,7 @@ const fixtures = {
       type: YUPANA_TAB_CHANGED,
       payload: {
         activeTab,
+        accountID,
       },
     },
   },
@@ -50,6 +53,8 @@ const fixtures = {
       type: YUPANA_POLLING_ERROR,
       payload: {
         error,
+        accountID,
+        activeTab,
       },
     },
   },

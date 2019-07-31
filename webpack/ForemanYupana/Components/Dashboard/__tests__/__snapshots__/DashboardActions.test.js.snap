@@ -4,6 +4,9 @@ exports[`Dashboard actions should downloadReports 1`] = `
 Array [
   Array [
     Object {
+      "payload": Object {
+        "accountID": "some-account-ID",
+      },
       "type": "YUPANA_REPORTS_DOWNLOAD",
     },
   ],
@@ -15,6 +18,8 @@ Array [
   Array [
     Object {
       "payload": Object {
+        "accountID": "some-account-ID",
+        "activeTab": undefined,
         "exitCode": 0,
         "logs": Array [
           "some-logs...",
@@ -28,6 +33,9 @@ Array [
 
 exports[`Dashboard actions should restartProcess 1`] = `
 Object {
+  "payload": Object {
+    "accountID": "some-account-ID",
+  },
   "type": "YUPANA_PROCESS_RESTART",
 }
 `;
@@ -35,6 +43,7 @@ Object {
 exports[`Dashboard actions should setActiveTab 1`] = `
 Object {
   "payload": Object {
+    "accountID": "some-account-ID",
     "activeTab": "uploads",
   },
   "type": "YUPANA_TAB_CHANGED",
@@ -44,6 +53,7 @@ Object {
 exports[`Dashboard actions should startPolling 1`] = `
 Object {
   "payload": Object {
+    "accountID": "some-account-ID",
     "pollingProcessID": 1,
   },
   "type": "YUPANA_POLLING_START",
@@ -54,6 +64,9 @@ exports[`Dashboard actions should stopPolling 1`] = `
 Array [
   Array [
     Object {
+      "payload": Object {
+        "accountID": "some-account-ID",
+      },
       "type": "YUPANA_POLLING_STOP",
     },
   ],

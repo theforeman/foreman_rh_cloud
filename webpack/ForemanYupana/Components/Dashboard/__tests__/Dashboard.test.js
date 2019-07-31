@@ -2,10 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { testComponentSnapshotsWithFixtures } from 'react-redux-test-utils';
 import Dashboard from '../Dashboard';
-import * as props from '../Dashboard.fixtures';
+import { props } from '../Dashboard.fixtures';
 
 const fixtures = {
-  'render without Props': {},
   'with props': props,
 };
 

@@ -8,7 +8,12 @@ import {
   downloadReports,
   restartProcess,
 } from '../DashboardActions';
-import { pollingProcessID, serverMock, activeTab } from '../Dashboard.fixtures';
+import {
+  pollingProcessID,
+  serverMock,
+  activeTab,
+  accountID,
+} from '../Dashboard.fixtures';
 
 jest.mock('foremanReact/API');
 API.get.mockImplementation(() => serverMock);
@@ -21,13 +26,13 @@ const runWithGetState = (state, action, params) => dispatch => {
 };
 
 const fixtures = {
-  'should startPolling': () => startPolling(pollingProcessID),
+  'should startPolling': () => startPolling(accountID, pollingProcessID),
   'should fetchLogs': () =>
-    runWithGetState({ activeTab: 'uploads' }, fetchLogs),
-  'should stopPolling': () => stopPolling(pollingProcessID),
-  'should setActiveTab': () => setActiveTab(activeTab),
-  'should downloadReports': () => downloadReports(),
-  'should restartProcess': () => restartProcess(),
+    runWithGetState({ activeTab: 'uploads' }, fetchLogs, accountID),
+  'should stopPolling': () => stopPolling(accountID, pollingProcessID),
+  'should setActiveTab': () => setActiveTab(accountID, activeTab),
+  'should downloadReports': () => downloadReports(accountID),
+  'should restartProcess': () => restartProcess(accountID),
 };
 
 describe('Dashboard actions', () => testActionSnapshotWithFixtures(fixtures));

@@ -11,30 +11,34 @@ import {
   completed,
   pollingProcessID,
   activeTab,
+  accountID,
 } from '../Dashboard.fixtures';
 
 const state = {
   dashboard: {
-    generating: {
-      logs,
-      completed,
+    [accountID]: {
+      generating: {
+        logs,
+        completed,
+      },
+      uploading: {
+        logs,
+        completed,
+      },
+      activeTab,
+      pollingProcessID,
     },
-    uploading: {
-      logs,
-      completed,
-    },
-    activeTab,
-    pollingProcessID,
   },
 };
 
 const fixtures = {
-  'should return Dashboard': () => selectDashboard(state),
-  'should return Dashboard uploading': () => selectUploading(state),
-  'should return Dashboard generating': () => selectGenerating(state),
+  'should return Dashboard': () => selectDashboard(state, accountID),
+  'should return Dashboard uploading': () => selectUploading(state, accountID),
+  'should return Dashboard generating': () =>
+    selectGenerating(state, accountID),
   'should return Dashboard pollingProcessID': () =>
-    selectPollingProcessID(state),
-  'should return Dashboard activeTab': () => selectActiveTab(state),
+    selectPollingProcessID(state, accountID),
+  'should return Dashboard activeTab': () => selectActiveTab(state, accountID),
 };
 
 describe('Dashboard selectors', () =>
