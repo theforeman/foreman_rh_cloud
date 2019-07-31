@@ -1,16 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Dashboard actions should downloadReports 1`] = `
-Array [
-  Array [
-    Object {
-      "payload": Object {
-        "accountID": "some-account-ID",
-      },
-      "type": "YUPANA_REPORTS_DOWNLOAD",
-    },
-  ],
-]
+Object {
+  "payload": Object {
+    "accountID": "some-account-ID",
+  },
+  "type": "YUPANA_REPORTS_DOWNLOAD",
+}
 `;
 
 exports[`Dashboard actions should fetchLogs 1`] = `

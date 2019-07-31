@@ -74,21 +74,12 @@ export const restartProcess = accountID =>
     },
   });
 
-export const downloadReports = accountID => dispatch => {
-  // TODO: Add API call here
-  setTimeout(() => {
-    const response = {
-      file:
-        'https://download.fedoraproject.org/pub/fedora/linux/releases/30/Workstation/x86_64/iso/Fedora-Workstation-netinst-x86_64-30-1.2.iso',
-    };
-    // server sent the url to the file!
-    // now, let's download:
-    window.location.href = response.file;
-  }, 100);
-  dispatch({
+export const downloadReports = accountID => {
+  window.location.href = `/foreman_yupana/${accountID}/uploads/file`;
+  return {
     type: YUPANA_REPORTS_DOWNLOAD,
     payload: {
       accountID,
     },
-  });
+  };
 };
