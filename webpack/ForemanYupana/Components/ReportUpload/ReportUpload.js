@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { noop } from 'patternfly-react';
 import TabContainer from '../TabContainer';
 import TabHeader from '../TabHeader';
-import TabFooter from '../TabFooter';
 import TabBody from '../TabBody';
-import FileDownload from '../FileDownload';
 import './reportUpload.scss';
 
 const ReportUpload = ({
@@ -18,16 +16,17 @@ const ReportUpload = ({
   error,
 }) => (
   <TabContainer className="report-upload">
-    <TabHeader exitCode={exitCode} onRestart={restartProcess} />
+    <TabHeader
+      exitCode={exitCode}
+      onRestart={restartProcess}
+      onDownload={downloadReports}
+    />
     <TabBody
       loading={loading}
       logs={logs}
       completed={completed}
       error={error}
     />
-    <TabFooter>
-      <FileDownload onClick={downloadReports} />
-    </TabFooter>
   </TabContainer>
 );
 
