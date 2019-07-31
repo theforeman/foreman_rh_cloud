@@ -14,15 +14,7 @@ class ShellProcessJobTest < ActiveSupport::TestCase
     end
   end
 
-  setup do
-    @tmpdir = Dir.mktmpdir('shell_job_test_root')
-
-    ForemanYupana.stubs(:base_folder).returns(@tmpdir)
-  end
-
-  teardown do
-    FileUtils.remove_entry @tmpdir
-  end
+  include FolderIsolation
 
   test 'Runs a process with environment vars' do
     label = Foreman.uuid
