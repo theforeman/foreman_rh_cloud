@@ -2,7 +2,7 @@
 
 exports[`NavContainer rendering render with Props 1`] = `
 <Uncontrolled(TabContainer)
-  defaultActiveKey={1}
+  defaultActiveKey={0}
   id="basic-tabs-pf"
 >
   <div
@@ -53,7 +53,7 @@ exports[`NavContainer rendering render with Props 1`] = `
 
 exports[`NavContainer rendering render without Props 1`] = `
 <Uncontrolled(TabContainer)
-  defaultActiveKey={1}
+  defaultActiveKey={0}
   id="basic-tabs-pf"
 >
   <div

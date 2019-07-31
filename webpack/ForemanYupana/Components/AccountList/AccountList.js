@@ -11,15 +11,15 @@ class AccountList extends Component {
   render() {
     const mockList = [
       {
-        name: 'Acount 1',
+        name: 'Account 1',
         status: { uploading: 'running', generating: 'running' },
       },
       {
-        name: 'Acount 2',
+        name: 'Account 2',
         status: { uploading: 'stopped', generating: 'failure' },
       },
       {
-        name: 'Acount 3',
+        name: 'Account 3',
         status: { uploading: 'success', generating: 'running' },
       },
     ];

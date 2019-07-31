@@ -1,33 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Dashboard rendering render without Props 1`] = `
-<NavContainer
-  items={
-    Array [
-      Object {
-        "component": [Function],
-        "icon": "database",
-        "name": "Generating",
-        "onClick": [Function],
-        "props": Object {
-          "restartProcess": [Function],
-        },
-      },
-      Object {
-        "component": [Function],
-        "icon": "cloud-upload",
-        "name": "Uploading",
-        "onClick": [Function],
-        "props": Object {
-          "downloadReports": [Function],
-          "restartProcess": [Function],
-        },
-      },
-    ]
-  }
-/>
-`;
-
 exports[`Dashboard rendering with props 1`] = `
 <NavContainer
   items={

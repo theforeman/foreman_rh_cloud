@@ -2,120 +2,43 @@
 
 exports[`Dashboard reducer should handle YUPANA_POLLING 1`] = `
 Object {
-  "activeTab": "uploads",
-  "generating": Object {
-    "completed": 0,
-    "error": null,
-    "logs": Array [
-      "No running process",
-      "--------------------",
-    ],
-  },
-  "pollingProcessID": 0,
-  "uploading": Object {
-    "completed": 25,
-    "files": Array [
-      "some-file",
-    ],
-    "logs": Array [
-      "some-logs...",
-    ],
+  "some-account-ID": Object {
+    "uploads": Object {
+      "error": null,
+      "exitCode": 0,
+      "logs": Array [
+        "some-logs...",
+      ],
+    },
   },
 }
 `;
 
 exports[`Dashboard reducer should handle YUPANA_POLLING_ERROR 1`] = `
 Object {
-  "activeTab": "uploads",
-  "generating": Object {
-    "completed": 0,
-    "error": null,
-    "logs": Array [
-      "No running process",
-      "--------------------",
-    ],
-  },
-  "pollingProcessID": 0,
-  "uploading": Object {
-    "completed": 0,
-    "error": "some-error",
-    "files": Array [],
-    "logs": Array [
-      "No running process",
-      "--------------------",
-    ],
+  "some-account-ID": Object {
+    "uploads": Object {
+      "error": "some-error",
+    },
   },
 }
 `;
 
 exports[`Dashboard reducer should handle YUPANA_POLLING_START 1`] = `
 Object {
-  "activeTab": "uploads",
-  "generating": Object {
-    "completed": 0,
-    "error": null,
-    "logs": Array [
-      "No running process",
-      "--------------------",
-    ],
-  },
-  "pollingProcessID": 1,
-  "uploading": Object {
-    "completed": 0,
-    "error": null,
-    "files": Array [],
-    "logs": Array [
-      "No running process",
-      "--------------------",
-    ],
+  "some-account-ID": Object {
+    "activeTab": "generating",
+    "pollingProcessID": 1,
   },
 }
 `;
 
 exports[`Dashboard reducer should handle YUPANA_TAB_CHANGED 1`] = `
 Object {
-  "activeTab": "uploads",
-  "generating": Object {
-    "completed": 0,
-    "error": null,
-    "logs": Array [
-      "No running process",
-      "--------------------",
-    ],
-  },
-  "pollingProcessID": 0,
-  "uploading": Object {
-    "completed": 0,
-    "error": null,
-    "files": Array [],
-    "logs": Array [
-      "No running process",
-      "--------------------",
-    ],
+  "some-account-ID": Object {
+    "activeTab": "uploads",
   },
 }
 `;
 
-exports[`Dashboard reducer should return the initial state 1`] = `
-Object {
-  "activeTab": "uploads",
-  "generating": Object {
-    "completed": 0,
-    "error": null,
-    "logs": Array [
-      "No running process",
-      "--------------------",
-    ],
-  },
-  "pollingProcessID": 0,
-  "uploading": Object {
-    "completed": 0,
-    "error": null,
-    "files": Array [],
-    "logs": Array [
-      "No running process",
-      "--------------------",
-    ],
-  },
-}
-`;
+exports[`Dashboard reducer should return the initial state 1`] = `Object {}`;

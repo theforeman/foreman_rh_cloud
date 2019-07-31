@@ -13,7 +13,7 @@ const ListItem = ({ name, status, initExpanded }) => (
     hideCloseIcon
     initExpanded={initExpanded}
   >
-    <Dashboard id={name} />
+    <Dashboard accountID={name} />
   </ListView.Item>
 );
 

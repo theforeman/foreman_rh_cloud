@@ -13,11 +13,11 @@ import {
 } from './DashboardSelectors';
 
 // map state to props
-const mapStateToProps = state => ({
-  uploading: selectUploading(state),
-  generating: selectGenerating(state),
-  pollingProcessID: selectPollingProcessID(state),
-  activeTab: selectActiveTab(state),
+const mapStateToProps = (state, { accountID }) => ({
+  uploading: selectUploading(state, accountID),
+  generating: selectGenerating(state, accountID),
+  pollingProcessID: selectPollingProcessID(state, accountID),
+  activeTab: selectActiveTab(state, accountID),
 });
 
 // map action dispatchers to props

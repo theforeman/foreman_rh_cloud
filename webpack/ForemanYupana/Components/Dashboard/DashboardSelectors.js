@@ -1,8 +1,12 @@
 import { selectForemanYupana } from '../../ForemanYupanaSelectors';
 
-export const selectDashboard = state => selectForemanYupana(state).dashboard;
-export const selectUploading = state => selectDashboard(state).uploading;
-export const selectGenerating = state => selectDashboard(state).generating;
-export const selectPollingProcessID = state =>
-  selectDashboard(state).pollingProcessID;
-export const selectActiveTab = state => selectDashboard(state).activeTab;
+export const selectDashboard = (state, accountID) =>
+  selectForemanYupana(state).dashboard[accountID] || {};
+export const selectUploading = (state, accountID) =>
+  selectDashboard(state, accountID).uploading;
+export const selectGenerating = (state, accountID) =>
+  selectDashboard(state, accountID).generating;
+export const selectPollingProcessID = (state, accountID) =>
+  selectDashboard(state, accountID).pollingProcessID;
+export const selectActiveTab = (state, accountID) =>
+  selectDashboard(state, accountID).activeTab;
