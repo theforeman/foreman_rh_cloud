@@ -6,7 +6,11 @@ module ForemanYupana
   end
 
   def self.uploads_folder(group)
-    @uploads_folder ||= ensure_folder(File.join(ForemanYupana.base_folder, 'uploads/', "#{group}/"))
+    @uploads_folders ||= {}
+    cache = @uploads_folders[group]
+    return cache if cache
+
+    @uploads_folders[group] = ensure_folder(File.join(ForemanYupana.base_folder, 'uploads/', "#{group}/"))
   end
 
   def self.outputs_folder

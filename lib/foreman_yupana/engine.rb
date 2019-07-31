@@ -1,3 +1,7 @@
+require 'katello'
+require 'redhat_access'
+require 'sucker_punch'
+
 module ForemanYupana
   class Engine < ::Rails::Engine
     engine_name 'foreman_yupana'
