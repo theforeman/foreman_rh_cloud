@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountList rendering render without Props 1`] = `
+<ListView
+  className=""
+>
+  <ListItem
+    initExpanded={true}
+    key="0"
+    name="Acount 1"
+    status={
+      Object {
+        "generating": "running",
+        "uploading": "running",
+      }
+    }
+  />
+  <ListItem
+    initExpanded={false}
+    key="1"
+    name="Acount 2"
+    status={
+      Object {
+        "generating": "failure",
+        "uploading": "stopped",
+      }
+    }
+  />
+  <ListItem
+    initExpanded={false}
+    key="2"
+    name="Acount 3"
+    status={
+      Object {
+        "generating": "running",
+        "uploading": "success",
+      }
+    }
+  />
+</ListView>
+`;

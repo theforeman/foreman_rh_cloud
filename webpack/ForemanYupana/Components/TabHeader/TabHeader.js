@@ -5,10 +5,10 @@ import './tabHeader.scss';
 
 const TabHeader = ({ exitCode, onRestart }) => (
   <Grid.Row className="tab-header">
-    <Grid.Col sm={4}>
+    <Grid.Col sm={8}>
       <h1># Exit Code: {exitCode}</h1>
     </Grid.Col>
-    <Grid.Col sm={4} smOffset={4}>
+    <Grid.Col sm={4}>
       <Button bsStyle="primary" onClick={onRestart}>
         Restart
       </Button>
