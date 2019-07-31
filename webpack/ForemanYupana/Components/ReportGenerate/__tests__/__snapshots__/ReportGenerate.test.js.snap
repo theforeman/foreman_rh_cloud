@@ -6,6 +6,7 @@ exports[`ReportGenerate rendering render with Props 1`] = `
 >
   <TabHeader
     exitCode={0}
+    onDownload={null}
     onRestart={[Function]}
   />
   <TabBody
@@ -27,6 +28,7 @@ exports[`ReportGenerate rendering render without Props 1`] = `
 >
   <TabHeader
     exitCode={0}
+    onDownload={null}
     onRestart={[Function]}
   />
   <TabBody
