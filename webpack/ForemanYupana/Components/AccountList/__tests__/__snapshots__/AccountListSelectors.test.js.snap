@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountList selectors should return AccountList 1`] = `
+Object {
+  "bool": false,
+}
+`;
+
+exports[`AccountList selectors should return AccountList bool 1`] = `false`;

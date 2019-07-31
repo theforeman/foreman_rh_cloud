@@ -9,7 +9,7 @@ exports[`TabHeader rendering render without Props 1`] = `
   <Col
     bsClass="col"
     componentClass="div"
-    sm={4}
+    sm={8}
   >
     <h1>
       # Exit Code: 
@@ -19,7 +19,6 @@ exports[`TabHeader rendering render without Props 1`] = `
     bsClass="col"
     componentClass="div"
     sm={4}
-    smOffset={4}
   >
     <Button
       active={false}

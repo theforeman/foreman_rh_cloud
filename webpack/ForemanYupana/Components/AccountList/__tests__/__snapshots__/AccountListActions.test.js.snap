@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountList actions should changeBool 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "bool": true,
+      },
+      "type": "ACCOUNTLIST_CHANGE_BOOL",
+    },
+  ],
+]
+`;

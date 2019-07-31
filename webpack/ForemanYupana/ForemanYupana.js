@@ -1,12 +1,11 @@
 import React from 'react';
-import Dashboard from './Components/Dashboard';
-import {
-  generating,
-  uploading,
-} from './Components/Dashboard/Dashboard.fixtures';
+import AccountList from './Components/AccountList/AccountList';
 
 const ForemanYupana = () => (
-  <Dashboard generating={generating} uploading={uploading} />
+  <div className="foreman-yupana">
+    <h1>Red Hat Inventory Uploads</h1>
+    <AccountList />
+  </div>
 );
 
 export default ForemanYupana;
