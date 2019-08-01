@@ -34,7 +34,7 @@ module ForemanYupana
 
         script_source = File.join(ForemanYupana::Engine.root, 'app/views/scripts/uploader.sh.erb')
 
-        template_src = Foreman::Renderer::Source::String(File.read(script_source))
+        template_src = Foreman::Renderer::Source::String.new(content: File.read(script_source))
         scope = Foreman::Renderer.get_scope(
           source: template_src,
           klass: Foreman::Renderer::Scope::Base,
