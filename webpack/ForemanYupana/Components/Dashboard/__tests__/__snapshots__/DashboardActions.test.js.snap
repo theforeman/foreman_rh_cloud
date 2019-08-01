@@ -28,12 +28,16 @@ Array [
 `;
 
 exports[`Dashboard actions should restartProcess 1`] = `
-Object {
-  "payload": Object {
-    "accountID": "some-account-ID",
-  },
-  "type": "YUPANA_PROCESS_RESTART",
-}
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "accountID": "some-account-ID",
+      },
+      "type": "YUPANA_PROCESS_RESTART",
+    },
+  ],
+]
 `;
 
 exports[`Dashboard actions should setActiveTab 1`] = `
