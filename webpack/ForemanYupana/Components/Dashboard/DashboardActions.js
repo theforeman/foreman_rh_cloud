@@ -64,15 +64,17 @@ export const setActiveTab = (accountID, tabName) => ({
   },
 });
 
-export const restartProcess = accountID =>
-  // const activeTab = selectActiveTab(getState());
-  // TODO: add API call here.
-  ({
+export const restartProcess = accountID => (dispatch, getState) => {
+  const activeTab = selectActiveTab(getState(), accountID);
+  const processController = activeTab === 'uploading' ? 'uploads' : 'reports';
+  API.post(`${accountID}/${processController}`);
+  dispatch({
     type: YUPANA_PROCESS_RESTART,
     payload: {
       accountID,
     },
   });
+};
 
 export const downloadReports = accountID => {
   window.location.href = `/foreman_yupana/${accountID}/uploads/file`;

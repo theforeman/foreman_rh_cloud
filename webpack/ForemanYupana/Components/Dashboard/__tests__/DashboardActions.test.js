@@ -32,7 +32,8 @@ const fixtures = {
   'should stopPolling': () => stopPolling(accountID, pollingProcessID),
   'should setActiveTab': () => setActiveTab(accountID, activeTab),
   'should downloadReports': () => downloadReports(accountID),
-  'should restartProcess': () => restartProcess(accountID),
+  'should restartProcess': () =>
+    runWithGetState({ activeTab: 'reports' }, restartProcess, accountID),
 };
 
 describe('Dashboard actions', () => testActionSnapshotWithFixtures(fixtures));
