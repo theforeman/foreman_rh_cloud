@@ -30,7 +30,7 @@ module ForemanYupana
       end
 
       def ensure_output_script
-        return if File.exits?(script_file)
+        return if File.exist?(script_file)
 
         template_src = Foreman::Renderer::Source::String(File.read('app/views/scripts/uploader.sh.erb'))
         scope = Foreman::Renderer.get_scope(
