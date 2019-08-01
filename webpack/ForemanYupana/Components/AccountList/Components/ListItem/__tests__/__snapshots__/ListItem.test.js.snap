@@ -8,8 +8,8 @@ exports[`ListItem rendering render with Props 1`] = `
       <ListItemStatus
         statuses={
           Object {
-            "generating": "unknown",
-            "uploading": "unknown",
+            "generate_report_status": "unknown",
+            "upload_report_status": "unknown",
           }
         }
       />,
@@ -39,8 +39,8 @@ exports[`ListItem rendering render with Props 1`] = `
     accountID="some-name"
     statuses={
       Object {
-        "generating": "unknown",
-        "uploading": "unknown",
+        "generate_report_status": "unknown",
+        "upload_report_status": "unknown",
       }
     }
   />

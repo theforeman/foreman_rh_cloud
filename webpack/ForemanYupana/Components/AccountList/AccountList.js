@@ -45,8 +45,8 @@ AccountList.propTypes = {
   stopAccountStatusPolling: PropTypes.func,
   pollingProcessID: PropTypes.number,
   statuses: PropTypes.shape({
-    generating: PropTypes.string,
-    uploading: PropTypes.string,
+    generate_report_status: PropTypes.string,
+    upload_report_status: PropTypes.string,
   }),
 };
 
@@ -56,8 +56,8 @@ AccountList.defaultProps = {
   stopAccountStatusPolling: noop,
   pollingProcessID: 0,
   statuses: {
-    generating: 'unknown',
-    uploading: 'unknown',
+    generate_report_status: 'unknown',
+    upload_report_status: 'unknown',
   },
 };
 

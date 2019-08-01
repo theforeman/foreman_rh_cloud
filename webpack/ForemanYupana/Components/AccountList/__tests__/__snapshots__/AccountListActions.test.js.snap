@@ -5,20 +5,9 @@ Array [
   Array [
     Object {
       "payload": Object {
-        "Account1": Object {
-          "generating": "running",
-          "uploading": "running",
-        },
-        "Account2": Object {
-          "generating": "failure",
-          "uploading": "unknown",
-        },
-        "Account3": Object {
-          "generating": "running",
-          "uploading": "success",
-        },
+        "error": "Cannot read property 'data' of undefined",
       },
-      "type": "YUPANA_ACCOUNT_STATUS_POLLING",
+      "type": "YUPANA_ACCOUNT_STATUS_POLLING_ERROR",
     },
   ],
 ]

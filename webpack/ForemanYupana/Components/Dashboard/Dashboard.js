@@ -45,7 +45,7 @@ class Dashboard extends React.Component {
             props: {
               ...generating,
               restartProcess: this.handleRestart,
-              exitCode: statuses.generating,
+              exitCode: statuses.generate_report_status,
             },
             onClick: () => this.handleTabChange('generating'),
           },
@@ -57,7 +57,7 @@ class Dashboard extends React.Component {
               ...uploading,
               restartProcess: this.handleRestart,
               downloadReports: this.handleDownload,
-              exitCode: statuses.uploading,
+              exitCode: statuses.upload_report_status,
             },
             onClick: () => this.handleTabChange('uploading'),
           },
@@ -99,8 +99,8 @@ Dashboard.propTypes = {
   downloadReports: PropTypes.func,
   pollingProcessID: PropTypes.number,
   statuses: PropTypes.shape({
-    generating: PropTypes.string,
-    uploading: PropTypes.string,
+    generate_report_status: PropTypes.string,
+    upload_report_status: PropTypes.string,
   }),
 };
 
@@ -115,8 +115,8 @@ Dashboard.defaultProps = {
   downloadReports: noop,
   pollingProcessID: 0,
   statuses: {
-    generating: 'unknown',
-    uploading: 'unknown',
+    generate_report_status: 'unknown',
+    upload_report_status: 'unknown',
   },
 };
 

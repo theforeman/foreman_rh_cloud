@@ -1,9 +1,18 @@
 import { noop } from 'patternfly-react';
 
 export const API_SUCCESS_RESPONSE = {
-  Account1: { uploading: 'running', generating: 'running' },
-  Account2: { uploading: 'unknown', generating: 'failure' },
-  Account3: { uploading: 'success', generating: 'running' },
+  Account1: {
+    upload_report_status: 'running',
+    generate_report_status: 'running',
+  },
+  Account2: {
+    upload_report_status: 'unknown',
+    generate_report_status: 'failure',
+  },
+  Account3: {
+    upload_report_status: 'success',
+    generate_report_status: 'running',
+  },
 };
 
 export const statuses = API_SUCCESS_RESPONSE;

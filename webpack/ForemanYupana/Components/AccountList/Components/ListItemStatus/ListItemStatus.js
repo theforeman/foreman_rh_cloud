@@ -14,11 +14,11 @@ const ListItemStatus = ({ statuses }) => {
     <Grid className="status">
       <Grid.Col sm={6} className="item">
         <p>Generating</p>
-        {statusIcons[statuses.generating]}
+        {statusIcons[statuses.generate_report_status]}
       </Grid.Col>
       <Grid.Col sm={6} className="item">
         <p>Uploading</p>
-        {statusIcons[statuses.uploading]}
+        {statusIcons[statuses.upload_report_status]}
       </Grid.Col>
     </Grid>
   );
@@ -26,15 +26,15 @@ const ListItemStatus = ({ statuses }) => {
 
 ListItemStatus.propTypes = {
   statuses: PropTypes.shape({
-    generating: PropTypes.string,
-    uploading: PropTypes.string,
+    generate_report_status: PropTypes.string,
+    upload_report_status: PropTypes.string,
   }),
 };
 
 ListItemStatus.defaultProps = {
   statuses: {
-    generating: 'unknown',
-    uploading: 'unknown',
+    generate_report_status: 'unknown',
+    uploupload_report_statusading: 'unknown',
   },
 };
 
