@@ -38,12 +38,13 @@ module ForemanYupana
 
       def self.for_report(portal_user)
         org_ids = Organization
+                  .joins(:telemetry_configuration)
                   .where(
-                    telemetry_configuration: {
+                    redhat_access_telemetry_configurations: {
                       portal_user: portal_user,
                       enable_telemetry: true
                     }
-                  ).select(:id)
+                  ).pluck(:id)
         for_slice(Host.where(organization_id: org_ids)).in_batches(of: 1_000)
       end
     end

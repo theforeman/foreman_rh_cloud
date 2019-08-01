@@ -8,5 +8,16 @@ module ForemanYupana
         output: output
       }, status: :ok
     end
+
+    def generate
+      portal_user = params[:portal_user]
+
+      generated_file_name = File.join(ForemanYupana.base_folder, "#{portal_user}.tar.gz")
+      ForemanYupana::Async::GenerateReportJob.perform_async(generated_file_name, portal_user)
+
+      render json: {
+        action_status: 'success'
+      }, status: :ok
+    end
   end
 end

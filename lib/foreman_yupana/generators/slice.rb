@@ -107,7 +107,9 @@ module ForemanYupana
       end
 
       def fact_value(host, fact_name)
-        value_record = host.fact_values.find { |fact_value| fact_value.fact_name_id == fact_names[fact_name] }
+        value_record = host.fact_values.find do |fact_value|
+          fact_value.fact_name_id == ForemanYupana::Generators::Queries.fact_names[fact_name]
+        end
         value_record&.value
       end
     end
