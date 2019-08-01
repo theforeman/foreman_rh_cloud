@@ -1,13 +1,49 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AccountList reducer should handle ACCOUNTLIST_CHANGE_BOOL 1`] = `
+exports[`AccountList reducer should handle YUPANA_ACCOUNT_STATUS_POLLING 1`] = `
 Object {
-  "bool": true,
+  "pollingProcessID": 0,
+  "statuses": Object {
+    "Account1": Object {
+      "generating": "running",
+      "uploading": "running",
+    },
+    "Account2": Object {
+      "generating": "failure",
+      "uploading": "stopped",
+    },
+    "Account3": Object {
+      "generating": "running",
+      "uploading": "success",
+    },
+  },
+}
+`;
+
+exports[`AccountList reducer should handle YUPANA_ACCOUNT_STATUS_POLLING_ERROR 1`] = `
+Object {
+  "pollingProcessID": 0,
+  "statuses": Object {},
+}
+`;
+
+exports[`AccountList reducer should handle YUPANA_ACCOUNT_STATUS_POLLING_START 1`] = `
+Object {
+  "pollingProcessID": 0,
+  "statuses": Object {},
+}
+`;
+
+exports[`AccountList reducer should handle YUPANA_ACCOUNT_STATUS_POLLING_STOP 1`] = `
+Object {
+  "pollingProcessID": 0,
+  "statuses": Object {},
 }
 `;
 
 exports[`AccountList reducer should return the initial state 1`] = `
 Object {
-  "bool": false,
+  "pollingProcessID": 0,
+  "statuses": Object {},
 }
 `;

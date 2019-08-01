@@ -1,8 +1,17 @@
 import { testActionSnapshotWithFixtures } from 'react-redux-test-utils';
-import { changeBool } from '../AccountListActions';
+import {
+  fetchAccountsStatus,
+  startAccountStatusPolling,
+  stopAccountStatusPolling,
+} from '../AccountListActions';
+import { pollingProcessID } from '../AccountList.fixtures';
 
 const fixtures = {
-  'should changeBool': () => changeBool({ bool: true }),
+  'should fetchAccountsStatus': () => fetchAccountsStatus(),
+  'should startAccountStatusPolling': () =>
+    startAccountStatusPolling(pollingProcessID),
+  'should stopAccountStatusPolling': () =>
+    stopAccountStatusPolling(pollingProcessID),
 };
 
 describe('AccountList actions', () => testActionSnapshotWithFixtures(fixtures));

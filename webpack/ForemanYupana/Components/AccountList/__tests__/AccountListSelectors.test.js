@@ -1,15 +1,25 @@
 import { testSelectorsSnapshotWithFixtures } from 'react-redux-test-utils';
-import { selectAccountList, selectBool } from '../AccountListSelectors';
+import {
+  selectAccountsList,
+  selectStatuses,
+  selectPollingProcessID,
+} from '../AccountListSelectors';
+import { pollingProcessID, statuses } from '../AccountList.fixtures';
 
 const state = {
-  accountList: {
-    bool: false,
+  ForemanYupana: {
+    accountsList: {
+      statuses,
+      pollingProcessID,
+    },
   },
 };
 
 const fixtures = {
-  'should return AccountList': () => selectAccountList(state),
-  'should return AccountList bool': () => selectBool(state),
+  'should return AccountsList': () => selectAccountsList(state),
+  'should return AccountList statuses': () => selectStatuses(state),
+  'should return AccountList pollingProcessID': () =>
+    selectPollingProcessID(state),
 };
 
 describe('AccountList selectors', () =>

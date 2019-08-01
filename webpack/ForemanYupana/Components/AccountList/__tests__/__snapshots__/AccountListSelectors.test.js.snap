@@ -1,9 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AccountList selectors should return AccountList 1`] = `
+exports[`AccountList selectors should return AccountList pollingProcessID 1`] = `0`;
+
+exports[`AccountList selectors should return AccountList statuses 1`] = `
 Object {
-  "bool": false,
+  "Account1": Object {
+    "generating": "running",
+    "uploading": "running",
+  },
+  "Account2": Object {
+    "generating": "failure",
+    "uploading": "stopped",
+  },
+  "Account3": Object {
+    "generating": "running",
+    "uploading": "success",
+  },
 }
 `;
 
-exports[`AccountList selectors should return AccountList bool 1`] = `false`;
+exports[`AccountList selectors should return AccountsList 1`] = `
+Object {
+  "pollingProcessID": 0,
+  "statuses": Object {
+    "Account1": Object {
+      "generating": "running",
+      "uploading": "running",
+    },
+    "Account2": Object {
+      "generating": "failure",
+      "uploading": "stopped",
+    },
+    "Account3": Object {
+      "generating": "running",
+      "uploading": "success",
+    },
+  },
+}
+`;

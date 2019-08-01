@@ -3,21 +3,20 @@ import { connect } from 'react-redux';
 
 import * as actions from './AccountListActions';
 import reducer from './AccountListReducer';
-import { selectBool } from './AccountListSelectors';
-
 import AccountList from './AccountList';
+import { selectStatuses, selectPollingProcessID } from './AccountListSelectors';
 
 // map state to props
 const mapStateToProps = state => ({
-  /** add state keys here */
-  bool: selectBool(state),
+  statuses: selectStatuses(state),
+  pollingProcessID: selectPollingProcessID(state),
 });
 
 // map action dispatchers to props
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 // export reducers
-export const reducers = { accountList: reducer };
+export const reducers = { accountsList: reducer };
 
 // export connected component
 export default connect(

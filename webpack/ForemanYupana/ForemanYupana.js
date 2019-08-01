@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountList from './Components/AccountList/AccountList';
+import AccountList from './Components/AccountList';
 
 const ForemanYupana = () => (
   <div className="foreman-yupana">

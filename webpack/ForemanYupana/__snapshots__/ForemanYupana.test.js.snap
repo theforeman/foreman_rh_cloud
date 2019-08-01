@@ -7,6 +7,6 @@ exports[`ForemanYupana render without Props 1`] = `
   <h1>
     Red Hat Inventory Uploads
   </h1>
-  <AccountList />
+  <Connect(AccountList) />
 </div>
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ListView } from 'patternfly-react';
 import PropTypes from 'prop-types';
-import ListItemStatus from '../ListItemStatus/ListItemStatus';
+import ListItemStatus from '../ListItemStatus';
 import Dashboard from '../../../Dashboard';
 
 const ListItem = ({ name, status, initExpanded }) => (

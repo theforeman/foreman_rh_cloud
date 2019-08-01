@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmptyState rendering render without Props 1`] = `
+<EmptyState
+  className=""
+>
+  <EmptyStateIcon
+    className=""
+    name="add-circle-o"
+    type="pf"
+  />
+  <EmptyStateTitle
+    className=""
+  >
+    Fetching data about your accounts
+  </EmptyStateTitle>
+  <EmptyStateInfo
+    className=""
+  >
+    Loading...
+  </EmptyStateInfo>
+</EmptyState>
+`;
