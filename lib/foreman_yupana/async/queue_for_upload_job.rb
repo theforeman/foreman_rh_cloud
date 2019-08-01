@@ -9,10 +9,9 @@ module ForemanYupana
         ensure_ouput_folder
         ensure_output_script
         SuckerPunch.logger.debug("Copying #{report_file} to #{uploads_folder}")
-        FileUtils.mv(report_file, uploads_folder)
-        SuckerPunch.logger.debug("Done copying #{report_file} to #{uploads_folder}")
-
         enqueued_file_name = File.join(uploads_folder, ForemanYupana.facts_archive_name)
+        FileUtils.mv(report_file, enqueued_file_name)
+        SuckerPunch.logger.debug("Done copying #{report_file} to #{enqueued_file_name}")
 
         UploadReportJob.perform_async(enqueued_file_name, portal_user)
       end
