@@ -80,11 +80,7 @@ exports[`Terminal rendering render without Props 1`] = `
           componentClass="div"
           sm={12}
         >
-          <p
-            key="0"
-          >
-            No running process
-          </p>
+          <p />
           <Spinner
             className=""
             inline={true}

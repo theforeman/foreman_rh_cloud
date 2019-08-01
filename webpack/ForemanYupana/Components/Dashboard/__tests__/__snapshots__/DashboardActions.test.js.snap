@@ -16,7 +16,6 @@ Array [
       "payload": Object {
         "accountID": "some-account-ID",
         "activeTab": undefined,
-        "exitCode": 0,
         "logs": Array [
           "some-logs...",
         ],

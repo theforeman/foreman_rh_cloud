@@ -5,7 +5,6 @@ Object {
   "some-account-ID": Object {
     "uploads": Object {
       "error": null,
-      "exitCode": 0,
       "logs": Array [
         "some-logs...",
       ],

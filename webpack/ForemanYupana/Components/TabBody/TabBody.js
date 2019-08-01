@@ -20,7 +20,7 @@ TabBody.propTypes = {
 
 TabBody.defaultProps = {
   loading: false,
-  logs: ['No running process'],
+  logs: null,
   error: null,
 };
 export default TabBody;

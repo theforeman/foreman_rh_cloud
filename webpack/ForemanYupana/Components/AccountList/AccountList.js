@@ -30,7 +30,7 @@ class AccountList extends Component {
         <ListItem
           key={index}
           name={name}
-          status={status}
+          statuses={status}
           initExpanded={index === 0}
         />
       );
@@ -40,19 +40,25 @@ class AccountList extends Component {
 }
 
 AccountList.propTypes = {
-  statuses: PropTypes.object,
   fetchAccountsStatus: PropTypes.func,
   startAccountStatusPolling: PropTypes.func,
   stopAccountStatusPolling: PropTypes.func,
   pollingProcessID: PropTypes.number,
+  statuses: PropTypes.shape({
+    generating: PropTypes.string,
+    uploading: PropTypes.string,
+  }),
 };
 
 AccountList.defaultProps = {
-  statuses: {},
   fetchAccountsStatus: noop,
   startAccountStatusPolling: noop,
   stopAccountStatusPolling: noop,
   pollingProcessID: 0,
+  statuses: {
+    generating: 'unknown',
+    uploading: 'unknown',
+  },
 };
 
 export default AccountList;

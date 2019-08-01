@@ -34,7 +34,7 @@ class Dashboard extends React.Component {
   };
 
   render() {
-    const { uploading, generating } = this.props;
+    const { uploading, generating, statuses } = this.props;
     return (
       <NavContainer
         items={[
@@ -42,7 +42,11 @@ class Dashboard extends React.Component {
             icon: 'database',
             name: 'Generating',
             component: ReportGenerate,
-            props: { ...generating, restartProcess: this.handleRestart },
+            props: {
+              ...generating,
+              restartProcess: this.handleRestart,
+              exitCode: statuses.generating,
+            },
             onClick: () => this.handleTabChange('generating'),
           },
           {
@@ -53,6 +57,7 @@ class Dashboard extends React.Component {
               ...uploading,
               restartProcess: this.handleRestart,
               downloadReports: this.handleDownload,
+              exitCode: statuses.uploading,
             },
             onClick: () => this.handleTabChange('uploading'),
           },
@@ -93,6 +98,10 @@ Dashboard.propTypes = {
   restartProcess: PropTypes.func,
   downloadReports: PropTypes.func,
   pollingProcessID: PropTypes.number,
+  statuses: PropTypes.shape({
+    generating: PropTypes.string,
+    uploading: PropTypes.string,
+  }),
 };
 
 Dashboard.defaultProps = {
@@ -105,6 +114,10 @@ Dashboard.defaultProps = {
   restartProcess: noop,
   downloadReports: noop,
   pollingProcessID: 0,
+  statuses: {
+    generating: 'unknown',
+    uploading: 'unknown',
+  },
 };
 
 export default Dashboard;

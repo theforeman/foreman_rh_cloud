@@ -8,7 +8,7 @@ exports[`AccountList rendering render with props 1`] = `
     initExpanded={true}
     key="0"
     name="Account1"
-    status={
+    statuses={
       Object {
         "generating": "running",
         "uploading": "running",
@@ -19,10 +19,10 @@ exports[`AccountList rendering render with props 1`] = `
     initExpanded={false}
     key="1"
     name="Account2"
-    status={
+    statuses={
       Object {
         "generating": "failure",
-        "uploading": "stopped",
+        "uploading": "unknown",
       }
     }
   />
@@ -30,7 +30,7 @@ exports[`AccountList rendering render with props 1`] = `
     initExpanded={false}
     key="2"
     name="Account3"
-    status={
+    statuses={
       Object {
         "generating": "running",
         "uploading": "success",
@@ -39,5 +39,3 @@ exports[`AccountList rendering render with props 1`] = `
   />
 </ListView>
 `;
-
-exports[`AccountList rendering render without Props 1`] = `<yupanaEmptyState />`;
