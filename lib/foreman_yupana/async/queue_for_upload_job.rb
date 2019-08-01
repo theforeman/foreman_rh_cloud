@@ -44,6 +44,7 @@ module ForemanYupana
         )
         script_source = Foreman::Renderer.render(template_src, scope)
         File.write(script_file, script_source)
+        FileUtils.chmod("+x", script_file)
       end
     end
   end
