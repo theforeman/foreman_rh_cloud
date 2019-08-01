@@ -43,7 +43,7 @@ module ForemanYupana
           }
         )
         script_source = Foreman::Renderer.render(template_src, scope)
-        File.write(foreman.upload_script_file, script_source)
+        File.write(script_file, script_source)
       end
     end
   end
