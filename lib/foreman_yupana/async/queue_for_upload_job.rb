@@ -35,9 +35,8 @@ module ForemanYupana
         script_source = File.join(ForemanYupana::Engine.root, 'app/views/scripts/uploader.sh.erb')
 
         template_src = Foreman::Renderer::Source::String.new(content: File.read(script_source))
-        scope = Foreman::Renderer.get_scope(
+        scope = Foreman::Renderer::Scope::Base.new(
           source: template_src,
-          klass: Foreman::Renderer::Scope::Base,
           params: {
             upload_url: ForemanYupana.upload_url,
             rh_username: @portal_user
