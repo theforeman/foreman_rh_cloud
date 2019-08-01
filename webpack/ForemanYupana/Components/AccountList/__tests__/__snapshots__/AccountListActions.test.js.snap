@@ -1,13 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AccountList actions should changeBool 1`] = `
+exports[`AccountList actions should fetchAccountsStatus 1`] = `
 Array [
   Array [
     Object {
       "payload": Object {
-        "bool": true,
+        "Account1": Object {
+          "generating": "running",
+          "uploading": "running",
+        },
+        "Account2": Object {
+          "generating": "failure",
+          "uploading": "stopped",
+        },
+        "Account3": Object {
+          "generating": "running",
+          "uploading": "success",
+        },
       },
-      "type": "ACCOUNTLIST_CHANGE_BOOL",
+      "type": "YUPANA_ACCOUNT_STATUS_POLLING",
+    },
+  ],
+]
+`;
+
+exports[`AccountList actions should startAccountStatusPolling 1`] = `
+Object {
+  "payload": Object {
+    "pollingProcessID": 0,
+  },
+  "type": "YUPANA_ACCOUNT_STATUS_POLLING_START",
+}
+`;
+
+exports[`AccountList actions should stopAccountStatusPolling 1`] = `
+Array [
+  Array [
+    Object {
+      "type": "YUPANA_ACCOUNT_STATUS_POLLING_STOP",
     },
   ],
 ]

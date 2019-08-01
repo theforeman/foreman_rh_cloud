@@ -1,10 +1,11 @@
 import { testComponentSnapshotsWithFixtures } from 'react-redux-test-utils';
 
 import AccountList from '../AccountList';
+import { props } from '../AccountList.fixtures';
 
 const fixtures = {
   'render without Props': {},
-  /** fixtures, props for the component */
+  'render with props': props,
 };
 
 describe('AccountList', () => {

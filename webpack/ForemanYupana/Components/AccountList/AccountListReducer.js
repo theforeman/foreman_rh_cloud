@@ -1,19 +1,28 @@
 import Immutable from 'seamless-immutable';
-
-import { ACCOUNTLIST_CHANGE_BOOL } from './AccountListConstants';
+import {
+  YUPANA_ACCOUNT_STATUS_POLLING,
+  YUPANA_ACCOUNT_STATUS_POLLING_ERROR,
+  YUPANA_ACCOUNT_STATUS_POLLING_START,
+} from './AccountListConstants';
 
 const initialState = Immutable({
-  /** insert AccountList state here */
-  bool: false,
+  statuses: {},
+  pollingProcessID: 0,
 });
 
 export default (state = initialState, action) => {
-  const { payload } = action;
+  const { payload: { pollingProcessID, ...payload } = {} } = action;
 
   switch (action.type) {
-    case ACCOUNTLIST_CHANGE_BOOL:
-      return state.set('bool', payload.bool);
-
+    case YUPANA_ACCOUNT_STATUS_POLLING:
+      return state.setIn(['statuses'], payload);
+    case YUPANA_ACCOUNT_STATUS_POLLING_ERROR:
+      return state.setIn(['statuses'], {});
+    case YUPANA_ACCOUNT_STATUS_POLLING_START:
+      return state.merge({
+        ...state,
+        pollingProcessID,
+      });
     default:
       return state;
   }

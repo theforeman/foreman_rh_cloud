@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AccountList rendering render without Props 1`] = `
+exports[`AccountList rendering render with props 1`] = `
 <ListView
   className=""
 >
   <ListItem
     initExpanded={true}
     key="0"
-    name="Account 1"
+    name="Account1"
     status={
       Object {
         "generating": "running",
@@ -18,7 +18,7 @@ exports[`AccountList rendering render without Props 1`] = `
   <ListItem
     initExpanded={false}
     key="1"
-    name="Account 2"
+    name="Account2"
     status={
       Object {
         "generating": "failure",
@@ -29,7 +29,7 @@ exports[`AccountList rendering render without Props 1`] = `
   <ListItem
     initExpanded={false}
     key="2"
-    name="Account 3"
+    name="Account3"
     status={
       Object {
         "generating": "running",
@@ -39,3 +39,5 @@ exports[`AccountList rendering render without Props 1`] = `
   />
 </ListView>
 `;
+
+exports[`AccountList rendering render without Props 1`] = `<yupanaEmptyState />`;
