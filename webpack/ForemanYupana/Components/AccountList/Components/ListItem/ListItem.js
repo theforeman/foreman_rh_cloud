@@ -22,16 +22,16 @@ const ListItem = ({ name, statuses, initExpanded }) => (
 ListItem.propTypes = {
   name: PropTypes.string.isRequired,
   statuses: PropTypes.shape({
-    generating: PropTypes.string,
-    uploading: PropTypes.string,
+    generate_report_status: PropTypes.string,
+    upload_report_status: PropTypes.string,
   }),
   initExpanded: PropTypes.bool,
 };
 
 ListItem.defaultProps = {
   statuses: {
-    generating: 'unknown',
-    uploading: 'unknown',
+    generate_report_status: 'unknown',
+    upload_report_status: 'unknown',
   },
   initExpanded: false,
 };

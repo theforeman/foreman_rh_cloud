@@ -10,8 +10,8 @@ exports[`AccountList rendering render with props 1`] = `
     name="Account1"
     statuses={
       Object {
-        "generating": "running",
-        "uploading": "running",
+        "generate_report_status": "running",
+        "upload_report_status": "running",
       }
     }
   />
@@ -21,8 +21,8 @@ exports[`AccountList rendering render with props 1`] = `
     name="Account2"
     statuses={
       Object {
-        "generating": "failure",
-        "uploading": "unknown",
+        "generate_report_status": "failure",
+        "upload_report_status": "unknown",
       }
     }
   />
@@ -32,8 +32,8 @@ exports[`AccountList rendering render with props 1`] = `
     name="Account3"
     statuses={
       Object {
-        "generating": "running",
-        "uploading": "success",
+        "generate_report_status": "running",
+        "upload_report_status": "success",
       }
     }
   />

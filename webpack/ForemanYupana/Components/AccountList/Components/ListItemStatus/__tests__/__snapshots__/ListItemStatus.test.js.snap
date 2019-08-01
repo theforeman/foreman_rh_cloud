@@ -29,9 +29,6 @@ exports[`ListItemStatus rendering render without Props 1`] = `
     <p>
       Uploading
     </p>
-    <span>
-      --
-    </span>
   </Col>
 </Grid>
 `;

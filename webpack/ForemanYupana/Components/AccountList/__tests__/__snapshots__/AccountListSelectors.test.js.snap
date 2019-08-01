@@ -5,16 +5,16 @@ exports[`AccountList selectors should return AccountList pollingProcessID 1`] = 
 exports[`AccountList selectors should return AccountList statuses 1`] = `
 Object {
   "Account1": Object {
-    "generating": "running",
-    "uploading": "running",
+    "generate_report_status": "running",
+    "upload_report_status": "running",
   },
   "Account2": Object {
-    "generating": "failure",
-    "uploading": "unknown",
+    "generate_report_status": "failure",
+    "upload_report_status": "unknown",
   },
   "Account3": Object {
-    "generating": "running",
-    "uploading": "success",
+    "generate_report_status": "running",
+    "upload_report_status": "success",
   },
 }
 `;
@@ -24,16 +24,16 @@ Object {
   "pollingProcessID": 0,
   "statuses": Object {
     "Account1": Object {
-      "generating": "running",
-      "uploading": "running",
+      "generate_report_status": "running",
+      "upload_report_status": "running",
     },
     "Account2": Object {
-      "generating": "failure",
-      "uploading": "unknown",
+      "generate_report_status": "failure",
+      "upload_report_status": "unknown",
     },
     "Account3": Object {
-      "generating": "running",
-      "uploading": "success",
+      "generate_report_status": "running",
+      "upload_report_status": "success",
     },
   },
 }
