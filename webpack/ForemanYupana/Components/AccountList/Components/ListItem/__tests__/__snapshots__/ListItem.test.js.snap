@@ -6,10 +6,10 @@ exports[`ListItem rendering render with Props 1`] = `
   additionalInfo={
     Array [
       <ListItemStatus
-        status={
+        statuses={
           Object {
-            "generating": "stopped",
-            "uploading": "stopped",
+            "generating": "unknown",
+            "uploading": "unknown",
           }
         }
       />,
@@ -37,6 +37,12 @@ exports[`ListItem rendering render with Props 1`] = `
 >
   <Connect(Dashboard)
     accountID="some-name"
+    statuses={
+      Object {
+        "generating": "unknown",
+        "uploading": "unknown",
+      }
+    }
   />
 </ListViewItem>
 `;

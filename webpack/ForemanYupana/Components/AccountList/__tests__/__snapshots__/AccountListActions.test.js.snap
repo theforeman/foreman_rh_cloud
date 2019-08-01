@@ -11,7 +11,7 @@ Array [
         },
         "Account2": Object {
           "generating": "failure",
-          "uploading": "stopped",
+          "uploading": "unknown",
         },
         "Account3": Object {
           "generating": "running",

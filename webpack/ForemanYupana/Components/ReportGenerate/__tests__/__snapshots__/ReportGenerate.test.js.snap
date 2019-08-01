@@ -35,11 +35,7 @@ exports[`ReportGenerate rendering render without Props 1`] = `
     completed={0}
     error={null}
     loading={false}
-    logs={
-      Array [
-        "No running process",
-      ]
-    }
+    logs={null}
   />
 </TabContainer>
 `;

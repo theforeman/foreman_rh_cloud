@@ -55,7 +55,7 @@ Terminal.propTypes = {
 };
 
 Terminal.defaultProps = {
-  logs: ['No running process'],
+  logs: null,
   loading: false,
   error: null,
 };

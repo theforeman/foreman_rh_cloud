@@ -8,11 +8,7 @@ exports[`TabBody rendering render without Props 1`] = `
   <Terminal
     error={null}
     loading={false}
-    logs={
-      Array [
-        "No running process",
-      ]
-    }
+    logs={null}
   />
 </Row>
 `;

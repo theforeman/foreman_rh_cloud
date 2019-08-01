@@ -46,7 +46,7 @@ ReportUpload.propTypes = {
 ReportUpload.defaultProps = {
   exitCode: 0,
   loading: false,
-  logs: ['No running process'],
+  logs: null,
   completed: 0,
   restartProcess: noop,
   downloadReports: noop,

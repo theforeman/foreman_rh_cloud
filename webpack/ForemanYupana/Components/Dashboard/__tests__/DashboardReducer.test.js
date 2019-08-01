@@ -14,7 +14,6 @@ import {
   activeTab,
   error,
   accountID,
-  exitCode,
 } from '../Dashboard.fixtures';
 
 const fixtures = {
@@ -33,7 +32,6 @@ const fixtures = {
       type: YUPANA_POLLING,
       payload: {
         logs,
-        exitCode,
         accountID,
         activeTab,
       },

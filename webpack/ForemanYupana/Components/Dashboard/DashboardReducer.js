@@ -11,14 +11,7 @@ const initialState = Immutable({});
 
 export default (state = initialState, action) => {
   const {
-    payload: {
-      accountID,
-      pollingProcessID,
-      logs,
-      exitCode,
-      error,
-      activeTab,
-    } = {},
+    payload: { accountID, pollingProcessID, logs, error, activeTab } = {},
   } = action;
   switch (action.type) {
     case YUPANA_POLLING_START:
@@ -32,7 +25,6 @@ export default (state = initialState, action) => {
         ...state[accountID],
         [activeTab]: {
           logs,
-          exitCode,
           error: null,
         },
       });

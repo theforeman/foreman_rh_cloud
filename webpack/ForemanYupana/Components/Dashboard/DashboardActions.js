@@ -33,7 +33,7 @@ export const fetchLogs = accountID => async (dispatch, getState) => {
   try {
     const processController = activeTab === 'uploading' ? 'uploads' : 'reports';
     const {
-      data: { output, status },
+      data: { output },
     } = await API.get(`${accountID}/${processController}/last`);
     dispatch({
       type: YUPANA_POLLING,
@@ -41,7 +41,6 @@ export const fetchLogs = accountID => async (dispatch, getState) => {
         accountID,
         activeTab,
         logs: output,
-        exitCode: status,
       },
     });
   } catch (error) {

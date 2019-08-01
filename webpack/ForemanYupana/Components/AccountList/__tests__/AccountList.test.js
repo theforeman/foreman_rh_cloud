@@ -4,7 +4,6 @@ import AccountList from '../AccountList';
 import { props } from '../AccountList.fixtures';
 
 const fixtures = {
-  'render without Props': {},
   'render with props': props,
 };
 
