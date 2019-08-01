@@ -9,7 +9,7 @@ module ForemanYupana
         @result_file = result_file
         @portal_user = portal_user
 
-        super(GenerateReportJob.output_label)
+        super(GenerateReportJob.output_label(portal_user))
 
         QueueForUploadJob.perform_async(result_file, portal_user)
       end

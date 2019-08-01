@@ -1,7 +1,7 @@
 #! /bin/sh
 
-DEST=<%= params[:upload_url] %>
-RH_USERNAME=<%= params[:rh_username] %>
+DEST=<%= @upload_url %>
+RH_USERNAME=<%= @rh_username %>
 
 if [ -z "$RH_USERNAME" ]
 then
