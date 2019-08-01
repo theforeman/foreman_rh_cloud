@@ -36,6 +36,8 @@ module ForemanYupana
 
       def status
         File.read(file_name(:status))
+      rescue Errno::ENOENT
+        ''
       end
 
       def status=(status)
