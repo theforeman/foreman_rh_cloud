@@ -21,6 +21,10 @@ module ForemanYupana
     'uploader.sh'
   end
 
+  def self.facts_archive_name
+    'hosts_report.tar.gz'
+  end
+
   def self.upload_url
     'https://cloud.redhat.com/'
   end

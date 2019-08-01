@@ -12,7 +12,7 @@ module ForemanYupana
         FileUtils.mv(report_file, uploads_folder)
         SuckerPunch.logger.debug("Done copying #{report_file} to #{uploads_folder}")
 
-        enqueued_file_name = File.join(uploads_folder, File.basename(report_file))
+        enqueued_file_name = File.join(uploads_folder, ForemanYupana.facts_archive_name)
 
         UploadReportJob.perform_async(enqueued_file_name, portal_user)
       end
