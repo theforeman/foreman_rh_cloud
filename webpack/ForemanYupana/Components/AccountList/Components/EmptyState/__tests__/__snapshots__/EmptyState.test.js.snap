@@ -4,10 +4,12 @@ exports[`EmptyState rendering render without Props 1`] = `
 <EmptyState
   className=""
 >
-  <EmptyStateIcon
+  <Spinner
     className=""
-    name="add-circle-o"
-    type="pf"
+    inline={true}
+    inverse={false}
+    loading={true}
+    size="lg"
   />
   <EmptyStateTitle
     className=""
