@@ -22,7 +22,7 @@ mkdir -p done
 
 for f in $FILES
 do
-  curl -vvv -# --fail -F "file=@$f" $DEST -u $(RH_USERNAME):$(RH_PASSWORD)
+  curl -vvv -# --fail -F "file=@$f" $DEST -u "$RH_USERNAME":"$RH_PASSWORD"
   if [ $? -eq 0 ]; then
     mv $f done/
     echo "Done: $f"
