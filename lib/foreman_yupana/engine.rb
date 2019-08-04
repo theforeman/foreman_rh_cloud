@@ -32,7 +32,7 @@ module ForemanYupana
         role 'ForemanYupana', [:view_foreman_yupana]
 
         # Adding a sub menu after hosts menu
-        sub_menu :top_menu, :Yupana, :caption => N_('Yupana'), :icon => 'fa fa-align-justify' do
+        sub_menu :top_menu, :Yupana, :caption => N_('RH Inventory'), :icon => 'fa fa-cloud-upload' do
           menu :top_menu, :level1, :caption => N_('Manage'), :url_hash => { controller: :'foreman_yupana/react', :action=>:index}
         end
 
