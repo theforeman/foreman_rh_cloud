@@ -77,7 +77,6 @@ Dashboard.propTypes = {
   setActiveTab: PropTypes.func,
   uploading: PropTypes.shape({
     exitCode: PropTypes.string,
-    loading: PropTypes.bool,
     logs: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.string,
@@ -88,7 +87,6 @@ Dashboard.propTypes = {
   }),
   generating: PropTypes.shape({
     exitCode: PropTypes.string,
-    loading: PropTypes.bool,
     logs: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.string,

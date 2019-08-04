@@ -5,6 +5,6 @@ export const logs = [
   'writing host 2/1000',
 ];
 
-export const loading = true;
+export const exitCode = 'Running pid 1111111';
 
-export const props = { logs, loading };
+export const props = { logs, exitCode };

@@ -32,7 +32,7 @@ const TabHeader = ({ exitCode, onRestart, onDownload }) => {
 TabHeader.propTypes = {
   onRestart: PropTypes.func,
   onDownload: PropTypes.func,
-  exitCode: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  exitCode: PropTypes.string,
 };
 
 TabHeader.defaultProps = {

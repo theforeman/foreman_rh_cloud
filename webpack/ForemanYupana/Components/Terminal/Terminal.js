@@ -19,7 +19,7 @@ class Terminal extends React.Component {
   };
 
   render() {
-    const { loading, logs, error } = this.props;
+    const { logs, error, exitCode } = this.props;
     let modifiedLogs = null;
     if (error !== null) {
       modifiedLogs = <p className="terminal_error">{error}</p>;
@@ -28,6 +28,7 @@ class Terminal extends React.Component {
     } else {
       modifiedLogs = <p>{logs}</p>;
     }
+    const loading = exitCode.toLowerCase().indexOf('running') !== -1;
     return (
       <Grid.Col sm={12}>
         <div className="terminal" ref={this.terminal}>
@@ -50,14 +51,14 @@ Terminal.propTypes = {
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.string,
   ]),
-  loading: PropTypes.bool,
   error: PropTypes.string,
+  exitCode: PropTypes.string,
 };
 
 Terminal.defaultProps = {
   logs: null,
-  loading: false,
   error: null,
+  exitCode: '',
 };
 
 export default Terminal;

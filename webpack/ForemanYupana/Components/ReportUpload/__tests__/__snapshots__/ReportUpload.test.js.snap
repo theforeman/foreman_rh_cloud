@@ -5,14 +5,14 @@ exports[`ReportUpload rendering render with Props 1`] = `
   className="report-upload"
 >
   <TabHeader
-    exitCode={0}
+    exitCode="exit 0"
     onDownload={[Function]}
     onRestart={[Function]}
   />
   <TabBody
     completed={0}
     error={null}
-    loading={false}
+    exitCode="exit 0"
     logs={
       Array [
         "No running process",
@@ -27,14 +27,14 @@ exports[`ReportUpload rendering render without Props 1`] = `
   className="report-upload"
 >
   <TabHeader
-    exitCode={0}
+    exitCode=""
     onDownload={[Function]}
     onRestart={[Function]}
   />
   <TabBody
     completed={0}
     error={null}
-    loading={false}
+    exitCode=""
     logs={null}
   />
 </TabContainer>
