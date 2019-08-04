@@ -1,24 +1,25 @@
 import React from 'react';
-import { Grid, Icon, Spinner } from 'patternfly-react';
+import { Grid } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import './listItemStatus.scss';
+import { getStatusIconByRegex } from './ListItemStatusHelper';
 
 const ListItemStatus = ({ statuses }) => {
-  const statusIcons = {
-    success: <Icon name="check" />,
-    failure: <Icon name="times" />,
-    running: <Spinner loading inline size="xs" />,
-    unknown: <span>--</span>,
-  };
+  const generatingStatusIcon = getStatusIconByRegex(
+    statuses.generate_report_status
+  );
+  const uploadingStatusIcon = getStatusIconByRegex(
+    statuses.upload_report_status
+  );
   return (
     <Grid className="status">
       <Grid.Col sm={6} className="item">
         <p>Generating</p>
-        {statusIcons[statuses.generate_report_status]}
+        {generatingStatusIcon}
       </Grid.Col>
       <Grid.Col sm={6} className="item">
         <p>Uploading</p>
-        {statusIcons[statuses.upload_report_status]}
+        {uploadingStatusIcon}
       </Grid.Col>
     </Grid>
   );

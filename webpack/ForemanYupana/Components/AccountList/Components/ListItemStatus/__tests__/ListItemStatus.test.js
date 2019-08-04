@@ -1,10 +1,11 @@
 import { testComponentSnapshotsWithFixtures } from 'react-redux-test-utils';
 
 import ListItemStatus from '../ListItemStatus';
+import { props } from '../ListItemStatus.fixtures';
 
 const fixtures = {
   'render without Props': {},
-  /** fixtures, props for the component */
+  'render with Props': props,
 };
 
 describe('ListItemStatus', () => {
