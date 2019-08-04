@@ -17,7 +17,8 @@ Array [
         "accountID": "some-account-ID",
         "activeTab": undefined,
         "logs": Array [
-          "some-logs...",
+          "some-logs",
+          "some-logs",
         ],
       },
       "type": "YUPANA_POLLING",

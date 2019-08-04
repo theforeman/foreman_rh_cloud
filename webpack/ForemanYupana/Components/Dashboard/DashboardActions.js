@@ -35,12 +35,13 @@ export const fetchLogs = accountID => async (dispatch, getState) => {
     const {
       data: { output },
     } = await API.get(`${accountID}/${processController}/last`);
+    const outputArray = output.split('\n');
     dispatch({
       type: YUPANA_POLLING,
       payload: {
         accountID,
         activeTab,
-        logs: output,
+        logs: outputArray,
       },
     });
   } catch (error) {

@@ -28,7 +28,9 @@ export const files = ['some-file'];
 
 export const activeTab = 'uploads';
 
-export const serverMock = { data: { output: logs, status: exitCode } };
+export const serverMock = {
+  data: { output: 'some-logs\nsome-logs', status: exitCode },
+};
 
 export const initialState = {};
 
