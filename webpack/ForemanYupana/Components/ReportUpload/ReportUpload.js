@@ -8,7 +8,6 @@ import './reportUpload.scss';
 
 const ReportUpload = ({
   exitCode,
-  loading,
   logs,
   completed,
   downloadReports,
@@ -22,7 +21,7 @@ const ReportUpload = ({
       onDownload={downloadReports}
     />
     <TabBody
-      loading={loading}
+      exitCode={exitCode}
       logs={logs}
       completed={completed}
       error={error}
@@ -31,8 +30,7 @@ const ReportUpload = ({
 );
 
 ReportUpload.propTypes = {
-  exitCode: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  loading: PropTypes.bool,
+  exitCode: PropTypes.string,
   logs: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.string,
@@ -44,8 +42,7 @@ ReportUpload.propTypes = {
 };
 
 ReportUpload.defaultProps = {
-  exitCode: 0,
-  loading: false,
+  exitCode: '',
   logs: null,
   completed: 0,
   restartProcess: noop,

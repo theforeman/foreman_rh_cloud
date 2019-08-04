@@ -8,7 +8,6 @@ import './reportGenerate.scss';
 
 const ReportGenerate = ({
   exitCode,
-  loading,
   logs,
   completed,
   error,
@@ -17,7 +16,7 @@ const ReportGenerate = ({
   <TabContainer className="report-generate">
     <TabHeader exitCode={exitCode} onRestart={restartProcess} />
     <TabBody
-      loading={loading}
+      exitCode={exitCode}
       logs={logs}
       completed={completed}
       error={error}
@@ -26,8 +25,7 @@ const ReportGenerate = ({
 );
 
 ReportGenerate.propTypes = {
-  exitCode: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  loading: PropTypes.bool,
+  exitCode: PropTypes.string,
   logs: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.string,
@@ -38,8 +36,7 @@ ReportGenerate.propTypes = {
 };
 
 ReportGenerate.defaultProps = {
-  exitCode: 0,
-  loading: false,
+  exitCode: '',
   logs: null,
   completed: 0,
   error: null,
