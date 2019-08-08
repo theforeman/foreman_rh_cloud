@@ -41,13 +41,13 @@ module ForemanYupana
           @stream.simple_field('vm_uuid', fact_value(host, 'virt::uuid'))
           @stream.array_field('ip_addresses') do
             @stream.raw(host.interfaces.map do |nic|
-              @stream.stringify_value(nic.ip)
-            end.join(', '))
+              @stream.stringify_value(nic.ip) if nic.ip
+            end.compact.join(', '))
           end
           @stream.array_field('mac_addresses') do
             @stream.raw(host.interfaces.map do |nic|
-              @stream.stringify_value(nic.mac)
-            end.join(', '))
+              @stream.stringify_value(nic.mac) if nic.mac
+            end.compact.join(', '))
           end
           @stream.object_field('system_profile', :last) do
             report_system_profile(host)
@@ -68,7 +68,7 @@ module ForemanYupana
               'mtu': nic.mtu,
               'mac_address': nic.mac,
               'name': nic.identifier
-            }.to_json
+            }.compact.to_json
           end.join(', '))
         end
         @stream.simple_field('bios_vendor', fact_value(host, 'dmi::bios::vendor'))
