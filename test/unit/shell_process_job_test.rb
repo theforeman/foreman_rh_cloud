@@ -2,7 +2,7 @@ require 'test_plugin_helper'
 require 'sucker_punch/testing/inline'
 
 class ShellProcessJobTest < ActiveSupport::TestCase
-  class TestProcessJob < ForemanYupana::Async::ShellProcess
+  class TestProcessJob < InventoryUpload::Async::ShellProcess
     def command
       'echo testing env: $testenv'
     end
@@ -20,7 +20,7 @@ class ShellProcessJobTest < ActiveSupport::TestCase
     label = Foreman.uuid
     TestProcessJob.perform_async(label)
 
-    progress_output = ForemanYupana::Async::ProgressOutput.get(label)
+    progress_output = InventoryUpload::Async::ProgressOutput.get(label)
 
     assert_match(/test_val/, progress_output.full_output)
     assert_match(/exit 0/, progress_output.status)

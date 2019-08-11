@@ -1,7 +1,7 @@
 {
-  "name": "foreman_yupana",
+  "name": "inventory_upload",
   "version": "0.0.1",
-  "description": "Foreman Yupana =============",
+  "description": "Inventory Upload =============",
   "main": "index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint -c .eslintrc webpack/",
@@ -15,10 +15,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/theforeman/foreman_yupana.git"
+    "url": "git+https://github.com/theforeman/inventory_upload.git"
   },
   "bugs": {
-    "url": "http://projects.theforeman.org/projects/foreman_yupana/issues"
+    "url": "http://projects.theforeman.org/projects/inventory_upload/issues"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^5.0.1",

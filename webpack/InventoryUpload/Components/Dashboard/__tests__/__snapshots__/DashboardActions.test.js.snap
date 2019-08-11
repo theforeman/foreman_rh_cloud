@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard actions should downloadReports 1`] = `
+Object {
+  "payload": Object {
+    "accountID": "some-account-ID",
+  },
+  "type": "INVENTORY_REPORTS_DOWNLOAD",
+}
+`;
+
+exports[`Dashboard actions should fetchLogs 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "accountID": "some-account-ID",
+        "activeTab": undefined,
+        "logs": Array [
+          "some-logs",
+          "some-logs",
+        ],
+      },
+      "type": "INVENTORY_POLLING",
+    },
+  ],
+]
+`;
+
+exports[`Dashboard actions should restartProcess 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "accountID": "some-account-ID",
+      },
+      "type": "INVENTORY_PROCESS_RESTART",
+    },
+  ],
+]
+`;
+
+exports[`Dashboard actions should setActiveTab 1`] = `
+Object {
+  "payload": Object {
+    "accountID": "some-account-ID",
+    "activeTab": "uploads",
+  },
+  "type": "INVENTORY_TAB_CHANGED",
+}
+`;
+
+exports[`Dashboard actions should startPolling 1`] = `
+Object {
+  "payload": Object {
+    "accountID": "some-account-ID",
+    "pollingProcessID": 1,
+  },
+  "type": "INVENTORY_POLLING_START",
+}
+`;
+
+exports[`Dashboard actions should stopPolling 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "accountID": "some-account-ID",
+      },
+      "type": "INVENTORY_POLLING_STOP",
+    },
+  ],
+]
+`;

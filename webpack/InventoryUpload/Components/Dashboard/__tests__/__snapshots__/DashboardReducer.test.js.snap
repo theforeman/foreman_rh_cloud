@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard reducer should handle INVENTORY_POLLING 1`] = `
+Object {
+  "some-account-ID": Object {
+    "uploads": Object {
+      "error": null,
+      "logs": Array [
+        "some-logs...",
+      ],
+    },
+  },
+}
+`;
+
+exports[`Dashboard reducer should handle INVENTORY_POLLING_ERROR 1`] = `
+Object {
+  "some-account-ID": Object {
+    "uploads": Object {
+      "error": "some-error",
+    },
+  },
+}
+`;
+
+exports[`Dashboard reducer should handle INVENTORY_POLLING_START 1`] = `
+Object {
+  "some-account-ID": Object {
+    "activeTab": "generating",
+    "pollingProcessID": 1,
+  },
+}
+`;
+
+exports[`Dashboard reducer should handle INVENTORY_TAB_CHANGED 1`] = `
+Object {
+  "some-account-ID": Object {
+    "activeTab": "uploads",
+  },
+}
+`;
+
+exports[`Dashboard reducer should return the initial state 1`] = `Object {}`;

@@ -13,14 +13,14 @@ module FolderIsolation
     setup do
       @tmpdir = Dir.mktmpdir(self.class.name.underscore)
 
-      ForemanYupana.stubs(:base_folder).returns(@tmpdir)
-      ForemanYupana.instance_variable_set(:@outputs_folder, nil)
-      ForemanYupana.instance_variable_set(:@uploads_folders, nil)
+      InventoryUpload.stubs(:base_folder).returns(@tmpdir)
+      InventoryUpload.instance_variable_set(:@outputs_folder, nil)
+      InventoryUpload.instance_variable_set(:@uploads_folders, nil)
     end
 
     teardown do
       FileUtils.remove_entry @tmpdir
-      ForemanYupana.unstub(:base_folder)
+      InventoryUpload.unstub(:base_folder)
     end
   end
 end

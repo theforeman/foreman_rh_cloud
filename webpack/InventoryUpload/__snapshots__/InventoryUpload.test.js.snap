@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InventoryUpload render without Props 1`] = `
+<div
+  className="inventory-upload"
+>
+  <h1>
+    Red Hat Inventory Uploads
+  </h1>
+  <Connect(AccountList) />
+</div>
+`;
