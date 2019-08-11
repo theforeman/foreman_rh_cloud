@@ -28,6 +28,7 @@ module ForemanYupana
 
       def write_line(line)
         buffer << line
+        buffer.fsync
       end
 
       def close

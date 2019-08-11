@@ -26,7 +26,7 @@ module ForemanYupana
   end
 
   def self.upload_url
-    'https://cloud.redhat.com/'
+    'https://ci.cloud.paas.psi.redhat.com/api/ingress/v1/upload'
   end
 
   def self.ensure_folder(folder)
