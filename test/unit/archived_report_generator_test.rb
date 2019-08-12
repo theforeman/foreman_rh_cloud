@@ -48,10 +48,10 @@ class ArchivedReportGeneratorTest < ActiveSupport::TestCase
     batches = Host.where(id: @host.id).in_batches
     portal_user = 'test_portal_user'
 
-    ForemanYupana::Generators::Queries.expects(:for_report).with(portal_user).returns(batches)
+    ForemanInventoryUpload::Generators::Queries.expects(:for_report).with(portal_user).returns(batches)
     Dir.mktmpdir do |tmpdir|
       target = File.join(tmpdir, 'test.tar.gz')
-      generator = ForemanYupana::Generators::ArchivedReport.new(target, Logger.new(STDOUT))
+      generator = ForemanInventoryUpload::Generators::ArchivedReport.new(target, Logger.new(STDOUT))
       generator.render(portal_user)
 
       files = Dir["#{tmpdir}/*"]

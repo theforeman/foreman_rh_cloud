@@ -36,7 +36,7 @@ script:
 env:
   global:
     - TESTOPTS=-v
-    - FOREMAN_PLUGIN_NAME=foreman_yupana
+    - FOREMAN_PLUGIN_NAME=foreman_inventory_upload
   matrix:
     - FOREMAN_CORE_BRANCH=develop
 addons:

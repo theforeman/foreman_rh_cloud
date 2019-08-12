@@ -46,7 +46,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
 
   test 'generates a report for a single host' do
     batch = Host.where(id: @host.id).in_batches.first
-    generator = ForemanYupana::Generators::Slice.new(batch, [], 'slice_123')
+    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice_123')
 
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))

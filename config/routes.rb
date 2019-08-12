@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  namespace :foreman_yupana do
+  namespace :foreman_inventory_upload do
     get 'index', to: 'react#index'
     get ':portal_user/reports/last', to: 'reports#last', constraints: { portal_user: %r{[^\/]+} }
     post ':portal_user/reports', to: 'reports#generate', constraints: { portal_user: %r{[^\/]+} }
