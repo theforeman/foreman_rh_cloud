@@ -1,5 +1,5 @@
 {
-  "name": "inventory_upload",
+  "name": "foreman_inventory_upload",
   "version": "0.0.1",
   "description": "Inventory Upload =============",
   "main": "index.js",
@@ -15,10 +15,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/theforeman/inventory_upload.git"
+    "url": "git+https://github.com/theforeman/foreman_inventory_upload.git"
   },
   "bugs": {
-    "url": "http://projects.theforeman.org/projects/inventory_upload/issues"
+    "url": "http://projects.theforeman.org/projects/foreman_inventory_upload/issues"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^5.0.1",

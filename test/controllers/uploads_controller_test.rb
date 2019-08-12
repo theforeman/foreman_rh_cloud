@@ -1,14 +1,14 @@
 require 'test_plugin_helper'
 
 class UploadsControllerTest < ActionController::TestCase
-  tests InventoryUpload::UploadsController
+  tests ForemanInventoryUpload::UploadsController
 
   test 'Returns latest upload status' do
     progress_output = mock('progress_output')
     test_portal_user = 'test_portal_user'
-    InventoryUpload::Async::ProgressOutput
+    ForemanInventoryUpload::Async::ProgressOutput
       .expects(:get)
-      .with(InventoryUpload::Async::UploadReportJob.output_label(test_portal_user))
+      .with(ForemanInventoryUpload::Async::UploadReportJob.output_label(test_portal_user))
       .returns(progress_output)
     progress_output.expects(:full_output).returns('test output')
 

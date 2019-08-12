@@ -1,7 +1,7 @@
 require 'test_plugin_helper'
 
 class StatusesControllerTest < ActionController::TestCase
-  tests InventoryUpload::StatusesController
+  tests ForemanInventoryUpload::StatusesController
 
   include FolderIsolation
 
@@ -9,11 +9,11 @@ class StatusesControllerTest < ActionController::TestCase
     configuration = RedhatAccess::TelemetryConfiguration.new(enable_telemetry: true, portal_user: 'test')
     configuration.save!
 
-    generate_label = InventoryUpload::Async::GenerateReportJob.output_label('test')
-    generate_output = InventoryUpload::Async::ProgressOutput.register(generate_label)
+    generate_label = ForemanInventoryUpload::Async::GenerateReportJob.output_label('test')
+    generate_output = ForemanInventoryUpload::Async::ProgressOutput.register(generate_label)
     generate_output.status = 'generate_status_test'
-    upload_label = InventoryUpload::Async::UploadReportJob.output_label('test')
-    upload_output = InventoryUpload::Async::ProgressOutput.register(upload_label)
+    upload_label = ForemanInventoryUpload::Async::UploadReportJob.output_label('test')
+    upload_output = ForemanInventoryUpload::Async::ProgressOutput.register(upload_label)
     upload_output.status = 'upload_status_test'
 
     get :index, session: set_session_user

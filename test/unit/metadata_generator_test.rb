@@ -5,7 +5,7 @@ class MetadataGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'generates an empty report' do
-    generator = InventoryUpload::Generators::Metadata.new
+    generator = ForemanInventoryUpload::Generators::Metadata.new
 
     json_str = generator.render do
     end
@@ -17,7 +17,7 @@ class MetadataGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'generates a report for a single slice' do
-    generator = InventoryUpload::Generators::Metadata.new
+    generator = ForemanInventoryUpload::Generators::Metadata.new
 
     json_str = generator.render do |gen|
       gen.add_slice('test_123', 1, true)

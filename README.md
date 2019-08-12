@@ -1,4 +1,4 @@
-# InventoryUpload
+# ForemanInventoryUpload
 
 *Introdction here*
 
