@@ -22,7 +22,7 @@ const TabHeader = ({ exitCode, onRestart, onDownload }) => {
   return (
     <Grid.Row className="tab-header">
       <Grid.Col sm={7}>
-        <p># Exit Code: {exitCode}</p>
+        <p>Exit Code: {exitCode}</p>
       </Grid.Col>
       <Grid.Col sm={5}>
         <div className="tab-action-buttons">{buttons}</div>
