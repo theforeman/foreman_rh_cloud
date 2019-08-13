@@ -8,16 +8,25 @@ import {
 const initialState = Immutable({
   statuses: {},
   pollingProcessID: 0,
+  error: null,
 });
 
 export default (state = initialState, action) => {
-  const { payload: { pollingProcessID, ...payload } = {} } = action;
+  const { payload: { pollingProcessID, error, statuses } = {} } = action;
 
   switch (action.type) {
     case INVENTORY_ACCOUNT_STATUS_POLLING:
-      return state.setIn(['statuses'], payload);
+      return state.merge({
+        ...state,
+        statuses,
+        error: null,
+      });
     case INVENTORY_ACCOUNT_STATUS_POLLING_ERROR:
-      return state.setIn(['statuses'], {});
+      return state.merge({
+        ...state,
+        statuses: {},
+        error,
+      });
     case INVENTORY_ACCOUNT_STATUS_POLLING_START:
       return state.merge({
         ...state,

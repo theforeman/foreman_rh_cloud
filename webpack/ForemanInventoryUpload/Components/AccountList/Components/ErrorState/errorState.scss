@@ -1,0 +1,17 @@
+$error_color: #d10d0d;
+
+.error_state {
+  margin-top: 100px;
+  text-align: center;
+  font-weight: bold;
+
+  .error_icon {
+    color: $error_color;
+    margin-right: 10px;
+    margin-bottom: 5px;
+  }
+
+  .error_description {
+    color: $error_color;
+  }
+}

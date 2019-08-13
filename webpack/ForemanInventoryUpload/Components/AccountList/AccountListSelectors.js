@@ -5,3 +5,4 @@ export const selectAccountsList = state =>
 export const selectStatuses = state => selectAccountsList(state).statuses;
 export const selectPollingProcessID = state =>
   selectAccountsList(state).pollingProcessID;
+export const selectError = state => selectAccountsList(state).error;

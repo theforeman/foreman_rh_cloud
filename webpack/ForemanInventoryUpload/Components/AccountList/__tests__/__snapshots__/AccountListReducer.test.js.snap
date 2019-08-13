@@ -2,6 +2,7 @@
 
 exports[`AccountList reducer should handle INVENTORY_ACCOUNT_STATUS_POLLING 1`] = `
 Object {
+  "error": null,
   "pollingProcessID": 0,
   "statuses": Object {
     "Account1": Object {
@@ -22,6 +23,7 @@ Object {
 
 exports[`AccountList reducer should handle INVENTORY_ACCOUNT_STATUS_POLLING_ERROR 1`] = `
 Object {
+  "error": "some-error",
   "pollingProcessID": 0,
   "statuses": Object {},
 }
@@ -29,6 +31,7 @@ Object {
 
 exports[`AccountList reducer should handle INVENTORY_ACCOUNT_STATUS_POLLING_START 1`] = `
 Object {
+  "error": null,
   "pollingProcessID": 0,
   "statuses": Object {},
 }
@@ -36,6 +39,7 @@ Object {
 
 exports[`AccountList reducer should handle INVENTORY_ACCOUNT_STATUS_POLLING_STOP 1`] = `
 Object {
+  "error": null,
   "pollingProcessID": 0,
   "statuses": Object {},
 }
@@ -43,6 +47,7 @@ Object {
 
 exports[`AccountList reducer should return the initial state 1`] = `
 Object {
+  "error": null,
   "pollingProcessID": 0,
   "statuses": Object {},
 }

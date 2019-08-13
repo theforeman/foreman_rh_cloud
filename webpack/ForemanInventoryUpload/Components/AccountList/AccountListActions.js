@@ -13,7 +13,9 @@ export const fetchAccountsStatus = () => async dispatch => {
     } = await API.get('statuses');
     dispatch({
       type: INVENTORY_ACCOUNT_STATUS_POLLING,
-      payload: statuses,
+      payload: {
+        statuses,
+      },
     });
   } catch (error) {
     dispatch({
