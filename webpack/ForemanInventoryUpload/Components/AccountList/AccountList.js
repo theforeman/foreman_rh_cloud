@@ -3,6 +3,7 @@ import { ListView, noop } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import ListItem from './Components/ListItem';
 import EmptyState from './Components/EmptyState';
+import ErrorState from './Components/ErrorState';
 import './accountList.scss';
 
 class AccountList extends Component {
@@ -19,8 +20,13 @@ class AccountList extends Component {
   }
 
   render() {
-    const { statuses } = this.props;
+    const { statuses, error } = this.props;
     const accountNames = Object.keys(statuses);
+
+    if (error) {
+      return <ErrorState error={error} />;
+    }
+
     if (accountNames.length === 0) {
       return <EmptyState />;
     }
@@ -48,6 +54,7 @@ AccountList.propTypes = {
     generate_report_status: PropTypes.string,
     upload_report_status: PropTypes.string,
   }),
+  error: PropTypes.string,
 };
 
 AccountList.defaultProps = {
@@ -59,6 +66,7 @@ AccountList.defaultProps = {
     generate_report_status: 'unknown',
     upload_report_status: 'unknown',
   },
+  error: '',
 };
 
 export default AccountList;

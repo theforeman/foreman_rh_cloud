@@ -4,12 +4,17 @@ import { connect } from 'react-redux';
 import * as actions from './AccountListActions';
 import reducer from './AccountListReducer';
 import AccountList from './AccountList';
-import { selectStatuses, selectPollingProcessID } from './AccountListSelectors';
+import {
+  selectStatuses,
+  selectPollingProcessID,
+  selectError,
+} from './AccountListSelectors';
 
 // map state to props
 const mapStateToProps = state => ({
   statuses: selectStatuses(state),
   pollingProcessID: selectPollingProcessID(state),
+  error: selectError(state),
 });
 
 // map action dispatchers to props

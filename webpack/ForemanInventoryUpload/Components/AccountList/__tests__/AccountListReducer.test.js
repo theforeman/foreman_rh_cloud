@@ -14,13 +14,15 @@ const fixtures = {
   'should handle INVENTORY_ACCOUNT_STATUS_POLLING': {
     action: {
       type: INVENTORY_ACCOUNT_STATUS_POLLING,
-      payload: statuses,
+      payload: {
+        statuses,
+      },
     },
   },
   'should handle INVENTORY_ACCOUNT_STATUS_POLLING_ERROR': {
     action: {
       type: INVENTORY_ACCOUNT_STATUS_POLLING_ERROR,
-      payload: error,
+      payload: { error },
     },
   },
   'should handle INVENTORY_ACCOUNT_STATUS_POLLING_START': {
