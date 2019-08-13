@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import {
   TabContainer,
   Nav,
@@ -9,12 +8,18 @@ import {
   TabPane,
   Icon,
 } from 'patternfly-react';
+import './navContainer.scss';
 
 const NavContainer = ({ items }) => {
   const navItems = items.map((item, index) => {
     const { name, icon, onClick } = item;
     return (
-      <NavItem key={index} eventKey={index} onClick={onClick}>
+      <NavItem
+        key={index}
+        eventKey={index}
+        onClick={onClick}
+        className="nav_item"
+      >
         <Icon name={icon} size="2x" />
         <p>{name}</p>
       </NavItem>
@@ -28,7 +33,7 @@ const NavContainer = ({ items }) => {
   return (
     <TabContainer id="basic-tabs-pf" defaultActiveKey={0}>
       <div className="dashboard">
-        <Nav bsClass="nav nav-tabs nav-tabs-pf nav-justified">{navItems}</Nav>
+        <Nav bsClass="nav nav-tabs nav-tabs-pf">{navItems}</Nav>
         <TabContent animation>{tabComponents}</TabContent>
       </div>
     </TabContainer>
