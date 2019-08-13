@@ -1,5 +1,4 @@
 require 'test_plugin_helper'
-require 'sucker_punch/testing/inline'
 
 class ShellProcessJobTest < ActiveSupport::TestCase
   class TestProcessJob < ForemanInventoryUpload::Async::ShellProcess
@@ -18,7 +17,7 @@ class ShellProcessJobTest < ActiveSupport::TestCase
 
   test 'Runs a process with environment vars' do
     label = Foreman.uuid
-    TestProcessJob.perform_async(label)
+    TestProcessJob.perform_now(label)
 
     progress_output = ForemanInventoryUpload::Async::ProgressOutput.get(label)
 

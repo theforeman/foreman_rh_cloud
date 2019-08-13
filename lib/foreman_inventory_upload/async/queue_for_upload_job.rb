@@ -1,19 +1,17 @@
 module ForemanInventoryUpload
   module Async
-    class QueueForUploadJob
-      include SuckerPunch::Job
-
+    class QueueForUploadJob < ::ApplicationJob
       def perform(report_file, portal_user)
         @portal_user = portal_user
-        SuckerPunch.logger.debug('Ensuring objects')
+        logger.debug('Ensuring objects')
         ensure_ouput_folder
         ensure_output_script
-        SuckerPunch.logger.debug("Copying #{report_file} to #{uploads_folder}")
+        logger.debug("Copying #{report_file} to #{uploads_folder}")
         enqueued_file_name = File.join(uploads_folder, ForemanInventoryUpload.facts_archive_name)
         FileUtils.mv(report_file, enqueued_file_name)
-        SuckerPunch.logger.debug("Done copying #{report_file} to #{enqueued_file_name}")
+        logger.debug("Done copying #{report_file} to #{enqueued_file_name}")
 
-        UploadReportJob.perform_async(enqueued_file_name, portal_user)
+        UploadReportJob.perform_later(enqueued_file_name, portal_user)
       end
 
       def uploads_folder
@@ -43,7 +41,11 @@ module ForemanInventoryUpload
         )
         script_source = Foreman::Renderer.render(template_src, scope)
         File.write(script_file, script_source)
-        FileUtils.chmod("+x", script_file)
+        FileUtils.chmod('+x', script_file)
+      end
+
+      def logger
+        Foreman::Logging.logger('background')
       end
     end
   end

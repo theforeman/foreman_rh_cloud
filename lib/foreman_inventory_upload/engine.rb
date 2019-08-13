@@ -1,6 +1,5 @@
 require 'katello'
 require 'redhat_access'
-require 'sucker_punch'
 
 module ForemanInventoryUpload
   class Engine < ::Rails::Engine
