@@ -13,7 +13,7 @@ module ForemanInventoryUpload
       portal_user = params[:portal_user]
 
       generated_file_name = File.join(ForemanInventoryUpload.base_folder, "#{portal_user}.tar.gz")
-      ForemanInventoryUpload::Async::GenerateReportJob.perform_async(generated_file_name, portal_user)
+      ForemanInventoryUpload::Async::GenerateReportJob.perform_later(generated_file_name, portal_user)
 
       render json: {
         action_status: 'success'
