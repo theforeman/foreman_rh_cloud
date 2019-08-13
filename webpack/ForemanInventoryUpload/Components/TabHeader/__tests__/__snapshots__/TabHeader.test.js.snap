@@ -12,7 +12,7 @@ exports[`TabHeader rendering render without Props 1`] = `
     sm={7}
   >
     <p>
-      # Exit Code: 
+      Exit Code: 
     </p>
   </Col>
   <Col
