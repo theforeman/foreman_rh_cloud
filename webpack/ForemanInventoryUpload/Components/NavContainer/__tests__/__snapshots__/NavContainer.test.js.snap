@@ -9,7 +9,7 @@ exports[`NavContainer rendering render with Props 1`] = `
     className="dashboard"
   >
     <Nav
-      bsClass="nav nav-tabs nav-tabs-pf nav-justified"
+      bsClass="nav nav-tabs nav-tabs-pf"
       justified={false}
       pullLeft={false}
       pullRight={false}
@@ -17,6 +17,7 @@ exports[`NavContainer rendering render with Props 1`] = `
     >
       <NavItem
         active={false}
+        className="nav_item"
         disabled={false}
         eventKey={0}
         key="0"
@@ -60,7 +61,7 @@ exports[`NavContainer rendering render without Props 1`] = `
     className="dashboard"
   >
     <Nav
-      bsClass="nav nav-tabs nav-tabs-pf nav-justified"
+      bsClass="nav nav-tabs nav-tabs-pf"
       justified={false}
       pullLeft={false}
       pullRight={false}
