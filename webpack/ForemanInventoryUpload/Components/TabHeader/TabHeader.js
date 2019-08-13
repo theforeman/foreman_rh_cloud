@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { noop, Grid, Button, ButtonGroup, Icon } from 'patternfly-react';
+import { noop, Grid, Button, Icon } from 'patternfly-react';
 import './tabHeader.scss';
 
 const TabHeader = ({ exitCode, onRestart, onDownload }) => {
@@ -10,12 +10,12 @@ const TabHeader = ({ exitCode, onRestart, onDownload }) => {
     </Button>
   );
   const buttons = onDownload ? (
-    <ButtonGroup>
+    <Fragment>
       {restartButton}
       <Button onClick={onDownload}>
         Download Report <Icon name="download" />
       </Button>
-    </ButtonGroup>
+    </Fragment>
   ) : (
     restartButton
   );
@@ -24,7 +24,9 @@ const TabHeader = ({ exitCode, onRestart, onDownload }) => {
       <Grid.Col sm={7}>
         <p># Exit Code: {exitCode}</p>
       </Grid.Col>
-      <Grid.Col sm={5}>{buttons}</Grid.Col>
+      <Grid.Col sm={5}>
+        <div className="tab-action-buttons">{buttons}</div>
+      </Grid.Col>
     </Grid.Row>
   );
 };
