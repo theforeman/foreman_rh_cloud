@@ -2,12 +2,10 @@ require 'open3'
 
 module ForemanInventoryUpload
   module Async
-    class ShellProcess
-      include SuckerPunch::Job
-
+    class ShellProcess < ::ApplicationJob
       def perform(instance_label)
         klass_name = self.class.name
-        SuckerPunch.logger.debug("Starting #{klass_name} with label #{instance_label}")
+        logger.debug("Starting #{klass_name} with label #{instance_label}")
         progress_output = ProgressOutput.register(instance_label)
         Open3.popen2e(env, command) do |_stdin, stdout_stderr, wait_thread|
           progress_output.status = "Running in pid #{wait_thread.pid}"
@@ -18,7 +16,7 @@ module ForemanInventoryUpload
 
           progress_output.status = wait_thread.value.to_s
         end
-        SuckerPunch.logger.debug("Finished job #{klass_name} with label #{instance_label}")
+        logger.debug("Finished job #{klass_name} with label #{instance_label}")
       ensure
         progress_output.close
       end
@@ -27,6 +25,10 @@ module ForemanInventoryUpload
 
       def env
         {}
+      end
+
+      def logger
+        Foreman::Logging.logger('background')
       end
     end
   end

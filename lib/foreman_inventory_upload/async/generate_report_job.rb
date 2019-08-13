@@ -11,7 +11,7 @@ module ForemanInventoryUpload
 
         super(GenerateReportJob.output_label(portal_user))
 
-        QueueForUploadJob.perform_async(result_file, portal_user)
+        QueueForUploadJob.perform_later(result_file, portal_user)
       end
 
       def command

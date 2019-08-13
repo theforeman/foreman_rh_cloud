@@ -16,7 +16,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'katello'
   s.add_dependency 'redhat_access'
-  s.add_dependency 'sucker_punch'
 
   s.add_development_dependency 'rdoc'
   s.add_development_dependency 'rubocop'
