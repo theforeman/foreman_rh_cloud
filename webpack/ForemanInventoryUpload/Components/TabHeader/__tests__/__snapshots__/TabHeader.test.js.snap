@@ -20,16 +20,20 @@ exports[`TabHeader rendering render without Props 1`] = `
     componentClass="div"
     sm={5}
   >
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="primary"
-      disabled={false}
-      onClick={[Function]}
+    <div
+      className="tab-action-buttons"
     >
-      Restart
-    </Button>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="primary"
+        disabled={false}
+        onClick={[Function]}
+      >
+        Restart
+      </Button>
+    </div>
   </Col>
 </Row>
 `;
