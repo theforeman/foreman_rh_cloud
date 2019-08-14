@@ -12,6 +12,7 @@ exports[`Dashboard rendering with props 1`] = `
         "props": Object {
           "exitCode": "unknown",
           "restartProcess": [Function],
+          "toggleFullScreen": [Function],
         },
       },
       Object {
@@ -23,9 +24,13 @@ exports[`Dashboard rendering with props 1`] = `
           "downloadReports": [Function],
           "exitCode": "unknown",
           "restartProcess": [Function],
+          "toggleFullScreen": [Function],
         },
       },
     ]
   }
+  showFullScreen={false}
+  terminalProps={Object {}}
+  toggleFullScreen={[Function]}
 />
 `;

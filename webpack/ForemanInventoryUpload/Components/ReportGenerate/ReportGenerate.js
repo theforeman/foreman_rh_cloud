@@ -12,9 +12,14 @@ const ReportGenerate = ({
   completed,
   error,
   restartProcess,
+  toggleFullScreen,
 }) => (
   <TabContainer className="report-generate">
-    <TabHeader exitCode={exitCode} onRestart={restartProcess} />
+    <TabHeader
+      exitCode={exitCode}
+      onRestart={restartProcess}
+      toggleFullScreen={toggleFullScreen}
+    />
     <TabBody
       exitCode={exitCode}
       logs={logs}
@@ -33,6 +38,7 @@ ReportGenerate.propTypes = {
   completed: PropTypes.number,
   error: PropTypes.string,
   restartProcess: PropTypes.func,
+  toggleFullScreen: PropTypes.func,
 };
 
 ReportGenerate.defaultProps = {
@@ -41,6 +47,7 @@ ReportGenerate.defaultProps = {
   completed: 0,
   error: null,
   restartProcess: noop,
+  toggleFullScreen: noop,
 };
 
 export default ReportGenerate;

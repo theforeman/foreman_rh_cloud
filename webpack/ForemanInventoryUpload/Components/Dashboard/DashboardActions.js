@@ -7,6 +7,7 @@ import {
   INVENTORY_POLLING_ERROR,
   INVENTORY_PROCESS_RESTART,
   INVENTORY_REPORTS_DOWNLOAD,
+  INVENTORY_TOGGLE_TERMINAL_FULL_SCREEN,
 } from './DashboardConstants';
 import { selectActiveTab } from './DashboardSelectors';
 
@@ -84,4 +85,15 @@ export const downloadReports = accountID => {
       accountID,
     },
   };
+};
+
+export const toggleFullScreen = accountID => (dispatch, getState) => {
+  const activeTab = selectActiveTab(getState(), accountID);
+  dispatch({
+    type: INVENTORY_TOGGLE_TERMINAL_FULL_SCREEN,
+    payload: {
+      activeTab,
+      accountID,
+    },
+  });
 };

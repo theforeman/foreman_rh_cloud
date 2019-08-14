@@ -48,6 +48,11 @@ exports[`NavContainer rendering render with Props 1`] = `
         <bound fn />
       </TabPane>
     </TabContent>
+    <FullScreenModal
+      showFullScreen={false}
+      terminalProps={Object {}}
+      toggleFullScreen={[Function]}
+    />
   </div>
 </Uncontrolled(TabContainer)>
 `;
@@ -73,6 +78,11 @@ exports[`NavContainer rendering render without Props 1`] = `
       componentClass="div"
       mountOnEnter={false}
       unmountOnExit={false}
+    />
+    <FullScreenModal
+      showFullScreen={false}
+      terminalProps={Object {}}
+      toggleFullScreen={[Function]}
     />
   </div>
 </Uncontrolled(TabContainer)>

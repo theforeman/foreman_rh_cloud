@@ -10,6 +10,7 @@ import {
   selectGenerating,
   selectPollingProcessID,
   selectActiveTab,
+  selectShowFullScreen,
 } from './DashboardSelectors';
 
 // map state to props
@@ -18,6 +19,7 @@ const mapStateToProps = (state, { accountID }) => ({
   generating: selectGenerating(state, accountID),
   pollingProcessID: selectPollingProcessID(state, accountID),
   activeTab: selectActiveTab(state, accountID),
+  showFullScreen: selectShowFullScreen(state, accountID),
 });
 
 // map action dispatchers to props

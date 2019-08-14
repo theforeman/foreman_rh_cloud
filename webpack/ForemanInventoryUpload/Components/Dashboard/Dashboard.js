@@ -35,8 +35,19 @@ class Dashboard extends React.Component {
     fetchLogs(accountID);
   };
 
+  handleToggleFullScreen = () => {
+    const { toggleFullScreen, accountID } = this.props;
+    toggleFullScreen(accountID);
+  };
+
   render() {
-    const { uploading, generating, statuses } = this.props;
+    const {
+      uploading,
+      generating,
+      statuses,
+      showFullScreen,
+      activeTab,
+    } = this.props;
     return (
       <NavContainer
         items={[
@@ -48,6 +59,7 @@ class Dashboard extends React.Component {
               ...generating,
               restartProcess: this.handleRestart,
               exitCode: statuses.generate_report_status,
+              toggleFullScreen: this.handleToggleFullScreen,
             },
             onClick: () => this.handleTabChange('generating'),
           },
@@ -60,10 +72,14 @@ class Dashboard extends React.Component {
               restartProcess: this.handleRestart,
               downloadReports: this.handleDownload,
               exitCode: statuses.upload_report_status,
+              toggleFullScreen: this.handleToggleFullScreen,
             },
             onClick: () => this.handleTabChange('uploading'),
           },
         ]}
+        toggleFullScreen={this.handleToggleFullScreen}
+        showFullScreen={showFullScreen}
+        terminalProps={this.props[activeTab]}
       />
     );
   }
@@ -102,6 +118,9 @@ Dashboard.propTypes = {
     generate_report_status: PropTypes.string,
     upload_report_status: PropTypes.string,
   }),
+  showFullScreen: PropTypes.bool,
+  toggleFullScreen: PropTypes.func,
+  activeTab: PropTypes.string,
 };
 
 Dashboard.defaultProps = {
@@ -118,6 +137,9 @@ Dashboard.defaultProps = {
     generate_report_status: 'unknown',
     upload_report_status: 'unknown',
   },
+  showFullScreen: false,
+  toggleFullScreen: noop,
+  activeTab: 'generating',
 };
 
 export default Dashboard;
