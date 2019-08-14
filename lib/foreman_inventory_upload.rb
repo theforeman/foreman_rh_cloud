@@ -2,7 +2,13 @@ require 'foreman_inventory_upload/engine'
 
 module ForemanInventoryUpload
   def self.base_folder
-    'red_hat_inventory/'
+    # in production setup, where selinux is enabled, we only have rights to
+    # create folders under /ver/lib/foreman. If the folder does not exist, it's
+    # a dev setup, where we can use our current root
+    @base_folder ||= File.join(
+      Dir.glob('/var/lib/foreman').first || Dir.getwd,
+      'red_hat_inventory/'
+    )
   end
 
   def self.uploads_folder(group)
@@ -10,7 +16,13 @@ module ForemanInventoryUpload
     cache = @uploads_folders[group]
     return cache if cache
 
-    @uploads_folders[group] = ensure_folder(File.join(ForemanInventoryUpload.base_folder, 'uploads/', "#{group}/"))
+    @uploads_folders[group] = ensure_folder(
+      File.join(
+        ForemanInventoryUpload.base_folder,
+        'uploads/',
+        "#{group}/"
+      )
+    )
   end
 
   def self.outputs_folder
