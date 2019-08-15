@@ -37,6 +37,14 @@ module ForemanInventoryUpload
       end
     end
 
+    initializer "foreman_inventory_upload.set_dynflow.config.on_init", :before => :finisher_hook do |_app|
+      unless Rails.env.test?
+        ForemanTasks.dynflow.config.on_init do |world|
+          ForemanInventoryUpload::Async::GenerateAllReportsJob.spawn_if_missing(world)
+        end
+      end
+    end
+
     rake_tasks do
       Rake::Task['db:seed'].enhance do
         ForemanInventoryUpload::Engine.load_seed
