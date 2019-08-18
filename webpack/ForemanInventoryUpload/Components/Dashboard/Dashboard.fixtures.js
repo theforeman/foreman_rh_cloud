@@ -28,8 +28,10 @@ export const files = ['some-file'];
 
 export const activeTab = 'uploads';
 
+export const scheduled = '2019-08-21T16:14:16.520+03:00';
+
 export const serverMock = {
-  data: { output: 'some-logs\nsome-logs', status: exitCode },
+  data: { output: 'some-logs\nsome-logs', status: exitCode, scheduled },
 };
 
 export const initialState = {};

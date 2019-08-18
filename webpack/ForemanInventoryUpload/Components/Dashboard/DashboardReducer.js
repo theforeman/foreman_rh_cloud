@@ -12,7 +12,14 @@ const initialState = Immutable({});
 
 export default (state = initialState, action) => {
   const {
-    payload: { accountID, pollingProcessID, logs, error, activeTab } = {},
+    payload: {
+      accountID,
+      pollingProcessID,
+      logs,
+      error,
+      activeTab,
+      scheduled,
+    } = {},
   } = action;
 
   const getTabState = () =>
@@ -30,6 +37,7 @@ export default (state = initialState, action) => {
         [activeTab]: {
           ...getTabState(),
           logs,
+          scheduled,
           error: null,
         },
       });

@@ -1,19 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ScheduledRun rendering render without Props 1`] = `
+exports[`ScheduledRun rendering render with Props 1`] = `
 <Col
   bsClass="col"
+  className="scheduled_run"
   componentClass="div"
   sm={12}
 >
   <p>
     <Icon
       name="calendar"
-      size="2x"
       type="fa"
     />
-    Next report generating is scheduled to run on 
-    00:00
+    Scheduled to run 
+    <FormattedRelative
+      updateInterval={10000}
+      value="2019-08-21T16:14:16.520+03:00"
+    />
+    .
   </p>
 </Col>
 `;
+
+exports[`ScheduledRun rendering render without Props 1`] = `""`;

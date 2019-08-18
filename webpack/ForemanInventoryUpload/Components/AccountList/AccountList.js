@@ -41,7 +41,7 @@ class AccountList extends Component {
         />
       );
     });
-    return <ListView>{items}</ListView>;
+    return <ListView className="account_list">{items}</ListView>;
   }
 }
 

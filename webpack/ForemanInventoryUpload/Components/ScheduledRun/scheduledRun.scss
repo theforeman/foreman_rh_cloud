@@ -1,5 +1,11 @@
-p {
-  span {
-    margin-right: 5px;
+.scheduled_run {
+  font-size: 14px;
+
+  p {
+    margin: 0 0 -10px 0;
+
+    .fa {
+      margin-right: 5px;
+    }
   }
 }

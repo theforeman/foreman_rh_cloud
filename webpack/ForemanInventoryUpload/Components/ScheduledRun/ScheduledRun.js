@@ -1,23 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon, Grid } from 'patternfly-react';
+import { FormattedRelative } from 'react-intl';
 import './scheduledRun.scss';
 
-const ScheduledRun = ({ time }) => (
-  <Grid.Col sm={12}>
-    <p>
-      <Icon name="calendar" size="2x" />
-      Next report generating is scheduled to run on {time}
-    </p>
-  </Grid.Col>
-);
+const ScheduledRun = ({ date }) =>
+  date ? (
+    <Grid.Col sm={12} className="scheduled_run">
+      <p>
+        <Icon name="calendar" />
+        Scheduled to run&nbsp;
+        <FormattedRelative value={date} />.
+      </p>
+    </Grid.Col>
+  ) : null;
 
 ScheduledRun.propTypes = {
-  time: PropTypes.string,
+  date: PropTypes.string,
 };
 
 ScheduledRun.defaultProps = {
-  time: '00:00',
+  date: null,
 };
 
 export default ScheduledRun;

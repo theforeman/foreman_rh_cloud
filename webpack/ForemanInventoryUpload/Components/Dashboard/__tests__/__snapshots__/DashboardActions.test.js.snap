@@ -20,6 +20,7 @@ Array [
           "some-logs",
           "some-logs",
         ],
+        "scheduled": "2019-08-21T16:14:16.520+03:00",
       },
       "type": "INVENTORY_POLLING",
     },
