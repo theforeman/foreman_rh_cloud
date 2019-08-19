@@ -5,7 +5,7 @@ module ForemanInventoryUpload
       output = ForemanInventoryUpload::Async::ProgressOutput.get(label)&.full_output
 
       render json: {
-        output: output
+        output: output,
       }, status: :ok
     end
 
@@ -16,7 +16,7 @@ module ForemanInventoryUpload
       ForemanInventoryUpload::Async::GenerateReportJob.perform_later(generated_file_name, portal_user)
 
       render json: {
-        action_status: 'success'
+        action_status: 'success',
       }, status: :ok
     end
   end

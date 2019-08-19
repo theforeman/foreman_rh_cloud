@@ -7,7 +7,7 @@ module ForemanInventoryUpload
                        .distinct
                        .pluck(:portal_user)
         portal_users.map do |portal_user|
-          generated_file_name = File.join(ForemanInventoryUpload.base_folder, "#{portal_user}.tar.gz")            
+          generated_file_name = File.join(ForemanInventoryUpload.base_folder, "#{portal_user}.tar.gz")
           GenerateReportJob.perform_later(generated_file_name, portal_user)
         end
       ensure

@@ -36,7 +36,7 @@ module ForemanInventoryUpload
           source: template_src,
           variables: {
             upload_url: ForemanInventoryUpload.upload_url,
-            rh_username: @portal_user
+            rh_username: @portal_user,
           }
         )
         script_source = Foreman::Renderer.render(template_src, scope)
