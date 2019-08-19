@@ -16,3 +16,4 @@ package-lock.json
 Gemfile.lock
 *.gem
 .tags*
+.rubocop*--*
