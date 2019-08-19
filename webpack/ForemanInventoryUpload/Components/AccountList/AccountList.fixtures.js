@@ -21,6 +21,10 @@ export const pollingProcessID = 0;
 
 export const error = 'some-error';
 
+export const accountID = 'user@redhat.com';
+
+export const processStatusName = 'upload_report_status';
+
 export const props = {
   statuses,
   fetchAccountsStatus: noop,

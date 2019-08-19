@@ -13,6 +13,20 @@ Array [
 ]
 `;
 
+exports[`AccountList actions should restartProcess 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "accountID": "some-account-ID",
+        "processStatusName": "generate_report_status",
+      },
+      "type": "INVENTORY_PROCESS_RESTART",
+    },
+  ],
+]
+`;
+
 exports[`AccountList actions should startAccountStatusPolling 1`] = `
 Object {
   "payload": Object {

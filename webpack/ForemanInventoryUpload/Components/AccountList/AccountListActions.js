@@ -4,6 +4,7 @@ import {
   INVENTORY_ACCOUNT_STATUS_POLLING_ERROR,
   INVENTORY_ACCOUNT_STATUS_POLLING_START,
   INVENTORY_ACCOUNT_STATUS_POLLING_STOP,
+  INVENTORY_PROCESS_RESTART,
 } from './AccountListConstants';
 
 export const fetchAccountsStatus = () => async dispatch => {
@@ -38,5 +39,27 @@ export const stopAccountStatusPolling = pollingProcessID => dispatch => {
   clearInterval(pollingProcessID);
   dispatch({
     type: INVENTORY_ACCOUNT_STATUS_POLLING_STOP,
+  });
+};
+
+export const restartProcess = (accountID, activeTab) => dispatch => {
+  let processController = null;
+  let processStatusName = null;
+
+  if (activeTab === 'uploading') {
+    processController = 'uploads';
+    processStatusName = 'upload_report_status';
+  } else {
+    processController = 'reports';
+    processStatusName = 'generate_report_status';
+  }
+
+  API.post(`${accountID}/${processController}`);
+  dispatch({
+    type: INVENTORY_PROCESS_RESTART,
+    payload: {
+      accountID,
+      processStatusName,
+    },
   });
 };

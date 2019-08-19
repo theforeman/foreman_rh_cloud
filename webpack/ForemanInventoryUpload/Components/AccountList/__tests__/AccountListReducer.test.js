@@ -5,9 +5,16 @@ import {
   INVENTORY_ACCOUNT_STATUS_POLLING_START,
   INVENTORY_ACCOUNT_STATUS_POLLING_STOP,
   INVENTORY_ACCOUNT_STATUS_POLLING_ERROR,
+  INVENTORY_PROCESS_RESTART,
 } from '../AccountListConstants';
 import reducer from '../AccountListReducer';
-import { statuses, error, pollingProcessID } from '../AccountList.fixtures';
+import {
+  statuses,
+  error,
+  pollingProcessID,
+  accountID,
+  processStatusName,
+} from '../AccountList.fixtures';
 
 const fixtures = {
   'should return the initial state': {},
@@ -36,6 +43,15 @@ const fixtures = {
   'should handle INVENTORY_ACCOUNT_STATUS_POLLING_STOP': {
     action: {
       type: INVENTORY_ACCOUNT_STATUS_POLLING_STOP,
+    },
+  },
+  'should handle INVENTORY_PROCESS_RESTART': {
+    action: {
+      type: INVENTORY_PROCESS_RESTART,
+      payload: {
+        accountID,
+        processStatusName,
+      },
     },
   },
 };

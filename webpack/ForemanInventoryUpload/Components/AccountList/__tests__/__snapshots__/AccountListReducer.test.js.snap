@@ -45,6 +45,18 @@ Object {
 }
 `;
 
+exports[`AccountList reducer should handle INVENTORY_PROCESS_RESTART 1`] = `
+Object {
+  "error": null,
+  "pollingProcessID": 0,
+  "statuses": Object {
+    "user@redhat.com": Object {
+      "upload_report_status": "Restarting...",
+    },
+  },
+}
+`;
+
 exports[`AccountList reducer should return the initial state 1`] = `
 Object {
   "error": null,
