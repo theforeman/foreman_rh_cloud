@@ -7,7 +7,7 @@ exports[`ErrorState rendering render without Props 1`] = `
   <Icon
     className="error_icon"
     name="times"
-    size="3x"
+    size="2x"
     type="fa"
   />
   <p>

@@ -5,7 +5,7 @@ import './errorState.scss';
 
 const ErrorState = ({ error }) => (
   <div className="error_state">
-    <Icon className="error_icon" name="times" size="3x" />
+    <Icon className="error_icon" name="times" size="2x" />
     <p>Encountered an error while trying to access the server:</p>
     <p className="error_description">{error}</p>
   </div>
