@@ -15,9 +15,9 @@ describe('Terminal', () => {
 
   it('handles terminal scroll on componentDidUpdate', () => {
     const wrapper = mount(<Terminal {...props} />);
-    jest.spyOn(wrapper.instance(), 'handleScroll');
+    jest.spyOn(wrapper.instance(), 'scrollBottom');
     wrapper.setProps({ logs: [...logs, 'new-log'] });
-    expect(wrapper.instance().handleScroll).toBeCalled();
+    expect(wrapper.instance().scrollBottom).toBeCalled();
   });
 
   it('error should be displayed in terminal', () => {

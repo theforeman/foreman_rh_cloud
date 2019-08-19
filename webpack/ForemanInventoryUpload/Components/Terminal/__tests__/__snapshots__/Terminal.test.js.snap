@@ -8,6 +8,7 @@ exports[`Terminal rendering render with props 1`] = `
 >
   <div
     className="terminal"
+    onScroll={[Function]}
   >
     <Grid
       bsClass="container"
@@ -65,6 +66,7 @@ exports[`Terminal rendering render without Props 1`] = `
 >
   <div
     className="terminal"
+    onScroll={[Function]}
   >
     <Grid
       bsClass="container"
