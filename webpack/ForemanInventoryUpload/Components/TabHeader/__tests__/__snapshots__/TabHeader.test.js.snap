@@ -9,7 +9,7 @@ exports[`TabHeader rendering render without Props 1`] = `
   <Col
     bsClass="col"
     componentClass="div"
-    sm={7}
+    sm={6}
   >
     <p>
       Exit Code: 
@@ -18,7 +18,7 @@ exports[`TabHeader rendering render without Props 1`] = `
   <Col
     bsClass="col"
     componentClass="div"
-    sm={5}
+    sm={6}
   >
     <div
       className="tab-action-buttons"
@@ -32,6 +32,20 @@ exports[`TabHeader rendering render without Props 1`] = `
         onClick={[Function]}
       >
         Restart
+      </Button>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="default"
+        disabled={false}
+        onClick={[Function]}
+      >
+        Full Screen
+        <Icon
+          name="arrows-alt"
+          type="fa"
+        />
       </Button>
     </div>
   </Col>

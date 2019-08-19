@@ -8,6 +8,7 @@ exports[`ReportUpload rendering render with Props 1`] = `
     exitCode="exit 0"
     onDownload={[Function]}
     onRestart={[Function]}
+    toggleFullScreen={[Function]}
   />
   <TabBody
     completed={0}
@@ -30,6 +31,7 @@ exports[`ReportUpload rendering render without Props 1`] = `
     exitCode=""
     onDownload={[Function]}
     onRestart={[Function]}
+    toggleFullScreen={[Function]}
   />
   <TabBody
     completed={0}

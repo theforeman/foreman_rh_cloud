@@ -14,8 +14,11 @@ class Terminal extends React.Component {
   }
 
   handleScroll = () => {
-    const element = this.terminal.current;
-    element.scrollTop = element.scrollHeight;
+    const { autoScroll } = this.props;
+    if (autoScroll) {
+      const element = this.terminal.current;
+      element.scrollTop = element.scrollHeight;
+    }
   };
 
   render() {
@@ -29,6 +32,7 @@ class Terminal extends React.Component {
       modifiedLogs = <p>{logs}</p>;
     }
     const loading = exitCode.toLowerCase().indexOf('running') !== -1;
+
     return (
       <Grid.Col sm={12}>
         <div className="terminal" ref={this.terminal}>
@@ -53,12 +57,14 @@ Terminal.propTypes = {
   ]),
   error: PropTypes.string,
   exitCode: PropTypes.string,
+  autoScroll: PropTypes.bool,
 };
 
 Terminal.defaultProps = {
   logs: null,
   error: null,
   exitCode: '',
+  autoScroll: true,
 };
 
 export default Terminal;

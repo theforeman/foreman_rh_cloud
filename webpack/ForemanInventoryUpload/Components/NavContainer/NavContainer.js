@@ -7,10 +7,17 @@ import {
   TabContent,
   TabPane,
   Icon,
+  noop,
 } from 'patternfly-react';
 import './navContainer.scss';
+import FullScreenModal from '../FullScreenModal';
 
-const NavContainer = ({ items }) => {
+const NavContainer = ({
+  items,
+  showFullScreen,
+  toggleFullScreen,
+  terminalProps,
+}) => {
   const navItems = items.map((item, index) => {
     const { name, icon, onClick } = item;
     return (
@@ -35,6 +42,11 @@ const NavContainer = ({ items }) => {
       <div className="dashboard">
         <Nav bsClass="nav nav-tabs nav-tabs-pf">{navItems}</Nav>
         <TabContent animation>{tabComponents}</TabContent>
+        <FullScreenModal
+          showFullScreen={showFullScreen}
+          toggleFullScreen={toggleFullScreen}
+          terminalProps={terminalProps}
+        />
       </div>
     </TabContainer>
   );
@@ -49,10 +61,23 @@ NavContainer.propTypes = {
       onClick: PropTypes.func,
     })
   ),
+  showFullScreen: PropTypes.bool,
+  toggleFullScreen: PropTypes.func,
+  terminalProps: PropTypes.shape({
+    exitCode: PropTypes.string,
+    logs: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.string,
+    ]),
+    error: PropTypes.string,
+  }),
 };
 
 NavContainer.defaultProps = {
   items: [],
+  showFullScreen: false,
+  toggleFullScreen: noop,
+  terminalProps: {},
 };
 
 export default NavContainer;

@@ -15,7 +15,7 @@ Array [
     Object {
       "payload": Object {
         "accountID": "some-account-ID",
-        "activeTab": undefined,
+        "activeTab": "generating",
         "logs": Array [
           "some-logs",
           "some-logs",
@@ -68,6 +68,20 @@ Array [
         "accountID": "some-account-ID",
       },
       "type": "INVENTORY_POLLING_STOP",
+    },
+  ],
+]
+`;
+
+exports[`Dashboard actions should toggleFullScreen 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "accountID": "some-account-ID",
+        "activeTab": "generating",
+      },
+      "type": "INVENTORY_TOGGLE_TERMINAL_FULL_SCREEN",
     },
   ],
 ]

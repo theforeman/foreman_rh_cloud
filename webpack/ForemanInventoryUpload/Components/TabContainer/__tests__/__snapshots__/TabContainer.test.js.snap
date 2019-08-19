@@ -12,9 +12,6 @@ exports[`TabContainer rendering render without Props 1`] = `
     <Col
       bsClass="col"
       componentClass="div"
-      lg={8}
-      lgOffset={2}
-      sm={12}
     />
   </Grid>
 </div>

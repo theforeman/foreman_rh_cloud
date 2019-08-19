@@ -1,0 +1,10 @@
+.modal-dialog {
+  width: 95%;
+
+  .modal-body,
+  .terminal {
+    height: -webkit-fill-available;
+    height: -moz-available;
+    height: fill-available;
+  }
+}

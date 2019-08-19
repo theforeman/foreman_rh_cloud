@@ -6,6 +6,7 @@ exports[`TabBody rendering render without Props 1`] = `
   componentClass="div"
 >
   <Terminal
+    autoScroll={true}
     error={null}
     exitCode=""
     logs={null}
