@@ -49,8 +49,17 @@ module ForemanInventoryUpload
               @stream.stringify_value(nic.mac) if nic.mac
             end.compact.join(', '))
           end
-          @stream.object_field('system_profile', :last) do
+          @stream.object_field('system_profile') do
             report_system_profile(host)
+          end
+          @stream.array_field('facts', :last) do
+            @stream.object do
+              @stream.simple_field('namespace', 'satellite')
+              @stream.object_field('facts', :last) do
+                @stream.simple_field('virtual_host_name', host.subscription_facet.hypervisor_host&.name)
+                @stream.simple_field('virtual_host_uuid', host.subscription_facet.hypervisor_host&.subscription_facet&.uuid, :last)
+              end
+            end
           end
         end
       end
