@@ -20,14 +20,14 @@ module ForemanInventoryUpload
             portal_user,
             {
               generate_report_status: generate_report_status,
-              upload_report_status: upload_report_status
-            }
+              upload_report_status: upload_report_status,
+            },
           ]
         end
       ]
 
       render json: {
-        statuses: statuses
+        statuses: statuses,
       }, status: :ok
     end
 

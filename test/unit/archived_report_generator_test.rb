@@ -32,7 +32,7 @@ class ArchivedReportGeneratorTest < ActiveSupport::TestCase
       'dmi::bios::relase_date',
       'distribution::name',
       'uname::release',
-      'lscpu::flags'
+      'lscpu::flags',
     ]
   end
 

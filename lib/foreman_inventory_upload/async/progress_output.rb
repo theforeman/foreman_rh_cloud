@@ -50,7 +50,7 @@ module ForemanInventoryUpload
       private
 
       def file_mode
-        @mode == :reader ? 'r' : 'w'
+        (@mode == :reader) ? 'r' : 'w'
       end
 
       def file_name(type = 'out')

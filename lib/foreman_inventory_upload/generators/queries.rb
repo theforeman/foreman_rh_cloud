@@ -16,7 +16,7 @@ module ForemanInventoryUpload
               'dmi::bios::relase_date',
               'distribution::name',
               'uname::release',
-              'lscpu::flags'
+              'lscpu::flags',
             ]).pluck(:name, :id)
           ]
       end
@@ -31,7 +31,7 @@ module ForemanInventoryUpload
             :installed_packages,
             :content_facet,
             :host_statuses,
-            subscription_facet: %i[pools installed_products]
+            subscription_facet: [:pools, :installed_products]
           )
           .merge(fact_values)
       end
@@ -42,7 +42,7 @@ module ForemanInventoryUpload
                   .where(
                     redhat_access_telemetry_configurations: {
                       portal_user: portal_user,
-                      enable_telemetry: true
+                      enable_telemetry: true,
                     }
                   ).pluck(:id)
         for_slice(Host.where(organization_id: org_ids)).in_batches(of: 1_000)

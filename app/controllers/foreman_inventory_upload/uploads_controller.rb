@@ -5,7 +5,7 @@ module ForemanInventoryUpload
       output = ForemanInventoryUpload::Async::ProgressOutput.get(label)&.full_output
 
       render json: {
-        output: output
+        output: output,
       }, status: :ok
     end
 

@@ -67,7 +67,7 @@ module ForemanInventoryUpload
               'ipv6_addresses': [nic.ip6].compact,
               'mtu': nic.mtu,
               'mac_address': nic.mac,
-              'name': nic.identifier
+              'name': nic.identifier,
             }.compact.to_json
           end.join(', '))
         end
@@ -92,7 +92,7 @@ module ForemanInventoryUpload
             @stream.raw(installed_products.map do |product|
               {
                 'name': product.name,
-                'id': product.cp_product_id
+                'id': product.cp_product_id,
               }.to_json
             end.join(', '))
           end

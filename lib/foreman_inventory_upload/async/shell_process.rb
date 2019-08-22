@@ -21,7 +21,8 @@ module ForemanInventoryUpload
         progress_output.close
       end
 
-      def command; end
+      def command
+      end
 
       def env
         {}
