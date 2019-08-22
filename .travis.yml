@@ -29,7 +29,7 @@ script:
   - bundle exec rake test:${FOREMAN_PLUGIN_NAME}
   - bundle exec rake "plugin:assets:precompile[${FOREMAN_PLUGIN_NAME}]" RAILS_ENV=production
   - cd ../${FOREMAN_PLUGIN_NAME}
-  - # bundle exec rubocop
+  - bundle exec rubocop
   - npm run test;
   - npm run coveralls;
   - npm run lint;
