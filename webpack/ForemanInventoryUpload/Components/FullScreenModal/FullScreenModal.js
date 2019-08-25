@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Icon, noop } from 'patternfly-react';
+import { translate as __ } from 'foremanReact/common/I18n';
 import Terminal from '../Terminal';
 import './fullScreenModal.scss';
 
@@ -19,7 +20,7 @@ const FullScreenModal = ({
       >
         <Icon type="pf" name="close" />
       </button>
-      <Modal.Title>Full Screen</Modal.Title>
+      <Modal.Title>{__('Full Screen')}</Modal.Title>
     </Modal.Header>
     <Modal.Body>
       <Terminal autoScroll={false} {...terminalProps} />

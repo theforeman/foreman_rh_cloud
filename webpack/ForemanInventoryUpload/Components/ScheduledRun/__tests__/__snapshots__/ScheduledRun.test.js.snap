@@ -12,7 +12,7 @@ exports[`ScheduledRun rendering render with Props 1`] = `
       name="calendar"
       type="fa"
     />
-    Scheduled to run 
+    Next run: 
     <FormattedRelative
       updateInterval={10000}
       value="2019-08-21T16:14:16.520+03:00"

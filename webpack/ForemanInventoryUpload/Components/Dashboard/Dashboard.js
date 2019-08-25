@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { noop } from 'patternfly-react';
+import { translate as __ } from 'foremanReact/common/I18n';
 import ReportGenerate from '../ReportGenerate';
 import ReportUpload from '../ReportUpload';
 import NavContainer from '../NavContainer';
@@ -53,7 +54,7 @@ class Dashboard extends React.Component {
         items={[
           {
             icon: 'database',
-            name: 'Generating',
+            name: __('Generating'),
             component: ReportGenerate,
             props: {
               ...generating,
@@ -65,7 +66,7 @@ class Dashboard extends React.Component {
           },
           {
             icon: 'cloud-upload',
-            name: 'Uploading',
+            name: __('Uploading'),
             component: ReportUpload,
             props: {
               ...uploading,
