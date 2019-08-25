@@ -19,6 +19,7 @@ exports[`ReportGenerate rendering render with Props 1`] = `
         "No running process",
       ]
     }
+    scheduled="2019-08-21T16:14:16.520+03:00"
   />
 </TabContainer>
 `;
@@ -38,6 +39,7 @@ exports[`ReportGenerate rendering render without Props 1`] = `
     error={null}
     exitCode=""
     logs={null}
+    scheduled={null}
   />
 </TabContainer>
 `;

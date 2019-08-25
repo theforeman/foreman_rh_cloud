@@ -33,7 +33,7 @@ export const fetchLogs = accountID => async (dispatch, getState) => {
   try {
     const processController = activeTab === 'uploading' ? 'uploads' : 'reports';
     const {
-      data: { output },
+      data: { output, scheduled },
     } = await API.get(`${accountID}/${processController}/last`);
     const outputArray = output.split('\n');
     dispatch({
@@ -42,6 +42,7 @@ export const fetchLogs = accountID => async (dispatch, getState) => {
         accountID,
         activeTab,
         logs: outputArray,
+        scheduled,
       },
     });
   } catch (error) {

@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'patternfly-react';
 import Terminal from '../Terminal';
+import ScheduledRun from '../ScheduledRun';
+import './tabBody.scss';
 
-const TabBody = ({ exitCode, logs, error }) => (
-  <Grid.Row>
+const TabBody = ({ exitCode, logs, error, scheduled }) => (
+  <Grid.Row className="tab_body">
     <Terminal logs={logs} exitCode={exitCode} error={error} />
+    <ScheduledRun date={scheduled} />
   </Grid.Row>
 );
 
@@ -16,11 +19,13 @@ TabBody.propTypes = {
     PropTypes.string,
   ]),
   error: PropTypes.string,
+  scheduled: PropTypes.string,
 };
 
 TabBody.defaultProps = {
   exitCode: '',
   logs: null,
   error: null,
+  scheduled: null,
 };
 export default TabBody;

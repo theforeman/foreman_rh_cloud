@@ -19,6 +19,7 @@ exports[`ReportUpload rendering render with Props 1`] = `
         "No running process",
       ]
     }
+    scheduled={null}
   />
 </TabContainer>
 `;
@@ -38,6 +39,7 @@ exports[`ReportUpload rendering render without Props 1`] = `
     error={null}
     exitCode=""
     logs={null}
+    scheduled={null}
   />
 </TabContainer>
 `;

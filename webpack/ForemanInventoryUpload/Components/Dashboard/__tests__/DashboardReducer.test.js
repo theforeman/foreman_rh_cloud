@@ -14,6 +14,7 @@ import {
   activeTab,
   error,
   accountID,
+  scheduled,
 } from '../Dashboard.fixtures';
 
 const fixtures = {
@@ -34,6 +35,7 @@ const fixtures = {
         logs,
         accountID,
         activeTab,
+        scheduled,
       },
     },
   },

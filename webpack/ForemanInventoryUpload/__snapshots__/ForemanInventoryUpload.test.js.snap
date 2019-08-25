@@ -1,12 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ForemanInventoryUpload render without Props 1`] = `
-<div
-  className="inventory-upload"
+<IntlProvider
+  locale="en-US"
 >
-  <h1>
-    Red Hat Inventory Uploads
-  </h1>
-  <Connect(AccountList) />
-</div>
+  <div
+    className="inventory-upload"
+  >
+    <h1>
+      Red Hat Inventory Uploads
+    </h1>
+    <Connect(AccountList) />
+  </div>
+</IntlProvider>
 `;

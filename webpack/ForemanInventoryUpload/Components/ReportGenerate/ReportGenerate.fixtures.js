@@ -5,11 +5,12 @@ export const logs = ['No running process'];
 export const completed = 0;
 export const restartProcess = noop;
 export const error = null;
-export const processScheduledTime = 'some-time';
+export const scheduled = '2019-08-21T16:14:16.520+03:00';
 export const props = {
   exitCode,
   logs,
   completed,
   restartProcess,
   error,
+  scheduled,
 };
