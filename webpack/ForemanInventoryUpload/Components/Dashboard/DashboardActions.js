@@ -5,7 +5,6 @@ import {
   INVENTORY_POLLING,
   INVENTORY_TAB_CHANGED,
   INVENTORY_POLLING_ERROR,
-  INVENTORY_PROCESS_RESTART,
   INVENTORY_REPORTS_DOWNLOAD,
   INVENTORY_TOGGLE_TERMINAL_FULL_SCREEN,
 } from './DashboardConstants';
@@ -64,18 +63,6 @@ export const setActiveTab = (accountID, tabName) => ({
     activeTab: tabName,
   },
 });
-
-export const restartProcess = accountID => (dispatch, getState) => {
-  const activeTab = selectActiveTab(getState(), accountID);
-  const processController = activeTab === 'uploading' ? 'uploads' : 'reports';
-  API.post(`${accountID}/${processController}`);
-  dispatch({
-    type: INVENTORY_PROCESS_RESTART,
-    payload: {
-      accountID,
-    },
-  });
-};
 
 export const downloadReports = accountID => {
   window.location.href = `/foreman_inventory_upload/${accountID}/uploads/file`;

@@ -6,7 +6,6 @@ import {
   fetchLogs,
   setActiveTab,
   downloadReports,
-  restartProcess,
   toggleFullScreen,
 } from '../DashboardActions';
 import {
@@ -33,8 +32,6 @@ const fixtures = {
   'should stopPolling': () => stopPolling(accountID, pollingProcessID),
   'should setActiveTab': () => setActiveTab(accountID, activeTab),
   'should downloadReports': () => downloadReports(accountID),
-  'should restartProcess': () =>
-    runWithGetState({ activeTab: 'reports' }, restartProcess, accountID),
   'should toggleFullScreen': () =>
     runWithGetState({ activeTab: 'reports' }, toggleFullScreen, accountID),
 };

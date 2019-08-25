@@ -25,8 +25,8 @@ class Dashboard extends React.Component {
   };
 
   handleRestart = () => {
-    const { restartProcess, accountID } = this.props;
-    restartProcess(accountID);
+    const { restartProcess, accountID, activeTab } = this.props;
+    restartProcess(accountID, activeTab);
   };
 
   handleTabChange = async tabName => {

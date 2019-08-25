@@ -18,7 +18,10 @@ export const getStatusIconByRegex = status => {
     return STATUS_ICONS.success;
   }
 
-  if (statusCopy.indexOf('running') !== -1) {
+  if (
+    statusCopy.indexOf('running') !== -1 ||
+    statusCopy.indexOf('restarting') !== -1
+  ) {
     return STATUS_ICONS.running;
   }
 

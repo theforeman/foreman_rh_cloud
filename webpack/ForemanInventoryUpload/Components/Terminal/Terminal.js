@@ -31,8 +31,10 @@ class Terminal extends React.Component {
     } else {
       modifiedLogs = <p>{logs}</p>;
     }
-    const loading = exitCode.toLowerCase().indexOf('running') !== -1;
-
+    const exitCodeLowerCase = exitCode.toLowerCase();
+    const loading =
+      exitCodeLowerCase.indexOf('running') !== -1 ||
+      exitCodeLowerCase.indexOf('restarting') !== -1;
     return (
       <Grid.Col sm={12}>
         <div className="terminal" ref={this.terminal}>
