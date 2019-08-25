@@ -19,7 +19,8 @@ exports[`EmptyState rendering render without Props 1`] = `
   <EmptyStateInfo
     className=""
   >
-    Loading...
+    Loading
+    ...
   </EmptyStateInfo>
 </EmptyState>
 `;

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon, Grid } from 'patternfly-react';
 import { FormattedRelative } from 'react-intl';
+import { translate as __ } from 'foremanReact/common/I18n';
 import './scheduledRun.scss';
 
 const ScheduledRun = ({ date }) =>
@@ -9,7 +10,7 @@ const ScheduledRun = ({ date }) =>
     <Grid.Col sm={12} className="scheduled_run">
       <p>
         <Icon name="calendar" />
-        Scheduled to run&nbsp;
+        {__('Next run: ')}
         <FormattedRelative value={date} />.
       </p>
     </Grid.Col>
