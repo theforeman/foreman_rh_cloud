@@ -37,6 +37,7 @@ module ForemanInventoryUpload
           @stream.simple_field('account', host.subscription_facet.pools.first.account_number.to_s)
           @stream.simple_field('subscription_manager_id', host.subscription_facet.uuid)
           @stream.simple_field('satellite_id', host.subscription_facet.uuid)
+          @stream.simple_field('satellite_instance_id', Foreman.instance_id)
           @stream.simple_field('bios_uuid', fact_value(host, 'dmi::system::uuid'))
           @stream.simple_field('vm_uuid', fact_value(host, 'virt::uuid'))
           @stream.array_field('ip_addresses') do
