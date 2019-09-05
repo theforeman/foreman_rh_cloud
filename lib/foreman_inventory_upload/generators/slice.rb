@@ -37,7 +37,6 @@ module ForemanInventoryUpload
           @stream.simple_field('account', host.subscription_facet.pools.first.account_number.to_s)
           @stream.simple_field('subscription_manager_id', host.subscription_facet.uuid)
           @stream.simple_field('satellite_id', host.subscription_facet.uuid)
-          @stream.simple_field('satellite_instance_id', Foreman.instance_id)
           @stream.simple_field('bios_uuid', fact_value(host, 'dmi::system::uuid'))
           @stream.simple_field('vm_uuid', fact_value(host, 'virt::uuid'))
           @stream.array_field('ip_addresses') do
@@ -107,11 +106,19 @@ module ForemanInventoryUpload
             end.join(', '))
           end
         end
-        @stream.array_field('installed_packages', :last) do
+        @stream.array_field('installed_packages') do
           first = true
           host.installed_packages.each do |package|
             @stream.raw("#{first ? '' : ', '}#{@stream.stringify_value(package.nvra)}")
             first = false
+          end
+        end
+        @stream.array_field('facts', :last) do
+          @stream.object do
+            @stream.simple_field('namespace', 'satellite')
+            @stream.object_field('facts', :last) do
+              @stream.simple_field('satellite_instance_id', Foreman.instance_id, :last)
+            end
           end
         end
       end
