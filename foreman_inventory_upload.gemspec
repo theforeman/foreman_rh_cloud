@@ -11,7 +11,9 @@ Gem::Specification.new do |s|
   # also update locale/gemspec.rb
   s.description = 'Foreman plugin that process & upload data to cloud based host inventory'
 
-  s.files = Dir['{app,config,db,lib,locale}/**/*'] + ['LICENSE', 'Rakefile', 'README.md']
+  s.files = Dir['{app,config,db,lib,locale,webpack}/**/*'] +
+            ['LICENSE', 'Rakefile', 'README.md'] +
+            ['package.json']
   s.test_files = Dir['test/**/*']
 
   s.add_dependency 'katello'
