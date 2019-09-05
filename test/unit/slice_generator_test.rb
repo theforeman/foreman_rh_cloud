@@ -66,9 +66,17 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    facts = actual['hosts'].first['facts'].first
+    facts = actual['hosts'].first.dig('system_profile', 'facts').first
     assert_equal 'satellite', facts['namespace']
-    assert_equal 'satellite-id', facts['facts']['satellite_instance_id']
+    satellite_facts = facts['facts']
+    assert_equal 'satellite-id', satellite_facts['satellite_instance_id']
+
+    version = satellite_facts['satellite_version']
+    if defined?(ForemanThemeSatellite)
+      assert_equal ForemanThemeSatellite::SATELLITE_VERSION, version
+    else
+      assert_nil version
+    end
   end
 
   test 'generates a report for a host with hypervisor' do

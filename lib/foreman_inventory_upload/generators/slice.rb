@@ -117,6 +117,9 @@ module ForemanInventoryUpload
           @stream.object do
             @stream.simple_field('namespace', 'satellite')
             @stream.object_field('facts', :last) do
+              if defined?(ForemanThemeSatellite)
+                @stream.simple_field('satellite_version', ForemanThemeSatellite::SATELLITE_VERSION)
+              end
               @stream.simple_field('satellite_instance_id', Foreman.instance_id, :last)
             end
           end
