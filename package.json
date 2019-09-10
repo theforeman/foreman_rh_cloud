@@ -20,6 +20,9 @@
   "bugs": {
     "url": "http://projects.theforeman.org/projects/foreman_inventory_upload/issues"
   },
+  "optionalDependencies": {
+    "babel-plugin-module-resolver": "^3.2.0"
+  },
   "devDependencies": {
     "@storybook/addon-actions": "^5.0.1",
     "@storybook/addon-knobs": "^5.0.1",
@@ -31,7 +34,6 @@
     "babel-loader": "^7.1.1",
     "babel-plugin-dynamic-import-node": "^2.0.0",
     "babel-plugin-lodash": "^3.3.4",
-    "babel-plugin-module-resolver": "^3.2.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-assign": "^6.8.0",
