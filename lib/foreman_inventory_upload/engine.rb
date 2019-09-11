@@ -11,6 +11,8 @@ module ForemanInventoryUpload
     config.autoload_paths += Dir["#{config.root}/app/overrides"]
     config.autoload_paths += Dir["#{config.root}/lib"]
 
+    config.eager_load_paths += Dir["#{config.root}/lib"]
+
     # Add any db migrations
     initializer 'foreman_inventory_upload.load_app_instance_data' do |app|
       ForemanInventoryUpload::Engine.paths['db/migrate'].existent.each do |path|
