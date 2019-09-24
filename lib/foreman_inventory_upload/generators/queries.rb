@@ -31,7 +31,7 @@ module ForemanInventoryUpload
             :installed_packages,
             :content_facet,
             :host_statuses,
-            subscription_facet: [:pools, :installed_products]
+            subscription_facet: [:pools, :installed_products, :hypervisor_host]
           )
           .merge(fact_values)
       end

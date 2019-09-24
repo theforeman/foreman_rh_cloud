@@ -57,4 +57,34 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
   end
+
+  test 'generates a report for a host with hypervisor' do
+    hypervisor_host = FactoryBot.create(
+      :host,
+      :with_subscription,
+      :with_content,
+      content_view: @host.content_view,
+      lifecycle_environment: @host.lifecycle_environment,
+      organization: @host.organization
+    )
+
+    @host.subscription_facet.hypervisor_host = hypervisor_host
+    @host.save!
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice_123')
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_equal @host.name, actual_host['display_name']
+    assert_equal @host.fqdn, actual_host['fqdn']
+    assert_not_nil(host_facts = actual_host['facts']&.first)
+    assert_equal 'satellite', host_facts['namespace']
+    assert_not_nil(fact_values = host_facts['facts'])
+    assert_equal hypervisor_host.name, fact_values['virtual_host_name']
+    assert_equal hypervisor_host.subscription_facet.uuid, fact_values['virtual_host_uuid']
+  end
 end
