@@ -57,7 +57,11 @@ module ForemanInventoryUpload
               @stream.simple_field('namespace', 'satellite')
               @stream.object_field('facts', :last) do
                 @stream.simple_field('virtual_host_name', host.subscription_facet.hypervisor_host&.name)
-                @stream.simple_field('virtual_host_uuid', host.subscription_facet.hypervisor_host&.subscription_facet&.uuid, :last)
+                @stream.simple_field('virtual_host_uuid', host.subscription_facet.hypervisor_host&.subscription_facet&.uuid)
+                if defined?(ForemanThemeSatellite)
+                  @stream.simple_field('satellite_version', ForemanThemeSatellite::SATELLITE_VERSION)
+                end
+                @stream.simple_field('satellite_instance_id', Foreman.respond_to?(:instance_id) ? Foreman.instance_id : nil, :last)
               end
             end
           end
@@ -106,22 +110,11 @@ module ForemanInventoryUpload
             end.join(', '))
           end
         end
-        @stream.array_field('installed_packages') do
+        @stream.array_field('installed_packages', :last) do
           first = true
           host.installed_packages.each do |package|
             @stream.raw("#{first ? '' : ', '}#{@stream.stringify_value(package.nvra)}")
             first = false
-          end
-        end
-        @stream.array_field('facts', :last) do
-          @stream.object do
-            @stream.simple_field('namespace', 'satellite')
-            @stream.object_field('facts', :last) do
-              if defined?(ForemanThemeSatellite)
-                @stream.simple_field('satellite_version', ForemanThemeSatellite::SATELLITE_VERSION)
-              end
-              @stream.simple_field('satellite_instance_id', Foreman.instance_id, :last)
-            end
           end
         end
       end

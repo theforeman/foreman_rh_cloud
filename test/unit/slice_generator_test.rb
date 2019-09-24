@@ -66,7 +66,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    facts = actual['hosts'].first.dig('system_profile', 'facts').first
+    facts = actual['hosts'].first['facts'].first
     assert_equal 'satellite', facts['namespace']
     satellite_facts = facts['facts']
     assert_equal 'satellite-id', satellite_facts['satellite_instance_id']
