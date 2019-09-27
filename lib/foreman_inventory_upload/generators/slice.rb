@@ -58,7 +58,7 @@ module ForemanInventoryUpload
               @stream.object_field('facts', :last) do
                 @stream.simple_field('virtual_host_name', host.subscription_facet.hypervisor_host&.name)
                 @stream.simple_field('virtual_host_uuid', host.subscription_facet.hypervisor_host&.subscription_facet&.uuid)
-                @stream.simple_field('account_number', organization_account_map[host.organization_id])
+                @stream.simple_field('organization_id', host.organization_id)
                 if defined?(ForemanThemeSatellite)
                   @stream.simple_field('satellite_version', ForemanThemeSatellite::SATELLITE_VERSION)
                 end
@@ -125,16 +125,6 @@ module ForemanInventoryUpload
           fact_value.fact_name_id == ForemanInventoryUpload::Generators::Queries.fact_names[fact_name]
         end
         value_record&.value
-      end
-
-      def organization_account_map
-        return @organization_account_map if @organization_account_map
-        scope = ::Katello::Pool.where(:organization_id => @hosts.map(&:organization_id).uniq)
-        scope = scope.where.not(:account_number => nil)
-        scope = scope.select(:organization_id, :account_number)
-        @organization_account_map = scope.reduce({}) do |acc, pool|
-          acc.merge(pool.organization_id => pool.account_number)
-        end
       end
     end
   end
