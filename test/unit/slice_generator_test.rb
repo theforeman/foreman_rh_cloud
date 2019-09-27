@@ -60,6 +60,10 @@ class ReportGeneratorTest < ActiveSupport::TestCase
 
   test 'generates a report with satellite facts' do
     Foreman.expects(:instance_id).returns('satellite-id')
+    pool = FactoryBot.create(:katello_pool)
+    pool.organization = @host.organization
+    pool.account_number = 12345
+    pool.save!
     batch = Host.where(id: @host.id).in_batches.first
     generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice-123')
 
@@ -70,6 +74,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal 'satellite', facts['namespace']
     satellite_facts = facts['facts']
     assert_equal 'satellite-id', satellite_facts['satellite_instance_id']
+    assert_equal 12345, satellite_facts['account_number']
 
     version = satellite_facts['satellite_version']
     if defined?(ForemanThemeSatellite)
