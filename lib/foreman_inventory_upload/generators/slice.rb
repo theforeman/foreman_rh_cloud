@@ -57,7 +57,12 @@ module ForemanInventoryUpload
               @stream.simple_field('namespace', 'satellite')
               @stream.object_field('facts', :last) do
                 @stream.simple_field('virtual_host_name', host.subscription_facet.hypervisor_host&.name)
-                @stream.simple_field('virtual_host_uuid', host.subscription_facet.hypervisor_host&.subscription_facet&.uuid, :last)
+                @stream.simple_field('virtual_host_uuid', host.subscription_facet.hypervisor_host&.subscription_facet&.uuid)
+                if defined?(ForemanThemeSatellite)
+                  @stream.simple_field('satellite_version', ForemanThemeSatellite::SATELLITE_VERSION)
+                end
+                @stream.simple_field('satellite_instance_id', Foreman.respond_to?(:instance_id) ? Foreman.instance_id : nil)
+                @stream.simple_field('organization_id', host.organization_id, :last)
               end
             end
           end

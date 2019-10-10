@@ -58,6 +58,28 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal '1234', actual_host['account']
   end
 
+  test 'generates a report with satellite facts' do
+    Foreman.expects(:instance_id).returns('satellite-id')
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice-123')
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    facts = actual['hosts'].first['facts'].first
+    assert_equal 'satellite', facts['namespace']
+    satellite_facts = facts['facts']
+    assert_equal 'satellite-id', satellite_facts['satellite_instance_id']
+    assert_equal @host.organization_id, satellite_facts['organization_id']
+
+    version = satellite_facts['satellite_version']
+    if defined?(ForemanThemeSatellite)
+      assert_equal ForemanThemeSatellite::SATELLITE_VERSION, version
+    else
+      assert_nil version
+    end
+  end
+
   test 'generates a report for a host with hypervisor' do
     hypervisor_host = FactoryBot.create(
       :host,
