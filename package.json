@@ -63,21 +63,9 @@
     "surge": "^0.20.3"
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0",
-    "classnames": "^2.2.5",
-    "lodash": "^4.17.10",
-    "patternfly-react": "^2.19.1",
-    "prop-types": "^15.6.0",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
     "react-intl": "^2.8.0",
-    "react-redux": "^5.0.6",
-    "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1",
-    "seamless-immutable": "^7.1.2",
-    "urijs": "^1.18.10",
-    "uuid": "^3.0.1"
+    "@theforeman/vendor": "^0.1.1",
+    "@theforeman/vendor-dev": "^0.1.1"
   },
   "jest": {
     "automock": true,
