@@ -37,15 +37,23 @@ module ForemanInventoryUpload
       end
 
       def self.for_report(portal_user)
-        org_ids = Organization
-                  .joins(:telemetry_configuration)
-                  .where(
-                    redhat_access_telemetry_configurations: {
-                      portal_user: portal_user,
-                      enable_telemetry: true,
-                    }
-                  ).pluck(:id)
-        for_slice(Host.where(organization_id: org_ids)).in_batches(of: 1_000)
+        org_ids = organizations_for_user(portal_user).pluck(:id)
+        for_slice(Host.unscoped.where(organization_id: org_ids)).in_batches(of: 1_000)
+      end
+
+      def self.for_org(organization_id)
+        for_slice(Host.unscoped.where(organization_id: organization_id)).in_batches(of: 1_000)
+      end
+
+      def self.organizations_for_user(portal_user)
+        Organization
+          .joins(:telemetry_configuration)
+          .where(
+            redhat_access_telemetry_configurations: {
+              portal_user: portal_user,
+              enable_telemetry: true,
+            }
+          )
       end
     end
   end

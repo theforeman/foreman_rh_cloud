@@ -6,18 +6,15 @@ module ForemanInventoryUpload
     end
 
     def index
-      portal_users = RedhatAccess::TelemetryConfiguration
-                     .where(enable_telemetry: true)
-                     .distinct
-                     .pluck(:portal_user)
+      labels = Organization.all.pluck(:id, :name)
 
       statuses = Hash[
-        portal_users.map do |portal_user|
-          generate_report_status = status_for(portal_user, ForemanInventoryUpload::Async::GenerateReportJob)
-          upload_report_status = status_for(portal_user, ForemanInventoryUpload::Async::UploadReportJob)
+        labels.map do |id, label|
+          generate_report_status = status_for(id, ForemanInventoryUpload::Async::GenerateReportJob)
+          upload_report_status = status_for(id, ForemanInventoryUpload::Async::UploadReportJob)
 
           [
-            portal_user,
+            label,
             {
               generate_report_status: generate_report_status,
               upload_report_status: upload_report_status,
@@ -33,8 +30,8 @@ module ForemanInventoryUpload
 
     private
 
-    def status_for(portal_user, job_class)
-      label = job_class.output_label(portal_user)
+    def status_for(label, job_class)
+      label = job_class.output_label(label)
       ForemanInventoryUpload::Async::ProgressOutput.get(label)&.status
     end
   end
