@@ -1,1 +1,1 @@
-export const props = { name: 'some-name' };
+export const props = { accountID: '1' };

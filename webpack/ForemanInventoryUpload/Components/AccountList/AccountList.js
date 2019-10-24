@@ -21,21 +21,21 @@ class AccountList extends Component {
 
   render() {
     const { statuses, error } = this.props;
-    const accountNames = Object.keys(statuses);
+    const accountIds = Object.keys(statuses);
 
     if (error) {
       return <ErrorState error={error} />;
     }
 
-    if (accountNames.length === 0) {
+    if (accountIds.length === 0) {
       return <EmptyState />;
     }
-    const items = accountNames.map((name, index) => {
-      const status = statuses[name];
+    const items = accountIds.map((accountID, index) => {
+      const status = statuses[accountID];
       return (
         <ListItem
           key={index}
-          name={name}
+          accountID={accountID}
           statuses={status}
           initExpanded={index === 0}
         />
