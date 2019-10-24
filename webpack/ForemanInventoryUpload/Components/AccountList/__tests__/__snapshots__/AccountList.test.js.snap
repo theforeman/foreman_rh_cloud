@@ -5,9 +5,9 @@ exports[`AccountList rendering render with props 1`] = `
   className="account_list"
 >
   <ListItem
+    accountID="Account1"
     initExpanded={true}
     key="0"
-    name="Account1"
     statuses={
       Object {
         "generate_report_status": "running",
@@ -16,9 +16,9 @@ exports[`AccountList rendering render with props 1`] = `
     }
   />
   <ListItem
+    accountID="Account2"
     initExpanded={false}
     key="1"
-    name="Account2"
     statuses={
       Object {
         "generate_report_status": "failure",
@@ -27,9 +27,9 @@ exports[`AccountList rendering render with props 1`] = `
     }
   />
   <ListItem
+    accountID="Account3"
     initExpanded={false}
     key="2"
-    name="Account3"
     statuses={
       Object {
         "generate_report_status": "running",
