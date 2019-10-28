@@ -8,7 +8,7 @@ namespace :foreman_inventory_upload do
       organizations = [ENV['organization_id']]
       base_folder = ENV['target'] || Dir.pwd
 
-      unless portal_user || organization_id
+      unless portal_user || organizations.empty?
         puts "Must specify either portal_user or organization_id"
       end
 

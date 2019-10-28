@@ -8,20 +8,15 @@ module ForemanInventoryUpload
       end
 
       def perform(filename, organization_id)
-        @label = label
         @filename = filename
         @organization = Organization.find(organization_id)
 
-        Tempfile.create([@organization.name, '.cer']) do |cer_file|
+        Tempfile.create([@organization.name, '.pem']) do |cer_file|
           cer_file.write(rh_credentials[:cert])
+          cer_file.write(rh_credentials[:key])
           cer_file.close
-          Tempfile.create([@organization.name, '.key']) do |key_file|
-            key_file.write(rh_credentials[:key])
-            key_file.close
-            @cer_path = cer_file.path
-            @cer_key = key_file.path
-            super(UploadReportJob.output_label(organization_id))
-          end
+          @cer_path = cer_file.path
+          super(UploadReportJob.output_label(organization_id))
         end
       end
 
@@ -32,8 +27,7 @@ module ForemanInventoryUpload
       def env
         super.merge(
           'FILES' => @filename,
-          'CER_PATH' => @cer_path,
-          'CER_KEY' => @cer_key
+          'CER_PATH' => @cer_path
         )
       end
 

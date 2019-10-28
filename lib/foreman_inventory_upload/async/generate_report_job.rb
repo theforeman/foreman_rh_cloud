@@ -14,7 +14,7 @@ module ForemanInventoryUpload
         QueueForUploadJob.perform_later(
           base_folder,
           ForemanInventoryUpload.facts_archive_name(organization),
-          organization_id
+          organization
         )
       end
 
