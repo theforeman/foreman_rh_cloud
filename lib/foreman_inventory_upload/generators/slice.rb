@@ -23,14 +23,14 @@ module ForemanInventoryUpload
             first = true
             hosts_batch.each do |host|
               @stream.comma unless first
-              first = false
-              report_host(host)
+              first = false if report_host(host)
             end
           end
         end
       end
 
       def report_host(host)
+        return nil unless host&.subscription_facet&.pools&.first
         @stream.object do
           @stream.simple_field('display_name', host.name)
           @stream.simple_field('fqdn', host.fqdn)
