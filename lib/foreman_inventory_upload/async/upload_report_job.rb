@@ -14,7 +14,7 @@ module ForemanInventoryUpload
         Tempfile.create([@organization.name, '.pem']) do |cer_file|
           cer_file.write(rh_credentials[:cert])
           cer_file.write(rh_credentials[:key])
-          cer_file.close
+          cer_file.flush
           @cer_path = cer_file.path
           super(UploadReportJob.output_label(organization_id))
         end
