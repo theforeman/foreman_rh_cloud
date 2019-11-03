@@ -42,7 +42,7 @@ module ForemanInventoryUpload
   end
 
   def self.upload_url
-    # for testing set ENV to 'https://ci.cloud.paas.psi.redhat.com/api/ingress/v1/upload'
+    # for testing set ENV to 'https://ci.cloud.redhat.com/api/ingress/v1/upload'
     @upload_url ||= ENV['SATELLITE_INVENTORY_UPLOAD_URL'] || 'https://cloud.redhat.com/api/ingress/v1/upload'
   end
 
