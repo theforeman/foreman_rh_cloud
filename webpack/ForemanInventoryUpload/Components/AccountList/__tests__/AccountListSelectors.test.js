@@ -1,15 +1,15 @@
 import { testSelectorsSnapshotWithFixtures } from 'react-redux-test-utils';
 import {
   selectAccountsList,
-  selectStatuses,
+  selectAccounts,
   selectPollingProcessID,
 } from '../AccountListSelectors';
-import { pollingProcessID, statuses } from '../AccountList.fixtures';
+import { pollingProcessID, accounts } from '../AccountList.fixtures';
 
 const state = {
   ForemanInventoryUpload: {
     accountsList: {
-      statuses,
+      accounts,
       pollingProcessID,
     },
   },
@@ -17,7 +17,7 @@ const state = {
 
 const fixtures = {
   'should return AccountsList': () => selectAccountsList(state),
-  'should return AccountList statuses': () => selectStatuses(state),
+  'should return AccountList accounts': () => selectAccounts(state),
   'should return AccountList pollingProcessID': () =>
     selectPollingProcessID(state),
 };

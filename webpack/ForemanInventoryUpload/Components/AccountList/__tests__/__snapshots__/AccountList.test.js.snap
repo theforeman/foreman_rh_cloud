@@ -8,7 +8,7 @@ exports[`AccountList rendering render with props 1`] = `
     accountID="Account1"
     initExpanded={true}
     key="0"
-    statuses={
+    account={
       Object {
         "generate_report_status": "running",
         "upload_report_status": "running",
@@ -19,7 +19,7 @@ exports[`AccountList rendering render with props 1`] = `
     accountID="Account2"
     initExpanded={false}
     key="1"
-    statuses={
+    account={
       Object {
         "generate_report_status": "failure",
         "upload_report_status": "unknown",
@@ -30,7 +30,7 @@ exports[`AccountList rendering render with props 1`] = `
     accountID="Account3"
     initExpanded={false}
     key="2"
-    statuses={
+    account={
       Object {
         "generate_report_status": "running",
         "upload_report_status": "success",

@@ -1,7 +1,7 @@
 require 'test_plugin_helper'
 
-class StatusesControllerTest < ActionController::TestCase
-  tests ForemanInventoryUpload::StatusesController
+class AccountsControllerTest < ActionController::TestCase
+  tests ForemanInventoryUpload::AccountsController
 
   include FolderIsolation
 
@@ -18,7 +18,7 @@ class StatusesControllerTest < ActionController::TestCase
     get :index, session: set_session_user
 
     assert_response :success
-    actual = JSON.parse(response.body)['statuses'][test_org.name]
+    actual = JSON.parse(response.body)['accounts'][test_org.name]
     assert_equal 'generate_status_test', actual['generate_report_status']
     assert_equal 'upload_status_test', actual['upload_report_status']
   end

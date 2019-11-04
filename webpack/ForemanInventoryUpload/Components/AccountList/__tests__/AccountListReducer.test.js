@@ -9,7 +9,7 @@ import {
 } from '../AccountListConstants';
 import reducer from '../AccountListReducer';
 import {
-  statuses,
+  accounts,
   error,
   pollingProcessID,
   accountID,
@@ -22,7 +22,7 @@ const fixtures = {
     action: {
       type: INVENTORY_ACCOUNT_STATUS_POLLING,
       payload: {
-        statuses,
+        accounts,
       },
     },
   },

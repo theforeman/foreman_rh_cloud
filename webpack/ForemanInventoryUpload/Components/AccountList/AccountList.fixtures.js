@@ -15,7 +15,7 @@ export const API_SUCCESS_RESPONSE = {
   },
 };
 
-export const statuses = API_SUCCESS_RESPONSE;
+export const accounts = API_SUCCESS_RESPONSE;
 
 export const pollingProcessID = 0;
 
@@ -26,7 +26,7 @@ export const accountID = 'user@redhat.com';
 export const processStatusName = 'upload_report_status';
 
 export const props = {
-  statuses,
+  accounts,
   fetchAccountsStatus: noop,
   startAccountStatusPolling: noop,
   stopAccountStatusPolling: noop,

@@ -6,7 +6,7 @@ exports[`ListItem rendering render with Props 1`] = `
   additionalInfo={
     Array [
       <ListItemStatus
-        statuses={
+        account={
           Object {
             "generate_report_status": "unknown",
             "label": "default_org_name",
@@ -38,7 +38,7 @@ exports[`ListItem rendering render with Props 1`] = `
 >
   <Connect(Dashboard)
     accountID="1"
-    statuses={
+    account={
       Object {
         "generate_report_status": "unknown",
         "label": "default_org_name",

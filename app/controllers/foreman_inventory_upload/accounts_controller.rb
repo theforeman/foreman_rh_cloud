@@ -1,5 +1,5 @@
 module ForemanInventoryUpload
-  class StatusesController < ::ApplicationController
+  class AccountsController < ::ApplicationController
     # override default "welcome screen behavior, since we don't have a model"
     def welcome
       true
@@ -8,7 +8,7 @@ module ForemanInventoryUpload
     def index
       labels = Organization.all.pluck(:id, :name)
 
-      statuses = Hash[
+      accounts = Hash[
         labels.map do |id, label|
           generate_report_status = status_for(id, ForemanInventoryUpload::Async::GenerateReportJob)
           upload_report_status = status_for(id, ForemanInventoryUpload::Async::UploadReportJob)
@@ -25,7 +25,7 @@ module ForemanInventoryUpload
       ]
 
       render json: {
-        statuses: statuses,
+        accounts: accounts,
       }, status: :ok
     end
 

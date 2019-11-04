@@ -2,7 +2,7 @@
 
 exports[`AccountList selectors should return AccountList pollingProcessID 1`] = `0`;
 
-exports[`AccountList selectors should return AccountList statuses 1`] = `
+exports[`AccountList selectors should return AccountList accounts 1`] = `
 Object {
   "Account1": Object {
     "generate_report_status": "running",
@@ -22,7 +22,7 @@ Object {
 exports[`AccountList selectors should return AccountsList 1`] = `
 Object {
   "pollingProcessID": 0,
-  "statuses": Object {
+  "accounts": Object {
     "Account1": Object {
       "generate_report_status": "running",
       "upload_report_status": "running",

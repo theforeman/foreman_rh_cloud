@@ -4,24 +4,24 @@ import PropTypes from 'prop-types';
 import ListItemStatus from '../ListItemStatus';
 import Dashboard from '../../../Dashboard';
 
-const ListItem = ({ accountID, statuses, initExpanded }) => (
+const ListItem = ({ accountID, account, initExpanded }) => (
   <ListView.Item
     leftContent={<ListView.Icon name="user" />}
-    heading={statuses.label}
+    heading={account.label}
     additionalInfo={[
-      <ListItemStatus key={`${accountID}_status`} statuses={statuses} />,
+      <ListItemStatus key={`${accountID}_status`} account={account} />,
     ]}
     stacked
     hideCloseIcon
     initExpanded={initExpanded}
   >
-    <Dashboard accountID={accountID} statuses={statuses} />
+    <Dashboard accountID={accountID} account={account} />
   </ListView.Item>
 );
 
 ListItem.propTypes = {
   accountID: PropTypes.string.isRequired,
-  statuses: PropTypes.shape({
+  account: PropTypes.shape({
     generate_report_status: PropTypes.string,
     upload_report_status: PropTypes.string,
     label: PropTypes.string,
@@ -30,7 +30,7 @@ ListItem.propTypes = {
 };
 
 ListItem.defaultProps = {
-  statuses: {
+  account: {
     generate_report_status: 'unknown',
     upload_report_status: 'unknown',
     label: 'default_org_name',

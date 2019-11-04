@@ -5,12 +5,12 @@ import { translate as __ } from 'foremanReact/common/I18n';
 import './listItemStatus.scss';
 import { getStatusIconByRegex } from './ListItemStatusHelper';
 
-const ListItemStatus = ({ statuses }) => {
+const ListItemStatus = ({ account }) => {
   const generatingStatusIcon = getStatusIconByRegex(
-    statuses.generate_report_status
+    account.generate_report_status
   );
   const uploadingStatusIcon = getStatusIconByRegex(
-    statuses.upload_report_status
+    account.upload_report_status
   );
   return (
     <Grid className="status">
@@ -27,14 +27,14 @@ const ListItemStatus = ({ statuses }) => {
 };
 
 ListItemStatus.propTypes = {
-  statuses: PropTypes.shape({
+  account: PropTypes.shape({
     generate_report_status: PropTypes.string,
     upload_report_status: PropTypes.string,
   }),
 };
 
 ListItemStatus.defaultProps = {
-  statuses: {
+  account: {
     generate_report_status: 'unknown',
     uploupload_report_statusading: 'unknown',
   },

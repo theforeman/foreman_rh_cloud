@@ -7,7 +7,7 @@ import {
 } from './AccountListConstants';
 
 const initialState = Immutable({
-  statuses: {},
+  accounts: {},
   pollingProcessID: 0,
   error: null,
 });
@@ -17,7 +17,7 @@ export default (state = initialState, action) => {
     payload: {
       pollingProcessID,
       error,
-      statuses,
+      accounts,
       accountID,
       processStatusName,
     } = {},
@@ -27,13 +27,13 @@ export default (state = initialState, action) => {
     case INVENTORY_ACCOUNT_STATUS_POLLING:
       return state.merge({
         ...state,
-        statuses,
+        accounts,
         error: null,
       });
     case INVENTORY_ACCOUNT_STATUS_POLLING_ERROR:
       return state.merge({
         ...state,
-        statuses: {},
+        accounts: {},
         error,
       });
     case INVENTORY_ACCOUNT_STATUS_POLLING_START:
@@ -42,10 +42,10 @@ export default (state = initialState, action) => {
         pollingProcessID,
       });
     case INVENTORY_PROCESS_RESTART:
-      return state.setIn(['statuses'], {
-        ...state.statuses,
+      return state.setIn(['accounts'], {
+        ...state.accounts,
         [accountID]: {
-          ...state.statuses[accountID],
+          ...state.accounts[accountID],
           [processStatusName]: 'Restarting...',
         },
       });

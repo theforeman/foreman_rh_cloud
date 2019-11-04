@@ -4,7 +4,7 @@ exports[`AccountList reducer should handle INVENTORY_ACCOUNT_STATUS_POLLING 1`] 
 Object {
   "error": null,
   "pollingProcessID": 0,
-  "statuses": Object {
+  "accounts": Object {
     "Account1": Object {
       "generate_report_status": "running",
       "upload_report_status": "running",
@@ -25,7 +25,7 @@ exports[`AccountList reducer should handle INVENTORY_ACCOUNT_STATUS_POLLING_ERRO
 Object {
   "error": "some-error",
   "pollingProcessID": 0,
-  "statuses": Object {},
+  "accounts": Object {},
 }
 `;
 
@@ -33,7 +33,7 @@ exports[`AccountList reducer should handle INVENTORY_ACCOUNT_STATUS_POLLING_STAR
 Object {
   "error": null,
   "pollingProcessID": 0,
-  "statuses": Object {},
+  "accounts": Object {},
 }
 `;
 
@@ -41,7 +41,7 @@ exports[`AccountList reducer should handle INVENTORY_ACCOUNT_STATUS_POLLING_STOP
 Object {
   "error": null,
   "pollingProcessID": 0,
-  "statuses": Object {},
+  "accounts": Object {},
 }
 `;
 
@@ -49,7 +49,7 @@ exports[`AccountList reducer should handle INVENTORY_PROCESS_RESTART 1`] = `
 Object {
   "error": null,
   "pollingProcessID": 0,
-  "statuses": Object {
+  "accounts": Object {
     "user@redhat.com": Object {
       "upload_report_status": "Restarting...",
     },
@@ -61,6 +61,6 @@ exports[`AccountList reducer should return the initial state 1`] = `
 Object {
   "error": null,
   "pollingProcessID": 0,
-  "statuses": Object {},
+  "accounts": Object {},
 }
 `;
