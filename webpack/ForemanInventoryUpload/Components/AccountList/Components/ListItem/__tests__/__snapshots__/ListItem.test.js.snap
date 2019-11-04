@@ -37,7 +37,6 @@ exports[`ListItem rendering render with Props 1`] = `
   stacked={true}
 >
   <Connect(Dashboard)
-    accountID="1"
     account={
       Object {
         "generate_report_status": "unknown",
@@ -45,6 +44,7 @@ exports[`ListItem rendering render with Props 1`] = `
         "upload_report_status": "unknown",
       }
     }
+    accountID="1"
   />
 </ListViewItem>
 `;
