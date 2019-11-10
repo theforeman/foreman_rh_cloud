@@ -5,37 +5,40 @@ exports[`AccountList rendering render with props 1`] = `
   className="account_list"
 >
   <ListItem
-    initExpanded={true}
-    key="0"
-    name="Account1"
-    statuses={
+    account={
       Object {
         "generate_report_status": "running",
+        "label": "test_org1",
         "upload_report_status": "running",
       }
     }
+    accountID="Account1"
+    initExpanded={true}
+    key="0"
   />
   <ListItem
-    initExpanded={false}
-    key="1"
-    name="Account2"
-    statuses={
+    account={
       Object {
         "generate_report_status": "failure",
+        "label": "test_org2",
         "upload_report_status": "unknown",
       }
     }
+    accountID="Account2"
+    initExpanded={false}
+    key="1"
   />
   <ListItem
-    initExpanded={false}
-    key="2"
-    name="Account3"
-    statuses={
+    account={
       Object {
         "generate_report_status": "running",
+        "label": "test_org3",
         "upload_report_status": "success",
       }
     }
+    accountID="Account3"
+    initExpanded={false}
+    key="2"
   />
 </ListView>
 `;

@@ -45,7 +45,7 @@ class Dashboard extends React.Component {
     const {
       uploading,
       generating,
-      statuses,
+      account,
       showFullScreen,
       activeTab,
     } = this.props;
@@ -59,7 +59,7 @@ class Dashboard extends React.Component {
             props: {
               ...generating,
               restartProcess: this.handleRestart,
-              exitCode: statuses.generate_report_status,
+              exitCode: account.generate_report_status,
               toggleFullScreen: this.handleToggleFullScreen,
             },
             onClick: () => this.handleTabChange('generating'),
@@ -72,7 +72,7 @@ class Dashboard extends React.Component {
               ...uploading,
               restartProcess: this.handleRestart,
               downloadReports: this.handleDownload,
-              exitCode: statuses.upload_report_status,
+              exitCode: account.upload_report_status,
               toggleFullScreen: this.handleToggleFullScreen,
             },
             onClick: () => this.handleTabChange('uploading'),
@@ -115,7 +115,7 @@ Dashboard.propTypes = {
   restartProcess: PropTypes.func,
   downloadReports: PropTypes.func,
   pollingProcessID: PropTypes.number,
-  statuses: PropTypes.shape({
+  account: PropTypes.shape({
     generate_report_status: PropTypes.string,
     upload_report_status: PropTypes.string,
   }),
@@ -134,7 +134,7 @@ Dashboard.defaultProps = {
   restartProcess: noop,
   downloadReports: noop,
   pollingProcessID: 0,
-  statuses: {
+  account: {
     generate_report_status: 'unknown',
     upload_report_status: 'unknown',
   },

@@ -5,14 +5,14 @@ import * as actions from './AccountListActions';
 import reducer from './AccountListReducer';
 import AccountList from './AccountList';
 import {
-  selectStatuses,
+  selectAccounts,
   selectPollingProcessID,
   selectError,
 } from './AccountListSelectors';
 
 // map state to props
 const mapStateToProps = state => ({
-  statuses: selectStatuses(state),
+  accounts: selectAccounts(state),
   pollingProcessID: selectPollingProcessID(state),
   error: selectError(state),
 });

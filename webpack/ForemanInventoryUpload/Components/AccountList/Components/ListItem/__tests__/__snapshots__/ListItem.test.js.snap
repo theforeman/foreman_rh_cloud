@@ -6,9 +6,10 @@ exports[`ListItem rendering render with Props 1`] = `
   additionalInfo={
     Array [
       <ListItemStatus
-        statuses={
+        account={
           Object {
             "generate_report_status": "unknown",
+            "label": "default_org_name",
             "upload_report_status": "unknown",
           }
         }
@@ -19,7 +20,7 @@ exports[`ListItem rendering render with Props 1`] = `
   compoundExpand={false}
   compoundExpanded={false}
   description={null}
-  heading="some-name"
+  heading="default_org_name"
   hideCloseIcon={true}
   initExpanded={false}
   leftContent={
@@ -36,13 +37,14 @@ exports[`ListItem rendering render with Props 1`] = `
   stacked={true}
 >
   <Connect(Dashboard)
-    accountID="some-name"
-    statuses={
+    account={
       Object {
         "generate_report_status": "unknown",
+        "label": "default_org_name",
         "upload_report_status": "unknown",
       }
     }
+    accountID="1"
   />
 </ListViewItem>
 `;

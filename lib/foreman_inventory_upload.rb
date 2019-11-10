@@ -11,16 +11,20 @@ module ForemanInventoryUpload
     )
   end
 
-  def self.uploads_folder(group)
-    @uploads_folders ||= {}
-    cache = @uploads_folders[group]
-    return cache if cache
-
-    @uploads_folders[group] = ensure_folder(
+  def self.uploads_folder
+    @uploads_folder ||= ensure_folder(
       File.join(
         ForemanInventoryUpload.base_folder,
-        'uploads/',
-        "#{group}/"
+        'uploads/'
+      )
+    )
+  end
+
+  def self.generated_reports_folder
+    @generated_reports_folder ||= ensure_folder(
+      File.join(
+        ForemanInventoryUpload.base_folder,
+        'generated_reports/'
       )
     )
   end
@@ -33,12 +37,12 @@ module ForemanInventoryUpload
     'uploader.sh'
   end
 
-  def self.facts_archive_name
-    'hosts_report.tar.gz'
+  def self.facts_archive_name(organization)
+    "report_for_#{organization}.tar.gz"
   end
 
   def self.upload_url
-    # for testing set ENV to 'https://ci.cloud.paas.psi.redhat.com/api/ingress/v1/upload'
+    # for testing set ENV to 'https://ci.cloud.redhat.com/api/ingress/v1/upload'
     @upload_url ||= ENV['SATELLITE_INVENTORY_UPLOAD_URL'] || 'https://cloud.redhat.com/api/ingress/v1/upload'
   end
 

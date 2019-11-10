@@ -6,10 +6,10 @@ module ForemanInventoryUpload
         @logger = logger
       end
 
-      def render(portal_user)
+      def render(organization:)
         Dir.mktmpdir do |tmpdir|
           @logger.info "Started generating hosts report in #{tmpdir}"
-          host_batches = ForemanInventoryUpload::Generators::Queries.for_report(portal_user)
+          host_batches = ForemanInventoryUpload::Generators::Queries.for_org(organization)
           File.open(File.join(tmpdir, 'metadata.json'), 'w') do |metadata_out|
             metadata_generator = ForemanInventoryUpload::Generators::Metadata.new(metadata_out)
             metadata_generator.render do |inner_generator|

@@ -1,15 +1,23 @@
+require 'tempfile'
+
 module ForemanInventoryUpload
   module Async
     class UploadReportJob < ShellProcess
-      def self.output_label(portal_user)
-        "upload_for_#{portal_user}"
+      def self.output_label(label)
+        "upload_for_#{label}"
       end
 
-      def perform(filename, portal_user)
-        @portal_user = portal_user
+      def perform(filename, organization_id)
         @filename = filename
+        @organization = Organization.find(organization_id)
 
-        super(UploadReportJob.output_label(portal_user))
+        Tempfile.create([@organization.name, '.pem']) do |cer_file|
+          cer_file.write(rh_credentials[:cert])
+          cer_file.write(rh_credentials[:key])
+          cer_file.flush
+          @cer_path = cer_file.path
+          super(UploadReportJob.output_label(organization_id))
+        end
       end
 
       def command
@@ -18,22 +26,19 @@ module ForemanInventoryUpload
 
       def env
         super.merge(
-          'RH_USERNAME' => rh_username,
-          'RH_PASSWORD' => rh_password,
-          'FILES' => @filename
+          'FILES' => @filename,
+          'CER_PATH' => @cer_path
         )
       end
 
       def rh_credentials
-        @rh_credentials ||= RedhatAccess::TelemetryConfiguration.where(portal_user: @portal_user).last
-      end
-
-      def rh_username
-        @portal_user
-      end
-
-      def rh_password
-        rh_credentials.portal_password
+        @rh_credentials ||= begin
+          candlepin_id_certificate = @organization.owner_details['upstreamConsumer']['idCert']
+          {
+            cert: candlepin_id_certificate['cert'],
+            key: candlepin_id_certificate['key']
+          }
+        end
       end
     end
   end

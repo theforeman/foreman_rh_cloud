@@ -3,26 +3,38 @@
 DEST=<%= @upload_url %>
 RH_USERNAME=<%= @rh_username %>
 
-if [ -z "$RH_USERNAME" ]
-then
-        IFS= read -rp "Enter username: " RH_USERNAME
-fi
-
-if [ -z "$RH_PASSWORD" ]
-then
-        IFS= read -rsp "Enter password: " RH_PASSWORD
-fi
-
 if [ -z "$FILES" ]
 then
         FILES=./*.tar.gz
 fi
 
+if [ -n "$CER_PATH" ]
+then
+        AUTH_KEY="--cert"
+        AUTH_VAL="$CER_PATH"
+else
+        if [ -z "$RH_USERNAME" ]
+        then
+                IFS= read -rp "Enter username: " RH_USERNAME
+        fi
+
+        if [ -z "$RH_PASSWORD" ]
+        then
+                IFS= read -rsp "Enter password: " RH_PASSWORD
+        fi
+
+        AUTH_KEY="-u"
+        AUTH_VAL="\"$RH_USERNAME\":\"$RH_PASSWORD\""
+fi
+
+# /tmp/a b/x.pem
+# curl --cert /tmp/a\ b/x.pem
+
 mkdir -p done
 
 for f in $FILES
 do
-  curl -k -vvv -# --fail -F "file=@$f;type=application/vnd.redhat.qpc.tar+tgz" $DEST -u "$RH_USERNAME":"$RH_PASSWORD"
+  curl -k -vvv -# --fail -F "file=@$f;type=application/vnd.redhat.qpc.tar+tgz" $DEST "$AUTH_KEY" "$AUTH_VAL"
   if [ $? -eq 0 ]; then
     mv $f done/
     echo "Done: $f"

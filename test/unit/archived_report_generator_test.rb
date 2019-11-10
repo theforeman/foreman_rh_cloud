@@ -46,13 +46,13 @@ class ArchivedReportGeneratorTest < ActiveSupport::TestCase
 
   test 'generates a report for a single host' do
     batches = Host.where(id: @host.id).in_batches
-    portal_user = 'test_portal_user'
+    test_org = FactoryBot.create(:organization)
 
-    ForemanInventoryUpload::Generators::Queries.expects(:for_report).with(portal_user).returns(batches)
+    ForemanInventoryUpload::Generators::Queries.expects(:for_org).with(test_org.id).returns(batches)
     Dir.mktmpdir do |tmpdir|
       target = File.join(tmpdir, 'test.tar.gz')
       generator = ForemanInventoryUpload::Generators::ArchivedReport.new(target, Logger.new(STDOUT))
-      generator.render(portal_user)
+      generator.render(organization: test_org.id)
 
       files = Dir["#{tmpdir}/*"]
       assert_equal "#{tmpdir}/test.tar.gz", files.first

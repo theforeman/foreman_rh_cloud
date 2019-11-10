@@ -1,17 +1,21 @@
 module ForemanInventoryUpload
   module Async
     class GenerateReportJob < ShellProcess
-      def self.output_label(portal_user)
-        "report_for_#{portal_user}"
+      def self.output_label(label)
+        "report_for_#{label}"
       end
 
-      def perform(result_file, portal_user)
-        @result_file = result_file
-        @portal_user = portal_user
+      def perform(base_folder, organization)
+        @base_folder = base_folder
+        @organization = organization
 
-        super(GenerateReportJob.output_label(portal_user))
+        super(GenerateReportJob.output_label(organization))
 
-        QueueForUploadJob.perform_later(result_file, portal_user)
+        QueueForUploadJob.perform_later(
+          base_folder,
+          ForemanInventoryUpload.facts_archive_name(organization),
+          organization
+        )
       end
 
       def command
@@ -20,8 +24,8 @@ module ForemanInventoryUpload
 
       def env
         super.merge(
-          'target' => @result_file,
-          'portal_user' => @portal_user
+          'target' => @base_folder,
+          'organization_id' => @organization
         )
       end
     end

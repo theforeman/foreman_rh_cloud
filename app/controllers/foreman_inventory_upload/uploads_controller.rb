@@ -1,7 +1,7 @@
 module ForemanInventoryUpload
   class UploadsController < ::ApplicationController
     def last
-      label = ForemanInventoryUpload::Async::UploadReportJob.output_label(params[:portal_user])
+      label = ForemanInventoryUpload::Async::UploadReportJob.output_label(params[:organization_id])
       output = ForemanInventoryUpload::Async::ProgressOutput.get(label)&.full_output
 
       render json: {
@@ -10,8 +10,8 @@ module ForemanInventoryUpload
     end
 
     def download_file
-      filename = 'hosts_report.tar.gz'
-      path = Rails.root.join(ForemanInventoryUpload.uploads_folder(params[:portal_user]), filename)
+      filename = ForemanInventoryUpload.facts_archive_name(params[:organization_id])
+      path = Rails.root.join(ForemanInventoryUpload.uploads_folder, filename)
       unless File.exist? path
         return throw_flash_error(
           "Path doesn't exist: #{path}"

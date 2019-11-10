@@ -20,23 +20,23 @@ class AccountList extends Component {
   }
 
   render() {
-    const { statuses, error } = this.props;
-    const accountNames = Object.keys(statuses);
+    const { accounts, error } = this.props;
+    const accountIds = Object.keys(accounts);
 
     if (error) {
       return <ErrorState error={error} />;
     }
 
-    if (accountNames.length === 0) {
+    if (accountIds.length === 0) {
       return <EmptyState />;
     }
-    const items = accountNames.map((name, index) => {
-      const status = statuses[name];
+    const items = accountIds.map((accountID, index) => {
+      const account = accounts[accountID];
       return (
         <ListItem
           key={index}
-          name={name}
-          statuses={status}
+          accountID={accountID}
+          account={account}
           initExpanded={index === 0}
         />
       );
@@ -50,7 +50,7 @@ AccountList.propTypes = {
   startAccountStatusPolling: PropTypes.func,
   stopAccountStatusPolling: PropTypes.func,
   pollingProcessID: PropTypes.number,
-  statuses: PropTypes.shape({
+  account: PropTypes.shape({
     generate_report_status: PropTypes.string,
     upload_report_status: PropTypes.string,
   }),
@@ -62,7 +62,7 @@ AccountList.defaultProps = {
   startAccountStatusPolling: noop,
   stopAccountStatusPolling: noop,
   pollingProcessID: 0,
-  statuses: {
+  account: {
     generate_report_status: 'unknown',
     upload_report_status: 'unknown',
   },
