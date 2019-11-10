@@ -8,6 +8,7 @@ exports[`AccountList rendering render with props 1`] = `
     account={
       Object {
         "generate_report_status": "running",
+        "label": "test_org1",
         "upload_report_status": "running",
       }
     }
@@ -19,6 +20,7 @@ exports[`AccountList rendering render with props 1`] = `
     account={
       Object {
         "generate_report_status": "failure",
+        "label": "test_org2",
         "upload_report_status": "unknown",
       }
     }
@@ -30,6 +32,7 @@ exports[`AccountList rendering render with props 1`] = `
     account={
       Object {
         "generate_report_status": "running",
+        "label": "test_org3",
         "upload_report_status": "success",
       }
     }

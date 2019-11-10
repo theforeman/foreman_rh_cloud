@@ -6,14 +6,17 @@ exports[`AccountList selectors should return AccountList accounts 1`] = `
 Object {
   "Account1": Object {
     "generate_report_status": "running",
+    "label": "test_org1",
     "upload_report_status": "running",
   },
   "Account2": Object {
     "generate_report_status": "failure",
+    "label": "test_org2",
     "upload_report_status": "unknown",
   },
   "Account3": Object {
     "generate_report_status": "running",
+    "label": "test_org3",
     "upload_report_status": "success",
   },
 }
@@ -24,14 +27,17 @@ Object {
   "accounts": Object {
     "Account1": Object {
       "generate_report_status": "running",
+      "label": "test_org1",
       "upload_report_status": "running",
     },
     "Account2": Object {
       "generate_report_status": "failure",
+      "label": "test_org2",
       "upload_report_status": "unknown",
     },
     "Account3": Object {
       "generate_report_status": "running",
+      "label": "test_org3",
       "upload_report_status": "success",
     },
   },
