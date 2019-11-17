@@ -56,13 +56,7 @@ module ForemanInventoryUpload
             @stream.object do
               @stream.simple_field('namespace', 'satellite')
               @stream.object_field('facts', :last) do
-                @stream.simple_field('virtual_host_name', host.subscription_facet.hypervisor_host&.name)
-                @stream.simple_field('virtual_host_uuid', host.subscription_facet.hypervisor_host&.subscription_facet&.uuid)
-                if defined?(ForemanThemeSatellite)
-                  @stream.simple_field('satellite_version', ForemanThemeSatellite::SATELLITE_VERSION)
-                end
-                @stream.simple_field('satellite_instance_id', Foreman.respond_to?(:instance_id) ? Foreman.instance_id : nil)
-                @stream.simple_field('organization_id', host.organization_id, :last)
+                report_satellite_facts(host)
               end
             end
           end
@@ -118,6 +112,18 @@ module ForemanInventoryUpload
             first = false
           end
         end
+      end
+
+      def report_satellite_facts(host)
+        @stream.simple_field('virtual_host_name', host.subscription_facet.hypervisor_host&.name)
+        @stream.simple_field('virtual_host_uuid', host.subscription_facet.hypervisor_host&.subscription_facet&.uuid)
+        if defined?(ForemanThemeSatellite)
+          @stream.simple_field('satellite_version', ForemanThemeSatellite::SATELLITE_VERSION)
+        end
+        @stream.simple_field('system_purpose_usage', host.subscription_facet.purpose_usage)
+        @stream.simple_field('system_purpose_role', host.subscription_facet.purpose_role)
+        @stream.simple_field('satellite_instance_id', Foreman.respond_to?(:instance_id) ? Foreman.instance_id : nil)
+        @stream.simple_field('organization_id', host.organization_id, :last)
       end
 
       def fact_value(host, fact_name)
