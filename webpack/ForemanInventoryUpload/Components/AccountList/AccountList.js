@@ -54,6 +54,7 @@ AccountList.propTypes = {
     generate_report_status: PropTypes.string,
     upload_report_status: PropTypes.string,
   }),
+  accounts: PropTypes.object,
   error: PropTypes.string,
 };
 
@@ -66,6 +67,7 @@ AccountList.defaultProps = {
     generate_report_status: 'unknown',
     upload_report_status: 'unknown',
   },
+  accounts: {},
   error: '',
 };
 

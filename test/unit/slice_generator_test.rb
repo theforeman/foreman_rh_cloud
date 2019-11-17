@@ -109,4 +109,26 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal hypervisor_host.name, fact_values['virtual_host_name']
     assert_equal hypervisor_host.subscription_facet.uuid, fact_values['virtual_host_uuid']
   end
+
+  test 'generates a report with system purpose' do
+    @host.subscription_facet.purpose_usage = 'test_usage'
+    @host.subscription_facet.purpose_role = 'test_role'
+    @host.subscription_facet.save!
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice_123')
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_equal @host.name, actual_host['display_name']
+    assert_equal @host.fqdn, actual_host['fqdn']
+    assert_not_nil(host_facts = actual_host['facts']&.first)
+    assert_equal 'satellite', host_facts['namespace']
+    assert_not_nil(fact_values = host_facts['facts'])
+    assert_equal 'test_usage', fact_values['system_purpose_usage']
+    assert_equal 'test_role', fact_values['system_purpose_role']
+  end
 end
