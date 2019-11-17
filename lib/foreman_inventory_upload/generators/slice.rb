@@ -122,6 +122,7 @@ module ForemanInventoryUpload
         end
         @stream.simple_field('system_purpose_usage', host.subscription_facet.purpose_usage)
         @stream.simple_field('system_purpose_role', host.subscription_facet.purpose_role)
+        @stream.simple_field('distribution_version', fact_value(host, 'distribution::version'))
         @stream.simple_field('satellite_instance_id', Foreman.respond_to?(:instance_id) ? Foreman.instance_id : nil)
         @stream.simple_field('organization_id', host.organization_id, :last)
       end
