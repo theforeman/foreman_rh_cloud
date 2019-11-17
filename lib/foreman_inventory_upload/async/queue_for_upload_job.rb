@@ -36,7 +36,7 @@ module ForemanInventoryUpload
         scope = Foreman::Renderer::Scope::Base.new(
           source: template_src,
           variables: {
-            upload_url: ForemanInventoryUpload.upload_url
+            upload_url: ForemanInventoryUpload.upload_url,
           }
         )
         script_source = Foreman::Renderer.render(template_src, scope)

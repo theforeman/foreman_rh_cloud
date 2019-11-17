@@ -36,7 +36,7 @@ module ForemanInventoryUpload
           candlepin_id_certificate = @organization.owner_details['upstreamConsumer']['idCert']
           {
             cert: candlepin_id_certificate['cert'],
-            key: candlepin_id_certificate['key']
+            key: candlepin_id_certificate['key'],
           }
         end
       end
