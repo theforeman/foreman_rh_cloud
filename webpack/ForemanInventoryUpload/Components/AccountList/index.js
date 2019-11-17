@@ -24,7 +24,4 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 export const reducers = { accountsList: reducer };
 
 // export connected component
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AccountList);
+export default connect(mapStateToProps, mapDispatchToProps)(AccountList);

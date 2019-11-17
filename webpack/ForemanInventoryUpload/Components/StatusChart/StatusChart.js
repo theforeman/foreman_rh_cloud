@@ -5,7 +5,10 @@ import './statusChart.scss';
 
 const StatusChart = ({ completed }) => {
   const donutConfigData = {
-    columns: [['Completed', completed], ['Remain', 100 - completed]],
+    columns: [
+      ['Completed', completed],
+      ['Remain', 100 - completed],
+    ],
     order: null,
   };
 
