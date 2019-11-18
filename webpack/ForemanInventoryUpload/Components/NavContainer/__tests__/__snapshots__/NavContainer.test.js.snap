@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NavContainer rendering render with Props 1`] = `
-<Uncontrolled(TabContainer)
+<ForwardRef
   defaultActiveKey={0}
   id="basic-tabs-pf"
 >
@@ -54,11 +54,11 @@ exports[`NavContainer rendering render with Props 1`] = `
       toggleFullScreen={[Function]}
     />
   </div>
-</Uncontrolled(TabContainer)>
+</ForwardRef>
 `;
 
 exports[`NavContainer rendering render without Props 1`] = `
-<Uncontrolled(TabContainer)
+<ForwardRef
   defaultActiveKey={0}
   id="basic-tabs-pf"
 >
@@ -85,5 +85,5 @@ exports[`NavContainer rendering render without Props 1`] = `
       toggleFullScreen={[Function]}
     />
   </div>
-</Uncontrolled(TabContainer)>
+</ForwardRef>
 `;

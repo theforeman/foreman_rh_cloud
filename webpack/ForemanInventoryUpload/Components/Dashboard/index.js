@@ -31,7 +31,4 @@ const mapDispatchToProps = dispatch =>
 export const reducers = { dashboard: reducer };
 
 // export connected component
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
