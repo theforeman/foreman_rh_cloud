@@ -35,7 +35,7 @@ script:
   - cd ../${FOREMAN_PLUGIN_NAME}
   - bundle exec rubocop
   - npm run test;
-  - npm run coveralls;
+  - # npm run coveralls;
   - npm run lint;
 env:
   global:
