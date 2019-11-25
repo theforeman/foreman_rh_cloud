@@ -33,8 +33,7 @@ module ForemanInventoryUpload
         script_source_file = File.join(ForemanInventoryUpload::Engine.root, 'app/views/scripts/uploader.sh.erb')
 
         script_source = File.read(script_source_file)
-        script_source.gsub!('<%= @upload_url %>', @upload_url)
-        script_source.gsub!('<%= @rh_username %>', @rh_username)
+        script_source.gsub!('<%= @upload_url %>', ForemanInventoryUpload.upload_url)
 
         File.write(script_file, script_source)
         FileUtils.chmod('+x', script_file)
