@@ -18,8 +18,12 @@ module ForemanInventoryUpload
         )
       end
 
+      def rake_prefix
+        'foreman-' unless Rails.env.development?
+      end
+
       def command
-        'rake foreman_inventory_upload:report:generate'
+        "#{rake_prefix}rake foreman_inventory_upload:report:generate"
       end
 
       def env
