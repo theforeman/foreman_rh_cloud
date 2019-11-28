@@ -1,2 +1,6 @@
 inherit_from:
-  - https://raw.githubusercontent.com/theforeman/foreman/4aa0bb6a24b45347ff9b673055499763eec72489/.rubocop.yml
+  - https://raw.githubusercontent.com/theforeman/foreman/1.20-stable/.rubocop.yml
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+Style/TrailingCommaInHashLiteral:
+  Enabled: false

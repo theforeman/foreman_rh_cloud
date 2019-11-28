@@ -20,7 +20,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'redhat_access'
 
   s.add_development_dependency 'rdoc'
-  s.add_development_dependency 'rubocop'
-  s.add_development_dependency 'rubocop-performance'
-  s.add_development_dependency 'rubocop-rails'
+  s.add_development_dependency 'rubocop', '~> 0.54.0'
 end
