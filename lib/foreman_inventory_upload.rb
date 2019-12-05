@@ -43,7 +43,7 @@ module ForemanInventoryUpload
 
   def self.upload_url
     # for testing set ENV to 'https://ci.cloud.redhat.com/api/ingress/v1/upload'
-    @upload_url ||= ENV['SATELLITE_INVENTORY_UPLOAD_URL'] || 'https://cloud.redhat.com/api/ingress/v1/upload'
+    @upload_url ||= ENV['SATELLITE_INVENTORY_UPLOAD_URL'] || 'https://cert.cloud.redhat.com/api/ingress/v1/upload'
   end
 
   def self.ensure_folder(folder)
