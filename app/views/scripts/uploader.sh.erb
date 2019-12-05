@@ -29,13 +29,15 @@ fi
 # /tmp/a b/x.pem
 # curl --cert /tmp/a\ b/x.pem
 
-mkdir -p done
+SCRIPT_DIR=$(realpath "$(dirname "${BASH_SOURCE:-0}")")
+DONE_DIR="$SCRIPT_DIR/done/"
+mkdir -p $DONE_DIR
 
 for f in $FILES
 do
   curl -k -vvv -# --fail -F "file=@$f;type=application/vnd.redhat.qpc.tar+tgz" $DEST "$AUTH_KEY" "$AUTH_VAL"
   if [ $? -eq 0 ]; then
-    mv $f done/
+    mv $f $DONE_DIR
     echo "Done: $f"
   fi
 done
