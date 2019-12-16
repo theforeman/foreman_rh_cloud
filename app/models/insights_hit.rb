@@ -1,0 +1,2 @@
+class InsightsHit < ApplicationRecord
+end
