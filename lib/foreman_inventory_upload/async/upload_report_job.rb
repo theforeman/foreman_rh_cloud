@@ -25,10 +25,19 @@ module ForemanInventoryUpload
       end
 
       def env
-        super.merge(
+        env_vars = super.merge(
           'FILES' => @filename,
           'CER_PATH' => @cer_path
         )
+        if http_proxy_string
+          env_vars['http_proxy'] = http_proxy_string
+          env_vars['https_proxy'] = http_proxy_string
+        end
+        env_vars
+      end
+
+      def http_proxy_string
+        @http_proxy_string ||= HttpProxy.default_global_content_proxy&.full_url
       end
 
       def rh_credentials
