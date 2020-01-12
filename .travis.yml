@@ -22,6 +22,7 @@ install:
   - cd ../foreman
   - echo "gemspec :path => '../${FOREMAN_PLUGIN_NAME}'" > bundler.d/${FOREMAN_PLUGIN_NAME}.local.rb
   - echo "gem 'katello'" > bundler.d/katello.local.rb
+  - echo "gem 'foreman-tasks', '< 0.17.0'" > bundler.d/foreman-tasks.local.rb
   - ln -s settings.yaml.test config/settings.yaml
   - ln -s database.yml.example config/database.yml
   - bundle install --jobs=3 --retry=3 --without journald development postgresql mysql2 console journald
