@@ -1,6 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { testComponentSnapshotsWithFixtures } from 'react-redux-test-utils';
+import { shallow, testComponentSnapshotsWithFixtures } from '@theforeman/test';
 import Dashboard from '../Dashboard';
 import { props } from '../Dashboard.fixtures';
 

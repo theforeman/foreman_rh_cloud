@@ -1,4 +1,4 @@
-import { testActionSnapshotWithFixtures } from 'react-redux-test-utils';
+import { testActionSnapshotWithFixtures } from '@theforeman/test';
 import API from 'foremanReact/API';
 import {
   startPolling,
@@ -36,4 +36,17 @@ const fixtures = {
     runWithGetState({ activeTab: 'reports' }, toggleFullScreen, accountID),
 };
 
-describe('Dashboard actions', () => testActionSnapshotWithFixtures(fixtures));
+describe('Dashboard actions', () => {
+  const { location } = window;
+
+  beforeAll(() => {
+    delete window.location;
+    window.location = { href: jest.fn() };
+  });
+
+  afterAll(() => {
+    window.location = location;
+  });
+
+  return testActionSnapshotWithFixtures(fixtures);
+});

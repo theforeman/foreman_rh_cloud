@@ -45,7 +45,7 @@ exports[`NavContainer rendering render with Props 1`] = `
         eventKey={0}
         key="0"
       >
-        <bound fn />
+        <component />
       </TabPane>
     </TabContent>
     <FullScreenModal
