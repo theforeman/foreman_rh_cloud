@@ -3,7 +3,7 @@ cache:
   - npm
   - bundler
 rvm:
-  - 2.5
+  - 2.3
 node_js:
   - '10'
   - '12'
