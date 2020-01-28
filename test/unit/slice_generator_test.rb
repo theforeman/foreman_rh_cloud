@@ -59,7 +59,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'generates a report with satellite facts' do
-    Foreman.expects(:instance_id).returns('satellite-id')
+    Foreman.expects(:instance_id).twice.returns('satellite-id')
     batch = Host.where(id: @host.id).in_batches.first
     generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice-123')
 
@@ -71,6 +71,14 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     satellite_facts = facts['facts']
     assert_equal 'satellite-id', satellite_facts['satellite_instance_id']
     assert_equal @host.organization_id, satellite_facts['organization_id']
+
+    instance_id_tag = actual['hosts'].first['tags'].find { |tag| tag['namespace'] == 'satellite' && tag['key'] == 'satellite_instance_id'}
+    assert_not_nil instance_id_tag
+    assert_equal 'satellite-id', instance_id_tag['value']
+
+    org_id_tag = actual['hosts'].first['tags'].find { |tag| tag['namespace'] == 'satellite' && tag['key'] == 'organization_id'}
+    assert_not_nil org_id_tag
+    assert_equal @host.organization_id, org_id_tag['value']
 
     version = satellite_facts['satellite_version']
     if defined?(ForemanThemeSatellite)
