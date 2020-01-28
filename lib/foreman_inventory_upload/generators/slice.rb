@@ -52,7 +52,7 @@ module ForemanInventoryUpload
           @stream.object_field('system_profile') do
             report_system_profile(host)
           end
-          @stream.array_field('facts', :last) do
+          @stream.array_field('facts') do
             @stream.object do
               @stream.simple_field('namespace', 'satellite')
               @stream.object_field('facts', :last) do
@@ -60,7 +60,21 @@ module ForemanInventoryUpload
               end
             end
           end
+
+          @stream.array_field('tags', :last) do
+            report_tag('satellite', 'satellite_instance_id', Foreman.instance_id) if Foreman.respond_to?(:instance_id)
+            report_tag('satellite', 'organization_id', host.organization_id, :last)
+          end
         end
+      end
+
+      def report_tag(namespace, key, value, last = nil)
+        @stream.object do
+          @stream.simple_field('namespace', namespace)
+          @stream.simple_field('key', key)
+          @stream.simple_field('value', value, :last)
+        end
+        @stream.comma unless last
       end
 
       def report_system_profile(host)
