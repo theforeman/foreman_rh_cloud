@@ -32,7 +32,7 @@ script:
   - cd ../foreman
   - bundle exec rake test:${FOREMAN_PLUGIN_NAME}
   - bundle exec rake "plugin:assets:precompile[${FOREMAN_PLUGIN_NAME}]" RAILS_ENV=production
-  - bundle exec rake "${FOREMAN_PLUGIN_NAME}:rubocop" 
+  - bundle exec rake "${FOREMAN_PLUGIN_NAME}:rubocop"
   - cd ../${FOREMAN_PLUGIN_NAME}
   - npm run test;
   - # npm run coveralls;
@@ -42,7 +42,7 @@ env:
     - TESTOPTS=-v
     - FOREMAN_PLUGIN_NAME=foreman_inventory_upload
   matrix:
-    - FOREMAN_CORE_BRANCH=develop
+    - FOREMAN_CORE_BRANCH=1.24-stable
 addons:
   apt:
     sources:
