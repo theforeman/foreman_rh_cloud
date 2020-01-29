@@ -42,7 +42,7 @@ env:
     - TESTOPTS=-v
     - FOREMAN_PLUGIN_NAME=foreman_inventory_upload
   matrix:
-    - FOREMAN_CORE_BRANCH=develop
+    - FOREMAN_CORE_BRANCH=1.24-stable
 addons:
   apt:
     sources:
