@@ -35,7 +35,7 @@ module InsightsCloud
           InsightsCloud.hits_export_url,
           :ssl_client_cert  =>  OpenSSL::X509::Certificate.new(rh_credentials[:cert]),
           :ssl_client_key   =>  OpenSSL::PKey::RSA.new(rh_credentials[:key]),
-          :verify_ssl       =>  OpenSSL::SSL::VERIFY_PEER
+          :verify_ssl       =>  ENV['SATELLITE_INSIGHTS_CLOUD_URL'] ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER
         ).get
 
         JSON.parse(hits_response)
