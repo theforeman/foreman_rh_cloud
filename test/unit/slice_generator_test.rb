@@ -159,4 +159,19 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
   end
+
+  test 'shows system_memory_bytes in bytes' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['memory::memtotal'], value: '1', host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice_123')
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(actual_profile = actual_host['system_profile'])
+    assert_equal 1024, actual_profile['system_memory_bytes']
+  end
 end
