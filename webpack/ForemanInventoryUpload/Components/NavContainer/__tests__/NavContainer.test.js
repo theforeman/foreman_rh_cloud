@@ -1,6 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { testComponentSnapshotsWithFixtures } from 'react-redux-test-utils';
+import { mount, testComponentSnapshotsWithFixtures } from '@theforeman/test';
 import NavContainer from '../NavContainer';
 import { props } from '../NavContainer.fixtures';
 

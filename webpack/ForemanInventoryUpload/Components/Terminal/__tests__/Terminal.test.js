@@ -1,6 +1,5 @@
 import React from 'react';
-import { testComponentSnapshotsWithFixtures } from 'react-redux-test-utils';
-import { mount } from 'enzyme';
+import { mount, testComponentSnapshotsWithFixtures } from '@theforeman/test';
 import Terminal from '../Terminal';
 import { props, logs } from '../Terminal.fixtures';
 

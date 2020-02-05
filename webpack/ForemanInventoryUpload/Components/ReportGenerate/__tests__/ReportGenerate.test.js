@@ -1,4 +1,4 @@
-import { testComponentSnapshotsWithFixtures } from 'react-redux-test-utils';
+import { testComponentSnapshotsWithFixtures } from '@theforeman/test';
 
 import ReportGenerate from '../ReportGenerate';
 import { props } from '../ReportGenerate.fixtures';

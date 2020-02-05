@@ -8,16 +8,20 @@ export const completed = 25;
 
 export const error = 'some-error';
 
+export const generating = {
+  logs,
+  completed,
+};
+
+export const uploading = {
+  logs,
+  completed,
+  files,
+};
+
 export const inventory = {
-  generating: {
-    logs,
-    completed,
-  },
-  uploading: {
-    logs,
-    completed,
-    files,
-  },
+  generating,
+  uploading,
 };
 
 export const accountID = 'some-account-ID';

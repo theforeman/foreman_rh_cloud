@@ -1,4 +1,4 @@
-import { testComponentSnapshotsWithFixtures } from 'react-redux-test-utils';
+import { testComponentSnapshotsWithFixtures } from '@theforeman/test';
 
 import ScheduledRun from '../ScheduledRun';
 import { props } from '../ScheduledRun.fixtures';
