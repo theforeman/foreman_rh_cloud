@@ -139,4 +139,24 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal 'test_usage', fact_values['system_purpose_usage']
     assert_equal 'test_role', fact_values['system_purpose_role']
   end
+
+  test 'skips hosts without subscription' do
+    a_host = FactoryBot.create(
+      :host,
+      organization: @host.organization
+    )
+
+    # make a_host last
+    batch = Host.where(id: [@host.id, a_host.id]).order(:name).in_batches.first
+    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice_123')
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_equal @host.name, actual_host['display_name']
+    assert_equal @host.fqdn, actual_host['fqdn']
+    assert_equal '1234', actual_host['account']
+  end
 end
