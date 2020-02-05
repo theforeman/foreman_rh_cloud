@@ -22,7 +22,7 @@ module ForemanInventoryUpload
 
     initializer 'foreman_inventory_upload.register_plugin', :before => :finisher_hook do |_app|
       Foreman::Plugin.register :foreman_inventory_upload do
-        requires_foreman '>= 1.20'
+        requires_foreman '> 1.24'
 
         # Add permissions
         security_block :foreman_inventory_upload do
