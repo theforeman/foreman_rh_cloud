@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Spinner } from 'patternfly-react';
-import isEqual from 'lodash/isEqual';
+import { isEqual } from 'lodash';
 import './terminal.scss';
 import { isTerminalScrolledDown } from './TerminalHelper';
 
