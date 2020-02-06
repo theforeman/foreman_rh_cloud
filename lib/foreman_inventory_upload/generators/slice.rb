@@ -1,6 +1,8 @@
 module ForemanInventoryUpload
   module Generators
     class Slice
+      include FactHelpers
+
       attr_accessor :slice_id
 
       def initialize(hosts, output = [], slice_id = Foreman.uuid)
@@ -81,7 +83,7 @@ module ForemanInventoryUpload
         @stream.simple_field('number_of_cpus', fact_value(host, 'cpu::cpu(s)').to_i)
         @stream.simple_field('number_of_sockets', fact_value(host, 'cpu::cpu_socket(s)').to_i)
         @stream.simple_field('cores_per_socket', fact_value(host, 'cpu::core(s)_per_socket').to_i)
-        @stream.simple_field('system_memory_bytes', fact_value(host, 'memory::memtotal').to_i)
+        @stream.simple_field('system_memory_bytes', kilobytes_to_bytes(fact_value(host, 'memory::memtotal').to_i))
         @stream.array_field('network_interfaces') do
           @stream.raw(host.interfaces.map do |nic|
             {
@@ -139,13 +141,6 @@ module ForemanInventoryUpload
         @stream.simple_field('distribution_version', fact_value(host, 'distribution::version'))
         @stream.simple_field('satellite_instance_id', Foreman.respond_to?(:instance_id) ? Foreman.instance_id : nil)
         @stream.simple_field('organization_id', host.organization_id, :last)
-      end
-
-      def fact_value(host, fact_name)
-        value_record = host.fact_values.find do |fact_value|
-          fact_value.fact_name_id == ForemanInventoryUpload::Generators::Queries.fact_names[fact_name]
-        end
-        value_record&.value
       end
     end
   end
