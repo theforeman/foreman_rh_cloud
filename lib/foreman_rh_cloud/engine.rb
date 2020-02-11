@@ -30,7 +30,7 @@ module ForemanRhCloud
         end
 
         # Add a new role called 'Discovery' if it doesn't exist
-        role 'ForemanRhCloud', [:view_foreman_rh_cloud]
+        role 'ForemanRhCloud', [:view_foreman_rh_cloud], 'TODO'
 
         # Adding a sub menu after hosts menu
         sub_menu :top_menu, :foreman_rh_cloud, :caption => N_('RH Cloud'), :icon => 'fa fa-cloud-upload' do
