@@ -1,5 +1,5 @@
 {
-  "name": "foreman_inventory_upload",
+  "name": "foreman_rh_cloud",
   "version": "0.0.1",
   "description": "Inventory Upload =============",
   "main": "index.js",
@@ -15,10 +15,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/theforeman/foreman_inventory_upload.git"
+    "url": "git+https://github.com/theforeman/foreman_rh_cloud.git"
   },
   "bugs": {
-    "url": "http://projects.theforeman.org/projects/foreman_inventory_upload/issues"
+    "url": "http://projects.theforeman.org/projects/foreman_rh_cloud/issues"
   },
   "peerDependencies": {
     "@theforeman/vendor": ">= 4.0.2"

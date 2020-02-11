@@ -1,5 +1,3 @@
-require 'foreman_inventory_upload/engine'
-
 module ForemanInventoryUpload
   def self.base_folder
     # in production setup, where selinux is enabled, we only have rights to
