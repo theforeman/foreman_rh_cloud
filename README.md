@@ -1,4 +1,4 @@
-# ForemanInventoryUpload
+# ForemanRhCloud
 
 *Introdction here*
 
