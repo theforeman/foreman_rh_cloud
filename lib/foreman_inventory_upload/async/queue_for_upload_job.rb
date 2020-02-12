@@ -30,7 +30,7 @@ module ForemanInventoryUpload
       def ensure_output_script
         return if File.exist?(script_file)
 
-        script_source = File.join(ForemanInventoryUpload::Engine.root, 'app/views/scripts/uploader.sh.erb')
+        script_source = File.join(ForemanRhCloud::Engine.root, 'lib/foreman_inventory_upload/scripts/uploader.sh.erb')
 
         template_src = Foreman::Renderer::Source::String.new(content: File.read(script_source))
         scope = Foreman::Renderer::Scope::Base.new(
