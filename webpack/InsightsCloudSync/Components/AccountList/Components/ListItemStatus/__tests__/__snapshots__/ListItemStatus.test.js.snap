@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListItemStatus rendering render with Props 1`] = `
+<Grid
+  bsClass="container"
+  className="status"
+  componentClass="div"
+  fluid={false}
+>
+  <Col
+    bsClass="col"
+    className="item"
+    componentClass="div"
+    sm={6}
+  >
+    <p>
+      Generating
+    </p>
+    <Icon
+      name="check"
+      type="fa"
+    />
+  </Col>
+  <Col
+    bsClass="col"
+    className="item"
+    componentClass="div"
+    sm={6}
+  >
+    <p>
+      Uploading
+    </p>
+    <Spinner
+      className=""
+      inline={true}
+      inverse={false}
+      loading={true}
+      size="xs"
+    />
+  </Col>
+</Grid>
+`;
+
+exports[`ListItemStatus rendering render without Props 1`] = `
+<Grid
+  bsClass="container"
+  className="status"
+  componentClass="div"
+  fluid={false}
+>
+  <Col
+    bsClass="col"
+    className="item"
+    componentClass="div"
+    sm={6}
+  >
+    <p>
+      Generating
+    </p>
+    <span>
+      --
+    </span>
+  </Col>
+  <Col
+    bsClass="col"
+    className="item"
+    componentClass="div"
+    sm={6}
+  >
+    <p>
+      Uploading
+    </p>
+    <span>
+      --
+    </span>
+  </Col>
+</Grid>
+`;

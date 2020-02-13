@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorState rendering render without Props 1`] = `
+<div
+  className="error_state"
+>
+  <Icon
+    className="error_icon"
+    name="times"
+    size="2x"
+    type="fa"
+  />
+  <p>
+    Encountered an error while trying to access the server:
+  </p>
+  <p
+    className="error_description"
+  />
+</div>
+`;

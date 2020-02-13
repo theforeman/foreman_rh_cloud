@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListItem rendering render with Props 1`] = `
+<ListViewItem
+  actions={null}
+  additionalInfo={
+    Array [
+      <ListItemStatus
+        account={
+          Object {
+            "generate_report_status": "unknown",
+            "label": "default_org_name",
+            "upload_report_status": "unknown",
+          }
+        }
+      />,
+    ]
+  }
+  checkboxInput={null}
+  compoundExpand={false}
+  compoundExpanded={false}
+  description={null}
+  heading="default_org_name"
+  hideCloseIcon={true}
+  initExpanded={false}
+  leftContent={
+    <ListViewIcon
+      className=""
+      name="user"
+      size="sm"
+      type="fa"
+    />
+  }
+  onCloseCompoundExpand={[Function]}
+  onExpand={[Function]}
+  onExpandClose={[Function]}
+  stacked={true}
+>
+  <Connect(Dashboard)
+    account={
+      Object {
+        "generate_report_status": "unknown",
+        "label": "default_org_name",
+        "upload_report_status": "unknown",
+      }
+    }
+    accountID="1"
+  />
+</ListViewItem>
+`;
