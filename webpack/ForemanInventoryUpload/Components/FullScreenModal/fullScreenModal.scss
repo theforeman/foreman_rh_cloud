@@ -1,10 +1,18 @@
 .modal-dialog {
   width: 95%;
+  height: 95%;
+  margin: 30px 0 0 30px;
 
-  .modal-body,
-  .terminal {
+  .modal-body {
+    padding: 0;
+    display: flex;
     height: -webkit-fill-available;
     height: -moz-available;
     height: fill-available;
+
+    .terminal {
+      margin: 0 -20px;
+      height: 100%;
+    }
   }
 }
