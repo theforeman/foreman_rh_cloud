@@ -11,14 +11,12 @@ const ReportUpload = ({
   logs,
   completed,
   downloadReports,
-  restartProcess,
   error,
   toggleFullScreen,
 }) => (
   <TabContainer className="report-upload">
     <TabHeader
       exitCode={exitCode}
-      onRestart={restartProcess}
       onDownload={downloadReports}
       toggleFullScreen={toggleFullScreen}
     />
@@ -38,7 +36,6 @@ ReportUpload.propTypes = {
     PropTypes.string,
   ]),
   completed: PropTypes.number,
-  restartProcess: PropTypes.func,
   downloadReports: PropTypes.func,
   error: PropTypes.string,
   toggleFullScreen: PropTypes.func,
@@ -48,7 +45,6 @@ ReportUpload.defaultProps = {
   exitCode: '',
   logs: null,
   completed: 0,
-  restartProcess: noop,
   downloadReports: noop,
   error: null,
   toggleFullScreen: noop,
