@@ -57,6 +57,10 @@ module ForemanRhCloud
           menu :top_menu, :inventory_upload, :caption => N_('Inventory Upload'), :url_hash => { controller: :'foreman_rh_cloud/react', :action => :inventory_upload }
           menu :top_menu, :insights_hits_import, :caption => N_('Manage insights hits import'), :url_hash => { controller: :'foreman_rh_cloud/react', :action => :insights_cloud }
         end
+
+        register_facet InsightsFacet, :insights do
+          configure_host
+        end
       end
     end
 
