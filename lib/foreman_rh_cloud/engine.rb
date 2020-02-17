@@ -1,9 +1,9 @@
 require 'katello'
 require 'redhat_access'
 
-module ForemanInventoryUpload
+module ForemanRhCloud
   class Engine < ::Rails::Engine
-    engine_name 'foreman_inventory_upload'
+    engine_name 'foreman_rh_cloud'
 
     config.autoload_paths += Dir["#{config.root}/app/controllers/concerns"]
     config.autoload_paths += Dir["#{config.root}/app/helpers/concerns"]
@@ -14,32 +14,32 @@ module ForemanInventoryUpload
     config.eager_load_paths += Dir["#{config.root}/lib"]
 
     # Add any db migrations
-    initializer 'foreman_inventory_upload.load_app_instance_data' do |app|
-      ForemanInventoryUpload::Engine.paths['db/migrate'].existent.each do |path|
+    initializer 'foreman_rh_cloud.load_app_instance_data' do |app|
+      ForemanRhCloud::Engine.paths['db/migrate'].existent.each do |path|
         app.config.paths['db/migrate'] << path
       end
     end
 
-    initializer 'foreman_inventory_upload.register_plugin', :before => :finisher_hook do |_app|
-      Foreman::Plugin.register :foreman_inventory_upload do
+    initializer 'foreman_rh_cloud.register_plugin', :before => :finisher_hook do |_app|
+      Foreman::Plugin.register :foreman_rh_cloud do
         requires_foreman '>= 1.20'
 
         # Add permissions
-        security_block :foreman_inventory_upload do
-          permission :view_foreman_inventory_upload, :'foreman_inventory_upload/reports' => [:last]
+        security_block :foreman_rh_cloud do
+          permission :view_foreman_rh_cloud, :'foreman_rh_cloud/reports' => [:last]
         end
 
         # Add a new role called 'Discovery' if it doesn't exist
-        role 'ForemanInventoryUpload', [:view_foreman_inventory_upload]
+        role 'ForemanRhCloud', [:view_foreman_rh_cloud]
 
         # Adding a sub menu after hosts menu
-        sub_menu :top_menu, :foreman_inventory_upload, :caption => N_('RH Inventory'), :icon => 'fa fa-cloud-upload' do
-          menu :top_menu, :level1, :caption => N_('Manage'), :url_hash => { controller: :'foreman_inventory_upload/react', :action => :index}
+        sub_menu :top_menu, :foreman_rh_cloud, :caption => N_('RH Cloud'), :icon => 'fa fa-cloud-upload' do
+          menu :top_menu, :level1, :caption => N_('Inventory Upload'), :url_hash => { controller: :'foreman_inventory_upload/react', :action => :index}
         end
       end
     end
 
-    initializer "foreman_inventory_upload.set_dynflow.config.on_init", :before => :finisher_hook do |_app|
+    initializer "foreman_rh_cloud.set_dynflow.config.on_init", :before => :finisher_hook do |_app|
       unless Rails.env.test?
         ForemanTasks.dynflow.config.on_init do |world|
           ForemanInventoryUpload::Async::GenerateAllReportsJob.spawn_if_missing(world)
@@ -49,13 +49,13 @@ module ForemanInventoryUpload
 
     rake_tasks do
       Rake::Task['db:seed'].enhance do
-        ForemanInventoryUpload::Engine.load_seed
+        ForemanRhCloud::Engine.load_seed
       end
     end
 
-    initializer 'foreman_inventory_upload.register_gettext', after: :load_config_initializers do |_app|
+    initializer 'foreman_rh_cloud.register_gettext', after: :load_config_initializers do |_app|
       locale_dir = File.join(File.expand_path('../..', __dir__), 'locale')
-      locale_domain = 'foreman_inventory_upload'
+      locale_domain = 'foreman_rh_cloud'
       Foreman::Gettext::Support.add_text_domain locale_domain, locale_dir
     end
   end

@@ -1,3 +1,3 @@
-module ForemanInventoryUpload
+module ForemanRhCloud
   VERSION = '0.9.3'.freeze
 end
