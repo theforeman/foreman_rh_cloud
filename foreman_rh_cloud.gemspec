@@ -1,15 +1,15 @@
-require File.expand_path('lib/foreman_inventory_upload/version', __dir__)
+require File.expand_path('lib/foreman_rh_cloud/version', __dir__)
 
 Gem::Specification.new do |s|
-  s.name        = 'foreman_inventory_upload'
-  s.version     = ForemanInventoryUpload::VERSION
+  s.name        = 'foreman_rh_cloud'
+  s.version     = ForemanRhCloud::VERSION
   s.license     = 'GPL-3.0'
-  s.authors     = ['Inventory upload team']
+  s.authors     = ['Foreman Red Hat Cloud team']
   s.email       = ['rlavi@redhat.com, sshtein@redhat.com']
-  s.homepage    = 'https://github.com/theforeman/foreman_inventory_upload'
-  s.summary     = 'Summary of ForemanInventoryUpload.'
+  s.homepage    = 'https://github.com/theforeman/foreman_rh_cloud'
+  s.summary     = 'Summary of ForemanRhCloud.'
   # also update locale/gemspec.rb
-  s.description = 'Foreman plugin that process & upload data to cloud based host inventory'
+  s.description = 'Foreman plugin that process & upload data to Red Hat Cloud'
 
   s.files = Dir['{app,config,db,lib,locale,webpack}/**/*'] +
             ['LICENSE', 'Rakefile', 'README.md'] +
