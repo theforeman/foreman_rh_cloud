@@ -23,7 +23,6 @@ exports[`Dashboard rendering with props 1`] = `
         "props": Object {
           "downloadReports": [Function],
           "exitCode": "unknown",
-          "restartProcess": [Function],
           "toggleFullScreen": [Function],
         },
       },

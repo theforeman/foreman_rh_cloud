@@ -11,9 +11,11 @@ const TabHeader = ({ exitCode, onRestart, onDownload, toggleFullScreen }) => (
     </Grid.Col>
     <Grid.Col sm={6}>
       <div className="tab-action-buttons">
-        <Button bsStyle="primary" onClick={onRestart}>
-          {__('Restart')}
-        </Button>
+        {onRestart ? (
+          <Button bsStyle="primary" onClick={onRestart}>
+            {__('Restart')}
+          </Button>
+        ) : null}
         {onDownload ? (
           <Button onClick={onDownload}>
             {__('Download Report')} <Icon name="download" />
@@ -36,7 +38,7 @@ TabHeader.propTypes = {
 };
 
 TabHeader.defaultProps = {
-  onRestart: noop,
+  onRestart: null,
   exitCode: '',
   onDownload: null,
   toggleFullScreen: noop,
