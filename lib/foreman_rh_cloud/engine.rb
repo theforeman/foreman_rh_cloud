@@ -40,6 +40,9 @@ module ForemanRhCloud
         sub_menu :top_menu, :foreman_rh_cloud, :caption => N_('RH Cloud'), :icon => 'fa fa-cloud-upload' do
           menu :top_menu, :level1, :caption => N_('Inventory Upload'), :url_hash => { controller: :'foreman_inventory_upload/react', :action => :index}
         end
+
+        # Add insights extension
+        register_global_js_file 'insights_extension'
       end
     end
 
