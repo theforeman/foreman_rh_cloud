@@ -41,7 +41,7 @@ script:
 env:
   global:
     - TESTOPTS=-v
-    - FOREMAN_PLUGIN_NAME=foreman_inventory_upload
+    - FOREMAN_PLUGIN_NAME=foreman_rh_cloud
   matrix:
     - FOREMAN_CORE_BRANCH=1.20-stable
 addons:

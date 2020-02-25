@@ -1,8 +1,8 @@
 [main]
 host = https://www.transifex.com
 
-[foreman.foreman_yupana]
-file_filter = locale/<lang>/foreman_yupana.edit.po
-source_file = locale/foreman_yupana.pot
+[foreman.foreman_rh_cloud]
+file_filter = locale/<lang>/foreman_rh_cloud.edit.po
+source_file = locale/foreman_rh_cloud.pot
 source_lang = en
 type = PO

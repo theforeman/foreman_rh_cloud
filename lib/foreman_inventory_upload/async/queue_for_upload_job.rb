@@ -30,7 +30,7 @@ module ForemanInventoryUpload
       def ensure_output_script
         return if File.exist?(script_file)
 
-        script_source_file = File.join(ForemanInventoryUpload::Engine.root, 'app/views/scripts/uploader.sh.erb')
+        script_source_file = File.join(ForemanRhCloud::Engine.root, 'lib/foreman_inventory_upload/scripts/uploader.sh.erb')
 
         script_source = File.read(script_source_file)
         script_source.gsub!('<%= @upload_url %>', ForemanInventoryUpload.upload_url)
