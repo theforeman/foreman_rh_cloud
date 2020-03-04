@@ -70,7 +70,6 @@ class Dashboard extends React.Component {
             component: ReportUpload,
             props: {
               ...uploading,
-              restartProcess: this.handleRestart,
               downloadReports: this.handleDownload,
               exitCode: account.upload_report_status,
               toggleFullScreen: this.handleToggleFullScreen,
