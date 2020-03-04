@@ -37,7 +37,11 @@ module ForemanInventoryUpload
       end
 
       def http_proxy_string
-        @http_proxy_string ||= HttpProxy.default_global_content_proxy&.full_url
+        @http_proxy_string ||= begin
+          if Setting[:content_default_http_proxy]
+            HttpProxy.unscoped.find_by(name: Setting[:content_default_http_proxy])&.full_url
+          end
+        end
       end
 
       def rh_credentials
