@@ -1,16 +1,16 @@
 # redefine katello factories, as long as katello is not compatible with dynamic properties
 FactoryBot.define do
   factory :katello_organization, :class => "Organization" do
-    type {"Organization"}
+    type { "Organization" }
     sequence(:name) { |n| "Organization#{n}" }
     sequence(:label) { |n| "org#{n}" }
     sequence(:id) { |n| n }
 
     trait :acme_corporation do
-      name {"ACME_Corporation"}
-      type {"Organization"}
-      description {"This is the first Organization."}
-      label {"acme_corporation_label"}
+      name { "ACME_Corporation" }
+      type { "Organization" }
+      description { "This is the first Organization." }
+      label { "acme_corporation_label" }
     end
 
     trait :with_library do
@@ -24,11 +24,11 @@ end
 FactoryBot.define do
   factory :katello_content_view, :class => Katello::ContentView do
     sequence(:name) { |n| "Database#{n}" }
-    description {"This content view is for database content"}
+    description { "This content view is for database content" }
     association :organization, :factory => :katello_organization
 
     trait :composite do
-      composite {true}
+      composite { true }
     end
   end
 end
@@ -50,23 +50,23 @@ end
 FactoryBot.define do
   factory :katello_subscription_facets, :aliases => [:subscription_facet], :class => ::Katello::Host::SubscriptionFacet do
     sequence(:uuid) { |n| "uuid-#{n}-#{rand(500)}" }
-    facts { {'memory.memtotal' => "12 GB"} }
+    facts { { 'memory.memtotal' => "12 GB" } }
   end
 end
 
 FactoryBot.define do
   factory :katello_pool, :class => Katello::Pool do
-    active {true}
-    end_date {Date.today + 1.year}
+    active { true }
+    end_date { Date.today + 1.year }
   end
 end
 
 FactoryBot.modify do
   factory :host do
     transient do
-      content_view {nil}
-      lifecycle_environment {nil}
-      content_source {nil}
+      content_view { nil }
+      lifecycle_environment { nil }
+      content_source { nil }
     end
 
     trait :with_content do
