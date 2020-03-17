@@ -5,6 +5,10 @@ module ForemanRhCloud
   class Engine < ::Rails::Engine
     engine_name 'foreman_rh_cloud'
 
+    initializer 'foreman_rh_cloud.load_default_settings', :before => :load_config_initializers do
+      require_dependency File.expand_path('../../app/models/setting/rh_cloud.rb', __dir__)
+    end
+
     config.autoload_paths += Dir["#{config.root}/app/controllers/concerns"]
     config.autoload_paths += Dir["#{config.root}/app/helpers/concerns"]
     config.autoload_paths += Dir["#{config.root}/app/models/concerns"]
