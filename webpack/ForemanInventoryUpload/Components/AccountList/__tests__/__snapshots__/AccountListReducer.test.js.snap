@@ -1,5 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`AccountList reducer should handle AUTO_UPLOAD_TOGGLE 1`] = `
+Object {
+  "accounts": Object {},
+  "error": null,
+  "isAutoUpload": true,
+  "pollingProcessID": 0,
+}
+`;
+
 exports[`AccountList reducer should handle INVENTORY_ACCOUNT_STATUS_POLLING 1`] = `
 Object {
   "accounts": Object {
@@ -20,6 +29,7 @@ Object {
     },
   },
   "error": null,
+  "isAutoUpload": true,
   "pollingProcessID": 0,
 }
 `;

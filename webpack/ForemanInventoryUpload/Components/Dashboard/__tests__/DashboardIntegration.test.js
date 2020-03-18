@@ -1,7 +1,8 @@
 import React from 'react';
 import { IntegrationTestHelper } from '@theforeman/test';
 
-import Dashboard, { reducers } from '../index';
+import Dashboard from '../Dashboard';
+import reducers from '../../../ForemanInventoryUploadReducers';
 import { accountID } from '../Dashboard.fixtures';
 
 describe('Dashboard integration test', () => {

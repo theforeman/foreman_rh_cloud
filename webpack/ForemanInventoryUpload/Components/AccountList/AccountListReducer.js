@@ -5,6 +5,7 @@ import {
   INVENTORY_ACCOUNT_STATUS_POLLING_START,
   INVENTORY_PROCESS_RESTART,
 } from './AccountListConstants';
+import { AUTO_UPLOAD_TOGGLE } from '../AutoUploadSwitcher/AutoUploadSwitcherConstants';
 
 const initialState = Immutable({
   accounts: {},
@@ -20,6 +21,7 @@ export default (state = initialState, action) => {
       accounts,
       accountID,
       processStatusName,
+      isAutoUpload,
     } = {},
   } = action;
 
@@ -28,6 +30,7 @@ export default (state = initialState, action) => {
       return state.merge({
         ...state,
         accounts,
+        isAutoUpload,
         error: null,
       });
     case INVENTORY_ACCOUNT_STATUS_POLLING_ERROR:
@@ -48,6 +51,11 @@ export default (state = initialState, action) => {
           ...state.accounts[accountID],
           [processStatusName]: 'Restarting...',
         },
+      });
+    case AUTO_UPLOAD_TOGGLE:
+      return state.merge({
+        ...state,
+        isAutoUpload,
       });
     default:
       return state;

@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AccountList selectors should return AccountList pollingProcessID 1`] = `0`;
-
 exports[`AccountList selectors should return AccountList accounts 1`] = `
 Object {
   "Account1": Object {
@@ -22,6 +20,10 @@ Object {
 }
 `;
 
+exports[`AccountList selectors should return AccountList isAutoUpload 1`] = `true`;
+
+exports[`AccountList selectors should return AccountList pollingProcessID 1`] = `0`;
+
 exports[`AccountList selectors should return AccountsList 1`] = `
 Object {
   "accounts": Object {
@@ -41,6 +43,7 @@ Object {
       "upload_report_status": "success",
     },
   },
+  "isAutoUpload": true,
   "pollingProcessID": 0,
 }
 `;
