@@ -4,13 +4,14 @@ exports[`ForemanInventoryUpload render without Props 1`] = `
 <IntlProvider
   locale="en-US"
 >
-  <div
+  <Grid
+    bsClass="container"
     className="inventory-upload"
+    componentClass="div"
+    fluid={true}
   >
-    <h1>
-      Red Hat Inventory Uploads
-    </h1>
+    <PageHeader />
     <Connect(AccountList) />
-  </div>
+  </Grid>
 </IntlProvider>
 `;

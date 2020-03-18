@@ -1,14 +1,15 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
-import { translate as __ } from 'foremanReact/common/I18n';
+import { Grid } from 'patternfly-react';
 import AccountList from './Components/AccountList';
+import PageHeader from './Components/PageHeader';
 
 const ForemanInventoryUpload = () => (
   <IntlProvider locale={navigator.language}>
-    <div className="inventory-upload">
-      <h1>{__('Red Hat Inventory Uploads')}</h1>
+    <Grid fluid className="inventory-upload">
+      <PageHeader />
       <AccountList />
-    </div>
+    </Grid>
   </IntlProvider>
 );
 
