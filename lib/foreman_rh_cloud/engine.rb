@@ -43,6 +43,7 @@ module ForemanRhCloud
 
         # Add insights extension
         register_global_js_file 'insights_extension'
+        register_global_css 'insights_extension'
       end
     end
 

@@ -1,3 +1,7 @@
+import React from 'react';
+import ReactDom from 'react-dom';
+import Hits from '../Hits';
+
 const tableHead = () => {
   const thead = document.createElement('th');
   thead.width = '25%';
@@ -7,8 +11,9 @@ const tableHead = () => {
 
 const tableData = data => {
   const td = document.createElement('td');
-  td.className = 'ellipsis';
-  td.innerHTML = `<span>${data}</span>`;
+  // td.className = 'ellipsis';
+  ReactDom.render(<Hits />, td);
+
   return td;
 };
 
