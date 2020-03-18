@@ -27,5 +27,13 @@ module ForemanInventoryUpload
         :error_msg => message
       )
     end
+
+    def toggle_auto_upload
+      toggled_auto_upload = !Setting[:allow_auto_inventory_upload]
+      Setting[:allow_auto_inventory_upload] = toggled_auto_upload
+      render json: {
+        isAutoUpload: toggled_auto_upload,
+      }
+    end
   end
 end
