@@ -2,6 +2,14 @@ module ForemanInventoryUpload
   module Async
     class GenerateAllReportsJob < ::ApplicationJob
       def perform
+        unless Setting[:allow_auto_inventory_upload]
+          logger.debug(
+            'The scheduled process is disabled due to the "allow_auto_inventory_upload"
+            setting being set to false.'
+          )
+          return
+        end
+
         organizations = Organization.unscoped.all
 
         organizations.map do |organization|
