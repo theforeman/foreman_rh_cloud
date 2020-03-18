@@ -12,7 +12,7 @@ exports[`TabBody rendering render without Props 1`] = `
     exitCode=""
     logs={null}
   />
-  <ScheduledRun
+  <Connect(ScheduledRun)
     date={null}
   />
 </Row>
