@@ -1,10 +1,15 @@
 class Setting::RhCloud < Setting
-  def self.default_settings
+  def self.load_defaults
     return unless ActiveRecord::Base.connection.table_exists?('settings')
     return unless super
-    [
-      set('allow_auto_inventory_upload', N_('Allow automatic upload of the host inventory to the Red Hat cloud'), true),
-    ]
+
+    transaction do
+      [
+        set('allow_auto_inventory_upload', N_('Allow automatic upload of the host inventory to the Red Hat cloud'), true),
+      ].each { |s| create! s.update(:category => 'Setting::RhCloud')}
+    end
+
+    true
   end
 
   def self.humanized_category
