@@ -174,4 +174,24 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_not_nil(actual_profile = actual_host['system_profile'])
     assert_equal 1024, actual_profile['system_memory_bytes']
   end
+
+  test 'reports an account for hosts with multiple pools' do
+    first_pool = @host.subscription_facet.pools.first
+    second_pool = FactoryBot.create(:katello_pool, account_number: nil, cp_id: 2)
+    @host.subscription_facet.pools = []
+    @host.subscription_facet.save!
+    @host.subscription_facet.pools << first_pool
+    @host.subscription_facet.pools << second_pool
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice_123')
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(actual_host['account'])
+    assert_not_empty(actual_host['account'])
+  end
 end
