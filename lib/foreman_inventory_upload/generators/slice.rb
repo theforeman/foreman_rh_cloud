@@ -36,7 +36,7 @@ module ForemanInventoryUpload
         @stream.object do
           @stream.simple_field('display_name', host.name)
           @stream.simple_field('fqdn', host.fqdn)
-          @stream.simple_field('account', host.subscription_facet.pools.first.account_number.to_s)
+          @stream.simple_field('account', host.subscription_facet.pools.where.not(account_number: nil).first&.account_number&.to_s)
           @stream.simple_field('subscription_manager_id', host.subscription_facet.uuid)
           @stream.simple_field('satellite_id', host.subscription_facet.uuid)
           @stream.simple_field('bios_uuid', fact_value(host, 'dmi::system::uuid'))
