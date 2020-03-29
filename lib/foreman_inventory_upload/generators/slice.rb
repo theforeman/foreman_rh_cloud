@@ -65,7 +65,7 @@ module ForemanInventoryUpload
 
           @stream.array_field('tags', :last) do
             report_tag('satellite', 'satellite_instance_id', Foreman.instance_id) if Foreman.respond_to?(:instance_id)
-            report_tag('satellite', 'organization_id', host.organization_id, :last)
+            report_tag('satellite', 'organization_id', host.organization_id.to_s, :last)
           end
         end
       end
