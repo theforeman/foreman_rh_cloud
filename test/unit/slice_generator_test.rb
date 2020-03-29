@@ -78,7 +78,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
 
     org_id_tag = actual['hosts'].first['tags'].find { |tag| tag['namespace'] == 'satellite' && tag['key'] == 'organization_id'}
     assert_not_nil org_id_tag
-    assert_equal @host.organization_id, org_id_tag['value']
+    assert_equal @host.organization_id.to_s, org_id_tag['value']
 
     version = satellite_facts['satellite_version']
     if defined?(ForemanThemeSatellite)
