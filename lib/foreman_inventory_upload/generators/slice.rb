@@ -4,11 +4,13 @@ module ForemanInventoryUpload
       include FactHelpers
 
       attr_accessor :slice_id
+      attr_reader :hosts_count
 
       def initialize(hosts, output = [], slice_id = Foreman.uuid)
         @stream = JsonStream.new(output)
         @hosts = hosts
         @slice_id = slice_id
+        @hosts_count = 0
       end
 
       def render
@@ -26,7 +28,10 @@ module ForemanInventoryUpload
             hosts_batch.each do |host|
               next unless host&.subscription_facet&.pools&.first
               @stream.comma unless first
-              first = false if report_host(host)
+              if report_host(host)
+                first = false
+                @hosts_count += 1
+              end
             end
           end
         end
