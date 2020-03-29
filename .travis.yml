@@ -17,7 +17,7 @@ install:
   - node --version
   - npm version
   - nvm version
-  - bundle install --jobs=3 --retry=3
+  - # bundle install --jobs=3 --retry=3
   - npm install eslint
   - cd ../foreman
   - echo "gemspec :path => '../${FOREMAN_PLUGIN_NAME}'" > bundler.d/${FOREMAN_PLUGIN_NAME}.local.rb
