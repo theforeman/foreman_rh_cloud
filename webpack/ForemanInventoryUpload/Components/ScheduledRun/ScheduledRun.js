@@ -5,8 +5,8 @@ import { FormattedRelative } from 'react-intl';
 import { translate as __ } from 'foremanReact/common/I18n';
 import './scheduledRun.scss';
 
-const ScheduledRun = ({ date, isAutoUpload }) =>
-  isAutoUpload && date ? (
+const ScheduledRun = ({ date, autoUploadEnabled }) =>
+  autoUploadEnabled && date ? (
     <Grid.Col sm={12} className="scheduled_run">
       <p>
         <Icon name="calendar" />
@@ -18,7 +18,7 @@ const ScheduledRun = ({ date, isAutoUpload }) =>
 
 ScheduledRun.propTypes = {
   date: PropTypes.string,
-  isAutoUpload: PropTypes.bool.isRequired,
+  autoUploadEnabled: PropTypes.bool.isRequired,
 };
 
 ScheduledRun.defaultProps = {

@@ -4,7 +4,7 @@ import { noop } from 'patternfly-react';
 import AutoUploadSwitcher from '../AutoUploadSwitcher';
 
 const fixtures = {
-  'render with props': { isAutoUpload: true, handleToggle: noop },
+  'render with props': { autoUploadEnabled: true, handleToggle: noop },
   /** fixtures, props for the component */
 };
 

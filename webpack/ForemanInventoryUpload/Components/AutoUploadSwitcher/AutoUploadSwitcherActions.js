@@ -4,15 +4,16 @@ import {
   AUTO_UPLOAD_TOGGLE_ERROR,
 } from './AutoUploadSwitcherConstants';
 
-export const handleToggle = () => async dispatch => {
+export const handleToggle = currentAutoUploadEnabled => async dispatch => {
+  const toggledAutoUploadEnabled = !currentAutoUploadEnabled;
   try {
     const {
-      data: { isAutoUpload },
-    } = await API.post('toggle_auto_upload');
+      data: { autoUploadEnabled },
+    } = await API.post('auto_upload', { value: toggledAutoUploadEnabled });
     dispatch({
       type: AUTO_UPLOAD_TOGGLE,
       payload: {
-        isAutoUpload,
+        autoUploadEnabled,
       },
     });
   } catch (error) {

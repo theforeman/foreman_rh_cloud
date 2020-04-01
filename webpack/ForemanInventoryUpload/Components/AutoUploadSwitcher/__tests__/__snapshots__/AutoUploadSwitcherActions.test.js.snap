@@ -5,7 +5,7 @@ Array [
   Array [
     Object {
       "payload": Object {
-        "isAutoUpload": true,
+        "autoUploadEnabled": true,
       },
       "type": "AUTO_UPLOAD_TOGGLE",
     },

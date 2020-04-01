@@ -28,7 +28,7 @@ export const accountID = 'user@redhat.com';
 
 export const processStatusName = 'upload_report_status';
 
-export const isAutoUpload = true;
+export const autoUploadEnabled = true;
 
 export const props = {
   accounts,

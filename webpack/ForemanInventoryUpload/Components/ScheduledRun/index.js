@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 
 import ScheduledRun from './ScheduledRun';
-import { selectIsAutoUpload } from '../AccountList/AccountListSelectors';
+import { selectAutoUploadEnabled } from '../AccountList/AccountListSelectors';
 
 // map state to props
 const mapStateToProps = state => ({
-  isAutoUpload: selectIsAutoUpload(state),
+  autoUploadEnabled: selectAutoUploadEnabled(state),
 });
 
 // export connected component

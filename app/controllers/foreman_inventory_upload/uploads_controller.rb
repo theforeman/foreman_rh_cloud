@@ -28,12 +28,15 @@ module ForemanInventoryUpload
       )
     end
 
-    def toggle_auto_upload
-      toggled_auto_upload = !Setting[:allow_auto_inventory_upload]
-      Setting[:allow_auto_inventory_upload] = toggled_auto_upload
+    def auto_upload
+      Setting[:allow_auto_inventory_upload] = auto_upload_params == true
       render json: {
-        isAutoUpload: toggled_auto_upload,
+        autoUploadEnabled: Setting[:allow_auto_inventory_upload],
       }
+    end
+
+    def auto_upload_params
+      params.require(:value)
     end
   end
 end

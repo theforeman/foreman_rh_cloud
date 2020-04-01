@@ -1,1 +1,1 @@
-export const handleToggleResponse = { data: { isAutoUpload: true } };
+export const handleToggleResponse = { data: { autoUploadEnabled: true } };

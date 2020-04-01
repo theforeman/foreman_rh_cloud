@@ -21,7 +21,7 @@ export default (state = initialState, action) => {
       accounts,
       accountID,
       processStatusName,
-      isAutoUpload,
+      autoUploadEnabled,
     } = {},
   } = action;
 
@@ -30,7 +30,7 @@ export default (state = initialState, action) => {
       return state.merge({
         ...state,
         accounts,
-        isAutoUpload,
+        autoUploadEnabled,
         error: null,
       });
     case INVENTORY_ACCOUNT_STATUS_POLLING_ERROR:
@@ -55,7 +55,7 @@ export default (state = initialState, action) => {
     case AUTO_UPLOAD_TOGGLE:
       return state.merge({
         ...state,
-        isAutoUpload,
+        autoUploadEnabled,
       });
     default:
       return state;

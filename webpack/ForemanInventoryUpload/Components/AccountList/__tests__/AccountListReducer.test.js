@@ -14,7 +14,7 @@ import {
   pollingProcessID,
   accountID,
   processStatusName,
-  isAutoUpload,
+  autoUploadEnabled,
 } from '../AccountList.fixtures';
 import { AUTO_UPLOAD_TOGGLE } from '../../AutoUploadSwitcher/AutoUploadSwitcherConstants';
 
@@ -25,7 +25,7 @@ const fixtures = {
       type: INVENTORY_ACCOUNT_STATUS_POLLING,
       payload: {
         accounts,
-        isAutoUpload,
+        autoUploadEnabled,
       },
     },
   },
@@ -61,7 +61,7 @@ const fixtures = {
     action: {
       type: AUTO_UPLOAD_TOGGLE,
       payload: {
-        isAutoUpload,
+        autoUploadEnabled,
       },
     },
   },

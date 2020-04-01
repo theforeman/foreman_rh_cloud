@@ -3,8 +3,8 @@
 exports[`AccountList reducer should handle AUTO_UPLOAD_TOGGLE 1`] = `
 Object {
   "accounts": Object {},
+  "autoUploadEnabled": true,
   "error": null,
-  "isAutoUpload": true,
   "pollingProcessID": 0,
 }
 `;
@@ -28,8 +28,8 @@ Object {
       "upload_report_status": "success",
     },
   },
+  "autoUploadEnabled": true,
   "error": null,
-  "isAutoUpload": true,
   "pollingProcessID": 0,
 }
 `;

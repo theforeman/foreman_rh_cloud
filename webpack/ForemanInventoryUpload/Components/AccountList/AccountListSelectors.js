@@ -6,5 +6,5 @@ export const selectAccounts = state => selectAccountsList(state).accounts;
 export const selectPollingProcessID = state =>
   selectAccountsList(state).pollingProcessID;
 export const selectError = state => selectAccountsList(state).error;
-export const selectIsAutoUpload = state =>
-  selectAccountsList(state).isAutoUpload || false;
+export const selectAutoUploadEnabled = state =>
+  selectAccountsList(state).autoUploadEnabled || false;

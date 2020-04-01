@@ -3,12 +3,12 @@ import {
   selectAccountsList,
   selectAccounts,
   selectPollingProcessID,
-  selectIsAutoUpload,
+  selectAutoUploadEnabled,
 } from '../AccountListSelectors';
 import {
   pollingProcessID,
   accounts,
-  isAutoUpload,
+  autoUploadEnabled,
 } from '../AccountList.fixtures';
 
 const state = {
@@ -16,7 +16,7 @@ const state = {
     accountsList: {
       accounts,
       pollingProcessID,
-      isAutoUpload,
+      autoUploadEnabled,
     },
   },
 };
@@ -26,7 +26,8 @@ const fixtures = {
   'should return AccountList accounts': () => selectAccounts(state),
   'should return AccountList pollingProcessID': () =>
     selectPollingProcessID(state),
-  'should return AccountList isAutoUpload': () => selectIsAutoUpload(state),
+  'should return AccountList autoUploadEnabled': () =>
+    selectAutoUploadEnabled(state),
 };
 
 describe('AccountList selectors', () =>

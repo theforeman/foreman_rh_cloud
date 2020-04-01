@@ -4,9 +4,13 @@ import { Switch, FieldLevelHelp } from 'patternfly-react';
 import { translate as __ } from 'foremanReact/common/I18n';
 import './autoUploadSwitcher.scss';
 
-const AutoUploadSwitcher = ({ isAutoUpload, handleToggle }) => (
+const AutoUploadSwitcher = ({ autoUploadEnabled, handleToggle }) => (
   <div className="auto_upload_switcher">
-    <Switch size="mini" value={isAutoUpload} onChange={handleToggle} />
+    <Switch
+      size="mini"
+      value={autoUploadEnabled}
+      onChange={() => handleToggle(autoUploadEnabled)}
+    />
     <FieldLevelHelp
       content={__(
         'Enable automatic upload of your host inventory to the Red Hat cloud'
@@ -17,7 +21,7 @@ const AutoUploadSwitcher = ({ isAutoUpload, handleToggle }) => (
 );
 
 AutoUploadSwitcher.propTypes = {
-  isAutoUpload: PropTypes.bool.isRequired,
+  autoUploadEnabled: PropTypes.bool.isRequired,
   handleToggle: PropTypes.func.isRequired,
 };
 

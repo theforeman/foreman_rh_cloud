@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 
 import * as actions from './AutoUploadSwitcherActions';
 import AutoUploadSwitcher from './AutoUploadSwitcher';
-import { selectIsAutoUpload } from '../AccountList/AccountListSelectors';
+import { selectAutoUploadEnabled } from '../AccountList/AccountListSelectors';
 
 // map state to props
 const mapStateToProps = state => ({
-  isAutoUpload: selectIsAutoUpload(state),
+  autoUploadEnabled: selectAutoUploadEnabled(state),
 });
 
 // map action dispatchers to props
