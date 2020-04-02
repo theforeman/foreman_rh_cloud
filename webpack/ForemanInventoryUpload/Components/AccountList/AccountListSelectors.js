@@ -7,4 +7,4 @@ export const selectPollingProcessID = state =>
   selectAccountsList(state).pollingProcessID;
 export const selectError = state => selectAccountsList(state).error;
 export const selectAutoUploadEnabled = state =>
-  selectAccountsList(state).autoUploadEnabled || false;
+  selectAccountsList(state).autoUploadEnabled;

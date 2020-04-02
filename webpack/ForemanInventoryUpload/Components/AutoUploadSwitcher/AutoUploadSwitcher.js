@@ -21,8 +21,12 @@ const AutoUploadSwitcher = ({ autoUploadEnabled, handleToggle }) => (
 );
 
 AutoUploadSwitcher.propTypes = {
-  autoUploadEnabled: PropTypes.bool.isRequired,
+  autoUploadEnabled: PropTypes.bool,
   handleToggle: PropTypes.func.isRequired,
+};
+
+AutoUploadSwitcher.defaultProps = {
+  autoUploadEnabled: true,
 };
 
 export default AutoUploadSwitcher;

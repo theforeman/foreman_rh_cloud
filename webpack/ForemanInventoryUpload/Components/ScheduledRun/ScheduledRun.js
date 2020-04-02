@@ -18,11 +18,12 @@ const ScheduledRun = ({ date, autoUploadEnabled }) =>
 
 ScheduledRun.propTypes = {
   date: PropTypes.string,
-  autoUploadEnabled: PropTypes.bool.isRequired,
+  autoUploadEnabled: PropTypes.bool,
 };
 
 ScheduledRun.defaultProps = {
   date: null,
+  autoUploadEnabled: true,
 };
 
 export default ScheduledRun;
