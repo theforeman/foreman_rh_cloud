@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageHeader rendering render without Props 1`] = `
+<Fragment>
+  <Row
+    bsClass="row"
+    componentClass="div"
+  >
+    <Col
+      bsClass="col"
+      componentClass="div"
+      xs={12}
+    >
+      <h1>
+        Red Hat Inventory Uploads
+      </h1>
+    </Col>
+  </Row>
+  <Row
+    bsClass="row"
+    componentClass="div"
+  >
+    <Col
+      bsClass="col"
+      componentClass="div"
+      xs={4}
+      xsOffset={8}
+    >
+      <Connect(AutoUploadSwitcher) />
+    </Col>
+  </Row>
+</Fragment>
+`;

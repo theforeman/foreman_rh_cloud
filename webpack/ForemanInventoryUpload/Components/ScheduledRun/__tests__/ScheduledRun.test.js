@@ -4,7 +4,6 @@ import ScheduledRun from '../ScheduledRun';
 import { props } from '../ScheduledRun.fixtures';
 
 const fixtures = {
-  'render without Props': {},
   'render with Props': props,
 };
 
