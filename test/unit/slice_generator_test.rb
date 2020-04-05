@@ -56,6 +56,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal @host.name, actual_host['display_name']
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
+    assert_equal 1, generator.hosts_count
   end
 
   test 'generates a report with satellite facts' do
@@ -158,6 +159,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal @host.name, actual_host['display_name']
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
+    assert_equal 1, generator.hosts_count
   end
 
   test 'shows system_memory_bytes in bytes' do
