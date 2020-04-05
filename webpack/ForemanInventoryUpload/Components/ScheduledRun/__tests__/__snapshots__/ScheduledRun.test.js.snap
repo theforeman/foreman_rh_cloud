@@ -21,5 +21,3 @@ exports[`ScheduledRun rendering render with Props 1`] = `
   </p>
 </Col>
 `;
-
-exports[`ScheduledRun rendering render without Props 1`] = `""`;

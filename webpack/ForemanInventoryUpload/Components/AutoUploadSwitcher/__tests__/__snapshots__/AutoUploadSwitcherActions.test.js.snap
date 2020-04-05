@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AutoUploadSwitcher actions should handleToggle 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "autoUploadEnabled": true,
+      },
+      "type": "AUTO_UPLOAD_TOGGLE",
+    },
+  ],
+]
+`;

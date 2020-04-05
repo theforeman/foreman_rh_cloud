@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AutoUploadSwitcher rendering render with props 1`] = `
+<div
+  className="auto_upload_switcher"
+>
+  <Switch
+    animate={true}
+    baseClass="bootstrap-switch"
+    bsSize={null}
+    defaultValue={true}
+    disabled={false}
+    handleWidth="auto"
+    inverse={false}
+    labelText=" "
+    labelWidth="auto"
+    offColor="default"
+    offText="OFF"
+    onChange={[Function]}
+    onColor="primary"
+    onText="ON"
+    readonly={false}
+    size="mini"
+    tristate={false}
+    value={true}
+    wrapperClass="wrapper"
+  />
+  <FieldLevelHelp
+    buttonClass=""
+    content="Enable automatic upload of your host inventory to the Red Hat cloud"
+    placement="top"
+    rootClose={true}
+  />
+  <span>
+    Allow Auto Upload
+  </span>
+</div>
+`;

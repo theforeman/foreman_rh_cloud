@@ -3,14 +3,20 @@ import {
   selectAccountsList,
   selectAccounts,
   selectPollingProcessID,
+  selectAutoUploadEnabled,
 } from '../AccountListSelectors';
-import { pollingProcessID, accounts } from '../AccountList.fixtures';
+import {
+  pollingProcessID,
+  accounts,
+  autoUploadEnabled,
+} from '../AccountList.fixtures';
 
 const state = {
   ForemanInventoryUpload: {
     accountsList: {
       accounts,
       pollingProcessID,
+      autoUploadEnabled,
     },
   },
 };
@@ -20,6 +26,8 @@ const fixtures = {
   'should return AccountList accounts': () => selectAccounts(state),
   'should return AccountList pollingProcessID': () =>
     selectPollingProcessID(state),
+  'should return AccountList autoUploadEnabled': () =>
+    selectAutoUploadEnabled(state),
 };
 
 describe('AccountList selectors', () =>
