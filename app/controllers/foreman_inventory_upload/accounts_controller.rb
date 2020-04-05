@@ -25,6 +25,7 @@ module ForemanInventoryUpload
       ]
 
       render json: {
+        autoUploadEnabled: Setting[:allow_auto_inventory_upload],
         accounts: accounts,
       }, status: :ok
     end

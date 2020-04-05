@@ -10,12 +10,13 @@ import {
 export const fetchAccountsStatus = () => async dispatch => {
   try {
     const {
-      data: { accounts },
+      data: { accounts, autoUploadEnabled },
     } = await API.get('accounts');
     dispatch({
       type: INVENTORY_ACCOUNT_STATUS_POLLING,
       payload: {
         accounts,
+        autoUploadEnabled,
       },
     });
   } catch (error) {
