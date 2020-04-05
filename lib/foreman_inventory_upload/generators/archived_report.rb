@@ -16,9 +16,9 @@ module ForemanInventoryUpload
               first = true
               host_batches.each do |hosts_batch|
                 slice_id = Foreman.uuid
-                hosts_count = hosts_batch.count
-                @logger.info "Adding slice #{slice_id} with #{hosts_count} hosts"
-                generate_slice(tmpdir, slice_id, hosts_batch)
+                @logger.info "Adding slice #{slice_id}"
+                hosts_count = generate_slice(tmpdir, slice_id, hosts_batch)
+                @logger.info "slice #{slice_id} was created with #{hosts_count} hosts"
                 inner_generator.add_slice(slice_id, hosts_count, first)
                 first = false
               end
@@ -43,10 +43,13 @@ module ForemanInventoryUpload
       private
 
       def generate_slice(tmpdir, slice_id, hosts_batch)
+        hosts_count = 0
         File.open(File.join(tmpdir, "#{slice_id}.json"), 'w') do |slice_out|
           slice_generator = ForemanInventoryUpload::Generators::Slice.new(hosts_batch, slice_out, slice_id)
           slice_generator.render
+          hosts_count = slice_generator.hosts_count
         end
+        hosts_count
       end
     end
   end
