@@ -29,14 +29,14 @@ module ForemanInventoryUpload
     end
 
     def auto_upload
-      Setting[:allow_auto_inventory_upload] = auto_upload_params == true
+      Setting[:allow_auto_inventory_upload] = auto_upload_params
       render json: {
         autoUploadEnabled: Setting[:allow_auto_inventory_upload],
       }
     end
 
     def auto_upload_params
-      params.require(:value)
+      ActiveModel::Type::Boolean.new.cast(params.require(:value))
     end
   end
 end
