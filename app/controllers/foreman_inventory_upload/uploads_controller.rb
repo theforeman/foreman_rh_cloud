@@ -27,5 +27,16 @@ module ForemanInventoryUpload
         :error_msg => message
       )
     end
+
+    def auto_upload
+      Setting[:allow_auto_inventory_upload] = auto_upload_params
+      render json: {
+        autoUploadEnabled: Setting[:allow_auto_inventory_upload],
+      }
+    end
+
+    def auto_upload_params
+      ActiveModel::Type::Boolean.new.cast(params.require(:value))
+    end
   end
 end
