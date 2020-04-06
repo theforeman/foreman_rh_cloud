@@ -110,7 +110,14 @@ module ForemanInventoryUpload
             end.join(', '))
           end
         end
-        @stream.simple_field('os_release', fact_value(host, 'distribution::name'))
+        @stream.simple_field(
+          'os_release',
+          os_release_value(
+            name: fact_value(host, 'distribution::name'),
+            version: fact_value(host, 'distribution::version'),
+            codename: fact_value(host, 'distribution::id')
+          )
+        )
         @stream.simple_field('os_kernel_version', fact_value(host, 'uname::release'))
         @stream.simple_field('arch', host.architecture&.name)
         @stream.simple_field('subscription_status', host.subscription_status_label)
@@ -146,6 +153,10 @@ module ForemanInventoryUpload
         @stream.simple_field('distribution_version', fact_value(host, 'distribution::version'))
         @stream.simple_field('satellite_instance_id', Foreman.respond_to?(:instance_id) ? Foreman.instance_id : nil)
         @stream.simple_field('organization_id', host.organization_id, :last)
+      end
+
+      def os_release_value(name:, version:, codename:)
+        "#{name} #{version} (#{codename})"
       end
     end
   end
