@@ -17,6 +17,8 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     )
 
     @host.subscription_facet.pools << FactoryBot.create(:katello_pool, account_number: '1234', cp_id: 1)
+
+    ForemanInventoryUpload::Generators::Queries.instance_variable_set(:@fact_names, nil)
   end
 
   def interesting_facts
@@ -30,9 +32,11 @@ class ReportGeneratorTest < ActiveSupport::TestCase
       'dmi::bios::vendor',
       'dmi::bios::version',
       'dmi::bios::relase_date',
-      'distribution::name',
       'uname::release',
       'lscpu::flags',
+      'distribution::name',
+      'distribution::version',
+      'distribution::id',
     ]
   end
 
@@ -195,5 +199,22 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_host['account'])
     assert_not_empty(actual_host['account'])
+  end
+
+  test 'Generates os_release with version and id' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['distribution::name'], value: 'Red Hat Test Linux', host: @host)
+    FactoryBot.create(:fact_value, fact_name: fact_names['distribution::version'], value: '7.1', host: @host)
+    FactoryBot.create(:fact_value, fact_name: fact_names['distribution::id'], value: 'TestId', host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice_123')
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(actual_profile = actual_host['system_profile'])
+    assert_equal 'Red Hat Test Linux 7.1 (TestId)', actual_profile['os_release']
   end
 end
