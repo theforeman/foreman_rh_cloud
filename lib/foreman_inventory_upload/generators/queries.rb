@@ -18,6 +18,7 @@ module ForemanInventoryUpload
               'uname::release',
               'lscpu::flags',
               'distribution::version',
+              'distribution::id',
             ]).pluck(:name, :id)
           ]
       end
