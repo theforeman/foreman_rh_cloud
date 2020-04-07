@@ -11,14 +11,10 @@ module ForemanInventoryUpload
 
     def download_file
       filename = ForemanInventoryUpload.facts_archive_name(params[:organization_id])
-      path = Rails.root.join(ForemanInventoryUpload.uploads_folder, filename)
-      unless File.exist? path
-        return throw_flash_error(
-          "Path doesn't exist: #{path}"
-        )
-      end
+      files = Dir["{#{ForemanInventoryUpload.uploads_file_path(filename)},#{ForemanInventoryUpload.done_file_path(filename)}}"]
 
-      send_file path, disposition: 'attachment', filename: filename
+      return send_file files.first, disposition: 'attachment', filename: filename unless files.empty?
+      throw_flash_error "File doesn't exist"
     end
 
     def throw_flash_error(message)
