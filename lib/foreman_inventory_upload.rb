@@ -18,6 +18,18 @@ module ForemanInventoryUpload
     )
   end
 
+  def self.uploads_file_path(filename)
+    File.join(ForemanInventoryUpload.uploads_folder, filename)
+  end
+
+  def self.done_folder
+    File.join(ForemanInventoryUpload.uploads_folder, 'done/')
+  end
+
+  def self.done_file_path(filename)
+    File.join(ForemanInventoryUpload.done_folder, filename)
+  end
+
   def self.generated_reports_folder
     @generated_reports_folder ||= ensure_folder(
       File.join(
