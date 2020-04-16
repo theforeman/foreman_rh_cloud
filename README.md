@@ -11,6 +11,14 @@ for how to install Foreman plugins
 
 *Usage here*
 
+### In Satellite
+
+Normally you run it via UI in RH Cloud -> Inventory Upload -> Restart, but if you need to run from command-line for some reason:
+
+    export organization_id=1
+    export target=/var/lib/foreman/red_hat_inventory/generated_reports/
+    /usr/sbin/foreman-rake foreman_inventory_upload:report:generate
+
 ## TODO
 
 *Todo list here*
