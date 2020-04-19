@@ -37,6 +37,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
       'distribution::name',
       'distribution::version',
       'distribution::id',
+      'virt::is_guest',
     ]
   end
 
@@ -232,6 +233,36 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
     assert_equal 'Red Hat Test Linux 7.1 (TestId)', actual_profile['os_release']
+  end
+
+  test 'sets infrastructure_type to "virtual" based on virt.is_guest fact' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['virt::is_guest'], value: true, host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(actual_profile = actual_host['system_profile'])
+    assert_equal 'virtual', actual_profile['infrastructure_type']
+  end
+
+  test 'sets infrastructure_type to "physical" based on virt.is_guest fact' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['virt::is_guest'], value: false, host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(actual_profile = actual_host['system_profile'])
+    assert_equal 'physical', actual_profile['infrastructure_type']
   end
 
   private
