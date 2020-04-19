@@ -26,7 +26,7 @@ module ForemanInventoryUpload
           @stream.array_field('hosts', :last) do
             first = true
             hosts_batch.each do |host|
-              next unless host&.subscription_facet&.pools&.first
+              next unless host&.subscription_facet
               @stream.comma unless first
               if report_host(host)
                 first = false
@@ -41,9 +41,9 @@ module ForemanInventoryUpload
         @stream.object do
           @stream.simple_field('display_name', host.name)
           @stream.simple_field('fqdn', host.fqdn)
-          @stream.simple_field('account', host.subscription_facet.pools.where.not(account_number: nil).first&.account_number&.to_s)
-          @stream.simple_field('subscription_manager_id', host.subscription_facet.uuid)
-          @stream.simple_field('satellite_id', host.subscription_facet.uuid)
+          @stream.simple_field('account', account_id(host.organization).to_s)
+          @stream.simple_field('subscription_manager_id', host.subscription_facet&.uuid)
+          @stream.simple_field('satellite_id', host.subscription_facet&.uuid)
           @stream.simple_field('bios_uuid', fact_value(host, 'dmi::system::uuid'))
           @stream.simple_field('vm_uuid', fact_value(host, 'virt::uuid'))
           @stream.array_field('ip_addresses') do
@@ -143,15 +143,16 @@ module ForemanInventoryUpload
       end
 
       def report_satellite_facts(host)
-        @stream.simple_field('virtual_host_name', host.subscription_facet.hypervisor_host&.name)
-        @stream.simple_field('virtual_host_uuid', host.subscription_facet.hypervisor_host&.subscription_facet&.uuid)
+        @stream.simple_field('virtual_host_name', host.subscription_facet&.hypervisor_host&.name)
+        @stream.simple_field('virtual_host_uuid', host.subscription_facet&.hypervisor_host&.subscription_facet&.uuid)
         if defined?(ForemanThemeSatellite)
           @stream.simple_field('satellite_version', ForemanThemeSatellite::SATELLITE_VERSION)
         end
         @stream.simple_field('system_purpose_usage', host.subscription_facet.purpose_usage)
         @stream.simple_field('system_purpose_role', host.subscription_facet.purpose_role)
         @stream.simple_field('distribution_version', fact_value(host, 'distribution::version'))
-        @stream.simple_field('satellite_instance_id', Foreman.respond_to?(:instance_id) ? Foreman.instance_id : nil)
+        @stream.simple_field('satellite_instance_id', Foreman.try(:instance_id))
+        @stream.simple_field('is_simple_content_access', golden_ticket?(host.organization))
         @stream.simple_field('organization_id', host.organization_id, :last)
       end
 
