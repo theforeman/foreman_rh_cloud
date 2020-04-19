@@ -16,7 +16,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
       organization: env.organization
     )
 
-    @host.subscription_facet.pools << FactoryBot.create(:katello_pool, account_number: '1234', cp_id: 1)
+    @host.organization.pools << FactoryBot.create(:katello_pool, account_number: '1234', cp_id: 1)
 
     ForemanInventoryUpload::Generators::Queries.instance_variable_set(:@fact_names, nil)
   end
@@ -50,7 +50,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
 
   test 'generates a report for a single host' do
     batch = Host.where(id: @host.id).in_batches.first
-    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice_123')
+    generator = create_generator(batch)
 
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
@@ -66,7 +66,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
   test 'generates a report with satellite facts' do
     Foreman.expects(:instance_id).twice.returns('satellite-id')
     batch = Host.where(id: @host.id).in_batches.first
-    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice-123')
+    generator = create_generator(batch)
 
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
@@ -107,7 +107,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     @host.save!
 
     batch = Host.where(id: @host.id).in_batches.first
-    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice_123')
+    generator = create_generator(batch)
 
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
@@ -129,7 +129,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     @host.subscription_facet.save!
 
     batch = Host.where(id: @host.id).in_batches.first
-    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice_123')
+    generator = create_generator(batch)
 
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
@@ -145,6 +145,23 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal 'test_role', fact_values['system_purpose_role']
   end
 
+  test 'generates a report for a golden ticket' do
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch) do |generator|
+      generator.stubs(:golden_ticket?).returns(true)
+    end
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_equal @host.name, actual_host['display_name']
+    assert_equal @host.fqdn, actual_host['fqdn']
+    assert_equal '1234', actual_host['account']
+    assert_equal 1, generator.hosts_count
+  end
+
   test 'skips hosts without subscription' do
     a_host = FactoryBot.create(
       :host,
@@ -153,7 +170,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
 
     # make a_host last
     batch = Host.where(id: [@host.id, a_host.id]).order(:name).in_batches.first
-    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice_123')
+    generator = create_generator(batch)
 
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
@@ -170,7 +187,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     FactoryBot.create(:fact_value, fact_name: fact_names['memory::memtotal'], value: '1', host: @host)
 
     batch = Host.where(id: @host.id).in_batches.first
-    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice_123')
+    generator = create_generator(batch)
 
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
@@ -182,15 +199,14 @@ class ReportGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'reports an account for hosts with multiple pools' do
-    first_pool = @host.subscription_facet.pools.first
+    first_pool = @host.organization.pools.first
     second_pool = FactoryBot.create(:katello_pool, account_number: nil, cp_id: 2)
-    @host.subscription_facet.pools = []
-    @host.subscription_facet.save!
-    @host.subscription_facet.pools << first_pool
-    @host.subscription_facet.pools << second_pool
+    new_org = FactoryBot.create(:organization, pools: [first_pool, second_pool])
+    @host.organization = new_org
+    @host.save!
 
     batch = Host.where(id: @host.id).in_batches.first
-    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice_123')
+    generator = create_generator(batch)
 
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
@@ -207,7 +223,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     FactoryBot.create(:fact_value, fact_name: fact_names['distribution::id'], value: 'TestId', host: @host)
 
     batch = Host.where(id: @host.id).in_batches.first
-    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], 'slice_123')
+    generator = create_generator(batch)
 
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
@@ -216,5 +232,17 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
     assert_equal 'Red Hat Test Linux 7.1 (TestId)', actual_profile['os_release']
+  end
+
+  private
+
+  def create_generator(batch, name = 'slice_123')
+    generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], name)
+    if block_given?
+      yield(generator)
+    else
+      generator.stubs(:golden_ticket?).returns(false)
+    end
+    generator
   end
 end
