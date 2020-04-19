@@ -19,6 +19,7 @@ module ForemanInventoryUpload
               'lscpu::flags',
               'distribution::version',
               'distribution::id',
+              'virt::is_guest',
             ]).pluck(:name, :id)
           ]
       end
