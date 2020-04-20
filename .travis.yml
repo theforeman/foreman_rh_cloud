@@ -1,4 +1,6 @@
 language: ruby
+services:
+  - postgresql
 cache:
   - npm
   - bundler
@@ -23,9 +25,12 @@ install:
   - echo "gemspec :path => '../${FOREMAN_PLUGIN_NAME}'" > bundler.d/${FOREMAN_PLUGIN_NAME}.local.rb
   - echo "gem 'katello'" > bundler.d/katello.local.rb
   - ln -s settings.yaml.test config/settings.yaml
-  - ln -s database.yml.example config/database.yml
-  - bundle install --jobs=3 --retry=3 --without journald development postgresql mysql2 console journald
+  - cp ../${FOREMAN_PLUGIN_NAME}/.travis.database.yml config/database.yml
+  - cat ../${FOREMAN_PLUGIN_NAME}/.travis.database.yml
+  - cat config/database.yml
+  - bundle install --jobs=3 --retry=3 --without journald development mysql2 console journald
   - npm install
+  - RAILS_ENV=test bundle exec rake db:create
   - bundle exec rake webpack:compile
   - bundle exec rake db:migrate RAILS_ENV=test
 script:
