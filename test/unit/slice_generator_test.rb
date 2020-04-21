@@ -58,7 +58,6 @@ class ReportGeneratorTest < ActiveSupport::TestCase
 
     assert_equal 'slice_123', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
-    assert_equal @host.name, actual_host['display_name']
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
     assert_equal 1, generator.hosts_count
@@ -115,7 +114,6 @@ class ReportGeneratorTest < ActiveSupport::TestCase
 
     assert_equal 'slice_123', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
-    assert_equal @host.name, actual_host['display_name']
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_not_nil(host_facts = actual_host['facts']&.first)
     assert_equal 'satellite', host_facts['namespace']
@@ -137,7 +135,6 @@ class ReportGeneratorTest < ActiveSupport::TestCase
 
     assert_equal 'slice_123', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
-    assert_equal @host.name, actual_host['display_name']
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_not_nil(host_facts = actual_host['facts']&.first)
     assert_equal 'satellite', host_facts['namespace']
@@ -157,7 +154,6 @@ class ReportGeneratorTest < ActiveSupport::TestCase
 
     assert_equal 'slice_123', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
-    assert_equal @host.name, actual_host['display_name']
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
     assert_equal 1, generator.hosts_count
@@ -178,7 +174,6 @@ class ReportGeneratorTest < ActiveSupport::TestCase
 
     assert_equal 'slice_123', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
-    assert_equal @host.name, actual_host['display_name']
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
     assert_equal 1, generator.hosts_count
