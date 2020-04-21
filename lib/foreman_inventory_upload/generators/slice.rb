@@ -39,7 +39,6 @@ module ForemanInventoryUpload
 
       def report_host(host)
         @stream.object do
-          @stream.simple_field('display_name', host.name)
           @stream.simple_field('fqdn', host.fqdn)
           @stream.simple_field('account', account_id(host.organization).to_s)
           @stream.simple_field('subscription_manager_id', host.subscription_facet&.uuid)
