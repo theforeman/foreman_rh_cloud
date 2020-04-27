@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InsightsCloudSync render without Props 1`] = `
+<IntlProvider
+  locale="en-US"
+>
+  <div
+    className="insights-cloud-sync"
+  >
+    <h1>
+      Red Hat Insights Sync
+    </h1>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Sync now
+    </Button>
+  </div>
+</IntlProvider>
+`;

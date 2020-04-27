@@ -44,7 +44,7 @@ class InsightsFullSyncTest < ActiveJob::TestCase
             "results_url": "https://cloud.redhat.com/insights/overview/security/CVE_2018_3620_cpu_kernel%7CCVE_2018_3620_CPU_KERNEL_NEED_UPDATE/accdf444-5628-451d-bf3e-cf909ad72756/"
         }
       ]
-HITS_JSON
+    HITS_JSON
     @hits = JSON.parse(hits_json)
   end
 

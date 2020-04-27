@@ -6,6 +6,6 @@ module ForemanInventoryUploadHostHelper
   def hits_counts_cell(host)
     host_hits = hits_counts[host.id]
     content = "#{host_hits} Rule hits" if host_hits
-    tag.td content, class: ['hidden-xs', 'ellipsis'] 
+    tag.td content, class: ['hidden-xs', 'ellipsis']
   end
 end

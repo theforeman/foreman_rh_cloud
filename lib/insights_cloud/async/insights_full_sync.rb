@@ -8,7 +8,7 @@ module InsightsCloud
 
         hits = query_insights_hits
 
-        host_names = hits.map { |hit| hit['hostname']}.uniq
+        host_names = hits.map { |hit| hit['hostname'] }.uniq
         setup_host_names(host_names)
 
         replace_hits_data(hits)
@@ -54,8 +54,8 @@ module InsightsCloud
       def replace_hits_data(hits)
         InsightsHit.transaction do
           InsightsHit.delete_all
-          InsightsHit.create(hits.map {|hits_hash| to_model_hash(hits_hash)})
-          InsightsFacet.create(@host_ids.values.map {|id| {host_id: id}})
+          InsightsHit.create(hits.map { |hits_hash| to_model_hash(hits_hash) })
+          InsightsFacet.create(@host_ids.values.map { |id| {host_id: id} })
         end
       end
 
