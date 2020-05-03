@@ -24,6 +24,7 @@ install:
   - cd ../foreman
   - echo "gemspec :path => '../${FOREMAN_PLUGIN_NAME}'" > bundler.d/${FOREMAN_PLUGIN_NAME}.local.rb
   - echo "gem 'katello'" > bundler.d/katello.local.rb
+  - echo "gem 'rubocop-minitest'" > bundler.d/rubocop-deps.local.rb
   - ln -s settings.yaml.test config/settings.yaml
   - cp ../${FOREMAN_PLUGIN_NAME}/.travis.database.yml config/database.yml
   - cat ../${FOREMAN_PLUGIN_NAME}/.travis.database.yml
@@ -47,7 +48,7 @@ env:
     - TESTOPTS=-v
     - FOREMAN_PLUGIN_NAME=foreman_rh_cloud
   matrix:
-    - FOREMAN_CORE_BRANCH=develop
+    - FOREMAN_CORE_BRANCH=2.0-stable
 addons:
   apt:
     sources:
