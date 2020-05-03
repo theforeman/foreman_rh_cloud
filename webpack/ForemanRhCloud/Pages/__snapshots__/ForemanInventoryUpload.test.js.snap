@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ForemanInventoryUpload render without Props 1`] = `
-<IntlProvider
-  locale="en-US"
+<PageLayout
+  header="Red Hat Inventory Upload"
+  searchable={false}
 >
   <Grid
     bsClass="container"
@@ -13,5 +14,5 @@ exports[`ForemanInventoryUpload render without Props 1`] = `
     <PageHeader />
     <Connect(AccountList) />
   </Grid>
-</IntlProvider>
+</PageLayout>
 `;

@@ -1,7 +1,7 @@
-import { selectForemanInventoryUpload } from '../../ForemanInventoryUploadSelectors';
+import { selectForemanRhCloud } from '../../ForemanRhCloudSelectors';
 
 export const selectDashboard = (state, accountID) =>
-  selectForemanInventoryUpload(state).dashboard[accountID] || {};
+  selectForemanRhCloud(state).dashboard[accountID] || {};
 export const selectUploading = (state, accountID) =>
   selectDashboard(state, accountID).uploading;
 export const selectGenerating = (state, accountID) =>

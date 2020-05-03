@@ -12,7 +12,7 @@ import {
 } from '../AccountList.fixtures';
 
 const state = {
-  ForemanInventoryUpload: {
+  ForemanRhCloud: {
     accountsList: {
       accounts,
       pollingProcessID,

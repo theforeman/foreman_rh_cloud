@@ -3,8 +3,8 @@
 /* eslint-disable import/extensions */
 import componentRegistry from 'foremanReact/components/componentRegistry';
 import { registerReducer } from 'foremanReact/common/MountingService';
-import reducers from './ForemanInventoryUpload/ForemanInventoryUploadReducers';
-import ForemanInventoryUpload from './ForemanInventoryUpload';
+import reducers from './ForemanRhCloud/ForemanRhCloudReducers';
+import ForemanRhCloud from './ForemanRhCloud';
 
 // register reducers
 Object.entries(reducers).forEach(([key, reducer]) =>
@@ -13,6 +13,6 @@ Object.entries(reducers).forEach(([key, reducer]) =>
 
 // register components
 componentRegistry.register({
-  name: 'ForemanInventoryUpload',
-  type: ForemanInventoryUpload,
+  name: 'ForemanRhCloud',
+  type: ForemanRhCloud,
 });

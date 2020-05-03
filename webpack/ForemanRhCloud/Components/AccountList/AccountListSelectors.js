@@ -1,7 +1,7 @@
-import { selectForemanInventoryUpload } from '../../ForemanInventoryUploadSelectors';
+import { selectForemanRhCloud } from '../../ForemanRhCloudSelectors';
 
 export const selectAccountsList = state =>
-  selectForemanInventoryUpload(state).accountsList;
+  selectForemanRhCloud(state).accountsList;
 export const selectAccounts = state => selectAccountsList(state).accounts;
 export const selectPollingProcessID = state =>
   selectAccountsList(state).pollingProcessID;

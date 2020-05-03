@@ -2,7 +2,7 @@ import React from 'react';
 import { IntegrationTestHelper } from 'react-redux-test-utils';
 
 import Dashboard from '../Dashboard';
-import reducers from '../../../ForemanInventoryUploadReducers';
+import reducers from '../../../ForemanRhCloudReducers';
 import { accountID } from '../Dashboard.fixtures';
 
 describe('Dashboard integration test', () => {

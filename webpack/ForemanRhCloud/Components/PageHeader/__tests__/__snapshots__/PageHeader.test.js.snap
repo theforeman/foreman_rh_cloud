@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageHeader rendering render without Props 1`] = `
+<Row
+  bsClass="row"
+  componentClass="div"
+>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    xs={4}
+    xsOffset={8}
+  >
+    <Connect(AutoUploadSwitcher) />
+  </Col>
+</Row>
+`;
