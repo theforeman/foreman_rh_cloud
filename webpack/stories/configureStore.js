@@ -1,6 +1,6 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import rootReducer from './ForemanInventoryUploadReducers';
+import rootReducer from './ForemanRhCloudReducers';
 
 export default function configureStore(preloadedState) {
   const middlewares = [thunkMiddleware];
