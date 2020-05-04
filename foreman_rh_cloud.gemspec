@@ -14,7 +14,9 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib,locale,webpack}/**/*'] +
             ['LICENSE', 'Rakefile', 'README.md'] +
             ['package.json']
+  s.files -= Dir['**/*.orig']
   s.test_files = Dir['test/**/*']
+  s.test_files -= Dir['test/**/*.orig']
 
   s.add_dependency 'katello'
   s.add_dependency 'redhat_access'
