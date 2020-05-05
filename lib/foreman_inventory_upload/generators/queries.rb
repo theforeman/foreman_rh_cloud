@@ -20,6 +20,9 @@ module ForemanInventoryUpload
               'distribution::version',
               'distribution::id',
               'virt::is_guest',
+              'dmi::system::manufacturer',
+              'dmi::system::product_name',
+              'dmi::chassis::asset_tag',
             ]).pluck(:name, :id)
           ]
       end
