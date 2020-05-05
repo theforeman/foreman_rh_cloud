@@ -38,6 +38,9 @@ class ReportGeneratorTest < ActiveSupport::TestCase
       'distribution::version',
       'distribution::id',
       'virt::is_guest',
+      'dmi::system::manufacturer',
+      'dmi::system::product_name',
+      'dmi::chassis::asset_tag',
     ]
   end
 
@@ -258,6 +261,81 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
     assert_equal 'physical', actual_profile['infrastructure_type']
+  end
+
+  test 'Identifies Amazon cloud provider' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['dmi::bios::version'], value: 'Test Amazon version', host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(actual_profile = actual_host['system_profile'])
+    assert_equal 'aws', actual_profile['cloud_provider']
+  end
+
+  test 'Identifies Google cloud provider' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['dmi::bios::version'], value: 'Test Google version', host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(actual_profile = actual_host['system_profile'])
+    assert_equal 'google', actual_profile['cloud_provider']
+  end
+
+  test 'Identifies Azure cloud provider' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['dmi::chassis::asset_tag'], value: '7783-7084-3265-9085-8269-3286-77', host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(actual_profile = actual_host['system_profile'])
+    assert_equal 'azure', actual_profile['cloud_provider']
+  end
+
+  test 'Identifies Alibaba cloud provider via manufacturer' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['dmi::system::manufacturer'], value: 'Test Alibaba Cloud version', host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(actual_profile = actual_host['system_profile'])
+    assert_equal 'alibaba', actual_profile['cloud_provider']
+  end
+
+  test 'Identifies Alibaba cloud provider via product name' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['dmi::system::product_name'], value: 'Test Alibaba Cloud ECS product', host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(actual_profile = actual_host['system_profile'])
+    assert_equal 'alibaba', actual_profile['cloud_provider']
   end
 
   private
