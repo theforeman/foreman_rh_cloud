@@ -126,6 +126,7 @@ module ForemanInventoryUpload
           'infrastructure_type',
           ActiveModel::Type::Boolean.new.cast(fact_value(host, 'virt::is_guest')) ? 'virtual' : 'physical'
         )
+        @stream.simple_field('cloud_provider', cloud_provider(host))
         unless (installed_products = host.subscription_facet&.installed_products).empty?
           @stream.array_field('installed_products') do
             @stream.raw(installed_products.map do |product|
