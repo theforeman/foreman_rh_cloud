@@ -13,8 +13,9 @@ import {
   activeTab,
   accountID,
 } from '../Dashboard.fixtures';
+import { inventoryStateWrapper } from '../../../ForemanInventoryHelpers';
 
-const state = {
+const state = inventoryStateWrapper({
   dashboard: {
     [accountID]: {
       generating: {
@@ -29,7 +30,7 @@ const state = {
       pollingProcessID,
     },
   },
-};
+});
 
 const fixtures = {
   'should return Dashboard': () => selectDashboard(state, accountID),

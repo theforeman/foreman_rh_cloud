@@ -1,4 +1,5 @@
 import API from 'foremanReact/API';
+import { inventoryUrl } from '../../ForemanInventoryHelpers';
 import {
   AUTO_UPLOAD_TOGGLE,
   AUTO_UPLOAD_TOGGLE_ERROR,
@@ -9,7 +10,9 @@ export const handleToggle = currentAutoUploadEnabled => async dispatch => {
   try {
     const {
       data: { autoUploadEnabled },
-    } = await API.post('auto_upload', { value: toggledAutoUploadEnabled });
+    } = await API.post(inventoryUrl('auto_upload'), {
+      value: toggledAutoUploadEnabled,
+    });
     dispatch({
       type: AUTO_UPLOAD_TOGGLE,
       payload: {
