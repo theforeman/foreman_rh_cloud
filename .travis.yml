@@ -19,7 +19,6 @@ install:
   - node --version
   - npm version
   - nvm version
-  - # bundle install --jobs=3 --retry=3
   - npm install eslint
   - cd ../foreman
   - echo "gemspec :path => '../${FOREMAN_PLUGIN_NAME}'" > bundler.d/${FOREMAN_PLUGIN_NAME}.local.rb
@@ -41,7 +40,7 @@ script:
   - bundle exec rake "${FOREMAN_PLUGIN_NAME}:rubocop"
   - cd ../${FOREMAN_PLUGIN_NAME}
   - npm run test;
-  - # npm run coveralls;
+  - npm run publish-coverage;
   - npm run lint;
 env:
   global:
@@ -52,21 +51,21 @@ env:
 addons:
   apt:
     sources:
-    - sourceline: 'ppa:qpid/released'
+      - sourceline: 'ppa:qpid/released'
     packages:
-    - nodejs
-    - git
-    - libsqlite3-dev
-    - zlib1g-dev
-    - libvirt-dev
-    - libqpid-proton-core10
-    - libqpidbroker-dev
-    - libqpidbroker2
-    - libqpidclient-dev
-    - libqpidclient2
-    - libqpidcommon-dev
-    - libqpidcommon2
-    - libqpidmessaging-dev
-    - libqpidmessaging2
-    - libqpidtypes-dev
-    - libqpidtypes1
+      - nodejs
+      - git
+      - libsqlite3-dev
+      - zlib1g-dev
+      - libvirt-dev
+      - libqpid-proton-core10
+      - libqpidbroker-dev
+      - libqpidbroker2
+      - libqpidclient-dev
+      - libqpidclient2
+      - libqpidcommon-dev
+      - libqpidcommon2
+      - libqpidmessaging-dev
+      - libqpidmessaging2
+      - libqpidtypes-dev
+      - libqpidtypes1
