@@ -56,7 +56,7 @@ export const restartProcess = (accountID, activeTab) => dispatch => {
     processStatusName = 'generate_report_status';
   }
 
-  API.post(`${accountID}/${processController}`);
+  API.post(inventoryUrl(`${accountID}/${processController}`));
   dispatch({
     type: INVENTORY_PROCESS_RESTART,
     payload: {
