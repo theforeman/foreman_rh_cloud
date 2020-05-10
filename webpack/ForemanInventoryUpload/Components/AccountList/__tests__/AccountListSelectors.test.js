@@ -10,7 +10,7 @@ import {
   accounts,
   autoUploadEnabled,
 } from '../AccountList.fixtures';
-import { inventoryStateWrapper } from '../../../ForemanInventoryHelpers';
+import { inventoryStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
 
 const state = inventoryStateWrapper({
   accountsList: {

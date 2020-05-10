@@ -1,5 +1,5 @@
 import { testSelectorsSnapshotWithFixtures } from '@theforeman/test';
-import { inventoryStateWrapper } from '../ForemanInventoryUpload/ForemanInventoryHelpers';
+import { inventoryStateWrapper } from '../ForemanRhCloudTestHelpers';
 import {
   selectForemanRhCloud,
   selectForemanInventoryUpload,

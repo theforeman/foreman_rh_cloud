@@ -13,7 +13,7 @@ import {
   activeTab,
   accountID,
 } from '../Dashboard.fixtures';
-import { inventoryStateWrapper } from '../../../ForemanInventoryHelpers';
+import { inventoryStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
 
 const state = inventoryStateWrapper({
   dashboard: {

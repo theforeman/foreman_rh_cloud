@@ -14,7 +14,7 @@ import {
   activeTab,
   accountID,
 } from '../Dashboard.fixtures';
-import { inventoryStateWrapper } from '../../../ForemanInventoryHelpers';
+import { inventoryStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
 
 jest.mock('foremanReact/API');
 API.get.mockImplementation(() => serverMock);
