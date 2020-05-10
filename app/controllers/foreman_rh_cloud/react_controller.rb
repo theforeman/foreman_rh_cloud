@@ -1,7 +1,8 @@
 module ForemanRhCloud
   class ReactController < ::ApplicationController
+    layout "foreman_rh_cloud/application" 
+
     def inventory_upload
-      render 'inventory_upload', :layout => false
     end
   end
 end
