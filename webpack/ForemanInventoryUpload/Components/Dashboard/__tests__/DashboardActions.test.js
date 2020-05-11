@@ -14,14 +14,13 @@ import {
   activeTab,
   accountID,
 } from '../Dashboard.fixtures';
+import { inventoryStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
 
 jest.mock('foremanReact/API');
 API.get.mockImplementation(() => serverMock);
 
 const runWithGetState = (state, action, params) => dispatch => {
-  const getState = () => ({
-    dashboard: state,
-  });
+  const getState = () => inventoryStateWrapper({ dashboard: state });
   action(params)(dispatch, getState);
 };
 

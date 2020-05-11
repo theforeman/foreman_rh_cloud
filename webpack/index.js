@@ -3,7 +3,7 @@
 /* eslint-disable import/extensions */
 import componentRegistry from 'foremanReact/components/componentRegistry';
 import { registerReducer } from 'foremanReact/common/MountingService';
-import reducers from './ForemanInventoryUpload/ForemanInventoryUploadReducers';
+import reducers from './ForemanRhCloudReducers';
 import ForemanInventoryUpload from './ForemanInventoryUpload';
 
 // register reducers
