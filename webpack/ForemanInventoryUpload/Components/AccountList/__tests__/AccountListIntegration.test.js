@@ -2,7 +2,7 @@ import React from 'react';
 import { IntegrationTestHelper } from '@theforeman/test';
 
 import AccountList from '../index';
-import reducers from '../../../ForemanInventoryUploadReducers';
+import reducers from '../../../../ForemanRhCloudReducers';
 
 describe('AccountList integration test', () => {
   it('should flow', async () => {

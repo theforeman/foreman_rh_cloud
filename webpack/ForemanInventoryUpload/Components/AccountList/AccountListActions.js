@@ -1,4 +1,5 @@
 import API from 'foremanReact/API';
+import { inventoryUrl } from '../../ForemanInventoryHelpers';
 import {
   INVENTORY_ACCOUNT_STATUS_POLLING,
   INVENTORY_ACCOUNT_STATUS_POLLING_ERROR,
@@ -11,7 +12,7 @@ export const fetchAccountsStatus = () => async dispatch => {
   try {
     const {
       data: { accounts, autoUploadEnabled },
-    } = await API.get('accounts');
+    } = await API.get(inventoryUrl('accounts'));
     dispatch({
       type: INVENTORY_ACCOUNT_STATUS_POLLING,
       payload: {
@@ -55,7 +56,7 @@ export const restartProcess = (accountID, activeTab) => dispatch => {
     processStatusName = 'generate_report_status';
   }
 
-  API.post(`${accountID}/${processController}`);
+  API.post(inventoryUrl(`${accountID}/${processController}`));
   dispatch({
     type: INVENTORY_PROCESS_RESTART,
     payload: {

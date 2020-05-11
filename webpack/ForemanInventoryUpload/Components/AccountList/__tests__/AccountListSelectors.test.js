@@ -10,16 +10,15 @@ import {
   accounts,
   autoUploadEnabled,
 } from '../AccountList.fixtures';
+import { inventoryStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
 
-const state = {
-  ForemanInventoryUpload: {
-    accountsList: {
-      accounts,
-      pollingProcessID,
-      autoUploadEnabled,
-    },
+const state = inventoryStateWrapper({
+  accountsList: {
+    accounts,
+    pollingProcessID,
+    autoUploadEnabled,
   },
-};
+});
 
 const fixtures = {
   'should return AccountsList': () => selectAccountsList(state),
