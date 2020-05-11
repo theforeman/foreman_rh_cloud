@@ -1,6 +1,6 @@
 import { testComponentSnapshotsWithFixtures } from 'react-redux-test-utils';
 
-import ForemanInventoryUpload from './ForemanInventoryUpload';
+import ForemanInventoryUpload from '../../ForemanInventoryUpload';
 
 const fixtures = {
   'render without Props': {},

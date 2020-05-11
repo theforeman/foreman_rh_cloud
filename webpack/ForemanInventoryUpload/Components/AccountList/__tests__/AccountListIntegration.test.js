@@ -2,7 +2,7 @@ import React from 'react';
 import { IntegrationTestHelper } from 'react-redux-test-utils';
 
 import AccountList from '../index';
-import reducers from '../../../ForemanInventoryUploadReducers';
+import reducers from '../../../../ForemanRhCloudReducers';
 
 describe('AccountList integration test', () => {
   it('should flow', async () => {
