@@ -1,4 +1,6 @@
 import API from 'foremanReact/API';
+import { selectActiveTab } from './DashboardSelectors';
+import { inventoryUrl } from '../../ForemanInventoryHelpers';
 import {
   INVENTORY_POLLING_START,
   INVENTORY_POLLING_STOP,
@@ -8,7 +10,6 @@ import {
   INVENTORY_REPORTS_DOWNLOAD,
   INVENTORY_TOGGLE_TERMINAL_FULL_SCREEN,
 } from './DashboardConstants';
-import { selectActiveTab } from './DashboardSelectors';
 
 export const startPolling = (accountID, pollingProcessID) => ({
   type: INVENTORY_POLLING_START,
@@ -34,7 +35,7 @@ export const fetchLogs = accountID => async (dispatch, getState) => {
     const processController = activeTab === 'uploading' ? 'uploads' : 'reports';
     const {
       data: { output, scheduled },
-    } = await API.get(`${accountID}/${processController}/last`);
+    } = await API.get(inventoryUrl(`${accountID}/${processController}/last`));
     const outputArray = output.split('\n');
     dispatch({
       type: INVENTORY_POLLING,
@@ -66,7 +67,7 @@ export const setActiveTab = (accountID, tabName) => ({
 });
 
 export const downloadReports = accountID => {
-  window.location.href = `/foreman_inventory_upload/${accountID}/uploads/file`;
+  window.location.href = inventoryUrl(`${accountID}/uploads/file`);
   return {
     type: INVENTORY_REPORTS_DOWNLOAD,
     payload: {

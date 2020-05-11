@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ForemanInventoryUpload helpers should return inventory Url 1`] = `"/foreman_inventory_upload/test_path"`;

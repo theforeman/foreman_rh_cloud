@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ForemanRhCloud helpers should return inventory wrapper 1`] = `
+Object {
+  "ForemanRhCloud": Object {
+    "inventoryUpload": Object {
+      "inventoryChildren": null,
+    },
+  },
+}
+`;

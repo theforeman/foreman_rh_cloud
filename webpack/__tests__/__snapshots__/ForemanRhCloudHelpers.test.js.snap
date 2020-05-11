@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ForemanRhCloud helpers should return foreman Url 1`] = `"MY_TEST_URL_PREFIX.example.com/test_path"`;
