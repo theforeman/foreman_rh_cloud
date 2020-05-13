@@ -1,4 +1,4 @@
-import { testSelectorsSnapshotWithFixtures } from '@theforeman/test';
+import { testSelectorsSnapshotWithFixtures } from 'react-redux-test-utils';
 import { foremanUrl } from '../ForemanRhCloudHelpers';
 
 global.URL_PREFIX = 'MY_TEST_URL_PREFIX.example.com';
