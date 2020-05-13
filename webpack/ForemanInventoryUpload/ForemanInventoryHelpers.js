@@ -1,3 +1,4 @@
-import { INVENTORY_BASE_URL } from './ForemanInventoryConstants';
+import { foremanUrl } from '../ForemanRhCloudHelpers';
 
-export const inventoryUrl = path => `${INVENTORY_BASE_URL}${path}`;
+export const inventoryUrl = path =>
+  foremanUrl(`/foreman_inventory_upload/${path}`);
