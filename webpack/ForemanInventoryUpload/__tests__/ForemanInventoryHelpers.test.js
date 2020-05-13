@@ -1,5 +1,7 @@
-import { testSelectorsSnapshotWithFixtures } from '@theforeman/test';
+import { testSelectorsSnapshotWithFixtures } from 'react-redux-test-utils';
 import { inventoryUrl } from '../ForemanInventoryHelpers';
+
+global.URL_PREFIX = '';
 
 const fixtures = {
   'should return inventory Url': () => inventoryUrl('test_path'),
