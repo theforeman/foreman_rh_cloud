@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import ListItem from './Components/ListItem';
 import EmptyState from './Components/EmptyState';
 import ErrorState from './Components/ErrorState';
+import EmptyResults from './Components/EmptyResults';
+import { filterAccounts } from './AccountListHelper';
 import './accountList.scss';
 
 class AccountList extends Component {
@@ -20,8 +22,9 @@ class AccountList extends Component {
   }
 
   render() {
-    const { accounts, error } = this.props;
+    const { accounts, error, filterTerm } = this.props;
     const accountIds = Object.keys(accounts);
+    const filteredAccountIds = filterAccounts(accounts, accountIds, filterTerm);
 
     if (error) {
       return <ErrorState error={error} />;
@@ -30,16 +33,14 @@ class AccountList extends Component {
     if (accountIds.length === 0) {
       return <EmptyState />;
     }
-    const items = accountIds.map((accountID, index) => {
+
+    if (filteredAccountIds.length === 0) {
+      return <EmptyResults />;
+    }
+
+    const items = filteredAccountIds.map((accountID, index) => {
       const account = accounts[accountID];
-      return (
-        <ListItem
-          key={index}
-          accountID={accountID}
-          account={account}
-          initExpanded={index === 0}
-        />
-      );
+      return <ListItem key={index} accountID={accountID} account={account} />;
     });
     return <ListView className="account_list">{items}</ListView>;
   }
@@ -56,6 +57,7 @@ AccountList.propTypes = {
   }),
   accounts: PropTypes.object,
   error: PropTypes.string,
+  filterTerm: PropTypes.string,
 };
 
 AccountList.defaultProps = {
@@ -69,6 +71,7 @@ AccountList.defaultProps = {
   },
   accounts: {},
   error: '',
+  filterTerm: null,
 };
 
 export default AccountList;
