@@ -1,4 +1,4 @@
-import { testActionSnapshotWithFixtures } from '@theforeman/test';
+import { testActionSnapshotWithFixtures } from 'react-redux-test-utils';
 import {
   handleFilterChange,
   handleFilterClear,
