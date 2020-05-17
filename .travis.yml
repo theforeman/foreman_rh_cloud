@@ -36,7 +36,7 @@ script:
   - cd ../${FOREMAN_PLUGIN_NAME}
   - bundle exec rubocop
   - npm run test;
-  - # npm run coveralls;
+  - npm run coveralls;
   - npm run lint;
 env:
   global:
@@ -47,21 +47,21 @@ env:
 addons:
   apt:
     sources:
-    - sourceline: 'ppa:qpid/released'
+      - sourceline: 'ppa:qpid/released'
     packages:
-    - nodejs
-    - git
-    - libsqlite3-dev
-    - zlib1g-dev
-    - libvirt-dev
-    - libqpid-proton-core10
-    - libqpidbroker-dev
-    - libqpidbroker2
-    - libqpidclient-dev
-    - libqpidclient2
-    - libqpidcommon-dev
-    - libqpidcommon2
-    - libqpidmessaging-dev
-    - libqpidmessaging2
-    - libqpidtypes-dev
-    - libqpidtypes1
+      - nodejs
+      - git
+      - libsqlite3-dev
+      - zlib1g-dev
+      - libvirt-dev
+      - libqpid-proton-core10
+      - libqpidbroker-dev
+      - libqpidbroker2
+      - libqpidclient-dev
+      - libqpidclient2
+      - libqpidcommon-dev
+      - libqpidcommon2
+      - libqpidmessaging-dev
+      - libqpidmessaging2
+      - libqpidtypes-dev
+      - libqpidtypes1
