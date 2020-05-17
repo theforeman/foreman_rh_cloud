@@ -11,7 +11,9 @@ exports[`PageHeader rendering render without Props 1`] = `
       componentClass="div"
       xs={12}
     >
-      <h1>
+      <h1
+        className="inventory_title"
+      >
         Red Hat Inventory Uploads
       </h1>
     </Col>
@@ -23,8 +25,17 @@ exports[`PageHeader rendering render without Props 1`] = `
     <Col
       bsClass="col"
       componentClass="div"
+      xs={3}
+    >
+      <Connect(InventoryFilter)
+        initialValue=""
+      />
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
       xs={4}
-      xsOffset={8}
+      xsOffset={5}
     >
       <Connect(AutoUploadSwitcher) />
     </Col>

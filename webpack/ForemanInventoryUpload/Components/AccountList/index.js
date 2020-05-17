@@ -9,12 +9,14 @@ import {
   selectPollingProcessID,
   selectError,
 } from './AccountListSelectors';
+import { selectFilterTerm } from '../InventoryFilter/InventoryFilterSelectors';
 
 // map state to props
 const mapStateToProps = state => ({
   accounts: selectAccounts(state),
   pollingProcessID: selectPollingProcessID(state),
   error: selectError(state),
+  filterTerm: selectFilterTerm(state),
 });
 
 // map action dispatchers to props

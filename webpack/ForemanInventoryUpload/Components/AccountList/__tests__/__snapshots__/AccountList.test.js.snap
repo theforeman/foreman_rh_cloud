@@ -13,7 +13,6 @@ exports[`AccountList rendering render with props 1`] = `
       }
     }
     accountID="Account1"
-    initExpanded={true}
     key="0"
   />
   <ListItem
@@ -25,7 +24,6 @@ exports[`AccountList rendering render with props 1`] = `
       }
     }
     accountID="Account2"
-    initExpanded={false}
     key="1"
   />
   <ListItem
@@ -37,8 +35,9 @@ exports[`AccountList rendering render with props 1`] = `
       }
     }
     accountID="Account3"
-    initExpanded={false}
     key="2"
   />
 </ListView>
 `;
+
+exports[`AccountList rendering show empty results 1`] = `<inventoryEmptyResults />`;
