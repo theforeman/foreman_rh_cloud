@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountList reducer should handle INVENTORY_FILTER_CLEAR 1`] = `
+Object {
+  "filterTerm": "",
+}
+`;
+
+exports[`AccountList reducer should handle INVENTORY_FILTER_UPDATE 1`] = `
+Object {
+  "filterTerm": "test_filter_term",
+}
+`;
+
+exports[`AccountList reducer should return the initial state 1`] = `
+Object {
+  "filterTerm": "",
+}
+`;

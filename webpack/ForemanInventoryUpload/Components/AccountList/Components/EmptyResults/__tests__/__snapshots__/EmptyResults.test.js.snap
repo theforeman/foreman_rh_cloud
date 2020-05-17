@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmptyResults rendering render without Props 1`] = `
+<EmptyState
+  className=""
+>
+  <EmptyStateTitle
+    className=""
+  >
+    <Icon
+      className="no_results_icon"
+      name="meh-o"
+      type="fa"
+    />
+    Oops! Couldn't find organization that matches your query
+  </EmptyStateTitle>
+</EmptyState>
+`;

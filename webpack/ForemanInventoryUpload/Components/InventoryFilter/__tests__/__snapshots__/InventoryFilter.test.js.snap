@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InventoryFilter rendering render with props 1`] = `
+<form
+  id="inventory_filter_form"
+>
+  <FormGroup
+    bsClass="form-group"
+    controlId="inventory_filter_input"
+  >
+    <FormControl
+      bsClass="form-control"
+      bsSize="lg"
+      componentClass="input"
+      onChange={[Function]}
+      placeholder="Filter.."
+      type="text"
+      value=""
+    />
+    <ClearButton
+      onClear={[Function]}
+    />
+  </FormGroup>
+</form>
+`;

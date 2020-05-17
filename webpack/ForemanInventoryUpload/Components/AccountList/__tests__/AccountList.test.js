@@ -5,6 +5,7 @@ import { props } from '../AccountList.fixtures';
 
 const fixtures = {
   'render with props': props,
+  'show empty results': { ...props, filterTerm: 'not_matching_term' },
 };
 
 describe('AccountList', () => {

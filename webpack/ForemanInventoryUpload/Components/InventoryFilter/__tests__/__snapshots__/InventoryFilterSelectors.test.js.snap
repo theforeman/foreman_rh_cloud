@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InventoryFilter selectors should return InventoryFilter 1`] = `
+Object {
+  "filterTerm": "test_filter_term",
+}
+`;
+
+exports[`InventoryFilter selectors should return filterTerm 1`] = `"test_filter_term"`;
