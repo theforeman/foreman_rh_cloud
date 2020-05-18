@@ -23,6 +23,8 @@ module ForemanInventoryUpload
               'dmi::system::manufacturer',
               'dmi::system::product_name',
               'dmi::chassis::asset_tag',
+              'insights_client::obfuscate_hostname_enabled',
+              'insights_client::hostname',
             ]).pluck(:name, :id)
           ]
       end
