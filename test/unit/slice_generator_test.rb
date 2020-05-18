@@ -41,6 +41,8 @@ class ReportGeneratorTest < ActiveSupport::TestCase
       'dmi::system::manufacturer',
       'dmi::system::product_name',
       'dmi::chassis::asset_tag',
+      'insights_client::obfuscate_hostname_enabled',
+      'insights_client::hostname',
     ]
   end
 
@@ -62,6 +64,23 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal 'slice_123', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal @host.fqdn, actual_host['fqdn']
+    assert_equal '1234', actual_host['account']
+    assert_equal 1, generator.hosts_count
+  end
+
+  test 'obfuscates fqdn when instructed by insights-client' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['insights_client::obfuscate_hostname_enabled'], value: 'true', host: @host)
+    FactoryBot.create(:fact_value, fact_name: fact_names['insights_client::hostname'], value: 'obfuscated_name', host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_equal 'obfuscated_name', actual_host['fqdn']
     assert_equal '1234', actual_host['account']
     assert_equal 1, generator.hosts_count
   end
