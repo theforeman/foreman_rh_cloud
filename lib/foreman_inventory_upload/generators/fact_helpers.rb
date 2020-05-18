@@ -51,6 +51,16 @@ module ForemanInventoryUpload
 
         nil
       end
+
+      def obfuscate_hostname?(host)
+        fact_value(host, 'insights_client::obfuscate_hostname_enabled')
+      end
+
+      def fqdn(host)
+        return fact_value(host, 'insights_client::hostname') if obfuscate_hostname?(host)
+
+        host.fqdn
+      end
     end
   end
 end
