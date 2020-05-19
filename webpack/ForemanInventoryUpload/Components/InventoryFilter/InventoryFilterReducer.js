@@ -1,7 +1,9 @@
 import Immutable from 'seamless-immutable';
+import { LAYOUT_CHANGE_ORG } from 'foremanReact/components/Layout/LayoutConstants';
 import {
   INVENTORY_FILTER_UPDATE,
   INVENTORY_FILTER_CLEAR,
+  ANY_ORGANIZATION,
 } from './InventoryFilterConstants';
 
 const initialState = Immutable({
@@ -10,7 +12,7 @@ const initialState = Immutable({
 
 export default (
   state = initialState,
-  { type, payload: { filterTerm } = {} }
+  { type, payload: { filterTerm, org } = {} }
 ) => {
   switch (type) {
     case INVENTORY_FILTER_UPDATE:
@@ -21,6 +23,13 @@ export default (
       return state.merge({
         filterTerm: '',
       });
+    case LAYOUT_CHANGE_ORG: {
+      const { title } = org;
+      const term = title === ANY_ORGANIZATION ? '' : title;
+      return state.merge({
+        filterTerm: term,
+      });
+    }
     default:
       return state;
   }

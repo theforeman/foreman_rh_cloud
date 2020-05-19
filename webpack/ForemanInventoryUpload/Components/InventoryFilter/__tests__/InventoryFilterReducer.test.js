@@ -1,6 +1,7 @@
 import { testReducerSnapshotWithFixtures } from 'react-redux-test-utils';
+import { LAYOUT_CHANGE_ORG } from 'foremanReact/components/Layout/LayoutConstants';
 import reducer from '../InventoryFilterReducer';
-import { filterTerm } from '../InventoryFilter.fixtures';
+import { filterTerm, org } from '../InventoryFilter.fixtures';
 import {
   INVENTORY_FILTER_UPDATE,
   INVENTORY_FILTER_CLEAR,
@@ -20,6 +21,12 @@ const fixtures = {
     action: {
       type: INVENTORY_FILTER_CLEAR,
       payload: {},
+    },
+  },
+  'should handle LAYOUT_CHANGE_ORG': {
+    action: {
+      type: LAYOUT_CHANGE_ORG,
+      payload: { org },
     },
   },
 };

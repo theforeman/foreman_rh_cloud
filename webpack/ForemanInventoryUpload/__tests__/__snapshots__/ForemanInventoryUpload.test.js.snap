@@ -10,9 +10,7 @@ exports[`ForemanInventoryUpload render without Props 1`] = `
     componentClass="div"
     fluid={true}
   >
-    <PageHeader
-      currentOrg=""
-    />
+    <PageHeader />
     <Connect(AccountList) />
   </Grid>
 </IntlProvider>
