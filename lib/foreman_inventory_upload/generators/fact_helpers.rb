@@ -53,13 +53,21 @@ module ForemanInventoryUpload
       end
 
       def obfuscate_hostname?(host)
-        fact_value(host, 'insights_client::obfuscate_hostname_enabled')
+        insights_client_setting = fact_value(host, 'insights_client::obfuscate_hostname_enabled')
+        insights_client_setting = ActiveModel::Type::Boolean.new.cast(insights_client_setting)
+        return insights_client_setting unless insights_client_setting.nil?
+
+        Setting[:obfuscate_inventory_hostnames]
       end
 
       def fqdn(host)
-        return fact_value(host, 'insights_client::hostname') if obfuscate_hostname?(host)
+        return host.fqdn unless obfuscate_hostname?(host)
 
-        host.fqdn
+        fact_value(host, 'insights_client::hostname') || obfuscate_fqdn(host.fqdn)
+      end
+
+      def obfuscate_fqdn(fqdn)
+        Base64.urlsafe_encode64(Digest::SHA1.digest(fqdn), padding: false)
       end
     end
   end
