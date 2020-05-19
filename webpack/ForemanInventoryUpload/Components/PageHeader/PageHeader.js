@@ -1,12 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Grid } from 'patternfly-react';
 import AutoUploadSwitcher from '../AutoUploadSwitcher';
 import InventoryFilter from '../InventoryFilter';
 import { INVENTORY_PAGE_TITLE } from '../../ForemanInventoryConstants';
 import './pageHeader.scss';
 
-const PageHeader = ({ currentOrg }) => (
+const PageHeader = () => (
   <React.Fragment>
     <Grid.Row>
       <Grid.Col xs={12}>
@@ -15,7 +14,7 @@ const PageHeader = ({ currentOrg }) => (
     </Grid.Row>
     <Grid.Row>
       <Grid.Col xs={3}>
-        <InventoryFilter initialValue={currentOrg} />
+        <InventoryFilter />
       </Grid.Col>
       <Grid.Col xs={4} xsOffset={5}>
         <AutoUploadSwitcher />
@@ -24,12 +23,8 @@ const PageHeader = ({ currentOrg }) => (
   </React.Fragment>
 );
 
-PageHeader.propTypes = {
-  currentOrg: PropTypes.string,
-};
+PageHeader.propTypes = {};
 
-PageHeader.defaultProps = {
-  currentOrg: '',
-};
+PageHeader.defaultProps = {};
 
 export default PageHeader;
