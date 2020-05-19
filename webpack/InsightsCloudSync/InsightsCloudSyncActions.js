@@ -1,9 +1,11 @@
 import API from 'foremanReact/API';
+import { insightsCloudUrl } from './InsightsCloudSyncHelpers';
+import { INSIGHTS_CLOUD_SYNC_TASK } from './InsightsCloudSyncConstants';
 
-export const syncInsights = () => dispatch => {
-  API.post('tasks');
-  dispatch({
-    type: 'syncTask',
+export const syncInsights = () => {
+  API.post(insightsCloudUrl('tasks'));
+  return {
+    type: INSIGHTS_CLOUD_SYNC_TASK,
     payload: {},
-  });
+  };
 };

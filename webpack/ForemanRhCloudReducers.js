@@ -5,6 +5,6 @@ import insightsReducers from './InsightsCloudSync/InsightsCloudSyncReducers';
 export default {
   ForemanRhCloud: combineReducers({
     ...inventoryUploadReducers,
-    ...insightsReducers
+    ...insightsReducers,
   }),
 };
