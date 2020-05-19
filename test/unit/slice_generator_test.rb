@@ -85,6 +85,41 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal 1, generator.hosts_count
   end
 
+  test 'obfuscates fqdn when setting set' do
+    FactoryBot.create(:setting, :name => 'obfuscate_inventory_hostnames', :value => true)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    obfuscated_fqdn = Base64.urlsafe_encode64(Digest::SHA1.digest(@host.fqdn), padding: false)
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_equal obfuscated_fqdn, actual_host['fqdn']
+    assert_equal '1234', actual_host['account']
+    assert_equal 1, generator.hosts_count
+  end
+
+  test 'does not obfuscate fqdn when insights-client sets to false' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['insights_client::obfuscate_hostname_enabled'], value: 'false', host: @host)
+    FactoryBot.create(:fact_value, fact_name: fact_names['insights_client::hostname'], value: 'obfuscated_name', host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_equal @host.fqdn, actual_host['fqdn']
+    assert_equal '1234', actual_host['account']
+    assert_equal 1, generator.hosts_count
+  end
+
   test 'generates a report with satellite facts' do
     Foreman.expects(:instance_id).twice.returns('satellite-id')
     batch = Host.where(id: @host.id).in_batches.first
