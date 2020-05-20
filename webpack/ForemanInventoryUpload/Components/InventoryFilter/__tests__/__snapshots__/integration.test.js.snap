@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InventoryFilter integration test should flow: filter have been updated 1`] = `
+Object {
+  "action": Array [
+    Array [
+      Object {
+        "payload": Object {
+          "filterTerm": "some_new_filter",
+        },
+        "type": "INVENTORY_FILTER_UPDATE",
+      },
+    ],
+  ],
+  "state": Object {
+    "ForemanRhCloud": Object {
+      "inventoryUpload": Object {
+        "accountsList": Object {
+          "accounts": Object {},
+          "error": null,
+          "pollingProcessID": 0,
+        },
+        "dashboard": Object {},
+        "inventoryFilter": Object {
+          "filterTerm": "some_new_filter",
+        },
+      },
+    },
+  },
+}
+`;
