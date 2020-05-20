@@ -27,9 +27,7 @@ exports[`PageHeader rendering render without Props 1`] = `
       componentClass="div"
       xs={3}
     >
-      <Connect(InventoryFilter)
-        initialValue=""
-      />
+      <Connect(InventoryFilter) />
     </Col>
     <Col
       bsClass="col"
