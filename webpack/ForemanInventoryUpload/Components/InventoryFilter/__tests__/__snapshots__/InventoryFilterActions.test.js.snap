@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InventoryFilter actions should handleFilterChange 1`] = `
+Object {
+  "payload": Object {
+    "filterTerm": "test_filter_term",
+  },
+  "type": "INVENTORY_FILTER_UPDATE",
+}
+`;
+
+exports[`InventoryFilter actions should handleFilterClear 1`] = `
+Object {
+  "payload": Object {},
+  "type": "INVENTORY_FILTER_CLEAR",
+}
+`;

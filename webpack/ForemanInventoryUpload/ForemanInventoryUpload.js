@@ -17,4 +17,8 @@ const ForemanInventoryUpload = () => {
   );
 };
 
+ForemanInventoryUpload.propTypes = {};
+
+ForemanInventoryUpload.defaultProps = {};
+
 export default ForemanInventoryUpload;
