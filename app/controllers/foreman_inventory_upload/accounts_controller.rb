@@ -1,12 +1,8 @@
 module ForemanInventoryUpload
   class AccountsController < ::ApplicationController
-    # override default "welcome screen behavior, since we don't have a model"
-    def welcome
-      true
-    end
-
     def index
-      labels = Organization.all.pluck(:id, :name)
+      organizations = User.current.my_organizations
+      labels = organizations.pluck(:id, :name)
 
       accounts = Hash[
         labels.map do |id, label|
