@@ -30,13 +30,13 @@ module ForemanRhCloud
 
         # Add permissions
         security_block :foreman_rh_cloud do
-          permission :generate_foreman_rh_cloud, :'foreman_inventory_uploads/reports' => [:generate]
-          permission :view_foreman_rh_cloud, :'foreman_inventory_uploads/accounts' => [:index]
-          permission :view_foreman_rh_cloud, :'foreman_inventory_uploads/reports' => [:last]
-          permission :view_foreman_rh_cloud, :'foreman_inventory_uploads/uploads' => [:auto_upload]
-          permission :view_foreman_rh_cloud, :'foreman_inventory_uploads/uploads' => [:download_file]
-          permission :view_foreman_rh_cloud, :'foreman_inventory_uploads/uploads' => [:last]
-          permission :view_foreman_rh_cloud, :'foreman_rh_cloud/react' => [:inventory_upload]
+          permission(:generate_foreman_rh_cloud, :'foreman_inventory_upload/reports' => [:generate])
+          permission(:view_foreman_rh_cloud,
+                     'foreman_inventory_upload/accounts': [:index],
+                     'foreman_inventory_upload/reports': [:last],
+                     'foreman_inventory_upload/uploads': [:auto_upload, :download_file, :last],
+                     'foreman_rh_cloud/react': [:inventory_upload]
+                    )
         end
 
         plugin_permissions = [:view_foreman_rh_cloud, :generate_foreman_rh_cloud]
@@ -44,9 +44,9 @@ module ForemanRhCloud
         role 'ForemanRhCloud', plugin_permissions, 'Role granting permissions to view the hosts inventory,
                                                     generate a report, upload it to the cloud and download it locally'
 
-        add_permissions_to_default_roles 'Organization admin' => plugin_permissions,
-                                         'Manager' => plugin_permissions,
-                                         'System admin' => plugin_permissions
+        add_permissions_to_default_roles Role::ORG_ADMIN => plugin_permissions,
+                                         Role::MANAGER => plugin_permissions,
+                                         Role::SYSTEM_ADMIN => plugin_permissions
 
         # Adding a sub menu after hosts menu
         sub_menu :top_menu, :foreman_rh_cloud, :caption => N_('RH Cloud'), :icon => 'fa fa-cloud-upload' do

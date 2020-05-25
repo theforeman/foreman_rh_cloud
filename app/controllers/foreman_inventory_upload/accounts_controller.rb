@@ -1,7 +1,7 @@
 module ForemanInventoryUpload
   class AccountsController < ::ApplicationController
     def index
-      organizations = resource_base
+      organizations = User.current.my_organizations
       labels = organizations.pluck(:id, :name)
 
       accounts = Hash[
@@ -31,10 +31,6 @@ module ForemanInventoryUpload
     def status_for(label, job_class)
       label = job_class.output_label(label)
       ForemanInventoryUpload::Async::ProgressOutput.get(label)&.status
-    end
-
-    def model_of_controller
-      ::Organization
     end
   end
 end
