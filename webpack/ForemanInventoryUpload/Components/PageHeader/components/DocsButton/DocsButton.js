@@ -1,15 +1,13 @@
 import React from 'react';
 import { Button, Icon } from 'patternfly-react';
-import {
-  INVENTORY_DOCS_LINK,
-  DOCS_BUTTON_TEXT,
-} from '../../../../ForemanInventoryConstants';
+import { DOCS_BUTTON_TEXT } from '../../../../ForemanInventoryConstants';
+import { getInventoryDocsUrl } from '../../../../ForemanInventoryHelpers';
 import './docsButton.scss';
 
 const DocsButton = () => (
   <Button
     className="docs_btn"
-    href={INVENTORY_DOCS_LINK}
+    href={getInventoryDocsUrl()}
     target="_blank"
     rel="noopener noreferrer"
   >

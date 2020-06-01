@@ -8,7 +8,7 @@ exports[`DocsButton rendering render without Props 1`] = `
   bsStyle="default"
   className="docs_btn"
   disabled={false}
-  href="https://access.redhat.com/products/subscription-central"
+  href="/links/manual/+?root_url=https%3A%2F%2Faccess.redhat.com%2Fproducts%2Fsubscription-central"
   rel="noopener noreferrer"
   target="_blank"
 >
