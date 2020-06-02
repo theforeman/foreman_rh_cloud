@@ -19,26 +19,37 @@ module InsightsCloud
       end
 
       def rh_credentials
-        @rh_credentials ||= begin
-          candlepin_id_certificate = @organization.owner_details['upstreamConsumer']['idCert']
-          {
-            cert: candlepin_id_certificate['cert'],
-            key: candlepin_id_certificate['key'],
-          }
-        end
+        @rh_credentials ||= query_refresh_token
       end
 
       private
 
       def query_insights_hits
-        hits_response = RestClient::Resource.new(
-          InsightsCloud.hits_export_url,
-          ssl_client_cert: OpenSSL::X509::Certificate.new(rh_credentials[:cert]),
-          ssl_client_key: OpenSSL::PKey::RSA.new(rh_credentials[:key]),
-          verify_ssl: ENV['SATELLITE_INSIGHTS_CLOUD_URL'] ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER
-        ).get
+        hits_response = RestClient::Request.execute(
+          method: :get,
+          url: InsightsCloud.hits_export_url,
+          verify_ssl: ENV['SATELLITE_INSIGHTS_CLOUD_URL'] ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER,
+          headers: {
+            Authorization: "Bearer #{rh_credentials}"
+          }
+        )
 
         JSON.parse(hits_response)
+      end
+
+      def query_refresh_token
+        token_response = RestClient::Request.execute(
+          method: :post,
+          url: InsightsCloud.authentication_url,
+          verify_ssl: ENV['SATELLITE_INSIGHTS_CLOUD_URL'] ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER,
+          payload: {
+            grant_type: 'refresh_token',
+            client_id: 'rhsm-api',
+            refresh_token: Setting[:rh_cloud_token]
+          }
+        )
+
+        JSON.parse(token_response)['access_token']
       end
 
       def setup_host_names(host_names)
