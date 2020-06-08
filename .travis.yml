@@ -2,8 +2,10 @@ language: ruby
 services:
   - postgresql
 cache:
-  - npm
-  - bundler
+  npm: true
+  bundler: true
+  directories:
+    - /home/travis/.rvm/
 rvm:
   - 2.5
 node_js:
@@ -12,6 +14,7 @@ node_js:
 install:
   - unset BUNDLE_GEMFILE
   - cd ..
+  - bash ${FOREMAN_PLUGIN_NAME}/script/travis_setup_postgresql_evr.sh
   - git clone https://github.com/theforeman/foreman.git -b ${FOREMAN_CORE_BRANCH} --depth 1
   - cd ${FOREMAN_PLUGIN_NAME}
   - gem install bundler
@@ -19,18 +22,16 @@ install:
   - node --version
   - npm version
   - nvm version
-  - npm install eslint
   - cd ../foreman
   - echo "gemspec :path => '../${FOREMAN_PLUGIN_NAME}'" > bundler.d/${FOREMAN_PLUGIN_NAME}.local.rb
   - echo "gem 'katello'" > bundler.d/katello.local.rb
-  - echo "gem 'rubocop-minitest'" > bundler.d/rubocop-deps.local.rb
   - ln -s settings.yaml.test config/settings.yaml
   - cp ../${FOREMAN_PLUGIN_NAME}/.travis.database.yml config/database.yml
   - cat ../${FOREMAN_PLUGIN_NAME}/.travis.database.yml
   - cat config/database.yml
   - bundle install --jobs=3 --retry=3 --without journald development mysql2 console journald
   - npm install
-  - RAILS_ENV=test bundle exec rake db:create
+  - bundle exec rake db:create
   - bundle exec rake webpack:compile
   - bundle exec rake db:migrate RAILS_ENV=test
 script:
@@ -45,7 +46,7 @@ env:
     - TESTOPTS=-v
     - FOREMAN_PLUGIN_NAME=foreman_rh_cloud
   matrix:
-    - FOREMAN_CORE_BRANCH=2.0-stable
+    - FOREMAN_CORE_BRANCH=develop
 addons:
   apt:
     sources:
