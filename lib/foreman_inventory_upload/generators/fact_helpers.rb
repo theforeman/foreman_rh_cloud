@@ -67,7 +67,7 @@ module ForemanInventoryUpload
       end
 
       def obfuscate_fqdn(fqdn)
-        Base64.urlsafe_encode64(Digest::SHA1.digest(fqdn), padding: false)
+        Digest::SHA1.hexdigest(fqdn)
       end
     end
   end
