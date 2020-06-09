@@ -157,6 +157,7 @@ module ForemanInventoryUpload
         @stream.simple_field('distribution_version', fact_value(host, 'distribution::version'))
         @stream.simple_field('satellite_instance_id', Foreman.try(:instance_id))
         @stream.simple_field('is_simple_content_access', golden_ticket?(host.organization))
+        @stream.simple_field('is_hostname_obfuscated', !!obfuscate_hostname?(host))
         @stream.simple_field('organization_id', host.organization_id, :last)
       end
 
