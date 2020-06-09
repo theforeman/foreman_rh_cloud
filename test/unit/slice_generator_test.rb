@@ -82,6 +82,8 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal 'obfuscated_name', actual_host['fqdn']
     assert_equal '1234', actual_host['account']
+    assert_not_nil(actual_facts = actual_host['facts'].first['facts'])
+    assert_equal true, actual_facts['is_hostname_obfuscated']
     assert_equal 1, generator.hosts_count
   end
 
@@ -94,12 +96,14 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    obfuscated_fqdn = Base64.urlsafe_encode64(Digest::SHA1.digest(@host.fqdn), padding: false)
+    obfuscated_fqdn = Digest::SHA1.hexdigest(@host.fqdn)
 
     assert_equal 'slice_123', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal obfuscated_fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
+    assert_not_nil(actual_facts = actual_host['facts'].first['facts'])
+    assert_equal true, actual_facts['is_hostname_obfuscated']
     assert_equal 1, generator.hosts_count
   end
 
@@ -117,6 +121,8 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
+    assert_not_nil(actual_facts = actual_host['facts'].first['facts'])
+    assert_equal false, actual_facts['is_hostname_obfuscated']
     assert_equal 1, generator.hosts_count
   end
 
@@ -141,6 +147,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     org_id_tag = actual['hosts'].first['tags'].find { |tag| tag['namespace'] == 'satellite' && tag['key'] == 'organization_id' }
     assert_not_nil org_id_tag
     assert_equal @host.organization_id.to_s, org_id_tag['value']
+    assert_equal false, satellite_facts['is_hostname_obfuscated']
 
     version = satellite_facts['satellite_version']
     if defined?(ForemanThemeSatellite)
