@@ -9,13 +9,20 @@ exports[`PageHeader rendering render without Props 1`] = `
     <Col
       bsClass="col"
       componentClass="div"
-      xs={12}
+      xs={6}
     >
       <h1
         className="inventory_title"
       >
         Red Hat Inventory Uploads
       </h1>
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      xs={6}
+    >
+      <Connect(AutoUploadSwitcher) />
     </Col>
   </Row>
   <Row
@@ -25,7 +32,7 @@ exports[`PageHeader rendering render without Props 1`] = `
     <Col
       bsClass="col"
       componentClass="div"
-      xs={3}
+      xs={4}
     >
       <Connect(InventoryFilter) />
     </Col>
@@ -33,9 +40,9 @@ exports[`PageHeader rendering render without Props 1`] = `
       bsClass="col"
       componentClass="div"
       xs={4}
-      xsOffset={5}
+      xsOffset={4}
     >
-      <Connect(AutoUploadSwitcher) />
+      <DocsButton />
     </Col>
   </Row>
 </Fragment>
