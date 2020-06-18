@@ -1,9 +1,9 @@
 import { testSelectorsSnapshotWithFixtures } from '@theforeman/test';
-import { inventoryStateWrapper } from '../ForemanRhCloudTestHelpers';
+import { rhCloudStateWrapper } from '../ForemanRhCloudTestHelpers';
 
 const fixtures = {
   'should return inventory wrapper': () =>
-    inventoryStateWrapper({ inventoryChildren: null }),
+    rhCloudStateWrapper({ inventoryChildren: null }),
 };
 
 describe('ForemanRhCloud helpers', () =>
