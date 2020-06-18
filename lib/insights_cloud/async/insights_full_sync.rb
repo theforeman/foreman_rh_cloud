@@ -30,7 +30,7 @@ module InsightsCloud
           url: InsightsCloud.hits_export_url,
           verify_ssl: ENV['SATELLITE_INSIGHTS_CLOUD_URL'] ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER,
           headers: {
-            Authorization: "Bearer #{rh_credentials}"
+            Authorization: "Bearer #{rh_credentials}",
           }
         )
 
@@ -45,11 +45,14 @@ module InsightsCloud
           payload: {
             grant_type: 'refresh_token',
             client_id: 'rhsm-api',
-            refresh_token: Setting[:rh_cloud_token]
+            refresh_token: Setting[:rh_cloud_token],
           }
         )
 
         JSON.parse(token_response)['access_token']
+      rescue RestClient::ExceptionWithResponse => e
+        Foreman::Logging.exception('Unable to authenticate using rh_cloud_token setting', e)
+        raise ::Foreman::WrappedException.new(e, N_('Unable to authenticate using rh_cloud_token setting'))
       end
 
       def setup_host_names(host_names)
@@ -66,7 +69,9 @@ module InsightsCloud
         InsightsHit.transaction do
           InsightsHit.delete_all
           InsightsHit.create(hits.map { |hits_hash| to_model_hash(hits_hash) })
-          InsightsFacet.create(@host_ids.values.map { |id| {host_id: id} })
+          # create new facets for hosts that are missing one
+          hosts_with_existing_facets = InsightsFacet.where(host_id: @host_ids.values).pluck(:host_id)
+          InsightsFacet.create((@host_ids.values - hosts_with_existing_facets).map { |id| {host_id: id} })
         end
       end
 

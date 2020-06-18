@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   end
 
   namespace :insights_cloud do
-    resources :tasks
+    resources :tasks, only: [:create]
   end
 
   namespace :foreman_rh_cloud do

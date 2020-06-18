@@ -5,7 +5,7 @@ module ForemanInventoryUploadHostHelper
 
   def hits_counts_cell(host)
     host_hits = hits_counts[host.id]
-    content = "#{host_hits} Rule hits" if host_hits
+    content = n_('One recommendation', '%{hits} recommendations', host_hits) % { hits: host_hits } if host_hits
     tag.td content, class: ['hidden-xs', 'ellipsis']
   end
 end

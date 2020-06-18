@@ -1,12 +1,12 @@
 import { testSelectorsSnapshotWithFixtures } from '@theforeman/test';
 import { filterTerm } from '../InventoryFilter.fixtures';
-import { inventoryStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
+import { rhCloudStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
 import {
   selectInventoryFilter,
   selectFilterTerm,
 } from '../InventoryFilterSelectors';
 
-const state = inventoryStateWrapper({
+const state = rhCloudStateWrapper({
   inventoryFilter: {
     filterTerm,
   },

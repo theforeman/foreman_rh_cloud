@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InsightsCloudSync render without Props 1`] = `
+exports[`InsightsCloudSync render 1`] = `
 <IntlProvider
   locale="en-US"
 >
