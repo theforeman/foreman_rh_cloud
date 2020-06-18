@@ -1,12 +1,12 @@
 import { testSelectorsSnapshotWithFixtures } from 'react-redux-test-utils';
 import { filterTerm } from '../InventoryFilter.fixtures';
-import { inventoryStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
+import { rhCloudStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
 import {
   selectInventoryFilter,
   selectFilterTerm,
 } from '../InventoryFilterSelectors';
 
-const state = inventoryStateWrapper({
+const state = rhCloudStateWrapper({
   inventoryFilter: {
     filterTerm,
   },

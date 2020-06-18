@@ -13,9 +13,9 @@ import {
   activeTab,
   accountID,
 } from '../Dashboard.fixtures';
-import { inventoryStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
+import { rhCloudStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
 
-const state = inventoryStateWrapper({
+const state = rhCloudStateWrapper({
   dashboard: {
     [accountID]: {
       generating: {
