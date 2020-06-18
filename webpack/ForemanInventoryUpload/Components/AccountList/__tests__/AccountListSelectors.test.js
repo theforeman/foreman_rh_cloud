@@ -10,9 +10,9 @@ import {
   accounts,
   autoUploadEnabled,
 } from '../AccountList.fixtures';
-import { inventoryStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
+import { rhCloudStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
 
-const state = inventoryStateWrapper({
+const state = rhCloudStateWrapper({
   accountsList: {
     accounts,
     pollingProcessID,

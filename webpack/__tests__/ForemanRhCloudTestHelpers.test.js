@@ -1,9 +1,9 @@
 import { testSelectorsSnapshotWithFixtures } from 'react-redux-test-utils';
-import { inventoryStateWrapper } from '../ForemanRhCloudTestHelpers';
+import { rhCloudStateWrapper } from '../ForemanRhCloudTestHelpers';
 
 const fixtures = {
   'should return inventory wrapper': () =>
-    inventoryStateWrapper({ inventoryChildren: null }),
+    rhCloudStateWrapper({ inventoryChildren: null }),
 };
 
 describe('ForemanRhCloud helpers', () =>

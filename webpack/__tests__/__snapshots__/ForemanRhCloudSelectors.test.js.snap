@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ForemanRhCloud selectors should return InsightsCloudSync 1`] = `
+Object {
+  "inventoryReducersNamespaces": Object {},
+}
+`;
+
 exports[`ForemanRhCloud selectors should return ForemanInventoryUpload 1`] = `
 Object {
   "inventoryReducersNamespaces": Object {},
@@ -8,6 +14,9 @@ Object {
 
 exports[`ForemanRhCloud selectors should return ForemanRhCloud 1`] = `
 Object {
+  "InsightsCloudSync": Object {
+    "inventoryReducersNamespaces": Object {},
+  },
   "inventoryUpload": Object {
     "inventoryReducersNamespaces": Object {},
   },

@@ -5,6 +5,7 @@ import componentRegistry from 'foremanReact/components/componentRegistry';
 import { registerReducer } from 'foremanReact/common/MountingService';
 import reducers from './ForemanRhCloudReducers';
 import ForemanInventoryUpload from './ForemanInventoryUpload';
+import InsightsCloudSync from './InsightsCloudSync';
 
 // register reducers
 Object.entries(reducers).forEach(([key, reducer]) =>
@@ -15,4 +16,10 @@ Object.entries(reducers).forEach(([key, reducer]) =>
 componentRegistry.register({
   name: 'ForemanInventoryUpload',
   type: ForemanInventoryUpload,
+});
+
+// register components
+componentRegistry.register({
+  name: 'InsightsCloudSync',
+  type: InsightsCloudSync,
 });

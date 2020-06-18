@@ -3,6 +3,9 @@
 exports[`ForemanRhCloud helpers should return inventory wrapper 1`] = `
 Object {
   "ForemanRhCloud": Object {
+    "InsightsCloudSync": Object {
+      "inventoryChildren": null,
+    },
     "inventoryUpload": Object {
       "inventoryChildren": null,
     },

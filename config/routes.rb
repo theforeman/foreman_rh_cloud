@@ -8,7 +8,12 @@ Rails.application.routes.draw do
     post 'auto_upload', to: 'uploads#auto_upload'
   end
 
+  namespace :insights_cloud do
+    resources :tasks, only: [:create]
+  end
+
   namespace :foreman_rh_cloud do
     get 'inventory_upload', to: 'react#inventory_upload'
+    get 'insights_cloud', to: 'react#insights_cloud'
   end
 end
