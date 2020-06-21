@@ -15,8 +15,10 @@ import {
   accountID,
   processStatusName,
   autoUploadEnabled,
+  hostObfuscationEnabled,
 } from '../AccountList.fixtures';
 import { AUTO_UPLOAD_TOGGLE } from '../../AutoUploadSwitcher/AutoUploadSwitcherConstants';
+import { HOST_OBFUSCATION_TOGGLE } from '../../HostObfuscationSwitcher/HostObfuscationSwitcherConstants';
 
 const fixtures = {
   'should return the initial state': {},
@@ -26,6 +28,7 @@ const fixtures = {
       payload: {
         accounts,
         autoUploadEnabled,
+        hostObfuscationEnabled,
       },
     },
   },
@@ -62,6 +65,14 @@ const fixtures = {
       type: AUTO_UPLOAD_TOGGLE,
       payload: {
         autoUploadEnabled,
+      },
+    },
+  },
+  'should handle HOST_OBFUSCATION_TOGGLE': {
+    action: {
+      type: HOST_OBFUSCATION_TOGGLE,
+      payload: {
+        hostObfuscationEnabled,
       },
     },
   },
