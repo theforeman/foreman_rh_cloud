@@ -4,6 +4,15 @@ exports[`AutoUploadSwitcher rendering render with props 1`] = `
 <div
   className="auto_upload_switcher"
 >
+  <span>
+    Auto upload
+  </span>
+  <FieldLevelHelp
+    buttonClass=""
+    content="Enable automatic upload of your host inventory to the Red Hat cloud"
+    placement="top"
+    rootClose={true}
+  />
   <Switch
     animate={true}
     baseClass="bootstrap-switch"
@@ -25,14 +34,5 @@ exports[`AutoUploadSwitcher rendering render with props 1`] = `
     value={true}
     wrapperClass="wrapper"
   />
-  <FieldLevelHelp
-    buttonClass=""
-    content="Enable automatic upload of your host inventory to the Red Hat cloud"
-    placement="top"
-    rootClose={true}
-  />
-  <span>
-    Allow Auto Upload
-  </span>
 </div>
 `;
