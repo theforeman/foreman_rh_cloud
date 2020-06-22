@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DocsButton rendering render without Props 1`] = `
+<Button
+  active={false}
+  block={false}
+  bsClass="btn"
+  bsStyle="default"
+  className="docs_btn"
+  disabled={false}
+  href="https://access.redhat.com/products/subscription-central"
+  rel="noopener noreferrer"
+  target="_blank"
+>
+  <Icon
+    name="help"
+    type="pf"
+  />
+   Documentation
+</Button>
+`;
