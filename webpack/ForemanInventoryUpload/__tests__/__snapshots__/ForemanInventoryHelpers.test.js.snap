@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ForemanInventoryUpload helpers should return inventory Url 1`] = `"/foreman_inventory_upload/test_path"`;
+
+exports[`ForemanInventoryUpload helpers should return inventory docs url 1`] = `"https://access.redhat.com/products/subscription-central"`;
