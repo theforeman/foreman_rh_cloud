@@ -6,17 +6,17 @@ import './autoUploadSwitcher.scss';
 
 const AutoUploadSwitcher = ({ autoUploadEnabled, handleToggle }) => (
   <div className="auto_upload_switcher">
-    <Switch
-      size="mini"
-      value={autoUploadEnabled}
-      onChange={() => handleToggle(autoUploadEnabled)}
-    />
+    <span>Auto upload</span>
     <FieldLevelHelp
       content={__(
         'Enable automatic upload of your host inventory to the Red Hat cloud'
       )}
     />
-    <span>Allow Auto Upload</span>
+    <Switch
+      size="mini"
+      value={autoUploadEnabled}
+      onChange={() => handleToggle(autoUploadEnabled)}
+    />
   </div>
 );
 

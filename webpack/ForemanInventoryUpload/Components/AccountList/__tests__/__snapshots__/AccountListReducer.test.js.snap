@@ -9,6 +9,15 @@ Object {
 }
 `;
 
+exports[`AccountList reducer should handle HOST_OBFUSCATION_TOGGLE 1`] = `
+Object {
+  "accounts": Object {},
+  "error": null,
+  "hostObfuscationEnabled": true,
+  "pollingProcessID": 0,
+}
+`;
+
 exports[`AccountList reducer should handle INVENTORY_ACCOUNT_STATUS_POLLING 1`] = `
 Object {
   "accounts": Object {
@@ -30,6 +39,7 @@ Object {
   },
   "autoUploadEnabled": true,
   "error": null,
+  "hostObfuscationEnabled": true,
   "pollingProcessID": 0,
 }
 `;

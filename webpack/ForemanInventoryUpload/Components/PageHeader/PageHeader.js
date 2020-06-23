@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid } from 'patternfly-react';
-import AutoUploadSwitcher from '../AutoUploadSwitcher';
+import InventorySettings from '../InventorySettings';
+import PageDescription from './components/PageDescription';
 import InventoryFilter from '../InventoryFilter';
 import DocsButton from './components/DocsButton';
 import { INVENTORY_PAGE_TITLE } from '../../ForemanInventoryConstants';
@@ -12,8 +13,13 @@ const PageHeader = () => (
       <Grid.Col xs={6}>
         <h1 className="inventory_title">{INVENTORY_PAGE_TITLE}</h1>
       </Grid.Col>
-      <Grid.Col xs={6}>
-        <AutoUploadSwitcher />
+    </Grid.Row>
+    <Grid.Row>
+      <Grid.Col xs={9}>
+        <PageDescription />
+      </Grid.Col>
+      <Grid.Col xs={3}>
+        <InventorySettings />
       </Grid.Col>
     </Grid.Row>
     <Grid.Row>

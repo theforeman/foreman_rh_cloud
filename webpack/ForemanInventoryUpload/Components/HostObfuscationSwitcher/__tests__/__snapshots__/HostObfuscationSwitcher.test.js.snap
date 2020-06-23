@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AutoUploadSwitcher rendering render with props 1`] = `
+exports[`HostObfuscationSwitcher rendering render with props 1`] = `
 <div
-  className="auto_upload_switcher"
+  className="host_obfuscation_switcher"
 >
   <span>
-    Auto upload
+    Obfuscate host names
   </span>
   <FieldLevelHelp
     buttonClass=""
-    content="Enable automatic upload of your host inventory to the Red Hat cloud"
+    content="Obfuscate host names sent to the Red Hat cloud"
     placement="top"
     rootClose={true}
   />
