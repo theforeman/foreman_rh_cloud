@@ -26,9 +26,11 @@ module ForemanInventoryUpload
 
     def auto_upload
       Setting[:allow_auto_inventory_upload] = auto_upload_params
-      render json: {
-        autoUploadEnabled: Setting[:allow_auto_inventory_upload],
-      }
+      render_setting(:autoUploadEnabled, :allow_auto_inventory_upload)
+    end
+
+    def show_auto_upload
+      render_setting(:autoUploadEnabled, :allow_auto_inventory_upload)
     end
 
     def auto_upload_params
@@ -37,13 +39,19 @@ module ForemanInventoryUpload
 
     def host_obfuscation
       Setting[:obfuscate_inventory_hostnames] = host_obfuscation_params
-      render json: {
-        hostObfuscationEnabled: Setting[:obfuscate_inventory_hostnames],
-      }
+      render_setting(:hostObfuscationEnabled, :obfuscate_inventory_hostnames)
     end
 
     def host_obfuscation_params
       ActiveModel::Type::Boolean.new.cast(params.require(:value))
+    end
+
+    private
+
+    def render_setting(node_name, setting)
+      render json: {
+        node_name => Setting[setting],
+      }
     end
   end
 end

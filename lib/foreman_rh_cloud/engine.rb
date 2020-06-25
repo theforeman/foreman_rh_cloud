@@ -38,7 +38,7 @@ module ForemanRhCloud
             :view_foreman_rh_cloud,
             'foreman_inventory_upload/accounts': [:index],
             'foreman_inventory_upload/reports': [:last],
-            'foreman_inventory_upload/uploads': [:auto_upload, :download_file, :last],
+            'foreman_inventory_upload/uploads': [:auto_upload, :show_auto_upload, :download_file, :last],
             'foreman_rh_cloud/react': [:inventory_upload]
           )
         end
@@ -60,6 +60,8 @@ module ForemanRhCloud
         register_facet InsightsFacet, :insights do
           configure_host
         end
+
+        register_global_js_file 'subscriptions_extension'
       end
 
       ::Katello::UINotifications::Subscriptions::ManifestImportSuccess.include ForemanInventoryUpload::Notifications::ManifestImportSuccessNotificationOverride if defined?(Katello)

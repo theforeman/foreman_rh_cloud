@@ -9,9 +9,9 @@ module ForemanInventoryUpload
             {
               :href => Rails.application.routes.url_helpers.foreman_rh_cloud_inventory_upload_path,
               :title => _('Enable inventory upload'),
-              :external => false
-            }
-          ]
+              :external => false,
+            },
+          ],
         }
       end
     end
