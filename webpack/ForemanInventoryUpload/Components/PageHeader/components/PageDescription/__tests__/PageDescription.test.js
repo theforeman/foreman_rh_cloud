@@ -1,4 +1,4 @@
-import { testComponentSnapshotsWithFixtures } from '@theforeman/test';
+import { testComponentSnapshotsWithFixtures } from 'react-redux-test-utils';
 import { PageDescription } from '../PageDescription';
 
 const fixtures = {
