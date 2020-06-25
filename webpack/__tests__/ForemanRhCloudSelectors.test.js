@@ -1,5 +1,5 @@
 import { testSelectorsSnapshotWithFixtures } from 'react-redux-test-utils';
-import { inventoryStateWrapper } from '../ForemanRhCloudTestHelpers';
+import { rhCloudStateWrapper } from '../ForemanRhCloudTestHelpers';
 import {
   selectForemanRhCloud,
   selectForemanInventoryUpload,
