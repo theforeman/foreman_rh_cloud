@@ -1,11 +1,12 @@
 import Immutable from 'seamless-immutable';
+import { AUTO_UPLOAD_TOGGLE } from '../AutoUploadSwitcher/AutoUploadSwitcherConstants';
+import { HOST_OBFUSCATION_TOGGLE } from '../HostObfuscationSwitcher/HostObfuscationSwitcherConstants';
 import {
   INVENTORY_ACCOUNT_STATUS_POLLING,
   INVENTORY_ACCOUNT_STATUS_POLLING_ERROR,
   INVENTORY_ACCOUNT_STATUS_POLLING_START,
   INVENTORY_PROCESS_RESTART,
 } from './AccountListConstants';
-import { AUTO_UPLOAD_TOGGLE } from '../AutoUploadSwitcher/AutoUploadSwitcherConstants';
 
 const initialState = Immutable({
   accounts: {},
@@ -22,6 +23,7 @@ export default (state = initialState, action) => {
       accountID,
       processStatusName,
       autoUploadEnabled,
+      hostObfuscationEnabled,
     } = {},
   } = action;
 
@@ -31,6 +33,7 @@ export default (state = initialState, action) => {
         ...state,
         accounts,
         autoUploadEnabled,
+        hostObfuscationEnabled,
         error: null,
       });
     case INVENTORY_ACCOUNT_STATUS_POLLING_ERROR:
@@ -56,6 +59,11 @@ export default (state = initialState, action) => {
       return state.merge({
         ...state,
         autoUploadEnabled,
+      });
+    case HOST_OBFUSCATION_TOGGLE:
+      return state.merge({
+        ...state,
+        hostObfuscationEnabled,
       });
     default:
       return state;
