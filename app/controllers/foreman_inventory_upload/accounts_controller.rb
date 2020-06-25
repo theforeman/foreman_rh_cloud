@@ -22,6 +22,7 @@ module ForemanInventoryUpload
 
       render json: {
         autoUploadEnabled: Setting[:allow_auto_inventory_upload],
+        hostObfuscationEnabled: Setting[:obfuscate_inventory_hostnames],
         accounts: accounts,
       }, status: :ok
     end
