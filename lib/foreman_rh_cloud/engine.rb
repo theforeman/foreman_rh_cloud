@@ -30,13 +30,17 @@ module ForemanRhCloud
 
         # Add permissions
         security_block :foreman_rh_cloud do
-          permission(:generate_foreman_rh_cloud, :'foreman_inventory_upload/reports' => [:generate])
-          permission(:view_foreman_rh_cloud,
-                     'foreman_inventory_upload/accounts': [:index],
-                     'foreman_inventory_upload/reports': [:last],
-                     'foreman_inventory_upload/uploads': [:auto_upload, :download_file, :last],
-                     'foreman_rh_cloud/react': [:inventory_upload]
-                    )
+          permission(
+            :generate_foreman_rh_cloud,
+            'foreman_inventory_upload/reports': [:generate]
+          )
+          permission(
+            :view_foreman_rh_cloud,
+            'foreman_inventory_upload/accounts': [:index],
+            'foreman_inventory_upload/reports': [:last],
+            'foreman_inventory_upload/uploads': [:auto_upload, :show_auto_upload, :download_file, :last],
+            'foreman_rh_cloud/react': [:inventory_upload]
+          )
         end
 
         plugin_permissions = [:view_foreman_rh_cloud, :generate_foreman_rh_cloud]
@@ -54,7 +58,10 @@ module ForemanRhCloud
         menu :top_menu, :insights_hits_import, :caption => N_('Insights'), :url_hash => { controller: :'foreman_rh_cloud/react', :action => :insights_cloud }, parent: :configure_menu
 
         register_facet InsightsFacet, :insights
+        register_global_js_file 'subscriptions_extension'
       end
+
+      ::Katello::UINotifications::Subscriptions::ManifestImportSuccess.include ForemanInventoryUpload::Notifications::ManifestImportSuccessNotificationOverride if defined?(Katello)
     end
 
     initializer "foreman_rh_cloud.set_dynflow.config.on_init", :before => :finisher_hook do |_app|
