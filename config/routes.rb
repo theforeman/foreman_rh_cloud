@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get ':organization_id/uploads/last', to: 'uploads#last', constraints: { organization_id: %r{[^\/]+} }
     get ':organization_id/uploads/file', to: 'uploads#download_file', constraints: { organization_id: %r{[^\/]+} }
     get 'accounts', to: 'accounts#index'
+    get 'auto_upload', to: 'uploads#show_auto_upload'
     post 'auto_upload', to: 'uploads#auto_upload'
     post 'host_obfuscation', to: 'uploads#host_obfuscation'
   end
