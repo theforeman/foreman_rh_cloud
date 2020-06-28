@@ -4,38 +4,7 @@ exports[`ToolbarButtons rendering render without Props 1`] = `
 <div
   className="inventory_toolbar_buttons"
 >
-  <Button
-    active={false}
-    block={false}
-    bsClass="btn"
-    bsStyle="default"
-    className="tasks_history_button"
-    disabled={false}
-    href="/foreman_tasks/tasks?search=action++%3D++ForemanInventoryUpload%3A%3AAsync%3A%3AGenerateReportJob+or+action++%3D++ForemanInventoryUpload%3A%3AAsync%3A%3AGenerateAllReportsJob&page=1"
-    rel="noopener noreferrer"
-    target="_blank"
-  >
-    <Icon
-      name="history"
-      type="fa"
-    />
-     Tasks history
-  </Button>
-  <Button
-    active={false}
-    block={false}
-    bsClass="btn"
-    bsStyle="default"
-    disabled={false}
-    href="/links/manual/+?root_url=https%3A%2F%2Faccess.redhat.com%2Fproducts%2Fsubscription-central"
-    rel="noopener noreferrer"
-    target="_blank"
-  >
-    <Icon
-      name="help"
-      type="pf"
-    />
-     Documentation
-  </Button>
+  <HistoryButton />
+  <DocsButton />
 </div>
 `;
