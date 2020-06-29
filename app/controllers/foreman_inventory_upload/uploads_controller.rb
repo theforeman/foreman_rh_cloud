@@ -34,5 +34,16 @@ module ForemanInventoryUpload
     def auto_upload_params
       ActiveModel::Type::Boolean.new.cast(params.require(:value))
     end
+
+    def host_obfuscation
+      Setting[:obfuscate_inventory_hostnames] = host_obfuscation_params
+      render json: {
+        hostObfuscationEnabled: Setting[:obfuscate_inventory_hostnames],
+      }
+    end
+
+    def host_obfuscation_params
+      ActiveModel::Type::Boolean.new.cast(params.require(:value))
+    end
   end
 end

@@ -11,13 +11,14 @@ import {
 export const fetchAccountsStatus = () => async dispatch => {
   try {
     const {
-      data: { accounts, autoUploadEnabled },
+      data: { accounts, autoUploadEnabled, hostObfuscationEnabled },
     } = await API.get(inventoryUrl('accounts'));
     dispatch({
       type: INVENTORY_ACCOUNT_STATUS_POLLING,
       payload: {
         accounts,
         autoUploadEnabled,
+        hostObfuscationEnabled,
       },
     });
   } catch (error) {

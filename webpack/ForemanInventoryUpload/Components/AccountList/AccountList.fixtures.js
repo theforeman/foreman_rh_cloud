@@ -32,6 +32,8 @@ export const processStatusName = 'upload_report_status';
 
 export const autoUploadEnabled = true;
 
+export const hostObfuscationEnabled = true;
+
 export const filterTerm = 'some_filter';
 
 export const props = {
@@ -40,4 +42,8 @@ export const props = {
   startAccountStatusPolling: noop,
   stopAccountStatusPolling: noop,
   pollingProcessID,
+};
+
+export const fetchAccountsStatusResponse = {
+  data: { accounts, autoUploadEnabled, hostObfuscationEnabled },
 };

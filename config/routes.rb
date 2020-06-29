@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     get ':organization_id/uploads/file', to: 'uploads#download_file', constraints: { organization_id: %r{[^\/]+} }
     get 'accounts', to: 'accounts#index'
     post 'auto_upload', to: 'uploads#auto_upload'
+    post 'host_obfuscation', to: 'uploads#host_obfuscation'
   end
 
   namespace :insights_cloud do

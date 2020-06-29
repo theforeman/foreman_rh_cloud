@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InventorySettings rendering render without Props 1`] = `
+<div
+  className="inventory_settings"
+>
+  <h3>
+    Settings
+  </h3>
+  <Connect(AutoUploadSwitcher) />
+  <Connect(HostObfuscationSwitcher) />
+</div>
+`;

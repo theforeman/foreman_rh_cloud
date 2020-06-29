@@ -5,9 +5,27 @@ Array [
   Array [
     Object {
       "payload": Object {
-        "error": "Cannot read property 'data' of undefined",
+        "accounts": Object {
+          "Account1": Object {
+            "generate_report_status": "running",
+            "label": "test_org1",
+            "upload_report_status": "running",
+          },
+          "Account2": Object {
+            "generate_report_status": "failure",
+            "label": "test_org2",
+            "upload_report_status": "unknown",
+          },
+          "Account3": Object {
+            "generate_report_status": "running",
+            "label": "test_org3",
+            "upload_report_status": "success",
+          },
+        },
+        "autoUploadEnabled": true,
+        "hostObfuscationEnabled": true,
       },
-      "type": "INVENTORY_ACCOUNT_STATUS_POLLING_ERROR",
+      "type": "INVENTORY_ACCOUNT_STATUS_POLLING",
     },
   ],
 ]
