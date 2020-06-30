@@ -3,7 +3,7 @@ import { Grid } from 'patternfly-react';
 import InventorySettings from '../InventorySettings';
 import PageDescription from './components/PageDescription';
 import InventoryFilter from '../InventoryFilter';
-import DocsButton from './components/DocsButton';
+import ToolbarButtons from './components/ToolbarButtons';
 import { INVENTORY_PAGE_TITLE } from '../../ForemanInventoryConstants';
 import './pageHeader.scss';
 
@@ -27,7 +27,7 @@ const PageHeader = () => (
         <InventoryFilter />
       </Grid.Col>
       <Grid.Col xs={4} xsOffset={4}>
-        <DocsButton />
+        <ToolbarButtons />
       </Grid.Col>
     </Grid.Row>
   </React.Fragment>
