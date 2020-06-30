@@ -54,7 +54,7 @@ exports[`PageHeader rendering render without Props 1`] = `
       xs={4}
       xsOffset={4}
     >
-      <DocsButton />
+      <ToolbarButtons />
     </Col>
   </Row>
 </Fragment>
