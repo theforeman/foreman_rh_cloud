@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HistoryButton rendering render without Props 1`] = `
+<Button
+  active={false}
+  block={false}
+  bsClass="btn"
+  bsStyle="default"
+  className="tasks_history_button"
+  disabled={false}
+  href="/foreman_tasks/tasks?search=action++%3D++ForemanInventoryUpload%3A%3AAsync%3A%3AGenerateReportJob+or+action++%3D++ForemanInventoryUpload%3A%3AAsync%3A%3AGenerateAllReportsJob&page=1"
+  rel="noopener noreferrer"
+  target="_blank"
+>
+  <Icon
+    name="history"
+    type="fa"
+  />
+   Actions history
+</Button>
+`;
