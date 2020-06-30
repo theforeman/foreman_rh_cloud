@@ -1,6 +1,8 @@
-import { testComponentSnapshotsWithFixtures } from '@theforeman/test';
+import { testComponentSnapshotsWithFixtures } from 'react-redux-test-utils';
 
 import HistoryButton from '../HistoryButton';
+
+global.URL_PREFIX = '';
 
 const fixtures = {
   'render without Props': {},
