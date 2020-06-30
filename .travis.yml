@@ -21,7 +21,7 @@ install:
   - npm install eslint
   - cd ../foreman
   - echo "gemspec :path => '../${FOREMAN_PLUGIN_NAME}'" > bundler.d/${FOREMAN_PLUGIN_NAME}.local.rb
-  - echo "gem 'katello', '< 3.11.0'" > bundler.d/katello.local.rb
+  - echo "gem 'katello', '~> 3.12.0'" > bundler.d/katello.local.rb
   - echo "gem 'foreman-tasks', '< 0.17.0'" > bundler.d/foreman-tasks.local.rb
   - ln -s settings.yaml.test config/settings.yaml
   - ln -s database.yml.example config/database.yml
@@ -41,7 +41,7 @@ env:
     - TESTOPTS=-v
     - FOREMAN_PLUGIN_NAME=foreman_rh_cloud
   matrix:
-    - FOREMAN_CORE_BRANCH=1.20-stable
+    - FOREMAN_CORE_BRANCH=1.22-stable
 addons:
   apt:
     sources:
