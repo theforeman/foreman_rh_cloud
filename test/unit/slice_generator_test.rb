@@ -281,10 +281,17 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     first_pool = @host.organization.pools.first
     second_pool = FactoryBot.create(:katello_pool, account_number: nil, cp_id: 2)
     new_org = FactoryBot.create(:organization, pools: [first_pool, second_pool])
-    @host.organization = new_org
-    @host.save!
 
-    batch = Host.where(id: @host.id).in_batches.first
+    another_host = FactoryBot.create(
+      :host,
+      :with_subscription,
+      :with_content,
+      content_view: @host.content_view,
+      lifecycle_environment: @host.lifecycle_environment,
+      organization: new_org
+    )
+
+    batch = Host.where(id: another_host.id).in_batches.first
     generator = create_generator(batch)
 
     json_str = generator.render
