@@ -8,10 +8,10 @@ exports[`PageDescription rendering render without Props 1`] = `
     Red Hat Insights is a set of cloud services which provide unified subscription reporting, predictive analysis and remediation of issues through this Satellite instance.
   </p>
   <p>
-    In order to utilize these servies, you can set the auto upload in the settings to "ON".
+    In order to utilize these services, you can set the auto upload in the settings to "ON".
   </p>
   <p>
-    You can also trigger the upload manually by openning the relevant organization card, and clicking on the "Restart" button
+    You can also trigger the upload manually by opening the relevant organization card, and clicking on the "Restart" button
   </p>
 </div>
 `;
