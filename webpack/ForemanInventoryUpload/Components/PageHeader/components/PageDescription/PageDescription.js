@@ -10,12 +10,12 @@ export const PageDescription = () => (
     </p>
     <p>
       {__(
-        'In order to utilize these servies, you can set the auto upload in the settings to "ON".'
+        'In order to utilize these services, you can set the auto upload in the settings to "ON".'
       )}
     </p>
     <p>
       {__(
-        'You can also trigger the upload manually by openning the relevant organization card, and clicking on the "Restart" button'
+        'You can also trigger the upload manually by opening the relevant organization card, and clicking on the "Restart" button'
       )}
     </p>
   </div>
