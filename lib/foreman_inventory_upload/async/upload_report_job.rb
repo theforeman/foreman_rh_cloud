@@ -21,7 +21,7 @@ module ForemanInventoryUpload
       end
 
       def command
-        File.join(File.dirname(@filename), ForemanInventoryUpload.upload_script_file)
+        ['/usr/bin/sh', File.join(File.dirname(@filename), ForemanInventoryUpload.upload_script_file)]
       end
 
       def env
