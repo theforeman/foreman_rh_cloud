@@ -36,6 +36,16 @@ module ForemanInventoryUpload
         @out << ',' unless last
       end
 
+      def string_array_value(name, value, last = false)
+        return if value.empty?
+
+        string_value = value.map { |v| stringify_value(v) }
+
+        array_field(name, last) do
+          raw(string_value.join(', '))
+        end
+      end
+
       def object_field(name, last = false, &block)
         @out << "\"#{name}\": "
         object(&block)
