@@ -45,16 +45,8 @@ module ForemanInventoryUpload
           @stream.simple_field('satellite_id', host.subscription_facet&.uuid)
           @stream.simple_field('bios_uuid', fact_value(host, 'dmi::system::uuid'))
           @stream.simple_field('vm_uuid', fact_value(host, 'virt::uuid'))
-          @stream.array_field('ip_addresses') do
-            @stream.raw(host.interfaces.map do |nic|
-              @stream.stringify_value(nic.ip) if nic.ip
-            end.compact.join(', '))
-          end
-          @stream.array_field('mac_addresses') do
-            @stream.raw(host.interfaces.map do |nic|
-              @stream.stringify_value(nic.mac) if nic.mac
-            end.compact.join(', '))
-          end
+          report_ip_addresses(host)
+          report_mac_addresses(host)
           @stream.object_field('system_profile') do
             report_system_profile(host)
           end
@@ -159,6 +151,18 @@ module ForemanInventoryUpload
         @stream.simple_field('is_simple_content_access', golden_ticket?(host.organization))
         @stream.simple_field('is_hostname_obfuscated', !!obfuscate_hostname?(host))
         @stream.simple_field('organization_id', host.organization_id, :last)
+      end
+
+      def report_ip_addresses(host)
+        ip_addresses = host.interfaces.map { |nic| nic.ip }.compact
+
+        @stream.string_array_value('ip_addresses', ip_addresses)
+      end
+
+      def report_mac_addresses(host)
+        macs = host.interfaces.map { |nic| nic.mac }.compact
+
+        @stream.string_array_value('mac_addresses', macs)
       end
 
       def os_release_value(name:, version:, codename:)
