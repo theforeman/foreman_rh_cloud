@@ -68,7 +68,7 @@ module InsightsCloud
       def replace_hits_data(hits)
         InsightsHit.transaction do
           InsightsHit.delete_all
-          InsightsHit.create(hits.map { |hits_hash| to_model_hash(hits_hash) })
+          InsightsHit.create(hits.map { |hits_hash| to_model_hash(hits_hash) }.compact)
           # create new facets for hosts that are missing one
           hosts_with_existing_facets = InsightsFacet.where(host_id: @host_ids.values).pluck(:host_id)
           InsightsFacet.create((@host_ids.values - hosts_with_existing_facets).map { |id| {host_id: id} })
@@ -76,8 +76,12 @@ module InsightsCloud
       end
 
       def to_model_hash(hit_hash)
+        hit_host_id = host_id(hit_hash['hostname'])
+
+        return unless hit_host_id
+
         {
-          host_id: host_id(hit_hash['hostname']),
+          host_id: hit_host_id,
           last_seen: DateTime.parse(hit_hash['last_seen']),
           publish_date: DateTime.parse(hit_hash['publish_date']),
           title: hit_hash['title'],
