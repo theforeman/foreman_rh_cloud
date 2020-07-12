@@ -59,4 +59,34 @@ class InsightsFullSyncTest < ActiveJob::TestCase
     assert_equal 2, @host1.insights.hits.count
     assert_equal 1, @host2.insights.hits.count
   end
+
+  test 'Hits ignoring non-existent hosts' do
+    hits_json = <<-HITS_JSON
+    [
+        {
+            "hostname": "#{@host1.name}_non_existent",
+            "rhel_version": "7.5",
+            "uuid": "accdf444-5628-451d-bf3e-cf909ad72756",
+            "last_seen": "2019-11-22T08:41:42.447244Z",
+            "title": "New Ansible Engine packages are inaccessible when dedicated Ansible repo is not enabled",
+            "solution_url": "",
+            "total_risk": 2,
+            "likelihood": 2,
+            "publish_date": "2018-04-16T10:03:16Z",
+            "results_url": "https://cloud.redhat.com/insights/overview/stability/ansible_deprecated_repo%7CANSIBLE_DEPRECATED_REPO/accdf444-5628-451d-bf3e-cf909ad72756/"
+        }
+    ]
+    HITS_JSON
+    hits = JSON.parse(hits_json)
+
+    InsightsCloud::Async::InsightsFullSync.any_instance.expects(:query_insights_hits).returns(hits)
+
+    InsightsCloud::Async::InsightsFullSync.perform_now(@host1.organization)
+
+    @host1.reload
+    @host2.reload
+
+    assert_nil @host1.insights
+    assert_nil @host2.insights
+  end
 end
