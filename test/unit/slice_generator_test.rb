@@ -63,6 +63,25 @@ class ReportGeneratorTest < ActiveSupport::TestCase
 
     assert_equal 'slice_123', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
+    assert_nil actual_host['ip_addresses']
+    assert_nil actual_host['mac_addresses']
+    assert_equal @host.fqdn, actual_host['fqdn']
+    assert_equal '1234', actual_host['account']
+    assert_equal 1, generator.hosts_count
+  end
+
+  test 'generates ip_address and mac_address fields' do
+    @host.interfaces << FactoryBot.build(:nic_managed)
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_equal @host.interfaces.where.not(ip: nil).first.ip, actual_host['ip_addresses'].first
+    assert_equal @host.interfaces.where.not(mac: nil).first.mac, actual_host['mac_addresses'].first
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
     assert_equal 1, generator.hosts_count
