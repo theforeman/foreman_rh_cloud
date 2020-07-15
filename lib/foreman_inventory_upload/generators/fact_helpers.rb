@@ -67,7 +67,7 @@ module ForemanInventoryUpload
       end
 
       def obfuscate_fqdn(fqdn)
-        Digest::SHA1.hexdigest(fqdn)
+        "#{Digest::SHA1.hexdigest(fqdn)}.example.com"
       end
     end
   end

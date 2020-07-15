@@ -115,7 +115,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    obfuscated_fqdn = Digest::SHA1.hexdigest(@host.fqdn)
+    obfuscated_fqdn = Digest::SHA1.hexdigest(@host.fqdn) + '.example.com'
 
     assert_equal 'slice_123', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
