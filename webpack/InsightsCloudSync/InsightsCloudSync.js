@@ -32,7 +32,7 @@ const InsightsCloudSync = ({ data: { settingsUrl }, syncInsights }) => {
           </a>
           <br />
           {__(
-            '3. Now you can syncronize recommendations manually using the "Sync now" button.'
+            '3. Now you can synchronize recommendations manually using the "Sync now" button.'
           )}
         </p>
         <div>
