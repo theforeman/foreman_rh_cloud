@@ -43,7 +43,7 @@ exports[`InsightsCloudSync render 1`] = `
         />
       </a>
       <br />
-      3. Now you can syncronize recommendations manually using the "Sync now" button.
+      3. Now you can synchronize recommendations manually using the "Sync now" button.
     </p>
     <div>
       <Button
