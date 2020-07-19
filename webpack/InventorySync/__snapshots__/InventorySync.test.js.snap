@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InventorySync render 1`] = `
+<IntlProvider
+  locale="en-US"
+>
+  <div
+    className="inventory-sync"
+  >
+    <h1>
+      Red Hat Inventory Sync
+    </h1>
+    <p>
+      By syncing, you'll be able to know which hosts were uploaded successfuly, as your inventory, to the Red Hat cloud
+    </p>
+    <p>
+      1. Obtain an RHSM API token: 
+      <a
+        href="https://access.redhat.com/management/api"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        access.redhat.com 
+        <Icon
+          name="external-link"
+          size="xs"
+          type="fa"
+        />
+      </a>
+      <br />
+      2. Copy the token to 'Red Hat Cloud token' setting: 
+      <a
+        href="www.example.com/settings"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Red Hat Cloud token 
+        <Icon
+          name="external-link"
+          size="xs"
+          type="fa"
+        />
+      </a>
+      <br />
+      3. Now you can syncronize your inventory manually using the "Sync now" button.
+    </p>
+    <div>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="primary"
+        disabled={false}
+        onClick={[Function]}
+      >
+        Sync now
+      </Button>
+    </div>
+  </div>
+</IntlProvider>
+`;

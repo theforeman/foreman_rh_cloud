@@ -7,5 +7,8 @@ module ForemanRhCloud
 
     def insights_cloud
     end
+
+    def inventory_sync
+    end
   end
 end
