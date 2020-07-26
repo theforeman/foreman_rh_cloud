@@ -11,11 +11,13 @@ module InventorySync
 
       def status_hashes
         @fqdns.map do |fqdn|
-          {
-            host_id: host_id(fqdn), # what if host_id is nil ?
-            status: 'SYNCED', # use the host status https://github.com/theforeman/foreman/blob/develop/developer_docs/how_to_create_a_plugin.asciidoc#add-custom-host-status
-            reported_at: DateTime.current
-          }
+          if host_id(fqdn)
+            {
+              host_id: host_id(fqdn),
+              status: InventorySync::InventoryStatus::SYNC,
+              reported_at: DateTime.current,
+            }
+          end
         end
       end
 

@@ -5,7 +5,7 @@ module InventorySync
     class InventoryFullSync < ::ApplicationJob
       def perform(organization)
         @organization = organization
-        
+
         loop do
           api_response = query_inventory
           results = HostResult.new(api_response)
@@ -21,7 +21,10 @@ module InventorySync
       private
 
       def update_hosts_status(status_hashes)
-        # update the actual host status
+        InventorySync::InventoryStatus.transaction do
+          InventorySync::InventoryStatus.delete_all
+          InventorySync::InventoryStatus.create(status_hashes)
+        end
       end
 
       def query_inventory(page = 1)
@@ -31,7 +34,7 @@ module InventorySync
           verify_ssl: ENV['SATELLITE_INVENTORY_CLOUD_URL'] ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER,
           params: {
             per_page: 100,
-            page: page
+            page: page,
           },
           headers: {
             Authorization: "Bearer #{rh_credentials}",

@@ -65,6 +65,8 @@ module ForemanRhCloud
         end
 
         register_global_js_file 'subscriptions_extension'
+
+        register_custom_status(InventorySync::InventoryStatus)
       end
 
       ::Katello::UINotifications::Subscriptions::ManifestImportSuccess.include ForemanInventoryUpload::Notifications::ManifestImportSuccessNotificationOverride if defined?(Katello)
