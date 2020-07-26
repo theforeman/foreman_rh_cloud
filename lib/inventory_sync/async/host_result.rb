@@ -11,14 +11,20 @@ module InventorySync
 
       def status_hashes
         @fqdns.map do |fqdn|
-          if host_id(fqdn)
+          host_id = host_id(fqdn)
+          if host_id
+            touched << host_id
             {
-              host_id: host_id(fqdn),
+              host_id: host_id,
               status: InventorySync::InventoryStatus::SYNC,
               reported_at: DateTime.current,
             }
           end
         end
+      end
+
+      def touched
+        @touched ||= []
       end
 
       def host_id(fqdn)

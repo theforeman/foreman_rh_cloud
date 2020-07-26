@@ -7,6 +7,17 @@ module InventorySync
       N_('Inventory')
     end
 
+    def to_global(_options = {})
+      case status
+      when DISCONNECT
+        ::HostStatus::Global::WARN
+      when SYNC
+        ::HostStatus::Global::OK
+      else
+        ::HostStatus::Global::WARN
+      end
+    end
+
     def to_label
       case status
         when DISCONNECT
