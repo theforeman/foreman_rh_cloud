@@ -58,6 +58,8 @@ class InsightsFullSyncTest < ActiveJob::TestCase
 
     assert_equal 2, @host1.insights.hits.count
     assert_equal 1, @host2.insights.hits.count
+    assert_equal 'accdf444-5628-451d-bf3e-cf909ad72756', @host1.insights.uuid
+    assert_equal 'accdf444-5628-451d-bf3e-cf909ad72757', @host2.insights.uuid
   end
 
   test 'Hits ignoring non-existent hosts' do

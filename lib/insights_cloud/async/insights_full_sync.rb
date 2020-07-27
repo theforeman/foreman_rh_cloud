@@ -8,8 +8,8 @@ module InsightsCloud
 
         hits = query_insights_hits
 
-        host_names = hits.map { |hit| hit['hostname'] }.uniq
-        setup_host_names(host_names)
+        @hits_host_names = Hash[hits.map { |hit| [hit['hostname'], hit['uuid']] }]
+        setup_host_names(@hits_host_names.keys)
 
         replace_hits_data(hits)
       end
@@ -71,7 +71,16 @@ module InsightsCloud
           InsightsHit.create(hits.map { |hits_hash| to_model_hash(hits_hash) }.compact)
           # create new facets for hosts that are missing one
           hosts_with_existing_facets = InsightsFacet.where(host_id: @host_ids.values).pluck(:host_id)
-          InsightsFacet.create((@host_ids.values - hosts_with_existing_facets).map { |id| {host_id: id} })
+          InsightsFacet.create(
+            @host_ids.map do |host_id, host_name|
+              unless hosts_with_existing_facets.include?(host_id)
+                {
+                  host_id: host_id,
+                  uuid: @hits_host_names[host_name],
+                }
+              end
+            end.compact
+          )
         end
       end
 
