@@ -3,7 +3,23 @@ require 'test_helper'
 class InventoryFullSyncTest < ActiveJob::TestCase
   setup do
     @host1 = FactoryBot.create(:host, :managed, name: 'host1')
-    @host2 = FactoryBot.create(:host, :managed, name: 'host2')
+
+    User.current = User.find_by(login: 'secret_admin')
+
+    env = FactoryBot.create(:katello_k_t_environment)
+    cv = env.content_views << FactoryBot.create(:katello_content_view, organization: env.organization)
+
+    # this host would pass our plugin queries, so it could be uploaded to the cloud.
+    @host2 = FactoryBot.create(
+      :host,
+      :with_subscription,
+      :with_content,
+      content_view: cv.first,
+      lifecycle_environment: env,
+      organization: env.organization
+    )
+
+    @host2.subscription_facet.pools << FactoryBot.create(:katello_pool, account_number: '1234', cp_id: 1)
 
     inventory_json = <<-INVENTORY_JSON
     {
