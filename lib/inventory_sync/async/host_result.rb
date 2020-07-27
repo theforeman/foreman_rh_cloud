@@ -38,8 +38,8 @@ module InventorySync
       end
 
       def percentage
-        return 100 unless @per_page * @page < @total
-        @per_page * @page * 100 / @total
+        ratio = @per_page * @page / @total
+        ratio > 1 ? 100 : ratio * 100
       end
 
       def last?

@@ -1,7 +1,8 @@
 .inventory_toolbar_buttons {
   float: right;
 
-  .tasks_history_button {
+  .tasks_history_button,
+  .sync_button {
     margin-right: 5px;
   }
 }

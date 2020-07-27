@@ -14,7 +14,7 @@ exports[`PageHeader rendering render without Props 1`] = `
       <h1
         className="inventory_title"
       >
-        Red Hat Inventory Uploads
+        Red Hat Inventory
       </h1>
     </Col>
   </Row>
