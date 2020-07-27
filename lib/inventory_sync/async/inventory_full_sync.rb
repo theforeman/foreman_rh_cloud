@@ -10,14 +10,18 @@ module InventorySync
         )
 
         InventorySync::InventoryStatus.transaction do
+          InventorySync::InventoryStatus.delete_all
+          logger.debug('inventory sync starting rest call to RH cloud')
           page = 1
           loop do
             api_response = query_inventory(page)
             results = HostResult.new(api_response)
             update_hosts_status(results.status_hashes, results.touched)
+            logger.debug("inventory sync downloading: #{results.percentage}%")
             page += 1
             break if results.last?
           end
+          logger.debug('inventory sync rest call ended')
           add_missing_hosts_statuses(@all_hosts)
         end
       end
@@ -29,7 +33,6 @@ module InventorySync
       private
 
       def update_hosts_status(status_hashes, touched)
-        InventorySync::InventoryStatus.delete_all
         InventorySync::InventoryStatus.create(status_hashes)
         @all_hosts.subtract(touched)
       end
@@ -51,12 +54,12 @@ module InventorySync
           method: :get,
           url: InventorySync.inventory_export_url,
           verify_ssl: ENV['SATELLITE_INVENTORY_CLOUD_URL'] ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER,
-          params: {
-            per_page: 100,
-            page: page,
-          },
           headers: {
             Authorization: "Bearer #{rh_credentials}",
+            params: {
+              per_page: 100,
+              page: page,
+            },
           }
         )
 
