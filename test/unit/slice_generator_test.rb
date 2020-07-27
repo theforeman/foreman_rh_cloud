@@ -159,13 +159,13 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal 'satellite-id', satellite_facts['satellite_instance_id']
     assert_equal @host.organization_id, satellite_facts['organization_id']
 
-    instance_id_tag = actual['hosts'].first['tags'].find { |tag| tag['namespace'] == 'satellite' && tag['key'] == 'satellite_instance_id'}
-    assert_not_nil instance_id_tag
-    assert_equal 'satellite-id', instance_id_tag['value']
+    actual_host = actual['hosts'].first
+    assert_tag('satellite-id', actual_host, 'satellite_instance_id')
+    assert_tag(@host.organization_id.to_s, actual_host, 'organization_id')
+    assert_tag(@host.content_view.name, actual_host, 'content_view')
+    assert_tag(@host.location.name, actual_host, 'location')
+    assert_tag(@host.organization.name, actual_host, 'organization')
 
-    org_id_tag = actual['hosts'].first['tags'].find { |tag| tag['namespace'] == 'satellite' && tag['key'] == 'organization_id'}
-    assert_not_nil org_id_tag
-    assert_equal @host.organization_id.to_s, org_id_tag['value']
     assert_equal false, satellite_facts['is_hostname_obfuscated']
 
     version = satellite_facts['satellite_version']
@@ -437,5 +437,11 @@ class ReportGeneratorTest < ActiveSupport::TestCase
       generator.stubs(:golden_ticket?).returns(false)
     end
     generator
+  end
+
+  def assert_tag(expected_value, host, tag_id)
+    actual_tag = host['tags'].find { |tag| tag['namespace'] == 'satellite' && tag['key'] == tag_id }
+    assert_not_nil actual_tag
+    assert_equal expected_value, actual_tag['value']
   end
 end
