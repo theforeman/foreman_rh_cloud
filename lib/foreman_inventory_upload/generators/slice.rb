@@ -3,6 +3,8 @@ module ForemanInventoryUpload
     class Slice
       include FactHelpers
 
+      SATELLITE_NAMESPACE = 'satellite'
+
       attr_accessor :slice_id
       attr_reader :hosts_count
 
@@ -52,7 +54,7 @@ module ForemanInventoryUpload
           end
           @stream.array_field('facts') do
             @stream.object do
-              @stream.simple_field('namespace', 'satellite')
+              @stream.simple_field('namespace', SATELLITE_NAMESPACE)
               @stream.object_field('facts', :last) do
                 report_satellite_facts(host)
               end
@@ -60,8 +62,15 @@ module ForemanInventoryUpload
           end
 
           @stream.array_field('tags', :last) do
-            report_tag('satellite', 'satellite_instance_id', Foreman.instance_id) if Foreman.respond_to?(:instance_id)
-            report_tag('satellite', 'organization_id', host.organization_id.to_s, :last)
+            report_satellite_tag('satellite_instance_id', Foreman.instance_id) if Foreman.respond_to?(:instance_id)
+            report_satellite_tag('lifecycle_environment', host.lifecycle_environment&.name)
+            report_satellite_tag('content_view', host.content_view&.name)
+            report_satellite_tag('activation_key', host.activation_keys) { |key| key.name }
+            report_satellite_tag('host_collection', host.host_collections) { |collection| collection.name }
+            report_satellite_tag('location', host.location.name)
+            report_satellite_tag('organization', host.organization.name)
+            report_satellite_tag('hostgroup', host.hostgroup&.name)
+            report_satellite_tag('organization_id', host.organization_id.to_s, :last)
           end
         end
       end
@@ -73,6 +82,18 @@ module ForemanInventoryUpload
           @stream.simple_field('value', value, :last)
         end
         @stream.comma unless last
+      end
+
+      def report_satellite_tag(key, value, last = nil)
+        return if value.nil?
+
+        array_value = Array(value)
+        last_index = array_value.count - 1
+
+        array_value.each_with_index do |value, index|
+          value = yield(value) if block_given?
+          report_tag(SATELLITE_NAMESPACE, key, value, last && index == last_index)
+        end
       end
 
       def report_system_profile(host)
