@@ -182,6 +182,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
   test 'generates a report with system purpose' do
     @host.subscription_facet.purpose_usage = 'test_usage'
     @host.subscription_facet.purpose_role = 'test_role'
+    @host.subscription_facet.service_level = 'test_sla'
     @host.subscription_facet.save!
 
     batch = Host.where(id: @host.id).in_batches.first
@@ -198,6 +199,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_not_nil(fact_values = host_facts['facts'])
     assert_equal 'test_usage', fact_values['system_purpose_usage']
     assert_equal 'test_role', fact_values['system_purpose_role']
+    assert_equal 'test_sla', fact_values['system_purpose_sla']
   end
 
   test 'generates a report for a golden ticket' do

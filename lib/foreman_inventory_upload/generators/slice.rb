@@ -154,6 +154,7 @@ module ForemanInventoryUpload
         end
         @stream.simple_field('system_purpose_usage', host.subscription_facet.purpose_usage)
         @stream.simple_field('system_purpose_role', host.subscription_facet.purpose_role)
+        @stream.simple_field('system_purpose_sla', host.subscription_facet.service_level)
         @stream.simple_field('distribution_version', fact_value(host, 'distribution::version'))
         @stream.simple_field('satellite_instance_id', Foreman.try(:instance_id))
         @stream.simple_field('is_simple_content_access', golden_ticket?(host.organization))
