@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'test_plugin_helper'
 
 class InventoryFullSyncTest < ActiveJob::TestCase
   setup do
@@ -21,6 +21,8 @@ class InventoryFullSyncTest < ActiveJob::TestCase
 
     @host2.subscription_facet.pools << FactoryBot.create(:katello_pool, account_number: '1234', cp_id: 1)
 
+    ForemanInventoryUpload::Generators::Queries.instance_variable_set(:@fact_names, nil)
+
     inventory_json = <<-INVENTORY_JSON
     {
       "total": 3,
@@ -31,6 +33,39 @@ class InventoryFullSyncTest < ActiveJob::TestCase
     }
     INVENTORY_JSON
     @inventory = JSON.parse(inventory_json)
+  end
+
+  def interesting_facts
+    [
+      'dmi::system::uuid',
+      'virt::uuid',
+      'cpu::cpu(s)',
+      'cpu::cpu_socket(s)',
+      'cpu::core(s)_per_socket',
+      'memory::memtotal',
+      'dmi::bios::vendor',
+      'dmi::bios::version',
+      'dmi::bios::relase_date',
+      'uname::release',
+      'lscpu::flags',
+      'distribution::name',
+      'distribution::version',
+      'distribution::id',
+      'virt::is_guest',
+      'dmi::system::manufacturer',
+      'dmi::system::product_name',
+      'dmi::chassis::asset_tag',
+      'insights_client::obfuscate_hostname_enabled',
+      'insights_client::hostname',
+    ]
+  end
+
+  def fact_names
+    @fact_names ||= Hash[
+      interesting_facts.map do |fact|
+        [fact, FactoryBot.create(:fact_name, name: fact, type: 'Katello::RhsmFactName')]
+      end
+    ]
   end
 
   test 'Host status should be SYNC' do
@@ -45,12 +80,12 @@ class InventoryFullSyncTest < ActiveJob::TestCase
 
   test 'Host status should be DISCONNECT' do
     InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
+    FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
 
     InventorySync::Async::InventoryFullSync.perform_now(@host2.organization)
 
     @host2.reload
 
-    # assert_equal InventorySync::InventoryStatus::DISCONNECT, InventorySync::InventoryStatus.where(host_id: @host2.id).first.status
-    assert_nil InventorySync::InventoryStatus.where(host_id: @host2.id).first
+    assert_equal InventorySync::InventoryStatus::DISCONNECT, InventorySync::InventoryStatus.where(host_id: @host2.id).first.status
   end
 end
