@@ -11,17 +11,15 @@ module InventorySync
 
         InventorySync::InventoryStatus.transaction do
           InventorySync::InventoryStatus.delete_all
-          logger.debug('inventory sync starting rest call to RH cloud')
           page = 1
           loop do
             api_response = query_inventory(page)
             results = HostResult.new(api_response)
             update_hosts_status(results.status_hashes, results.touched)
-            logger.debug("inventory sync downloading: #{results.percentage}%")
+            logger.debug("Downloading cloud inventory data: #{results.percentage}%")
             page += 1
             break if results.last?
           end
-          logger.debug('inventory sync rest call ended')
           add_missing_hosts_statuses(@all_hosts)
         end
       end
