@@ -5,6 +5,8 @@ module InventorySync
     class InventoryFullSync < ::ApplicationJob
       def perform(organization)
         @organization = organization
+        @sync_hosts_amount = 0
+        @disconnect_hosts_amount = 0
         @all_hosts = Set.new(
           ForemanInventoryUpload::Generators::Queries.for_slice(Host.unscoped).pluck(:id)
         )
@@ -15,13 +17,23 @@ module InventorySync
           loop do
             api_response = query_inventory(page)
             results = HostResult.new(api_response)
-            update_hosts_status(results.status_hashes, results.touched)
             logger.debug("Downloading cloud inventory data: #{results.percentage}%")
+            update_hosts_status(results.status_hashes, results.touched)
+            @sync_hosts_amount += results.touched.size
             page += 1
             break if results.last?
           end
           add_missing_hosts_statuses(@all_hosts)
+          @disconnect_hosts_amount += @all_hosts.size
         end
+
+        logger.debug("Synced hosts amount: #{@sync_hosts_amount}")
+        logger.debug("Disconnected hosts amount: #{@disconnect_hosts_amount}")
+
+        {
+          syncHosts: @sync_hosts_amount,
+          disconnectHosts: @disconnect_hosts_amount,
+        }
       end
 
       def rh_credentials
