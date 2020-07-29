@@ -8,13 +8,11 @@ Rails.application.routes.draw do
     get 'auto_upload', to: 'uploads#show_auto_upload'
     post 'auto_upload', to: 'uploads#auto_upload'
     post 'host_obfuscation', to: 'uploads#host_obfuscation'
-  end
 
-  namespace :insights_cloud do
     resources :tasks, only: [:create]
   end
 
-  namespace :inventory_sync do
+  namespace :insights_cloud do
     resources :tasks, only: [:create]
   end
 

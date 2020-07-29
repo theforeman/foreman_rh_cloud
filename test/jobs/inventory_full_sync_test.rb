@@ -68,7 +68,7 @@ class InventoryFullSyncTest < ActiveJob::TestCase
     ]
   end
 
-  test 'Host status should be SYNC' do
+  test 'Host status should be SYNC for inventory hosts' do
     InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
 
     InventorySync::Async::InventoryFullSync.perform_now(@host1.organization)
@@ -78,7 +78,7 @@ class InventoryFullSyncTest < ActiveJob::TestCase
     assert_equal InventorySync::InventoryStatus::SYNC, InventorySync::InventoryStatus.where(host_id: @host1.id).first.status
   end
 
-  test 'Host status should be DISCONNECT' do
+  test 'Host status should be DISCONNECT for hosts that are not returned from cloud' do
     InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
     FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
 

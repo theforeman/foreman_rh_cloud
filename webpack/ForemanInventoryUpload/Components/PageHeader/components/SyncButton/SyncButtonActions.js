@@ -1,13 +1,13 @@
 import React from 'react';
 import API from 'foremanReact/API';
 import { addToast } from 'foremanReact/redux/actions/toasts';
-import { inventorySyncUrl } from './SyncButtonHelpers';
+import { inventoryUrl } from '../../../../ForemanInventoryHelpers';
+import Toast from './components/Toast';
 import {
   SYNCING_REQUEST,
   SYNCING_SUCCESS,
   SYNCING_FAILURE,
 } from './SyncButtonConstants';
-import Toast from './components/Toast';
 
 export const handleSync = () => async dispatch => {
   dispatch({
@@ -17,7 +17,7 @@ export const handleSync = () => async dispatch => {
   try {
     const {
       data: { syncHosts, disconnectHosts },
-    } = await API.post(inventorySyncUrl('tasks'));
+    } = await API.post(inventoryUrl('tasks'));
     dispatch({
       type: SYNCING_SUCCESS,
       payload: {

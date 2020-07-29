@@ -1,6 +1,6 @@
 module InventorySync
   module Async
-    class HostResult < ::ApplicationJob
+    class HostResult
       def initialize(result)
         @total = result['total']
         @count = result['count']
@@ -20,7 +20,7 @@ module InventorySync
               reported_at: DateTime.current,
             }
           end
-        end
+        end.compact
       end
 
       def touched

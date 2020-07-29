@@ -1,4 +1,4 @@
-module InventorySync
+module ForemanInventoryUpload
   class TasksController < ::ApplicationController
     def create
       selected_org = Organization.current

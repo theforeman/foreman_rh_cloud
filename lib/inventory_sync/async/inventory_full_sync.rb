@@ -61,7 +61,7 @@ module InventorySync
       def query_inventory(page = 1)
         hosts_inventory_response = RestClient::Request.execute(
           method: :get,
-          url: InventorySync.inventory_export_url,
+          url: ForemanRhCloud.inventory_export_url,
           verify_ssl: ENV['SATELLITE_INVENTORY_CLOUD_URL'] ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER,
           headers: {
             Authorization: "Bearer #{rh_credentials}",
@@ -78,7 +78,7 @@ module InventorySync
       def query_refresh_token
         token_response = RestClient::Request.execute(
           method: :post,
-          url: InventorySync.authentication_url,
+          url: ForemanRhCloud.authentication_url,
           verify_ssl: ENV['SATELLITE_INVENTORY_CLOUD_URL'] ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER,
           payload: {
             grant_type: 'refresh_token',
