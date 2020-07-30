@@ -13,17 +13,20 @@ export default (
   switch (type) {
     case INVENTORY_SYNC_REQUEST:
       return state.merge({
+        ...state,
         status: STATUS.PENDING,
         error: null,
       });
     case INVENTORY_SYNC_SUCCESS:
       return state.merge({
+        ...state,
         status: STATUS.RESOLVED,
         syncHosts,
         disconnectHosts,
       });
     case INVENTORY_SYNC_FAILURE:
       return state.merge({
+        ...state,
         status: STATUS.ERROR,
         error,
       });

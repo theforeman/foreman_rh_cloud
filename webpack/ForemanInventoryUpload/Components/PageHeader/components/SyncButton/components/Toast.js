@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { translate as __ } from 'foremanReact/common/I18n';
 import { foremanUrl } from '../../../../../../ForemanRhCloudHelpers';
 
 const Toast = ({ syncHosts, disconnectHosts }) => {
@@ -7,14 +8,16 @@ const Toast = ({ syncHosts, disconnectHosts }) => {
   return (
     <span>
       <p>
-        From <strong>{totalHosts} host</strong>(s) with subscriprion
+        {__("Total org's hosts with subscriprion: ")}
+        <strong>{totalHosts}</strong>
       </p>
       <p>
-        <strong>{syncHosts} host</strong>(s) were uploaded successfully to the
-        cloud
+        {__('Successfully synced hosts: ')}
+        <strong>{syncHosts}</strong>
       </p>
       <p>
-        <strong>{disconnectHosts} host</strong>(s) are not in sync.
+        {__('Disconnected hosts: ')}
+        <strong>{disconnectHosts}</strong>
       </p>
       <p>
         For more info, please visit the{' '}
@@ -31,8 +34,8 @@ const Toast = ({ syncHosts, disconnectHosts }) => {
 };
 
 Toast.propTypes = {
-  syncHosts: PropTypes.string.isRequired,
-  disconnectHosts: PropTypes.string.isRequired,
+  syncHosts: PropTypes.number.isRequired,
+  disconnectHosts: PropTypes.number.isRequired,
 };
 
 export default Toast;

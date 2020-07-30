@@ -35,21 +35,23 @@ export const handleSync = () => async dispatch => {
         ),
       })
     );
-  } catch (error) {
+  } catch ({
+    message,
+    response: { data: { message: toastMessage } = {} } = {},
+  }) {
     dispatch({
       type: INVENTORY_SYNC_FAILURE,
       payload: {
-        error: error.message,
+        error: message,
       },
     });
 
-    const { data: { message } = {} } = error.response;
-    if (message) {
+    if (toastMessage) {
       dispatch(
         addToast({
           sticky: true,
           type: 'error',
-          message,
+          message: toastMessage,
         })
       );
     }
