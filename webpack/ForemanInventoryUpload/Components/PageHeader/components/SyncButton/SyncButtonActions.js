@@ -30,7 +30,6 @@ export const handleSync = () => async dispatch => {
       addToast({
         sticky: true,
         type: 'success',
-        title: 'Sync process ended successfully',
         message: (
           <Toast syncHosts={syncHosts} disconnectHosts={disconnectHosts} />
         ),
@@ -43,5 +42,16 @@ export const handleSync = () => async dispatch => {
         error: error.message,
       },
     });
+
+    const { data: { message } = {} } = error.response;
+    if (message) {
+      dispatch(
+        addToast({
+          sticky: true,
+          type: 'error',
+          message,
+        })
+      );
+    }
   }
 };

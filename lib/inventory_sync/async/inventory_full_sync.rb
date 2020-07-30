@@ -5,16 +5,16 @@ module InventorySync
     class InventoryFullSync < ::ApplicationJob
       def perform(organization)
         @organization = organization
+        @subscribed_hosts_ids = Set.new(
+          ForemanInventoryUpload::Generators::Queries.for_slice(Host).pluck(:id)
+        )
         @host_statuses = {
           sync: 0,
           disconnect: 0,
         }
-        @all_hosts = Set.new(
-          ForemanInventoryUpload::Generators::Queries.for_slice(Host.unscoped).pluck(:id)
-        )
 
         InventorySync::InventoryStatus.transaction do
-          InventorySync::InventoryStatus.delete_all
+          InventorySync::InventoryStatus.where(host_id: @subscribed_hosts_ids).delete_all
           page = 1
           loop do
             api_response = query_inventory(page)
@@ -25,8 +25,8 @@ module InventorySync
             page += 1
             break if results.last?
           end
-          add_missing_hosts_statuses(@all_hosts)
-          @host_statuses[:disconnect] += @all_hosts.size
+          add_missing_hosts_statuses(@subscribed_hosts_ids)
+          @host_statuses[:disconnect] += @subscribed_hosts_ids.size
         end
 
         logger.debug("Synced hosts amount: #{@host_statuses[:sync]}")
@@ -43,7 +43,7 @@ module InventorySync
 
       def update_hosts_status(status_hashes, touched)
         InventorySync::InventoryStatus.create(status_hashes)
-        @all_hosts.subtract(touched)
+        @subscribed_hosts_ids.subtract(touched)
       end
 
       def add_missing_hosts_statuses(hosts_ids)
