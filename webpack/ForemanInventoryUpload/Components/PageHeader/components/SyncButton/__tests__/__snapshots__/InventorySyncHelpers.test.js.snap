@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`SyncButton helpers should return insights cloud Url 1`] = `"/inventory_sync/test_path"`;

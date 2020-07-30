@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { foremanUrl } from '../../../../../../ForemanRhCloudHelpers';
 
 const Toast = ({ syncHosts, disconnectHosts }) => {
@@ -27,6 +28,11 @@ const Toast = ({ syncHosts, disconnectHosts }) => {
       </p>
     </span>
   );
+};
+
+Toast.propTypes = {
+  syncHosts: PropTypes.string.isRequired,
+  disconnectHosts: PropTypes.string.isRequired,
 };
 
 export default Toast;

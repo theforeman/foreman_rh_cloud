@@ -1,20 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SyncButton rendering render without Props 1`] = `
-<Button
-  active={false}
-  block={false}
-  bsClass="btn"
-  bsSize="lg"
-  bsStyle="default"
-  className="sync_button"
-  disabled={false}
-  onClick={[Function]}
->
-  <Icon
-    name="refresh"
-    type="fa"
+exports[`SyncButton rendering render with Props 1`] = `
+<Fragment>
+  <SyncModal
+    show={false}
+    toggleModal={[Function]}
   />
-   Sync inventory status
-</Button>
+  <Button
+    active={false}
+    block={false}
+    bsClass="btn"
+    bsSize="lg"
+    bsStyle="default"
+    className="sync_button"
+    disabled={false}
+    onClick={[Function]}
+  >
+    <Icon
+      name="refresh"
+      type="fa"
+    />
+     Sync inventory status
+  </Button>
+</Fragment>
 `;

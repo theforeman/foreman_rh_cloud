@@ -4,7 +4,7 @@ exports[`ToolbarButtons rendering render without Props 1`] = `
 <div
   className="inventory_toolbar_buttons"
 >
-  <SyncButton />
+  <Connect(SyncButton) />
   <HistoryButton />
   <DocsButton />
 </div>

@@ -38,6 +38,7 @@ Object {
     },
   },
   "autoUploadEnabled": true,
+  "cloudToken": undefined,
   "error": null,
   "hostObfuscationEnabled": true,
   "pollingProcessID": 0,

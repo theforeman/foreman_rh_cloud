@@ -23,6 +23,7 @@ Array [
           },
         },
         "autoUploadEnabled": true,
+        "cloudToken": undefined,
         "hostObfuscationEnabled": true,
       },
       "type": "INVENTORY_ACCOUNT_STATUS_POLLING",
