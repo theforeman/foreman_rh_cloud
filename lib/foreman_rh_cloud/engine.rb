@@ -58,7 +58,9 @@ module ForemanRhCloud
         menu :top_menu, :insights_hits_import, :caption => N_('Insights'), :url_hash => { controller: :'foreman_rh_cloud/react', :action => :insights_cloud }, parent: :configure_menu
 
         register_facet InsightsFacet, :insights do
-          configure_host
+          configure_host do
+            set_dependent_action :destroy
+          end
         end
 
         register_global_js_file 'subscriptions_extension'
