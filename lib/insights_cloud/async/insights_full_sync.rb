@@ -57,7 +57,7 @@ module InsightsCloud
 
       def setup_host_names(host_names)
         @host_ids = Hash[
-          Host.where(name: host_names).pluck(:name, :id)
+          Host.unscoped.where(name: host_names).pluck(:name, :id)
         ]
       end
 
@@ -72,7 +72,7 @@ module InsightsCloud
           # create new facets for hosts that are missing one
           hosts_with_existing_facets = InsightsFacet.where(host_id: @host_ids.values).pluck(:host_id)
           InsightsFacet.create(
-            @host_ids.map do |host_id, host_name|
+            @host_ids.map do |host_name, host_id|
               unless hosts_with_existing_facets.include?(host_id)
                 {
                   host_id: host_id,
