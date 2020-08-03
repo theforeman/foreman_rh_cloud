@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountList reducer should handle INVENTORY_SYNC_FAILURE 1`] = `
+Object {
+  "error": "some-error",
+  "status": "ERROR",
+}
+`;
+
+exports[`AccountList reducer should handle INVENTORY_SYNC_REQUEST 1`] = `
+Object {
+  "error": null,
+  "status": "PENDING",
+}
+`;
+
+exports[`AccountList reducer should handle INVENTORY_SYNC_SUCCESS 1`] = `
+Object {
+  "disconnectHosts": 0,
+  "status": "RESOLVED",
+  "syncHosts": 1,
+}
+`;
+
+exports[`AccountList reducer should return the initial state 1`] = `Object {}`;

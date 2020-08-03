@@ -24,6 +24,7 @@ export default (state = initialState, action) => {
       processStatusName,
       autoUploadEnabled,
       hostObfuscationEnabled,
+      cloudToken,
     } = {},
   } = action;
 
@@ -34,6 +35,7 @@ export default (state = initialState, action) => {
         accounts,
         autoUploadEnabled,
         hostObfuscationEnabled,
+        cloudToken,
         error: null,
       });
     case INVENTORY_ACCOUNT_STATUS_POLLING_ERROR:

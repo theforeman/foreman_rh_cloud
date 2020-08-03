@@ -36,6 +36,8 @@ export const hostObfuscationEnabled = true;
 
 export const filterTerm = 'some_filter';
 
+export const cloudToken = 'some-cloud-token';
+
 export const props = {
   accounts,
   fetchAccountsStatus: noop,
@@ -45,5 +47,5 @@ export const props = {
 };
 
 export const fetchAccountsStatusResponse = {
-  data: { accounts, autoUploadEnabled, hostObfuscationEnabled },
+  data: { accounts, autoUploadEnabled, hostObfuscationEnabled, cloudToken },
 };

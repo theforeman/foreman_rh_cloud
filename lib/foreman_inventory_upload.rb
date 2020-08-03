@@ -60,4 +60,8 @@ module ForemanInventoryUpload
     FileUtils.mkdir_p(folder)
     folder
   end
+
+  def self.inventory_export_url
+    ForemanRhCloud.base_url + '/api/inventory/v1/hosts'
+  end
 end
