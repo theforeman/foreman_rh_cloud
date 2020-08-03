@@ -1,13 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ForemanRhCloud helpers should return inventory wrapper 1`] = `
+exports[`ForemanRhCloud helpers should return insights wrapper 1`] = `
 Object {
   "ForemanRhCloud": Object {
     "InsightsCloudSync": Object {
-      "inventoryChildren": null,
+      "insightsChild": Object {},
+    },
+    "inventoryUpload": Object {},
+  },
+}
+`;
+
+exports[`ForemanRhCloud helpers should return inventory wrapper 1`] = `
+Object {
+  "ForemanRhCloud": Object {
+    "InsightsCloudSync": Object {},
+    "inventoryUpload": Object {
+      "inventoryChild": Object {},
+    },
+  },
+}
+`;
+
+exports[`ForemanRhCloud helpers should return rhCloud wrapper 1`] = `
+Object {
+  "ForemanRhCloud": Object {
+    "InsightsCloudSync": Object {
+      "insightsChild": Object {},
     },
     "inventoryUpload": Object {
-      "inventoryChildren": null,
+      "inventoryChild": Object {},
     },
   },
 }

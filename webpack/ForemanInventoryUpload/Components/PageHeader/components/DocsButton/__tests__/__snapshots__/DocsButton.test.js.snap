@@ -5,6 +5,7 @@ exports[`DocsButton rendering render without Props 1`] = `
   active={false}
   block={false}
   bsClass="btn"
+  bsSize="lg"
   bsStyle="default"
   disabled={false}
   href="https://access.redhat.com/products/subscription-central"

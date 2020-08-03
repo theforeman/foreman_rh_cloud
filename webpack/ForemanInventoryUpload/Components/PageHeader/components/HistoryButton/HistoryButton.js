@@ -9,6 +9,7 @@ const HistoryButton = () => (
     href={getActionsHistoryUrl()}
     target="_blank"
     rel="noopener noreferrer"
+    bsSize="lg"
   >
     <Icon name="history" />
     {ACTIONS_HISTORY_BUTTON_TEXT}

@@ -8,6 +8,7 @@ const DocsButton = () => (
     href={getInventoryDocsUrl()}
     target="_blank"
     rel="noopener noreferrer"
+    bsSize="lg"
   >
     <Icon type="pf" name="help" />
     {DOCS_BUTTON_TEXT}
