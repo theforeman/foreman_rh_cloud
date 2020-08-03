@@ -27,8 +27,8 @@ module InsightsCloud
       def query_insights_hits
         hits_response = RestClient::Request.execute(
           method: :get,
-          url: ForemanRhCloud.hits_export_url,
-          verify_ssl: ENV['SATELLITE_INSIGHTS_CLOUD_URL'] ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER,
+          url: InsightsCloud.hits_export_url,
+          verify_ssl: ForemanRhCloud.verify_ssl_method,
           headers: {
             Authorization: "Bearer #{rh_credentials}",
           }
@@ -41,7 +41,7 @@ module InsightsCloud
         token_response = RestClient::Request.execute(
           method: :post,
           url: ForemanRhCloud.authentication_url,
-          verify_ssl: ENV['SATELLITE_INSIGHTS_CLOUD_URL'] ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER,
+          verify_ssl: ForemanRhCloud.verify_ssl_method,
           payload: {
             grant_type: 'refresh_token',
             client_id: 'rhsm-api',

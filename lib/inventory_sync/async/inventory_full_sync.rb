@@ -6,7 +6,9 @@ module InventorySync
       def perform(organization)
         @organization = organization
         @subscribed_hosts_ids = Set.new(
-          ForemanInventoryUpload::Generators::Queries.for_slice(Host).pluck(:id)
+          ForemanInventoryUpload::Generators::Queries.for_slice(
+            Host.unscoped.where(organization: organization)
+          ).pluck(:id)
         )
         @host_statuses = {
           sync: 0,
@@ -61,8 +63,8 @@ module InventorySync
       def query_inventory(page = 1)
         hosts_inventory_response = RestClient::Request.execute(
           method: :get,
-          url: ForemanRhCloud.inventory_export_url,
-          verify_ssl: ENV['SATELLITE_INVENTORY_CLOUD_URL'] ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER,
+          url: ForemanInventoryUpload.inventory_export_url,
+          verify_ssl: ForemanRhCloud.verify_ssl_method,
           headers: {
             Authorization: "Bearer #{rh_credentials}",
             params: {
@@ -79,7 +81,7 @@ module InventorySync
         token_response = RestClient::Request.execute(
           method: :post,
           url: ForemanRhCloud.authentication_url,
-          verify_ssl: ENV['SATELLITE_INVENTORY_CLOUD_URL'] ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER,
+          verify_ssl: ForemanRhCloud.verify_ssl_method,
           payload: {
             grant_type: 'refresh_token',
             client_id: 'rhsm-api',

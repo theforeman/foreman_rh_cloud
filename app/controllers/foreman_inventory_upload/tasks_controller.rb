@@ -3,7 +3,9 @@ module ForemanInventoryUpload
     def create
       selected_org = Organization.current
       subscribed_hosts_ids = Set.new(
-        ForemanInventoryUpload::Generators::Queries.for_slice(Host).pluck(:id)
+        ForemanInventoryUpload::Generators::Queries.for_slice(
+          Host.unscoped.where(organization: selected_org)
+        ).pluck(:id)
       )
 
       if subscribed_hosts_ids.empty?

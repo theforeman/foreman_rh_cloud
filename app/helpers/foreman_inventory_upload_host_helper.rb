@@ -10,7 +10,7 @@ module ForemanInventoryUploadHostHelper
       if host_hits
         link_to(
           content,
-          ForemanRhCloud::WebUi.insights_system_url(InsightsCloud::WebUi::ADVISOR, host.insights.uuid),
+          InsightsCloud::WebUi.system_url(InsightsCloud::WebUi::ADVISOR, host.insights.uuid),
           :rel => 'external noopener noreferrer',
           :target => '_blank'
         )
