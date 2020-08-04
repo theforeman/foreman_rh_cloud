@@ -51,7 +51,7 @@ class InsightsFullSyncTest < ActiveJob::TestCase
   test 'Hits data is replaced with data from cloud' do
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:query_insights_hits).returns(@hits)
 
-    InsightsCloud::Async::InsightsFullSync.perform_now(@host1.organization)
+    InsightsCloud::Async::InsightsFullSync.perform_now()
 
     @host1.reload
     @host2.reload
@@ -83,7 +83,7 @@ class InsightsFullSyncTest < ActiveJob::TestCase
 
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:query_insights_hits).returns(hits)
 
-    InsightsCloud::Async::InsightsFullSync.perform_now(@host1.organization)
+    InsightsCloud::Async::InsightsFullSync.perform_now()
 
     @host1.reload
     @host2.reload
