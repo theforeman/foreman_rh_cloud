@@ -1,6 +1,15 @@
-export const rhCloudStateWrapper = innerState => ({
+export const rhCloudStateWrapper = (
+  inventoryState = {},
+  insightsState = {}
+) => ({
   ForemanRhCloud: {
-    inventoryUpload: { ...innerState },
-    InsightsCloudSync: { ...innerState },
+    inventoryUpload: { ...inventoryState },
+    InsightsCloudSync: { ...insightsState },
   },
 });
+
+export const inventoryStateWrapper = innerState =>
+  rhCloudStateWrapper(innerState);
+
+export const insightsStateWrapper = innerState =>
+  rhCloudStateWrapper({}, innerState);

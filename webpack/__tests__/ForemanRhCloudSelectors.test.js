@@ -6,7 +6,10 @@ import {
   selectInsightsCloudSync,
 } from '../ForemanRhCloudSelectors';
 
-const state = rhCloudStateWrapper({ inventoryReducersNamespaces: {} });
+const state = rhCloudStateWrapper(
+  { inventoryChild: {} },
+  { insightsChild: {} }
+);
 
 const fixtures = {
   'should return ForemanRhCloud': () => selectForemanRhCloud(state),
