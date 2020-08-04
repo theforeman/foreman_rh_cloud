@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import * as actions from './InsightsCloudSyncActions';
 import InsightsCloudSync from './InsightsCloudSync';
+import insightsCloudSyncReducers from './InsightsCloudSyncReducers';
 
 // map state to props
 const mapStateToProps = state => ({});
@@ -11,7 +12,7 @@ const mapStateToProps = state => ({});
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 // export reducers
-export const reducers = {};
+export const reducers = insightsCloudSyncReducers;
 
 // export connected component
 export default connect(mapStateToProps, mapDispatchToProps)(InsightsCloudSync);
