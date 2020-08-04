@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InsightsSettings reducer should handle INSIGHTS_SYNC_SETTING_SET 1`] = `
+Object {
+  "insightsSyncEnabled": true,
+}
+`;
+
+exports[`InsightsSettings reducer should handle INSIGHTS_SYNC_SETTING_SET_FAILURE 1`] = `
+Object {
+  "error": "test set error",
+  "insightsSyncEnabled": false,
+}
+`;
+
+exports[`InsightsSettings reducer should handle INSIGHTS_SYNC_SETTINGS_GET_FAILURE 1`] = `
+Object {
+  "error": "test error",
+  "insightsSyncEnabled": false,
+}
+`;
+
+exports[`InsightsSettings reducer should handle INSIGHTS_SYNC_SETTINGS_GET_SUCCESS 1`] = `
+Object {
+  "insightsSyncEnabled": true,
+}
+`;
+
+exports[`InsightsSettings reducer should return the initial state 1`] = `
+Object {
+  "insightsSyncEnabled": false,
+}
+`;
