@@ -16,6 +16,7 @@ import {
   processStatusName,
   autoUploadEnabled,
   hostObfuscationEnabled,
+  cloudToken,
 } from '../AccountList.fixtures';
 import { AUTO_UPLOAD_TOGGLE } from '../../AutoUploadSwitcher/AutoUploadSwitcherConstants';
 import { HOST_OBFUSCATION_TOGGLE } from '../../HostObfuscationSwitcher/HostObfuscationSwitcherConstants';
@@ -29,6 +30,7 @@ const fixtures = {
         accounts,
         autoUploadEnabled,
         hostObfuscationEnabled,
+        cloudToken,
       },
     },
   },

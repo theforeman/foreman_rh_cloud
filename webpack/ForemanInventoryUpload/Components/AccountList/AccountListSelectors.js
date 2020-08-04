@@ -15,3 +15,5 @@ export const selectAutoUploadEnabled = state =>
 
 export const selectHostObfuscationEnabled = state =>
   selectAccountsList(state).hostObfuscationEnabled;
+
+export const selectCloudToken = state => selectAccountsList(state).cloudToken;

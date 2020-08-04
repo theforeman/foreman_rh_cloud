@@ -11,7 +11,7 @@ import {
 export const fetchAccountsStatus = () => async dispatch => {
   try {
     const {
-      data: { accounts, autoUploadEnabled, hostObfuscationEnabled },
+      data: { accounts, autoUploadEnabled, hostObfuscationEnabled, cloudToken },
     } = await API.get(inventoryUrl('accounts'));
     dispatch({
       type: INVENTORY_ACCOUNT_STATUS_POLLING,
@@ -19,6 +19,7 @@ export const fetchAccountsStatus = () => async dispatch => {
         accounts,
         autoUploadEnabled,
         hostObfuscationEnabled,
+        cloudToken,
       },
     });
   } catch (error) {
