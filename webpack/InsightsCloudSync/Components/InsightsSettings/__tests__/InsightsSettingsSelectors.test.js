@@ -1,4 +1,4 @@
-import { testSelectorsSnapshotWithFixtures } from '@theforeman/test';
+import { testSelectorsSnapshotWithFixtures } from 'react-redux-test-utils';
 import {
   selectSettings,
   selectInsightsSyncEnabled,
