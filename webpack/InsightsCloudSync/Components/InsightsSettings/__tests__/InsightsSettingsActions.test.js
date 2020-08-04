@@ -1,4 +1,4 @@
-import { testActionSnapshotWithFixtures } from '@theforeman/test';
+import { testActionSnapshotWithFixtures } from 'react-redux-test-utils';
 import API from 'foremanReact/API';
 import {
   getInsightsSyncSettings,

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { Button, Icon } from 'patternfly-react';
 import { INSIGHTS_SYNC_PAGE_TITLE } from './InsightsCloudSyncConstants';
+import InsightsSettings from './Components/InsightsSettings';
 
 const InsightsCloudSync = ({ data: { settingsUrl }, syncInsights }) => {
   document.title = INSIGHTS_SYNC_PAGE_TITLE;
