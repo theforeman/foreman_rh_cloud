@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InsightsSettings selectors should return insights sync settings 1`] = `
+Object {
+  "insightsSyncEnabled": true,
+}
+`;
+
+exports[`InsightsSettings selectors should return insightsSyncEnabled setting 1`] = `true`;
