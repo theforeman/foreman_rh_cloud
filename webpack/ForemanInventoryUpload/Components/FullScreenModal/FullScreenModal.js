@@ -10,7 +10,11 @@ const FullScreenModal = ({
   toggleFullScreen,
   terminalProps,
 }) => (
-  <Modal show={showFullScreen} onHide={toggleFullScreen}>
+  <Modal
+    id="full-screen-terminal"
+    show={showFullScreen}
+    onHide={toggleFullScreen}
+  >
     <Modal.Header>
       <button
         className="close"

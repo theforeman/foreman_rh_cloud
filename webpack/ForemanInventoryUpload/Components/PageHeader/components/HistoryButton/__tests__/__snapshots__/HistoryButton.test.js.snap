@@ -5,6 +5,7 @@ exports[`HistoryButton rendering render without Props 1`] = `
   active={false}
   block={false}
   bsClass="btn"
+  bsSize="lg"
   bsStyle="default"
   className="tasks_history_button"
   disabled={false}

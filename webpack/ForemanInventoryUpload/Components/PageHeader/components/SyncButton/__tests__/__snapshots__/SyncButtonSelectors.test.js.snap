@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SyncButton selectors should return InventorySync 1`] = `
+Object {
+  "disconnectHosts": 0,
+  "error": "some-error",
+  "status": "RESOLVED",
+  "syncHosts": 1,
+}
+`;
+
+exports[`SyncButton selectors should return InventorySync SyncHosts 1`] = `1`;
+
+exports[`SyncButton selectors should return InventorySync disconnectHosts 1`] = `0`;
+
+exports[`SyncButton selectors should return InventorySync error 1`] = `"some-error"`;
+
+exports[`SyncButton selectors should return InventorySync status 1`] = `"RESOLVED"`;

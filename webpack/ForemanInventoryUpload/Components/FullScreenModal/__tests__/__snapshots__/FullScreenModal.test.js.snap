@@ -8,6 +8,7 @@ exports[`FullScreenModal rendering render without Props 1`] = `
   bsClass="modal"
   dialogComponentClass={[Function]}
   enforceFocus={true}
+  id="full-screen-terminal"
   keyboard={true}
   manager={
     ModalManager {
