@@ -3,9 +3,7 @@ require 'rest-client'
 module InsightsCloud
   module Async
     class InsightsFullSync < ::ApplicationJob
-      def perform(organization)
-        @organization = organization
-
+      def perform
         hits = query_insights_hits
 
         @hits_host_names = Hash[hits.map { |hit| [hit['hostname'], hit['uuid']] }]
