@@ -39,7 +39,7 @@ module InventorySync
 
       def percentage
         ratio = @per_page * @page * 1.0 / @total * 100
-        ratio > 100 ? 100 : ratio.truncate(2)
+        (ratio > 100) ? 100 : ratio.truncate(2)
       end
 
       def last?
