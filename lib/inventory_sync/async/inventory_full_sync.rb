@@ -54,7 +54,7 @@ module InventorySync
             {
               host_id: host_id,
               status: InventorySync::InventoryStatus::DISCONNECT,
-              reported_at: DateTime.current,
+              reported_at: Time.current,
             }
           end
         )

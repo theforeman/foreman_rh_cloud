@@ -17,7 +17,7 @@ module InventorySync
             {
               host_id: host_id,
               status: InventorySync::InventoryStatus::SYNC,
-              reported_at: DateTime.current,
+              reported_at: Time.current,
             }
           end
         end.compact
