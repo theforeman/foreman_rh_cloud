@@ -75,6 +75,7 @@ module ForemanRhCloud
       unless Rails.env.test?
         ForemanTasks.dynflow.config.on_init do |world|
           ForemanInventoryUpload::Async::GenerateAllReportsJob.spawn_if_missing(world)
+          InsightsCloud::Async::InsightsScheduledSync.spawn_if_missing(world)
         end
       end
     end

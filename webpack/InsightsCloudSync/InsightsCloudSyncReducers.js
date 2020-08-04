@@ -1,3 +1,8 @@
-const reducers = {};
+import { combineReducers } from 'redux';
+import { reducers as settingsReducers } from './Components/InsightsSettings';
 
-export default reducers;
+export default {
+  InsightsCloudSync: combineReducers({
+    ...settingsReducers,
+  }),
+};

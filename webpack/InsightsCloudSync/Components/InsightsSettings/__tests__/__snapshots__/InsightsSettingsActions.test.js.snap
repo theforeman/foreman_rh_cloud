@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InsightsSettings actions should generate INSIGHTS_SYNC_SETTINGS_GET_SUCCESS action 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "settings": Object {
+          "insightsSyncEnabled": true,
+        },
+      },
+      "type": "INSIGHTS_SYNC_SETTINGS_GET_SUCCESS",
+    },
+  ],
+]
+`;
+
+exports[`InsightsSettings actions should generate INSIGHTS_SYNC_SETTING_SET action 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "settings": Object {
+          "insightsSyncEnabled": true,
+        },
+      },
+      "type": "INSIGHTS_SYNC_SETTING_SET",
+    },
+  ],
+]
+`;
