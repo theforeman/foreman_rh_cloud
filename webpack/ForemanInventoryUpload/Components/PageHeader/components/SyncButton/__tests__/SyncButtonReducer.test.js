@@ -1,4 +1,4 @@
-import { testReducerSnapshotWithFixtures } from '@theforeman/test';
+import { testReducerSnapshotWithFixtures } from 'react-redux-test-utils';
 import reducer from '../SyncButtonReducer';
 import { syncHosts, disconnectHosts, error } from './SyncButtonFixtures';
 import {
