@@ -1,4 +1,4 @@
-import { testReducerSnapshotWithFixtures } from '@theforeman/test';
+import { testReducerSnapshotWithFixtures } from 'react-redux-test-utils';
 
 import {
   INSIGHTS_SYNC_SETTING_SET,
