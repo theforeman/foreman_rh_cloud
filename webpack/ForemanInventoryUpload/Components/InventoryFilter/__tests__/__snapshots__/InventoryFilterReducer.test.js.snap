@@ -18,6 +18,12 @@ Object {
 }
 `;
 
+exports[`AccountList reducer should handle LAYOUT_INITIALIZE 1`] = `
+Object {
+  "filterTerm": "some_org",
+}
+`;
+
 exports[`AccountList reducer should return the initial state 1`] = `
 Object {
   "filterTerm": "",
