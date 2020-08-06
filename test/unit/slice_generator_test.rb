@@ -305,10 +305,8 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_not_empty(actual_host['account'])
   end
 
-  test 'Generates os_release with version and id' do
-    FactoryBot.create(:fact_value, fact_name: fact_names['distribution::name'], value: 'Red Hat Test Linux', host: @host)
-    FactoryBot.create(:fact_value, fact_name: fact_names['distribution::version'], value: '7.1', host: @host)
-    FactoryBot.create(:fact_value, fact_name: fact_names['distribution::id'], value: 'TestId', host: @host)
+  test 'Generating os_kernel_version should be shortend' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['uname::release'], value: '3.10.0-1127.el7.x86_64', host: @host)
 
     batch = Host.where(id: @host.id).in_batches.first
     generator = create_generator(batch)
@@ -319,7 +317,22 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal 'slice_123', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
-    assert_equal 'Red Hat Test Linux 7.1 (TestId)', actual_profile['os_release']
+    assert_equal '3.10.0', actual_profile['os_kernel_version']
+  end
+
+  test 'Generates os_release with version only' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['distribution::version'], value: '7.1', host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(actual_profile = actual_host['system_profile'])
+    assert_equal '7.1', actual_profile['os_release']
   end
 
   test 'sets infrastructure_type to "virtual" based on virt.is_guest fact' do

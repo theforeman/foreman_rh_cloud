@@ -122,15 +122,8 @@ module ForemanInventoryUpload
             end.join(', '))
           end
         end
-        @stream.simple_field(
-          'os_release',
-          os_release_value(
-            name: fact_value(host, 'distribution::name'),
-            version: fact_value(host, 'distribution::version'),
-            codename: fact_value(host, 'distribution::id')
-          )
-        )
-        @stream.simple_field('os_kernel_version', fact_value(host, 'uname::release'))
+        @stream.simple_field('os_release', fact_value(host, 'distribution::version'))
+        @stream.simple_field('os_kernel_version', os_kernel_version(fact_value(host, 'uname::release')))
         @stream.simple_field('arch', host.architecture&.name)
         @stream.simple_field('subscription_status', host.subscription_status_label)
         @stream.simple_field('katello_agent_running', host.content_facet&.katello_agent_installed?)
@@ -189,6 +182,10 @@ module ForemanInventoryUpload
 
       def os_release_value(name:, version:, codename:)
         "#{name} #{version} (#{codename})"
+      end
+
+      def os_kernel_version(long_version)
+        long_version&.split("-")&.first
       end
     end
   end
