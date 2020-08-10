@@ -35,7 +35,6 @@ script:
   - bundle exec rake "plugin:assets:precompile[${FOREMAN_PLUGIN_NAME}]" RAILS_ENV=production
   - cd ../${FOREMAN_PLUGIN_NAME}
   - bundle exec rubocop
-  - bash ./script/travis_run_js_tests.sh
 env:
   global:
     - TESTOPTS=-v
