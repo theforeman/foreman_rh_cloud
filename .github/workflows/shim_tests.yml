@@ -1,0 +1,18 @@
+name: Shim Testing
+on:
+  pull_request:
+    paths:
+      - 'webpack/**'
+      - 'package.json'
+      - '.github/workflows/shim_tests.yml'
+jobs:
+  shim_js:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [10, 12]
+    steps:
+      - name: Checkout plugin
+        uses: actions/checkout@v2
+
