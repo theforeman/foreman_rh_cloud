@@ -67,6 +67,9 @@ module ForemanRhCloud
       end
 
       ::Katello::UINotifications::Subscriptions::ManifestImportSuccess.include ForemanInventoryUpload::Notifications::ManifestImportSuccessNotificationOverride if defined?(Katello)
+
+      ::Host::Managed.include RhCloudHost
+      ::Host::Base.include RhCloudHost
     end
 
     initializer "foreman_rh_cloud.set_dynflow.config.on_init", :before => :finisher_hook do |_app|
