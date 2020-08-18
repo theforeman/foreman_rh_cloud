@@ -9,6 +9,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
 
     @host = FactoryBot.create(
       :host,
+      :redhat,
       :with_subscription,
       :with_content,
       content_view: cv.first,
@@ -262,6 +263,23 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
     assert_equal 1, generator.hosts_count
+  end
+
+  test 'skips hosts with non-redhat OS' do
+    os = @host.operatingsystem
+    os.name = 'Centos'
+    os.save!
+
+    # make a_host last
+    batch = ForemanInventoryUpload::Generators::Queries.for_org(@host.organization_id)
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_nil(actual['hosts'].first)
+    assert_equal 0, generator.hosts_count
   end
 
   test 'shows system_memory_bytes in bytes' do
