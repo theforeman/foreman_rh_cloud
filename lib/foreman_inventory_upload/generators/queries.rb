@@ -30,27 +30,27 @@ module ForemanInventoryUpload
       end
 
       def self.for_slice(base)
-        fact_values = FactValue.where(fact_name_id: fact_names.values)
         base
           .joins(:subscription_facet)
-          .eager_load(:fact_values)
           .preload(
             :interfaces,
             :installed_packages,
             :content_facet,
             :host_statuses,
+            :inventory_upload_facts,
             subscription_facet: [:pools, :installed_products, :hypervisor_host]
           )
-          .merge(fact_values)
       end
 
       def self.for_report(portal_user)
         org_ids = organizations_for_user(portal_user).pluck(:id)
-        for_slice(Host.unscoped.where(organization_id: org_ids)).in_batches(of: 1_000)
+        for_org(org_ids)
       end
 
       def self.for_org(organization_id)
-        for_slice(Host.unscoped.where(organization_id: organization_id)).in_batches(of: 1_000)
+        # Katello always creates an operating system with name = 'RedHat'
+        # source: https://github.com/Katello/katello/blob/41231b70e0ae9ccf5aebc573699fc8202791188c/app/services/katello/candlepin/consumer.rb#L145
+        for_slice(Host.unscoped.where(organization_id: organization_id, operatingsystem_id: Operatingsystem.where(name: 'RedHat'))).in_batches(of: 1_000)
       end
 
       def self.organizations_for_user(portal_user)
