@@ -21,6 +21,9 @@ module ForemanInventoryUpload
       private
 
       def render_report(metadata)
+        metadata ||= {}
+        metadata['foreman_rh_cloud_version'] = ForemanRhCloud::VERSION
+
         @stream.object do
           @stream.simple_field('report_id', Foreman.uuid)
           @stream.simple_field('host_inventory_api_version', '1.0')
