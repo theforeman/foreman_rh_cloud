@@ -13,6 +13,8 @@ class MetadataGeneratorTest < ActiveSupport::TestCase
 
     assert_not_nil actual['report_id']
     assert_equal 'Satellite', actual['source']
+    assert_not_nil (actual_metadata = actual['source_metadata'])
+    assert_equal ForemanRhCloud::VERSION, actual_metadata['foreman_rh_cloud_version']
     assert_equal({}, actual['report_slices'])
   end
 
