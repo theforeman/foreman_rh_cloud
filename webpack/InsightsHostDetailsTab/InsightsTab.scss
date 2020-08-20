@@ -1,0 +1,86 @@
+#host_details_insights_react_container {
+  #btn_toolbar {
+    float: right;
+  }
+
+  #btn_fullscreen {
+    margin-left: 5px;
+
+    .fa-arrows-alt {
+      margin-left: 5px;
+    }
+  }
+
+  h2 {
+    margin-top: 5px;
+  }
+
+  #hits_list {
+    max-height: 650px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-top: 15px;
+
+    .list-view-pf-expand {
+      padding: 0;
+    }
+
+    .list-group-item-header {
+      .list-view-pf-expand .fa-angle-right {
+        margin-top: 6px;
+      }
+
+      .list-view-pf-main-info .list-view-pf-description {
+        width: 83%;
+
+        .list-group-item-heading {
+          width: 375px;
+        }
+
+        p {
+          margin: 0;
+          font-size: 14px;
+        }
+      }
+
+      .list-view-pf-additional-info {
+        .risk-label {
+          padding: 5px 8px;
+          border-radius: 12px;
+
+          &.Low {
+            background-color: #e7f1fa;
+          }
+
+          &.Moderate {
+            background-color: #fdf7e7;
+          }
+
+          &.Important {
+            background-color: #f9dddd;
+          }
+
+          &.Critical {
+            background-color: #ffecec;
+          }
+
+          p {
+            margin: 0;
+          }
+        }
+      }
+    }
+
+    &::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #0e0e0e6e;
+      border-radius: 6px;
+      border: 3px solid transparent;
+      background-clip: content-box;
+    }
+  }
+}

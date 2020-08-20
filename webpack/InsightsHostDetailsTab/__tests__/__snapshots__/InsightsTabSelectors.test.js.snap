@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InsightsTab selectors should return hits 1`] = `
+Array [
+  Object {
+    "insights_hit": Object {
+      "hostname": "my-host.example.com",
+      "last_seen": "2020-08-19T04:43:09.068706Z",
+      "likelihood": 2,
+      "publish_date": "2018-04-16T10:03:16Z",
+      "results_url": "https://cloud.redhat.com/insights/advisor/recommendations/ansible_deprecated_repo%7CANSIBLE_DEPRECATED_REPO/4739b323-a343-4e89-b71b-81991b8dc656/",
+      "rhel_version": "7.8",
+      "solution_url": "https://access.redhat.com/node/3359651",
+      "title": "New Ansible Engine packages are inaccessible when dedicated Ansible repo is not enabled",
+      "total_risk": 2,
+      "uuid": "4739b323-a343-4e89-b71b-81991b8dc656",
+    },
+  },
+]
+`;
