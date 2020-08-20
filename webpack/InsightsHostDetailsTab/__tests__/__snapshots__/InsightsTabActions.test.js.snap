@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InsightsTab actions should fetchHits 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {},
+      "type": "INSIGHTS_HITS_REQUEST",
+    },
+  ],
+  Array [
+    Object {
+      "payload": Object {
+        "error": "Cannot read property 'hits' of undefined",
+      },
+      "type": "INSIGHTS_HITS_FAILURE",
+    },
+  ],
+]
+`;
