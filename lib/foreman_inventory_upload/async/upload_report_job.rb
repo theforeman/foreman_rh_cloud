@@ -9,6 +9,9 @@ module ForemanInventoryUpload
 
       def perform(filename, organization_id)
         label = UploadReportJob.output_label(organization_id)
+        @filename = filename
+        @organization = Organization.find(organization_id)
+
         if Setting[:content_disconnected]
           progress_output_for(label) do |progress_output|
             progress_output.write_line('Upload was stopped since disconnected mode setting is enabled for content on this instance.')
@@ -16,15 +19,22 @@ module ForemanInventoryUpload
           end
           return
         end
-        @filename = filename
-        @organization = Organization.find(organization_id)
+
+        unless @organization.owner_details&.fetch('upstreamConsumer')&.fetch('idCert')
+          logger.info("Skipping organization '#{@organization}', no candlepin certificate defined.")
+          progress_output_for(label) do |progress_output|
+            progress_output.write_line("Skipping organization #{@organization}, no candlepin certificate defined.")
+            progress_output.status = "Task aborted, exit 1"
+          end
+          return
+        end
 
         Tempfile.create([@organization.name, '.pem']) do |cer_file|
           cer_file.write(rh_credentials[:cert])
           cer_file.write(rh_credentials[:key])
           cer_file.flush
           @cer_path = cer_file.path
-          super(UploadReportJob.output_label(organization_id))
+          super(label)
         end
       end
 
