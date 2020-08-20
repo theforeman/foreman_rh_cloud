@@ -64,6 +64,13 @@ module ForemanRhCloud
         register_global_js_file 'subscriptions_extension'
 
         register_custom_status(InventorySync::InventoryStatus)
+
+        extend_page 'hosts/show' do |context|
+          context.add_pagelet :main_tabs,
+            partial: 'hosts/insights_tab',
+            name: _('Insights'),
+            onlyif: proc { |host| host.insights }
+        end
       end
 
       ::Katello::UINotifications::Subscriptions::ManifestImportSuccess.include ForemanInventoryUpload::Notifications::ManifestImportSuccessNotificationOverride if defined?(Katello)
