@@ -8,6 +8,14 @@ module ForemanInventoryUpload
       end
 
       def perform(filename, organization_id)
+        label = UploadReportJob.output_label(organization_id)
+        if Setting[:content_disconnected]
+          progress_output_for(label) do |progress_output|
+            progress_output.write_line('Upload was stopped since disconnected mode setting is enabled for content on this instance.')
+            progress_output.status = "Task aborted, exit 1"
+          end
+          return
+        end
         @filename = filename
         @organization = Organization.find(organization_id)
 
