@@ -1,4 +1,4 @@
-import { testSelectorsSnapshotWithFixtures } from '@theforeman/test';
+import { testSelectorsSnapshotWithFixtures } from 'react-redux-test-utils';
 import { hostInsightsStateWrapper } from '../../ForemanRhCloudTestHelpers';
 import { hits } from './InsightsTab.fixtures';
 import { selectHits } from '../InsightsTabSelectors';

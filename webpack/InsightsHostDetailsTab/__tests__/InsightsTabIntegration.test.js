@@ -1,5 +1,5 @@
 import React from 'react';
-import { IntegrationTestHelper } from '@theforeman/test';
+import { IntegrationTestHelper } from 'react-redux-test-utils';
 
 import InsightsTab from '../index';
 import reducers from '../../ForemanRhCloudReducers';
