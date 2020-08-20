@@ -11,6 +11,7 @@ Object {
   "InsightsCloudSync": Object {
     "insightsChild": Object {},
   },
+  "hostInsights": Object {},
   "inventoryUpload": Object {
     "inventoryChild": Object {},
   },
