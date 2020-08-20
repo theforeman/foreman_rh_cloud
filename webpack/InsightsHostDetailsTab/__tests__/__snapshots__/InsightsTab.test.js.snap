@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InsightsTab rendering render with props 1`] = `
+<Row
+  bsClass="row"
+  componentClass="div"
+>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    xs={12}
+  >
+    <h2>
+      Recommendations
+    </h2>
+    <ListView
+      className=""
+      id="hits_list"
+    >
+      <ListItem
+        key="0"
+        resultsUrl="https://cloud.redhat.com/insights/advisor/recommendations/ansible_deprecated_repo%7CANSIBLE_DEPRECATED_REPO/4739b323-a343-4e89-b71b-81991b8dc656/"
+        solutionUrl="https://access.redhat.com/node/3359651"
+        title="New Ansible Engine packages are inaccessible when dedicated Ansible repo is not enabled"
+        totalRisk={2}
+      />
+    </ListView>
+  </Col>
+</Row>
+`;
