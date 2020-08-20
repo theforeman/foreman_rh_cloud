@@ -19,6 +19,9 @@ Object {
           "insightsSyncEnabled": false,
         },
       },
+      "hostInsights": Object {
+        "hits": Array [],
+      },
       "inventoryUpload": Object {
         "accountsList": Object {
           "accounts": Object {},

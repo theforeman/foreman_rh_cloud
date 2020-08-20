@@ -1,0 +1,15 @@
+<% content_for(:javascripts) do %>
+  <%= webpacked_plugins_js_for :'foreman_rh_cloud' %>
+<% end %>
+
+<% content_for(:stylesheets) do %>
+    <%= webpacked_plugins_css_for :'foreman_rh_cloud' %>
+<% end %>
+
+<div id="host_details_insights_react_container"></div>
+<%= mount_react_component(
+  'InsightsHostDetailsTab',
+  '#host_details_insights_react_container',
+  { hostID: host.id }.to_json,
+  flatten_data: true
+) %>

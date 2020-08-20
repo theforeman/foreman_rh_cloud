@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   namespace :insights_cloud do
     resources :tasks, only: [:create]
     resource :settings, only: [:show, :update]
+    get 'hits/:host_id', to: 'hits#index'
   end
 
   namespace :foreman_rh_cloud do
