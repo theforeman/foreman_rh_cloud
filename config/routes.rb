@@ -18,6 +18,12 @@ Rails.application.routes.draw do
     get 'hits/:host_id', to: 'hits#index'
   end
 
+  namespace :redhat_access do
+    scope 'r/insights/v1' do
+      get 'branch_info', to: 'machine_telemetries#branch_info'
+    end
+  end
+
   namespace :foreman_rh_cloud do
     get 'inventory_upload', to: 'react#inventory_upload'
     get 'insights_cloud', to: 'react#insights_cloud'

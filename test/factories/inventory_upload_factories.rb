@@ -61,6 +61,18 @@ FactoryBot.define do
   end
 end
 
+FactoryBot.define do
+  factory :katello_host_collection_host, :class => Katello::HostCollectionHosts do
+    host_id { nil }
+    host_collection_id { nil }
+  end
+
+  factory :katello_host_collection, :class => Katello::HostCollection do
+    sequence(:name) { |n| "Host Collection #{n}" }
+    organization_id { nil }
+  end
+end
+
 FactoryBot.modify do
   factory :host do
     transient do

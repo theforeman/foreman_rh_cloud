@@ -7,6 +7,7 @@ class Setting::RhCloud < Setting
       set('allow_auto_insights_sync', N_('Allow recommendations synchronization from Red Hat cloud'), false),
       set('obfuscate_inventory_hostnames', N_('Obfuscate host names sent to Red Hat cloud'), false),
       set('rh_cloud_token', N_('Authentication token to Red Hat cloud services. Used to authenticate requests to cloud APIs'), 'DEFAULT', N_('Red Hat Cloud token'), nil, encrypted: true),
+      set('include_parameter_tags', N_('Should import include parameter tags from Foreman?'), false),
     ]
   end
 
