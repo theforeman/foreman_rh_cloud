@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint -c .eslintrc webpack/",
-    "lint:spelling": "eslint ./",
     "test": "node node_modules/.bin/jest --no-cache",
     "test:watch": "node node_modules/.bin/jest --watchAll",
     "test:current": "node node_modules/.bin/jest --watch",
