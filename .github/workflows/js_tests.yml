@@ -23,7 +23,9 @@ jobs:
       - name: Install plugin npm dependencies
         run: npm install
       - name: Run plugin linter
-        run: npm run lint
+        run: |
+          npm run lint
+          npm run lint:spelling
       - name: Run plugin tests
         run: npm run test
       - name: Publish Coveralls

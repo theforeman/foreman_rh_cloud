@@ -1,7 +1,36 @@
 {
-  "plugins": ["@theforeman/foreman"],
+  "plugins": [
+    "@theforeman/foreman",
+    "spellcheck"
+  ],
   "extends": [
     "plugin:@theforeman/foreman/core",
     "plugin:@theforeman/foreman/plugins"
-  ]
+  ],
+  "rules": {
+    "spellcheck/spell-checker": [
+      "error",
+      {
+        "identifiers": false,
+        "ignoreRequire": true,
+        "skipWords": [
+          "ansible",
+          "donut",
+          "jed",
+          "katello",
+          "knowledgebase",
+          "noopener",
+          "noreferrer",
+          "nowrap",
+          "pid",
+          "redhat",
+          "repo",
+          "theforeman",
+          "tooltip",
+          "unmount"
+        ],
+        "minLength": 3
+      }
+    ]
+  }
 }

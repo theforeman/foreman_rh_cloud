@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "tfm-lint --plugin -d /webpack",
+    "lint:spelling": "eslint ./",
     "test": "tfm-test --plugin",
     "test:watch": "tfm-test --plugin --watchAll",
     "test:current": "tfm-test --plugin --watch",
@@ -32,6 +33,7 @@
     "@theforeman/eslint-plugin-foreman": "^4.0.2",
     "babel-eslint": "^10.0.0",
     "eslint": "^6.7.2",
+    "eslint-plugin-spellcheck": "^0.0.17",
     "prettier": "^1.13.5",
     "raf": "^3.4.0",
     "stylelint": "^9.3.0",
