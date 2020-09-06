@@ -27,7 +27,7 @@ const StatusChart = ({ completed }) => {
     <Grid.Col sm={4}>
       <div className="status-chart">
         <DonutChart
-          id="donunt-chart-1"
+          id="donut-chart-1"
           size={{
             width: 210,
             height: 210,
