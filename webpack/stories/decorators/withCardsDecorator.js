@@ -4,7 +4,7 @@ export const withCardsDecorator = storyFn => (
   <div
     style={{
       width: '100%',
-      height: '100vh',
+      height: '100%',
       backgroundColor: '#F5F5F5',
       padding: '50px',
     }}

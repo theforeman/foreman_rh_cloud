@@ -8,7 +8,7 @@ const Toast = ({ syncHosts, disconnectHosts }) => {
   return (
     <span>
       <p>
-        {__("Total org's hosts with subscriprion: ")}
+        {__('Hosts with subscription in organization: ')}
         <strong>{totalHosts}</strong>
       </p>
       <p>

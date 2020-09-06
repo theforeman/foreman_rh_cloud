@@ -43,7 +43,7 @@ exports[`StatusChart rendering render without Props 1`] = `
           "width": 11,
         }
       }
-      id="donunt-chart-1"
+      id="donut-chart-1"
       legend={
         Object {
           "show": false,
