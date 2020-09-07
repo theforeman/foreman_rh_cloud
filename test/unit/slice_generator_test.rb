@@ -265,21 +265,20 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal 1, generator.hosts_count
   end
 
-  test 'skips hosts with non-redhat OS' do
+  test 'include also hosts with non-redhat OS' do
     os = @host.operatingsystem
     os.name = 'Centos'
     os.save!
 
     # make a_host last
-    batch = ForemanInventoryUpload::Generators::Queries.for_org(@host.organization_id)
+    batch = ForemanInventoryUpload::Generators::Queries.for_org(@host.organization_id).first
     generator = create_generator(batch)
 
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
     assert_equal 'slice_123', actual['report_slice_id']
-    assert_nil(actual['hosts'].first)
-    assert_equal 0, generator.hosts_count
+    assert_equal 1, generator.hosts_count
   end
 
   test 'shows system_memory_bytes in bytes' do

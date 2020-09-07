@@ -48,9 +48,7 @@ module ForemanInventoryUpload
       end
 
       def self.for_org(organization_id)
-        # Katello always creates an operating system with name = 'RedHat'
-        # source: https://github.com/Katello/katello/blob/41231b70e0ae9ccf5aebc573699fc8202791188c/app/services/katello/candlepin/consumer.rb#L145
-        for_slice(Host.unscoped.where(organization_id: organization_id, operatingsystem_id: Operatingsystem.where(name: 'RedHat'))).in_batches(of: 1_000)
+        for_slice(Host.unscoped.where(organization_id: organization_id)).in_batches(of: 1_000)
       end
 
       def self.organizations_for_user(portal_user)
