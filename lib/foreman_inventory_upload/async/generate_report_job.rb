@@ -23,7 +23,7 @@ module ForemanInventoryUpload
       end
 
       def command
-        "#{rake_prefix}rake foreman_inventory_upload:report:generate"
+        "#{rake_prefix}rake rh_cloud_inventory:report:generate"
       end
 
       def env
