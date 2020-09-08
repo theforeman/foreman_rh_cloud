@@ -11,6 +11,39 @@ for how to install Foreman plugins
 
 *Usage here*
 
+### In Satellite
+
+#### Inventory upload
+
+In UI: Configure -> Inventory Upload -> Restart
+
+From command-line:
+
+    export organization_id=1
+    export target=/var/lib/foreman/red_hat_inventory/generated_reports/
+    /usr/sbin/foreman-rake rh_cloud_inventory:report:generate
+
+#### Fetch hosts remediation data
+
+In UI: Configure -> Insights -> Sync now
+
+From command-line:
+
+    /usr/sbin/foreman-rake rh_cloud_inventory:sync
+
+#### Synchronize inventory status
+
+In UI: Configure -> Inventory Upload -> Sync inventory status
+
+From command-line:
+
+    # all organizations
+    /usr/sbin/foreman-rake rh_cloud_insights:sync
+    
+    # specific organization with id 1
+    export organization_id=1
+    /usr/sbin/foreman-rake rh_cloud_insights:sync
+
 ## TODO
 
 *Todo list here*

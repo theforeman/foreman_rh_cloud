@@ -1,6 +1,6 @@
 require 'tempfile'
 
-namespace :foreman_inventory_upload do
+namespace :rh_cloud_inventory do
   namespace :report do
     desc 'Generate inventory report to be sent to Red Hat cloud'
     task generate: :environment do
@@ -25,5 +25,11 @@ namespace :foreman_inventory_upload do
         puts "Successfully generated #{target} for organization id #{organization}"
       end
     end
+  end
+
+  desc "Synchronize Insights hosts hits"
+  task sync: :environment do
+    InsightsCloud::Async::InsightsFullSync.perform_now()
+    puts "Synchronized Insights hosts hits data"
   end
 end
