@@ -147,6 +147,10 @@ class ReportGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'generates a report with satellite facts' do
+    hostgroup = FactoryBot.create(:hostgroup)
+    @host.hostgroup = hostgroup
+    @host.save!
+
     Foreman.expects(:instance_id).twice.returns('satellite-id')
     batch = Host.where(id: @host.id).in_batches.first
     generator = create_generator(batch)
@@ -166,6 +170,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_tag(@host.content_view.name, actual_host, 'content_view')
     assert_tag(@host.location.name, actual_host, 'location')
     assert_tag(@host.organization.name, actual_host, 'organization')
+    assert_tag(@host.hostgroup.name, actual_host, 'hostgroup')
 
     assert_equal false, satellite_facts['is_hostname_obfuscated']
 
