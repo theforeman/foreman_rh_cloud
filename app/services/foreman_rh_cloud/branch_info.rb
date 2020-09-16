@@ -18,12 +18,10 @@ module ForemanRhCloud
     end
 
     def core_app_name
-      return 'Satellite' if defined? ForemanThemeSatellite
       'Foreman'
     end
 
     def core_app_version
-      return Foreman::Version.new(ForemanThemeSatellite::SATELLITE_VERSION) if defined? ForemanThemeSatellite
       Foreman::Version.new
     end
 
