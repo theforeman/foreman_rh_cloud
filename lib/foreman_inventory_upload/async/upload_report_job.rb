@@ -47,18 +47,13 @@ module ForemanInventoryUpload
           'FILES' => @filename,
           'CER_PATH' => @cer_path
         )
+
+        http_proxy_string = ForemanRhCloud.http_proxy_string(logger: logger)
         if http_proxy_string
           env_vars['http_proxy'] = http_proxy_string
           env_vars['https_proxy'] = http_proxy_string
         end
         env_vars
-      end
-
-      def http_proxy_string
-        @http_proxy_string ||=
-          HttpProxy.default_global_content_proxy&.full_url ||
-          cdn_proxy ||
-          global_foreman_proxy
       end
 
       def rh_credentials
@@ -69,31 +64,6 @@ module ForemanInventoryUpload
             key: candlepin_id_certificate['key'],
           }
         end
-      end
-
-      def cdn_proxy
-        cdn_settings = SETTINGS[:katello][:cdn_proxy] || {}
-
-        return nil unless cdn_settings[:host]
-
-        proxy_uri = URI('')
-
-        original_uri = URI.parse(cdn_settings[:host])
-
-        proxy_uri.scheme = original_uri.scheme || 'http'
-        proxy_uri.host = original_uri.host || original_uri.path
-        proxy_uri.port = cdn_settings[:port]
-        proxy_uri.user = cdn_settings[:user]
-        proxy_uri.password = cdn_settings[:password]
-
-        proxy_uri.to_s
-      rescue URI::Error => e
-        logger.warn("cdn_proxy parsing failed: #{e}")
-        nil
-      end
-
-      def global_foreman_proxy
-        Setting[:http_proxy]
       end
     end
   end
