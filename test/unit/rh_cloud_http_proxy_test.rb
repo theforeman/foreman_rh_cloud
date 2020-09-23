@@ -2,7 +2,6 @@ require 'test_plugin_helper'
 
 class RhCloudHttpProxyTest < ActiveSupport::TestCase
   setup do
-    @global_content_proxy_mock = 'http://global:content@localhost:8888'
     @global_foreman_proxy_mock = 'http://global:foreman@localhost:8888'
     @katello_cdn_proxy_mock = {
       host: 'localhost',
@@ -14,16 +13,9 @@ class RhCloudHttpProxyTest < ActiveSupport::TestCase
     @katello_cdn_proxy_string_mock = 'http://katello:cdn@localhost:8888'
   end
 
-  test 'selects global content proxy' do
-    setup_global_content_proxy
-    setup_global_foreman_proxy
-    setup_cdn_proxy do
-      assert_equal @global_content_proxy_mock, ForemanRhCloud.proxy_setting
-    end
-  end
-
   test 'selects cdn proxy' do
     setup_global_foreman_proxy
+
     setup_cdn_proxy do
       assert_equal @katello_cdn_proxy_string_mock, ForemanRhCloud.proxy_setting
     end
@@ -33,11 +25,6 @@ class RhCloudHttpProxyTest < ActiveSupport::TestCase
     setup_global_foreman_proxy
 
     assert_equal @global_foreman_proxy_mock, ForemanRhCloud.proxy_setting
-  end
-
-  def setup_global_content_proxy
-    http_proxy = FactoryBot.create(:http_proxy, url: @global_content_proxy_mock)
-    HttpProxy.stubs(:default_global_content_proxy).returns(http_proxy)
   end
 
   def setup_global_foreman_proxy
