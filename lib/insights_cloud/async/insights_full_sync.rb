@@ -27,6 +27,7 @@ module InsightsCloud
           method: :get,
           url: InsightsCloud.hits_export_url,
           verify_ssl: ForemanRhCloud.verify_ssl_method,
+          proxy: ForemanRhCloud.transformed_http_proxy_string(logger: logger),
           headers: {
             Authorization: "Bearer #{rh_credentials}",
           }
@@ -40,6 +41,7 @@ module InsightsCloud
           method: :post,
           url: ForemanRhCloud.authentication_url,
           verify_ssl: ForemanRhCloud.verify_ssl_method,
+          proxy: ForemanRhCloud.transformed_http_proxy_string(logger: logger),
           payload: {
             grant_type: 'refresh_token',
             client_id: 'rhsm-api',
