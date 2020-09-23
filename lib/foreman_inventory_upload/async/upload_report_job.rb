@@ -47,19 +47,13 @@ module ForemanInventoryUpload
           'FILES' => @filename,
           'CER_PATH' => @cer_path
         )
+
+        http_proxy_string = ForemanRhCloud.http_proxy_string(logger: logger)
         if http_proxy_string
           env_vars['http_proxy'] = http_proxy_string
           env_vars['https_proxy'] = http_proxy_string
         end
         env_vars
-      end
-
-      def http_proxy_string
-        @http_proxy_string ||= begin
-          if Setting[:content_default_http_proxy]
-            HttpProxy.unscoped.find_by(name: Setting[:content_default_http_proxy])&.full_url
-          end
-        end
       end
 
       def rh_credentials
