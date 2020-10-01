@@ -22,6 +22,13 @@ const fixtures = {
   'should stopAccountStatusPolling': () =>
     stopAccountStatusPolling(pollingProcessID),
   'should restartProcess': () => restartProcess(accountID, activeTab),
+  'should invoke toast notification upon failure': () => {
+    API.post.mockImplementationOnce(() =>
+      Promise.reject(new Error('test error'))
+    );
+
+    return restartProcess(accountID, activeTab);
+  },
 };
 
 describe('AccountList actions', () => testActionSnapshotWithFixtures(fixtures));
