@@ -134,7 +134,6 @@ module ForemanInventoryUpload
         @stream.simple_field('arch', host.architecture&.name)
         @stream.simple_field('subscription_status', host.subscription_status_label)
         @stream.simple_field('katello_agent_running', host.content_facet&.katello_agent_installed?)
-        @stream.simple_field('satellite_managed', true)
         @stream.simple_field(
           'infrastructure_type',
           ActiveModel::Type::Boolean.new.cast(fact_value(host, 'virt::is_guest')) ? 'virtual' : 'physical'
@@ -150,13 +149,16 @@ module ForemanInventoryUpload
             end.join(', '))
           end
         end
-        @stream.array_field('installed_packages', :last) do
-          first = true
-          host.installed_packages.each do |package|
-            @stream.raw("#{first ? '' : ', '}#{@stream.stringify_value(package.nvra)}")
-            first = false
+        unless Setting[:exclude_installed_packages]
+          @stream.array_field('installed_packages') do
+            first = true
+            host.installed_packages.each do |package|
+              @stream.raw("#{first ? '' : ', '}#{@stream.stringify_value(package.nvra)}")
+              first = false
+            end
           end
         end
+        @stream.simple_field('satellite_managed', true, :last)
       end
 
       def report_satellite_facts(host)
