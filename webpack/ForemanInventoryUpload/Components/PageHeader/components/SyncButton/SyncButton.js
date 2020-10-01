@@ -21,7 +21,12 @@ class SyncButton extends React.Component {
     return (
       <React.Fragment>
         <SyncModal show={this.state.showModal} toggleModal={this.toggleModal} />
-        <Button className="sync_button" onClick={handleClick} bsSize="lg">
+        <Button
+          className="sync_button"
+          onClick={handleClick}
+          bsSize="lg"
+          disabled={status === STATUS.PENDING}
+        >
           {!cloudToken && (
             <span>
               <Icon name="warning" />{' '}
