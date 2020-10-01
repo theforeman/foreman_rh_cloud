@@ -32,6 +32,23 @@ Array [
 ]
 `;
 
+exports[`AccountList actions should invoke toast notification upon failure 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "message": Object {
+          "message": "test error",
+          "sticky": true,
+          "type": "error",
+        },
+      },
+      "type": "TOASTS_ADD",
+    },
+  ],
+]
+`;
+
 exports[`AccountList actions should restartProcess 1`] = `
 Array [
   Array [

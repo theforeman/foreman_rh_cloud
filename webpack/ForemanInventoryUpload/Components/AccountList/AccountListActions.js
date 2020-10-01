@@ -1,4 +1,5 @@
 import API from 'foremanReact/API';
+import { addToast } from 'foremanReact/redux/actions/toasts';
 import { inventoryUrl } from '../../ForemanInventoryHelpers';
 import {
   INVENTORY_ACCOUNT_STATUS_POLLING,
@@ -46,7 +47,7 @@ export const stopAccountStatusPolling = pollingProcessID => dispatch => {
   });
 };
 
-export const restartProcess = (accountID, activeTab) => dispatch => {
+export const restartProcess = (accountID, activeTab) => async dispatch => {
   let processController = null;
   let processStatusName = null;
 
@@ -58,12 +59,22 @@ export const restartProcess = (accountID, activeTab) => dispatch => {
     processStatusName = 'generate_report_status';
   }
 
-  API.post(inventoryUrl(`${accountID}/${processController}`));
-  dispatch({
-    type: INVENTORY_PROCESS_RESTART,
-    payload: {
-      accountID,
-      processStatusName,
-    },
-  });
+  try {
+    await API.post(inventoryUrl(`${accountID}/${processController}`));
+    dispatch({
+      type: INVENTORY_PROCESS_RESTART,
+      payload: {
+        accountID,
+        processStatusName,
+      },
+    });
+  } catch (error) {
+    dispatch(
+      addToast({
+        sticky: true,
+        type: 'error',
+        message: error.message,
+      })
+    );
+  }
 };
