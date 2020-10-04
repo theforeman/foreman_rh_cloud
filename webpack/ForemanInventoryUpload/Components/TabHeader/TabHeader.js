@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, Grid, Button, Icon } from 'patternfly-react';
 import { sprintf, translate as __ } from 'foremanReact/common/I18n';
+import { isExitCodeLoading } from '../../ForemanInventoryHelpers';
 import './tabHeader.scss';
 
 const TabHeader = ({ exitCode, onRestart, onDownload, toggleFullScreen }) => (
@@ -12,7 +13,11 @@ const TabHeader = ({ exitCode, onRestart, onDownload, toggleFullScreen }) => (
     <Grid.Col sm={6}>
       <div className="tab-action-buttons">
         {onRestart ? (
-          <Button bsStyle="primary" onClick={onRestart}>
+          <Button
+            bsStyle="primary"
+            onClick={onRestart}
+            disabled={isExitCodeLoading(exitCode)}
+          >
             {__('Restart')}
           </Button>
         ) : null}
