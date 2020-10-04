@@ -4,6 +4,7 @@ import { Grid, Spinner } from 'patternfly-react';
 import isEqual from 'lodash/isEqual';
 import './terminal.scss';
 import { isTerminalScrolledDown } from './TerminalHelper';
+import { isExitCodeLoading } from '../../ForemanInventoryHelpers';
 
 class Terminal extends React.Component {
   constructor(props) {
@@ -67,10 +68,7 @@ class Terminal extends React.Component {
     } else {
       modifiedLogs = <p>{logs}</p>;
     }
-    const exitCodeLowerCase = exitCode.toLowerCase();
-    const loading =
-      exitCodeLowerCase.indexOf('running') !== -1 ||
-      exitCodeLowerCase.indexOf('restarting') !== -1;
+    const loading = isExitCodeLoading(exitCode);
     return (
       <Grid.Col sm={12}>
         <div
