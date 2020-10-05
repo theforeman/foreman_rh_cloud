@@ -9,14 +9,13 @@ import {
 } from '../AccountListConstants';
 import reducer from '../AccountListReducer';
 import {
-  accounts,
   error,
   pollingProcessID,
   accountID,
   processStatusName,
   autoUploadEnabled,
   hostObfuscationEnabled,
-  cloudToken,
+  pollingResponse,
 } from '../AccountList.fixtures';
 import { AUTO_UPLOAD_TOGGLE } from '../../AutoUploadSwitcher/AutoUploadSwitcherConstants';
 import { HOST_OBFUSCATION_TOGGLE } from '../../HostObfuscationSwitcher/HostObfuscationSwitcherConstants';
@@ -26,12 +25,7 @@ const fixtures = {
   'should handle INVENTORY_ACCOUNT_STATUS_POLLING': {
     action: {
       type: INVENTORY_ACCOUNT_STATUS_POLLING,
-      payload: {
-        accounts,
-        autoUploadEnabled,
-        hostObfuscationEnabled,
-        cloudToken,
-      },
+      payload: pollingResponse,
     },
   },
   'should handle INVENTORY_ACCOUNT_STATUS_POLLING_ERROR': {

@@ -38,6 +38,8 @@ export const filterTerm = 'some_filter';
 
 export const cloudToken = 'some-cloud-token';
 
+export const excludePackages = false;
+
 export const props = {
   accounts,
   fetchAccountsStatus: noop,
@@ -46,6 +48,14 @@ export const props = {
   pollingProcessID,
 };
 
+export const pollingResponse = {
+  accounts,
+  autoUploadEnabled,
+  hostObfuscationEnabled,
+  cloudToken,
+  excludePackages,
+};
+
 export const fetchAccountsStatusResponse = {
-  data: { accounts, autoUploadEnabled, hostObfuscationEnabled, cloudToken },
+  data: pollingResponse,
 };

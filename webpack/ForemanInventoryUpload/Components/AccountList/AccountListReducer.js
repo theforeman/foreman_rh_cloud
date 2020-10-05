@@ -1,6 +1,7 @@
 import Immutable from 'seamless-immutable';
 import { AUTO_UPLOAD_TOGGLE } from '../AutoUploadSwitcher/AutoUploadSwitcherConstants';
 import { HOST_OBFUSCATION_TOGGLE } from '../HostObfuscationSwitcher/HostObfuscationSwitcherConstants';
+import { EXCLUDE_PACKAGES_TOGGLE } from '../ExcludePackagesSwitcher/ExcludePackagesSwitcherConstants';
 import {
   INVENTORY_ACCOUNT_STATUS_POLLING,
   INVENTORY_ACCOUNT_STATUS_POLLING_ERROR,
@@ -25,6 +26,7 @@ export default (state = initialState, action) => {
       autoUploadEnabled,
       hostObfuscationEnabled,
       cloudToken,
+      excludePackages,
     } = {},
   } = action;
 
@@ -36,6 +38,7 @@ export default (state = initialState, action) => {
         autoUploadEnabled,
         hostObfuscationEnabled,
         cloudToken,
+        excludePackages,
         error: null,
       });
     case INVENTORY_ACCOUNT_STATUS_POLLING_ERROR:
@@ -66,6 +69,11 @@ export default (state = initialState, action) => {
       return state.merge({
         ...state,
         hostObfuscationEnabled,
+      });
+    case EXCLUDE_PACKAGES_TOGGLE:
+      return state.merge({
+        ...state,
+        excludePackages,
       });
     default:
       return state;
