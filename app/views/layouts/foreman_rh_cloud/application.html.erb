@@ -10,7 +10,6 @@
   <%= notifications %>
   <div id="organization-id" data-id="<%= Organization.current.id if Organization.current %>" ></div>
   <div id="user-id" data-id="<%= User.current.id if User.current %>" ></div>
-  <div id="ForemanRhCloudReactRoot"></div>
   <%= yield %>
 <% end %>
 <%= render file: "layouts/base" %>

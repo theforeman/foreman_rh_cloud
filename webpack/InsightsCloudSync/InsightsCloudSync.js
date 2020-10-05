@@ -6,7 +6,7 @@ import { Button, Icon } from 'patternfly-react';
 import { INSIGHTS_SYNC_PAGE_TITLE } from './InsightsCloudSyncConstants';
 import InsightsSettings from './Components/InsightsSettings';
 
-const InsightsCloudSync = ({ data: { settingsUrl }, syncInsights }) => {
+const InsightsCloudSync = ({ settingsUrl, syncInsights }) => {
   document.title = INSIGHTS_SYNC_PAGE_TITLE;
   return (
     <IntlProvider locale={navigator.language}>
@@ -51,9 +51,7 @@ const InsightsCloudSync = ({ data: { settingsUrl }, syncInsights }) => {
 
 InsightsCloudSync.propTypes = {
   syncInsights: PropTypes.func.isRequired,
-  data: PropTypes.shape({
-    settingsUrl: PropTypes.string.isRequired,
-  }).isRequired,
+  settingsUrl: PropTypes.string.isRequired,
 };
 
 export default InsightsCloudSync;

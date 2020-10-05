@@ -40,12 +40,14 @@ class InsightsHostDetailsTab extends React.Component {
       )
     );
     return (
-      <Grid.Row>
-        <Grid.Col xs={12}>
-          <h2>Recommendations</h2>
-          <ListView id="hits_list">{items}</ListView>
-        </Grid.Col>
-      </Grid.Row>
+      <div id="host_details_insights_tab">
+        <Grid.Row>
+          <Grid.Col xs={12}>
+            <h2>Recommendations</h2>
+            <ListView id="hits_list">{items}</ListView>
+          </Grid.Col>
+        </Grid.Row>
+      </div>
     );
   }
 }
