@@ -40,6 +40,7 @@ Object {
   "autoUploadEnabled": true,
   "cloudToken": "some-cloud-token",
   "error": null,
+  "excludePackages": false,
   "hostObfuscationEnabled": true,
   "pollingProcessID": 0,
 }

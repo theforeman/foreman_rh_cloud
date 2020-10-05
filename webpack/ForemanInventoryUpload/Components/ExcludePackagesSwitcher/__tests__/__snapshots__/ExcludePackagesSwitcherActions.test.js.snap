@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExcludePackagesSwitcher actions should handleToggle 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "excludePackages": true,
+      },
+      "type": "EXCLUDE_PACKAGES_TOGGLE",
+    },
+  ],
+]
+`;
+
+exports[`ExcludePackagesSwitcher actions should invoke toast notification upon failure of handleToggle 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "message": Object {
+          "message": "test error",
+          "sticky": true,
+          "type": "error",
+        },
+      },
+      "type": "TOASTS_ADD",
+    },
+  ],
+]
+`;
