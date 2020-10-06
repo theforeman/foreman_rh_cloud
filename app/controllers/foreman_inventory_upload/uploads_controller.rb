@@ -46,6 +46,15 @@ module ForemanInventoryUpload
       ActiveModel::Type::Boolean.new.cast(params.require(:value))
     end
 
+    def installed_packages_inclusion
+      Setting[:exclude_installed_packages] = host_obfuscation_params
+      render_setting(:excludePackages, :exclude_installed_packages)
+    end
+
+    def installed_packages_inclusion_params
+      ActiveModel::Type::Boolean.new.cast(params.require(:value))
+    end
+
     private
 
     def render_setting(node_name, setting)
