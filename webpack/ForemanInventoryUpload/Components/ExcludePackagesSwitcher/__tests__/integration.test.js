@@ -1,8 +1,10 @@
 import React from 'react';
-import { IntegrationTestHelper } from '@theforeman/test';
+import { IntegrationTestHelper } from 'react-redux-test-utils';
 import API from 'foremanReact/API';
 import ExcludePackagesSwitcher from '../index';
 import reducers from '../../../../ForemanRhCloudReducers';
+
+global.URL_PREFIX = '';
 
 jest.mock('foremanReact/API');
 API.post.mockImplementation(async () => ({

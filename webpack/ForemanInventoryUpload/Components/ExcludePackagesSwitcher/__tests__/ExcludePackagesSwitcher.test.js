@@ -1,4 +1,4 @@
-import { testComponentSnapshotsWithFixtures } from '@theforeman/test';
+import { testComponentSnapshotsWithFixtures } from 'react-redux-test-utils';
 import { noop } from 'patternfly-react';
 
 import ExcludePackagesSwitcher from '../ExcludePackagesSwitcher';

@@ -451,7 +451,7 @@ class ReportGeneratorTest < ActiveSupport::TestCase
 
   test 'include packages installed in the report' do
     FactoryBot.create(:setting, :name => 'exclude_installed_packages', :value => false)
-    installed_package = ::Katello::InstalledPackage.create(name: 'test-package', nvrea: 'test-package-1.0.x86_64', nvra: 'test-package-1.0.x86_64')
+    installed_package = ::Katello::InstalledPackage.create(name: 'test-package', nvra: 'test-package-1.0.x86_64')
 
     another_host = FactoryBot.create(
       :host,
