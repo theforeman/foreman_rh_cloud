@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExcludePackagesSwitcher integration test should flow: switcher was toggled 1`] = `
+Object {
+  "action": Array [
+    Array [
+      Object {
+        "payload": Object {
+          "excludePackages": false,
+        },
+        "type": "EXCLUDE_PACKAGES_TOGGLE",
+      },
+    ],
+  ],
+  "state": Object {
+    "ForemanRhCloud": Object {
+      "InsightsCloudSync": Object {
+        "settings": Object {
+          "insightsSyncEnabled": false,
+        },
+      },
+      "hostInsights": Object {
+        "hits": Array [],
+      },
+      "inventoryUpload": Object {
+        "accountsList": Object {
+          "accounts": Object {},
+          "error": null,
+          "excludePackages": false,
+          "pollingProcessID": 0,
+        },
+        "dashboard": Object {},
+        "inventoryFilter": Object {
+          "filterTerm": "",
+        },
+        "inventorySync": Object {},
+      },
+    },
+  },
+}
+`;

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get 'auto_upload', to: 'uploads#show_auto_upload'
     post 'auto_upload', to: 'uploads#auto_upload'
     post 'host_obfuscation', to: 'uploads#host_obfuscation'
+    post 'installed_packages_inclusion', to: 'uploads#installed_packages_inclusion'
 
     resources :tasks, only: [:create]
   end

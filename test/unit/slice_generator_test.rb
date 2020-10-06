@@ -449,6 +449,32 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_equal 'alibaba', actual_profile['cloud_provider']
   end
 
+  test 'include packages installed in the report' do
+    FactoryBot.create(:setting, :name => 'exclude_installed_packages', :value => false)
+    installed_package = ::Katello::InstalledPackage.create(name: 'test-package', nvra: 'test-package-1.0.x86_64')
+
+    another_host = FactoryBot.create(
+      :host,
+      :with_subscription,
+      :with_content,
+      content_view: @host.content_view,
+      lifecycle_environment: @host.lifecycle_environment,
+      organization: @host.organization,
+      installed_packages: [installed_package]
+    )
+
+    batch = Host.where(id: another_host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(actual_profile = actual_host['system_profile'])
+    assert_not_nil(actual_profile['installed_packages'])
+  end
+
   private
 
   def create_generator(batch, name = 'slice_123')
