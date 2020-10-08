@@ -24,6 +24,7 @@ Array [
         },
         "autoUploadEnabled": true,
         "cloudToken": "some-cloud-token",
+        "excludePackages": false,
         "hostObfuscationEnabled": true,
       },
       "type": "INVENTORY_ACCOUNT_STATUS_POLLING",

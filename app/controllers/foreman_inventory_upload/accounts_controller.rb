@@ -24,6 +24,7 @@ module ForemanInventoryUpload
         autoUploadEnabled: Setting[:allow_auto_inventory_upload],
         hostObfuscationEnabled: Setting[:obfuscate_inventory_hostnames],
         cloudToken: Setting[:rh_cloud_token],
+        excludePackages: Setting[:exclude_installed_packages],
         accounts: accounts,
       }, status: :ok
     end

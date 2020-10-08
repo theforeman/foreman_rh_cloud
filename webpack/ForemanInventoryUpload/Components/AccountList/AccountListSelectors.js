@@ -17,3 +17,6 @@ export const selectHostObfuscationEnabled = state =>
   selectAccountsList(state).hostObfuscationEnabled;
 
 export const selectCloudToken = state => selectAccountsList(state).cloudToken;
+
+export const selectExcludePackages = state =>
+  selectAccountsList(state).excludePackages;

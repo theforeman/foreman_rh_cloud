@@ -5,12 +5,16 @@ import {
   selectPollingProcessID,
   selectAutoUploadEnabled,
   selectHostObfuscationEnabled,
+  selectCloudToken,
+  selectExcludePackages,
 } from '../AccountListSelectors';
 import {
   pollingProcessID,
   accounts,
   autoUploadEnabled,
   hostObfuscationEnabled,
+  cloudToken,
+  excludePackages,
 } from '../AccountList.fixtures';
 import { rhCloudStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
 
@@ -20,6 +24,8 @@ const state = rhCloudStateWrapper({
     pollingProcessID,
     autoUploadEnabled,
     hostObfuscationEnabled,
+    cloudToken,
+    excludePackages,
   },
 });
 
@@ -32,6 +38,9 @@ const fixtures = {
     selectAutoUploadEnabled(state),
   'should return AccountList hostObfuscationEnabled': () =>
     selectHostObfuscationEnabled(state),
+  'should return AccountList cloudToken': () => selectCloudToken(state),
+  'should return AccountList excludePackages': () =>
+    selectExcludePackages(state),
 };
 
 describe('AccountList selectors', () =>
