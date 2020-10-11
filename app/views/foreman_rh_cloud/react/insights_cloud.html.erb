@@ -1,6 +1,1 @@
-<%= mount_react_component(
-'InsightsCloudSync',
-'#ForemanRhCloudReactRoot',
-{
-  settingsUrl: settings_url(search: 'name = rh_cloud_token')
-}.to_json) %>
+<%= react_component('InsightsCloudSync', { settingsUrl: settings_url(search: 'name = rh_cloud_token') }) %>
