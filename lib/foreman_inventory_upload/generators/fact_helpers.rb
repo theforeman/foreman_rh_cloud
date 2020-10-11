@@ -1,3 +1,5 @@
+require 'json'
+
 module ForemanInventoryUpload
   module Generators
     module FactHelpers
@@ -68,6 +70,39 @@ module ForemanInventoryUpload
 
       def obfuscate_fqdn(fqdn)
         "#{Digest::SHA1.hexdigest(fqdn)}.example.com"
+      end
+
+      def obfuscate_ips?(host)
+        insights_client_setting = fact_value(host, 'insights_client::obfuscate_ip_enabled')
+        insights_client_setting = ActiveModel::Type::Boolean.new.cast(insights_client_setting)
+        return insights_client_setting unless insights_client_setting.nil?
+
+        Setting[:obfuscate_inventory_ips]
+      end
+
+      def host_ips(host)
+        return obfuscated_ips(host) if obfuscate_ips?(host)
+
+        # return a pass through proxy hash in case no obfuscation needed
+        Hash.new { |h, k| k }
+      end
+
+      def obfuscated_ips(host)
+        insights_client_ips = JSON.parse(fact_value(host, 'insights_client::ips') || '[]')
+
+        obfuscated_ips = Hash[
+          insights_client_ips.map { |ip_record| [ip_record['original'], ip_record['obfuscated']] }
+        ]
+
+        obfuscated_ips.default_proc = proc do |hash, key|
+          hash[key] = obfuscate_ip(key, hash)
+        end
+
+        obfuscated_ips
+      end
+
+      def obfuscate_ip(ip, ips_dict)
+        "10.230.230.#{ips_dict.count + 1}"
       end
     end
   end

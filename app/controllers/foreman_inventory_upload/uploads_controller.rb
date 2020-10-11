@@ -55,6 +55,15 @@ module ForemanInventoryUpload
       ActiveModel::Type::Boolean.new.cast(params.require(:value))
     end
 
+    def ips_obfuscation
+      Setting[:obfuscate_inventory_ips] = ips_obfuscation_params
+      render_setting(:ipsObfuscationEnabled, :obfuscate_inventory_ips)
+    end
+
+    def ips_obfuscation_params
+      ActiveModel::Type::Boolean.new.cast(params.require(:value))
+    end
+
     private
 
     def render_setting(node_name, setting)
