@@ -1,6 +1,6 @@
 require 'test_plugin_helper'
 
-class ReportGeneratorTest < ActiveSupport::TestCase
+class SliceGeneratorTest < ActiveSupport::TestCase
   setup do
     User.current = User.find_by(login: 'secret_admin')
 
@@ -44,6 +44,8 @@ class ReportGeneratorTest < ActiveSupport::TestCase
       'dmi::chassis::asset_tag',
       'insights_client::obfuscate_hostname_enabled',
       'insights_client::hostname',
+      'insights_client::obfuscate_ip_enabled',
+      'insights_client::ips',
     ]
   end
 
@@ -83,6 +85,59 @@ class ReportGeneratorTest < ActiveSupport::TestCase
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal @host.interfaces.where.not(ip: nil).first.ip, actual_host['ip_addresses'].first
     assert_equal @host.interfaces.where.not(mac: nil).first.mac, actual_host['mac_addresses'].first
+    assert_equal @host.fqdn, actual_host['fqdn']
+    assert_equal '1234', actual_host['account']
+    assert_equal 1, generator.hosts_count
+  end
+
+  test 'generates obfuscated ip_address fields without inisghts-client' do
+    FactoryBot.create(:setting, :name => 'obfuscate_inventory_ips', :value => true)
+
+    @host.interfaces << FactoryBot.build(:nic_managed)
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_equal '10.230.230.1', actual_host['ip_addresses'].first
+    assert_not_nil(actual_system_profile = actual_host['system_profile'])
+    assert_not_nil(actual_network_interfaces = actual_system_profile['network_interfaces'])
+    assert_not_nil(actual_nic = actual_network_interfaces.first)
+    assert_equal '10.230.230.1', actual_nic['ipv4_addresses'].first
+    assert_equal @host.fqdn, actual_host['fqdn']
+    assert_equal '1234', actual_host['account']
+    assert_equal 1, generator.hosts_count
+  end
+
+  test 'generates obfuscated ip_address fields with inisghts-client' do
+    nic = FactoryBot.build(:nic_primary_and_provision)
+    @host.interfaces = [nic]
+    @host.save!
+
+    FactoryBot.create(:fact_value, fact_name: fact_names['insights_client::obfuscate_ip_enabled'], value: 'true', host: @host)
+    FactoryBot.create(
+      :fact_value,
+      fact_name: fact_names['insights_client::ips'],
+      value: "[{\"obfuscated\": \"10.230.230.100\", \"original\": \"#{nic.ip}\"}]",
+      host: @host
+    )
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_equal '10.230.230.100', actual_host['ip_addresses'].first
+    assert_not_nil(actual_system_profile = actual_host['system_profile'])
+    assert_not_nil(actual_network_interfaces = actual_system_profile['network_interfaces'])
+    assert_not_nil(actual_nic = actual_network_interfaces.first)
+    assert_equal '10.230.230.100', actual_nic['ipv4_addresses'].first
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
     assert_equal 1, generator.hosts_count

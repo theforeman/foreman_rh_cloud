@@ -34,6 +34,8 @@ export const autoUploadEnabled = true;
 
 export const hostObfuscationEnabled = true;
 
+export const ipsObfuscationEnabled = true;
+
 export const filterTerm = 'some_filter';
 
 export const cloudToken = 'some-cloud-token';
@@ -52,6 +54,7 @@ export const pollingResponse = {
   accounts,
   autoUploadEnabled,
   hostObfuscationEnabled,
+  ipsObfuscationEnabled,
   cloudToken,
   excludePackages,
 };

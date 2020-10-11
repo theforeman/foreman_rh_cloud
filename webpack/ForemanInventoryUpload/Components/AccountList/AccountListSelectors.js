@@ -16,6 +16,9 @@ export const selectAutoUploadEnabled = state =>
 export const selectHostObfuscationEnabled = state =>
   selectAccountsList(state).hostObfuscationEnabled;
 
+export const selectIpsObfuscationEnabled = state =>
+  selectAccountsList(state).ipsObfuscationEnabled;
+
 export const selectCloudToken = state => selectAccountsList(state).cloudToken;
 
 export const selectExcludePackages = state =>

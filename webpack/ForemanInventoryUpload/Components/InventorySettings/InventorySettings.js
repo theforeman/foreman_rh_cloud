@@ -3,6 +3,7 @@ import { translate as __ } from 'foremanReact/common/I18n';
 import AutoUploadSwitcher from '../AutoUploadSwitcher';
 import HostObfuscationSwitcher from '../HostObfuscationSwitcher';
 import ExcludePackagesSwitcher from '../ExcludePackagesSwitcher';
+import IpsObfuscationSwitcher from '../IpsObfuscationSwitcher';
 import './inventorySettings.scss';
 
 const InventorySettings = () => (
@@ -11,6 +12,7 @@ const InventorySettings = () => (
     <AutoUploadSwitcher />
     <ExcludePackagesSwitcher />
     <HostObfuscationSwitcher />
+    <IpsObfuscationSwitcher />
   </div>
 );
 
