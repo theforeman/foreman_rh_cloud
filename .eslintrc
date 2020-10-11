@@ -16,6 +16,7 @@
         "skipWords": [
           "ansible",
           "donut",
+          "ips",
           "jed",
           "katello",
           "knowledgebase",

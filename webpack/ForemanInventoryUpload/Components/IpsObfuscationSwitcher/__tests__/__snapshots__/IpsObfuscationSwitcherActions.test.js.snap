@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IpsObfuscationSwitcher actions should handleError 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "message": Object {
+          "message": "test error",
+          "sticky": true,
+          "type": "error",
+        },
+      },
+      "type": "TOASTS_ADD",
+    },
+  ],
+]
+`;
+
+exports[`IpsObfuscationSwitcher actions should handleToggle 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "ipsObfuscationEnabled": true,
+      },
+      "type": "IPS_OBFUSCATION_TOGGLE",
+    },
+  ],
+]
+`;
