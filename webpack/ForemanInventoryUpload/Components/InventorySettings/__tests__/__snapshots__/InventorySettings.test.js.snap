@@ -10,5 +10,6 @@ exports[`InventorySettings rendering render without Props 1`] = `
   <Connect(AutoUploadSwitcher) />
   <Connect(ExcludePackagesSwitcher) />
   <Connect(HostObfuscationSwitcher) />
+  <Connect(IpsObfuscationSwitcher) />
 </div>
 `;

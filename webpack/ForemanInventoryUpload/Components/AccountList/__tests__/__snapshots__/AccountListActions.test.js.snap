@@ -26,6 +26,7 @@ Array [
         "cloudToken": "some-cloud-token",
         "excludePackages": false,
         "hostObfuscationEnabled": true,
+        "ipsObfuscationEnabled": true,
       },
       "type": "INVENTORY_ACCOUNT_STATUS_POLLING",
     },

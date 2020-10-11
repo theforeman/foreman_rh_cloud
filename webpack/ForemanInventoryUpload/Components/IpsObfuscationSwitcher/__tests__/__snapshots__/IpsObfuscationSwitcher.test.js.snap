@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IpsObfuscationSwitcher rendering render with props 1`] = `
+<div
+  className="ips_obfuscation_switcher"
+>
+  <span>
+    Obfuscate host ip addresses
+  </span>
+  <FieldLevelHelp
+    buttonClass=""
+    content="Obfuscate ip addresses sent to the Red Hat cloud"
+    placement="top"
+    rootClose={true}
+  />
+  <Switch
+    animate={true}
+    baseClass="bootstrap-switch"
+    bsSize={null}
+    defaultValue={true}
+    disabled={false}
+    handleWidth="auto"
+    inverse={false}
+    labelText=" "
+    labelWidth="auto"
+    offColor="default"
+    offText="OFF"
+    onChange={[Function]}
+    onColor="primary"
+    onText="ON"
+    readonly={false}
+    size="mini"
+    tristate={false}
+    value={true}
+    wrapperClass="wrapper"
+  />
+</div>
+`;
