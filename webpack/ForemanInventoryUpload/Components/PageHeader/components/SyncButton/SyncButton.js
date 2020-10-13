@@ -45,12 +45,13 @@ class SyncButton extends React.Component {
 }
 
 SyncButton.propTypes = {
-  cloudToken: PropTypes.string.isRequired,
+  cloudToken: PropTypes.string,
   handleSync: PropTypes.func.isRequired,
   status: PropTypes.string,
 };
 
 SyncButton.defaultProps = {
+  cloudToken: null,
   status: null,
 };
 
