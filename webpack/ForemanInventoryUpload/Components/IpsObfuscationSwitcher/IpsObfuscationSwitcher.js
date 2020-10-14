@@ -5,9 +5,9 @@ import { translate as __ } from 'foremanReact/common/I18n';
 
 const IpsObfuscationSwitcher = ({ ipsObfuscationEnabled, handleToggle }) => (
   <div className="ips_obfuscation_switcher">
-    <span>Obfuscate host ip addresses</span>
+    <span>Obfuscate host ipv4 addresses</span>
     <FieldLevelHelp
-      content={__('Obfuscate ip addresses sent to the Red Hat cloud')}
+      content={__('Obfuscate ipv4 addresses sent to the Red Hat cloud')}
     />
     <Switch
       size="mini"
