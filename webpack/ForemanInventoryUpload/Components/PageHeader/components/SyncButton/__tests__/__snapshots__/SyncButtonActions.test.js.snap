@@ -46,6 +46,14 @@ Array [
   Array [
     Object {
       "payload": Object {
+        "error": "Server error!",
+      },
+      "type": "INVENTORY_SYNC_ERROR",
+    },
+  ],
+  Array [
+    Object {
+      "payload": Object {
         "message": Object {
           "message": "Custom error to display in a toast",
           "sticky": true,
@@ -64,6 +72,14 @@ Array [
     Object {
       "payload": Object {},
       "type": "INVENTORY_SYNC_REQUEST",
+    },
+  ],
+  Array [
+    Object {
+      "payload": Object {
+        "error": "Network error!",
+      },
+      "type": "INVENTORY_SYNC_ERROR",
     },
   ],
   Array [

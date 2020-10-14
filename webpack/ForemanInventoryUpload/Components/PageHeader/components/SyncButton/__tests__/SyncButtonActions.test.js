@@ -17,7 +17,7 @@ const fixtures = {
   },
   'should handleSync with custom error message': () => {
     API.post.mockImplementationOnce(() => {
-      const customError = new Error();
+      const customError = new Error('Server error!');
       customError.response = {
         data: { message: 'Custom error to display in a toast' },
       };

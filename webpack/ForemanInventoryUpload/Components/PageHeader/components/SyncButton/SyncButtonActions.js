@@ -6,6 +6,7 @@ import Toast from './components/Toast';
 import {
   INVENTORY_SYNC_REQUEST,
   INVENTORY_SYNC_SUCCESS,
+  INVENTORY_SYNC_ERROR,
 } from './SyncButtonConstants';
 
 export const handleSync = () => async dispatch => {
@@ -38,6 +39,13 @@ export const handleSync = () => async dispatch => {
     message,
     response: { data: { message: toastMessage } = {} } = {},
   }) {
+    dispatch({
+      type: INVENTORY_SYNC_ERROR,
+      payload: {
+        error: message,
+      },
+    });
+
     dispatch(
       addToast({
         sticky: true,
