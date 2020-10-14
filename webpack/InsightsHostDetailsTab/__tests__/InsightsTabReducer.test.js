@@ -4,7 +4,6 @@ import { hits } from './InsightsTab.fixtures';
 import {
   INSIGHTS_HITS_REQUEST,
   INSIGHTS_HITS_SUCCESS,
-  INSIGHTS_HITS_FAILURE,
 } from '../InsightsTabConstants';
 
 const fixtures = {
@@ -19,14 +18,6 @@ const fixtures = {
     action: {
       type: INSIGHTS_HITS_SUCCESS,
       payload: { hits },
-    },
-  },
-  'should handle INSIGHTS_HITS_FAILURE': {
-    action: {
-      type: INSIGHTS_HITS_FAILURE,
-      payload: {
-        error: 'some-error',
-      },
     },
   },
 };
