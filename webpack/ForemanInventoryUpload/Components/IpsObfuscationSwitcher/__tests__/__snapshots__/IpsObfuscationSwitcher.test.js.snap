@@ -5,11 +5,11 @@ exports[`IpsObfuscationSwitcher rendering render with props 1`] = `
   className="ips_obfuscation_switcher"
 >
   <span>
-    Obfuscate host ip addresses
+    Obfuscate host ipv4 addresses
   </span>
   <FieldLevelHelp
     buttonClass=""
-    content="Obfuscate ip addresses sent to the Red Hat cloud"
+    content="Obfuscate ipv4 addresses sent to the Red Hat cloud"
     placement="top"
     rootClose={true}
   />
