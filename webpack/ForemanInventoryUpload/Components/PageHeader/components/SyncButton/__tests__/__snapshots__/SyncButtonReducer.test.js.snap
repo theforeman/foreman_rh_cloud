@@ -1,12 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AccountList reducer should handle INVENTORY_SYNC_FAILURE 1`] = `
-Object {
-  "error": "some-error",
-  "status": "ERROR",
-}
-`;
-
 exports[`AccountList reducer should handle INVENTORY_SYNC_REQUEST 1`] = `
 Object {
   "error": null,
