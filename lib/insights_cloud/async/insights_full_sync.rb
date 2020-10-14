@@ -46,8 +46,6 @@ module InsightsCloud
 
       def replace_hits_data(hits)
         InsightsHit.transaction do
-          InsightsHit.delete_all
-          InsightsHit.create(hits.map { |hits_hash| to_model_hash(hits_hash) }.compact)
           # create new facets for hosts that are missing one
           hosts_with_existing_facets = InsightsFacet.where(host_id: @host_ids.values).pluck(:host_id)
           InsightsFacet.create(
@@ -60,6 +58,8 @@ module InsightsCloud
               end
             end.compact
           )
+          InsightsHit.delete_all
+          InsightsHit.create(hits.map { |hits_hash| to_model_hash(hits_hash) }.compact)
         end
       end
 

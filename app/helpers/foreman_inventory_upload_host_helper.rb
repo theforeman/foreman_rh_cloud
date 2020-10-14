@@ -5,11 +5,10 @@ module ForemanInventoryUploadHostHelper
 
   def hits_counts_cell(host)
     host_hits = hits_counts[host.id]
-    content = n_('One recommendation', '%{hits} recommendations', host_hits) % { hits: host_hits } if host_hits
-    tag.td class: ['hidden-xs', 'ellipsis'] do
+    tag.td class: ['hidden-xs', 'ellipsis', 'text-center'] do
       if host_hits
         link_to(
-          content,
+          host_hits,
           InsightsCloud::WebUi.system_url(InsightsCloud::WebUi::ADVISOR, host.insights.uuid),
           :rel => 'external noopener noreferrer',
           :target => '_blank'
