@@ -1,1 +1,2 @@
-export const handleToggleResponse = { data: { autoUploadEnabled: true } };
+export const currentHostObfuscationEnabled = false;
+export const handleToggleResponse = { data: { hostObfuscationEnabled: true } };
