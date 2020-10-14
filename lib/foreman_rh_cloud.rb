@@ -28,7 +28,8 @@ module ForemanRhCloud
   def self.proxy_setting(logger: Foreman::Logging.logger('background'))
     HttpProxy.default_global_content_proxy&.full_url ||
     ForemanRhCloud.cdn_proxy(logger: logger) ||
-    ForemanRhCloud.global_foreman_proxy
+    ForemanRhCloud.global_foreman_proxy ||
+    ''
   end
 
   def self.cdn_proxy(logger: Foreman::Logging.logger('app'))
