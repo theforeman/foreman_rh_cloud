@@ -1,8 +1,5 @@
 {
-  "plugins": [
-    "@theforeman/foreman",
-    "spellcheck"
-  ],
+  "plugins": ["@theforeman/foreman", "spellcheck"],
   "extends": [
     "plugin:@theforeman/foreman/core",
     "plugin:@theforeman/foreman/plugins"
@@ -17,6 +14,7 @@
           "ansible",
           "donut",
           "ips",
+          "ipv4",
           "jed",
           "katello",
           "knowledgebase",
