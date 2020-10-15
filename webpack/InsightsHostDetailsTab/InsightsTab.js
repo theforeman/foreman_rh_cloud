@@ -9,6 +9,11 @@ class InsightsHostDetailsTab extends React.Component {
   componentDidMount() {
     const { fetchHits, hostID } = this.props;
     fetchHits(hostID);
+
+    const { hash } = window.location;
+    if (hash === '#insights') {
+      document.querySelector(`li > a[href='${hash}']`).click();
+    }
   }
 
   render() {

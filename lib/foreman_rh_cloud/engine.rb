@@ -72,6 +72,7 @@ module ForemanRhCloud
           context.add_pagelet :main_tabs,
             partial: 'hosts/insights_tab',
             name: _('Insights'),
+            id: 'insights',
             onlyif: proc { |host| host.insights }
         end
       end
