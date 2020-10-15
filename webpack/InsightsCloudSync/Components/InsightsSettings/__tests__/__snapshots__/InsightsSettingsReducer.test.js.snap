@@ -6,20 +6,6 @@ Object {
 }
 `;
 
-exports[`InsightsSettings reducer should handle INSIGHTS_SYNC_SETTING_SET_FAILURE 1`] = `
-Object {
-  "error": "test set error",
-  "insightsSyncEnabled": false,
-}
-`;
-
-exports[`InsightsSettings reducer should handle INSIGHTS_SYNC_SETTINGS_GET_FAILURE 1`] = `
-Object {
-  "error": "test error",
-  "insightsSyncEnabled": false,
-}
-`;
-
 exports[`InsightsSettings reducer should handle INSIGHTS_SYNC_SETTINGS_GET_SUCCESS 1`] = `
 Object {
   "insightsSyncEnabled": true,

@@ -22,12 +22,28 @@ const runWithGetState = (state, action, params) => dispatch => {
 const fixtures = {
   'should generate INSIGHTS_SYNC_SETTINGS_GET_SUCCESS action': () =>
     runWithGetState({ settings: {} }, getInsightsSyncSettings, {}),
+  'should handle getInsightsSyncSettings with error ': () => {
+    API.get.mockImplementationOnce(() =>
+      Promise.reject(new Error('Network error!'))
+    );
+    return runWithGetState({ settings: {} }, getInsightsSyncSettings, {});
+  },
   'should generate INSIGHTS_SYNC_SETTING_SET action': () =>
     runWithGetState(
       { settings: { insightsSyncEnabled: false } },
       setInsightsSyncEnabled,
       true
     ),
+  'should handle setInsightsSyncEnabled with error ': () => {
+    API.patch.mockImplementationOnce(() =>
+      Promise.reject(new Error('Network error!'))
+    );
+    return runWithGetState(
+      { settings: { insightsSyncEnabled: false } },
+      setInsightsSyncEnabled,
+      true
+    );
+  },
 };
 
 describe('InsightsSettings actions', () => {

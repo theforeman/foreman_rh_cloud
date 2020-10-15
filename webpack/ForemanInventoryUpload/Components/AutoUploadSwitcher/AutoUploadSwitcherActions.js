@@ -1,9 +1,7 @@
 import API from 'foremanReact/API';
+import { addToast } from 'foremanReact/redux/actions/toasts';
 import { inventoryUrl } from '../../ForemanInventoryHelpers';
-import {
-  AUTO_UPLOAD_TOGGLE,
-  AUTO_UPLOAD_TOGGLE_ERROR,
-} from './AutoUploadSwitcherConstants';
+import { AUTO_UPLOAD_TOGGLE } from './AutoUploadSwitcherConstants';
 
 export const handleToggle = currentAutoUploadEnabled => async dispatch => {
   const toggledAutoUploadEnabled = !currentAutoUploadEnabled;
@@ -19,12 +17,13 @@ export const handleToggle = currentAutoUploadEnabled => async dispatch => {
         autoUploadEnabled,
       },
     });
-  } catch (error) {
-    dispatch({
-      type: AUTO_UPLOAD_TOGGLE_ERROR,
-      payload: {
-        error: error.message,
-      },
-    });
+  } catch ({ message }) {
+    dispatch(
+      addToast({
+        sticky: true,
+        type: 'error',
+        message,
+      })
+    );
   }
 };

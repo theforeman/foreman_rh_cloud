@@ -1,9 +1,9 @@
 import API from 'foremanReact/API';
+import { addToast } from 'foremanReact/redux/actions/toasts';
 import { insightsCloudUrl } from '../InsightsCloudSync/InsightsCloudSyncHelpers';
 import {
   INSIGHTS_HITS_REQUEST,
   INSIGHTS_HITS_SUCCESS,
-  INSIGHTS_HITS_FAILURE,
 } from './InsightsTabConstants';
 
 export const fetchHits = hostID => async dispatch => {
@@ -19,12 +19,13 @@ export const fetchHits = hostID => async dispatch => {
       type: INSIGHTS_HITS_SUCCESS,
       payload: { hits },
     });
-  } catch (error) {
-    dispatch({
-      type: INSIGHTS_HITS_FAILURE,
-      payload: {
-        error: error.message,
-      },
-    });
+  } catch ({ message }) {
+    dispatch(
+      addToast({
+        sticky: true,
+        type: 'error',
+        message,
+      })
+    );
   }
 };

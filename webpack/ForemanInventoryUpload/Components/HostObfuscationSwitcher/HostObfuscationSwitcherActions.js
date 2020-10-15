@@ -1,9 +1,7 @@
 import API from 'foremanReact/API';
+import { addToast } from 'foremanReact/redux/actions/toasts';
 import { inventoryUrl } from '../../ForemanInventoryHelpers';
-import {
-  HOST_OBFUSCATION_TOGGLE,
-  HOST_OBFUSCATION_TOGGLE_ERROR,
-} from './HostObfuscationSwitcherConstants';
+import { HOST_OBFUSCATION_TOGGLE } from './HostObfuscationSwitcherConstants';
 
 export const handleToggle = currentHostObfuscationEnabled => async dispatch => {
   const toggledHostObfuscationEnabled = !currentHostObfuscationEnabled;
@@ -19,12 +17,13 @@ export const handleToggle = currentHostObfuscationEnabled => async dispatch => {
         hostObfuscationEnabled,
       },
     });
-  } catch (error) {
-    dispatch({
-      type: HOST_OBFUSCATION_TOGGLE_ERROR,
-      payload: {
-        error: error.message,
-      },
-    });
+  } catch ({ message }) {
+    dispatch(
+      addToast({
+        sticky: true,
+        type: 'error',
+        message,
+      })
+    );
   }
 };
