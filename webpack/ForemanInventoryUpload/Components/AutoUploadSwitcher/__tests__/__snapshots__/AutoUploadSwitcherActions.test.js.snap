@@ -12,3 +12,20 @@ Array [
   ],
 ]
 `;
+
+exports[`AutoUploadSwitcher actions should handleToggle with error 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "message": Object {
+          "message": "Network error!",
+          "sticky": true,
+          "type": "error",
+        },
+      },
+      "type": "TOASTS_ADD",
+    },
+  ],
+]
+`;

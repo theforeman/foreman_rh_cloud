@@ -1,10 +1,9 @@
 import { testReducerSnapshotWithFixtures } from '@theforeman/test';
 import reducer from '../SyncButtonReducer';
-import { syncHosts, disconnectHosts, error } from './SyncButtonFixtures';
+import { syncHosts, disconnectHosts } from './SyncButtonFixtures';
 import {
   INVENTORY_SYNC_REQUEST,
   INVENTORY_SYNC_SUCCESS,
-  INVENTORY_SYNC_FAILURE,
 } from '../SyncButtonConstants';
 
 const fixtures = {
@@ -19,12 +18,6 @@ const fixtures = {
     action: {
       type: INVENTORY_SYNC_SUCCESS,
       payload: { syncHosts, disconnectHosts },
-    },
-  },
-  'should handle INVENTORY_SYNC_FAILURE': {
-    action: {
-      type: INVENTORY_SYNC_FAILURE,
-      payload: { error },
     },
   },
 };
