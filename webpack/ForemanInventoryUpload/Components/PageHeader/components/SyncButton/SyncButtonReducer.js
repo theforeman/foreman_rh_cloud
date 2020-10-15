@@ -3,7 +3,7 @@ import { STATUS } from 'foremanReact/constants';
 import {
   INVENTORY_SYNC_REQUEST,
   INVENTORY_SYNC_SUCCESS,
-  INVENTORY_SYNC_FAILURE,
+  INVENTORY_SYNC_ERROR,
 } from './SyncButtonConstants';
 
 export default (
@@ -24,7 +24,7 @@ export default (
         syncHosts,
         disconnectHosts,
       });
-    case INVENTORY_SYNC_FAILURE:
+    case INVENTORY_SYNC_ERROR:
       return state.merge({
         ...state,
         status: STATUS.ERROR,

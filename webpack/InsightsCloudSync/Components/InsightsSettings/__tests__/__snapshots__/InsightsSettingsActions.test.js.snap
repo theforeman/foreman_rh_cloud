@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`InsightsSettings actions should generate INSIGHTS_SYNC_SETTING_SET action 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "settings": Object {
+          "insightsSyncEnabled": true,
+        },
+      },
+      "type": "INSIGHTS_SYNC_SETTING_SET",
+    },
+  ],
+]
+`;
+
 exports[`InsightsSettings actions should generate INSIGHTS_SYNC_SETTINGS_GET_SUCCESS action 1`] = `
 Array [
   Array [
@@ -15,16 +30,35 @@ Array [
 ]
 `;
 
-exports[`InsightsSettings actions should generate INSIGHTS_SYNC_SETTING_SET action 1`] = `
+exports[`InsightsSettings actions should handle getInsightsSyncSettings with error  1`] = `
 Array [
   Array [
     Object {
       "payload": Object {
-        "settings": Object {
-          "insightsSyncEnabled": true,
+        "message": Object {
+          "message": "Network error!",
+          "sticky": true,
+          "type": "error",
         },
       },
-      "type": "INSIGHTS_SYNC_SETTING_SET",
+      "type": "TOASTS_ADD",
+    },
+  ],
+]
+`;
+
+exports[`InsightsSettings actions should handle setInsightsSyncEnabled with error  1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "message": Object {
+          "message": "Network error!",
+          "sticky": true,
+          "type": "error",
+        },
+      },
+      "type": "TOASTS_ADD",
     },
   ],
 ]
