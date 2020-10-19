@@ -1,9 +1,7 @@
 import API from 'foremanReact/API';
+import { addToast } from 'foremanReact/redux/actions/toasts';
 import { insightsCloudUrl } from './InsightsCloudSyncHelpers';
-import {
-  INSIGHTS_CLOUD_SYNC_SUCCESS,
-  INSIGHTS_CLOUD_SYNC_FAILURE,
-} from './InsightsCloudSyncConstants';
+import { INSIGHTS_CLOUD_SYNC_SUCCESS } from './InsightsCloudSyncConstants';
 
 export const syncInsights = () => async dispatch => {
   try {
@@ -12,12 +10,13 @@ export const syncInsights = () => async dispatch => {
       type: INSIGHTS_CLOUD_SYNC_SUCCESS,
       payload: {},
     });
-  } catch (error) {
-    dispatch({
-      type: INSIGHTS_CLOUD_SYNC_FAILURE,
-      payload: {
-        error: error.message,
-      },
-    });
+  } catch ({ message }) {
+    dispatch(
+      addToast({
+        sticky: true,
+        type: 'error',
+        message,
+      })
+    );
   }
 };

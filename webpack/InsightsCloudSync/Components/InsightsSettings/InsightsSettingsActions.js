@@ -1,10 +1,9 @@
 import API from 'foremanReact/API';
+import { addToast } from 'foremanReact/redux/actions/toasts';
 import { insightsCloudUrl } from '../../InsightsCloudSyncHelpers';
 import {
   INSIGHTS_SYNC_SETTING_SET,
-  INSIGHTS_SYNC_SETTING_SET_FAILURE,
   INSIGHTS_SYNC_SETTINGS_GET_SUCCESS,
-  INSIGHTS_SYNC_SETTINGS_GET_FAILURE,
 } from './InsightsSettingsConstants';
 
 export const getInsightsSyncSettings = () => async dispatch => {
@@ -20,15 +19,14 @@ export const getInsightsSyncSettings = () => async dispatch => {
         },
       },
     });
-  } catch (error) {
-    dispatch({
-      type: INSIGHTS_SYNC_SETTINGS_GET_FAILURE,
-      payload: {
-        settings: {
-          error: error.message,
-        },
-      },
-    });
+  } catch ({ message }) {
+    dispatch(
+      addToast({
+        sticky: true,
+        type: 'error',
+        message,
+      })
+    );
   }
 };
 
@@ -47,14 +45,13 @@ export const setInsightsSyncEnabled = currentInsightsSyncEnabled => async dispat
         },
       },
     });
-  } catch (error) {
-    dispatch({
-      type: INSIGHTS_SYNC_SETTING_SET_FAILURE,
-      payload: {
-        settings: {
-          error: error.message,
-        },
-      },
-    });
+  } catch ({ message }) {
+    dispatch(
+      addToast({
+        sticky: true,
+        type: 'error',
+        message,
+      })
+    );
   }
 };
