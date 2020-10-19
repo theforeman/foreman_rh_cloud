@@ -10,27 +10,28 @@ module InsightsCloud::Api
 
     skip_after_action :log_response_body, :only => [:forward_request]
     skip_before_action :check_media_type, :only => [:forward_request]
+    after_action :update_host_insights_status, only: [:forward_request]
 
     # The method that "proxies" requests over to Cloud
     def forward_request
       certs = candlepin_id_cert @organization
-      cloud_response = ::ForemanRhCloud::CloudRequestForwarder.new.forward_request(request, controller_name, @branch_id, certs)
+      @cloud_response = ::ForemanRhCloud::CloudRequestForwarder.new.forward_request(request, controller_name, @branch_id, certs)
 
-      if cloud_response.code == 401
+      if @cloud_response.code == 401
         return render json: {
           :message => 'Authentication to the Insights Service failed.',
           :headers => {},
         }, status: :bad_gateway
       end
 
-      if cloud_response.headers[:content_disposition]
-        return send_data cloud_response, disposition: cloud_response.headers[:content_disposition], type: cloud_response.headers[:content_type]
+      if @cloud_response.headers[:content_disposition]
+        return send_data @cloud_response, disposition: @cloud_response.headers[:content_disposition], type: @cloud_response.headers[:content_type]
       end
 
-      assign_header(response, cloud_response, :x_resource_count, true)
-      assign_header(response, cloud_response, :x_rh_insights_request_id, false)
+      assign_header(response, @cloud_response, :x_resource_count, true)
+      assign_header(response, @cloud_response, :x_rh_insights_request_id, false)
 
-      render json: cloud_response, status: cloud_response.code
+      render json: @cloud_response, status: @cloud_response.code
     end
 
     def branch_info
@@ -68,6 +69,15 @@ module InsightsCloud::Api
     def ensure_branch_id
       @branch_id = cp_owner_id(@organization)
       return render_message "Branch ID not found for organization #{@organization.title}", :status => 400 unless @branch_id
+    end
+
+    def update_host_insights_status
+      return unless request.path == '/redhat_access/r/insights/platform/ingress/v1/upload' ||
+                    request.path.include?('/redhat_access/r/insights/uploads/')
+
+      host_status = @host.get_status(InsightsClientReportStatus)
+      host_status.update(reported_at: DateTime.now)
+      host_status.update(status: host_status.to_status(data: @cloud_response.code.to_s.start_with?('2')))
     end
   end
 end

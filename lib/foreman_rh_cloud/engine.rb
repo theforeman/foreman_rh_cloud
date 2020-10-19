@@ -78,7 +78,10 @@ module ForemanRhCloud
 
         register_global_js_file 'global'
 
-        register_custom_status(InventorySync::InventoryStatus)
+        register_custom_status InventorySync::InventoryStatus
+        register_custom_status InsightsClientReportStatus
+
+        subscribe 'host_created.event.foreman', ForemanRhCloud::InsightsSubscriber
 
         extend_page 'hosts/show' do |context|
           context.add_pagelet :main_tabs,
