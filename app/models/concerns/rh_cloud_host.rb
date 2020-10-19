@@ -8,5 +8,8 @@ module RhCloudHost
       class_name: 'FactValue',
       foreign_key: :host_id
     )
+
+    has_many :insights_hits, through: :insights, source: :hits
+    scoped_search :relation => :insights, :on => :hits_count, :only_explicit => true, :rename => :insights_recommendations_count
   end
 end
