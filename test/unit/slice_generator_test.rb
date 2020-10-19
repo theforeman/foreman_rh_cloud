@@ -71,6 +71,31 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
     assert_equal 1, generator.hosts_count
+    assert_not_nil(actual_system_profile = actual_host['system_profile'])
+    assert_nil actual_system_profile['number_of_cpus']
+    assert_nil actual_system_profile['number_of_sockets']
+    assert_nil actual_system_profile['cores_per_socket']
+    assert_nil actual_system_profile['system_memory_bytes']
+    assert_nil actual_system_profile['os_release']
+  end
+
+  test 'hosts report fields should be present if fact exist' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['cpu::cpu(s)'], value: '4', host: @host)
+    FactoryBot.create(:fact_value, fact_name: fact_names['cpu::cpu_socket(s)'], value: '2', host: @host)
+    FactoryBot.create(:fact_value, fact_name: fact_names['cpu::core(s)_per_socket'], value: '1', host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(actual_system_profile = actual_host['system_profile'])
+    assert_equal 4, actual_system_profile['number_of_cpus']
+    assert_equal 2, actual_system_profile['number_of_sockets']
+    assert_equal 1, actual_system_profile['cores_per_socket']
   end
 
   test 'generates ip_address and mac_address fields' do
