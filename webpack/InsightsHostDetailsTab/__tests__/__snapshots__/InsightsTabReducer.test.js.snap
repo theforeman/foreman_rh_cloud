@@ -1,12 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AccountList reducer should handle INSIGHTS_HITS_FAILURE 1`] = `
-Object {
-  "error": "some-error",
-  "hits": Array [],
-}
-`;
-
 exports[`AccountList reducer should handle INSIGHTS_HITS_REQUEST 1`] = `
 Object {
   "hits": Array [],

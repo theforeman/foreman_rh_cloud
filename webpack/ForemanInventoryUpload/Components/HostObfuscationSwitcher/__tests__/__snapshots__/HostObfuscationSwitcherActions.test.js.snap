@@ -5,9 +5,26 @@ Array [
   Array [
     Object {
       "payload": Object {
-        "hostObfuscationEnabled": undefined,
+        "hostObfuscationEnabled": true,
       },
       "type": "HOST_OBFUSCATION_TOGGLE",
+    },
+  ],
+]
+`;
+
+exports[`HostObfuscationSwitcher actions should handleToggle with error 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "message": Object {
+          "message": "Network error!",
+          "sticky": true,
+          "type": "error",
+        },
+      },
+      "type": "TOASTS_ADD",
     },
   ],
 ]
