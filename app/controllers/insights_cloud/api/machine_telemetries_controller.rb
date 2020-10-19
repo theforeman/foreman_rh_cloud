@@ -1,9 +1,9 @@
-module RedhatAccess
+module InsightsCloud::Api
   class MachineTelemetriesController < ::Api::V2::BaseController
     layout false
 
-    include ::RedhatAccess::ClientAuthentication
-    include ::RedhatAccess::CandlepinRelated
+    include ::InsightsCloud::ClientAuthentication
+    include ::InsightsCloud::CandlepinCache
 
     before_action :ensure_telemetry_enabled_for_consumer, :only => [:forward_request]
     before_action :cert_uuid, :ensure_org, :ensure_branch_id, :only => [:forward_request]
@@ -39,17 +39,7 @@ module RedhatAccess
     end
 
     def ensure_telemetry_enabled_for_consumer
-      render_message 'Telemetry is not enabled for your organization', :status => 403 unless telemetry_enabled_for_consumer?
-    end
-
-    def telemetry_enabled_for_consumer?
-      telemetry_config(@host.organization).present?
-    end
-
-    def telemetry_config(org)
-      TelemetryConfiguration.find_or_create_by(:organization_id => org.id) do |conf|
-        conf.enable_telemetry = true
-      end
+      render_message 'Telemetry is not enabled for your organization', :status => 403 if Setting[:rh_cloud_disable_insights_proxy]
     end
 
     private

@@ -57,6 +57,7 @@ module ForemanRhCloud
   # This method assumes uri_string contains uri-encoded username and p@$$word:
   # http://user:p%40%24%24word@localhost:8888
   def self.transform_scheme(uri_string)
+    return unless uri_string
     transformed_uri = URI.parse(uri_string)
 
     case transformed_uri.scheme
@@ -67,5 +68,12 @@ module ForemanRhCloud
     end
 
     transformed_uri.to_s
+  end
+
+  def self.prepare_forward_cloud_url(request_path)
+    cloud_path = request_path.sub('/redhat_access/r/insights/platform/', '')
+                             .sub('/redhat_access/r/insights/', '')
+
+    "#{base_url}/api/#{cloud_path}"
   end
 end

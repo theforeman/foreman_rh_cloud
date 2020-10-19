@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     get 'insights_cloud', to: 'react#insights_cloud'
   end
 
-  scope :module => :redhat_access, :path => :redhat_access do
+  scope :module => :'insights_cloud/api', :path => :redhat_access do
     scope '/r/insights' do
       match '/*path', :constraints => lambda { |req| !req.path.ends_with?('branch_info') }, to: 'machine_telemetries#forward_request', via: [:get, :post, :delete,:put, :patch]
     end
