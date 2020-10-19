@@ -98,10 +98,10 @@ module ForemanInventoryUpload
       end
 
       def report_system_profile(host, host_ips_cache)
-        @stream.simple_field('number_of_cpus', fact_value(host, 'cpu::cpu(s)').to_i)
-        @stream.simple_field('number_of_sockets', fact_value(host, 'cpu::cpu_socket(s)').to_i)
-        @stream.simple_field('cores_per_socket', fact_value(host, 'cpu::core(s)_per_socket').to_i)
-        @stream.simple_field('system_memory_bytes', kilobytes_to_bytes(fact_value(host, 'memory::memtotal').to_i))
+        @stream.simple_field('number_of_cpus', fact_value(host, 'cpu::cpu(s)')) { |v| v.to_i }
+        @stream.simple_field('number_of_sockets', fact_value(host, 'cpu::cpu_socket(s)')) { |v| v.to_i }
+        @stream.simple_field('cores_per_socket', fact_value(host, 'cpu::core(s)_per_socket')) { |v| v.to_i }
+        @stream.simple_field('system_memory_bytes', fact_value(host, 'memory::memtotal')) { |v| kilobytes_to_bytes(v.to_i) }
         @stream.array_field('network_interfaces') do
           @stream.raw(host.interfaces.map do |nic|
             {
@@ -124,13 +124,12 @@ module ForemanInventoryUpload
           end
         end
         @stream.simple_field(
-          'os_release',
-          os_release_value(
-            name: fact_value(host, 'distribution::name'),
-            version: fact_value(host, 'distribution::version'),
-            codename: fact_value(host, 'distribution::id')
-          )
-        )
+          'os_release', [
+            fact_value(host, 'distribution::name'),
+            fact_value(host, 'distribution::version'),
+            fact_value(host, 'distribution::id'),
+          ]
+        ) { |v| os_release_value(*v) }
         @stream.simple_field('os_kernel_version', fact_value(host, 'uname::release'))
         @stream.simple_field('arch', host.architecture&.name)
         @stream.simple_field('subscription_status', host.subscription_status_label)
@@ -190,7 +189,7 @@ module ForemanInventoryUpload
         @stream.string_array_value('mac_addresses', macs)
       end
 
-      def os_release_value(name:, version:, codename:)
+      def os_release_value(name, version, codename)
         "#{name} #{version} (#{codename})"
       end
     end

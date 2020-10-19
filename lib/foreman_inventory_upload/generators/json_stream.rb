@@ -26,8 +26,13 @@ module ForemanInventoryUpload
         @out << string
       end
 
-      def simple_field(name, value, last = false)
-        @out << "\"#{name}\": #{stringify_value(value)}#{last ? '' : ','}" unless value.nil?
+      def simple_field(name, value, last = false, &block)
+        return if value.nil? || value.try(:empty?)
+        return if value.kind_of?(Array) && value.compact.empty?
+
+        block ||= ->(value) { value }
+
+        @out << "\"#{name}\": #{stringify_value(block.call(value))}#{last ? '' : ','}"
       end
 
       def array_field(name, last = false, &block)
