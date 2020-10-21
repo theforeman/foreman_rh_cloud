@@ -1,8 +1,7 @@
 require 'test_plugin_helper'
 
-module RedhatAccess
+module InsightsCloud::Api
   class MachineTelemetriesControllerTest < ActionController::TestCase
-
     setup do
       @body = 'Cloud response body'
       @http_req = RestClient::Request.new(:method => 'GET', :url => 'http://test.theforeman.org')
@@ -10,7 +9,7 @@ module RedhatAccess
       org = FactoryBot.create(:organization)
       host = FactoryBot.create(:host, :with_subscription, :organization => org)
       User.current = ::Katello::CpConsumerUser.new(:uuid => host.subscription_facet.uuid, :login => host.subscription_facet.uuid)
-      RedhatAccess::MachineTelemetriesController.any_instance.stubs(:upstream_owner).returns({ 'uuid' => 'abcdefg' })
+      InsightsCloud::Api::MachineTelemetriesController.any_instance.stubs(:upstream_owner).returns({ 'uuid' => 'abcdefg' })
     end
 
     test "should respond with response from cloud" do
@@ -19,7 +18,7 @@ module RedhatAccess
       res = RestClient::Response.create(@body, net_http_resp, @http_req)
       ::ForemanRhCloud::CloudRequestForwarder.any_instance.stubs(:forward_request).returns(res)
 
-      get :forward_request, params: { "path"=>"platform/module-update-router/v1/channel" }
+      get :forward_request, params: { "path" => "platform/module-update-router/v1/channel" }
       assert_equal @body, @response.body
     end
 
@@ -32,7 +31,7 @@ module RedhatAccess
       res = RestClient::Response.create(@body, net_http_resp, @http_req)
       ::ForemanRhCloud::CloudRequestForwarder.any_instance.stubs(:forward_request).returns(res)
 
-      get :forward_request, params: { "path"=>"platform/module-update-router/v1/channel" }
+      get :forward_request, params: { "path" => "platform/module-update-router/v1/channel" }
       assert_equal x_resource_count, @response.headers['x-resource-count']
       assert_equal x_rh_insights_request_id, @response.headers['x_rh_insights_request_id']
     end
@@ -42,10 +41,9 @@ module RedhatAccess
       res = RestClient::Response.create(@body, net_http_resp, @http_req)
       ::ForemanRhCloud::CloudRequestForwarder.any_instance.stubs(:forward_request).returns(res)
 
-      get :forward_request, params: { "path"=>"platform/module-update-router/v1/channel" }
+      get :forward_request, params: { "path" => "platform/module-update-router/v1/channel" }
       assert_equal 502, @response.status
       assert_equal 'Authentication to the Insights Service failed.', JSON.parse(@response.body)['message']
     end
   end
 end
-

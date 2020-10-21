@@ -4,31 +4,60 @@ module ForemanRhCloud
   class CloudRequestForwarder
     include ::ForemanRhCloud::CloudAuth
 
-    def forward_request(original_request, controller_name, branch_id)
+    def forward_request(original_request, controller_name, branch_id, certs)
       forward_params = prepare_forward_params(original_request, branch_id)
-      logger.debug{"Request parameters for telemetry request: #{forward_params}"}
+      logger.debug("Request parameters for telemetry request: #{forward_params}")
 
       forward_payload = prepare_forward_payload(original_request, controller_name)
 
       logger.debug("User agent for telemetry is: #{http_user_agent original_request}")
 
-      cloud_url = ForemanRhCloud.prepare_forward_cloud_url(original_request.path)
-      logger.debug("Sending request to: #{cloud_url}")
+      request_opts = prepare_request_opts(original_request, forward_payload, forward_params, certs)
 
-      execute_cloud_request(original_request.method, cloud_url, forward_payload, forward_params)
+      logger.debug("Sending request to: #{request_opts[:url]}")
+
+      execute_cloud_request(request_opts)
     end
 
-    def execute_cloud_request(req_method, cloud_url, forward_payload, forward_params)
-      RestClient::Request.execute(
-        method: req_method,
-        url: cloud_url,
+    def prepare_request_opts(original_request, forward_payload, forward_params, certs)
+      base_params = {
+        method: original_request.method,
         verify_ssl: ForemanRhCloud.verify_ssl_method,
         payload: forward_payload,
-        headers: {
-          Authorization: "Bearer #{rh_credentials}",
-          params: forward_params,
-        }
-      )
+
+      }
+
+      if no_cert_paths.any? { |path| path.match original_request.path }
+        base_params.merge(
+          url: ForemanRhCloud.prepare_forward_cloud_url(ForemanRhCloud.base_url, original_request.path),
+          headers: {
+            Authorization: "Bearer #{rh_credentials}",
+            params: forward_params,
+          }
+        )
+      else
+        base_params.merge(
+          url: ForemanRhCloud.prepare_forward_cloud_url(ForemanRhCloud.cert_base_url, original_request.path),
+          ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
+          ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key]),
+          headers: {
+            params: forward_params,
+          }
+        )
+      end
+    end
+
+    def no_cert_paths
+      [
+        "/redhat_access/r/insights/v1/static/release/insights-core.egg",
+        "/redhat_access/r/insights/v1/static/uploader.v2.json",
+        "/redhat_access/r/insights/v1/static/uploader.v2.json.asc",
+        "/redhat_access/r/insights/v1/static/core/insights-core.egg",
+      ]
+    end
+
+    def execute_cloud_request(request_opts)
+      RestClient::Request.execute request_opts
     end
 
     def prepare_forward_payload(original_request, controller_name)

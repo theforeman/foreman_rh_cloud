@@ -9,7 +9,7 @@ class Setting::RhCloud < Setting
       set('obfuscate_inventory_ips', N_('Obfuscate ip addresses sent to Red Hat cloud'), false),
       set('rh_cloud_token', N_('Authentication token to Red Hat cloud services. Used to authenticate requests to cloud APIs'), 'DEFAULT', N_('Red Hat Cloud token'), nil, encrypted: true),
       set('exclude_installed_packages', N_('Exclude installed packages from Red Hat cloud inventory report'), false),
-      set('rh_cloud_disable_insights_proxy', N_('Disable proxying requests from insights-client to Red Hat cloud'), false, N_('Red Hat Cloud Disable Insights Proxy'))
+      set('rh_cloud_disable_insights_proxy', N_('Disable proxying requests from insights-client to Red Hat cloud'), false, N_('Red Hat Cloud Disable Insights Proxy')),
     ]
   end
 

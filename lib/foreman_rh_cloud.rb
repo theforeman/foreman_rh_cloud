@@ -8,6 +8,10 @@ module ForemanRhCloud
     @base_url ||= ENV['SATELLITE_RH_CLOUD_URL'] || 'https://cloud.redhat.com'
   end
 
+  def self.cert_base_url
+    @cert_base_url ||= 'https://cert.cloud.redhat.com'
+  end
+
   def self.authentication_url
     # https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
     @authentication_url ||= ENV['SATELLITE_RH_CLOUD_SSO_URL'] || 'https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token'
@@ -70,7 +74,7 @@ module ForemanRhCloud
     transformed_uri.to_s
   end
 
-  def self.prepare_forward_cloud_url(request_path)
+  def self.prepare_forward_cloud_url(base_url, request_path)
     cloud_path = request_path.sub('/redhat_access/r/insights/platform/', '')
                              .sub('/redhat_access/r/insights/', '')
 

@@ -13,5 +13,16 @@ module InsightsCloud
       owner = upstream_owner(org)
       owner['uuid'] if owner
     end
+
+    def candlepin_id_cert(org)
+      owner = upstream_owner(org)
+      return unless owner
+      id_cert = {
+        cert: owner.dig('idCert', 'cert'),
+        key: owner.dig('idCert', 'key'),
+      }
+      return unless id_cert.values.all?
+      id_cert
+    end
   end
 end

@@ -12,13 +12,14 @@ module InsightsCloud::Api
 
     # The method that "proxies" requests over to Cloud
     def forward_request
-      cloud_response = ::ForemanRhCloud::CloudRequestForwarder.new.forward_request(request, controller_name, @branch_id)
+      certs = candlepin_id_cert @organization
+      cloud_response = ::ForemanRhCloud::CloudRequestForwarder.new.forward_request(request, controller_name, @branch_id, certs)
 
       if cloud_response.code == 401
         return render json: {
           :message => 'Authentication to the Insights Service failed.',
-          :headers => {}
-        }, status: 502
+          :headers => {},
+        }, status: :bad_gateway
       end
 
       if cloud_response.headers[:content_disposition]
@@ -34,7 +35,7 @@ module InsightsCloud::Api
     def assign_header(res, cloud_res, header, transform)
       header_content = cloud_res.headers[header]
       return unless header_content
-      new_header = transform ? header.to_s.gsub('_', '-') : header.to_s
+      new_header = transform ? header.to_s.tr('_', '-') : header.to_s
       res.headers[new_header] = header_content
     end
 
