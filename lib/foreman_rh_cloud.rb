@@ -9,7 +9,7 @@ module ForemanRhCloud
   end
 
   def self.cert_base_url
-    @cert_base_url ||= 'https://cert.cloud.redhat.com'
+    @cert_base_url ||= ENV['SATELLITE_CERT_RH_CLOUD_URL'] || 'https://cert.cloud.redhat.com'
   end
 
   def self.authentication_url
@@ -72,12 +72,5 @@ module ForemanRhCloud
     end
 
     transformed_uri.to_s
-  end
-
-  def self.prepare_forward_cloud_url(base_url, request_path)
-    cloud_path = request_path.sub('/redhat_access/r/insights/platform/', '')
-                             .sub('/redhat_access/r/insights/', '')
-
-    "#{base_url}/api/#{cloud_path}"
   end
 end

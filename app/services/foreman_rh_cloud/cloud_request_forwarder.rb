@@ -24,25 +24,18 @@ module ForemanRhCloud
         method: original_request.method,
         verify_ssl: ForemanRhCloud.verify_ssl_method,
         payload: forward_payload,
-
+        headers: {
+          params: forward_params,
+        },
       }
 
       if no_cert_paths.any? { |path| path.match original_request.path }
-        base_params.merge(
-          url: ForemanRhCloud.prepare_forward_cloud_url(ForemanRhCloud.base_url, original_request.path),
-          headers: {
-            Authorization: "Bearer #{rh_credentials}",
-            params: forward_params,
-          }
-        )
+        base_params.merge(url: prepare_forward_cloud_url(ForemanRhCloud.base_url, original_request.path))
       else
         base_params.merge(
-          url: ForemanRhCloud.prepare_forward_cloud_url(ForemanRhCloud.cert_base_url, original_request.path),
+          url: prepare_forward_cloud_url(ForemanRhCloud.cert_base_url, original_request.path),
           ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-          ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key]),
-          headers: {
-            params: forward_params,
-          }
+          ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key])
         )
       end
     end
@@ -80,6 +73,13 @@ module ForemanRhCloud
       end
 
       forward_params
+    end
+
+    def prepare_forward_cloud_url(base_url, request_path)
+      cloud_path = request_path.sub('/redhat_access/r/insights/platform/', '')
+                               .sub('/redhat_access/r/insights/', '')
+
+      "#{base_url}/api/#{cloud_path}"
     end
 
     def core_app_name
