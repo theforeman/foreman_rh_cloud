@@ -27,7 +27,7 @@ module ForemanRhCloud
 
     initializer 'foreman_rh_cloud.register_plugin', :before => :finisher_hook do |_app|
       Foreman::Plugin.register :foreman_rh_cloud do
-        requires_foreman '> 2.1'
+        requires_foreman '>= 2.3'
 
         # Add permissions
         security_block :foreman_rh_cloud do
@@ -72,6 +72,7 @@ module ForemanRhCloud
           context.add_pagelet :main_tabs,
             partial: 'hosts/insights_tab',
             name: _('Insights'),
+            id: 'insights',
             onlyif: proc { |host| host.insights }
         end
       end
