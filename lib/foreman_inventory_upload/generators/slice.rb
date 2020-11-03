@@ -107,7 +107,7 @@ module ForemanInventoryUpload
             {
               'ipv4_addresses': [host_ips_cache[nic.ip]].compact,
               'ipv6_addresses': [nic.ip6].compact,
-              'mtu': nic.try(:mtu),
+              'mtu': nic.try(:mtu) && nic.mtu.to_i,
               'mac_address': nic.mac,
               'name': nic.identifier,
             }.compact.to_json
