@@ -77,6 +77,11 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_nil actual_system_profile['cores_per_socket']
     assert_nil actual_system_profile['system_memory_bytes']
     assert_nil actual_system_profile['os_release']
+    assert_not_nil(actual_network_interfaces = actual_system_profile['network_interfaces'])
+    assert_not_nil(actual_nic = actual_network_interfaces.first)
+    refute actual_nic.key?('mtu')
+    refute actual_nic.key?('mac_address')
+    refute actual_nic.key?('name')
   end
 
   test 'hosts report fields should be present if fact exist' do
@@ -99,7 +104,9 @@ class SliceGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'generates ip_address and mac_address fields' do
-    @host.interfaces << FactoryBot.build(:nic_managed)
+    nic = FactoryBot.build(:nic_managed)
+    nic.attrs['mtu'] = '1500'
+    @host.interfaces << nic
     batch = Host.where(id: @host.id).in_batches.first
     generator = create_generator(batch)
 
@@ -110,6 +117,36 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal @host.interfaces.where.not(ip: nil).first.ip, actual_host['ip_addresses'].first
     assert_equal @host.interfaces.where.not(mac: nil).first.mac, actual_host['mac_addresses'].first
+    assert_equal @host.fqdn, actual_host['fqdn']
+    assert_equal '1234', actual_host['account']
+    assert_equal 1, generator.hosts_count
+  end
+
+  test 'generates nic fields' do
+    ip6 = Array.new(4) { '%x' % rand(16**4) }.join(':') + '::' + '5'
+    nic = FactoryBot.build(:nic_managed, ip6: ip6)
+    nic.attrs['mtu'] = '1500'
+    @host.interfaces << nic
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    expected_ip = @host.interfaces.where.not(ip: nil).first.ip
+    assert_not_nil actual_host['ip_addresses'].find { |addr| addr == expected_ip }
+    expected_mac = @host.interfaces.where.not(mac: nil).first.mac
+    assert_not_nil actual_host['mac_addresses'].find { |mac| mac == expected_mac }
+    assert_not_nil(actual_system_profile = actual_host['system_profile'])
+    assert_not_nil(actual_network_interfaces = actual_system_profile['network_interfaces'])
+    assert_not_nil(actual_nic = actual_network_interfaces.find { |nic_node| nic_node['ipv4_addresses'].first == nic.ip })
+    assert_equal nic.ip, actual_nic['ipv4_addresses'].first
+    assert_equal nic.ip6, actual_nic['ipv6_addresses'].first
+    assert_equal 1500, actual_nic['mtu']
+    assert_equal nic.mac, actual_nic['mac_address']
+    assert_equal nic.identifier, actual_nic['name']
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
     assert_equal 1, generator.hosts_count
