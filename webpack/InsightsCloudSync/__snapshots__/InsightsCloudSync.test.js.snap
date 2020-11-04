@@ -19,7 +19,7 @@ exports[`InsightsCloudSync render 1`] = `
              recommendations output for hosts managed here
       </p>
       <p>
-        1. Obtain an RHSM API token: 
+        1. Obtain a Red Hat API token: 
         <a
           href="https://access.redhat.com/management/api"
           rel="noopener noreferrer"
