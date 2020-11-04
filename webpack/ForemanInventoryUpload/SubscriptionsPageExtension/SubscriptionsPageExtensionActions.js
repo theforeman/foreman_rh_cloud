@@ -1,3 +1,5 @@
+import ReactDom from 'react-dom';
+import React from 'react';
 import API from 'foremanReact/API';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { foremanUrl } from '../../ForemanRhCloudHelpers';
@@ -32,3 +34,21 @@ const fetchInventoryAutoUploadSetting = async processApiResponse => {
     processApiResponse(settingValue);
   }
 };
+
+export const manifestModalListener = (isOpen, unsubscribe) => {
+  if(!isOpen) return;
+
+  const intervalID = setInterval(() => {
+    const form = document.querySelector("#manifest-history-tabs-pane-1 > form");
+    if(!form) return; // Although modal 'isOpen' was set to true, its DOM wasn't loaded yet.
+    clearInterval(intervalID)
+
+    const rhCloudSlot = document.createElement('div')
+    rhCloudSlot.id = 'rh_cloud_slot'
+    form.insertAdjacentElement('beforeend', rhCloudSlot)
+
+    const switcher = <h1>Hello from RH</h1>; // Replace this with the form-group and the actual switcher.
+    ReactDom.render(switcher, document.getElementById('rh_cloud_slot'));
+    unsubscribe();
+  }, 250) 
+}
