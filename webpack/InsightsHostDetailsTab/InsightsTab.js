@@ -17,16 +17,14 @@ class InsightsHostDetailsTab extends React.Component {
     if (!hits.length) {
       return <h2>No recommendations were found for this host!</h2>;
     }
-    const hitsSorted = orderBy(hits, ['insights_hit.total_risk'], ['desc']);
+    const hitsSorted = orderBy(hits, ['total_risk'], ['desc']);
     const items = hitsSorted.map(
       (
         {
-          insights_hit: {
-            title,
-            total_risk: totalRisk,
-            results_url: resultsUrl,
-            solution_url: solutionUrl,
-          },
+          title,
+          total_risk: totalRisk,
+          results_url: resultsUrl,
+          solution_url: solutionUrl,
         },
         index
       ) => (
