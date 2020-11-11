@@ -26,6 +26,7 @@ module ForemanRhCloud
         payload: forward_payload,
         headers: {
           params: forward_params,
+          user_agent: http_user_agent(original_request),
         },
       }
 
