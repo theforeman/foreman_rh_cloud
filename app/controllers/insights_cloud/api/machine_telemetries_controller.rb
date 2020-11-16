@@ -6,7 +6,8 @@ module InsightsCloud::Api
     include ::InsightsCloud::CandlepinCache
 
     before_action :ensure_telemetry_enabled_for_consumer, :only => [:forward_request]
-    before_action :cert_uuid, :ensure_org, :ensure_branch_id, :only => [:forward_request]
+    before_action :cert_uuid, :ensure_org, :ensure_branch_id, :only => [:forward_request, :branch_info]
+
     skip_after_action :log_response_body, :only => [:forward_request]
     skip_before_action :check_media_type, :only => [:forward_request]
 
@@ -30,6 +31,10 @@ module InsightsCloud::Api
       assign_header(response, cloud_response, :x_rh_insights_request_id, false)
 
       render json: cloud_response, status: cloud_response.code
+    end
+
+    def branch_info
+      render :json => ForemanRhCloud::BranchInfo.new.generate(@uuid, @host, @branch_id, request.host).to_json
     end
 
     def assign_header(res, cloud_res, header, transform)

@@ -29,20 +29,18 @@ Rails.application.routes.draw do
     post 'save_token_and_sync', to: 'settings#save_token_and_sync'
   end
 
-  namespace :redhat_access do
-    scope 'r/insights/v1' do
-      get 'branch_info', to: 'machine_telemetries#branch_info'
-    end
-  end
-
   namespace :foreman_rh_cloud do
     get 'inventory_upload', to: '/react#index'
     get 'insights_cloud', to: '/react#index' # Uses foreman's react controller
   end
 
   scope :module => :'insights_cloud/api', :path => :redhat_access do
+    scope 'r/insights/v1' do
+      get 'branch_info', to: 'machine_telemetries#branch_info'
+    end
+
     scope '/r/insights' do
-      match '/*path', :constraints => lambda { |req| !req.path.ends_with?('branch_info') }, to: 'machine_telemetries#forward_request', via: [:get, :post, :delete,:put, :patch]
+      match '/*path', to: 'machine_telemetries#forward_request', via: [:get, :post, :delete,:put, :patch]
     end
   end
 end
