@@ -4,8 +4,6 @@ services:
 cache:
   npm: true
   bundler: true
-  directories:
-    - /home/travis/.rvm/
 rvm:
   - 2.5
 node_js:
