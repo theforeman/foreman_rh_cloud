@@ -5,8 +5,8 @@ module InsightsCloud::Api
     include ::InsightsCloud::ClientAuthentication
     include ::InsightsCloud::CandlepinCache
 
-    before_action :ensure_telemetry_enabled_for_consumer, :only => [:forward_request]
     before_action :cert_uuid, :ensure_org, :ensure_branch_id, :only => [:forward_request, :branch_info]
+    before_action :ensure_telemetry_enabled_for_consumer, :only => [:forward_request]
 
     skip_after_action :log_response_body, :only => [:forward_request]
     skip_before_action :check_media_type, :only => [:forward_request]
@@ -44,11 +44,17 @@ module InsightsCloud::Api
       res.headers[new_header] = header_content
     end
 
+    private
+
     def ensure_telemetry_enabled_for_consumer
-      render_message 'Telemetry is not enabled for your organization', :status => 403 if Setting[:rh_cloud_disable_insights_proxy]
+      render_message 'Telemetry is not enabled for your organization', :status => 403 unless telemetry_config
     end
 
-    private
+    def telemetry_config
+      ::RedhatAccess::TelemetryConfiguration.find_or_create_by(:organization_id => @organization.id) do |conf|
+        conf.enable_telemetry = true
+      end
+    end
 
     def cert_uuid
       @uuid ||= User.current.login
