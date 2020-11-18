@@ -21,10 +21,10 @@ const SyncModal = ({ show, toggleModal }) => (
     <Modal.Body>
       <Grid>
         <p>
-          {__(`Please go over the following steps to add a RHSM API token:`)}
+          {__(`Please go over the following steps to add a Red Hat API token:`)}
         </p>
         <p>
-          {__(`1. Obtain an RHSM API token: `)}
+          {__(`1. Obtain an Red Hat API token: `)}
           <a
             href="https://access.redhat.com/management/api"
             target="_blank"
