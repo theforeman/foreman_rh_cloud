@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InventoryAutoUpload rendering render with props 1`] = `
+<FormGroup
+  bsClass="form-group"
+>
+  <Grid
+    bsClass="container"
+    componentClass="div"
+    fluid={false}
+  >
+    <h3>
+      Red Hat Cloud Inventory
+    </h3>
+    <hr />
+    <Row
+      bsClass="row"
+      componentClass="div"
+    >
+      <Switcher
+        SwitchCol={2}
+        id="auto-upload"
+        isChecked={true}
+        label="Inventory Auto Upload"
+        labelCol={5}
+        onChange={[Function]}
+        tooltip="Enable automatic upload of your hosts inventory to the Red Hat cloud"
+      />
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={5}
+      >
+        <Popover
+          bodyContent={
+            <UNDEFINED
+              autoUploadEnabled={true}
+              handleToggle={[Function]}
+            />
+          }
+          headerContent={
+            <strong>
+              Advanced Inventory Settings
+            </strong>
+          }
+          position="right"
+        >
+          <Button
+            style={
+              Object {
+                "fontSize": "small",
+                "marginTop": "-4px",
+              }
+            }
+            variant="secondary"
+          >
+            Show Advanced Settings
+             
+            <CaretRightIcon
+              color="currentColor"
+              noVerticalAlign={false}
+              size="sm"
+            />
+          </Button>
+        </Popover>
+      </Col>
+    </Row>
+    <br />
+    <Row
+      bsClass="row"
+      componentClass="div"
+    >
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={12}
+      >
+        <Text
+          component="p"
+        >
+          <InfoAltIcon
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+          />
+           
+          More details can be found in
+           
+          <Text
+            component="a"
+            href="/foreman_rh_cloud/inventory_upload"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <strong>
+              Configure
+               &gt; 
+              Inventory Upload
+            </strong>
+          </Text>
+        </Text>
+      </Col>
+    </Row>
+  </Grid>
+</FormGroup>
+`;

@@ -9,7 +9,7 @@ exports[`AutoUploadSwitcher rendering render with props 1`] = `
   </span>
   <FieldLevelHelp
     buttonClass=""
-    content="Enable automatic upload of your host inventory to the Red Hat cloud"
+    content="Enable automatic upload of your hosts inventory to the Red Hat cloud"
     placement="top"
     rootClose={true}
   />

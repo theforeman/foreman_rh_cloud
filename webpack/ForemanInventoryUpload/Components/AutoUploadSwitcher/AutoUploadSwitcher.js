@@ -9,7 +9,7 @@ const AutoUploadSwitcher = ({ autoUploadEnabled, handleToggle }) => (
     <span>Auto upload</span>
     <FieldLevelHelp
       content={__(
-        'Enable automatic upload of your host inventory to the Red Hat cloud'
+        'Enable automatic upload of your hosts inventory to the Red Hat cloud'
       )}
     />
     <Switch
