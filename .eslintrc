@@ -13,6 +13,7 @@
         "skipWords": [
           "ansible",
           "donut",
+          "hostnames",
           "ips",
           "ipv4",
           "jed",

@@ -1,5 +1,5 @@
 import { registerReducers } from './ForemanRhCloudReducers';
-import { registerPages } from './ForemanRhCloudPages';
+import { registerFills } from './ForemanRhCloudFills';
 
 registerReducers();
-registerPages();
+registerFills();
