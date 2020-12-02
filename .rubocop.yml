@@ -1,2 +1,2 @@
 inherit_from:
-  - https://raw.githubusercontent.com/theforeman/foreman/develop/.rubocop.yml
+  - https://raw.githubusercontent.com/theforeman/foreman/2.3-stable/.rubocop.yml
