@@ -28,21 +28,19 @@ exports[`InsightsCloudSync render 1`] = `
           access.redhat.com 
           <Icon
             name="external-link"
-            size="xs"
             type="fa"
           />
         </a>
         <br />
         2. Copy the token to 'Red Hat Cloud token' setting: 
         <a
-          href="www.example.com/settings"
+          href="/settings?search=name+%3D+rh_cloud_token"
           rel="noopener noreferrer"
           target="_blank"
         >
           Red Hat Cloud token 
           <Icon
             name="external-link"
-            size="xs"
             type="fa"
           />
         </a>

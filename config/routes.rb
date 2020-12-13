@@ -22,6 +22,6 @@ Rails.application.routes.draw do
 
   namespace :foreman_rh_cloud do
     get 'inventory_upload', to: 'react#inventory_upload'
-    get 'insights_cloud', to: 'react#insights_cloud'
+    get 'insights_cloud', to: '/react#index' # Uses foreman's react controller
   end
 end

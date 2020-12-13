@@ -1,4 +1,6 @@
+import React from 'react';
 import componentRegistry from 'foremanReact/components/componentRegistry';
+import { registerRoutes as foremanRegisterRoutes } from 'foremanReact/routes/RoutingService';
 import ForemanInventoryUpload from './ForemanInventoryUpload';
 import InsightsCloudSync from './InsightsCloudSync';
 import InsightsHostDetailsTab from './InsightsHostDetailsTab';
@@ -11,4 +13,16 @@ const pages = [
 
 export const registerPages = () => {
   pages.forEach(page => componentRegistry.register(page));
+};
+
+export const routes = [
+  {
+    path: '/foreman_rh_cloud/insights_cloud',
+    exact: true,
+    render: props => <InsightsCloudSync {...props} />,
+  },
+];
+
+export const registerRoutes = () => {
+  foremanRegisterRoutes('foreman_rh_cloud', routes);
 };
