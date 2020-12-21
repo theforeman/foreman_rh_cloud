@@ -1,2 +1,2 @@
-<!-- insert_bottom 'head' -->
+<!-- insert_top 'head' -->
 <%= css_tags_for([:foreman_rh_cloud]).first %>
