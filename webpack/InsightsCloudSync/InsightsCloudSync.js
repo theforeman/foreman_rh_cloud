@@ -1,61 +1,64 @@
-import React from 'react';
-import { IntlProvider } from 'react-intl';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
+import { Button } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import { translate as __ } from 'foremanReact/common/I18n';
-import { Button, Icon } from 'patternfly-react';
-import { INSIGHTS_SYNC_PAGE_TITLE } from './InsightsCloudSyncConstants';
-import InsightsSettings from './Components/InsightsSettings';
-import { cloudTokenSettingUrl } from './InsightsCloudSyncHelpers';
+import PageLayout from 'foremanReact/routes/common/PageLayout/PageLayout';
+import { useForemanSettings } from 'foremanReact/Root/Context/ForemanContext';
+import InsightsHeader from './Components/InsightsHeader';
+import {
+  INSIGHTS_SYNC_PAGE_TITLE,
+  INSIGHTS_SEARCH_PROPS,
+} from './InsightsCloudSyncConstants';
 
-const InsightsCloudSync = ({ syncInsights }) => {
-  document.title = INSIGHTS_SYNC_PAGE_TITLE;
+const InsightsCloudSync = ({
+  syncInsights,
+  query,
+  fetchInsights,
+  page,
+  perPage: urlPerPage,
+}) => {
+  const { perPage: appPerPage } = useForemanSettings();
+  const perPage = urlPerPage || appPerPage;
+
+  // acts as componentDidMount
+  useEffect(() => {
+    fetchInsights({ page, perPage, searchQuery: query });
+  }, []);
+
   return (
-    <IntlProvider locale={navigator.language}>
-      <div className="insights-cloud-sync">
-        <h1>{__('Red Hat Insights Sync')}</h1>
-        <div className="insights-cloud-sync-body">
-          <InsightsSettings />
-          <p>
-            {__(`Insights synchronization process is used to provide Insights
-             recommendations output for hosts managed here`)}
-          </p>
-          <p>
-            {__(`1. Obtain an Red Hat API token: `)}
-            <a
-              href="https://access.redhat.com/management/api"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              access.redhat.com <Icon name="external-link" />
-            </a>
-            <br />
-            {__("2. Copy the token to 'Red Hat Cloud token' setting: ")}
-            <a
-              href={cloudTokenSettingUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {__('Red Hat Cloud token ')}
-              <Icon name="external-link" />
-            </a>
-            <br />
-            {__(
-              '3. Now you can synchronize recommendations manually using the "Sync now" button.'
-            )}
-          </p>
-          <div>
-            <Button bsStyle="primary" onClick={syncInsights}>
-              {__('Sync now')}
-            </Button>
-          </div>
-        </div>
-      </div>
-    </IntlProvider>
+    <PageLayout
+      searchable
+      searchProps={INSIGHTS_SEARCH_PROPS}
+      onSearch={searchQuery => fetchInsights({ searchQuery, page: 1 })}
+      header={INSIGHTS_SYNC_PAGE_TITLE}
+      toolbarButtons={
+        <Button bsStyle="primary" onClick={syncInsights}>
+          {__('Sync now')}
+        </Button>
+      }
+      searchQuery={query}
+      beforeToolbarComponent={<InsightsHeader />}
+    >
+      <React.Fragment>
+        <p>Insights Table will be here</p>
+      </React.Fragment>
+    </PageLayout>
   );
 };
 
 InsightsCloudSync.propTypes = {
   syncInsights: PropTypes.func.isRequired,
+  fetchInsights: PropTypes.func.isRequired,
+  page: PropTypes.number,
+  perPage: PropTypes.number,
+  query: PropTypes.string,
+};
+
+InsightsCloudSync.defaultProps = {
+  page: 1,
+  perPage: null,
+  query: '',
 };
 
 export default InsightsCloudSync;

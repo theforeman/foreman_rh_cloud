@@ -40,7 +40,8 @@ module ForemanRhCloud
             'foreman_inventory_upload/accounts': [:index],
             'foreman_inventory_upload/reports': [:last],
             'foreman_inventory_upload/uploads': [:auto_upload, :show_auto_upload, :download_file, :last],
-            'foreman_rh_cloud/react': [:inventory_upload]
+            'foreman_rh_cloud/react': [:inventory_upload],
+            'insights_cloud/hits': [:index, :auto_complete_search]
           )
         end
 
