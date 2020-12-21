@@ -4,8 +4,5 @@ module ForemanRhCloud
 
     def inventory_upload
     end
-
-    def insights_cloud
-    end
   end
 end

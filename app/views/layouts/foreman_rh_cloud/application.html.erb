@@ -2,10 +2,6 @@
   <%= webpacked_plugins_js_for :'foreman_rh_cloud' %>
 <% end %>
 
-<% content_for(:stylesheets) do %>
-    <%= webpacked_plugins_css_for :'foreman_rh_cloud' %>
-<% end %>
-
 <% content_for(:content) do %>
   <%= notifications %>
   <div id="organization-id" data-id="<%= Organization.current.id if Organization.current %>" ></div>

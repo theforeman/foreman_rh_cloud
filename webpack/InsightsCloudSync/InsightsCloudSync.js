@@ -5,8 +5,9 @@ import { translate as __ } from 'foremanReact/common/I18n';
 import { Button, Icon } from 'patternfly-react';
 import { INSIGHTS_SYNC_PAGE_TITLE } from './InsightsCloudSyncConstants';
 import InsightsSettings from './Components/InsightsSettings';
+import { cloudTokenSettingUrl } from './InsightsCloudSyncHelpers';
 
-const InsightsCloudSync = ({ settingsUrl, syncInsights }) => {
+const InsightsCloudSync = ({ syncInsights }) => {
   document.title = INSIGHTS_SYNC_PAGE_TITLE;
   return (
     <IntlProvider locale={navigator.language}>
@@ -25,13 +26,17 @@ const InsightsCloudSync = ({ settingsUrl, syncInsights }) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              access.redhat.com <Icon name="external-link" size="xs" />
+              access.redhat.com <Icon name="external-link" />
             </a>
             <br />
             {__("2. Copy the token to 'Red Hat Cloud token' setting: ")}
-            <a href={settingsUrl} target="_blank" rel="noopener noreferrer">
+            <a
+              href={cloudTokenSettingUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {__('Red Hat Cloud token ')}
-              <Icon name="external-link" size="xs" />
+              <Icon name="external-link" />
             </a>
             <br />
             {__(
@@ -51,7 +56,6 @@ const InsightsCloudSync = ({ settingsUrl, syncInsights }) => {
 
 InsightsCloudSync.propTypes = {
   syncInsights: PropTypes.func.isRequired,
-  settingsUrl: PropTypes.string.isRequired,
 };
 
 export default InsightsCloudSync;
