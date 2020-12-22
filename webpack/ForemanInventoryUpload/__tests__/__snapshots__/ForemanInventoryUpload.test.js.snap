@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ForemanInventoryUpload render without Props 1`] = `
-<IntlProvider
-  locale="en-US"
+<PageLayout
+  beforeToolbarComponent={<PageHeader />}
+  header="Red Hat Inventory"
+  searchable={false}
 >
   <Grid
     bsClass="container"
@@ -10,8 +12,7 @@ exports[`ForemanInventoryUpload render without Props 1`] = `
     componentClass="div"
     fluid={true}
   >
-    <PageHeader />
     <Connect(AccountList) />
   </Grid>
-</IntlProvider>
+</PageLayout>
 `;

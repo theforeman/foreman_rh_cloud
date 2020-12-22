@@ -4,10 +4,10 @@ import AutoUploadSwitcher from '../AutoUploadSwitcher';
 import HostObfuscationSwitcher from '../HostObfuscationSwitcher';
 import ExcludePackagesSwitcher from '../ExcludePackagesSwitcher';
 import IpsObfuscationSwitcher from '../IpsObfuscationSwitcher';
-import './inventorySettings.scss';
+import './InventorySettings.scss';
 
 const InventorySettings = () => (
-  <div className="inventory_settings">
+  <div className="inventory-settings">
     <h3>{__('Settings')}</h3>
     <AutoUploadSwitcher />
     <ExcludePackagesSwitcher />
