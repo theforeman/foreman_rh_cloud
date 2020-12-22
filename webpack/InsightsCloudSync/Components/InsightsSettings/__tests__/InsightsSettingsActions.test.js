@@ -1,5 +1,5 @@
 import { testActionSnapshotWithFixtures } from '@theforeman/test';
-import API from 'foremanReact/API';
+import { API } from 'foremanReact/redux/API';
 import {
   getInsightsSyncSettings,
   setInsightsSyncEnabled,
@@ -10,7 +10,7 @@ const serverMock = {
   data: { insightsSyncEnabled: true },
 };
 
-jest.mock('foremanReact/API');
+jest.mock('foremanReact/redux/API');
 API.get.mockImplementation(() => serverMock);
 API.patch.mockImplementation(() => serverMock);
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import API from 'foremanReact/API';
+import { API } from 'foremanReact/redux/API';
 import { addToast } from 'foremanReact/redux/actions/toasts';
 import { inventoryUrl } from '../../../../ForemanInventoryHelpers';
 import Toast from './components/Toast';

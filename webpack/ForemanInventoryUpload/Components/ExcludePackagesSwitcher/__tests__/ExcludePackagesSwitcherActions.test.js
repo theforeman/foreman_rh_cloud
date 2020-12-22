@@ -1,9 +1,9 @@
 import { testActionSnapshotWithFixtures } from '@theforeman/test';
-import API from 'foremanReact/API';
+import { API } from 'foremanReact/redux/API';
 import { handleToggle } from '../ExcludePackagesSwitcherActions';
 import { handleToggleResponse } from '../ExcludePackagesSwitcher.fixtures';
 
-jest.mock('foremanReact/API');
+jest.mock('foremanReact/redux/API');
 API.post.mockImplementation(async () => handleToggleResponse);
 
 const fixtures = {

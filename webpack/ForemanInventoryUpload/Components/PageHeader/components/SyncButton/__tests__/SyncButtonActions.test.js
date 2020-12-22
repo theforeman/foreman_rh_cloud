@@ -1,9 +1,9 @@
 import { testActionSnapshotWithFixtures } from '@theforeman/test';
-import API from 'foremanReact/API';
+import { API } from 'foremanReact/redux/API';
 import { handleSync } from '../SyncButtonActions';
 import { successResponse } from './SyncButtonFixtures';
 
-jest.mock('foremanReact/API');
+jest.mock('foremanReact/redux/API');
 API.post.mockImplementation(async () => successResponse);
 
 const fixtures = {

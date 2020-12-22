@@ -1,10 +1,10 @@
 import React from 'react';
 import { IntegrationTestHelper } from '@theforeman/test';
-import API from 'foremanReact/API';
+import { API } from 'foremanReact/redux/API';
 import ExcludePackagesSwitcher from '../index';
 import reducers from '../../../../ForemanRhCloudReducers';
 
-jest.mock('foremanReact/API');
+jest.mock('foremanReact/redux/API');
 API.post.mockImplementation(async () => ({
   data: {
     excludePackages: false,
