@@ -41,3 +41,21 @@ exports[`InsightsCloudSync render 1`] = `
   </p>
 </PageLayout>
 `;
+
+exports[`InsightsCloudSync render error 1`] = `
+<PageLayout
+  header="Red Hat Insights ERROR"
+  searchable={false}
+>
+  <ErrorEmptyState />
+</PageLayout>
+`;
+
+exports[`InsightsCloudSync render no token 1`] = `
+<PageLayout
+  header="Red Hat Insights"
+  searchable={false}
+>
+  <NoTokenEmptyState />
+</PageLayout>
+`;

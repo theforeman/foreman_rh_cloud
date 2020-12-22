@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InsightsHeader render 1`] = `
+<div
+  className="insights-header"
+>
+  <Connect(InsightsSettings) />
+  <p>
+    Insights synchronization process is used to provide Insights
+             recommendations output for hosts managed here
+  </p>
+</div>
+`;
