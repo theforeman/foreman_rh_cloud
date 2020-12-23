@@ -17,7 +17,12 @@ Rails.application.routes.draw do
   namespace :insights_cloud do
     resources :tasks, only: [:create]
     resource :settings, only: [:show, :update]
-    get 'hits/:host_id', to: 'hits#index'
+    resources :hits, except: %i[show] do
+      collection do
+        get 'auto_complete_search'
+      end
+    end
+    match 'hits/:host_id', to: 'hits#show', via: :get
   end
 
   namespace :foreman_rh_cloud do

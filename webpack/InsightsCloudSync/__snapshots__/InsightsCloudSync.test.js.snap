@@ -1,65 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InsightsCloudSync render 1`] = `
-<IntlProvider
-  locale="en-US"
->
-  <div
-    className="insights-cloud-sync"
-  >
-    <h1>
-      Red Hat Insights Sync
-    </h1>
-    <div
-      className="insights-cloud-sync-body"
+<PageLayout
+  beforeToolbarComponent={<InsightsHeader />}
+  header="Red Hat Insights"
+  onSearch={[Function]}
+  searchProps={
+    Object {
+      "autocomplete": Object {
+        "id": "searchBar",
+        "searchQuery": "",
+        "url": "/insights_cloud/hits/auto_complete_search",
+        "useKeyShortcuts": true,
+      },
+      "bookmarks": Object {
+        "canCreateBookmarks": true,
+        "documentationUrl": "4.1.5Searching",
+        "url": "/api/bookmarks",
+      },
+      "controller": "/foreman_rh_cloud/insights_cloud",
+    }
+  }
+  searchQuery=""
+  searchable={true}
+  toolbarButtons={
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      disabled={false}
+      onClick={[Function]}
     >
-      <Connect(InsightsSettings) />
-      <p>
-        Insights synchronization process is used to provide Insights
-             recommendations output for hosts managed here
-      </p>
-      <p>
-        1. Obtain an Red Hat API token: 
-        <a
-          href="https://access.redhat.com/management/api"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          access.redhat.com 
-          <Icon
-            name="external-link"
-            type="fa"
-          />
-        </a>
-        <br />
-        2. Copy the token to 'Red Hat Cloud token' setting: 
-        <a
-          href="/settings?search=name+%3D+rh_cloud_token"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Red Hat Cloud token 
-          <Icon
-            name="external-link"
-            type="fa"
-          />
-        </a>
-        <br />
-        3. Now you can synchronize recommendations manually using the "Sync now" button.
-      </p>
-      <div>
-        <Button
-          active={false}
-          block={false}
-          bsClass="btn"
-          bsStyle="primary"
-          disabled={false}
-          onClick={[Function]}
-        >
-          Sync now
-        </Button>
-      </div>
-    </div>
-  </div>
-</IntlProvider>
+      Sync now
+    </Button>
+  }
+>
+  <p>
+    Insights Table will be here
+  </p>
+</PageLayout>
 `;

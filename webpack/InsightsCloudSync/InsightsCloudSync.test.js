@@ -6,7 +6,8 @@ import InsightsCloudSync from './InsightsCloudSync';
 const fixtures = {
   render: {
     syncInsights: noop,
-    settingsUrl: 'www.example.com/settings',
+    query: '',
+    fetchInsights: noop,
   },
 };
 

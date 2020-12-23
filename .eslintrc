@@ -12,6 +12,7 @@
         "ignoreRequire": true,
         "skipWords": [
           "ansible",
+          "camelcase",
           "donut",
           "hostnames",
           "ips",
@@ -24,6 +25,7 @@
           "nowrap",
           "pid",
           "redhat",
+          "remediations",
           "repo",
           "theforeman",
           "tooltip",
