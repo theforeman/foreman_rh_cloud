@@ -1,6 +1,5 @@
 import { push } from 'connected-react-router';
-import API from 'foremanReact/API';
-import { get } from 'foremanReact/redux/API';
+import { API, get } from 'foremanReact/redux/API';
 import { addToast } from 'foremanReact/redux/actions/toasts';
 import { stringifyParams } from 'foremanReact/common/urlHelpers';
 import { insightsCloudUrl } from './InsightsCloudSyncHelpers';

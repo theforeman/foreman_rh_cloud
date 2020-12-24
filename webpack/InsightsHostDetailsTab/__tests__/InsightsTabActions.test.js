@@ -1,9 +1,9 @@
 import { testActionSnapshotWithFixtures } from '@theforeman/test';
-import API from 'foremanReact/API';
+import { API } from 'foremanReact/redux/API';
 import { fetchHits } from '../InsightsTabActions';
 import { hostID, hits } from './InsightsTab.fixtures';
 
-jest.mock('foremanReact/API');
+jest.mock('foremanReact/redux/API');
 API.get.mockImplementation(async () => ({ data: { hits } }));
 
 const fixtures = {

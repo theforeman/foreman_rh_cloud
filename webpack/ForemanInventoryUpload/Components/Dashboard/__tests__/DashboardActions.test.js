@@ -1,5 +1,5 @@
 import { testActionSnapshotWithFixtures } from '@theforeman/test';
-import API from 'foremanReact/API';
+import { API } from 'foremanReact/redux/API';
 import {
   startPolling,
   stopPolling,
@@ -16,7 +16,7 @@ import {
 } from '../Dashboard.fixtures';
 import { rhCloudStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
 
-jest.mock('foremanReact/API');
+jest.mock('foremanReact/redux/API');
 API.get.mockImplementation(() => serverMock);
 
 const runWithGetState = (state, action, params) => dispatch => {

@@ -1,5 +1,5 @@
 import { testActionSnapshotWithFixtures } from '@theforeman/test';
-import API from 'foremanReact/API';
+import { API } from 'foremanReact/redux/API';
 import {
   fetchAccountsStatus,
   startAccountStatusPolling,
@@ -12,7 +12,7 @@ import {
 } from '../AccountList.fixtures';
 import { accountID, activeTab } from '../../Dashboard/Dashboard.fixtures';
 
-jest.mock('foremanReact/API');
+jest.mock('foremanReact/redux/API');
 API.get.mockImplementation(async () => fetchAccountsStatusResponse);
 
 const fixtures = {

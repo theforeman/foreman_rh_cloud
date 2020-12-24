@@ -1,4 +1,4 @@
-import API from 'foremanReact/API';
+import { API } from 'foremanReact/redux/API';
 import { addToast } from 'foremanReact/redux/actions/toasts';
 import { inventoryUrl } from '../../ForemanInventoryHelpers';
 import { HOST_OBFUSCATION_TOGGLE } from './HostObfuscationSwitcherConstants';

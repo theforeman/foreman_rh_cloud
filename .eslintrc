@@ -29,7 +29,8 @@
           "repo",
           "theforeman",
           "tooltip",
-          "unmount"
+          "unmount",
+          "redux"
         ],
         "minLength": 3
       }
