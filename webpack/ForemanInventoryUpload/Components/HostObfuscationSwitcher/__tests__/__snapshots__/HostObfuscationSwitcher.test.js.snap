@@ -4,35 +4,12 @@ exports[`HostObfuscationSwitcher rendering render with props 1`] = `
 <div
   className="host_obfuscation_switcher"
 >
-  <span>
-    Obfuscate host names
-  </span>
-  <FieldLevelHelp
-    buttonClass=""
-    content="Obfuscate host names sent to the Red Hat cloud"
-    placement="top"
-    rootClose={true}
-  />
-  <Switch
-    animate={true}
-    baseClass="bootstrap-switch"
-    bsSize={null}
-    defaultValue={true}
-    disabled={false}
-    handleWidth="auto"
-    inverse={false}
-    labelText=" "
-    labelWidth="auto"
-    offColor="default"
-    offText="OFF"
+  <SwitcherPF4
+    id="host-obfuscation-setting-switcher"
+    isChecked={true}
+    label="Obfuscate host names"
     onChange={[Function]}
-    onColor="primary"
-    onText="ON"
-    readonly={false}
-    size="mini"
-    tristate={false}
-    value={true}
-    wrapperClass="wrapper"
+    tooltip="Obfuscate host names sent to the Red Hat cloud"
   />
 </div>
 `;

@@ -1,20 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, FieldLevelHelp } from 'patternfly-react';
 import { translate as __ } from 'foremanReact/common/I18n';
-import './autoUploadSwitcher.scss';
+import SwitcherPF4 from '../../../common/Switcher/SwitcherPF4';
 
 const AutoUploadSwitcher = ({ autoUploadEnabled, handleToggle }) => (
   <div className="auto_upload_switcher">
-    <span>Auto upload</span>
-    <FieldLevelHelp
-      content={__(
+    <SwitcherPF4
+      id="auto-upload-setting-switcher"
+      label={__('Auto upload')}
+      tooltip={__(
         'Enable automatic upload of your hosts inventory to the Red Hat cloud'
       )}
-    />
-    <Switch
-      size="mini"
-      value={autoUploadEnabled}
+      isChecked={autoUploadEnabled}
       onChange={() => handleToggle(autoUploadEnabled)}
     />
   </div>

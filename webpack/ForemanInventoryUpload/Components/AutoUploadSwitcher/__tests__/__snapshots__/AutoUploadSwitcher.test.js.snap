@@ -4,35 +4,12 @@ exports[`AutoUploadSwitcher rendering render with props 1`] = `
 <div
   className="auto_upload_switcher"
 >
-  <span>
-    Auto upload
-  </span>
-  <FieldLevelHelp
-    buttonClass=""
-    content="Enable automatic upload of your hosts inventory to the Red Hat cloud"
-    placement="top"
-    rootClose={true}
-  />
-  <Switch
-    animate={true}
-    baseClass="bootstrap-switch"
-    bsSize={null}
-    defaultValue={true}
-    disabled={false}
-    handleWidth="auto"
-    inverse={false}
-    labelText=" "
-    labelWidth="auto"
-    offColor="default"
-    offText="OFF"
+  <SwitcherPF4
+    id="auto-upload-setting-switcher"
+    isChecked={true}
+    label="Auto upload"
     onChange={[Function]}
-    onColor="primary"
-    onText="ON"
-    readonly={false}
-    size="mini"
-    tristate={false}
-    value={true}
-    wrapperClass="wrapper"
+    tooltip="Enable automatic upload of your hosts inventory to the Red Hat cloud"
   />
 </div>
 `;
