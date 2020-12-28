@@ -1,21 +1,21 @@
 import React from 'react';
-import { IntlProvider } from 'react-intl';
 import { Grid } from 'patternfly-react';
+import PageLayout from 'foremanReact/routes/common/PageLayout/PageLayout';
 import AccountList from './Components/AccountList';
 import PageHeader from './Components/PageHeader';
 import { INVENTORY_PAGE_TITLE } from './ForemanInventoryConstants';
 
-const ForemanInventoryUpload = () => {
-  document.title = INVENTORY_PAGE_TITLE;
-  return (
-    <IntlProvider locale={navigator.language}>
-      <Grid fluid className="inventory-upload">
-        <PageHeader />
-        <AccountList />
-      </Grid>
-    </IntlProvider>
-  );
-};
+const ForemanInventoryUpload = () => (
+  <PageLayout
+    header={INVENTORY_PAGE_TITLE}
+    searchable={false}
+    beforeToolbarComponent={<PageHeader />}
+  >
+    <Grid fluid className="inventory-upload">
+      <AccountList />
+    </Grid>
+  </PageLayout>
+);
 
 ForemanInventoryUpload.propTypes = {};
 

@@ -21,6 +21,11 @@ export const routes = [
     exact: true,
     render: props => <InsightsCloudSync {...props} />,
   },
+  {
+    path: '/foreman_rh_cloud/inventory_upload',
+    exact: true,
+    render: props => <ForemanInventoryUpload {...props} />,
+  },
 ];
 
 export const registerRoutes = () => {

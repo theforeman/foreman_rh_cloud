@@ -2,41 +2,12 @@
 
 exports[`PageHeader rendering render without Props 1`] = `
 <Fragment>
-  <Row
-    bsClass="row"
-    componentClass="div"
+  <div
+    className="inventory-upload-header"
   >
-    <Col
-      bsClass="col"
-      componentClass="div"
-      xs={6}
-    >
-      <h1
-        className="inventory_title"
-      >
-        Red Hat Inventory
-      </h1>
-    </Col>
-  </Row>
-  <Row
-    bsClass="row"
-    componentClass="div"
-  >
-    <Col
-      bsClass="col"
-      componentClass="div"
-      xs={9}
-    >
-      <PageDescription />
-    </Col>
-    <Col
-      bsClass="col"
-      componentClass="div"
-      xs={3}
-    >
-      <InventorySettings />
-    </Col>
-  </Row>
+    <InventorySettings />
+    <PageDescription />
+  </div>
   <Row
     bsClass="row"
     componentClass="div"
