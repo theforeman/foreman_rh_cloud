@@ -1,0 +1,106 @@
+name: Ruby tests
+on:
+  push:
+    branches: [master, foreman_2_1, foreman_1_24]
+  pull_request:
+    branches: [master, foreman_2_1, foreman_1_24]
+
+defaults:
+  run:
+    working-directory: ./projects/foreman
+
+jobs:
+  test_ruby:
+    env:
+      PGHOST: 127.0.0.1
+      PGUSER: foreman
+      RAILS_ENV: test
+
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: quay.io/jomitsch/postgres-with-evr
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_USER: foreman
+          POSTGRES_PASSWORD: foreman
+
+    steps:
+      - name: Checkout foreman_rh_cloud repo
+        uses: actions/checkout@v2
+        with:
+          path: ${{ github.workspace }}/projects/foreman_rh_cloud
+      - name: Checkout Foreman repo
+        uses: actions/checkout@v2
+        with:
+          repository: theforeman/foreman
+          path: ${{ github.workspace }}/projects/foreman # checkout Foreman and foreman_rh_cloud as siblings, same as dev env
+          ref: 2.1-stable
+      - name: Checkout Katello repo
+        uses: actions/checkout@v2
+        with:
+          repository: Katello/katello
+          path: ${{ github.workspace }}/projects/katello # checkout Foreman and foreman_rh_cloud as siblings, same as dev env
+          ref: KATELLO-3.16
+      - name: check for postgres
+        run: file /usr/share/postgresql/12/extension/
+      - name: Cache bundler
+        uses: actions/cache@v2
+        with:
+          path: projects/foreman/vendor/bundle
+          key: ${{ runner.os }}-bundle-2_1-${{ hashFiles('projects/foreman_rh_cloud/config/Gemfile.lock.gh_test') }}
+          restore-keys: |
+            ${{ runner.os }}-bundle-2_1
+      - name: Cache npm
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-2_1-${{ hashFiles('projects/foreman_rh_cloud/config/package-lock.json.gh_test') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-2_1
+      - name: Set up Ruby 2.5
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.5
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install system dependencies
+        run: sudo apt-get -yqq install libsystemd-dev make tar git ruby-libvirt build-essential patch ruby-dev zlib1g-dev liblzma-dev libxml2-dev libcurl4-openssl-dev libpq-dev qemu-kvm libvirt-daemon-system libvirt-dev nodejs
+      - name: Add foreman_rh_cloud and katello to Gemfile
+        run: |
+          echo "gemspec :path => '../foreman_rh_cloud', :development_group => :dev" > bundler.d/foreman_rh_cloud.local.rb
+          echo "gemspec :path => '../katello', :development_group => :dev" > bundler.d/katello.local.rb
+      - name: Copy configuration files
+        run: |
+          cp ../foreman_rh_cloud/config/database.yml.example config/database.yml
+          cp ../foreman_rh_cloud/config/Gemfile.lock.gh_test Gemfile.lock
+          cp ../foreman_rh_cloud/config/package-lock.json.gh_test package-lock.json
+      - name: Bundle install
+        run: |
+          gem install bundler:2.2.3
+          bundle config path vendor/bundle
+          bundle install --jobs=3 --retry=3 --without journald development mysql2 console
+      - name: npm install
+        run: npm ci
+      - name: Create database
+        run: |
+          bundle exec rails db:create
+          bundle exec rails db:create RAILS_ENV=production
+      - name: Migrate database
+        run: bundle exec rails db:migrate
+      - name: Run Rubocop
+        run: bundle exec rake foreman_rh_cloud:rubocop
+      - name: Run tests
+        run: bundle exec rake test:foreman_rh_cloud
+      - name: Precompile assets
+        run: bundle exec rake "plugin:assets:precompile[foreman_rh_cloud]" RAILS_ENV=production
+      - name: Webpack compile
+        run: bundle exec rake webpack:compile
