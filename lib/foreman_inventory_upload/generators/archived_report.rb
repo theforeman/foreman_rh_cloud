@@ -28,7 +28,7 @@ module ForemanInventoryUpload
 
           @logger.info 'Archiving generated report'
           # success = system('tar', '-zcvf', @target, '-C', tmpdir, '.')
-          Open3.popen2e('tar', '-zcvf', @target, '-C', tmpdir, '.') do |_in, out, wait_thr|
+          Open3.popen2e('tar', '-Jcvf', @target, '-C', tmpdir, '.') do |_in, out, wait_thr|
             @logger.info("tar: #{out.read}")
 
             if wait_thr.value.success?
