@@ -61,7 +61,9 @@ jobs:
         with:
           node-version: 12
       - name: Install system dependencies
-        run: sudo apt-get -yqq install libsystemd-dev make tar git ruby-libvirt build-essential patch ruby-dev zlib1g-dev liblzma-dev libxml2-dev libcurl4-openssl-dev libpq-dev qemu-kvm libvirt-daemon-system libvirt-dev nodejs
+        run: |
+          sudo add-apt-repository ppa:qpid/released
+          sudo apt-get -yqq install libsystemd-dev make tar git ruby-libvirt build-essential patch ruby-dev zlib1g-dev liblzma-dev libxml2-dev libcurl4-openssl-dev libpq-dev qemu-kvm libvirt-daemon-system libvirt-dev nodejs libqpid-proton-core10 libqpidbroker-dev libqpidbroker2 libqpidclient-dev libqpidclient2 libqpidcommon-dev libqpidcommon2 libqpidmessaging-dev libqpidmessaging2 libqpidtypes-dev libqpidtypes1
       - name: Add foreman_rh_cloud and katello to Gemfile
         run: |
           echo "gemspec :path => '../foreman_rh_cloud', :development_group => :dev" > bundler.d/foreman_rh_cloud.local.rb
@@ -74,6 +76,7 @@ jobs:
       - name: Bundle install
         run: |
           gem install bundler:1.16.1
+          gem install qpid_messaging -v '1.39.0'
           bundle config set path vendor/bundle
           bundle install --jobs=3 --retry=3 --without journald development mysql2 console
       - name: npm install
