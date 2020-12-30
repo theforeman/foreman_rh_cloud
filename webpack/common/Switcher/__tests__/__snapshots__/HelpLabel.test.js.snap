@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InsightsCloudSync helpers should return insights cloud Url 1`] = `
+<Popover
+  aria-label="help-text"
+  bodyContent="some-text"
+  id="some-id-help"
+>
+  <button
+    className="pf-c-form__group-label-help some-class"
+    onClick={[Function]}
+  >
+    <HelpIcon
+      color="currentColor"
+      noVerticalAlign={true}
+      size="sm"
+    />
+  </button>
+</Popover>
+`;

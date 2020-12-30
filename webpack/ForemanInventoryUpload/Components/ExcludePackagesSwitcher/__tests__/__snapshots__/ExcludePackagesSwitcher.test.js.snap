@@ -4,35 +4,12 @@ exports[`ExcludePackagesSwitcher rendering render with props 1`] = `
 <div
   className="exclude_packages_switcher"
 >
-  <span>
-    Exclude Packages
-  </span>
-  <FieldLevelHelp
-    buttonClass=""
-    content="Exclude packages from being uploaded to the Red Hat cloud"
-    placement="top"
-    rootClose={true}
-  />
-  <Switch
-    animate={true}
-    baseClass="bootstrap-switch"
-    bsSize={null}
-    defaultValue={true}
-    disabled={false}
-    handleWidth="auto"
-    inverse={false}
-    labelText=" "
-    labelWidth="auto"
-    offColor="default"
-    offText="OFF"
+  <SwitcherPF4
+    id="exclude-packages-setting-switcher"
+    isChecked={true}
+    label="Exclude Packages"
     onChange={[Function]}
-    onColor="primary"
-    onText="ON"
-    readonly={false}
-    size="mini"
-    tristate={false}
-    value={true}
-    wrapperClass="wrapper"
+    tooltip="Exclude packages from being uploaded to the Red Hat cloud"
   />
 </div>
 `;

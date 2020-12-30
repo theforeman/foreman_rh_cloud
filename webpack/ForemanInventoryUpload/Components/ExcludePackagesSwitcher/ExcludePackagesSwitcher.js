@@ -1,18 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, FieldLevelHelp } from 'patternfly-react';
 import { translate as __ } from 'foremanReact/common/I18n';
-import './excludePackagesSwitcher.scss';
+import SwitcherPF4 from '../../../common/Switcher/SwitcherPF4';
 
 const ExcludePackagesSwitcher = ({ excludePackages, handleToggle }) => (
   <div className="exclude_packages_switcher">
-    <span>Exclude Packages</span>
-    <FieldLevelHelp
-      content={__('Exclude packages from being uploaded to the Red Hat cloud')}
-    />
-    <Switch
-      size="mini"
-      value={excludePackages}
+    <SwitcherPF4
+      id="exclude-packages-setting-switcher"
+      label={__('Exclude Packages')}
+      tooltip={__('Exclude packages from being uploaded to the Red Hat cloud')}
+      isChecked={excludePackages}
       onChange={() => handleToggle(excludePackages)}
     />
   </div>

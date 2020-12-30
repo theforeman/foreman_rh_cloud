@@ -1,18 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ForemanInventoryUpload render without Props 1`] = `
-<PageLayout
-  beforeToolbarComponent={<PageHeader />}
-  header="Red Hat Inventory"
-  searchable={false}
+<div
+  className="rh-cloud-page"
 >
-  <Grid
-    bsClass="container"
-    className="inventory-upload"
-    componentClass="div"
-    fluid={true}
+  <PageLayout
+    beforeToolbarComponent={<PageHeader />}
+    header="Red Hat Inventory"
+    searchable={false}
   >
     <Connect(AccountList) />
-  </Grid>
-</PageLayout>
+  </PageLayout>
+</div>
 `;

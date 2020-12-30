@@ -1,18 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, FieldLevelHelp } from 'patternfly-react';
 import { translate as __ } from 'foremanReact/common/I18n';
-import './HostObfuscationSwitcher.scss';
+import SwitcherPF4 from '../../../common/Switcher/SwitcherPF4';
 
 const HostObfuscationSwitcher = ({ hostObfuscationEnabled, handleToggle }) => (
   <div className="host_obfuscation_switcher">
-    <span>Obfuscate host names</span>
-    <FieldLevelHelp
-      content={__('Obfuscate host names sent to the Red Hat cloud')}
-    />
-    <Switch
-      size="mini"
-      value={hostObfuscationEnabled}
+    <SwitcherPF4
+      id="host-obfuscation-setting-switcher"
+      label={__('Obfuscate host names')}
+      tooltip={__('Obfuscate host names sent to the Red Hat cloud')}
+      isChecked={hostObfuscationEnabled}
       onChange={() => handleToggle(hostObfuscationEnabled)}
     />
   </div>

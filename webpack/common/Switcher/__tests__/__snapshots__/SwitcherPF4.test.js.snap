@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InsightsCloudSync helpers should return insights cloud Url 1`] = `
+<Switch
+  aria-label=""
+  className="foreman-switcher"
+  id="rh-cloud-switcher-some-id"
+  isChecked={true}
+  isDisabled={false}
+  label={
+    <div>
+      some-label
+      <HelpLabel
+        className="switcher-help-label"
+        id="some-id"
+        text="some-text"
+      />
+    </div>
+  }
+  onChange={[MockFunction]}
+/>
+`;
