@@ -1,87 +1,14 @@
 PATH
-  remote: ../foreman-plugin/redhat-access
+  remote: ../foreman_rh_cloud
   specs:
-    redhat_access (2.2.11)
-      angular-rails-templates (>= 0.0.4)
-      foreman-tasks
-      katello
-      redhat_access_lib (>= 1.1.5)
-
-PATH
-  remote: ../foreman-tasks
-  specs:
-    foreman-tasks (0.17.5.2)
-      dynflow (>= 1.2.3)
-      foreman-tasks-core
-      get_process_mem
-      parse-cron (~> 0.1.4)
-      sinatra
-    foreman-tasks-core (0.3.3)
-      dynflow (>= 1.2.0)
-
-PATH
-  remote: ../foreman_ansible
-  specs:
-    foreman_ansible (4.0.3.1)
-      deface (< 2.0)
-      foreman-tasks (~> 0.8)
-      foreman_remote_execution (>= 2.0.0, < 3.0)
-      ipaddress (>= 0.8.0, < 1.0)
-    foreman_ansible_core (3.0.2)
-      foreman-tasks-core (~> 0.3.2)
-      foreman_remote_execution_core (~> 1.1)
-      net-ssh
-
-PATH
-  remote: ../foreman_bootdisk
-  specs:
-    foreman_bootdisk (16.0.0)
-
-PATH
-  remote: ../foreman_discovery
-  specs:
-    foreman_discovery (16.0.1)
-
-PATH
-  remote: ../foreman_hooks
-  specs:
-    foreman_hooks (0.3.15)
-
-PATH
-  remote: ../foreman_inventory_upload
-  specs:
-    foreman_rh_cloud (1.0.7)
+    foreman_rh_cloud (1.0.13.1)
       katello
       redhat_access
 
 PATH
-  remote: ../foreman_openscap
-  specs:
-    foreman_openscap (2.0.2)
-
-PATH
-  remote: ../foreman_remote_execution
-  specs:
-    foreman_remote_execution (2.0.8)
-      deface
-      dynflow (>= 1.0.1, < 2.0.0)
-      foreman-tasks (>= 0.15.1, < 1.0.0)
-      foreman_remote_execution_core
-    foreman_remote_execution_core (1.3.0)
-      foreman-tasks-core (>= 0.3.1)
-      net-ssh
-
-PATH
-  remote: ../foreman_templates
-  specs:
-    foreman_templates (7.0.7)
-      diffy
-      git
-
-PATH
   remote: ../katello
   specs:
-    katello (3.14.0.15)
+    katello (3.14.1)
       activerecord-import
       anemone
       angular-rails-templates (~> 1.0.2)
@@ -101,11 +28,10 @@ PATH
       rabl
       rails
       rest-client
-      runcible (>= 2.13.0, < 3.0.0)
+      runcible (>= 2.12.1, < 3.0.0)
 
 GEM
-  remote: http://gemsatsnap67-satellite6-build.cloud.paas.psi.redhat.com/
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     actioncable (5.2.1)
       actionpack (= 5.2.1)
@@ -139,8 +65,10 @@ GEM
       activemodel (= 5.2.1)
       activesupport (= 5.2.1)
       arel (>= 9.0)
-    activerecord-import (1.0.4)
+    activerecord-import (1.0.7)
       activerecord (>= 3.2)
+    activerecord-nulldb-adapter (0.5.0)
+      activerecord (>= 5.2.0)
     activerecord-session_store (1.1.3)
       actionpack (>= 4.0)
       activerecord (>= 4.0)
@@ -183,7 +111,7 @@ GEM
       execjs
     awesome_print (1.8.0)
     bcrypt (3.1.13)
-    benchmark-ips (2.7.2)
+    benchmark-ips (2.8.3)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
     bootstrap-sass (3.3.7)
@@ -237,7 +165,6 @@ GEM
       polyglot
       rails (>= 4.1)
       rainbow (>= 2.1.0)
-    diffy (3.3.0)
     docile (1.3.2)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
@@ -309,6 +236,14 @@ GEM
     font-awesome-sass (4.6.2)
       sass (>= 3.2)
     foreman (0.87.0)
+    foreman-tasks (0.17.6)
+      dynflow (>= 1.2.3)
+      foreman-tasks-core
+      get_process_mem
+      parse-cron (~> 0.1.4)
+      sinatra
+    foreman-tasks-core (0.3.4)
+      dynflow (>= 1.2.0)
     formatador (0.2.5)
     friendly_id (5.3.0)
       activerecord (>= 4.0.0)
@@ -324,8 +259,6 @@ GEM
       gettext_i18n_rails (>= 0.7.1)
       po_to_json (>= 1.0.0)
       rails (>= 3.2.0)
-    git (1.6.0)
-      rchardet (~> 1.8)
     gitlab-sidekiq-fetcher (0.5.2)
       sidekiq (~> 5)
     globalid (0.4.2)
@@ -535,10 +468,14 @@ GEM
       json (>= 1.8)
       nokogiri (~> 1.5)
       optimist (~> 3.0)
-    rchardet (1.8.0)
     rdoc (6.2.1)
     record_tag_helper (1.0.1)
       actionview (>= 5)
+    redhat_access (2.2.18)
+      angular-rails-templates (>= 0.0.4)
+      foreman-tasks
+      katello
+      redhat_access_lib (>= 1.1.5)
     redhat_access_lib (1.1.5)
       rest-client (>= 1.6.3)
     redis (4.1.3)
@@ -590,7 +527,7 @@ GEM
     ruby_parser (3.14.2)
       sexp_processor (~> 4.9)
     rubyzip (2.2.0)
-    runcible (2.13.0)
+    runcible (2.13.1)
       activesupport (>= 3.0.10)
       i18n (>= 0.5.0)
       json
@@ -654,7 +591,7 @@ GEM
       sprockets (>= 3.0.0)
     sqlite3 (1.3.13)
     sshkey (1.9.0)
-    statsd-instrument (3.0.0)
+    statsd-instrument (2.9.2)
     text (1.3.1)
     thor (1.0.1)
     thread_safe (0.3.6)
@@ -695,6 +632,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-nulldb-adapter
   activerecord-session_store (>= 1.1.0, < 2)
   ancestry (>= 2.0, < 4)
   apipie-rails (>= 0.5.2, < 0.6.0)
@@ -702,10 +640,10 @@ DEPENDENCIES
   audited (>= 4.9.0, < 5)
   awesome_print (~> 1.0)
   bcrypt (~> 3.1)
-  benchmark-ips
+  benchmark-ips (>= 2.8.2)
   bootsnap
   bullet (>= 5.7.3)
-  capybara (~> 3.0, < 4)
+  capybara (~> 3.0, < 3.32.1)
   ci_reporter_minitest
   daemons
   database_cleaner (~> 1.3)
@@ -721,20 +659,11 @@ DEPENDENCIES
   fog-google (~> 1.8.2)
   fog-libvirt (>= 0.6.0)
   fog-openstack (>= 1.0.8, < 2.0.0)
-  fog-ovirt (~> 1.2.3)
+  fog-ovirt (~> 1.2.0)
   fog-rackspace (~> 0.1.4)
   fog-vsphere (~> 3.2, >= 3.2.1)
   foreman
-  foreman-tasks!
-  foreman_ansible!
-  foreman_ansible_core (~> 3.0)
-  foreman_bootdisk!
-  foreman_discovery!
-  foreman_hooks!
-  foreman_openscap!
-  foreman_remote_execution!
   foreman_rh_cloud!
-  foreman_templates!
   friendly_id (>= 5.2.4, < 6)
   get_process_mem
   gettext (>= 3.2.1, < 4.0.0)
@@ -782,11 +711,9 @@ DEPENDENCIES
   rails (= 5.2.1)
   rails-controller-testing (~> 1.0)
   rails-i18n (~> 5.0)
-  rake
   rbvmomi (~> 2.0)
   rdoc
   record_tag_helper (~> 1.0)
-  redhat_access!
   redis (~> 4.0)
   responders (~> 3.0)
   rest-client (>= 2.0.0, < 3)
@@ -801,7 +728,7 @@ DEPENDENCIES
   safemode (>= 1.3.5, < 2)
   sass-rails (>= 5.0, < 6.0)
   scoped_search (>= 4.1.7, < 5)
-  secure_headers (~> 6.0)
+  secure_headers (~> 6.3)
   selenium-webdriver
   shoulda-context (~> 1.2)
   shoulda-matchers (~> 4.0)
@@ -815,7 +742,7 @@ DEPENDENCIES
   sprockets-rails (~> 3.0)
   sqlite3 (~> 1.3.6)
   sshkey (~> 1.9)
-  statsd-instrument
+  statsd-instrument (< 3)
   turbolinks (>= 2.5.4, < 3)
   uglifier (>= 1.0.3)
   validates_lengths_from_database (>= 0.5, < 1)
