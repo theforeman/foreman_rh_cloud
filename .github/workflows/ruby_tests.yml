@@ -53,7 +53,7 @@ jobs:
       - name: Cache bundler
         uses: actions/cache@v2
         with:
-          path: vendor/bundle
+          path: projects/foreman/vendor/bundle
           key: ${{ runner.os }}-bundle-1_24-${{ hashFiles('projects/foreman_rh_cloud/config/Gemfile.lock.gh_test') }}
           restore-keys: |
             ${{ runner.os }}-bundle-1_24
