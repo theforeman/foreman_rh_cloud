@@ -54,14 +54,14 @@ jobs:
         uses: actions/cache@v2
         with:
           path: vendor/bundle
-          key: ${{ runner.os }}-bundle-1_24-${{ hashFiles('${{ github.workspace }}/projects/foreman_rh_cloud/config/Gemfile.lock.gh_test') }}
+          key: ${{ runner.os }}-bundle-1_24-${{ hashFiles('projects/foreman_rh_cloud/config/Gemfile.lock.gh_test') }}
           restore-keys: |
             ${{ runner.os }}-bundle-1_24
       - name: Cache npm
         uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-npm-1_24-${{ hashFiles('${{ github.workspace }}/projects/foreman_rh_cloud/config/package-lock.json.gh_test') }}
+          key: ${{ runner.os }}-npm-1_24-${{ hashFiles('projects/foreman_rh_cloud/config/package-lock.json.gh_test') }}
           restore-keys: |
             ${{ runner.os }}-npm-1_24
       - name: Set up Ruby 2.5
@@ -90,7 +90,8 @@ jobs:
           gem install bundler:1.16.1
           gem install qpid_messaging -v '1.39.0'
           bundle config set path vendor/bundle
-          bundle install --jobs=3 --retry=3 --without journald development mysql2 console
+          bundle install --deployment --jobs=3 --retry=3 --without journald development mysql2 console
+          bundle show rails
       - name: npm install
         run: |
           npm ci
