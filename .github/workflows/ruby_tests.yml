@@ -1,5 +1,9 @@
 name: Ruby tests
-on: [pull_request]
+on:
+  push:
+    branches: [master, foreman_2_1, foreman_1_24]
+  pull_request:
+    branches: [master, foreman_2_1, foreman_1_24]
 
 defaults:
   run:
@@ -46,16 +50,24 @@ jobs:
           ref: KATELLO-3.18
       - name: check for postgres
         run: file /usr/share/postgresql/12/extension/
+      - name: Cache bundler
+        uses: actions/cache@v2
+        with:
+          path: projects/foreman/vendor/bundle
+          key: ${{ runner.os }}-bundle-2_3-${{ hashFiles('projects/foreman_rh_cloud/config/Gemfile.lock.gh_test') }}
+          restore-keys: |
+            ${{ runner.os }}-bundle-2_3
+      - name: Cache npm
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-2_3-${{ hashFiles('projects/foreman_rh_cloud/config/package-lock.json.gh_test') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-2_3
       - name: Set up Ruby 2.6
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.6
-      - uses: actions/cache@v1
-        with:
-          path: |
-            vendor/bundle
-            node_modules
-          key: ${{ runner.os }}-2_3-${{ hashFiles('Gemfile.lock') }}
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -69,12 +81,12 @@ jobs:
       - name: Copy configuration files
         run: |
           cp ../foreman_rh_cloud/config/database.yml.example config/database.yml
-          cp ../foreman_rh_cloud/config/Gemfile.lock.example Gemfile.lock
-          cp ../foreman_rh_cloud/config/package-lock.json.example package-lock.json
+          cp ../foreman_rh_cloud/config/Gemfile.lock.gh_test Gemfile.lock
+          cp ../foreman_rh_cloud/config/package-lock.json.gh_test package-lock.json
       - name: Bundle install
         run: |
           gem install bundler
-          bundle config set path vendor/bundle
+          bundle config path vendor/bundle
           bundle install --jobs=3 --retry=3 --without journald development mysql2 console
       - name: npm install
         run: npm ci
