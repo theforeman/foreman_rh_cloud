@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       end
     end
     match 'hits/:host_id', to: 'hits#show', via: :get
+    post 'save_token_and_sync', to: 'settings#save_token_and_sync'
   end
 
   namespace :foreman_rh_cloud do

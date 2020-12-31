@@ -7,6 +7,7 @@ module InsightsCloud
 
       render json: {
         hits: hits,
+        hasToken: Setting[:rh_cloud_token].length > 1,
       }, status: :ok
     end
 

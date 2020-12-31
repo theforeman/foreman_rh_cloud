@@ -8,6 +8,8 @@ import {
   selectPage,
   selectPerPage,
   selectSearch,
+  selectHasToken,
+  selectStatus,
 } from './InsightsCloudSyncSelectors';
 
 // map state to props
@@ -15,6 +17,8 @@ const mapStateToProps = state => ({
   query: selectSearch(state),
   page: selectPage(state),
   perPage: selectPerPage(state),
+  hasToken: selectHasToken(state),
+  status: selectStatus(state),
 });
 
 // map action dispatchers to props
