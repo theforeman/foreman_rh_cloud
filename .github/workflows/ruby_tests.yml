@@ -91,7 +91,6 @@ jobs:
           gem install qpid_messaging -v '1.39.0'
           bundle config path vendor/bundle
           bundle install --jobs=3 --retry=3 --without journald development mysql2 console
-          bundle show rails
       - name: npm install
         run: |
           npm ci
