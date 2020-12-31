@@ -4,11 +4,13 @@ import InventorySettings from '../InventorySettings';
 import PageDescription from './components/PageDescription';
 import InventoryFilter from '../InventoryFilter';
 import ToolbarButtons from './components/ToolbarButtons';
+import PageTitle from './PageTitle';
 import './PageHeader.scss';
 
 const PageHeader = () => (
-  <React.Fragment>
-    <div className="inventory-upload-header">
+  <div className="inventory-upload-header">
+    <PageTitle />
+    <div className="inventory-upload-header-description">
       <InventorySettings />
       <PageDescription />
     </div>
@@ -20,7 +22,7 @@ const PageHeader = () => (
         <ToolbarButtons />
       </Grid.Col>
     </Grid.Row>
-  </React.Fragment>
+  </div>
 );
 
 PageHeader.propTypes = {};

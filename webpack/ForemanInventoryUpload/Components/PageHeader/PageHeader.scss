@@ -1,3 +1,19 @@
-.inventory-upload-header {
-  overflow: auto;
+.rh-cloud-page {
+  .inventory-upload-header {
+    .inventory-upload-header-description {
+      overflow: auto;
+    }
+
+    .inventory-upload-header-title {
+      margin-top: -15px;
+
+      h1 {
+        margin: 0;
+      }
+    }
+
+    .title-dropdown {
+      float: right;
+    }
+  }
 }

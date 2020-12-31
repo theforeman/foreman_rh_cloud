@@ -1,12 +1,12 @@
 import { testComponentSnapshotsWithFixtures } from '@theforeman/test';
 
-import DocsButton from '../DocsButton';
+import PageTitle from '../PageTitle';
 
 const fixtures = {
   'render without Props': {},
 };
 
-describe('DocsButton', () => {
+describe('PageTitle', () => {
   describe('rendering', () =>
-    testComponentSnapshotsWithFixtures(DocsButton, fixtures));
+    testComponentSnapshotsWithFixtures(PageTitle, fixtures));
 });

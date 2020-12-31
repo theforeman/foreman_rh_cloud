@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageTitle rendering render without Props 1`] = `
+<div
+  className="row form-group inventory-upload-header-title"
+>
+  <h1
+    className="col-md-8"
+  >
+    Red Hat Inventory
+  </h1>
+  <Dropdown
+    className="title-dropdown"
+    dropdownItems={
+      Array [
+        <DropdownItem
+          href="/foreman_tasks/tasks?search=action++%3D++ForemanInventoryUpload%3A%3AAsync%3A%3AGenerateReportJob+or+action++%3D++ForemanInventoryUpload%3A%3AAsync%3A%3AGenerateAllReportsJob&page=1"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Actions history
+        </DropdownItem>,
+        <DropdownItem
+          href="/links/manual/+?root_url=https%3A%2F%2Faccess.redhat.com%2Fproducts%2Fsubscription-central"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Documentation
+        </DropdownItem>,
+      ]
+    }
+    isOpen={false}
+    isPlain={true}
+    onSelect={[Function]}
+    position="right"
+    toggle={
+      <KebabToggle
+        onToggle={[Function]}
+      />
+    }
+  />
+</div>
+`;

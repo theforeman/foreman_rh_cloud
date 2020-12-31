@@ -1,9 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PageHeader rendering render without Props 1`] = `
-<Fragment>
+<div
+  className="inventory-upload-header"
+>
+  <PageTitle />
   <div
-    className="inventory-upload-header"
+    className="inventory-upload-header-description"
   >
     <InventorySettings />
     <PageDescription />
@@ -28,5 +31,5 @@ exports[`PageHeader rendering render without Props 1`] = `
       <ToolbarButtons />
     </Col>
   </Row>
-</Fragment>
+</div>
 `;

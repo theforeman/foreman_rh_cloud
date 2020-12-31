@@ -6,7 +6,6 @@ exports[`ForemanInventoryUpload render without Props 1`] = `
 >
   <PageLayout
     beforeToolbarComponent={<PageHeader />}
-    header="Red Hat Inventory"
     searchable={false}
   >
     <Connect(AccountList) />
