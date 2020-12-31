@@ -51,45 +51,27 @@ jobs:
       - name: check for postgres
         run: file /usr/share/postgresql/12/extension/
       - name: Cache bundler
-        id: cache-bundler
         uses: actions/cache@v2
         with:
           path: vendor/bundle
-          key: ${{ runner.os }}-gems-1_24-${{ hashFiles('**/Gemfile.lock') }}
+          key: ${{ runner.os }}-bundle-1_24-${{ hashFiles('${{ github.workspace }}/projects/foreman_rh_cloud/config/Gemfile.lock.gh_test') }}
           restore-keys: |
-            ${{ runner.os }}-gems-1_24
+            ${{ runner.os }}-bundle-1_24
       - name: Cache npm
-        id: cache-npm
         uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-1_24-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-npm-1_24-${{ hashFiles('${{ github.workspace }}/projects/foreman_rh_cloud/config/package-lock.json.gh_test') }}
           restore-keys: |
-            ${{ runner.os }}-node-1_24
+            ${{ runner.os }}-npm-1_24
       - name: Set up Ruby 2.5
-        if: steps.cache-bundler.outputs.cache-hit != 'true'
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.5
       - name: Setup Node
-        if: steps.cache-npm.outputs.cache-hit != 'true'
         uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Cache bundler
-        uses: actions/cache@v2
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-1_24-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-1_24
-      - name: Cache npm
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-1_24-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-1_24
       - name: Install system dependencies
         run: |
           sudo add-apt-repository ppa:qpid/released
@@ -105,12 +87,14 @@ jobs:
           cp ../foreman_rh_cloud/config/package-lock.json.gh_test package-lock.json
       - name: Bundle install
         run: |
-          sudo gem install bundler:1.16.1
-          sudo gem install qpid_messaging -v '1.39.0'
+          gem install bundler:1.16.1
+          gem install qpid_messaging -v '1.39.0'
           bundle config set path vendor/bundle
           bundle install --jobs=3 --retry=3 --without journald development mysql2 console
       - name: npm install
-        run: npm ci
+        run: |
+          npm ci
+          npm i babel-plugin-module-resolver@3.2.0
       - name: Create database
         run: |
           bundle exec rails db:create
