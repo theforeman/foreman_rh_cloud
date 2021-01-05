@@ -1,0 +1,168 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InsightsTable rendering render with Props 1`] = `
+<Fragment>
+  <SelectAllAlert
+    clearAllSelection={[Function]}
+    itemCount={2}
+    onClose={[Function]}
+    selectAll={[Function]}
+    selectedIds={Object {}}
+    showSelectAllAlert={false}
+  />
+  <Table
+    actions={Array []}
+    aria-label="Recommendations Table"
+    borders={true}
+    canSelectAll={true}
+    canSortFavorites={true}
+    cells={
+      Array [
+        Object {
+          "sortKey": "hostname",
+          "title": "Hostname",
+          "transforms": Array [
+            [Function],
+            [Function],
+          ],
+        },
+        Object {
+          "sortKey": "title",
+          "title": "Recommendation",
+          "transforms": Array [
+            [Function],
+            [Function],
+          ],
+        },
+        Object {
+          "sortKey": "total_risk",
+          "title": "Total Risk",
+          "transforms": Array [
+            [Function],
+            [Function],
+          ],
+        },
+      ]
+    }
+    className=""
+    contentId="expanded-content"
+    dropdownDirection="down"
+    dropdownPosition="right"
+    expandId="expandable-toggle"
+    gridBreakPoint="grid-md"
+    isStickyHeader={false}
+    onSelect={[Function]}
+    onSort={[Function]}
+    ouiaSafe={true}
+    role="grid"
+    rowLabeledBy="simple-node"
+    rows={
+      Array [
+        Array [
+          undefined,
+          "Decreased security: Yum GPG verification disabled",
+          <Section
+            className="insights-total-risk"
+            type="icon-group"
+          >
+            <InsightsLabel
+              value={1}
+            />
+          </Section>,
+        ],
+        Array [
+          undefined,
+          "Installation of packages across major releases is not supported",
+          <Section
+            className="insights-total-risk"
+            type="icon-group"
+          >
+            <InsightsLabel
+              value={2}
+            />
+          </Section>,
+        ],
+      ]
+    }
+    selectVariant="checkbox"
+    sortBy={
+      Object {
+        "direction": "desc",
+        "index": 3,
+      }
+    }
+    variant={null}
+  >
+    <TableHeader />
+    <Component />
+  </Table>
+  <TableEmptyState
+    error={null}
+    status="RESOLVED"
+  />
+  <Pagination
+    className=""
+    defaultToFullPage={false}
+    firstPage={1}
+    isCompact={false}
+    isDisabled={false}
+    isSticky={false}
+    itemCount={2}
+    itemsEnd={null}
+    itemsStart={null}
+    offset={0}
+    onFirstClick={[Function]}
+    onLastClick={[Function]}
+    onNextClick={[Function]}
+    onPageInput={[Function]}
+    onPerPageSelect={[Function]}
+    onPreviousClick={[Function]}
+    onSetPage={[Function]}
+    ouiaSafe={true}
+    page={1}
+    perPage={5}
+    perPageOptions={
+      Array [
+        Object {
+          "title": "5",
+          "value": 5,
+        },
+        Object {
+          "title": "10",
+          "value": 10,
+        },
+        Object {
+          "title": "20",
+          "value": 20,
+        },
+        Object {
+          "title": "50",
+          "value": 50,
+        },
+        Object {
+          "title": "100",
+          "value": 100,
+        },
+      ]
+    }
+    titles={
+      Object {
+        "currPage": "Current page",
+        "items": "",
+        "itemsPerPage": "Items per page",
+        "optionsToggle": "Items per page",
+        "page": "",
+        "paginationTitle": "Pagination",
+        "perPageSuffix": "per page",
+        "toFirstPage": "Go to first page",
+        "toLastPage": "Go to last page",
+        "toNextPage": "Go to next page",
+        "toPreviousPage": "Go to previous page",
+      }
+    }
+    toggleTemplate={[Function]}
+    variant="bottom"
+    widgetId="recommendation-pagination"
+  />
+</Fragment>
+`;

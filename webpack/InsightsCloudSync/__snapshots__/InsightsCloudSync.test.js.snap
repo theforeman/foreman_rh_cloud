@@ -36,18 +36,7 @@ exports[`InsightsCloudSync render 1`] = `
     </Button>
   }
 >
-  <p>
-    Insights Table will be here
-  </p>
-</PageLayout>
-`;
-
-exports[`InsightsCloudSync render error 1`] = `
-<PageLayout
-  header="Red Hat Insights ERROR"
-  searchable={false}
->
-  <ErrorEmptyState />
+  <Connect(InsightsTable) />
 </PageLayout>
 `;
 
