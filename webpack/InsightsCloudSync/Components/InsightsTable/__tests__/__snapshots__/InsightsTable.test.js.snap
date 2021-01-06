@@ -5,13 +5,19 @@ exports[`InsightsTable rendering render with Props 1`] = `
   <SelectAllAlert
     clearAllSelection={[Function]}
     itemCount={2}
-    onClose={[Function]}
     selectAll={[Function]}
     selectedIds={Object {}}
     showSelectAllAlert={false}
   />
   <Table
-    actions={Array []}
+    actions={
+      Array [
+        Object {
+          "onClick": [Function],
+          "title": "Remediate",
+        },
+      ]
+    }
     aria-label="Recommendations Table"
     borders={true}
     canSelectAll={true}
@@ -35,6 +41,9 @@ exports[`InsightsTable rendering render with Props 1`] = `
           ],
         },
         Object {
+          "cellTransforms": Array [
+            [Function],
+          ],
           "sortKey": "total_risk",
           "title": "Total Risk",
           "transforms": Array [
@@ -61,26 +70,12 @@ exports[`InsightsTable rendering render with Props 1`] = `
         Array [
           undefined,
           "Decreased security: Yum GPG verification disabled",
-          <Section
-            className="insights-total-risk"
-            type="icon-group"
-          >
-            <InsightsLabel
-              value={1}
-            />
-          </Section>,
+          1,
         ],
         Array [
           undefined,
           "Installation of packages across major releases is not supported",
-          <Section
-            className="insights-total-risk"
-            type="icon-group"
-          >
-            <InsightsLabel
-              value={2}
-            />
-          </Section>,
+          2,
         ],
       ]
     }
@@ -128,20 +123,24 @@ exports[`InsightsTable rendering render with Props 1`] = `
           "value": 5,
         },
         Object {
+          "title": "5",
+          "value": 5,
+        },
+        Object {
           "title": "10",
           "value": 10,
         },
         Object {
-          "title": "20",
-          "value": 20,
+          "title": "15",
+          "value": 15,
+        },
+        Object {
+          "title": "25",
+          "value": 25,
         },
         Object {
           "title": "50",
           "value": 50,
-        },
-        Object {
-          "title": "100",
-          "value": 100,
         },
       ]
     }

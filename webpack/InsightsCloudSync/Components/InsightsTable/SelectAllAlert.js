@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Alert,
-  AlertActionCloseButton,
-  AlertActionLink,
-} from '@patternfly/react-core';
+import { Alert, AlertActionLink } from '@patternfly/react-core';
+import { translate as __, sprintf } from 'foremanReact/common/I18n';
 
 const SelectAllAlert = ({
   selectedIds,
   itemCount,
   showSelectAllAlert,
-  onClose,
   selectAll,
   clearAllSelection,
 }) => {
@@ -22,12 +18,14 @@ const SelectAllAlert = ({
       <Alert
         isInline
         variant="info"
-        title={`All ${selectedCount} recommendations on this page are selected.`}
-        actionClose={<AlertActionCloseButton onClose={onClose} />}
+        title={sprintf(
+          'All %s recommendations on this page are selected.',
+          selectedCount
+        )}
         actionLinks={
           <React.Fragment>
             <AlertActionLink onClick={selectAll}>
-              Select all {itemCount} recommendations
+              {sprintf('Select all %s recommendations', itemCount)}
             </AlertActionLink>
           </React.Fragment>
         }
@@ -39,12 +37,11 @@ const SelectAllAlert = ({
       <Alert
         isInline
         variant="info"
-        title={`All ${selectedCount} recommendations are selected.`}
-        actionClose={<AlertActionCloseButton onClose={onClose} />}
+        title={sprintf('All %s recommendations are selected.', selectedCount)}
         actionLinks={
           <React.Fragment>
             <AlertActionLink onClick={clearAllSelection}>
-              Clear Selection
+              {__('Clear Selection')}
             </AlertActionLink>
           </React.Fragment>
         }
@@ -58,7 +55,6 @@ SelectAllAlert.propTypes = {
   selectedIds: PropTypes.object,
   itemCount: PropTypes.number,
   showSelectAllAlert: PropTypes.bool,
-  onClose: PropTypes.func.isRequired,
   selectAll: PropTypes.func.isRequired,
   clearAllSelection: PropTypes.func.isRequired,
 };

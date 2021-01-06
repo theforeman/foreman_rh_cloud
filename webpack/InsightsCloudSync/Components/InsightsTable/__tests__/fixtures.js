@@ -44,7 +44,6 @@ export const tableProps = {
   onTableSelect: noop,
   selectedIds: {},
   showSelectAllAlert: false,
-  hideSelectAll: noop,
   selectAll: noop,
   clearAllSelection: noop,
   error: null,

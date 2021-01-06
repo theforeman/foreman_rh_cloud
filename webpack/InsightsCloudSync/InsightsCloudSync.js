@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { Button } from 'patternfly-react';
 import PropTypes from 'prop-types';

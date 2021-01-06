@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -20,7 +19,7 @@ const TableEmptyState = ({ status, error }) => {
         <EmptyState variant={EmptyStateVariant.small}>
           <EmptyStateIcon variant="container" component={Spinner} />
           <Title headingLevel="h2" size="lg">
-            Loading
+            {__('Loading')}
           </Title>
         </EmptyState>
       );

@@ -5,9 +5,13 @@ import { Pagination, PaginationVariant } from '@patternfly/react-core';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { useForemanSettings } from 'foremanReact/Root/Context/ForemanContext';
 import SelectAllAlert from './SelectAllAlert';
-import { mapResultsToRows, getSortColumnIndex } from './InsightsTableHelpers';
-import { columns, perPageOptions, actions } from './InsightsTableConstants';
+import { columns, actions } from './InsightsTableConstants';
 import TableEmptyState from './components/EmptyState';
+import {
+  modifySelectedRows,
+  getSortColumnIndex,
+  getPerPageOptions,
+} from './InsightsTableHelpers';
 import './table.scss';
 
 const InsightsTable = ({
@@ -26,7 +30,6 @@ const InsightsTable = ({
   onTableSelect,
   selectedIds,
   showSelectAllAlert,
-  hideSelectAll,
   selectAll,
   clearAllSelection,
   error,
@@ -45,7 +48,6 @@ const InsightsTable = ({
         itemCount={itemCount}
         selectedIds={selectedIds}
         showSelectAllAlert={showSelectAllAlert}
-        onClose={hideSelectAll}
         selectAll={selectAll}
         clearAllSelection={clearAllSelection}
       />
@@ -58,7 +60,7 @@ const InsightsTable = ({
         sortBy={{ index: getSortColumnIndex(sortBy), direction: sortOrder }}
         onSort={onTableSort}
         cells={columns}
-        rows={mapResultsToRows(hits, selectedIds)}
+        rows={modifySelectedRows(hits, selectedIds)}
         actions={actions}
       >
         <TableHeader />
@@ -73,7 +75,7 @@ const InsightsTable = ({
         variant={PaginationVariant.bottom}
         onSetPage={onTableSetPage}
         onPerPageSelect={onTablePerPageSelect}
-        perPageOptions={perPageOptions}
+        perPageOptions={getPerPageOptions(perPage)}
       />
     </React.Fragment>
   );
@@ -93,7 +95,6 @@ InsightsTable.propTypes = {
   onTableSelect: PropTypes.func.isRequired,
   selectedIds: PropTypes.object,
   showSelectAllAlert: PropTypes.bool,
-  hideSelectAll: PropTypes.func.isRequired,
   selectAll: PropTypes.func.isRequired,
   clearAllSelection: PropTypes.func.isRequired,
   fetchInsights: PropTypes.func.isRequired,

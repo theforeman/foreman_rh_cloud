@@ -1,25 +1,12 @@
 /* eslint-disable camelcase */
-import React from 'react';
-import {
-  InsightsLabel,
-  Section,
-} from '@redhat-cloud-services/frontend-components';
 import { columns } from './InsightsTableConstants';
 
-export const mapResultsToRows = (results, selectedIds) => {
-  if (results.length === 0) return [];
+export const modifySelectedRows = (hits, selectedIds) => {
+  if (hits.length === 0) return [];
 
-  return results.asMutable().map(({ id, hostname, title, total_risk }) => {
-    const row = [
-      hostname,
-      title,
-      <Section className="insights-total-risk" type="icon-group">
-        <InsightsLabel value={total_risk} />
-      </Section>,
-    ];
-
+  return hits.asMutable().map(({ id, hostname, title, total_risk }) => {
+    const row = [hostname, title, total_risk];
     row.selected = selectedIds[id];
-
     return row;
   });
 };
@@ -33,4 +20,17 @@ export const getSortColumnIndex = sortBy => {
     }
   });
   return colIndex;
+};
+
+export const getPerPageOptions = perPage => {
+  const options = new Set([
+    { title: '5', value: 5 },
+    { title: '10', value: 10 },
+    { title: '15', value: 15 },
+    { title: '25', value: 25 },
+    { title: '50', value: 50 },
+  ]);
+
+  options.add({ title: `${perPage}`, value: perPage });
+  return [...options].sort((a, b) => a.value - b.value);
 };
