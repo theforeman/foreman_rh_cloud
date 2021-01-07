@@ -46,10 +46,17 @@ export const fetchInsights = (queryParams = {}) => (dispatch, getState) => {
     })
   );
 
-  dispatch(hideSelectAll());
+  dispatch(hideSelectAllAlert());
 };
 
-export const hideSelectAll = () => ({ type: INSIGHTS_HIDE_SELECT_ALL_ALERT });
+export const hideSelectAllAlert = () => ({
+  type: INSIGHTS_HIDE_SELECT_ALL_ALERT,
+});
+
+export const selectByIds = (selectedIds = {}, showSelectAllAlert = false) => ({
+  type: INSIGHTS_SET_SELECTED_IDS,
+  payload: { selectedIds, showSelectAllAlert },
+});
 
 export const selectAll = () => (dispatch, getState) => {
   const { query } = { ...selectQueryParams(getState()) };
@@ -59,10 +66,7 @@ export const selectAll = () => (dispatch, getState) => {
     response.data.hits.forEach(({ id }) => {
       selectedIds[id] = true;
     });
-    dispatch({
-      type: INSIGHTS_SET_SELECTED_IDS,
-      payload: { selectedIds },
-    });
+    dispatch(selectByIds(selectedIds, true));
   };
   dispatch(
     get({
@@ -76,10 +80,7 @@ export const selectAll = () => (dispatch, getState) => {
   );
 };
 
-export const clearAllSelection = () => ({
-  type: INSIGHTS_SET_SELECTED_IDS,
-  payload: { selectedIds: {} },
-});
+export const clearAllSelection = selectByIds; // passing nothing to `selectByIds` will clear all selection
 
 export const onTableSort = (_event, index, direction) => {
   // The checkbox column shifts the data columns by 1;
@@ -103,23 +104,23 @@ export const onTableSelect = (
   rowId,
   results,
   prevSelectedIds
-) => {
+) => dispatch => {
   const selectedIds = { ...prevSelectedIds };
   let showSelectAllAlert = false;
   // for select all
   if (rowId === -1) {
+    if (!isSelected) return dispatch(clearAllSelection());
+
     results.forEach(row => {
-      isSelected ? (selectedIds[row.id] = true) : delete selectedIds[row.id];
+      selectedIds[row.id] = true;
     });
-    showSelectAllAlert = isSelected;
+
+    showSelectAllAlert = true;
   } else {
     isSelected
       ? (selectedIds[results[rowId].id] = true)
       : delete selectedIds[results[rowId].id];
   }
 
-  return {
-    type: INSIGHTS_SET_SELECTED_IDS,
-    payload: { selectedIds, showSelectAllAlert },
-  };
+  return dispatch(selectByIds(selectedIds, showSelectAllAlert));
 };
