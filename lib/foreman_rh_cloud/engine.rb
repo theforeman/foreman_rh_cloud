@@ -40,12 +40,19 @@ module ForemanRhCloud
             'foreman_inventory_upload/accounts': [:index],
             'foreman_inventory_upload/reports': [:last],
             'foreman_inventory_upload/uploads': [:auto_upload, :show_auto_upload, :download_file, :last],
-            'foreman_rh_cloud/react': [:inventory_upload],
-            'insights_cloud/hits': [:index, :auto_complete_search]
+            '/react': [:index],
+          )
+          permission(
+            :view_insights_hits,
+            {
+              'insights_cloud/hits': [:index, :show],
+              '/react': [:index],
+            },
+            :resource_type => ::InsightsHit.name
           )
         end
 
-        plugin_permissions = [:view_foreman_rh_cloud, :generate_foreman_rh_cloud]
+        plugin_permissions = [:view_foreman_rh_cloud, :generate_foreman_rh_cloud, :view_insights_hits]
 
         role 'ForemanRhCloud', plugin_permissions, 'Role granting permissions to view the hosts inventory,
                                                     generate a report, upload it to the cloud and download it locally'
@@ -57,7 +64,7 @@ module ForemanRhCloud
         # Adding a sub menu after hosts menu
         divider :top_menu, caption: N_('RH Cloud'), parent: :configure_menu
         menu :top_menu, :inventory_upload, caption: N_('Inventory Upload'), url: '/foreman_rh_cloud/inventory_upload', url_hash: { controller: :react, action: :index }, parent: :configure_menu
-        menu :top_menu, :insights_hits_import, caption: N_('Insights'), url: '/foreman_rh_cloud/insights_cloud', url_hash: { controller: :react, action: :index }, parent: :configure_menu
+        menu :top_menu, :insights_hits, caption: N_('Insights'), url: '/foreman_rh_cloud/insights_cloud', url_hash: { controller: :react, action: :index }, parent: :configure_menu
 
         register_facet InsightsFacet, :insights do
           configure_host do

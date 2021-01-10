@@ -1,4 +1,5 @@
 class InsightsHit < ApplicationRecord
+  include ::Authorizable
   belongs_to :host
   # since the facet is one-to-one association with a host, we can connect
   # through host_id column on both this model and facet.

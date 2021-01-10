@@ -24,6 +24,10 @@ module InsightsCloud
       ::InsightsHit
     end
 
+    def resource_class
+      ::InsightsHit
+    end
+
     private
 
     def host_id_param
