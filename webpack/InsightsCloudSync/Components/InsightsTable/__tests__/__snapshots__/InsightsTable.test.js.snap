@@ -4,6 +4,7 @@ exports[`InsightsTable rendering render with Props 1`] = `
 <Fragment>
   <SelectAllAlert
     clearAllSelection={[Function]}
+    isAllSelected={false}
     itemCount={2}
     selectAll={[Function]}
     selectedIds={Object {}}

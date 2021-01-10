@@ -16,6 +16,7 @@ import {
   selectSelectedIds,
   selectShowSelectAllAlert,
   selectError,
+  selectIsAllSelected,
 } from './InsightsTableSelectors';
 
 // map state to props
@@ -31,6 +32,7 @@ const mapStateToProps = state => ({
   selectedIds: selectSelectedIds(state),
   showSelectAllAlert: selectShowSelectAllAlert(state),
   error: selectError(state),
+  isAllSelected: selectIsAllSelected(state),
 });
 
 // map action dispatchers to props

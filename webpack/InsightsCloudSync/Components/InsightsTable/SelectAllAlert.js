@@ -9,11 +9,12 @@ const SelectAllAlert = ({
   showSelectAllAlert,
   selectAll,
   clearAllSelection,
+  isAllSelected,
 }) => {
   if (!showSelectAllAlert) return null;
   const selectedCount = Object.keys(selectedIds).length;
   if (!selectedCount) return null;
-  if (itemCount > selectedCount) {
+  if (!isAllSelected && selectedCount !== itemCount) {
     return (
       <Alert
         isInline
@@ -32,23 +33,21 @@ const SelectAllAlert = ({
       />
     );
   }
-  if (itemCount === selectedCount) {
-    return (
-      <Alert
-        isInline
-        variant="info"
-        title={sprintf('All %s recommendations are selected.', selectedCount)}
-        actionLinks={
-          <React.Fragment>
-            <AlertActionLink onClick={clearAllSelection}>
-              {__('Clear Selection')}
-            </AlertActionLink>
-          </React.Fragment>
-        }
-      />
-    );
-  }
-  return null;
+
+  return (
+    <Alert
+      isInline
+      variant="info"
+      title={sprintf('All %s recommendations are selected.', itemCount)}
+      actionLinks={
+        <React.Fragment>
+          <AlertActionLink onClick={clearAllSelection}>
+            {__('Clear Selection')}
+          </AlertActionLink>
+        </React.Fragment>
+      }
+    />
+  );
 };
 
 SelectAllAlert.propTypes = {
@@ -57,12 +56,14 @@ SelectAllAlert.propTypes = {
   showSelectAllAlert: PropTypes.bool,
   selectAll: PropTypes.func.isRequired,
   clearAllSelection: PropTypes.func.isRequired,
+  isAllSelected: PropTypes.bool,
 };
 
 SelectAllAlert.defaultProps = {
   selectedIds: {},
   itemCount: 0,
   showSelectAllAlert: false,
+  isAllSelected: false,
 };
 
 export default SelectAllAlert;

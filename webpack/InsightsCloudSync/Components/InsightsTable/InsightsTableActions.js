@@ -1,19 +1,24 @@
 import URI from 'urijs';
 import { push } from 'connected-react-router';
 import { get } from 'foremanReact/redux/API';
-import { selectQueryParams } from './InsightsTableSelectors';
+import {
+  selectIsAllSelected,
+  selectQueryParams,
+} from './InsightsTableSelectors';
 import { INSIGHTS_PATH } from '../../InsightsCloudSyncConstants';
 import {
   columns,
   INSIGHTS_HITS_API_KEY,
   INSIGHTS_HITS_PATH,
   INSIGHTS_SET_SELECTED_IDS,
-  INSIGHTS_HIDE_SELECT_ALL_ALERT,
+  INSIGHTS_SET_SELECT_ALL_ALERT,
+  INSIGHTS_SET_SELECT_ALL,
 } from './InsightsTableConstants';
 
 export const fetchInsights = (queryParams = {}) => (dispatch, getState) => {
+  const state = getState();
   const { page, perPage, query, sortBy, sortOrder } = {
-    ...selectQueryParams(getState()),
+    ...selectQueryParams(state),
     ...queryParams,
   };
 
@@ -46,41 +51,37 @@ export const fetchInsights = (queryParams = {}) => (dispatch, getState) => {
     })
   );
 
-  dispatch(hideSelectAllAlert());
+  const isAllSelected = selectIsAllSelected(state);
+  if (isAllSelected) {
+    dispatch(clearAllSelection());
+  } else {
+    dispatch(setSelectAllAlert(false));
+    dispatch(setSelectAll(false));
+  }
 };
 
-export const hideSelectAllAlert = () => ({
-  type: INSIGHTS_HIDE_SELECT_ALL_ALERT,
+export const setSelectAllAlert = showSelectAllAlert => ({
+  type: INSIGHTS_SET_SELECT_ALL_ALERT,
+  payload: { showSelectAllAlert },
 });
 
-export const selectByIds = (selectedIds = {}, showSelectAllAlert = false) => ({
+export const selectByIds = selectedIds => ({
   type: INSIGHTS_SET_SELECTED_IDS,
-  payload: { selectedIds, showSelectAllAlert },
+  payload: { selectedIds },
 });
 
-export const selectAll = () => (dispatch, getState) => {
-  const { query } = { ...selectQueryParams(getState()) };
+export const setSelectAll = isAllSelected => ({
+  type: INSIGHTS_SET_SELECT_ALL,
+  payload: { isAllSelected },
+});
 
-  const handleSuccess = response => {
-    const selectedIds = {};
-    response.data.hits.forEach(({ id }) => {
-      selectedIds[id] = true;
-    });
-    dispatch(selectByIds(selectedIds, true));
-  };
-  dispatch(
-    get({
-      key: `${INSIGHTS_HITS_API_KEY}_ALL`,
-      url: INSIGHTS_HITS_PATH,
-      params: {
-        search: query,
-      },
-      handleSuccess,
-    })
-  );
+export const selectAll = () => setSelectAll(true);
+
+export const clearAllSelection = () => dispatch => {
+  dispatch(selectByIds({}));
+  dispatch(setSelectAllAlert(false));
+  dispatch(setSelectAll(false));
 };
-
-export const clearAllSelection = selectByIds; // passing nothing to `selectByIds` will clear all selection
 
 export const onTableSort = (_event, index, direction) => {
   // The checkbox column shifts the data columns by 1;
@@ -122,5 +123,6 @@ export const onTableSelect = (
       : delete selectedIds[results[rowId].id];
   }
 
-  return dispatch(selectByIds(selectedIds, showSelectAllAlert));
+  dispatch(selectByIds(selectedIds));
+  return dispatch(setSelectAllAlert(showSelectAllAlert));
 };

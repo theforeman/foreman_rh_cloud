@@ -33,6 +33,7 @@ const InsightsTable = ({
   selectAll,
   clearAllSelection,
   error,
+  isAllSelected,
 }) => {
   const { perPage: appPerPage } = useForemanSettings();
   const perPage = urlPerPage || appPerPage;
@@ -50,6 +51,7 @@ const InsightsTable = ({
         showSelectAllAlert={showSelectAllAlert}
         selectAll={selectAll}
         clearAllSelection={clearAllSelection}
+        isAllSelected={isAllSelected}
       />
       <Table
         aria-label="Recommendations Table"
@@ -100,6 +102,7 @@ InsightsTable.propTypes = {
   fetchInsights: PropTypes.func.isRequired,
   query: PropTypes.string,
   error: PropTypes.string,
+  isAllSelected: PropTypes.bool,
 };
 
 InsightsTable.defaultProps = {
@@ -112,6 +115,7 @@ InsightsTable.defaultProps = {
   showSelectAllAlert: false,
   query: '',
   error: '',
+  isAllSelected: false,
 };
 
 export default InsightsTable;

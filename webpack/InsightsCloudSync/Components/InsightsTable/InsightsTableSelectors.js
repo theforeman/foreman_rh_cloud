@@ -61,6 +61,9 @@ export const selectInsightsCloudTable = state =>
 export const selectSelectedIds = state =>
   selectInsightsCloudTable(state).selectedIds || {};
 
+export const selectIsAllSelected = state =>
+  selectInsightsCloudTable(state).isAllSelected || false;
+
 export const selectShowSelectAllAlert = state =>
   selectInsightsCloudTable(state).showSelectAllAlert || false;
 
