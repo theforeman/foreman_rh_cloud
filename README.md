@@ -19,9 +19,22 @@ In UI: Configure -> Inventory Upload -> Restart
 
 From command-line:
 
+    # generate and upload report for all organizations
+    /usr/sbin/foreman-rake rh_cloud_inventory:report:generate_upload
+
+    # generate and upload report for specific organization
+    export organization_id=1
+    /usr/sbin/foreman-rake rh_cloud_inventory:report:generate_upload
+
+    # generate report for specific organization (don't upload)
     export organization_id=1
     export target=/var/lib/foreman/red_hat_inventory/generated_reports/
     /usr/sbin/foreman-rake rh_cloud_inventory:report:generate
+
+    # upload previously generated report (needs to be named 'report_for_#{organization_id}.tar.gz')
+    export organization_id=1
+    export target=/var/lib/foreman/red_hat_inventory/generated_reports/
+    /usr/sbin/foreman-rake rh_cloud_inventory:report:upload
 
 #### Fetch hosts remediation data
 
