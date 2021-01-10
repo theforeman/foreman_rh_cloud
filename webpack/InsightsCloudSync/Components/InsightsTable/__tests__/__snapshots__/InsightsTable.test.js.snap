@@ -123,16 +123,16 @@ exports[`InsightsTable rendering render with Props 1`] = `
           "value": 5,
         },
         Object {
-          "title": "5",
-          "value": 5,
-        },
-        Object {
           "title": "10",
           "value": 10,
         },
         Object {
           "title": "15",
           "value": 15,
+        },
+        Object {
+          "title": "20",
+          "value": 20,
         },
         Object {
           "title": "25",

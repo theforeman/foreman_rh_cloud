@@ -22,15 +22,10 @@ export const getSortColumnIndex = sortBy => {
   return colIndex;
 };
 
-export const getPerPageOptions = perPage => {
-  const options = new Set([
-    { title: '5', value: 5 },
-    { title: '10', value: 10 },
-    { title: '15', value: 15 },
-    { title: '25', value: 25 },
-    { title: '50', value: 50 },
-  ]);
-
-  options.add({ title: `${perPage}`, value: perPage });
-  return [...options].sort((a, b) => a.value - b.value);
+export const getPerPageOptions = (urlPerPage, appPerPage) => {
+  const initialValues = new Set([5, 10, 15, 25, 50]);
+  initialValues.add(appPerPage);
+  urlPerPage && initialValues.add(urlPerPage);
+  const options = [...initialValues].sort((a, b) => a - b);
+  return options.map(value => ({ title: value.toString(), value }));
 };

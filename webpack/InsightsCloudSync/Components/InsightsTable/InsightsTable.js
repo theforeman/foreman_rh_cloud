@@ -75,7 +75,7 @@ const InsightsTable = ({
         variant={PaginationVariant.bottom}
         onSetPage={onTableSetPage}
         onPerPageSelect={onTablePerPageSelect}
-        perPageOptions={getPerPageOptions(perPage)}
+        perPageOptions={getPerPageOptions(urlPerPage, appPerPage)}
       />
     </React.Fragment>
   );
