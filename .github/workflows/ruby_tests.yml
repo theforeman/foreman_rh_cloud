@@ -73,7 +73,9 @@ jobs:
         with:
           node-version: 12
       - name: Install system dependencies
-        run: sudo apt-get -yqq install libsystemd-dev make tar git ruby-libvirt build-essential patch ruby-dev zlib1g-dev liblzma-dev libxml2-dev libcurl4-openssl-dev libpq-dev qemu-kvm libvirt-daemon-system libvirt-dev nodejs
+        run: |
+          sudo apt-get update -yqq
+          sudo apt-get -yqq install libsystemd-dev make tar git ruby-libvirt build-essential patch ruby-dev zlib1g-dev liblzma-dev libxml2-dev libcurl4-openssl-dev libpq-dev qemu-kvm libvirt-daemon-system libvirt-dev nodejs
       - name: Add foreman_rh_cloud and katello to Gemfile
         run: |
           echo "gemspec :path => '../foreman_rh_cloud', :development_group => :dev" > bundler.d/foreman_rh_cloud.local.rb
