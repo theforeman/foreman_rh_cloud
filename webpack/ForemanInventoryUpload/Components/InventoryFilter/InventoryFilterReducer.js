@@ -3,6 +3,7 @@ import {
   LAYOUT_CHANGE_ORG,
   LAYOUT_INITIALIZE,
 } from 'foremanReact/components/Layout/LayoutConstants';
+import { translate as __ } from 'foremanReact/common/I18n';
 import {
   INVENTORY_FILTER_UPDATE,
   INVENTORY_FILTER_CLEAR,
@@ -28,7 +29,8 @@ export default (
       });
     case LAYOUT_CHANGE_ORG: {
       const { title } = org;
-      const term = title === ANY_ORGANIZATION ? '' : title;
+      // Any org is used only in it's translated form in the redux
+      const term = title === __(ANY_ORGANIZATION) ? '' : title;
       return state.merge({
         filterTerm: term,
       });
@@ -36,7 +38,8 @@ export default (
     case LAYOUT_INITIALIZE: {
       // Layout action changed in Jul 20 2020 - https://github.com/theforeman/foreman/commit/e4c39a7d8f8b50ba45ef63e46f6f6914b69f247a
       const { title } = organization; // org was renamed
-      const term = title === ANY_ORGANIZATION ? '' : title;
+      // Any org is used only in it's translated form in the redux
+      const term = title === __(ANY_ORGANIZATION) ? '' : title;
       return state.merge({
         filterTerm: term,
       });
