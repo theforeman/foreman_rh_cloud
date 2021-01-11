@@ -48,3 +48,55 @@ export const tableProps = {
   clearAllSelection: noop,
   error: null,
 };
+
+export const routerState = {
+  router: {
+    location: {
+      pathname: '/foreman_rh_cloud/insights_cloud',
+      search:
+        '?page=1&per_page=7&search=total_risk+%3C+3&sort_by=total_risk&sort_order=asc',
+      hash: '',
+      key: '40p9q7',
+      query: {
+        page: '1',
+        per_page: '7',
+        search: 'total_risk+%3C+3',
+        sort_by: 'total_risk',
+        sort_order: 'asc',
+      },
+    },
+    action: 'PUSH',
+  },
+};
+
+export const APIState = {
+  API: {
+    INSIGHTS_HITS: {
+      payload: {
+        url: '/insights_cloud/hits',
+      },
+      response: {
+        hasToken: true,
+        hits,
+        itemCount: 2,
+      },
+      status: 'RESOLVED',
+    },
+  },
+};
+
+export const APIErrorState = {
+  API: {
+    INSIGHTS_HITS: {
+      payload: {
+        url: '/insights_cloud/hits',
+      },
+      response: {
+        message: 'Request failed with status code 503',
+        name: 'Error',
+        stack: 'Error: Request failed with status code 503',
+      },
+      status: 'ERROR',
+    },
+  },
+};
