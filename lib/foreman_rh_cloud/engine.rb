@@ -40,15 +40,15 @@ module ForemanRhCloud
             'foreman_inventory_upload/accounts': [:index],
             'foreman_inventory_upload/reports': [:last],
             'foreman_inventory_upload/uploads': [:auto_upload, :show_auto_upload, :download_file, :last],
-            'react': [:index],
+            'react': [:index]
           )
           permission(
             :view_insights_hits,
             {
-              '/foreman_rh_cloud/insights_cloud': [:index], #for bookmarks and later for showing the page
+              '/foreman_rh_cloud/insights_cloud': [:index], # for bookmarks and later for showing the page
               'insights_cloud/hits': [:index, :show, :auto_complete_search],
               'insights_cloud/settings': [:index, :show],
-              'react': [:index],
+              'react': [:index]
             },
             :resource_type => ::InsightsHit.name
           )
