@@ -2,6 +2,21 @@ require 'tempfile'
 
 namespace :rh_cloud_inventory do
   namespace :report do
+    desc 'Generate inventory report and send it to Red Hat cloud'
+    task generate_upload: [:environment, 'dynflow:client'] do
+      unless ENV['organization_id'].nil?
+        organizations = [ Organization.where(:id => ENV['organization_id']).first ]
+      else
+        organizations = Organization.unscoped.all
+      end
+
+      User.as_anonymous_admin do
+        organizations.each do |organization|
+          ForemanInventoryUpload::Async::GenerateReportJob.perform_now(ForemanInventoryUpload.generated_reports_folder, organization.id)
+          puts "Generated and uploaded inventory report for organization '#{organization.name}'"
+        end
+      end
+    end
     desc 'Generate inventory report to be sent to Red Hat cloud'
     task generate: :environment do
       portal_user = ENV['portal_user']
@@ -26,6 +41,14 @@ namespace :rh_cloud_inventory do
           puts "Successfully generated #{target} for organization id #{organization}"
         end
       end
+    end
+    desc 'Upload generated inventory report to Red Hat cloud'
+    task upload: [:environment, 'dynflow:client'] do
+      base_folder = ENV['target'] || ForemanInventoryUpload.generated_reports_folder
+      organization_id = ENV['organization_id']
+      report_file = ForemanInventoryUpload.facts_archive_name(organization_id)
+      ForemanInventoryUpload::Async::QueueForUploadJob.perform_now(base_folder, report_file, organization_id)
+      puts "Uploaded #{report_file}"
     end
   end
 
