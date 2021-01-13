@@ -24,11 +24,9 @@ const SelectAllAlert = ({
           selectedCount
         )}
         actionLinks={
-          <React.Fragment>
-            <AlertActionLink onClick={selectAll}>
-              {sprintf('Select all %s recommendations', itemCount)}
-            </AlertActionLink>
-          </React.Fragment>
+          <AlertActionLink onClick={selectAll}>
+            {sprintf('Select all %s recommendations', itemCount)}
+          </AlertActionLink>
         }
       />
     );

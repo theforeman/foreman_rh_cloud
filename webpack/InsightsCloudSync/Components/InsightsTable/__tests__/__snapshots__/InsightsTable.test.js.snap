@@ -69,12 +69,12 @@ exports[`InsightsTable rendering render with Props 1`] = `
     rows={
       Array [
         Array [
-          undefined,
+          "foo.example.com",
           "Decreased security: Yum GPG verification disabled",
           1,
         ],
         Array [
-          undefined,
+          "foo.example.com",
           "Installation of packages across major releases is not supported",
           2,
         ],

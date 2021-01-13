@@ -25,12 +25,12 @@ export const columns = [
   {
     sortKey: 'title',
     title: __('Recommendation'),
-    transforms: [cellWidth(65), sortable],
+    transforms: [cellWidth(60), sortable],
   },
   {
     sortKey: 'total_risk',
     title: __('Total Risk'),
-    transforms: [cellWidth(15), sortable],
+    transforms: [cellWidth(20), sortable],
     cellTransforms: [totalRiskFormatter],
   },
 ];

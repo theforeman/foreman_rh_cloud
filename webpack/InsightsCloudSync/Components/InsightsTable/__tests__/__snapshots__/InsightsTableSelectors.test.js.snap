@@ -14,6 +14,7 @@ exports[`InsightsTable selectors should return API hits 1`] = `
 Array [
   Object {
     "host_id": 1,
+    "hostname": "foo.example.com",
     "id": 16,
     "last_seen": "2020-11-01T15:55:14.280+02:00",
     "likelihood": 1,
@@ -25,6 +26,7 @@ Array [
   },
   Object {
     "host_id": 1,
+    "hostname": "foo.example.com",
     "id": 17,
     "last_seen": "2020-11-01T15:55:14.280+02:00",
     "likelihood": 3,
