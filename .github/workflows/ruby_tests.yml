@@ -75,6 +75,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo add-apt-repository ppa:qpid/released
+          sudo apt-get update -yqq
           sudo apt-get -yqq install libsystemd-dev make tar git ruby-libvirt build-essential patch ruby-dev zlib1g-dev liblzma-dev libxml2-dev libcurl4-openssl-dev libpq-dev qemu-kvm libvirt-daemon-system libvirt-dev nodejs libqpid-proton-core10 libqpidbroker-dev libqpidbroker2 libqpidclient-dev libqpidclient2 libqpidcommon-dev libqpidcommon2 libqpidmessaging-dev libqpidmessaging2 libqpidtypes-dev libqpidtypes1
       - name: Add foreman_rh_cloud and katello to Gemfile
         run: |
