@@ -28,6 +28,10 @@ module InsightsCloud
       ::InsightsHit
     end
 
+    def controller_permission
+      :insights_hits
+    end
+
     private
 
     def host_id_param
