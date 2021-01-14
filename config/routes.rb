@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     post 'installed_packages_inclusion', to: 'uploads#installed_packages_inclusion'
     post 'ips_obfuscation', to: 'uploads#ips_obfuscation'
 
+    get 'cloud_connector', to: 'uploads#cloud_connector_status'
+    post 'cloud_connector', to: 'uploads#enable_cloud_connector'
+
     resources :tasks, only: [:create]
   end
 

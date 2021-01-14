@@ -1,5 +1,6 @@
 require 'katello'
 require 'redhat_access'
+require 'foreman_ansible'
 
 module ForemanRhCloud
   class Engine < ::Rails::Engine

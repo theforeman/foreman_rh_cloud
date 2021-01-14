@@ -24,6 +24,16 @@ module ForemanInventoryUpload
       )
     end
 
+    def enable_cloud_connector
+      cloud_connector = ForemanRhCloud::CloudConnector.new
+      render json: cloud_connector.install.to_json
+    end
+
+    def cloud_connector_status
+      cloud_connector = ForemanRhCloud::CloudConnector.new
+      render json: cloud_connector.latest_job.to_json
+    end
+
     def auto_upload
       Setting[:allow_auto_inventory_upload] = auto_upload_params
       render_setting(:autoUploadEnabled, :allow_auto_inventory_upload)
