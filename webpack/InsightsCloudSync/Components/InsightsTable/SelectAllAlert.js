@@ -38,11 +38,9 @@ const SelectAllAlert = ({
       variant="info"
       title={sprintf('All %s recommendations are selected.', itemCount)}
       actionLinks={
-        <React.Fragment>
-          <AlertActionLink onClick={clearAllSelection}>
-            {__('Clear Selection')}
-          </AlertActionLink>
-        </React.Fragment>
+        <AlertActionLink onClick={clearAllSelection}>
+          {__('Clear Selection')}
+        </AlertActionLink>
       }
     />
   );
