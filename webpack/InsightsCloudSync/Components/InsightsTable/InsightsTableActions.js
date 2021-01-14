@@ -125,4 +125,5 @@ export const onTableSelect = (
 
   dispatch(selectByIds(selectedIds));
   dispatch(setSelectAllAlert(showSelectAllAlert));
+  return null;
 };
