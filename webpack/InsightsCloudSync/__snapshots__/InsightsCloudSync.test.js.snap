@@ -18,7 +18,7 @@ exports[`InsightsCloudSync render 1`] = `
         "documentationUrl": "4.1.5Searching",
         "url": "/api/bookmarks",
       },
-      "controller": "/foreman_rh_cloud/insights_cloud",
+      "controller": "insights_hits",
     }
   }
   searchQuery=""

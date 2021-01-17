@@ -14,5 +14,5 @@ export const INSIGHTS_SAVE_AND_SYNC_PATH = foremanUrl(
 
 export const INSIGHTS_SEARCH_PROPS = {
   ...getControllerSearchProps('/insights_cloud/hits'),
-  controller: INSIGHTS_PATH,
+  controller: 'insights_hits',
 };
