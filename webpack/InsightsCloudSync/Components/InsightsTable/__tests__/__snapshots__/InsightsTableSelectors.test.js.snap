@@ -1,12 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InsightsTable selectors should return API error 1`] = `
-Object {
-  "message": "Request failed with status code 503",
-  "name": "Error",
-  "stack": "Error: Request failed with status code 503",
-}
-`;
+exports[`InsightsTable selectors should return API error 1`] = `"Request failed with status code 503"`;
 
 exports[`InsightsTable selectors should return API has token 1`] = `true`;
 

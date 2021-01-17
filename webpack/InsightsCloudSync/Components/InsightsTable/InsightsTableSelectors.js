@@ -4,7 +4,7 @@ import { selectRouterLocation } from 'foremanReact/routes/RouterSelector';
 import {
   selectAPIResponse,
   selectAPIStatus,
-  selectAPIError,
+  selectAPIErrorMessage,
 } from 'foremanReact/redux/API/APISelectors';
 import { INSIGHTS_HITS_API_KEY } from './InsightsTableConstants';
 import { selectInsightsCloudSync } from '../../../ForemanRhCloudSelectors';
@@ -38,7 +38,7 @@ export const selectStatus = state =>
   selectAPIStatus(state, INSIGHTS_HITS_API_KEY);
 
 export const selectError = state =>
-  selectAPIError(state, INSIGHTS_HITS_API_KEY);
+  selectAPIErrorMessage(state, INSIGHTS_HITS_API_KEY);
 
 export const selectSortBy = state => {
   const sortBy = selectQuery(state).sort_by;
