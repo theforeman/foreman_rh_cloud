@@ -10,6 +10,7 @@
     font-family: monospace;
     font-size: 16px;
     color: #22da26;
+    overflow-wrap: anywhere;
 
     &.terminal_error {
       color: #f00;
