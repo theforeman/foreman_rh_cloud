@@ -30,7 +30,8 @@
           "theforeman",
           "tooltip",
           "unmount",
-          "redux"
+          "redux",
+          "dropdown"
         ],
         "minLength": 3
       }
