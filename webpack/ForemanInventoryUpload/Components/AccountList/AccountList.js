@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { ListView, noop } from 'patternfly-react';
+import { noop } from 'foremanReact/common/helpers';
+import { Accordion } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
 import ListItem from './Components/ListItem';
 import EmptyState from './Components/EmptyState';
@@ -42,7 +43,7 @@ class AccountList extends Component {
       const account = accounts[accountID];
       return <ListItem key={index} accountID={accountID} account={account} />;
     });
-    return <ListView className="account_list">{items}</ListView>;
+    return <Accordion className="account-list">{items}</Accordion>;
   }
 }
 

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Grid } from 'patternfly-react';
+import { Grid, GridItem } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
 import { translate as __ } from 'foremanReact/common/I18n';
-import './listItemStatus.scss';
 import { getStatusIconByRegex } from './ListItemStatusHelper';
 
 const ListItemStatus = ({ account }) => {
@@ -13,15 +12,15 @@ const ListItemStatus = ({ account }) => {
     account.upload_report_status
   );
   return (
-    <Grid className="status">
-      <Grid.Col sm={6} className="item">
+    <Grid hasGutter className="status">
+      <GridItem span={6} className="item">
         <p>{__('Generating')}</p>
         {generatingStatusIcon}
-      </Grid.Col>
-      <Grid.Col sm={6} className="item">
+      </GridItem>
+      <GridItem span={6} className="item">
         <p>{__('Uploading')}</p>
         {uploadingStatusIcon}
-      </Grid.Col>
+      </GridItem>
     </Grid>
   );
 };

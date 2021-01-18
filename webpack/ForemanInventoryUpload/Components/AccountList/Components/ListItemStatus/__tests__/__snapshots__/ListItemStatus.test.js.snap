@@ -2,57 +2,44 @@
 
 exports[`ListItemStatus rendering render with Props 1`] = `
 <Grid
-  bsClass="container"
   className="status"
-  componentClass="div"
-  fluid={false}
+  hasGutter={true}
 >
-  <Col
-    bsClass="col"
+  <GridItem
     className="item"
-    componentClass="div"
-    sm={6}
+    span={6}
   >
     <p>
       Generating
     </p>
-    <Icon
-      name="check"
-      type="fa"
+    <CheckIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
     />
-  </Col>
-  <Col
-    bsClass="col"
+  </GridItem>
+  <GridItem
     className="item"
-    componentClass="div"
-    sm={6}
+    span={6}
   >
     <p>
       Uploading
     </p>
     <Spinner
-      className=""
-      inline={true}
-      inverse={false}
-      loading={true}
-      size="xs"
+      size="sm"
     />
-  </Col>
+  </GridItem>
 </Grid>
 `;
 
 exports[`ListItemStatus rendering render without Props 1`] = `
 <Grid
-  bsClass="container"
   className="status"
-  componentClass="div"
-  fluid={false}
+  hasGutter={true}
 >
-  <Col
-    bsClass="col"
+  <GridItem
     className="item"
-    componentClass="div"
-    sm={6}
+    span={6}
   >
     <p>
       Generating
@@ -60,12 +47,10 @@ exports[`ListItemStatus rendering render without Props 1`] = `
     <span>
       --
     </span>
-  </Col>
-  <Col
-    bsClass="col"
+  </GridItem>
+  <GridItem
     className="item"
-    componentClass="div"
-    sm={6}
+    span={6}
   >
     <p>
       Uploading
@@ -73,6 +58,6 @@ exports[`ListItemStatus rendering render without Props 1`] = `
     <span>
       --
     </span>
-  </Col>
+  </GridItem>
 </Grid>
 `;
