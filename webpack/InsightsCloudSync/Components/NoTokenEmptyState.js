@@ -14,10 +14,8 @@ import {
 import { ExternalLinkAltIcon, RocketIcon } from '@patternfly/react-icons';
 import { post } from 'foremanReact/redux/API';
 import { translate as __ } from 'foremanReact/common/I18n';
-import {
-  INSIGHTS_HITS_API_KEY,
-  INSIGHTS_SAVE_AND_SYNC_PATH,
-} from '../InsightsCloudSyncConstants';
+import { INSIGHTS_SAVE_AND_SYNC_PATH } from '../InsightsCloudSyncConstants';
+import { INSIGHTS_HITS_API_KEY } from './InsightsTable/InsightsTableConstants';
 
 export const NoTokenEmptyState = () => {
   const [token, setToken] = useState('');

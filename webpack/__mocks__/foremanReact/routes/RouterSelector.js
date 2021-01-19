@@ -1,1 +1,2 @@
-export const selectRouterLocation = () => ({ query: 'some-query' });
+export const selectRouter = state => state.router;
+export const selectRouterLocation = state => selectRouter(state).location;

@@ -18,6 +18,11 @@ Object {
         "settings": Object {
           "insightsSyncEnabled": false,
         },
+        "table": Object {
+          "isAllSelected": false,
+          "selectedIds": Object {},
+          "showSelectAllAlert": false,
+        },
       },
       "hostInsights": Object {
         "hits": Array [],
