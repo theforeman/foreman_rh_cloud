@@ -1,22 +1,40 @@
-import React from 'react';
-import { ListView } from 'patternfly-react';
+import React, { useState } from 'react';
+import {
+  AccordionItem,
+  AccordionToggle,
+  AccordionContent,
+  Label,
+} from '@patternfly/react-core';
+import { UserIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 import ListItemStatus from '../ListItemStatus';
 import Dashboard from '../../../Dashboard';
 
-const ListItem = ({ accountID, account }) => (
-  <ListView.Item
-    leftContent={<ListView.Icon name="user" />}
-    heading={account.label}
-    additionalInfo={[
-      <ListItemStatus key={`${accountID}_status`} account={account} />,
-    ]}
-    stacked
-    hideCloseIcon
-  >
-    <Dashboard accountID={accountID} account={account} />
-  </ListView.Item>
-);
+const ListItem = ({ accountID, account }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  return (
+    <AccordionItem>
+      <AccordionToggle
+        onClick={() => setIsExpanded(currentValue => !currentValue)}
+        isExpanded={isExpanded}
+      >
+        <span>
+          <Label
+            className="account-icon"
+            variant="outline"
+            color="blue"
+            icon={<UserIcon />}
+          />
+          {account.label}
+        </span>
+        <ListItemStatus key={`${accountID}_status`} account={account} />
+      </AccordionToggle>
+      <AccordionContent isHidden={!isExpanded}>
+        <Dashboard accountID={accountID} account={account} />
+      </AccordionContent>
+    </AccordionItem>
+  );
+};
 
 ListItem.propTypes = {
   accountID: PropTypes.string.isRequired,

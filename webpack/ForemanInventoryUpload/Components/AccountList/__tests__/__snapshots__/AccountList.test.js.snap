@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AccountList rendering render with props 1`] = `
-<ListView
-  className="account_list"
+<Accordion
+  className="account-list"
 >
   <ListItem
     account={
@@ -37,7 +37,7 @@ exports[`AccountList rendering render with props 1`] = `
     accountID="Account3"
     key="2"
   />
-</ListView>
+</Accordion>
 `;
 
 exports[`AccountList rendering show empty results 1`] = `<inventoryEmptyResults />`;

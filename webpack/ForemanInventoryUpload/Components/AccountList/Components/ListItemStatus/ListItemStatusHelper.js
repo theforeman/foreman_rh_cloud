@@ -1,10 +1,11 @@
 import React from 'react';
-import { Icon, Spinner } from 'patternfly-react';
+import { Spinner } from '@patternfly/react-core';
+import { CheckIcon, TimesIcon } from '@patternfly/react-icons';
 
 const STATUS_ICONS = {
-  success: <Icon name="check" />,
-  failure: <Icon name="times" />,
-  running: <Spinner loading inline size="xs" />,
+  success: <CheckIcon />,
+  failure: <TimesIcon />,
+  running: <Spinner size="sm" />,
   unknown: <span>--</span>,
 };
 
