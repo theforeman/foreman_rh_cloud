@@ -3,7 +3,7 @@ import { testComponentSnapshotsWithFixtures } from '@theforeman/test';
 import CloudConnectorSwitcher from '../CloudConnectorSwitcher';
 
 const fixtures = {
-  render: {},
+  render: { handleToggle: jest.fn() },
 };
 
 describe('CloudConnectorSwitcher', () => {

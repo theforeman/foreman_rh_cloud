@@ -5,7 +5,7 @@ exports[`CloudConnectorSwitcher rendering render 1`] = `
   id="cloud-connector-settings-switcher"
   isChecked={false}
   label="Cloud Connector"
-  onChange={[Function]}
+  onChange={[MockFunction]}
   tooltip={null}
 />
 `;
