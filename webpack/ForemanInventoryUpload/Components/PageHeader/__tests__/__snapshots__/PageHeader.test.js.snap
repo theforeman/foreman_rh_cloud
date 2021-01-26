@@ -8,7 +8,7 @@ exports[`PageHeader rendering render without Props 1`] = `
   <div
     className="inventory-upload-header-description"
   >
-    <InventorySettings />
+    <ConnectedInventorySettings />
     <PageDescription />
   </div>
   <Row

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Inventory settings reducer should handle CLOUD_CONNECTOR_TOGGLE true 1`] = `
+Object {
+  "cloudConnector": true,
+  "rhInventory": false,
+}
+`;
+
+exports[`Inventory settings reducer should handle RH_INVENTORY_TOGGLE false 1`] = `
+Object {
+  "cloudConnector": false,
+  "rhInventory": false,
+}
+`;

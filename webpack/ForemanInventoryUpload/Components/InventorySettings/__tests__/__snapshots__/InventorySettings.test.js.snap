@@ -1,14 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InventorySettings rendering render without Props 1`] = `
+exports[`InventorySettings rendering render Props 1`] = `
 <div
   className="inventory-settings"
 >
   <h3>
     Settings
   </h3>
-  <RedHatInventorySwitcher />
-  <CloudConnectorSwitcher />
+  <RedHatInventorySwitcher
+    handleToggle={[MockFunction]}
+    isEnabled={true}
+  />
+  <CloudConnectorSwitcher
+    handleToggle={[MockFunction]}
+    isEnabled={false}
+  />
   <Button
     isInline={true}
     onClick={[Function]}

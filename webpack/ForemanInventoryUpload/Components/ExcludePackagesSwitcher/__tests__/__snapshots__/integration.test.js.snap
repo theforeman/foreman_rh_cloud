@@ -38,6 +38,10 @@ Object {
         "inventoryFilter": Object {
           "filterTerm": "",
         },
+        "inventorySettings": Object {
+          "cloudConnector": false,
+          "rhInventory": false,
+        },
         "inventorySync": Object {},
       },
     },
