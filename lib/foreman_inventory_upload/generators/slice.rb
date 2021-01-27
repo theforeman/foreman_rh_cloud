@@ -103,7 +103,7 @@ module ForemanInventoryUpload
         @stream.simple_field('cores_per_socket', fact_value(host, 'cpu::core(s)_per_socket')) { |v| v.to_i }
         @stream.simple_field('system_memory_bytes', fact_value(host, 'memory::memtotal')) { |v| kilobytes_to_bytes(v.to_i) }
         @stream.array_field('network_interfaces') do
-          @stream.raw(host.interfaces.map do |nic|
+          @stream.raw(host.interfaces.reject { |nic| nic.identifier.empty? }.map do |nic|
             {
               'ipv4_addresses': [host_ips_cache[nic.ip]].compact,
               'ipv6_addresses': [nic.ip6].compact,
