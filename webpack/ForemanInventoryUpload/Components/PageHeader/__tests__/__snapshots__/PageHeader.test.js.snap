@@ -25,8 +25,8 @@ exports[`PageHeader rendering render without Props 1`] = `
     <Col
       bsClass="col"
       componentClass="div"
-      xs={6}
-      xsOffset={2}
+      xs={7}
+      xsOffset={1}
     >
       <ToolbarButtons />
     </Col>

@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CloudConnectorButton render no cloud connector 1`] = `
+<Button
+  onClick={[MockFunction]}
+  variant="secondary"
+>
+  Configure Cloud Connector
+</Button>
+`;
+
+exports[`CloudConnectorButton render pending connector 1`] = `
+<Popover
+  aria-label="Popover with Link to cloud connector job"
+  bodyContent={
+    <div>
+      Cloud connector job is still running, you can view it here:
+      <a
+        href="/job-link"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Open job
+      </a>
+    </div>
+  }
+  closeBtnAriaLabel="Close cloud connector Popover"
+>
+  <Button
+    variant="secondary"
+  >
+    <Spinner
+      size="sm"
+    />
+     
+    Cloud Connector in progress
+  </Button>
+</Popover>
+`;
+
+exports[`CloudConnectorButton render resolved cloud connector 1`] = `
+<Button
+  isDisabled={true}
+  variant="secondary"
+>
+  Cloud Connector is configured
+</Button>
+`;

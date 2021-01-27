@@ -7,18 +7,16 @@ exports[`SyncButton rendering render with Props 1`] = `
     toggleModal={[Function]}
   />
   <Button
-    active={false}
-    block={false}
-    bsClass="btn"
-    bsSize="lg"
-    bsStyle="default"
     className="sync_button"
-    disabled={false}
+    isDisabled={false}
     onClick={[Function]}
+    size="lg"
+    variant="secondary"
   >
-    <Icon
-      name="refresh"
-      type="fa"
+    <RedoIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
     />
      Sync inventory status
   </Button>

@@ -18,7 +18,7 @@ const PageHeader = () => (
       <Grid.Col xs={4}>
         <InventoryFilter />
       </Grid.Col>
-      <Grid.Col xs={6} xsOffset={2}>
+      <Grid.Col xs={7} xsOffset={1}>
         <ToolbarButtons />
       </Grid.Col>
     </Grid.Row>
