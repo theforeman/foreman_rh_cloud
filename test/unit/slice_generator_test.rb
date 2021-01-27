@@ -18,6 +18,8 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     )
 
     @host.organization.pools << FactoryBot.create(:katello_pool, account_number: '1234', cp_id: 1)
+    @host.interfaces.first.identifier = 'test_nic1'
+    @host.save!
 
     ForemanInventoryUpload::Generators::Queries.instance_variable_set(:@fact_names, nil)
   end
@@ -81,7 +83,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_not_nil(actual_nic = actual_network_interfaces.first)
     refute actual_nic.key?('mtu')
     refute actual_nic.key?('mac_address')
-    refute actual_nic.key?('name')
+    assert_equal 'test_nic1', actual_nic['name']
   end
 
   test 'hosts report fields should be present if fact exist' do
@@ -150,6 +152,26 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
     assert_equal 1, generator.hosts_count
+  end
+
+  test 'skips nameless nics' do
+    ip6 = Array.new(4) { '%x' % rand(16**4) }.join(':') + '::' + '5'
+    nic = FactoryBot.build(:nic_managed, ip6: ip6, identifier: '')
+    nic.attrs['mtu'] = '1500'
+    @host.interfaces << nic
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_equal @host.interfaces.where.not(ip: nil).first.ip, actual_host['ip_addresses'].first
+    assert_equal @host.interfaces.where.not(mac: nil).first.mac, actual_host['mac_addresses'].first
+    assert_not_nil(actual_system_profile = actual_host['system_profile'])
+    assert_not_nil(actual_network_interfaces = actual_system_profile['network_interfaces'])
+    assert_nil actual_network_interfaces.find { |actual_nic| actual_nic['name'].empty? }
   end
 
   test 'generates obfuscated ip_address fields without inisghts-client' do
