@@ -48,7 +48,7 @@ module ForemanInventoryUpload
   end
 
   def self.facts_archive_name(organization)
-    "report_for_#{organization}.tar.gz"
+    "report_for_#{organization}.tar.xz"
   end
 
   def self.upload_url
