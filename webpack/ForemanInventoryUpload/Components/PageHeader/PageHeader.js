@@ -4,11 +4,13 @@ import InventorySettings from '../InventorySettings';
 import PageDescription from './components/PageDescription';
 import InventoryFilter from '../InventoryFilter';
 import ToolbarButtons from './components/ToolbarButtons';
+import SettingsWarning from './components/SettingsWarning';
 import PageTitle from './PageTitle';
 import './PageHeader.scss';
 
 const PageHeader = () => (
   <div className="inventory-upload-header">
+    <SettingsWarning />
     <PageTitle />
     <div className="inventory-upload-header-description">
       <InventorySettings />
