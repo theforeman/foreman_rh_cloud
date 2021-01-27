@@ -7,16 +7,21 @@ import { translate as __ } from 'foremanReact/common/I18n';
 import { foremanUrl } from '../../../ForemanRhCloudHelpers';
 import Switcher from '../../../common/Switcher';
 import AdvancedSettings from './components/AdvancedSettings';
+import { settingsDict } from '../../Components/InventorySettings/AdvancedSetting/AdvancedSettingsConstants';
 
 const InventoryAutoUploadSwitcher = ({
   autoUploadEnabled,
-  handleToggle,
-  fetchSettings,
+  setSetting,
+  getSettings,
 }) => {
   useEffect(() => {
-    fetchSettings();
-  }, [fetchSettings]);
-
+    getSettings();
+  }, [getSettings]);
+  const handleToggle = () =>
+    setSetting({
+      setting: settingsDict.autoUploadEnabled.name,
+      value: !autoUploadEnabled,
+    });
   return (
     <FormGroup>
       <Grid>
@@ -30,7 +35,7 @@ const InventoryAutoUploadSwitcher = ({
               'Enable automatic upload of your hosts inventory to the Red Hat cloud'
             )}
             isChecked={autoUploadEnabled}
-            onChange={() => handleToggle(autoUploadEnabled)}
+            onChange={handleToggle}
             labelCol={5}
           />
 
@@ -81,8 +86,8 @@ const InventoryAutoUploadSwitcher = ({
 
 InventoryAutoUploadSwitcher.propTypes = {
   autoUploadEnabled: PropTypes.bool,
-  handleToggle: PropTypes.func.isRequired,
-  fetchSettings: PropTypes.func.isRequired,
+  setSetting: PropTypes.func.isRequired,
+  getSettings: PropTypes.func.isRequired,
 };
 
 InventoryAutoUploadSwitcher.defaultProps = {

@@ -11,10 +11,6 @@ exports[`InventorySettings rendering render Props 1`] = `
     handleToggle={[MockFunction]}
     isEnabled={true}
   />
-  <CloudConnectorSwitcher
-    handleToggle={[MockFunction]}
-    isEnabled={false}
-  />
   <Button
     isInline={true}
     onClick={[Function]}

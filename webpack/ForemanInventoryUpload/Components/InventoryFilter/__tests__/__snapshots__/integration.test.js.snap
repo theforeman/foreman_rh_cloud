@@ -38,7 +38,6 @@ Object {
           "filterTerm": "some_new_filter",
         },
         "inventorySettings": Object {
-          "cloudConnector": false,
           "rhInventory": false,
         },
         "inventorySync": Object {},

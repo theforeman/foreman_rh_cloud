@@ -11,7 +11,7 @@ class Dashboard extends React.Component {
   componentDidMount() {
     const { startPolling, fetchLogs, accountID } = this.props;
     fetchLogs(accountID);
-    const pollingProcessID = setInterval(() => fetchLogs(accountID), 5000);
+    const pollingProcessID = setInterval(() => fetchLogs(accountID), 500000);
     startPolling(accountID, pollingProcessID);
   }
 

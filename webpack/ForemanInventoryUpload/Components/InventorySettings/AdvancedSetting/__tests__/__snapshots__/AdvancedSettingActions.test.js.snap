@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AdvancedSetting actions should handleToggle 1`] = `
+Array [
+  Array [
+    Object {
+      "handleError": [Function],
+      "key": "INVENTORY_SETTINGS",
+      "params": Object {
+        "setting": "autoUploadEnabled",
+        "value": true,
+      },
+      "type": "post-some-type",
+      "url": "/foreman_inventory_upload/set_setting",
+    },
+  ],
+]
+`;

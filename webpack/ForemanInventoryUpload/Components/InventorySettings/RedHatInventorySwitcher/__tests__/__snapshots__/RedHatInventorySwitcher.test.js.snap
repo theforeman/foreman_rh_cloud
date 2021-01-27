@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CloudConnectorSwitcher rendering render 1`] = `
+exports[`RedHatInventorySwitcher rendering render 1`] = `
 <ShortSwitcherPF4
-  id="cloud-connector-settings-switcher"
+  id="rh-inventory-settings-switcher"
   isChecked={false}
-  label="Cloud Connector"
+  label="Red Hat Inventory"
   onChange={[MockFunction]}
   tooltip={null}
 />

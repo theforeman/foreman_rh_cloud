@@ -5,9 +5,7 @@ import InventorySettings from '../InventorySettings';
 const fixtures = {
   'render Props': {
     handleToggleRHInventory: jest.fn(),
-    handleToggleCloudConnector: jest.fn(),
     rhInventory: true,
-    cloudConnector: false,
   },
 };
 

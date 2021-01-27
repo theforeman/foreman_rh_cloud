@@ -20,13 +20,7 @@ Object {
 }
 `;
 
-exports[`AccountList selectors should return AccountList autoUploadEnabled 1`] = `true`;
-
 exports[`AccountList selectors should return AccountList cloudToken 1`] = `"some-cloud-token"`;
-
-exports[`AccountList selectors should return AccountList excludePackages 1`] = `false`;
-
-exports[`AccountList selectors should return AccountList hostObfuscationEnabled 1`] = `true`;
 
 exports[`AccountList selectors should return AccountList pollingProcessID 1`] = `0`;
 
@@ -49,10 +43,7 @@ Object {
       "upload_report_status": "success",
     },
   },
-  "autoUploadEnabled": true,
   "cloudToken": "some-cloud-token",
-  "excludePackages": false,
-  "hostObfuscationEnabled": true,
   "pollingProcessID": 0,
 }
 `;

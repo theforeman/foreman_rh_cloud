@@ -21,24 +21,13 @@ module ForemanInventoryUpload
       ]
 
       render json: {
-        autoUploadEnabled: Setting[:allow_auto_inventory_upload],
-        hostObfuscationEnabled: Setting[:obfuscate_inventory_hostnames],
-        ipsObfuscationEnabled: Setting[:obfuscate_inventory_ips],
         cloudToken: Setting[:rh_cloud_token],
-        excludePackages: Setting[:exclude_installed_packages],
         accounts: accounts,
-        CloudConnectorStatus: cloud_connector_status,
+        CloudConnectorStatus: ForemanInventoryUpload::UploadsSettingsController.cloud_connector_status,
       }, status: :ok
     end
 
     private
-
-    def cloud_connector_status
-      cloud_connector = ForemanRhCloud::CloudConnector.new
-      job = cloud_connector&.latest_job
-      return nil unless job
-      { id: job.id, task: ForemanTasks::Task.where(:id => job.task_id).first }
-    end
 
     def status_for(label, job_class)
       label = job_class.output_label(label)

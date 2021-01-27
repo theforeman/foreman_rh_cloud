@@ -1,1 +1,0 @@
-export const AUTO_UPLOAD_TOGGLE = 'AUTO_UPLOAD_TOGGLE';

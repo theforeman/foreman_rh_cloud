@@ -1,14 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Inventory settings actions should handleToggleCloudConnector false 1`] = `
-Object {
-  "payload": Object {
-    "cloudConnector": true,
-  },
-  "type": "CLOUD_CONNECTOR_TOGGLE",
-}
-`;
-
 exports[`Inventory settings actions should handleToggleRHInventory true 1`] = `
 Object {
   "payload": Object {
