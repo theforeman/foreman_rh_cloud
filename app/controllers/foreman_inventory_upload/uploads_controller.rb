@@ -31,7 +31,8 @@ module ForemanInventoryUpload
 
     def cloud_connector_status
       cloud_connector = ForemanRhCloud::CloudConnector.new
-      render json: cloud_connector.latest_job.to_json
+      task_id = cloud_connector.latest_job.task_id
+      render json: ForemanTasks::Task.where(:id => task_id)
     end
 
     def auto_upload

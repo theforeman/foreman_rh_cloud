@@ -2,8 +2,10 @@
 
 exports[`CloudConnector button actions should configureCloudConnector 1`] = `
 Object {
+  "errorToast": [Function],
   "key": "CONFIGURE_CLOUD_CONNECTOR",
+  "successToast": [Function],
   "type": "post-some-type",
-  "url": "/foreman_inventory_upload/enable_cloud_connector",
+  "url": "/foreman_inventory_upload/cloud_connector",
 }
 `;
