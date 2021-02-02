@@ -28,9 +28,7 @@ module ForemanRhCloud
     def personal_access_token(user)
       access_token = PersonalAccessToken.find_by_name(CLOUD_CONNECTOR_TOKEN_NAME)
 
-      unless access_token.nil?
-        access_token.destroy!
-      end
+      access_token&.destroy! # destroy the old token if exists
 
       personal_access_token = PersonalAccessToken.new(:name => CLOUD_CONNECTOR_TOKEN_NAME, :user => user)
       token_value = personal_access_token.generate_token
@@ -58,6 +56,5 @@ module ForemanRhCloud
     def foreman_host
       ::Host.friendly.find(::SmartProxy.default_capsule.name)
     end
-
   end
 end
