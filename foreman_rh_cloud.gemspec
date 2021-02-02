@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'redhat_access'
   s.add_dependency 'foreman_ansible'
 
+  s.add_development_dependency 'foreman_ansible_core'
   s.add_development_dependency 'rdoc'
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'rubocop-performance'
