@@ -22,7 +22,7 @@ module ForemanRhCloud
 
     def latest_job
       feature_id = RemoteExecutionFeature.find_by_label(CLOUD_CONNECTOR_FEATURE).id
-      JobInvocation.where(:remote_execution_feature_id => feature_id).first
+      JobInvocation.where(:remote_execution_feature_id => feature_id).includes(:task).reorder('foreman_tasks_tasks.started_at DESC').first
     end
 
     def personal_access_token(user)
