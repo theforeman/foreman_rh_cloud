@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Icon, Spinner } from 'patternfly-react';
+import { Spinner, Button } from '@patternfly/react-core';
+import { ExclamationTriangleIcon, RedoIcon } from '@patternfly/react-icons';
 import { STATUS } from 'foremanReact/constants';
 import SyncModal from './components/Modal';
 import { SYNC_BUTTON_TEXT } from '../../../../ForemanInventoryConstants';
@@ -24,19 +25,16 @@ class SyncButton extends React.Component {
         <Button
           className="sync_button"
           onClick={handleClick}
-          bsSize="lg"
-          disabled={status === STATUS.PENDING}
+          size="lg"
+          isDisabled={status === STATUS.PENDING}
+          variant="secondary"
         >
           {!cloudToken && (
             <span>
-              <Icon name="warning" />{' '}
+              <ExclamationTriangleIcon />{' '}
             </span>
           )}
-          {status === STATUS.PENDING ? (
-            <Spinner loading size="xs" />
-          ) : (
-            <Icon name="refresh" />
-          )}
+          {status === STATUS.PENDING ? <Spinner size="sm" /> : <RedoIcon />}
           {SYNC_BUTTON_TEXT}
         </Button>
       </React.Fragment>

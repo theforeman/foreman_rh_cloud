@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CloudConnector button actions should configureCloudConnector 1`] = `
+Object {
+  "errorToast": [Function],
+  "key": "CONFIGURE_CLOUD_CONNECTOR",
+  "successToast": [Function],
+  "type": "post-some-type",
+  "url": "/foreman_inventory_upload/cloud_connector",
+}
+`;
