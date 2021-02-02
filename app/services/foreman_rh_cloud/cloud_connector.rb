@@ -2,7 +2,6 @@ require 'securerandom'
 
 module ForemanRhCloud
   class CloudConnector
-
     CLOUD_CONNECTOR_USER = 'cloud_connector_user'.freeze
     CLOUD_CONNECTOR_TOKEN_NAME = 'Cloud connector access token'.freeze
     CLOUD_CONNECTOR_FEATURE = 'ansible_configure_cloud_connector'.freeze
