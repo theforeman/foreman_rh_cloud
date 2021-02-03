@@ -10,9 +10,9 @@ export const CloudConnectorButton = ({ status, onClick, jobLink }) => {
       <Popover
         bodyContent={
           <div>
-            {__('Cloud connector job is still running, you can view it here:')}
+            {__('Cloud connector setup is in progress now: ')}
             <a href={jobLink} target="_blank" rel="noopener noreferrer">
-              {__('Open job')}
+              {__('Cloud connector job link')}
             </a>
           </div>
         }
@@ -20,7 +20,7 @@ export const CloudConnectorButton = ({ status, onClick, jobLink }) => {
         closeBtnAriaLabel="Close cloud connector Popover"
       >
         <Button variant="secondary">
-          <Spinner size="sm" /> {__('Cloud Connector in progress')}
+          <Spinner size="sm" /> {__('Cloud Connector is in progress')}
         </Button>
       </Popover>
     );
@@ -28,8 +28,8 @@ export const CloudConnectorButton = ({ status, onClick, jobLink }) => {
 
   if (status === CONNECTOR_STATUS.RESOLVED) {
     return (
-      <Button variant="secondary" isDisabled>
-        {__('Cloud Connector is configured')}
+      <Button variant="secondary" onClick={onClick}>
+        {__('Reconfigure Cloud Connector')}
       </Button>
     );
   }

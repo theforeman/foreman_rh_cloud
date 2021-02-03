@@ -1,14 +1,20 @@
 import { selectAPIResponse } from 'foremanReact/redux/API/APISelectors';
+import { foremanUrl } from '../../../../../ForemanRhCloudHelpers';
 
 import {
   CONFIGURE_CLOUD_CONNECTOR,
   CONNECTOR_STATUS,
 } from './CloudConnectorConstants';
 
-export const selectStatus = state =>
-  selectAPIResponse(state, CONFIGURE_CLOUD_CONNECTOR)?.result === 'success'
-    ? CONNECTOR_STATUS.RESOLVED
-    : CONNECTOR_STATUS.NOT_RESOLVED;
+export const selectStatus = state => {
+  const { task } = selectAPIResponse(state, CONFIGURE_CLOUD_CONNECTOR);
+  if (!task) return CONNECTOR_STATUS.NOT_RESOLVED;
+  if (task.state === 'running') return CONNECTOR_STATUS.PENDING;
+  if (task.result === 'success') return CONNECTOR_STATUS.RESOLVED;
+  return CONNECTOR_STATUS.NOT_RESOLVED;
+};
 
-export const selectJobLink = state =>
-  selectAPIResponse(state, CONFIGURE_CLOUD_CONNECTOR).job_link || '';
+export const selectJobLink = state => {
+  const { id } = selectAPIResponse(state, CONFIGURE_CLOUD_CONNECTOR);
+  return id ? foremanUrl(`/job_invocations/${id}`) : '';
+};

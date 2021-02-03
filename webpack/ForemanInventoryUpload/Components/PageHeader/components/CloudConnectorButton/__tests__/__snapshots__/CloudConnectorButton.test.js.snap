@@ -14,13 +14,13 @@ exports[`CloudConnectorButton render pending connector 1`] = `
   aria-label="Popover with Link to cloud connector job"
   bodyContent={
     <div>
-      Cloud connector job is still running, you can view it here:
+      Cloud connector setup is in progress now: 
       <a
         href="/job-link"
         rel="noopener noreferrer"
         target="_blank"
       >
-        Open job
+        Cloud connector job link
       </a>
     </div>
   }
@@ -33,16 +33,16 @@ exports[`CloudConnectorButton render pending connector 1`] = `
       size="sm"
     />
      
-    Cloud Connector in progress
+    Cloud Connector is in progress
   </Button>
 </Popover>
 `;
 
 exports[`CloudConnectorButton render resolved cloud connector 1`] = `
 <Button
-  isDisabled={true}
+  onClick={[MockFunction]}
   variant="secondary"
 >
-  Cloud Connector is configured
+  Reconfigure Cloud Connector
 </Button>
 `;
