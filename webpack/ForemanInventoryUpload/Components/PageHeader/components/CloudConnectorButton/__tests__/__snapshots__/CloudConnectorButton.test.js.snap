@@ -14,27 +14,35 @@ exports[`CloudConnectorButton render pending connector 1`] = `
   aria-label="Popover with Link to cloud connector job"
   bodyContent={
     <div>
-      Cloud connector setup is in progress now: 
+      Cloud connector setup has started: 
       <a
         href="/job-link"
         rel="noopener noreferrer"
         target="_blank"
       >
-        Cloud connector job link
+        view the job in progress
       </a>
     </div>
   }
   closeBtnAriaLabel="Close cloud connector Popover"
+  isVisible={false}
+  shouldClose={[Function]}
 >
-  <Button
-    variant="secondary"
+  <div
+    classnmae="cloud-connector-pending-button"
+    onMouseEnter={[Function]}
   >
-    <Spinner
-      size="sm"
-    />
-     
-    Cloud Connector is in progress
-  </Button>
+    <Button
+      isDisabled={true}
+      variant="secondary"
+    >
+      <Spinner
+        size="sm"
+      />
+       
+      Cloud Connector is in progress
+    </Button>
+  </div>
 </Popover>
 `;
 

@@ -9,7 +9,8 @@ import {
 export const selectStatus = state => {
   const { task } = selectAPIResponse(state, CONFIGURE_CLOUD_CONNECTOR);
   if (!task) return CONNECTOR_STATUS.NOT_RESOLVED;
-  if (task.state === 'running') return CONNECTOR_STATUS.PENDING;
+  if (task.result === 'running' || task.result === 'pending')
+    return CONNECTOR_STATUS.PENDING;
   if (task.result === 'success') return CONNECTOR_STATUS.RESOLVED;
   return CONNECTOR_STATUS.NOT_RESOLVED;
 };
