@@ -20,7 +20,8 @@ module ForemanRhCloud
     end
 
     def latest_job
-      feature_id = RemoteExecutionFeature.find_by_label(CLOUD_CONNECTOR_FEATURE).id
+      feature_id = RemoteExecutionFeature.find_by_label(CLOUD_CONNECTOR_FEATURE)&.id
+      return nil unless feature_id
       JobInvocation.where(:remote_execution_feature_id => feature_id).includes(:task).reorder('foreman_tasks_tasks.started_at DESC').first
     end
 

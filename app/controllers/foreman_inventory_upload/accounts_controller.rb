@@ -27,10 +27,18 @@ module ForemanInventoryUpload
         cloudToken: Setting[:rh_cloud_token],
         excludePackages: Setting[:exclude_installed_packages],
         accounts: accounts,
+        CloudConnectorStatus: cloud_connector_status,
       }, status: :ok
     end
 
     private
+
+    def cloud_connector_status
+      cloud_connector = ForemanRhCloud::CloudConnector.new
+      job = cloud_connector&.latest_job
+      return nil unless job
+      { id: job.id, task: ForemanTasks::Task.where(:id => job.task_id).first }
+    end
 
     def status_for(label, job_class)
       label = job_class.output_label(label)

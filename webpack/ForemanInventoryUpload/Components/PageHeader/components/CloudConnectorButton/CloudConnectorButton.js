@@ -23,7 +23,7 @@ export const CloudConnectorButton = ({ status, onClick, jobLink }) => {
         closeBtnAriaLabel="Close cloud connector Popover"
       >
         <div
-          classnmae="cloud-connector-pending-button"
+          className="cloud-connector-pending-button"
           onMouseEnter={() => setIsPopoverVisible(true)}
         >
           <Button variant="secondary" isDisabled>

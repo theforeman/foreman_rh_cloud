@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { CloudConnectorButton } from './CloudConnectorButton';
-import {
-  configureCloudConnector,
-  getCloudConnector,
-} from './CloudConnectorActions';
+import { configureCloudConnector } from './CloudConnectorActions';
 import { selectStatus, selectJobLink } from './CloudConnectorSelectors';
 
 const ConnectedCloudConnectorButton = () => {
@@ -12,9 +9,6 @@ const ConnectedCloudConnectorButton = () => {
   const jobLink = useSelector(selectJobLink);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getCloudConnector());
-  }, [dispatch]);
   return (
     <CloudConnectorButton
       status={status}

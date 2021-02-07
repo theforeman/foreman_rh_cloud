@@ -29,7 +29,7 @@ exports[`CloudConnectorButton render pending connector 1`] = `
   shouldClose={[Function]}
 >
   <div
-    classnmae="cloud-connector-pending-button"
+    className="cloud-connector-pending-button"
     onMouseEnter={[Function]}
   >
     <Button

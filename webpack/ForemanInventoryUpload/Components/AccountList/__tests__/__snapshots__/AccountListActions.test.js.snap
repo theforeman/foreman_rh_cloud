@@ -5,6 +5,12 @@ Array [
   Array [
     Object {
       "payload": Object {
+        "CloudConnectorStatus": Object {
+          "id": 7,
+          "task": Object {
+            "id": 11,
+          },
+        },
         "accounts": Object {
           "Account1": Object {
             "generate_report_status": "running",
