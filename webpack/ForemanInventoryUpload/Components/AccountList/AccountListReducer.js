@@ -29,6 +29,7 @@ export default (state = initialState, action) => {
       ipsObfuscationEnabled,
       cloudToken,
       excludePackages,
+      CloudConnectorStatus,
     } = {},
   } = action;
 
@@ -42,6 +43,7 @@ export default (state = initialState, action) => {
         ipsObfuscationEnabled,
         cloudToken,
         excludePackages,
+        CloudConnectorStatus,
         error: null,
       });
     case INVENTORY_ACCOUNT_STATUS_POLLING_ERROR:

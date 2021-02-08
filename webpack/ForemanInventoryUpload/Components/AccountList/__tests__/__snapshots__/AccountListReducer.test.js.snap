@@ -20,6 +20,12 @@ Object {
 
 exports[`AccountList reducer should handle INVENTORY_ACCOUNT_STATUS_POLLING 1`] = `
 Object {
+  "CloudConnectorStatus": Object {
+    "id": 7,
+    "task": Object {
+      "id": 11,
+    },
+  },
   "accounts": Object {
     "Account1": Object {
       "generate_report_status": "running",

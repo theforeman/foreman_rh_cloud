@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate as __ } from 'foremanReact/common/I18n';
-import { get, post } from 'foremanReact/redux/API';
+import { post } from 'foremanReact/redux/API';
 import { CONFIGURE_CLOUD_CONNECTOR } from './CloudConnectorConstants';
 import { inventoryUrl } from '../../../../ForemanInventoryHelpers';
 import { foremanUrl } from '../../../../../ForemanRhCloudHelpers';
@@ -18,10 +18,4 @@ export const configureCloudConnector = () =>
       </span>
     ),
     errorToast: error => `${__('Cloud connector setup has failed: ')} ${error}`,
-  });
-
-export const getCloudConnector = () =>
-  get({
-    key: CONFIGURE_CLOUD_CONNECTOR,
-    url: inventoryUrl('cloud_connector'),
   });

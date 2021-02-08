@@ -42,6 +42,11 @@ export const cloudToken = 'some-cloud-token';
 
 export const excludePackages = false;
 
+export const CloudConnectorStatus = {
+  id: 7,
+  task: { id: 11 },
+};
+
 export const props = {
   accounts,
   fetchAccountsStatus: noop,
@@ -57,6 +62,7 @@ export const pollingResponse = {
   ipsObfuscationEnabled,
   cloudToken,
   excludePackages,
+  CloudConnectorStatus,
 };
 
 export const fetchAccountsStatusResponse = {

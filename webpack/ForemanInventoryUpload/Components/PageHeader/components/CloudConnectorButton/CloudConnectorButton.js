@@ -1,35 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Spinner, Button, Popover } from '@patternfly/react-core';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { CONNECTOR_STATUS } from './CloudConnectorConstants';
 
 export const CloudConnectorButton = ({ status, onClick, jobLink }) => {
+  const [isPopoverVisible, setIsPopoverVisible] = useState(false);
   if (status === CONNECTOR_STATUS.PENDING) {
     return (
       <Popover
+        isVisible={isPopoverVisible}
+        shouldClose={() => setIsPopoverVisible(false)}
         bodyContent={
           <div>
-            {__('Cloud connector job is still running, you can view it here:')}
+            {__('Cloud connector setup has started: ')}
             <a href={jobLink} target="_blank" rel="noopener noreferrer">
-              {__('Open job')}
+              {__('view the job in progress')}
             </a>
           </div>
         }
         aria-label="Popover with Link to cloud connector job"
         closeBtnAriaLabel="Close cloud connector Popover"
       >
-        <Button variant="secondary">
-          <Spinner size="sm" /> {__('Cloud Connector in progress')}
-        </Button>
+        <div
+          className="cloud-connector-pending-button"
+          onMouseEnter={() => setIsPopoverVisible(true)}
+        >
+          <Button variant="secondary" isDisabled>
+            <Spinner size="sm" /> {__('Cloud Connector is in progress')}
+          </Button>
+        </div>
       </Popover>
     );
   }
 
   if (status === CONNECTOR_STATUS.RESOLVED) {
     return (
-      <Button variant="secondary" isDisabled>
-        {__('Cloud Connector is configured')}
+      <Button variant="secondary" onClick={onClick}>
+        {__('Reconfigure Cloud Connector')}
       </Button>
     );
   }
