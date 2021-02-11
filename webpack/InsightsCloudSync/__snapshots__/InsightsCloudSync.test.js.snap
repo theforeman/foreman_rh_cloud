@@ -25,14 +25,10 @@ exports[`InsightsCloudSync render 1`] = `
   searchable={true}
   toolbarButtons={
     <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="primary"
-      disabled={false}
       onClick={[Function]}
+      variant="primary"
     >
-      Sync now
+      Start recommendations sync
     </Button>
   }
 >

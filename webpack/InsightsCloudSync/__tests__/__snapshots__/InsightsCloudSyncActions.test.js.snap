@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Insights cloud sync actions should syncInsights 1`] = `
+Object {
+  "errorToast": [Function],
+  "key": "INSIGHTS_CLOUD_SYNC",
+  "successToast": [Function],
+  "type": "post-some-type",
+  "url": "/insights_cloud/tasks",
+}
+`;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'patternfly-react';
+import { Button } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
 import { translate as __ } from 'foremanReact/common/I18n';
 import PageLayout from 'foremanReact/routes/common/PageLayout/PageLayout';
@@ -31,8 +31,8 @@ const InsightsCloudSync = ({
       onSearch={nextQuery => fetchInsights({ query: nextQuery, page: 1 })}
       header={INSIGHTS_SYNC_PAGE_TITLE}
       toolbarButtons={
-        <Button bsStyle="primary" onClick={syncInsights}>
-          {__('Sync now')}
+        <Button variant="primary" onClick={syncInsights}>
+          {__('Start recommendations sync')}
         </Button>
       }
       searchQuery={query}

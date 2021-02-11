@@ -2,7 +2,7 @@ import { translate as __ } from 'foremanReact/common/I18n';
 import { getControllerSearchProps } from 'foremanReact/constants';
 import { foremanUrl } from '../ForemanRhCloudHelpers';
 
-export const INSIGHTS_CLOUD_SYNC_SUCCESS = 'INSIGHTS_CLOUD_SYNC_SUCCESS';
+export const INSIGHTS_CLOUD_SYNC = 'INSIGHTS_CLOUD_SYNC';
 
 export const INSIGHTS_SYNC_PAGE_TITLE = __('Red Hat Insights');
 
