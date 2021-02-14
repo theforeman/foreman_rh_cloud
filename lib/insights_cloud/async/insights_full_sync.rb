@@ -46,6 +46,8 @@ module InsightsCloud
 
       def replace_hits_data(hits)
         InsightsHit.transaction do
+          # Reset hit counters to 0, they will be recreated later
+          InsightsFacet.unscoped.update_all(hits_count: 0)
           # create new facets for hosts that are missing one
           hosts_with_existing_facets = InsightsFacet.where(host_id: @host_ids.values).pluck(:host_id)
           InsightsFacet.create(
