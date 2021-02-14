@@ -125,8 +125,10 @@ class SliceGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'generates nic fields' do
+    empty_nic = FactoryBot.build(:nic_managed, ip6: '', identifier: 'empty_nic')
+    @host.interfaces << empty_nic
     ip6 = Array.new(4) { '%x' % rand(16**4) }.join(':') + '::' + '5'
-    nic = FactoryBot.build(:nic_managed, ip6: ip6)
+    nic = FactoryBot.build(:nic_managed, ip6: ip6, identifier: 'good_nic')
     nic.attrs['mtu'] = '1500'
     @host.interfaces << nic
     batch = Host.where(id: @host.id).in_batches.first
@@ -141,7 +143,9 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_equal @host.interfaces.where.not(mac: nil).first.mac, actual_host['mac_addresses'].first
     assert_not_nil(actual_system_profile = actual_host['system_profile'])
     assert_not_nil(actual_network_interfaces = actual_system_profile['network_interfaces'])
-    assert_not_nil(actual_nic = actual_network_interfaces.first)
+    assert_not_nil(actual_empty_nic = actual_network_interfaces.find { |actual_nic| actual_nic['name'] == 'empty_nic' })
+    assert actual_empty_nic['ipv6_addresses'].empty?
+    assert_not_nil(actual_nic = actual_network_interfaces.find { |actual_nic| actual_nic['name'] == 'good_nic' })
     assert_equal nic.ip, actual_nic['ipv4_addresses'].first
     assert_equal nic.ip6, actual_nic['ipv6_addresses'].first
     assert_equal 1500, actual_nic['mtu']

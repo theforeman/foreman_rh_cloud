@@ -105,8 +105,8 @@ module ForemanInventoryUpload
         @stream.array_field('network_interfaces') do
           @stream.raw(host.interfaces.reject { |nic| nic.identifier.empty? }.map do |nic|
             {
-              'ipv4_addresses': [host_ips_cache[nic.ip]].compact,
-              'ipv6_addresses': [nic.ip6].compact,
+              'ipv4_addresses': [host_ips_cache[nic.ip]].reject(&:empty?),
+              'ipv6_addresses': [nic.ip6].reject(&:empty?),
               'mtu': nic.try(:mtu) && nic.mtu.to_i,
               'mac_address': nic.mac,
               'name': nic.identifier,
