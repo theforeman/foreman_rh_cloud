@@ -67,7 +67,7 @@ export const setActiveTab = (accountID, tabName) => ({
 });
 
 export const downloadReports = accountID => {
-  window.location.href = inventoryUrl(`${accountID}/uploads/file`);
+  window.open(inventoryUrl(`${accountID}/uploads/file`), '_blank');
   return {
     type: INVENTORY_REPORTS_DOWNLOAD,
     payload: {

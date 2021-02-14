@@ -36,15 +36,15 @@ const fixtures = {
 };
 
 describe('Dashboard actions', () => {
-  const { location } = window;
+  const { open } = window;
 
   beforeAll(() => {
-    delete window.location;
-    window.location = { href: jest.fn() };
+    delete window.open;
+    window.open = jest.fn();
   });
 
   afterAll(() => {
-    window.location = location;
+    window.open = open;
   });
 
   return testActionSnapshotWithFixtures(fixtures);
