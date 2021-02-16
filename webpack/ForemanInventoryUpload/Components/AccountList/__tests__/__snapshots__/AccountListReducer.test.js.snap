@@ -44,7 +44,7 @@ Object {
     },
   },
   "autoUploadEnabled": true,
-  "cloudToken": "some-cloud-token",
+  "cloudToken": true,
   "error": null,
   "excludePackages": false,
   "hostObfuscationEnabled": true,

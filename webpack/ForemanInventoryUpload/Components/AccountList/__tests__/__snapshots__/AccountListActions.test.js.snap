@@ -29,7 +29,7 @@ Array [
           },
         },
         "autoUploadEnabled": true,
-        "cloudToken": "some-cloud-token",
+        "cloudToken": true,
         "excludePackages": false,
         "hostObfuscationEnabled": true,
         "ipsObfuscationEnabled": true,

@@ -22,7 +22,7 @@ Object {
 
 exports[`AccountList selectors should return AccountList autoUploadEnabled 1`] = `true`;
 
-exports[`AccountList selectors should return AccountList cloudToken 1`] = `"some-cloud-token"`;
+exports[`AccountList selectors should return AccountList cloudToken 1`] = `true`;
 
 exports[`AccountList selectors should return AccountList excludePackages 1`] = `false`;
 
@@ -50,7 +50,7 @@ Object {
     },
   },
   "autoUploadEnabled": true,
-  "cloudToken": "some-cloud-token",
+  "cloudToken": true,
   "excludePackages": false,
   "hostObfuscationEnabled": true,
   "pollingProcessID": 0,

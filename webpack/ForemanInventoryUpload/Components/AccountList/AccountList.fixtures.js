@@ -38,7 +38,7 @@ export const ipsObfuscationEnabled = true;
 
 export const filterTerm = 'some_filter';
 
-export const cloudToken = 'some-cloud-token';
+export const cloudToken = true;
 
 export const excludePackages = false;
 
