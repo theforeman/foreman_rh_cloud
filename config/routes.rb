@@ -5,11 +5,8 @@ Rails.application.routes.draw do
     get ':organization_id/uploads/last', to: 'uploads#last', constraints: { organization_id: %r{[^\/]+} }
     get ':organization_id/uploads/file', to: 'uploads#download_file', constraints: { organization_id: %r{[^\/]+} }
     get 'accounts', to: 'accounts#index'
-    get 'auto_upload', to: 'uploads#show_auto_upload'
-    post 'auto_upload', to: 'uploads#auto_upload'
-    post 'host_obfuscation', to: 'uploads#host_obfuscation'
-    post 'installed_packages_inclusion', to: 'uploads#installed_packages_inclusion'
-    post 'ips_obfuscation', to: 'uploads#ips_obfuscation'
+    get 'settings', to: 'uploads_settings#index'
+    post 'setting', to: 'uploads_settings#set_advanced_setting'
 
     post 'cloud_connector', to: 'uploads#enable_cloud_connector'
 

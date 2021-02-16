@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from './SyncButtonActions';
 import reducer from './SyncButtonReducer';
 import SyncButton from './SyncButton';
-import { selectCloudToken } from '../../../AccountList/AccountListSelectors';
+import { selectCloudToken } from '../../../InventorySettings/InventorySettingsSelectors';
 import { selectStatus } from './SyncButtonSelectors';
 
 // map state to props

@@ -4,7 +4,7 @@ import { SettingsWarning } from './SettingsWarning';
 import {
   selectAutoUploadEnabled,
   selectHostObfuscationEnabled,
-} from '../../../AccountList/AccountListSelectors';
+} from '../../../InventorySettings/InventorySettingsSelectors';
 import { CONNECTOR_STATUS } from '../CloudConnectorButton/CloudConnectorConstants';
 import { selectStatus } from '../CloudConnectorButton/CloudConnectorSelectors';
 

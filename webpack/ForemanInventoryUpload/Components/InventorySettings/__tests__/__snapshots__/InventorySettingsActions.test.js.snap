@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Inventory settings actions should getSettings 1`] = `
+Object {
+  "key": "INVENTORY_SETTINGS",
+  "type": "get-some-type",
+  "url": "/foreman_inventory_upload/settings",
+}
+`;
+
+exports[`Inventory settings actions should setSetting hostObfuscation true 1`] = `
+Array [
+  Array [
+    Object {
+      "errorToast": [Function],
+      "key": "INVENTORY_SETTINGS",
+      "params": Object {
+        "setting": "hostObfuscation",
+        "value": true,
+      },
+      "type": "post-some-type",
+      "url": "/foreman_inventory_upload/setting",
+    },
+  ],
+]
+`;

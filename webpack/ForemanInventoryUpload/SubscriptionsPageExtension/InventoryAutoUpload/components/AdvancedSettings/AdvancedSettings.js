@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { Grid } from 'patternfly-react';
 import { translate as __ } from 'foremanReact/common/I18n';
 import Switcher from '../../../../../common/Switcher';
+import { settingsDict } from '../../../../Components/InventorySettings/AdvancedSetting/AdvancedSettingsConstants';
 
 const AdvancedSettings = ({
+  setSetting,
   hostObfuscationEnabled,
-  hostObfuscationToggle,
   ipsObfuscationEnabled,
-  ipsObfuscationToggle,
   excludePackagesEnabled,
-  excludePackagesToggle,
 }) => (
   <form style={{ padding: '5px' }}>
     <Grid.Row>
@@ -19,7 +18,12 @@ const AdvancedSettings = ({
         label={__('Obfuscate host names')}
         tooltip={__('Obfuscate host names sent to the Red Hat cloud')}
         isChecked={hostObfuscationEnabled}
-        onChange={() => hostObfuscationToggle(hostObfuscationEnabled)}
+        onChange={() =>
+          setSetting({
+            setting: settingsDict.hostObfuscationEnabled.name,
+            value: !hostObfuscationEnabled,
+          })
+        }
         labelCol={8}
       />
     </Grid.Row>
@@ -29,7 +33,12 @@ const AdvancedSettings = ({
         label={__('Obfuscate IPs')}
         tooltip={__('Obfuscate ipv4 addresses sent to the Red Hat cloud')}
         isChecked={ipsObfuscationEnabled}
-        onChange={() => ipsObfuscationToggle(ipsObfuscationEnabled)}
+        onChange={() =>
+          setSetting({
+            setting: settingsDict.ipsObfuscationEnabled.name,
+            value: !ipsObfuscationEnabled,
+          })
+        }
         labelCol={8}
       />
     </Grid.Row>
@@ -41,7 +50,12 @@ const AdvancedSettings = ({
           'Exclude packages from being uploaded to the Red Hat cloud'
         )}
         isChecked={excludePackagesEnabled}
-        onChange={() => excludePackagesToggle(excludePackagesEnabled)}
+        onChange={() =>
+          setSetting({
+            setting: settingsDict.excludePackagesEnabled.name,
+            value: !excludePackagesEnabled,
+          })
+        }
         labelCol={8}
       />
     </Grid.Row>
@@ -49,12 +63,10 @@ const AdvancedSettings = ({
 );
 
 AdvancedSettings.propTypes = {
+  setSetting: PropTypes.func.isRequired,
   hostObfuscationEnabled: PropTypes.bool.isRequired,
-  hostObfuscationToggle: PropTypes.func.isRequired,
   ipsObfuscationEnabled: PropTypes.bool.isRequired,
-  ipsObfuscationToggle: PropTypes.func.isRequired,
   excludePackagesEnabled: PropTypes.bool.isRequired,
-  excludePackagesToggle: PropTypes.func.isRequired,
 };
 
 export default AdvancedSettings;

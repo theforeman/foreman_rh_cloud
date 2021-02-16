@@ -1,14 +1,12 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { handleToggle as hostObfuscationToggle } from '../../../../Components/HostObfuscationSwitcher/HostObfuscationSwitcherActions';
-import { handleToggle as ipsObfuscationToggle } from '../../../../Components/IpsObfuscationSwitcher/IpsObfuscationSwitcherActions';
-import { handleToggle as excludePackagesToggle } from '../../../../Components/ExcludePackagesSwitcher/ExcludePackagesSwitcherActions';
+import { setSetting } from '../../../../Components/InventorySettings/InventorySettingsActions';
 import AdvancedSettings from './AdvancedSettings';
 import {
   selectExcludePackages,
   selectHostObfuscationEnabled,
   selectIpsObfuscationEnabled,
-} from '../../../../Components/AccountList/AccountListSelectors';
+} from '../../../../Components/InventorySettings/InventorySettingsSelectors';
 
 // map state to props
 const mapStateToProps = state => ({
@@ -19,10 +17,7 @@ const mapStateToProps = state => ({
 
 // map action dispatchers to props
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    { hostObfuscationToggle, ipsObfuscationToggle, excludePackagesToggle },
-    dispatch
-  );
+  bindActionCreators({ setSetting }, dispatch);
 
 // export connected component
 export default connect(mapStateToProps, mapDispatchToProps)(AdvancedSettings);
