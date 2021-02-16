@@ -4,6 +4,7 @@ exports[`PageHeader rendering render without Props 1`] = `
 <div
   className="inventory-upload-header"
 >
+  <ConnectedSettingsWarning />
   <PageTitle />
   <div
     className="inventory-upload-header-description"

@@ -1,5 +1,17 @@
 .rh-cloud-page {
   .inventory-upload-header {
+    .settings-alert {
+      margin-bottom: 30px;
+      .pf-c-alert {
+        margin-bottom: 5px;
+
+        .pf-c-alert__title {
+          font-size: var(--pf-global--FontSize--md);
+          line-height: var(--pf-global--LineHeight--md);
+        }
+      }
+    }
+
     .inventory-upload-header-description {
       overflow: auto;
     }

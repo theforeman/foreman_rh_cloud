@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsWarning with 2 alerts 1`] = `
+<div
+  className="settings-alert"
+>
+  <Alert
+    actionClose={
+      <AlertActionCloseButton
+        onClose={[Function]}
+      />
+    }
+    key="auto-upload"
+    title="Cloud Connector has been configured however the inventory auto-upload is disabled, it's recommended to enable it"
+    variant="warning"
+  />
+  <Alert
+    actionClose={
+      <AlertActionCloseButton
+        onClose={[Function]}
+      />
+    }
+    key="obfuscating-host"
+    title="Cloud Connector has been configured however obfuscating host names setting is enabled, it's recommended to disable it"
+    variant="warning"
+  />
+</div>
+`;
+
+exports[`SettingsWarning with isCloudConnector false 1`] = `""`;
