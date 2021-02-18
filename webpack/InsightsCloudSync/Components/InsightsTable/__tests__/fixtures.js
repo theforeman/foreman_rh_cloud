@@ -1,7 +1,7 @@
 import Immutable from 'seamless-immutable';
 import { noop } from 'patternfly-react';
 
-const hits = Immutable([
+export const hits = Immutable([
   {
     id: 16,
     host_id: 1,

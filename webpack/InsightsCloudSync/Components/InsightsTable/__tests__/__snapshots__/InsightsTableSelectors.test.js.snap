@@ -59,6 +59,7 @@ Object {
 
 exports[`InsightsTable selectors should return queryParams 1`] = `
 Object {
+  "isSelectAll": false,
   "page": 1,
   "perPage": 7,
   "query": "total_risk < 3",

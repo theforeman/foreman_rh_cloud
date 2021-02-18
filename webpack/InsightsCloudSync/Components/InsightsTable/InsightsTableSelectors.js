@@ -32,6 +32,7 @@ export const selectQueryParams = state => ({
   query: selectSearch(state),
   sortBy: selectSortBy(state),
   sortOrder: selectSortOrder(state),
+  isSelectAll: selectIsAllSelectedQuery(state),
 });
 
 export const selectStatus = state =>
@@ -63,6 +64,9 @@ export const selectSelectedIds = state =>
 
 export const selectIsAllSelected = state =>
   selectInsightsCloudTable(state).isAllSelected || false;
+
+export const selectIsAllSelectedQuery = state =>
+  selectQuery(state).select_all === 'true';
 
 export const selectShowSelectAllAlert = state =>
   selectInsightsCloudTable(state).showSelectAllAlert || false;

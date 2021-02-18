@@ -61,7 +61,7 @@ const InsightsTable = ({
         className="recommendations-table"
         aria-label="Recommendations Table"
         onSelect={(_event, isSelected, rowId) =>
-          onTableSelect(_event, isSelected, rowId, rows, selectedIds)
+          onTableSelect(isSelected, rowId, rows, selectedIds)
         }
         canSelectAll
         sortBy={{ index: getSortColumnIndex(sortBy), direction: sortOrder }}
