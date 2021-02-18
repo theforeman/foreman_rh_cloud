@@ -16,7 +16,8 @@ FactoryBot.define do
     total_risk { 1 }
     likelihood { 2 }
     publish_date { DateTime.now }
-    sequence(:results_url) { |n| "http://example.com/results/#{n}" }
+    sequence(:results_url) { |n| "https://cloud.redhat.com/insights/overview/stability/test_rule%7CTEST_RULE/accdf444-5628-451d-bf3e-cf909ad7275#{n}/" }
+    rule_id { "test_rule|TEST_RULE" }
   end
 end
 
