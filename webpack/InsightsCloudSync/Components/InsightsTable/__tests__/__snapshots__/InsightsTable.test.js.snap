@@ -11,14 +11,6 @@ exports[`InsightsTable rendering render with Props 1`] = `
     showSelectAllAlert={false}
   />
   <Table
-    actions={
-      Array [
-        Object {
-          "onClick": [Function],
-          "title": "Remediate",
-        },
-      ]
-    }
     aria-label="Recommendations Table"
     borders={true}
     canSelectAll={true}

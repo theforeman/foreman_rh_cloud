@@ -35,15 +35,6 @@ export const columns = [
   },
 ];
 
-export const actions = [
-  {
-    title: __('Remediate'),
-    onClick: (event, rowId, rowData, extra) => {
-      alert('Remediate!');
-    },
-  },
-];
-
 export const INSIGHTS_HITS_PATH = foremanUrl('/insights_cloud/hits');
 
 export const INSIGHTS_HITS_API_KEY = 'INSIGHTS_HITS';

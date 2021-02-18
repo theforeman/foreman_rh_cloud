@@ -5,7 +5,7 @@ import { Pagination, PaginationVariant } from '@patternfly/react-core';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { useForemanSettings } from 'foremanReact/Root/Context/ForemanContext';
 import SelectAllAlert from './SelectAllAlert';
-import { columns, actions } from './InsightsTableConstants';
+import { columns } from './InsightsTableConstants';
 import TableEmptyState from './components/EmptyState';
 import {
   modifySelectedRows,
@@ -63,7 +63,6 @@ const InsightsTable = ({
         onSort={onTableSort}
         cells={columns}
         rows={modifySelectedRows(hits, selectedIds)}
-        actions={actions}
       >
         <TableHeader />
         <TableBody />
