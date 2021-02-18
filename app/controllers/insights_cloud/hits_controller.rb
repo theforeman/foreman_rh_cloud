@@ -6,7 +6,7 @@ module InsightsCloud
       hits = resource_base_search_and_page.preload(:host)
 
       render json: {
-        hasToken: Setting[:rh_cloud_token].length > 1,
+        hasToken: !Setting[:rh_cloud_token].empty?,
         hits: hits.map { |hit| hit.attributes.merge(hostname: hit.host&.name) },
         itemCount: hits.count,
       }, status: :ok
