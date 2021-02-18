@@ -32,4 +32,14 @@ Rails.application.routes.draw do
     get 'inventory_upload', to: '/react#index'
     get 'insights_cloud', to: '/react#index' # Uses foreman's react controller
   end
+
+  scope :module => :'insights_cloud/api', :path => :redhat_access do
+    scope 'r/insights/v1' do
+      get 'branch_info', to: 'machine_telemetries#branch_info'
+    end
+
+    scope '/r/insights' do
+      match '/*path', :constraints => lambda { |req| !req.path.include?('view/api') }, to: 'machine_telemetries#forward_request', via: [:get, :post, :delete,:put, :patch]
+    end
+  end
 end

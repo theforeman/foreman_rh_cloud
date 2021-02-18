@@ -20,6 +20,7 @@ class Setting::RhCloud < Setting
       set('obfuscate_inventory_ips', N_('Obfuscate ip addresses sent to Red Hat cloud'), false, N_('Obfuscate IPs')),
       set('rh_cloud_token', N_('Authentication token to Red Hat cloud services. Used to authenticate requests to cloud APIs'), nil, N_('Red Hat Cloud token'), nil, encrypted: true),
       set('exclude_installed_packages', N_('Exclude installed packages from Red Hat cloud inventory report'), false, N_("Don't upload installed packages")),
+      set('include_parameter_tags', N_('Should import include parameter tags from Foreman?'), false, N_('Include parameters in insights-client reports')),
     ]
   end
 

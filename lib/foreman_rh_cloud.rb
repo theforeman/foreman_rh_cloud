@@ -8,6 +8,10 @@ module ForemanRhCloud
     @base_url ||= ENV['SATELLITE_RH_CLOUD_URL'] || 'https://cloud.redhat.com'
   end
 
+  def self.cert_base_url
+    @cert_base_url ||= ENV['SATELLITE_CERT_RH_CLOUD_URL'] || 'https://cert.cloud.redhat.com'
+  end
+
   def self.authentication_url
     # https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
     @authentication_url ||= ENV['SATELLITE_RH_CLOUD_SSO_URL'] || 'https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token'
@@ -58,6 +62,7 @@ module ForemanRhCloud
   # This method assumes uri_string contains uri-encoded username and p@$$word:
   # http://user:p%40%24%24word@localhost:8888
   def self.transform_scheme(uri_string)
+    return unless uri_string
     transformed_uri = URI.parse(uri_string)
 
     case transformed_uri.scheme
