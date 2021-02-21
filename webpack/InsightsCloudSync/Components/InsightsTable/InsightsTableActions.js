@@ -103,7 +103,7 @@ export const onTableSelect = (
   _event,
   isSelected,
   rowId,
-  results,
+  rows,
   prevSelectedIds
 ) => dispatch => {
   const selectedIds = { ...prevSelectedIds };
@@ -112,15 +112,16 @@ export const onTableSelect = (
   if (rowId === -1) {
     if (!isSelected) return dispatch(clearAllSelection());
 
-    results.forEach(row => {
+    rows.forEach(row => {
+      if (row.disableCheckbox) return;
       selectedIds[row.id] = true;
     });
 
     showSelectAllAlert = true;
   } else {
     isSelected
-      ? (selectedIds[results[rowId].id] = true)
-      : delete selectedIds[results[rowId].id];
+      ? (selectedIds[rows[rowId].id] = true)
+      : delete selectedIds[rows[rowId].id];
   }
 
   dispatch(selectByIds(selectedIds));

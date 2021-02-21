@@ -5,7 +5,6 @@ import { translate as __, sprintf } from 'foremanReact/common/I18n';
 
 const SelectAllAlert = ({
   selectedIds,
-  itemCount,
   showSelectAllAlert,
   selectAll,
   clearAllSelection,
@@ -14,7 +13,7 @@ const SelectAllAlert = ({
   if (!showSelectAllAlert) return null;
   const selectedCount = Object.keys(selectedIds).length;
   if (!selectedCount) return null;
-  if (!isAllSelected && selectedCount !== itemCount) {
+  if (!isAllSelected) {
     return (
       <Alert
         isInline
@@ -25,7 +24,7 @@ const SelectAllAlert = ({
         )}
         actionLinks={
           <AlertActionLink onClick={selectAll}>
-            {sprintf('Select all %s recommendations', itemCount)}
+            {__('Select recommendations from all pages')}
           </AlertActionLink>
         }
       />
@@ -36,7 +35,7 @@ const SelectAllAlert = ({
     <Alert
       isInline
       variant="info"
-      title={sprintf('All %s recommendations are selected.', itemCount)}
+      title={__('All recommendations are now selected.')}
       actionLinks={
         <AlertActionLink onClick={clearAllSelection}>
           {__('Clear Selection')}
@@ -48,7 +47,6 @@ const SelectAllAlert = ({
 
 SelectAllAlert.propTypes = {
   selectedIds: PropTypes.object,
-  itemCount: PropTypes.number,
   showSelectAllAlert: PropTypes.bool,
   selectAll: PropTypes.func.isRequired,
   clearAllSelection: PropTypes.func.isRequired,
@@ -57,7 +55,6 @@ SelectAllAlert.propTypes = {
 
 SelectAllAlert.defaultProps = {
   selectedIds: {},
-  itemCount: 0,
   showSelectAllAlert: false,
   isAllSelected: false,
 };

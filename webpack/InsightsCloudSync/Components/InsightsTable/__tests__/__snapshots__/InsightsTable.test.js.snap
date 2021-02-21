@@ -5,7 +5,6 @@ exports[`InsightsTable rendering render with Props 1`] = `
   <SelectAllAlert
     clearAllSelection={[Function]}
     isAllSelected={false}
-    itemCount={2}
     selectAll={[Function]}
     selectedIds={Object {}}
     showSelectAllAlert={false}
@@ -44,9 +43,18 @@ exports[`InsightsTable rendering render with Props 1`] = `
             [Function],
           ],
         },
+        Object {
+          "cellTransforms": Array [
+            [Function],
+          ],
+          "title": "Playbook",
+          "transforms": Array [
+            [Function],
+          ],
+        },
       ]
     }
-    className=""
+    className="recommendations-table"
     contentId="expanded-content"
     dropdownDirection="down"
     dropdownPosition="right"
@@ -58,20 +66,7 @@ exports[`InsightsTable rendering render with Props 1`] = `
     ouiaSafe={true}
     role="grid"
     rowLabeledBy="simple-node"
-    rows={
-      Array [
-        Array [
-          "foo.example.com",
-          "Decreased security: Yum GPG verification disabled",
-          1,
-        ],
-        Array [
-          "foo.example.com",
-          "Installation of packages across major releases is not supported",
-          2,
-        ],
-      ]
-    }
+    rows={Array []}
     selectVariant="checkbox"
     sortBy={
       Object {

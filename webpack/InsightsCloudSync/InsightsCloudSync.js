@@ -25,21 +25,23 @@ const InsightsCloudSync = ({
     );
   }
   return (
-    <PageLayout
-      searchable
-      searchProps={INSIGHTS_SEARCH_PROPS}
-      onSearch={nextQuery => fetchInsights({ query: nextQuery, page: 1 })}
-      header={INSIGHTS_SYNC_PAGE_TITLE}
-      toolbarButtons={
-        <Button variant="primary" onClick={syncInsights}>
-          {__('Start recommendations sync')}
-        </Button>
-      }
-      searchQuery={query}
-      beforeToolbarComponent={<InsightsHeader />}
-    >
-      <InsightsTable />
-    </PageLayout>
+    <div className="rh-cloud-insights">
+      <PageLayout
+        searchable
+        searchProps={INSIGHTS_SEARCH_PROPS}
+        onSearch={nextQuery => fetchInsights({ query: nextQuery, page: 1 })}
+        header={INSIGHTS_SYNC_PAGE_TITLE}
+        toolbarButtons={
+          <Button variant="primary" onClick={syncInsights}>
+            {__('Start recommendations sync')}
+          </Button>
+        }
+        searchQuery={query}
+        beforeToolbarComponent={<InsightsHeader />}
+      >
+        <InsightsTable />
+      </PageLayout>
+    </div>
   );
 };
 

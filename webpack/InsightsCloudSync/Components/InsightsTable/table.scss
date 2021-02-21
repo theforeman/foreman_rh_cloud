@@ -1,1 +1,11 @@
 @import '~@redhat-cloud-services/frontend-components/index.css';
+
+.rh-cloud-insights {
+  .recommendations-table {
+    .pf-c-table__check {
+      input:disabled {
+        display: none;
+      }
+    }
+  }
+}

@@ -37,16 +37,20 @@ const InsightsTable = ({
 }) => {
   const { perPage: appPerPage } = useForemanSettings();
   const perPage = urlPerPage || appPerPage;
+  const [rows, setRows] = React.useState([]);
 
   // acts as componentDidMount
   useEffect(() => {
     fetchInsights({ page, perPage, query, sortBy, sortOrder });
   }, []);
 
+  useEffect(() => {
+    setRows(modifySelectedRows(hits, selectedIds, showSelectAllAlert));
+  }, [hits, selectedIds]);
+
   return (
     <React.Fragment>
       <SelectAllAlert
-        itemCount={itemCount}
         selectedIds={selectedIds}
         showSelectAllAlert={showSelectAllAlert}
         selectAll={selectAll}
@@ -54,15 +58,16 @@ const InsightsTable = ({
         isAllSelected={isAllSelected}
       />
       <Table
+        className="recommendations-table"
         aria-label="Recommendations Table"
         onSelect={(_event, isSelected, rowId) =>
-          onTableSelect(_event, isSelected, rowId, hits, selectedIds)
+          onTableSelect(_event, isSelected, rowId, rows, selectedIds)
         }
         canSelectAll
         sortBy={{ index: getSortColumnIndex(sortBy), direction: sortOrder }}
         onSort={onTableSort}
         cells={columns}
-        rows={modifySelectedRows(hits, selectedIds)}
+        rows={rows}
       >
         <TableHeader />
         <TableBody />
