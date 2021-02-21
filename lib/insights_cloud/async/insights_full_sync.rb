@@ -12,6 +12,8 @@ module InsightsCloud
         setup_host_names(@hits_host_names.keys)
 
         replace_hits_data(hits)
+
+        InsightsRulesSync.perform_later
       end
 
       def logger
@@ -32,6 +34,20 @@ module InsightsCloud
         )
 
         JSON.parse(hits_response)
+      end
+
+      def query_insights_rules
+        rules_response = RestClient::Request.execute(
+          method: :get,
+          url: InsightsCloud.rules_url,
+          verify_ssl: ForemanRhCloud.verify_ssl_method,
+          proxy: ForemanRhCloud.transformed_http_proxy_string(logger: logger),
+          headers: {
+            Authorization: "Bearer #{rh_credentials}",
+          }
+        )
+
+        JSON.parse(rules_response)
       end
 
       def setup_host_names(host_names)
@@ -79,7 +95,18 @@ module InsightsCloud
           total_risk: hit_hash['total_risk'].to_i,
           likelihood: hit_hash['likelihood'].to_i,
           results_url: hit_hash['results_url'],
+          rule_id: to_rule_id(hit_hash['results_url']),
         }
+      end
+
+      def to_rule_id(results_url)
+        URI.decode(safe_results_match(results_url)[:id] || '')
+      end
+
+      def safe_results_match(results_url)
+        match = results_url.match(/\/(?<id>[^\/]*)\/[^\/]*\/\z/)
+
+        match || { id: nil }
       end
     end
   end

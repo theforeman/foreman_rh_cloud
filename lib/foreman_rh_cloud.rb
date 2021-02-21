@@ -21,6 +21,10 @@ module ForemanRhCloud
     @verify_ssl_method ||= ENV['SATELLITE_RH_CLOUD_URL'] ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER
   end
 
+  def self.query_limit
+    @query_limit ||= ENV['SATELLITE_RH_CLOUD_QUERY_LIMIT'] ? ENV['SATELLITE_RH_CLOUD_QUERY_LIMIT'].to_i : 100
+  end
+
   def self.http_proxy_string(logger: Foreman::Logging.logger('background'))
     ForemanRhCloud.proxy_setting(logger: logger)
   end

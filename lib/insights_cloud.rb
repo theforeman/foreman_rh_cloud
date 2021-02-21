@@ -12,4 +12,8 @@ module InsightsCloud
   def self.hits_export_url
     ForemanRhCloud.base_url + '/api/insights/v1/export/hits/'
   end
+
+  def self.rules_url(limit: ForemanRhCloud.query_limit, offset: 0)
+    ForemanRhCloud.base_url + "/api/insights/v1/rule/?impacting=true&rule_status=enabled&has_playbook=true&limit=#{limit}&offset=#{offset}"
+  end
 end
