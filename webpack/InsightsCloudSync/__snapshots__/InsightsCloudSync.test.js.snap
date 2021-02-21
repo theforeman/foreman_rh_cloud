@@ -1,39 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InsightsCloudSync render 1`] = `
-<PageLayout
-  beforeToolbarComponent={<InsightsHeader />}
-  header="Red Hat Insights"
-  onSearch={[Function]}
-  searchProps={
-    Object {
-      "autocomplete": Object {
-        "id": "searchBar",
-        "searchQuery": "",
-        "url": "/insights_cloud/hits/auto_complete_search",
-        "useKeyShortcuts": true,
-      },
-      "bookmarks": Object {
-        "canCreateBookmarks": true,
-        "documentationUrl": "4.1.5Searching",
-        "url": "/api/bookmarks",
-      },
-      "controller": "insights_hits",
-    }
-  }
-  searchQuery=""
-  searchable={true}
-  toolbarButtons={
-    <Button
-      onClick={[Function]}
-      variant="primary"
-    >
-      Start recommendations sync
-    </Button>
-  }
+<div
+  className="rh-cloud-insights"
 >
-  <Connect(InsightsTable) />
-</PageLayout>
+  <PageLayout
+    beforeToolbarComponent={<InsightsHeader />}
+    header="Red Hat Insights"
+    onSearch={[Function]}
+    searchProps={
+      Object {
+        "autocomplete": Object {
+          "id": "searchBar",
+          "searchQuery": "",
+          "url": "/insights_cloud/hits/auto_complete_search",
+          "useKeyShortcuts": true,
+        },
+        "bookmarks": Object {
+          "canCreateBookmarks": true,
+          "documentationUrl": "4.1.5Searching",
+          "url": "/api/bookmarks",
+        },
+        "controller": "insights_hits",
+      }
+    }
+    searchQuery=""
+    searchable={true}
+    toolbarButtons={
+      <Button
+        onClick={[Function]}
+        variant="primary"
+      >
+        Start recommendations sync
+      </Button>
+    }
+  >
+    <Connect(InsightsTable) />
+  </PageLayout>
+</div>
 `;
 
 exports[`InsightsCloudSync render no token 1`] = `

@@ -5,6 +5,7 @@ import {
   Section,
 } from '@redhat-cloud-services/frontend-components';
 import { sortable, cellWidth } from '@patternfly/react-table';
+import { CheckCircleIcon } from '@patternfly/react-icons';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { foremanUrl } from '../../../ForemanRhCloudHelpers';
 
@@ -16,6 +17,10 @@ export const totalRiskFormatter = ({ title: totalRisk }) => ({
   ),
 });
 
+export const hasPlaybookFormatter = ({ title: hasPlaybook }) => ({
+  children: hasPlaybook ? <CheckCircleIcon color="green" /> : __('No'),
+});
+
 export const columns = [
   {
     sortKey: 'hostname',
@@ -25,13 +30,18 @@ export const columns = [
   {
     sortKey: 'title',
     title: __('Recommendation'),
-    transforms: [cellWidth(60), sortable],
+    transforms: [cellWidth(50), sortable],
   },
   {
     sortKey: 'total_risk',
     title: __('Total Risk'),
-    transforms: [cellWidth(20), sortable],
+    transforms: [cellWidth(15), sortable],
     cellTransforms: [totalRiskFormatter],
+  },
+  {
+    title: __('Playbook'),
+    transforms: [cellWidth(15)],
+    cellTransforms: [hasPlaybookFormatter],
   },
 ];
 

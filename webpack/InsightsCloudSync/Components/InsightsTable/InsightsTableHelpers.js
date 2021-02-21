@@ -1,14 +1,22 @@
 /* eslint-disable camelcase */
 import { columns } from './InsightsTableConstants';
 
-export const modifySelectedRows = (hits, selectedIds) => {
+export const modifySelectedRows = (hits, selectedIds, showSelectAllAlert) => {
   if (hits.length === 0) return [];
 
-  return hits.asMutable().map(({ id, hostname, title, total_risk }) => {
-    const row = [hostname, title, total_risk];
-    row.selected = selectedIds[id];
-    return row;
-  });
+  return hits
+    .asMutable()
+    .map(({ id, hostname, title, total_risk, has_playbook }) => {
+      const disableCheckbox = !has_playbook;
+      return {
+        cells: [hostname, title, total_risk, has_playbook],
+        disableCheckbox,
+        id,
+        /** The main table checkbox will be seen as selected only if all rows are selected,
+         * in this case we need to select also the disabled once and hide it with css */
+        selected: selectedIds[id] || (disableCheckbox && showSelectAllAlert),
+      };
+    });
 };
 
 export const getSortColumnIndex = sortBy => {
