@@ -1,10 +1,7 @@
 import URI from 'urijs';
 import { push } from 'connected-react-router';
 import { get } from 'foremanReact/redux/API';
-import {
-  selectIsAllSelected,
-  selectQueryParams,
-} from './InsightsTableSelectors';
+import { selectQueryParams } from './InsightsTableSelectors';
 import { INSIGHTS_PATH } from '../../InsightsCloudSyncConstants';
 import {
   columns,
@@ -17,7 +14,7 @@ import {
 
 export const fetchInsights = (queryParams = {}) => (dispatch, getState) => {
   const state = getState();
-  const { page, perPage, query, sortBy, sortOrder } = {
+  const { page, perPage, query, sortBy, sortOrder, isSelectAll } = {
     ...selectQueryParams(state),
     ...queryParams,
   };
@@ -32,6 +29,12 @@ export const fetchInsights = (queryParams = {}) => (dispatch, getState) => {
         search: query,
         order: `${sortBy} ${sortOrder}`,
       },
+      handleSuccess: response => {
+        if (isSelectAll) {
+          selectAllIds(dispatch, response.data.hits || []);
+          dispatch(selectAll());
+        }
+      },
     })
   );
 
@@ -42,6 +45,7 @@ export const fetchInsights = (queryParams = {}) => (dispatch, getState) => {
     search: query,
     sort_by: sortBy,
     sort_order: sortOrder,
+    select_all: isSelectAll,
   });
 
   dispatch(
@@ -51,13 +55,19 @@ export const fetchInsights = (queryParams = {}) => (dispatch, getState) => {
     })
   );
 
-  const isAllSelected = selectIsAllSelected(state);
-  if (isAllSelected) {
-    dispatch(clearAllSelection());
-  } else {
+  if (!isSelectAll) {
     dispatch(setSelectAllAlert(false));
-    dispatch(setSelectAll(false));
   }
+};
+
+const selectAllIds = (dispatch, results, prevSelectedIds = {}) => {
+  const selectedIds = { ...prevSelectedIds };
+  results.forEach(row => {
+    if (row.disableCheckbox) return;
+    selectedIds[row.id] = true;
+  });
+  dispatch(selectByIds(selectedIds));
+  dispatch(setSelectAllAlert(true));
 };
 
 export const setSelectAllAlert = showSelectAllAlert => ({
@@ -70,10 +80,13 @@ export const selectByIds = selectedIds => ({
   payload: { selectedIds },
 });
 
-export const setSelectAll = isAllSelected => ({
-  type: INSIGHTS_SET_SELECT_ALL,
-  payload: { isAllSelected },
-});
+export const setSelectAll = isAllSelected => dispatch => {
+  dispatch(setSelectAllUrl(isAllSelected));
+  dispatch({
+    type: INSIGHTS_SET_SELECT_ALL,
+    payload: { isAllSelected },
+  });
+};
 
 export const selectAll = () => setSelectAll(true);
 
@@ -100,31 +113,42 @@ export const onTablePerPageSelect = (_event, perPageNumber) =>
   fetchInsights({ perPage: perPageNumber });
 
 export const onTableSelect = (
-  _event,
   isSelected,
   rowId,
   rows,
   prevSelectedIds
 ) => dispatch => {
-  const selectedIds = { ...prevSelectedIds };
-  let showSelectAllAlert = false;
-  // for select all
+  const handleRegularCheckbox = () => {
+    const selectedIds = { ...prevSelectedIds };
+    if (isSelected) {
+      selectedIds[rows[rowId].id] = true;
+    } else {
+      dispatch(setSelectAllAlert(false));
+      dispatch(setSelectAll(false));
+      delete selectedIds[rows[rowId].id];
+    }
+
+    dispatch(selectByIds(selectedIds));
+  };
+
   if (rowId === -1) {
     if (!isSelected) return dispatch(clearAllSelection());
-
-    rows.forEach(row => {
-      if (row.disableCheckbox) return;
-      selectedIds[row.id] = true;
-    });
-
-    showSelectAllAlert = true;
+    selectAllIds(dispatch, rows, prevSelectedIds);
   } else {
-    isSelected
-      ? (selectedIds[rows[rowId].id] = true)
-      : delete selectedIds[rows[rowId].id];
+    handleRegularCheckbox();
   }
 
-  dispatch(selectByIds(selectedIds));
-  dispatch(setSelectAllAlert(showSelectAllAlert));
   return null;
+};
+
+const setSelectAllUrl = selectAllValue => dispatch => {
+  const uri = new URI();
+  uri.setSearch({ select_all: selectAllValue });
+
+  dispatch(
+    push({
+      pathname: INSIGHTS_PATH,
+      search: uri.search(),
+    })
+  );
 };

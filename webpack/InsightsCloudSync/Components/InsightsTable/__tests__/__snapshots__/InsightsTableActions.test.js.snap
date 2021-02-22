@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`insights table actions should clearAllSelection 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "selectedIds": Object {},
+      },
+      "type": "INSIGHTS_SET_SELECTED_IDS",
+    },
+  ],
+  Array [
+    Object {
+      "payload": Object {
+        "showSelectAllAlert": false,
+      },
+      "type": "INSIGHTS_SET_SELECT_ALL_ALERT",
+    },
+  ],
+  Array [
+    [Function],
+  ],
+]
+`;
+
+exports[`insights table actions should fetchInsights 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "selectedIds": Object {
+          "16": true,
+          "17": true,
+        },
+      },
+      "type": "INSIGHTS_SET_SELECTED_IDS",
+    },
+  ],
+  Array [
+    Object {
+      "payload": Object {
+        "showSelectAllAlert": true,
+      },
+      "type": "INSIGHTS_SET_SELECT_ALL_ALERT",
+    },
+  ],
+  Array [
+    [Function],
+  ],
+  Array [
+    Object {
+      "key": "INSIGHTS_HITS",
+      "params": Object {
+        "order": " ",
+        "page": 2,
+        "per_page": 7,
+        "search": "",
+      },
+      "type": "get",
+      "url": "/insights_cloud/hits",
+    },
+  ],
+  Array [
+    Object {
+      "payload": Object {
+        "args": Array [
+          Object {
+            "pathname": "/foreman_rh_cloud/insights_cloud",
+            "search": "?page=2&per_page=7&search=&sort_by=&sort_order=&select_all=true",
+          },
+        ],
+        "method": "push",
+      },
+      "type": "@@router/CALL_HISTORY_METHOD",
+    },
+  ],
+]
+`;
+
+exports[`insights table actions should selectAll 1`] = `
+Array [
+  Array [
+    [Function],
+  ],
+  Array [
+    Object {
+      "payload": Object {
+        "isAllSelected": true,
+      },
+      "type": "INSIGHTS_SET_SELECT_ALL",
+    },
+  ],
+]
+`;
+
+exports[`insights table actions should selectByIds 1`] = `
+Object {
+  "payload": Object {
+    "selectedIds": Object {
+      "1": true,
+      "5": true,
+    },
+  },
+  "type": "INSIGHTS_SET_SELECTED_IDS",
+}
+`;
+
+exports[`insights table actions should setSelectAll false 1`] = `
+Array [
+  Array [
+    [Function],
+  ],
+  Array [
+    Object {
+      "payload": Object {
+        "isAllSelected": false,
+      },
+      "type": "INSIGHTS_SET_SELECT_ALL",
+    },
+  ],
+]
+`;
+
+exports[`insights table actions should setSelectAllAlert true 1`] = `
+Object {
+  "payload": Object {
+    "showSelectAllAlert": true,
+  },
+  "type": "INSIGHTS_SET_SELECT_ALL_ALERT",
+}
+`;
