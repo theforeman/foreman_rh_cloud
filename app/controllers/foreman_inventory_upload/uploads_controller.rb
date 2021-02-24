@@ -14,14 +14,7 @@ module ForemanInventoryUpload
       files = Dir["{#{ForemanInventoryUpload.uploads_file_path(filename)},#{ForemanInventoryUpload.done_file_path(filename)}}"]
 
       return send_file files.first, disposition: 'attachment', filename: filename unless files.empty?
-      throw_flash_error "File doesn't exist"
-    end
-
-    def throw_flash_error(message)
-      process_error(
-        :redirect => foreman_inventory_upload_index_path,
-        :error_msg => message
-      )
+      raise ::Foreman::Exception.new("The report file doesn't exist")
     end
 
     def auto_upload
