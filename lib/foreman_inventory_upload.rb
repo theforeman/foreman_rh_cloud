@@ -62,6 +62,7 @@ module ForemanInventoryUpload
   end
 
   def self.inventory_export_url
-    ForemanRhCloud.base_url + '/api/inventory/v1/hosts'
+    tags = URI.encode("satellite/satellite_instance_id=#{Foreman.instance_id}")
+    ForemanRhCloud.base_url + "/api/inventory/v1/hosts?tags=#{tags}"
   end
 end
