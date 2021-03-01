@@ -35,4 +35,17 @@ const fixtures = {
     runWithGetState({ activeTab: 'reports' }, toggleFullScreen, accountID),
 };
 
-describe('Dashboard actions', () => testActionSnapshotWithFixtures(fixtures));
+describe('Dashboard actions', () => {
+  const { location } = window;
+
+  beforeAll(() => {
+    delete window.location;
+    window.location = { href: jest.fn() };
+  });
+
+  afterAll(() => {
+    window.location = location;
+  });
+
+  return testActionSnapshotWithFixtures(fixtures);
+});
