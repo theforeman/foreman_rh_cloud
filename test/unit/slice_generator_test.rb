@@ -1,11 +1,15 @@
 require 'test_plugin_helper'
 
 class SliceGeneratorTest < ActiveSupport::TestCase
+  include KatelloLocationFix
+
   setup do
     User.current = User.find_by(login: 'secret_admin')
 
     env = FactoryBot.create(:katello_k_t_environment)
     cv = env.content_views << FactoryBot.create(:katello_content_view, organization: env.organization)
+
+    location = FactoryBot.create(:location)
 
     @host = FactoryBot.create(
       :host,
@@ -14,7 +18,8 @@ class SliceGeneratorTest < ActiveSupport::TestCase
       :with_content,
       content_view: cv.first,
       lifecycle_environment: env,
-      organization: env.organization
+      organization: env.organization,
+      location: location
     )
 
     @host.organization.pools << FactoryBot.create(:katello_pool, account_number: '1234', cp_id: 1)
