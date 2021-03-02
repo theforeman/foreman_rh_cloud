@@ -8,34 +8,34 @@ exports[`AccountList rendering render with props 1`] = `
     account={
       Object {
         "generate_report_status": "running",
-        "label": "test_org1",
+        "id": 1,
         "upload_report_status": "running",
       }
     }
-    accountID="Account1"
     key="0"
+    label="Account1"
   />
   <ListItem
     account={
       Object {
         "generate_report_status": "failure",
-        "label": "test_org2",
+        "id": 2,
         "upload_report_status": "unknown",
       }
     }
-    accountID="Account2"
     key="1"
+    label="Account2"
   />
   <ListItem
     account={
       Object {
         "generate_report_status": "running",
-        "label": "test_org3",
+        "id": 3,
         "upload_report_status": "success",
       }
     }
-    accountID="Account3"
     key="2"
+    label="Account3"
   />
 </Accordion>
 `;

@@ -2,17 +2,17 @@ import { noop } from 'patternfly-react';
 
 export const accounts = {
   Account1: {
-    label: 'test_org1',
+    id: 1,
     upload_report_status: 'running',
     generate_report_status: 'running',
   },
   Account2: {
-    label: 'test_org2',
+    id: 2,
     upload_report_status: 'unknown',
     generate_report_status: 'failure',
   },
   Account3: {
-    label: 'test_org3',
+    id: 3,
     upload_report_status: 'success',
     generate_report_status: 'running',
   },
