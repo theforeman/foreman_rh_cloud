@@ -1,8 +1,10 @@
-.status-chart {
-  display: flex;
-  align-items: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  margin: 10%;
-  padding: 5%;
+.rh-cloud-inventory-page {
+  .status-chart {
+    display: flex;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    margin: 10%;
+    padding: 5%;
+  }
 }

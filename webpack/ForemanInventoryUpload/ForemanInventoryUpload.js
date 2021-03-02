@@ -4,7 +4,7 @@ import AccountList from './Components/AccountList';
 import PageHeader from './Components/PageHeader';
 
 const ForemanInventoryUpload = () => (
-  <div className="rh-cloud-page">
+  <div className="rh-cloud-inventory-page">
     <PageLayout searchable={false} beforeToolbarComponent={<PageHeader />}>
       <AccountList />
     </PageLayout>
