@@ -19,17 +19,19 @@ exports[`ListItem rendering render with Props 1`] = `
         }
         variant="outline"
       />
-      default_org_name
+      test
     </span>
     <ListItemStatus
       account={
         Object {
-          "generate_report_status": "unknown",
-          "label": "default_org_name",
-          "upload_report_status": "unknown",
+          "test": Object {
+            "generate_report_status": "unknown",
+            "id": 1,
+            "upload_report_status": "unknown",
+          },
         }
       }
-      key="1_status"
+      key="test_status"
     />
   </AccordionToggle>
   <AccordionContent
@@ -38,12 +40,13 @@ exports[`ListItem rendering render with Props 1`] = `
     <Connect(Dashboard)
       account={
         Object {
-          "generate_report_status": "unknown",
-          "label": "default_org_name",
-          "upload_report_status": "unknown",
+          "test": Object {
+            "generate_report_status": "unknown",
+            "id": 1,
+            "upload_report_status": "unknown",
+          },
         }
       }
-      accountID="1"
     />
   </AccordionContent>
 </AccordionItem>

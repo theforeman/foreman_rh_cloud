@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { isEmpty } from 'lodash';
 import { noop } from 'foremanReact/common/helpers';
 import { Accordion } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
@@ -24,24 +25,23 @@ class AccountList extends Component {
 
   render() {
     const { accounts, error, filterTerm } = this.props;
-    const accountIds = Object.keys(accounts);
-    const filteredAccountIds = filterAccounts(accounts, accountIds, filterTerm);
+    const filteredAccount = filterAccounts(accounts, filterTerm);
 
     if (error) {
       return <ErrorState error={error} />;
     }
 
-    if (accountIds.length === 0) {
+    if (isEmpty(accounts)) {
       return <EmptyState />;
     }
 
-    if (filteredAccountIds.length === 0) {
+    if (isEmpty(filteredAccount)) {
       return <EmptyResults />;
     }
 
-    const items = filteredAccountIds.map((accountID, index) => {
-      const account = accounts[accountID];
-      return <ListItem key={index} accountID={accountID} account={account} />;
+    const items = Object.keys(filteredAccount).map((label, index) => {
+      const account = accounts[label];
+      return <ListItem key={index} label={label} account={account} />;
     });
     return <Accordion className="account-list">{items}</Accordion>;
   }

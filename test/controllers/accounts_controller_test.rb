@@ -21,7 +21,7 @@ class AccountsControllerTest < ActionController::TestCase
 
     assert_response :success
     actual = JSON.parse(response.body)
-    actual_account_statuses = actual['accounts'][test_org.id.to_s]
+    actual_account_statuses = actual['accounts'][test_org.label]
     assert_equal 'generate_status_test', actual_account_statuses['generate_report_status']
     assert_equal 'upload_status_test', actual_account_statuses['upload_report_status']
 
