@@ -1,10 +1,10 @@
-export const filterAccounts = (accounts, accountIds, filterTerm) => {
-  if (!filterTerm || !accountIds.length) {
-    return accountIds;
-  }
+import { pickBy } from 'lodash';
+
+export const filterAccounts = (accounts, filterTerm) => {
+  if (!filterTerm) return accounts;
 
   const filterTermLowerCased = filterTerm.toLowerCase();
-  return accountIds.filter(id =>
-    accounts[id].label.toLowerCase().includes(filterTermLowerCased)
+  return pickBy(accounts, (value, key) =>
+    key.toLowerCase().includes(filterTermLowerCased)
   );
 };
