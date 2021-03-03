@@ -38,20 +38,9 @@ module ForemanRhCloud
     end
 
     def host_labels(host)
-      labels = [new_label('Organization', host.organization.name, 'Satellite')]
-      labels += labels_from_items(host.location.title.split('/'), 'Satellite', ->(item) { 'Location' }) if host.location
-      labels += labels_from_items(host.hostgroup.title.split('/'), 'Satellite', ->(item) { 'Host Group' }) if host.hostgroup
-      labels += labels_from_items(host.host_collections, 'Satellite', ->(item) { 'Host Collection' }, :name)
-
-      if Setting[:include_parameter_tags]
-        labels += labels_from_items(
-          host.host_inherited_params_objects,
-          'SatelliteParameter',
-          ->(item) { item.name },
-          :value)
-      end
-
-      labels
+      tags_generator = ForemanInventoryUpload::Generators::Tags.new(host)
+      tags_generator.generate.map { |key, value| new_label(key, value, ForemanInventoryUpload::Generators::Slice::SATELLITE_NAMESPACE) } +
+        tags_generator.generate_parameters.map { |key, value| new_label(key, value, ForemanInventoryUpload::Generators::Slice::SATELLITE_PARAMS_NAMESPACE) }
     end
   end
 end

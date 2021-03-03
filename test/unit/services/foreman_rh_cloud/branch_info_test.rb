@@ -46,15 +46,15 @@ class BranchInfoTest < ActiveSupport::TestCase
 
     labels = ::ForemanRhCloud::BranchInfo.new.generate('a1', @host, 'branch', 'foo')[:labels]
 
-    org_label = labels.find { |label| label[:key] == 'Organization' }
-    loc_label = labels.find { |label| label[:key] == 'Location' }
+    org_label = labels.find { |label| label[:key] == 'organization' }
+    loc_label = labels.find { |label| label[:key] == 'location' }
     assert_equal @host.organization.title, org_label[:value]
     assert_equal @host.location.title, loc_label[:value]
 
-    hg_label = labels.find { |label| label[:key] == 'Host Group' }
-    host_colections = labels.select { |label| label[:key] == 'Host Collection' }
+    hg_label = labels.find { |label| label[:key] == 'hostgroup' }
+    host_colections = labels.select { |label| label[:key] == 'host collection' }
     assert_equal @host.hostgroup.name, hg_label[:value]
     assert_equal 2, host_colections.count
-    refute_empty labels.select { |label| label[:namespace] == 'SatelliteParameter' }
+    refute_empty labels.select { |label| label[:namespace] == 'satellite_parameter' }
   end
 end
