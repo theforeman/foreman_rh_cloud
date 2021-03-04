@@ -12,6 +12,10 @@ module ForemanRhCloud
     @cert_base_url ||= ENV['SATELLITE_CERT_RH_CLOUD_URL'] || 'https://cert.cloud.redhat.com'
   end
 
+  def self.legacy_insights_url
+    @legacy_insights_url ||= ENV['SATELLITE_LEGACY_INSIGHTS_URL'] || 'https://cert-api.access.redhat.com'
+  end
+
   def self.authentication_url
     # https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
     @authentication_url ||= ENV['SATELLITE_RH_CLOUD_SSO_URL'] || 'https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token'

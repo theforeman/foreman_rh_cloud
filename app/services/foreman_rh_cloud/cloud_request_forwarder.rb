@@ -29,25 +29,7 @@ module ForemanRhCloud
           user_agent: http_user_agent(original_request),
         },
       }
-
-      if no_cert_paths.any? { |path| path.match original_request.path }
-        base_params.merge(url: prepare_forward_cloud_url(ForemanRhCloud.base_url, original_request.path))
-      else
-        base_params.merge(
-          url: prepare_forward_cloud_url(ForemanRhCloud.cert_base_url, original_request.path),
-          ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-          ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key])
-        )
-      end
-    end
-
-    def no_cert_paths
-      [
-        "/redhat_access/r/insights/v1/static/release/insights-core.egg",
-        "/redhat_access/r/insights/v1/static/uploader.v2.json",
-        "/redhat_access/r/insights/v1/static/uploader.v2.json.asc",
-        "/redhat_access/r/insights/v1/static/core/insights-core.egg",
-      ]
+      base_params.merge(path_params(original_request.path, certs))
     end
 
     def execute_cloud_request(request_opts)
@@ -74,6 +56,36 @@ module ForemanRhCloud
       end
 
       forward_params
+    end
+
+    def path_params(request_path, certs)
+      case request_path
+      when metadata_request?
+        {
+          url: ForemanRhCloud.base_url + request_path.sub('/redhat_access/r/insights', '/api'),
+        }
+      when platform_request?
+        {
+          url: ForemanRhCloud.cert_base_url + request_path.sub('/redhat_access/r/insights/platform', '/api'),
+          ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
+          ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key]),
+        }
+      else # Legacy insights API
+        {
+          url: ForemanRhCloud.legacy_insights_url + request_path.sub('/redhat_access/r/insights', '/r/insights'),
+          ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
+          ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key]),
+          ssl_ca_file: Class.new.include(RedhatAccess::Telemetry::LookUps).new.get_default_ssl_ca_file,
+        }
+      end
+    end
+
+    def metadata_request?
+      ->(request_path) { request_path.include? '/static' }
+    end
+
+    def platform_request?
+      ->(request_path) { request_path.include? '/platform' }
     end
 
     def prepare_forward_cloud_url(base_url, request_path)
