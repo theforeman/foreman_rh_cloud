@@ -4,7 +4,7 @@ import {
   LAYOUT_INITIALIZE,
 } from 'foremanReact/components/Layout/LayoutConstants';
 import reducer from '../InventoryFilterReducer';
-import { filterTerm, org } from '../InventoryFilter.fixtures';
+import { filterTerm, organization } from '../InventoryFilter.fixtures';
 import {
   INVENTORY_FILTER_UPDATE,
   INVENTORY_FILTER_CLEAR,
@@ -29,13 +29,13 @@ const fixtures = {
   'should handle LAYOUT_CHANGE_ORG': {
     action: {
       type: LAYOUT_CHANGE_ORG,
-      payload: { org },
+      payload: { organization },
     },
   },
   'should handle LAYOUT_INITIALIZE': {
     action: {
       type: LAYOUT_INITIALIZE,
-      payload: { organization: org },
+      payload: { organization },
     },
   },
 };
