@@ -30,17 +30,7 @@ export const accountID = 'user@redhat.com';
 
 export const processStatusName = 'upload_report_status';
 
-export const autoUploadEnabled = true;
-
-export const hostObfuscationEnabled = true;
-
-export const ipsObfuscationEnabled = true;
-
 export const filterTerm = 'some_filter';
-
-export const cloudToken = true;
-
-export const excludePackages = false;
 
 export const CloudConnectorStatus = {
   id: 7,
@@ -57,11 +47,6 @@ export const props = {
 
 export const pollingResponse = {
   accounts,
-  autoUploadEnabled,
-  hostObfuscationEnabled,
-  ipsObfuscationEnabled,
-  cloudToken,
-  excludePackages,
   CloudConnectorStatus,
 };
 

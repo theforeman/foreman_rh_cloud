@@ -21,53 +21,5 @@ module ForemanInventoryUpload
       cloud_connector = ForemanRhCloud::CloudConnector.new
       render json: cloud_connector.install.to_json
     end
-
-    def auto_upload
-      Setting[:allow_auto_inventory_upload] = auto_upload_params
-      render_setting(:autoUploadEnabled, :allow_auto_inventory_upload)
-    end
-
-    def show_auto_upload
-      render_setting(:autoUploadEnabled, :allow_auto_inventory_upload)
-    end
-
-    def auto_upload_params
-      ActiveModel::Type::Boolean.new.cast(params.require(:value))
-    end
-
-    def host_obfuscation
-      Setting[:obfuscate_inventory_hostnames] = host_obfuscation_params
-      render_setting(:hostObfuscationEnabled, :obfuscate_inventory_hostnames)
-    end
-
-    def host_obfuscation_params
-      ActiveModel::Type::Boolean.new.cast(params.require(:value))
-    end
-
-    def installed_packages_inclusion
-      Setting[:exclude_installed_packages] = host_obfuscation_params
-      render_setting(:excludePackages, :exclude_installed_packages)
-    end
-
-    def installed_packages_inclusion_params
-      ActiveModel::Type::Boolean.new.cast(params.require(:value))
-    end
-
-    def ips_obfuscation
-      Setting[:obfuscate_inventory_ips] = ips_obfuscation_params
-      render_setting(:ipsObfuscationEnabled, :obfuscate_inventory_ips)
-    end
-
-    def ips_obfuscation_params
-      ActiveModel::Type::Boolean.new.cast(params.require(:value))
-    end
-
-    private
-
-    def render_setting(node_name, setting)
-      render json: {
-        node_name => Setting[setting],
-      }
-    end
   end
 end

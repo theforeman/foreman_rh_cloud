@@ -6,8 +6,8 @@ import InventoryAutoUpload from '../InventoryAutoUpload';
 const fixtures = {
   'render with props': {
     autoUploadEnabled: true,
-    handleToggle: noop,
-    fetchSettings: noop,
+    setSetting: noop,
+    getSettings: noop,
   },
 };
 

@@ -14,8 +14,6 @@ class AccountsControllerTest < ActionController::TestCase
     upload_label = ForemanInventoryUpload::Async::UploadReportJob.output_label(test_org.id)
     upload_output = ForemanInventoryUpload::Async::ProgressOutput.register(upload_label)
     upload_output.status = 'upload_status_test'
-    FactoryBot.create(:setting, :name => 'allow_auto_inventory_upload', :value => true)
-    assert_equal true, Setting[:allow_auto_inventory_upload]
 
     get :index, session: set_session_user
 
@@ -24,7 +22,5 @@ class AccountsControllerTest < ActionController::TestCase
     actual_account_statuses = actual['accounts'][test_org.label]
     assert_equal 'generate_status_test', actual_account_statuses['generate_report_status']
     assert_equal 'upload_status_test', actual_account_statuses['upload_report_status']
-
-    assert_equal true, actual['autoUploadEnabled']
   end
 end

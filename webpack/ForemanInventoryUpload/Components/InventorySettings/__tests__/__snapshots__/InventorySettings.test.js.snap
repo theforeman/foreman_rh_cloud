@@ -7,9 +7,21 @@ exports[`InventorySettings rendering render without Props 1`] = `
   <h3>
     Settings
   </h3>
-  <Connect(AutoUploadSwitcher) />
-  <Connect(ExcludePackagesSwitcher) />
-  <Connect(HostObfuscationSwitcher) />
-  <Connect(IpsObfuscationSwitcher) />
+  <AdvancedSetting
+    key="autoUploadEnabled"
+    setting="autoUploadEnabled"
+  />
+  <AdvancedSetting
+    key="hostObfuscationEnabled"
+    setting="hostObfuscationEnabled"
+  />
+  <AdvancedSetting
+    key="ipsObfuscationEnabled"
+    setting="ipsObfuscationEnabled"
+  />
+  <AdvancedSetting
+    key="excludePackagesEnabled"
+    setting="excludePackagesEnabled"
+  />
 </div>
 `;

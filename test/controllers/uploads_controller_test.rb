@@ -18,17 +18,4 @@ class UploadsControllerTest < ActionController::TestCase
     actual = JSON.parse(response.body)
     assert_equal 'test output', actual['output']
   end
-
-  test 'should update allow_auto_inventory_upload setting' do
-    FactoryBot.create(:setting, :name => 'allow_auto_inventory_upload', :settings_type => "boolean", :category => "Setting::RhCloud", :default => false, :value => false)
-
-    assert_equal false, Setting[:allow_auto_inventory_upload]
-
-    post :auto_upload, params: { value: true }, session: set_session_user
-
-    assert_response :success
-    actual = JSON.parse(response.body)
-    assert_equal true, actual['autoUploadEnabled']
-    assert_equal true, Setting[:allow_auto_inventory_upload]
-  end
 end

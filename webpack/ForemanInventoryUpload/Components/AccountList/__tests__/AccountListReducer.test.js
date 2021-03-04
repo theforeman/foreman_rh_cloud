@@ -13,14 +13,8 @@ import {
   pollingProcessID,
   accountID,
   processStatusName,
-  autoUploadEnabled,
-  hostObfuscationEnabled,
-  ipsObfuscationEnabled,
   pollingResponse,
 } from '../AccountList.fixtures';
-import { AUTO_UPLOAD_TOGGLE } from '../../AutoUploadSwitcher/AutoUploadSwitcherConstants';
-import { HOST_OBFUSCATION_TOGGLE } from '../../HostObfuscationSwitcher/HostObfuscationSwitcherConstants';
-import { IPS_OBFUSCATION_TOGGLE } from '../../IpsObfuscationSwitcher/IpsObfuscationSwitcherConstants';
 
 const fixtures = {
   'should return the initial state': {},
@@ -55,30 +49,6 @@ const fixtures = {
       payload: {
         accountID,
         processStatusName,
-      },
-    },
-  },
-  'should handle AUTO_UPLOAD_TOGGLE': {
-    action: {
-      type: AUTO_UPLOAD_TOGGLE,
-      payload: {
-        autoUploadEnabled,
-      },
-    },
-  },
-  'should handle HOST_OBFUSCATION_TOGGLE': {
-    action: {
-      type: HOST_OBFUSCATION_TOGGLE,
-      payload: {
-        hostObfuscationEnabled,
-      },
-    },
-  },
-  'should handle IPS_OBFUSCATION_TOGGLE': {
-    action: {
-      type: IPS_OBFUSCATION_TOGGLE,
-      payload: {
-        ipsObfuscationEnabled,
       },
     },
   },

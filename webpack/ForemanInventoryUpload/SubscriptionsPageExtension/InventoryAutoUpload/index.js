@@ -1,10 +1,12 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from '../../Components/AutoUploadSwitcher/AutoUploadSwitcherActions';
+import {
+  getSettings,
+  setSetting,
+} from '../../Components/InventorySettings/InventorySettingsActions';
 import InventoryAutoUpload from './InventoryAutoUpload';
-import { selectAutoUploadEnabled } from '../../Components/AccountList/AccountListSelectors';
-import { fetchAccountsStatus as fetchSettings } from '../../Components/AccountList/AccountListActions';
+import { selectAutoUploadEnabled } from '../../Components/InventorySettings/InventorySettingsSelectors';
 
 // map state to props
 const mapStateToProps = state => ({
@@ -13,7 +15,7 @@ const mapStateToProps = state => ({
 
 // map action dispatchers to props
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...actions, fetchSettings }, dispatch);
+  bindActionCreators({ setSetting, getSettings }, dispatch);
 
 // export connected component
 export default connect(
