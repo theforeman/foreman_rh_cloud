@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, OverlayTrigger, Tooltip, noop } from 'patternfly-react';
+import { noop } from 'foremanReact/common/helpers';
+import { Icon, OverlayTrigger, Tooltip } from 'patternfly-react';
 import { translate as __ } from 'foremanReact/common/I18n';
 
 const ClearButton = ({ onClear }) => (

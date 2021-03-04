@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Grid, Button, Icon } from 'patternfly-react';
+import { Grid, Button, Icon } from 'patternfly-react';
+import { noop } from 'foremanReact/common/helpers';
 import './fileDownload.scss';
 
 const FileDownload = ({ onClick }) => (

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop } from 'patternfly-react';
+import { noop } from 'foremanReact/common/helpers';
 import TabContainer from '../TabContainer';
 import TabHeader from '../TabHeader';
 import TabBody from '../TabBody';

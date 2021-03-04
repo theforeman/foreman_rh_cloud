@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { orderBy } from 'lodash';
-import { Grid, ListView, noop } from 'patternfly-react';
+import { Grid, ListView } from 'patternfly-react';
+import { noop } from 'foremanReact/common/helpers';
 import ListItem from './components/ListItem';
 import './InsightsTab.scss';
 

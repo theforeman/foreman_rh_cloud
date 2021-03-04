@@ -1,5 +1,5 @@
 import Immutable from 'seamless-immutable';
-import { noop } from 'patternfly-react';
+import { noop } from 'foremanReact/common/helpers';
 
 export const hits = Immutable([
   {
