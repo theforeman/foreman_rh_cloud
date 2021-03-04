@@ -3,7 +3,7 @@ module InsightsCloud
     include Foreman::Controller::AutoCompleteSearch
 
     def index
-      hits = resource_base_search_and_page.preload(:host, :rule)
+      hits = resource_base_search_and_page.where(host: Host.authorized).preload(:host, :rule)
 
       render json: {
         hasToken: !Setting[:rh_cloud_token].empty?,
