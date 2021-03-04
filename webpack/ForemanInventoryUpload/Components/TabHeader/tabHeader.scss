@@ -1,20 +1,22 @@
-.tab-header {
-  h1 {
-    margin-top: 0;
-  }
+.rh-cloud-inventory-page {
+  .tab-header {
+    h1 {
+      margin-top: 0;
+    }
 
-  p {
-    font-size: 16px;
-  }
+    p {
+      font-size: 16px;
+    }
 
-  .tab-action-buttons {
-    float: right;
+    .tab-action-buttons {
+      float: right;
 
-    button {
-      margin-left: 5px;
-
-      span {
+      button {
         margin-left: 5px;
+
+        span {
+          margin-left: 5px;
+        }
       }
     }
   }

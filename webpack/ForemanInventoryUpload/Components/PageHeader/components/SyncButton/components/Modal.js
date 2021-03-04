@@ -6,7 +6,7 @@ import { foremanUrl } from '../../../../../../ForemanRhCloudHelpers';
 import './modal.scss';
 
 const SyncModal = ({ show, toggleModal }) => (
-  <Modal show={show} onHide={toggleModal} id="sync_modal">
+  <Modal show={show} onHide={toggleModal} id="inventory-sync-modal">
     <Modal.Header>
       <button
         className="close"
