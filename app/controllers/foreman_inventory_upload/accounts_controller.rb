@@ -10,11 +10,11 @@ module ForemanInventoryUpload
           upload_report_status = status_for(id, ForemanInventoryUpload::Async::UploadReportJob)
 
           [
-            id,
+            label,
             {
               generate_report_status: generate_report_status,
               upload_report_status: upload_report_status,
-              label: label,
+              id: id,
             },
           ]
         end

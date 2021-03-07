@@ -8,9 +8,11 @@ exports[`ListItem rendering render with Props 1`] = `
       <ListItemStatus
         account={
           Object {
-            "generate_report_status": "unknown",
-            "label": "default_org_name",
-            "upload_report_status": "unknown",
+            "test": Object {
+              "generate_report_status": "unknown",
+              "id": 1,
+              "upload_report_status": "unknown",
+            },
           }
         }
       />,
@@ -20,7 +22,7 @@ exports[`ListItem rendering render with Props 1`] = `
   compoundExpand={false}
   compoundExpanded={false}
   description={null}
-  heading="default_org_name"
+  heading="test"
   hideCloseIcon={true}
   initExpanded={false}
   leftContent={
@@ -39,12 +41,13 @@ exports[`ListItem rendering render with Props 1`] = `
   <Connect(Dashboard)
     account={
       Object {
-        "generate_report_status": "unknown",
-        "label": "default_org_name",
-        "upload_report_status": "unknown",
+        "test": Object {
+          "generate_report_status": "unknown",
+          "id": 1,
+          "upload_report_status": "unknown",
+        },
       }
     }
-    accountID="1"
   />
 </ListViewItem>
 `;
