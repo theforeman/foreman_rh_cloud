@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Grid, Button, Icon } from 'patternfly-react';
+import { Grid, Button, Icon } from 'patternfly-react';
+import { noop } from 'foremanReact/common/helpers';
 import { sprintf, translate as __ } from 'foremanReact/common/I18n';
 import { isExitCodeLoading } from '../../ForemanInventoryHelpers';
 import './tabHeader.scss';

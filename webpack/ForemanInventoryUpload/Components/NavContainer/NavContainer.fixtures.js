@@ -1,5 +1,5 @@
 import React from 'react';
-import { noop } from 'patternfly-react';
+import { noop } from 'foremanReact/common/helpers';
 
 export const props = {
   items: [

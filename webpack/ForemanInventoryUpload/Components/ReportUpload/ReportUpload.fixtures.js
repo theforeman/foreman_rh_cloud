@@ -1,4 +1,4 @@
-import { noop } from 'patternfly-react';
+import { noop } from 'foremanReact/common/helpers';
 
 export const files = ['some-file'];
 export const exitCode = 'exit 0';

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, FormControl, noop } from 'patternfly-react';
+import { FormGroup, FormControl } from 'patternfly-react';
+import { noop } from 'foremanReact/common/helpers';
 import { translate as __ } from 'foremanReact/common/I18n';
 import ClearButton from './Components/ClearButton';
 import './inventoryFilter.scss';

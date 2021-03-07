@@ -1,5 +1,5 @@
 import { testComponentSnapshotsWithFixtures } from '@theforeman/test';
-import { noop } from 'patternfly-react';
+import { noop } from 'foremanReact/common/helpers';
 
 import InventoryAutoUpload from '../InventoryAutoUpload';
 

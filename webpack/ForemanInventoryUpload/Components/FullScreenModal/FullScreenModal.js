@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Icon, noop } from 'patternfly-react';
+import { Modal, Icon } from 'patternfly-react';
+import { noop } from 'foremanReact/common/helpers';
 import { translate as __ } from 'foremanReact/common/I18n';
 import Terminal from '../Terminal';
 import './fullScreenModal.scss';

@@ -1,4 +1,4 @@
-import { noop } from 'patternfly-react';
+import { noop } from 'foremanReact/common/helpers';
 
 export const exitCode = 'exit 0';
 export const logs = ['No running process'];

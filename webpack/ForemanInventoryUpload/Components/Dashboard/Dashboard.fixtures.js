@@ -1,4 +1,4 @@
-import { noop } from 'patternfly-react';
+import { noop } from 'foremanReact/common/helpers';
 
 export const pollingProcessID = 1;
 
