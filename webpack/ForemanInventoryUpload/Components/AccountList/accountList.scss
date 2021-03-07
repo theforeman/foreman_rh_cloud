@@ -1,32 +1,34 @@
-.account-list {
-  .pf-c-accordion__toggle {
-    margin-top: 10px;
-  }
+.rh-cloud-inventory-page {
+  .account-list {
+    .pf-c-accordion__toggle {
+      margin-top: 10px;
+    }
 
-  .pf-c-accordion__toggle-text {
-    font-size: 16px;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+    .pf-c-accordion__toggle-text {
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
 
-    .account-icon {
-      margin-right: 5px;
+      .account-icon {
+        margin-right: 5px;
 
-      .pf-c-label__icon {
+        .pf-c-label__icon {
+          margin: 0;
+        }
+      }
+
+      span {
+        align-self: center;
+      }
+
+      .status {
         margin: 0;
       }
     }
 
-    span {
-      align-self: center;
+    .list-item-status > span {
+      margin-left: 7px;
     }
-
-    .status {
-      margin: 0;
-    }
-  }
-
-  .list-item-status > span {
-    margin-left: 7px;
   }
 }

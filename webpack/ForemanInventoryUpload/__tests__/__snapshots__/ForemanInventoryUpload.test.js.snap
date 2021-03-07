@@ -2,7 +2,7 @@
 
 exports[`ForemanInventoryUpload render without Props 1`] = `
 <div
-  className="rh-cloud-page"
+  className="rh-cloud-inventory-page"
 >
   <PageLayout
     beforeToolbarComponent={<PageHeader />}
