@@ -63,7 +63,7 @@ module ForemanInventoryUpload
         return value if value.is_a?(FalseClass)
         return value.to_json if value.is_a?(Hash)
 
-        "\"#{value}\""
+        ActiveSupport::JSON.encode(value)
       end
     end
   end
