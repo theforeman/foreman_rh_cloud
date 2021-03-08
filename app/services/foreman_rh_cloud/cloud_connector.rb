@@ -9,13 +9,18 @@ module ForemanRhCloud
     def install
       user = service_user
       token_value = personal_access_token(user)
+      target_host = foreman_host
+      composer = nil
 
-      composer = ::JobInvocationComposer.for_feature(
-        CLOUD_CONNECTOR_FEATURE,
-        [foreman_host.id],
-        {:satellite_user => service_user.login, :satellite_password => token_value}
-      )
-      composer.trigger!
+      Taxonomy.as_taxonomy(target_host.organization, target_host.location) do
+        composer = ::JobInvocationComposer.for_feature(
+          CLOUD_CONNECTOR_FEATURE,
+          [target_host.id],
+          {:satellite_user => service_user.login, :satellite_password => token_value}
+        )
+        composer.trigger!
+      end
+
       composer.job_invocation
     end
 
@@ -54,7 +59,7 @@ module ForemanRhCloud
     end
 
     def foreman_host
-      ::Host.friendly.find(::SmartProxy.default_capsule.name)
+      ::Host.unscoped.friendly.find(::SmartProxy.default_capsule.name)
     end
   end
 end
