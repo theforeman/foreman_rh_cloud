@@ -287,7 +287,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'generates a report with satellite facts' do
-    hostgroup = FactoryBot.create(:hostgroup)
+    hostgroup = FactoryBot.create(:hostgroup, name: 'Special"name')
     @host.hostgroup = hostgroup
     @host.save!
 
