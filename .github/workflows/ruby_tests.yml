@@ -18,6 +18,18 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        include:
+          - foreman_branch: develop
+            katello_branch: KATELLO-4.0
+            tasks_branch: master
+            lock_prefix: foreman_develop
+        # - foreman_branch: 2.3-stable
+        #   katello_branch: KATELLO-3.18
+        #   tasks_branch: 3.0.x
+        #   lock_prefix: foreman_2_3
+
     services:
       db:
         image: quay.io/jomitsch/postgres-with-evr
@@ -41,27 +53,33 @@ jobs:
         with:
           repository: theforeman/foreman
           path: ${{ github.workspace }}/projects/foreman # checkout Foreman and foreman_rh_cloud as siblings, same as dev env
-          ref: 2.3-stable
+          ref: ${{ matrix.foreman_branch }}
       - name: Checkout Katello repo
         uses: actions/checkout@v2
         with:
           repository: Katello/katello
           path: ${{ github.workspace }}/projects/katello # checkout Foreman and foreman_rh_cloud as siblings, same as dev env
-          ref: KATELLO-3.18
+          ref: ${{ matrix.katello_branch }}
+      - name: Checkout foreman_tasks repo
+        uses: actions/checkout@v2
+        with:
+          repository: theforeman/foreman-tasks
+          path: ${{ github.workspace }}/projects/foreman-tasks # checkout Foreman and foreman_rh_cloud as siblings, same as dev env
+          ref: ${{ matrix.tasks_branch }}
       - name: check for postgres
         run: file /usr/share/postgresql/12/extension/
       - name: Cache bundler
         uses: actions/cache@v2
         with:
           path: projects/foreman/vendor/bundle
-          key: ${{ runner.os }}-bundle-2_3-${{ hashFiles('projects/foreman_rh_cloud/config/Gemfile.lock.gh_test') }}
+          key: ${{ runner.os }}-bundle-2_3-${{ hashFiles(format('projects/foreman_rh_cloud/config/Gemfile.lock.{0}.gh_test', matrix.lock_prefix)) }}
           restore-keys: |
             ${{ runner.os }}-bundle-2_3
       - name: Cache npm
         uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-npm-2_3-${{ hashFiles('projects/foreman_rh_cloud/config/package-lock.json.gh_test') }}
+          key: ${{ runner.os }}-npm-2_3-${{ hashFiles(format('projects/foreman_rh_cloud/config/package-lock.json.{0}.gh_test', matrix.lock_prefix)) }}
           restore-keys: |
             ${{ runner.os }}-npm-2_3
       - name: Set up Ruby 2.6
@@ -75,16 +93,17 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update -yqq
-          sudo apt-get -yqq install libsystemd-dev make tar git ruby-libvirt build-essential patch ruby-dev zlib1g-dev liblzma-dev libxml2-dev libcurl4-openssl-dev libpq-dev qemu-kvm libvirt-daemon-system libvirt-dev nodejs
-      - name: Add foreman_rh_cloud and katello to Gemfile
+          sudo apt-get -yqq install libsystemd-dev make tar git ruby-libvirt build-essential patch ruby-dev zlib1g-dev liblzma-dev libxml2-dev libcurl4-openssl-dev libpq-dev qemu-kvm libvirt-daemon-system libvirt-dev nodejs libqpid-proton*
+      - name: Add local gems to Gemfile
         run: |
           echo "gemspec :path => '../foreman_rh_cloud', :development_group => :dev" > bundler.d/foreman_rh_cloud.local.rb
           echo "gemspec :path => '../katello', :development_group => :dev" > bundler.d/katello.local.rb
+          echo "gemspec :path => '../foreman-tasks', :name => 'foreman-tasks', :development_group => :dev" > bundler.d/foreman_tasks.local.rb
       - name: Copy configuration files
         run: |
           cp ../foreman_rh_cloud/config/database.yml.example config/database.yml
-          cp ../foreman_rh_cloud/config/Gemfile.lock.gh_test Gemfile.lock
-          cp ../foreman_rh_cloud/config/package-lock.json.gh_test package-lock.json
+          cp ../foreman_rh_cloud/config/Gemfile.lock.${{ matrix.lock_prefix }}.gh_test Gemfile.lock
+          cp ../foreman_rh_cloud/config/package-lock.json.${{ matrix.lock_prefix }}.gh_test package-lock.json
       - name: Bundle install
         run: |
           gem install bundler
