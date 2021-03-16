@@ -1,40 +1,53 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, FormControl } from 'patternfly-react';
+import { FormGroup, TextInput } from '@patternfly/react-core';
 import { noop } from 'foremanReact/common/helpers';
 import { translate as __ } from 'foremanReact/common/I18n';
 import ClearButton from './Components/ClearButton';
 import './inventoryFilter.scss';
+import { ANY_ORGANIZATION } from './InventoryFilterConstants';
 
 const InventoryFilter = ({
   handleFilterChange,
   handleFilterClear,
   filterTerm,
-}) => (
-  <form id="inventory_filter_form">
-    <FormGroup controlId="inventory_filter_input">
-      <FormControl
-        value={filterTerm}
-        type="text"
-        placeholder={__('Filter..')}
-        bsSize="lg"
-        onChange={e => handleFilterChange(e.target.value)}
-      />
-      <ClearButton onClear={handleFilterClear} />
-    </FormGroup>
-  </form>
-);
+  organization,
+}) => {
+  useEffect(() => {
+    const initialTerm =
+      organization === __(ANY_ORGANIZATION) ? '' : organization;
+    handleFilterChange(initialTerm);
+  }, [organization]);
+
+  return (
+    <form id="inventory_filter_form">
+      <FormGroup>
+        <TextInput
+          id="inventory_filter_input"
+          value={filterTerm}
+          type="text"
+          placeholder={__('Filter..')}
+          onChange={handleFilterChange}
+        />
+        <ClearButton onClear={handleFilterClear} />
+      </FormGroup>
+    </form>
+  );
+};
 
 InventoryFilter.propTypes = {
   handleFilterChange: PropTypes.func,
   handleFilterClear: PropTypes.func,
   filterTerm: PropTypes.string,
+  organization: PropTypes.string,
 };
 
 InventoryFilter.defaultProps = {
   handleFilterChange: noop,
   handleFilterClear: noop,
   filterTerm: '',
+  organization: '',
 };
 
 export default InventoryFilter;
