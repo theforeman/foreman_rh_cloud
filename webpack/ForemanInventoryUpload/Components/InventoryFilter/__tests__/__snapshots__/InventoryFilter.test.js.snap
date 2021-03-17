@@ -4,18 +4,13 @@ exports[`InventoryFilter rendering render with props 1`] = `
 <form
   id="inventory_filter_form"
 >
-  <FormGroup
-    bsClass="form-group"
-    controlId="inventory_filter_input"
-  >
-    <FormControl
-      bsClass="form-control"
-      bsSize="lg"
-      componentClass="input"
+  <FormGroup>
+    <TextInput
+      id="inventory_filter_input"
       onChange={[Function]}
       placeholder="Filter.."
       type="text"
-      value=""
+      value="test_filter_term"
     />
     <ClearButton
       onClear={[Function]}

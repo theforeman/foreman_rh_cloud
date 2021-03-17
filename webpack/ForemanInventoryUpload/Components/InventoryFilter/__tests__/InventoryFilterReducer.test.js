@@ -1,10 +1,6 @@
 import { testReducerSnapshotWithFixtures } from '@theforeman/test';
-import {
-  LAYOUT_CHANGE_ORG,
-  LAYOUT_INITIALIZE,
-} from 'foremanReact/components/Layout/LayoutConstants';
 import reducer from '../InventoryFilterReducer';
-import { filterTerm, organization } from '../InventoryFilter.fixtures';
+import { filterTerm } from '../InventoryFilter.fixtures';
 import {
   INVENTORY_FILTER_UPDATE,
   INVENTORY_FILTER_CLEAR,
@@ -24,18 +20,6 @@ const fixtures = {
     action: {
       type: INVENTORY_FILTER_CLEAR,
       payload: {},
-    },
-  },
-  'should handle LAYOUT_CHANGE_ORG': {
-    action: {
-      type: LAYOUT_CHANGE_ORG,
-      payload: { organization },
-    },
-  },
-  'should handle LAYOUT_INITIALIZE': {
-    action: {
-      type: LAYOUT_INITIALIZE,
-      payload: { organization },
     },
   },
 };

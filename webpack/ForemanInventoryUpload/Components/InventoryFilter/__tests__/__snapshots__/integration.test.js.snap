@@ -6,7 +6,7 @@ Object {
     Array [
       Object {
         "payload": Object {
-          "filterTerm": "some_new_filter",
+          "filterTerm": "some-org",
         },
         "type": "INVENTORY_FILTER_UPDATE",
       },
@@ -35,7 +35,7 @@ Object {
         },
         "dashboard": Object {},
         "inventoryFilter": Object {
-          "filterTerm": "some_new_filter",
+          "filterTerm": "some-org",
         },
         "inventorySync": Object {},
       },
