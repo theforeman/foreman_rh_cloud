@@ -23,6 +23,18 @@ module InsightsCloud::Api
         assert_equal @body, @response.body
       end
 
+      test "should respond with the same content type" do
+        net_http_resp = Net::HTTPResponse.new(1.0, 200, "OK")
+        net_http_resp.add_field 'Set-Cookie', 'Monster'
+        res = RestClient::Response.create(@body, net_http_resp, @http_req)
+        ::ForemanRhCloud::CloudRequestForwarder.any_instance.expects(:execute_cloud_request).with do |opts|
+          opts[:headers][:content_type] == 'application/json'
+        end.returns(res)
+
+        post :forward_request, as: :json, params: { "path" => "static/v1/test", "machine_telemetry" => {"foo" => "bar"} }
+        assert_equal @body, @response.body
+      end
+
       test "should add headers to response from cloud" do
         x_resource_count = '101'
         x_rh_insights_request_id = '202'
