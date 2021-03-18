@@ -56,6 +56,11 @@ module ForemanInventoryUpload
     @upload_url ||= ENV['SATELLITE_INVENTORY_UPLOAD_URL'] || 'https://cert.cloud.redhat.com/api/ingress/v1/upload'
   end
 
+  def self.slice_size
+    # for testing set ENV to 'https://ci.cloud.redhat.com/api/ingress/v1/upload'
+    @slice_size ||= (ENV['SATELLITE_INVENTORY_SLICE_SIZE'] || '1000').to_i
+  end
+
   def self.ensure_folder(folder)
     FileUtils.mkdir_p(folder)
     folder

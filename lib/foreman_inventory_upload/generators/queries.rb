@@ -50,7 +50,7 @@ module ForemanInventoryUpload
       end
 
       def self.for_org(organization_id)
-        for_slice(Host.unscoped.where(organization_id: organization_id)).in_batches(of: 1_000)
+        for_slice(Host.unscoped.where(organization_id: organization_id)).in_batches(of: ForemanInventoryUpload.slice_size)
       end
 
       def self.organizations_for_user(portal_user)
