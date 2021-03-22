@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SyncButton integration test Successful task was triggered on the server resulting in an info toast and polling on the task: handleSync was called 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "message": Object {
+          "message": <Toast
+            disconnectHosts={2}
+            syncHosts={0}
+          />,
+          "sticky": true,
+          "type": "success",
+        },
+      },
+      "type": "TOASTS_ADD",
+    },
+  ],
+  Array [
+    Object {
+      "errorToast": [Function],
+      "interval": 3000,
+      "type": "API_GET",
+      "url": "/foreman_inventory_upload/tasks/1",
+    },
+  ],
+  Array [
+    Object {
+      "payload": Object {
+        "message": Object {
+          "message": <span>
+            Inventory sync has started:
+             
+            <a
+              href="/foreman_tasks/tasks/1"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              view the task page for more details
+            </a>
+          </span>,
+          "sticky": false,
+          "type": "info",
+        },
+      },
+      "type": "TOASTS_ADD",
+    },
+  ],
+  Array [
+    Object {
+      "errorToast": [Function],
+      "type": "API_POST",
+      "url": "/foreman_inventory_upload/tasks",
+    },
+  ],
+]
+`;
