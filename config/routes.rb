@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
     post 'cloud_connector', to: 'uploads#enable_cloud_connector'
 
-    resources :tasks, only: [:create]
+    resources :tasks, only: [:create, :show]
   end
 
   namespace :insights_cloud do

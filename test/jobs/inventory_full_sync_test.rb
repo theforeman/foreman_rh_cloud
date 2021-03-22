@@ -71,7 +71,7 @@ class InventoryFullSyncTest < ActiveJob::TestCase
   test 'Host status should be SYNC for inventory hosts' do
     InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
 
-    InventorySync::Async::InventoryFullSync.perform_now(@host1.organization)
+    ForemanTasks.sync_task(InventorySync::Async::InventoryFullSync, @host1.organization)
 
     @host1.reload
 
@@ -82,8 +82,7 @@ class InventoryFullSyncTest < ActiveJob::TestCase
     InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
     FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
 
-    InventorySync::Async::InventoryFullSync.perform_now(@host2.organization)
-
+    ForemanTasks.sync_task(InventorySync::Async::InventoryFullSync, @host2.organization)
     @host2.reload
 
     assert_equal InventorySync::InventoryStatus::DISCONNECT, InventorySync::InventoryStatus.where(host_id: @host2.id).first.status

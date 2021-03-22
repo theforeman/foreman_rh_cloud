@@ -37,7 +37,6 @@ Object {
         "inventoryFilter": Object {
           "filterTerm": "some-org",
         },
-        "inventorySync": Object {},
       },
     },
   },

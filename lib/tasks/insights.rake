@@ -8,7 +8,7 @@ namespace :rh_cloud_insights do
     end
 
     organizations.each do |organization|
-      InventorySync::Async::InventoryFullSync.perform_now(organization)
+      ForemanTasks.async_task(InventorySync::Async::InventoryFullSync, organization)
       puts "Synchronized inventory for organization '#{organization.name}'"
     end
   end
