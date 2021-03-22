@@ -18,7 +18,7 @@ const InventoryFilter = ({
     const initialTerm =
       organization === __(ANY_ORGANIZATION) ? '' : organization;
     handleFilterChange(initialTerm);
-  }, [organization]);
+  }, []);
 
   return (
     <form id="inventory_filter_form">
