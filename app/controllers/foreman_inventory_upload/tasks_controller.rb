@@ -13,12 +13,23 @@ module ForemanInventoryUpload
           message: N_('Nothing to sync, there are no hosts with subscription for this organization.'),
         }, status: :method_not_allowed
       else
-        host_statuses = InventorySync::Async::InventoryFullSync.perform_now(selected_org)
+        task = ForemanTasks.async_task(InventorySync::Async::InventoryFullSync, selected_org)
       end
+      return render json: { message: N_('there was an issue triggering the task') }, status: :internal_server_error unless task
 
       render json: {
-        syncHosts: host_statuses[:sync],
-        disconnectHosts: host_statuses[:disconnect],
+        task: task,
+      }, status: :ok
+    end
+
+    def show
+      task = ForemanTasks::Task.find_by(id: params[:id])
+      return render json: { message: N_('No task was found') }, status: :internal_server_error unless task
+
+      render json: {
+        endedAt: task.ended_at,
+        output: task.output,
+        result: task.result,
       }, status: :ok
     end
   end

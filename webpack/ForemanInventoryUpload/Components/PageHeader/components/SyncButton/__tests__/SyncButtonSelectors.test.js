@@ -1,35 +1,26 @@
 import { testSelectorsSnapshotWithFixtures } from '@theforeman/test';
-import { inventoryStateWrapper } from '../../../../../../ForemanRhCloudTestHelpers';
-import {
-  status,
-  error,
-  syncHosts,
-  disconnectHosts,
-} from './SyncButtonFixtures';
-import {
-  selectInventorySync,
-  selectStatus,
-  selectError,
-  selectSyncHosts,
-  selectDisconnectHosts,
-} from '../SyncButtonSelectors';
+import { selectTaskStatus } from '../SyncButtonSelectors';
 
-const state = inventoryStateWrapper({
-  inventorySync: {
-    status,
-    error,
-    syncHosts,
-    disconnectHosts,
+const state = {
+  API: {
+    INVENTORY_SYNC_TASK_UPDATE: {
+      response: {
+        endedAt: '2021-03-08T14:27:30.718+02:00',
+        output: {
+          host_statuses: {
+            sync: 0,
+            disconnect: 2,
+          },
+        },
+        result: 'pending',
+      },
+      status: 'RESOLVED',
+    },
   },
-});
+};
 
 const fixtures = {
-  'should return InventorySync': () => selectInventorySync(state),
-  'should return InventorySync status': () => selectStatus(state),
-  'should return InventorySync error': () => selectError(state),
-  'should return InventorySync SyncHosts': () => selectSyncHosts(state),
-  'should return InventorySync disconnectHosts': () =>
-    selectDisconnectHosts(state),
+  'should return InventorySync status': () => selectTaskStatus(state),
 };
 
 describe('SyncButton selectors', () =>

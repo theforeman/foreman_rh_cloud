@@ -2,17 +2,20 @@ require 'rest-client'
 
 module InventorySync
   module Async
-    class InventoryFullSync < ::ApplicationJob
+    class InventoryFullSync < ::Actions::EntryAction
       include ::ForemanRhCloud::CloudAuth
 
-      def perform(organization)
-        @organization = organization
+      def plan(organization)
+        plan_self(organization_id: organization.id)
+      end
+
+      def run
         @subscribed_hosts_ids = Set.new(
           ForemanInventoryUpload::Generators::Queries.for_slice(
-            Host.unscoped.where(organization: organization)
+            Host.unscoped.where(organization_id: input[:organization_id])
           ).pluck(:id)
         )
-        @host_statuses = {
+        host_statuses = {
           sync: 0,
           disconnect: 0,
         }
@@ -25,18 +28,18 @@ module InventorySync
             results = HostResult.new(api_response)
             logger.debug("Downloading cloud inventory data: #{results.percentage}%")
             update_hosts_status(results.status_hashes, results.touched)
-            @host_statuses[:sync] += results.touched.size
+            host_statuses[:sync] += results.touched.size
             page += 1
             break if results.last?
           end
           add_missing_hosts_statuses(@subscribed_hosts_ids)
-          @host_statuses[:disconnect] += @subscribed_hosts_ids.size
+          host_statuses[:disconnect] += @subscribed_hosts_ids.size
         end
 
-        logger.debug("Synced hosts amount: #{@host_statuses[:sync]}")
-        logger.debug("Disconnected hosts amount: #{@host_statuses[:disconnect]}")
+        logger.debug("Synced hosts amount: #{host_statuses[:sync]}")
+        logger.debug("Disconnected hosts amount: #{host_statuses[:disconnect]}")
 
-        @host_statuses
+        output[:host_statuses] = host_statuses
       end
 
       private
@@ -74,6 +77,10 @@ module InventorySync
         )
 
         JSON.parse(hosts_inventory_response)
+      end
+
+      def logger
+        action_logger
       end
     end
   end
