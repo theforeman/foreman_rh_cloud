@@ -6,12 +6,13 @@ module InventorySync
         @count = result['count']
         @page = result['page']
         @per_page = result['per_page']
-        @fqdns = result["results"].map { |host| host['fqdn'] }
+        @sub_ids = result["results"].map { |host| host['subscription_manager_id'] }
+        @uuid_by_sub_id = Hash[result["results"].map { |host| [host['subscription_manager_id'], host['id']] }]
       end
 
       def status_hashes
-        @fqdns.map do |fqdn|
-          host_id = host_id(fqdn)
+        @sub_ids.map do |sub_id|
+          host_id = host_id(sub_id)
           if host_id
             touched << host_id
             {
@@ -27,14 +28,18 @@ module InventorySync
         @touched ||= []
       end
 
-      def host_id(fqdn)
-        hosts[fqdn]
+      def host_id(sub_id)
+        hosts[sub_id]
       end
 
       def hosts
         @hosts ||= Hash[
-          Host.where(name: @fqdns).pluck(:name, :id)
+          Katello::Host::SubscriptionFacet.where(uuid: @sub_ids).pluck(:uuid, :host_id)
         ]
+      end
+
+      def host_uuids
+        @host_uuids ||= Hash[@sub_ids.map { |sub_id| [host_id(sub_id), @uuid_by_sub_id[sub_id]] }].except(nil)
       end
 
       def percentage
