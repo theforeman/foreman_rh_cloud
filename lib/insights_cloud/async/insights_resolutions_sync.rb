@@ -40,7 +40,7 @@ module InsightsCloud
       end
 
       def relevant_rules
-        InsightsRule.all.pluck(:rule_id).map { |id| "advisor:#{id}" }
+        InsightsRule.all.pluck(:rule_id).map { |id| InsightsCloud.remediation_rule_id(id) }
       end
 
       def to_resolution_hash(rule_id, resolution_hash)

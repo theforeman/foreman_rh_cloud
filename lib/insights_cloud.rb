@@ -20,4 +20,12 @@ module InsightsCloud
   def self.resolutions_url
     ForemanRhCloud.base_url + '/api/remediations/v1/resolutions'
   end
+
+  def self.playbook_url
+    ForemanRhCloud.base_url + '/api/remediations/v1/playbook'
+  end
+
+  def self.remediation_rule_id(rule_id)
+    "advisor:#{rule_id}"
+  end
 end
