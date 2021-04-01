@@ -2,15 +2,20 @@ require 'test_helper'
 
 class InsightsFullSyncTest < ActiveJob::TestCase
   setup do
+    uuid1 = 'accdf444-5628-451d-bf3e-cf909ad72756'
     @host1 = FactoryBot.create(:host, :managed, name: 'host1')
+    FactoryBot.create(:insights_facet, host_id: @host1.id, uuid: uuid1)
+
+    uuid2 = 'accdf444-5628-451d-bf3e-cf909ad72757'
     @host2 = FactoryBot.create(:host, :managed, name: 'host2')
+    FactoryBot.create(:insights_facet, host_id: @host2.id, uuid: uuid2)
 
     hits_json = <<-HITS_JSON
     [
         {
             "hostname": "#{@host1.name}",
             "rhel_version": "7.5",
-            "uuid": "accdf444-5628-451d-bf3e-cf909ad72756",
+            "uuid": "#{uuid1}",
             "last_seen": "2019-11-22T08:41:42.447244Z",
             "title": "New Ansible Engine packages are inaccessible when dedicated Ansible repo is not enabled",
             "solution_url": "",
@@ -22,7 +27,7 @@ class InsightsFullSyncTest < ActiveJob::TestCase
         {
             "hostname": "#{@host1.name}",
             "rhel_version": "7.5",
-            "uuid": "accdf444-5628-451d-bf3e-cf909ad72756",
+            "uuid": "#{uuid1}",
             "last_seen": "2019-11-22T08:41:42.447244Z",
             "title": "CPU vulnerable to side-channel attacks using Microarchitectural Data Sampling (CVE-2018-12130, CVE-2018-12126, CVE-2018-12127, CVE-2019-11091)",
             "solution_url": "https://access.redhat.com/node/4134081",
@@ -34,7 +39,7 @@ class InsightsFullSyncTest < ActiveJob::TestCase
         {
             "hostname": "#{@host2.name}",
             "rhel_version": "7.5",
-            "uuid": "accdf444-5628-451d-bf3e-cf909ad72757",
+            "uuid": "#{uuid2}",
             "last_seen": "2019-11-22T08:41:42.447244Z",
             "title": "CPU vulnerable to side-channel attacks using L1 Terminal Fault (CVE-2018-3620)",
             "solution_url": "https://access.redhat.com/node/3560291",
@@ -51,6 +56,7 @@ class InsightsFullSyncTest < ActiveJob::TestCase
   test 'Hits data is replaced with data from cloud' do
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:query_insights_hits).returns(@hits)
 
+    ForemanTasks.expects(:sync_task).with(InventorySync::Async::InventoryHostsSync)
     InsightsCloud::Async::InsightsFullSync.perform_now()
 
     @host1.reload
@@ -58,12 +64,11 @@ class InsightsFullSyncTest < ActiveJob::TestCase
 
     assert_equal 2, @host1.insights.hits.count
     assert_equal 1, @host2.insights.hits.count
-    assert_equal 'accdf444-5628-451d-bf3e-cf909ad72756', @host1.insights.uuid
-    assert_equal 'accdf444-5628-451d-bf3e-cf909ad72757', @host2.insights.uuid
   end
 
   test 'Hits counters are reset correctly' do
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:query_insights_hits).returns(@hits).twice
+    ForemanTasks.stubs(:sync_task)
 
     InsightsCloud::Async::InsightsFullSync.perform_now()
     # Invoke again
@@ -75,8 +80,6 @@ class InsightsFullSyncTest < ActiveJob::TestCase
     # Check that the counters are correct
     assert_equal 2, @host1.insights.hits.count
     assert_equal 1, @host2.insights.hits.count
-    assert_equal 'accdf444-5628-451d-bf3e-cf909ad72756', @host1.insights.uuid
-    assert_equal 'accdf444-5628-451d-bf3e-cf909ad72757', @host2.insights.uuid
   end
 
   test 'Hits ignoring non-existent hosts' do
@@ -85,7 +88,7 @@ class InsightsFullSyncTest < ActiveJob::TestCase
         {
             "hostname": "#{@host1.name}_non_existent",
             "rhel_version": "7.5",
-            "uuid": "accdf444-5628-451d-bf3e-cf909ad72756",
+            "uuid": "accdf444-5628-451d-bf3e-cf909ad00000",
             "last_seen": "2019-11-22T08:41:42.447244Z",
             "title": "New Ansible Engine packages are inaccessible when dedicated Ansible repo is not enabled",
             "solution_url": "",
@@ -98,6 +101,7 @@ class InsightsFullSyncTest < ActiveJob::TestCase
     HITS_JSON
     hits = JSON.parse(hits_json)
 
+    ForemanTasks.stubs(:sync_task)
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:query_insights_hits).returns(hits)
 
     InsightsCloud::Async::InsightsFullSync.perform_now()
@@ -105,7 +109,7 @@ class InsightsFullSyncTest < ActiveJob::TestCase
     @host1.reload
     @host2.reload
 
-    assert_nil @host1.insights
-    assert_nil @host2.insights
+    assert_equal 0, @host1.insights.hits_count
+    assert_equal 0, @host2.insights.hits_count
   end
 end

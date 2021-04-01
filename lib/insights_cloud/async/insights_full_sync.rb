@@ -6,14 +6,22 @@ module InsightsCloud
       include ::ForemanRhCloud::CloudAuth
 
       def perform
-        hits = query_insights_hits
+        # This can be turned off when we enable automatic status syncs
+        # This step will query cloud inventory to retrieve inventory uuids for each host
+        ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync)
 
-        @hits_host_names = Hash[hits.map { |hit| [hit['hostname'], hit['uuid']] }]
-        setup_host_names(@hits_host_names.keys)
-
-        replace_hits_data(hits)
+        perform_hits_sync
 
         InsightsRulesSync.perform_later
+      end
+
+      def perform_hits_sync
+        hits = query_insights_hits
+
+        uuids = hits.map { |hit| hit['uuid'] }
+        setup_host_ids(uuids)
+
+        replace_hits_data(hits)
       end
 
       def logger
@@ -50,39 +58,27 @@ module InsightsCloud
         JSON.parse(rules_response)
       end
 
-      def setup_host_names(host_names)
+      def setup_host_ids(uuids)
         @host_ids = Hash[
-          Host.unscoped.where(name: host_names).pluck(:name, :id)
+          InsightsFacet.where(uuid: uuids).pluck(:uuid, :host_id)
         ]
       end
 
-      def host_id(host_name)
-        @host_ids[host_name]
+      def host_id(uuid)
+        @host_ids[uuid]
       end
 
       def replace_hits_data(hits)
         InsightsHit.transaction do
           # Reset hit counters to 0, they will be recreated later
           InsightsFacet.unscoped.update_all(hits_count: 0)
-          # create new facets for hosts that are missing one
-          hosts_with_existing_facets = InsightsFacet.where(host_id: @host_ids.values).pluck(:host_id)
-          InsightsFacet.create(
-            @host_ids.map do |host_name, host_id|
-              unless hosts_with_existing_facets.include?(host_id)
-                {
-                  host_id: host_id,
-                  uuid: @hits_host_names[host_name],
-                }
-              end
-            end.compact
-          )
           InsightsHit.delete_all
           InsightsHit.create(hits.map { |hits_hash| to_model_hash(hits_hash) }.compact)
         end
       end
 
       def to_model_hash(hit_hash)
-        hit_host_id = host_id(hit_hash['hostname'])
+        hit_host_id = host_id(hit_hash['uuid'])
 
         return unless hit_host_id
 
