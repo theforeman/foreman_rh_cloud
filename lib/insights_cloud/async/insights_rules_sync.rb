@@ -5,6 +5,7 @@ module InsightsCloud
     class InsightsRulesSync < ::Actions::EntryAction
       include ::ForemanRhCloud::CloudAuth
 
+<<<<<<< HEAD
       def plan
         plan_self
         plan_resolutions
@@ -14,6 +15,8 @@ module InsightsCloud
         plan_action InsightsResolutionsSync
       end
 
+=======
+>>>>>>> Switch jobs to tasks
       def run
         offset = 0
         InsightsRule.transaction do
