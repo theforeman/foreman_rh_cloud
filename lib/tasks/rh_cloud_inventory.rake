@@ -54,7 +54,7 @@ namespace :rh_cloud_inventory do
 
   desc "Synchronize Insights hosts hits"
   task sync: :environment do
-    InsightsCloud::Async::InsightsFullSync.perform_now()
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync)
     puts "Synchronized Insights hosts hits data"
   end
 end

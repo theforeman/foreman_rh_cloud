@@ -2,10 +2,10 @@ require 'rest-client'
 
 module InsightsCloud
   module Async
-    class InsightsRulesSync < ::ApplicationJob
+    class InsightsRulesSync < ::Actions::EntryAction
       include ::ForemanRhCloud::CloudAuth
 
-      def perform
+      def run
         offset = 0
         InsightsRule.transaction do
           InsightsResolution.delete_all
@@ -16,13 +16,14 @@ module InsightsCloud
             logger.debug("Downloaded #{offset + results.count} of #{results.total}")
             write_rules_page(results.rules)
             offset += results.count
+            output[:rules_count] = results.total
             break if offset >= results.total
           end
         end
       end
 
       def logger
-        Foreman::Logging.logger('background')
+        action_logger
       end
 
       private

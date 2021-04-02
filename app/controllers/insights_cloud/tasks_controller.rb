@@ -1,8 +1,7 @@
 module InsightsCloud
   class TasksController < ::ApplicationController
     def create
-      job = InsightsCloud::Async::InsightsFullSync.perform_later
-      task = ForemanTasks::Task.find_by(external_id: job.provider_job_id)
+      task = ForemanTasks.async_task(InsightsCloud::Async::InsightsFullSync)
 
       render json: {
         task: task,

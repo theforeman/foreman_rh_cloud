@@ -1,7 +1,9 @@
 require 'test_helper'
 
-class InsightsFullSyncTest < ActiveJob::TestCase
+class InsightsFullSyncTest < ActiveSupport::TestCase
   setup do
+    InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_rules_sync)
+
     uuid1 = 'accdf444-5628-451d-bf3e-cf909ad72756'
     @host1 = FactoryBot.create(:host, :managed, name: 'host1')
     FactoryBot.create(:insights_facet, host_id: @host1.id, uuid: uuid1)
@@ -56,8 +58,9 @@ class InsightsFullSyncTest < ActiveJob::TestCase
   test 'Hits data is replaced with data from cloud' do
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:query_insights_hits).returns(@hits)
 
-    ForemanTasks.expects(:sync_task).with(InventorySync::Async::InventoryHostsSync)
-    InsightsCloud::Async::InsightsFullSync.perform_now()
+    InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_hosts_sync)
+    InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_rules_sync)
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync)
 
     @host1.reload
     @host2.reload
@@ -68,11 +71,12 @@ class InsightsFullSyncTest < ActiveJob::TestCase
 
   test 'Hits counters are reset correctly' do
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:query_insights_hits).returns(@hits).twice
-    ForemanTasks.stubs(:sync_task)
 
-    InsightsCloud::Async::InsightsFullSync.perform_now()
+    InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_hosts_sync)
+
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync)
     # Invoke again
-    InsightsCloud::Async::InsightsFullSync.perform_now()
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync)
 
     @host1.reload
     @host2.reload
@@ -101,10 +105,10 @@ class InsightsFullSyncTest < ActiveJob::TestCase
     HITS_JSON
     hits = JSON.parse(hits_json)
 
-    ForemanTasks.stubs(:sync_task)
+    InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_hosts_sync)
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:query_insights_hits).returns(hits)
 
-    InsightsCloud::Async::InsightsFullSync.perform_now()
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync)
 
     @host1.reload
     @host2.reload
