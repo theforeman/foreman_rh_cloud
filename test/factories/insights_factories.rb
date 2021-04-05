@@ -19,6 +19,20 @@ FactoryBot.define do
     sequence(:results_url) { |n| "https://cloud.redhat.com/insights/overview/stability/test_rule%7CTEST_RULE/accdf444-5628-451d-bf3e-cf909ad7275#{n}/" }
     rule_id { "test_rule|TEST_RULE" }
   end
+
+  factory :insights_rule do
+    sequence(:rule_id) { |n| "test_rule#{n}|TEST_RULE#{n}" }
+    description { 'test rule description' }
+    category_name { 'Testing' }
+    impact_name { 'Testing error' }
+    summary { 'Testing summary' }
+    generic { 'Testing generic' }
+    reason { 'No apparent reason' }
+    total_risk { -1 }
+    reboot_required { true }
+    more_info { 'more test info' }
+    rating { 0 }
+  end
 end
 
 FactoryBot.modify do

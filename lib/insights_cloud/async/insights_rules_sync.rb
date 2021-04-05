@@ -5,10 +5,18 @@ module InsightsCloud
     class InsightsRulesSync < ::Actions::EntryAction
       include ::ForemanRhCloud::CloudAuth
 
+      def plan
+        plan_self
+        plan_resolutions
+      end
+
+      def plan_resolutions
+        plan_action InsightsResolutionsSync
+      end
+
       def run
         offset = 0
         InsightsRule.transaction do
-          InsightsResolution.delete_all
           InsightsRule.delete_all
           loop do
             api_response = query_insights_rules(offset)
@@ -44,12 +52,8 @@ module InsightsCloud
 
       def write_rules_page(rules)
         rules_attributes = rules.map { |rule| to_rule_hash(rule) }
-        resolutions_attributes = rules.map do |rule|
-          rule['resolution_set'].map { |resolution| to_resolution_hash(rule['rule_id'], resolution) }
-        end.flatten
 
         InsightsRule.create(rules_attributes)
-        InsightsResolution.create(resolutions_attributes)
       end
 
       def to_rule_hash(rule_hash)
@@ -65,15 +69,6 @@ module InsightsCloud
           reboot_required:  rule_hash['reboot_required'],
           more_info:  rule_hash['more_info'],
           rating:  rule_hash['rating'],
-        }
-      end
-
-      def to_resolution_hash(rule_id, resolution_hash)
-        {
-          rule_id: rule_id,
-          system_type: resolution_hash['system_type'],
-          resolution: resolution_hash['resolution'],
-          has_playbook: resolution_hash['has_playbook'],
         }
       end
     end
