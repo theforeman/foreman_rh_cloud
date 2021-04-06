@@ -10,7 +10,7 @@ module InsightsCloud
           return
         end
 
-        InsightsFullSync.perform_later()
+        ForemanTasks.async_task InsightsFullSync
       ensure
         self.class.set(:wait => 24.hours).perform_later
       end

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class InsightsRulesSyncTest < ActiveJob::TestCase
+class InsightsRulesSyncTest < ActiveSupport::TestCase
   setup do
     rules_json = <<-'RULES_JSON'
     {
@@ -112,7 +112,7 @@ class InsightsRulesSyncTest < ActiveJob::TestCase
   test 'Hits data is replaced with data from cloud' do
     InsightsCloud::Async::InsightsRulesSync.any_instance.expects(:query_insights_rules).returns(@rules)
 
-    InsightsCloud::Async::InsightsRulesSync.perform_now()
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsRulesSync)
     @hit.reload
 
     assert_equal 2, InsightsRule.all.count
@@ -191,7 +191,7 @@ class InsightsRulesSyncTest < ActiveJob::TestCase
     InsightsCloud::Async::InsightsRulesSync.any_instance.
       stubs(:query_insights_rules).returns(@rules).then.returns(@last_rule)
 
-    InsightsCloud::Async::InsightsRulesSync.perform_now()
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsRulesSync)
 
     assert_equal 3, InsightsRule.all.count
   end

@@ -2,17 +2,19 @@ require 'rest-client'
 
 module InsightsCloud
   module Async
-    class InsightsFullSync < ::ApplicationJob
+    class InsightsFullSync < ::Actions::EntryAction
       include ::ForemanRhCloud::CloudAuth
 
-      def perform
+      def plan
         # This can be turned off when we enable automatic status syncs
         # This step will query cloud inventory to retrieve inventory uuids for each host
-        ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync)
+        plan_hosts_sync
+        plan_self
+        plan_rules_sync
+      end
 
+      def run
         perform_hits_sync
-
-        InsightsRulesSync.perform_later
       end
 
       def perform_hits_sync
@@ -25,10 +27,18 @@ module InsightsCloud
       end
 
       def logger
-        Foreman::Logging.logger('background')
+        action_logger
       end
 
       private
+
+      def plan_hosts_sync
+        plan_action InventorySync::Async::InventoryHostsSync
+      end
+
+      def plan_rules_sync
+        plan_action InsightsRulesSync
+      end
 
       def query_insights_hits
         hits_response = RestClient::Request.execute(

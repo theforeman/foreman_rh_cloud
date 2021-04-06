@@ -13,7 +13,7 @@ module InsightsCloud
       token = Setting::RhCloud.find_by_name("rh_cloud_token")
       token.value = params.require(:value)
       token.save!
-      InsightsCloud::Async::InsightsFullSync.perform_now
+      ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync)
       redirect_to(:controller => "hits", :action => 'index')
     end
 

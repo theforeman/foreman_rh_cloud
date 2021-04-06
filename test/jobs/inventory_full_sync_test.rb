@@ -1,6 +1,6 @@
 require 'test_plugin_helper'
 
-class InventoryFullSyncTest < ActiveJob::TestCase
+class InventoryFullSyncTest < ActiveSupport::TestCase
   setup do
     User.current = User.find_by(login: 'secret_admin')
 
