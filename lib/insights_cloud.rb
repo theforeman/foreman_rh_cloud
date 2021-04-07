@@ -16,4 +16,8 @@ module InsightsCloud
   def self.rules_url(limit: ForemanRhCloud.query_limit, offset: 0)
     ForemanRhCloud.base_url + "/api/insights/v1/rule/?impacting=true&rule_status=enabled&has_playbook=true&limit=#{limit}&offset=#{offset}"
   end
+
+  def self.resolutions_url
+    ForemanRhCloud.base_url + '/api/remediations/v1/resolutions'
+  end
 end

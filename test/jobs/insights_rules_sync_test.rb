@@ -107,6 +107,8 @@ class InsightsRulesSyncTest < ActiveSupport::TestCase
     @rules = JSON.parse(rules_json)
     @host = FactoryBot.create(:host, :managed, name: 'host1')
     @hit = FactoryBot.create(:insights_hit, host_id: @host.id)
+
+    InsightsCloud::Async::InsightsRulesSync.any_instance.stubs(:plan_resolutions)
   end
 
   test 'Hits data is replaced with data from cloud' do
