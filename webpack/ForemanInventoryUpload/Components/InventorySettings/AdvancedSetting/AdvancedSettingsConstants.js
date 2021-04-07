@@ -3,7 +3,7 @@ import { translate as __ } from 'foremanReact/common/I18n';
 export const settingsDict = {
   autoUploadEnabled: {
     name: 'allow_auto_inventory_upload',
-    label: __('Auto upload'),
+    label: __('Automatic inventory upload'),
     tooltip: __(
       'Enable automatic upload of your hosts inventory to the Red Hat cloud'
     ),
@@ -20,7 +20,7 @@ export const settingsDict = {
   },
   excludePackagesEnabled: {
     name: 'exclude_installed_packages',
-    label: __('Exclude Packages'),
-    tooltip: __('Exclude packages from being uploaded to the Red Hat cloud'),
+    label: __('Exclude installed Packages'),
+    tooltip: __('Exclude installed packages from being uploaded to the Red Hat cloud'),
   },
 };
