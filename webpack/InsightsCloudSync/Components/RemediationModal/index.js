@@ -7,8 +7,12 @@ import {
 } from 'foremanReact/redux/API/APISelectors';
 import * as actions from './RemediationActions';
 import RemediationModal from './RemediationModal';
-import { selectSelectedIds } from '../InsightsTable/InsightsTableSelectors';
 import { REMEDIATIONS_API_KEY } from './RemediationTableConstants';
+import {
+  selectIsAllSelected,
+  selectSearch,
+  selectSelectedIds,
+} from '../InsightsTable/InsightsTableSelectors';
 
 // map state to props
 const mapStateToProps = state => ({
@@ -17,6 +21,8 @@ const mapStateToProps = state => ({
   status: selectAPIStatus(state, REMEDIATIONS_API_KEY),
   error: selectAPIErrorMessage(state, REMEDIATIONS_API_KEY),
   itemCount: selectAPIResponse(state, REMEDIATIONS_API_KEY).itemCount || 0,
+  isAllSelected: selectIsAllSelected(state),
+  query: selectSearch(state),
 });
 
 // map action dispatchers to props

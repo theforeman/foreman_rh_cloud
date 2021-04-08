@@ -4,9 +4,9 @@ import {
   REMEDIATIONS_PATH,
 } from './RemediationTableConstants';
 
-export const fetchRemediations = selectedIDs =>
+export const fetchRemediations = ({ selectedIds, isAllSelected, query }) =>
   get({
     key: REMEDIATIONS_API_KEY,
     url: REMEDIATIONS_PATH,
-    params: { ids: Object.keys(selectedIDs) },
+    params: { ids: Object.keys(selectedIds), isAllSelected, query },
   });

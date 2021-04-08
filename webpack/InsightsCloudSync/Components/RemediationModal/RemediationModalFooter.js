@@ -23,13 +23,10 @@ const ModalFooter = ({ toggleModal, remediations }) => {
             type="hidden"
             name="hit_ids[]"
             key={remediation.id}
-            value={remediation.id}
-          />
-          <input
-            type="hidden"
-            name="resolution_ids[]"
-            key={remediation.resolutions[0].id}
-            value={remediation.resolutions[0].id}
+            value={JSON.stringify({
+              hit_id: remediation.id,
+              resolution_id: remediation.resolutions[0].id,
+            })}
           />
         </React.Fragment>
       ))}

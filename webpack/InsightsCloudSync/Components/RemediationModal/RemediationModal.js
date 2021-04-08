@@ -18,13 +18,15 @@ const RemediationModal = ({
   remediations,
   status,
   error,
+  isAllSelected,
+  query,
 }) => {
   const [rows, setRows] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const toggleModal = () => setOpen(prevValue => !prevValue);
 
   useEffect(() => {
-    if (open) fetchRemediations(selectedIds);
+    if (open) fetchRemediations({ selectedIds, isAllSelected, query });
   }, [open]);
 
   useEffect(() => {
@@ -74,6 +76,8 @@ RemediationModal.propTypes = {
   remediations: PropTypes.array,
   status: PropTypes.string,
   error: PropTypes.string,
+  isAllSelected: PropTypes.bool,
+  query: PropTypes.string,
 };
 
 RemediationModal.defaultProps = {
@@ -81,6 +85,8 @@ RemediationModal.defaultProps = {
   remediations: [],
   status: null,
   error: null,
+  isAllSelected: false,
+  query: null,
 };
 
 export default RemediationModal;
