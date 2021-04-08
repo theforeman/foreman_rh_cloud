@@ -14,6 +14,7 @@
           "ansible",
           "camelcase",
           "checkbox",
+          "csrf",
           "dropdown",
           "donut",
           "hostnames",

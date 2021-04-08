@@ -20,6 +20,16 @@ module InsightsCloud
       }, status: :ok
     end
 
+    def resolutions
+      ids = params[:ids]&.map(&:to_i)
+      hits = resource_base_search_and_page.where(id: ids).preload(:host, rule: :resolutions)
+
+      render json: {
+        hits: hits.map { |hit| hit.attributes.merge(hostname: hit.host&.name, resolutions: hit.rule.resolutions.map(&:attributes), reboot: hit.rule.reboot_required) },
+        itemCount: hits.count,
+      }, status: :ok
+    end
+
     def model_of_controller
       ::InsightsHit
     end
@@ -30,6 +40,15 @@ module InsightsCloud
 
     def controller_permission
       :insights_hits
+    end
+
+    def action_permission
+      case params[:action]
+      when 'resolutions'
+        'view'
+      else
+        super
+      end
     end
 
     private

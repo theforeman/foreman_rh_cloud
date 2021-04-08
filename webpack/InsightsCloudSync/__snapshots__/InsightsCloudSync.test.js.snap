@@ -27,12 +27,15 @@ exports[`InsightsCloudSync render 1`] = `
     searchQuery=""
     searchable={true}
     toolbarButtons={
-      <Button
-        onClick={[Function]}
-        variant="primary"
-      >
-        Start recommendations sync
-      </Button>
+      <React.Fragment>
+        <UNDEFINED />
+        <Button
+          onClick={[Function]}
+          variant="secondary"
+        >
+          Start recommendations sync
+        </Button>
+      </React.Fragment>
     }
   >
     <Connect(InsightsTable) />
