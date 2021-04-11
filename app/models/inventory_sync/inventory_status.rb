@@ -26,5 +26,11 @@ module InventorySync
           N_('Successfully uploaded to your RH cloud inventory')
       end
     end
+
+    def to_status(options = {})
+      # this method used to calculate status.
+      # Since the calculation is done externally we should return the previously calculated status
+      status
+    end
   end
 end
