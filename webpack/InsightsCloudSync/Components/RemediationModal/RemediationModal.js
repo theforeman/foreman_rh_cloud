@@ -23,6 +23,8 @@ const RemediationModal = ({
 }) => {
   const [rows, setRows] = React.useState([]);
   const [open, setOpen] = React.useState(false);
+  const [resolutions, setResolutions] = React.useState([]);
+  const [hostsIds, setHostsIds] = React.useState([]);
   const toggleModal = () => setOpen(prevValue => !prevValue);
 
   useEffect(() => {
@@ -31,7 +33,9 @@ const RemediationModal = ({
 
   useEffect(() => {
     const modifiedRows =
-      status === STATUS.PENDING ? [] : modifyRows(remediations);
+      status === STATUS.PENDING
+        ? []
+        : modifyRows(remediations, setResolutions, setHostsIds);
     setRows(modifiedRows);
   }, [remediations, status]);
 
@@ -52,7 +56,11 @@ const RemediationModal = ({
         isOpen={open}
         onClose={toggleModal}
         footer={
-          <ModalFooter toggleModal={toggleModal} remediations={remediations} />
+          <ModalFooter
+            toggleModal={toggleModal}
+            resolutions={resolutions}
+            hostsIds={hostsIds}
+          />
         }
       >
         <Table

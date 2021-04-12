@@ -4,7 +4,7 @@ import { Button } from '@patternfly/react-core';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { JOB_INVOCATION_PATH } from './RemediationTableConstants';
 
-const ModalFooter = ({ toggleModal, remediations }) => {
+const ModalFooter = ({ toggleModal, resolutions, hostsIds }) => {
   let token = document.querySelector('meta[name="csrf-token"]');
   token = token?.content || '';
   return (
@@ -15,20 +15,15 @@ const ModalFooter = ({ toggleModal, remediations }) => {
       <Button key="cancel" variant="link" onClick={toggleModal}>
         {__('Cancel')}
       </Button>
-      <input type="hidden" name="feature" value="insights_remediation" />
+      <input type="hidden" name="feature" value="rh_cloud_remediate_hosts" />
       <input type="hidden" name="authenticity_token" value={token} />
-      {remediations.map((remediation, index) => (
-        <React.Fragment key={index}>
-          <input
-            type="hidden"
-            name="hit_ids[]"
-            key={remediation.id}
-            value={JSON.stringify({
-              hit_id: remediation.id,
-              resolution_id: remediation.resolutions[0].id,
-            })}
-          />
-        </React.Fragment>
+      <input
+        type="hidden"
+        name="inputs[hit_remediation_pairs]"
+        value={JSON.stringify(resolutions)}
+      />
+      {hostsIds.map(id => (
+        <input type="hidden" name="host_ids[]" key={id} value={id} />
       ))}
     </form>
   );
@@ -36,11 +31,13 @@ const ModalFooter = ({ toggleModal, remediations }) => {
 
 ModalFooter.propTypes = {
   toggleModal: PropTypes.func.isRequired,
-  remediations: PropTypes.array,
+  resolutions: PropTypes.array,
+  hostsIds: PropTypes.array,
 };
 
 ModalFooter.defaultProps = {
-  remediations: [],
+  resolutions: [],
+  hostsIds: [],
 };
 
 export default ModalFooter;
