@@ -20,12 +20,6 @@ module InsightsCloud
       }, status: :ok
     end
 
-    def remediate
-      retreiver = ForemanRhCloud::RemediationsRetreiver.new(remediation_request_params, logger: logger)
-
-
-    end
-
     def model_of_controller
       ::InsightsHit
     end
@@ -46,10 +40,6 @@ module InsightsCloud
 
     def remediation_request_params
       params.permit(remediations: [:hit_id, :remediation_id]).require(:remediations)
-    end
-
-    def playbook_request(remediations)
-      hit_records = InsightsHit.where(id: remediations.map {|r| r[:hit_id]})
     end
   end
 end

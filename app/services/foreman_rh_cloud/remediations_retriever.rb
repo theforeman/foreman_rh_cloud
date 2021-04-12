@@ -1,24 +1,32 @@
 module ForemanRhCloud
-  class RemediationsRetreiver
+  class RemediationsRetriever
     include CloudAuth
 
-    def initialize(hit_remediation_pairs, logger: nil)
+    attr_reader :logger
+
+    def initialize(hit_remediation_pairs, logger: Logger.new(IO::NULL))
       @hit_remediation_pairs = hit_remediation_pairs
       @logger = logger
+
+      logger.debug("Querying playbook for #{hit_remediation_pairs}")
     end
 
     def create_playbook
-      query_playbook
+      response = query_playbook
+
+      logger.debug("Got playbook response: #{response.body}")
+
+      response.body
     end
 
     private
 
     def hit_ids
-      @hit_remediation_pairs.map { |pair| pair[:hit_id] }
+      @hit_remediation_pairs.map { |pair| pair["hit_id"] }
     end
 
     def remediation_ids
-      @hit_remediation_pairs.map { |pair| pair[:remediation_id] }
+      @hit_remediation_pairs.map { |pair| pair["remediation_id"] }
     end
 
     def hits
@@ -28,7 +36,7 @@ module ForemanRhCloud
     end
 
     def pairs_by_remediation_id
-      @hit_remediation_pairs.group_by { |pair| pair[:remediation_id] }
+      @hit_remediation_pairs.group_by { |pair| pair["remediation_id"] }
     end
 
     def remediations
@@ -42,19 +50,19 @@ module ForemanRhCloud
     def playbook_request
       {
         issues: pairs_by_remediation_id.map do |remediation_id, pairs|
-            {
-              resolution: remediations[remediation_id][:resolution_type],
-              id: InsightsCloud.remediation_rule_id(remediations[remediation_id][:rule_id]),
-              systems: pairs.map do |pair|
-                hits[pair[:hit_id]]
-              end,
-            }
-        end
+          {
+            resolution: remediations[remediation_id][:resolution_type],
+            id: InsightsCloud.remediation_rule_id(remediations[remediation_id][:rule_id]),
+            systems: pairs.map do |pair|
+              hits[pair["hit_id"]]
+            end,
+          }
+        end,
       }
     end
 
     def query_playbook
-      playbook_response = RestClient::Request.execute(
+      RestClient::Request.execute(
         method: :post,
         url: InsightsCloud.playbook_url,
         verify_ssl: ForemanRhCloud.verify_ssl_method,
@@ -65,10 +73,6 @@ module ForemanRhCloud
         },
         payload: playbook_request.to_json
       )
-    end
-
-    def logger
-      @logger
     end
   end
 end

@@ -33,6 +33,14 @@ FactoryBot.define do
     more_info { 'more test info' }
     rating { 0 }
   end
+
+  factory :insights_resolution do
+    sequence(:rule_id) { |n| "test_rule#{n}|TEST_RULE#{n}" }
+    description { 'fix the issue on the fly' }
+    needs_reboot { false }
+    resolution_risk { 1 }
+    resolution_type { 'fix' }
+  end
 end
 
 FactoryBot.modify do
