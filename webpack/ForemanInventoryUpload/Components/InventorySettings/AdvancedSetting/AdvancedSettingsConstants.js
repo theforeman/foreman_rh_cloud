@@ -21,6 +21,8 @@ export const settingsDict = {
   excludePackagesEnabled: {
     name: 'exclude_installed_packages',
     label: __('Exclude installed Packages'),
-    tooltip: __('Exclude installed packages from being uploaded to the Red Hat cloud'),
+    tooltip: __(
+      'Exclude installed packages from being uploaded to the Red Hat cloud'
+    ),
   },
 };
