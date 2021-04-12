@@ -14,12 +14,12 @@ class Setting::RhCloud < Setting
   def self.default_settings
     return unless ActiveRecord::Base.connection.table_exists?('settings')
     [
-      set('allow_auto_inventory_upload', N_('Allow automatic upload of the host inventory to the Red Hat cloud'), true, N_('Allow automatic inventory uploads')),
-      set('allow_auto_insights_sync', N_('Allow recommendations synchronization from Red Hat cloud'), false, N_('Allow recommendations synchronization')),
-      set('obfuscate_inventory_hostnames', N_('Obfuscate host names sent to Red Hat cloud'), false, N_('Obfuscate host names')),
-      set('obfuscate_inventory_ips', N_('Obfuscate ip addresses sent to Red Hat cloud'), false, N_('Obfuscate IPs')),
+      set('allow_auto_inventory_upload', N_('Enable automatic upload of your host inventory to the Red Hat cloud'), true, N_('Automatic inventory upload')),
+      set('allow_auto_insights_sync', N_('Enable automatic synchronization of Insights recommendations from the Red Hat cloud'), false, N_('Synchronize recommendations Automatically')),
+      set('obfuscate_inventory_hostnames', N_('Obfuscate host names sent to the Red Hat cloud'), false, N_('Obfuscate host names')),
+      set('obfuscate_inventory_ips', N_('Obfuscate ipv4 addresses sent to the Red Hat cloud'), false, N_('Obfuscate host ipv4 addresses')),
       set('rh_cloud_token', N_('Authentication token to Red Hat cloud services. Used to authenticate requests to cloud APIs'), nil, N_('Red Hat Cloud token'), nil, encrypted: true),
-      set('exclude_installed_packages', N_('Exclude installed packages from Red Hat cloud inventory report'), false, N_("Don't upload installed packages")),
+      set('exclude_installed_packages', N_('Exclude installed packages from being uploaded to the Red Hat cloud'), false, N_("Exclude installed Packages")),
       set('include_parameter_tags', N_('Should import include parameter tags from Foreman?'), false, N_('Include parameters in insights-client reports')),
     ]
   end
