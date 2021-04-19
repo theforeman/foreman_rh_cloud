@@ -26,7 +26,7 @@ module ForemanRhCloud
     end
 
     def remediation_ids
-      @hit_remediation_pairs.map { |pair| pair["remediation_id"] }
+      @hit_remediation_pairs.map { |pair| pair["resolution_id"] }
     end
 
     def hits
@@ -36,7 +36,7 @@ module ForemanRhCloud
     end
 
     def pairs_by_remediation_id
-      @hit_remediation_pairs.group_by { |pair| pair["remediation_id"] }
+      @hit_remediation_pairs.group_by { |pair| pair["resolution_id"] }
     end
 
     def remediations

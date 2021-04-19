@@ -15,7 +15,7 @@ class RemediationsRetrieverTest < ActiveSupport::TestCase
     FactoryBot.create(:insights_facet, uuid: 'HOST2', host_id: @host2.id)
     host2_hit1 = FactoryBot.create(:insights_hit, rule_id: rule1.rule_id, host_id: @host2.id)
 
-    pairs = [{'hit_id' => host1_hit1.id, 'remediation_id' => rule1_remediation1.id}, {'hit_id' => host2_hit1.id, 'remediation_id' => rule1_remediation1.id}]
+    pairs = [{'hit_id' => host1_hit1.id, 'resolution_id' => rule1_remediation1.id}, {'hit_id' => host2_hit1.id, 'resolution_id' => rule1_remediation1.id}]
     retriever = ForemanRhCloud::RemediationsRetriever.new(pairs)
 
     actual_request = retriever.send(:playbook_request)
@@ -38,7 +38,7 @@ class RemediationsRetrieverTest < ActiveSupport::TestCase
     FactoryBot.create(:insights_facet, uuid: 'HOST2', host_id: @host2.id)
     host2_hit1 = FactoryBot.create(:insights_hit, rule_id: rule1.rule_id, host_id: @host2.id)
 
-    pairs = [{'hit_id' => host1_hit1.id, 'remediation_id' => rule1_remediation1.id}, {'hit_id' => host2_hit1.id, 'remediation_id' => rule1_remediation2.id}]
+    pairs = [{'hit_id' => host1_hit1.id, 'resolution_id' => rule1_remediation1.id}, {'hit_id' => host2_hit1.id, 'resolution_id' => rule1_remediation2.id}]
     retriever = ForemanRhCloud::RemediationsRetriever.new(pairs)
 
     actual_request = retriever.send(:playbook_request)
