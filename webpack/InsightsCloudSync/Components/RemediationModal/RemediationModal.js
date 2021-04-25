@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
-import { Modal, ModalVariant, Button, Popover } from '@patternfly/react-core';
+import { Modal, ModalVariant } from '@patternfly/react-core';
 import { STATUS } from 'foremanReact/constants';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { columns } from './RemediationTableConstants';
@@ -11,6 +10,7 @@ import { modifyRows } from './RemediationHelpers';
 import ModalFooter from './RemediationModalFooter';
 import TableEmptyState from '../../../common/table/EmptyState';
 import './RemediationModal.scss';
+import RemediateButton from './RemediateButton';
 
 const RemediationModal = ({
   selectedIds,
@@ -40,38 +40,13 @@ const RemediationModal = ({
     setRows(modifiedRows);
   }, [remediations, status]);
 
-  let remediateButton = (
-    <Button
-      variant="primary"
-      onClick={() => isExperimentalMode && toggleModal()}
-      isDisabled={isEmpty(selectedIds)}
-    >
-      {__('Remediate')}
-    </Button>
-  );
-
-  if (!isExperimentalMode) {
-    remediateButton = (
-      <Popover
-        bodyContent={
-          <div
-            dangerouslySetInnerHTML={{
-              __html: __(
-                'To use this feature, please enable <a href="/settings?search=name+%3D+lab_features">Show Experimental Labs</a> in settings.'
-              ),
-            }}
-          />
-        }
-        closeBtnAriaLabel="Close Popover with Link"
-      >
-        {remediateButton}
-      </Popover>
-    );
-  }
-
   return (
     <React.Fragment>
-      {remediateButton}{' '}
+      <RemediateButton
+        isExperimentalMode={isExperimentalMode}
+        selectedIds={selectedIds}
+        toggleModal={toggleModal}
+      />{' '}
       <Modal
         id="remediation-modal"
         appendTo={document.body}
