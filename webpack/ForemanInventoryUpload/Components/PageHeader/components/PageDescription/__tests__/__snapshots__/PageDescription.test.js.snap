@@ -8,10 +8,21 @@ exports[`PageDescription rendering render without Props 1`] = `
     Red Hat Insights is a set of cloud services which provide unified subscription reporting, predictive analysis and remediation of issues through this Satellite instance.
   </p>
   <p>
-    In order to utilize these services, you can set the auto upload in the settings to "ON".
+    You can toggle the Auto upload switch to the ON position to enable Satellite to automatically upload your host inventory once a day.
   </p>
   <p>
-    You can also trigger the upload manually by opening the relevant organization card, and clicking on the "Restart" button
+    Click Restart to upload your host inventory to Red Hat Insights. Perform this step for each organization from which you want to manually upload a host inventory.
+  </p>
+  <p>
+    Enabling inventory uploads is required by subscription watch. For more information about subscription watch see link:
+     
+    <a
+      href="https://access.redhat.com/documentation/en-us/subscription_central/2020-04/html/getting_started_with_subscription_watch/assembly-about-subscriptionwatch"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      About subscription watch
+    </a>
   </p>
 </div>
 `;
