@@ -6,10 +6,12 @@ import PageLayout from 'foremanReact/routes/common/PageLayout/PageLayout';
 import InsightsHeader from './Components/InsightsHeader';
 import { NoTokenEmptyState } from './Components/NoTokenEmptyState';
 import InsightsTable from './Components/InsightsTable';
+import RemediationModal from './Components/RemediationModal';
 import {
   INSIGHTS_SYNC_PAGE_TITLE,
   INSIGHTS_SEARCH_PROPS,
 } from './InsightsCloudSyncConstants';
+import './InsightsCloudSync.scss';
 
 const InsightsCloudSync = ({
   syncInsights,
@@ -32,9 +34,12 @@ const InsightsCloudSync = ({
         onSearch={nextQuery => fetchInsights({ query: nextQuery, page: 1 })}
         header={INSIGHTS_SYNC_PAGE_TITLE}
         toolbarButtons={
-          <Button variant="primary" onClick={syncInsights}>
-            {__('Start recommendations sync')}
-          </Button>
+          <>
+            <RemediationModal />
+            <Button variant="secondary" onClick={syncInsights}>
+              {__('Start recommendations sync')}
+            </Button>
+          </>
         }
         searchQuery={query}
         beforeToolbarComponent={<InsightsHeader />}

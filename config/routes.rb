@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :hits, except: %i[show] do
       collection do
         get 'auto_complete_search'
+        get 'resolutions', to: 'hits#resolutions'
       end
     end
     match 'hits/:host_id', to: 'hits#show', via: :get

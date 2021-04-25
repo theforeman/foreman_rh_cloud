@@ -76,3 +76,6 @@ export const selectItemCount = state =>
 
 export const selectHasToken = state =>
   selectAPIResponse(state, INSIGHTS_HITS_API_KEY).hasToken;
+
+export const selectExperimental = state =>
+  selectAPIResponse(state, INSIGHTS_HITS_API_KEY).isExperimentalMode;

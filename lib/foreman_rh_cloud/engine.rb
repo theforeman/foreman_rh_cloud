@@ -48,7 +48,7 @@ module ForemanRhCloud
             :view_insights_hits,
             {
               '/foreman_rh_cloud/insights_cloud': [:index], # for bookmarks and later for showing the page
-              'insights_cloud/hits': [:index, :show, :auto_complete_search],
+              'insights_cloud/hits': [:index, :show, :auto_complete_search, :resolutions],
               'insights_cloud/settings': [:index, :show],
               'react': [:index],
             },

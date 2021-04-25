@@ -9,6 +9,7 @@ module InsightsCloud
         hasToken: !Setting[:rh_cloud_token].empty?,
         hits: hits.map { |hit| hit.attributes.merge(hostname: hit.host&.name, has_playbook: hit.has_playbook?) },
         itemCount: hits.count,
+        isExperimentalMode: Setting[:lab_features],
       }, status: :ok
     end
 
@@ -17,6 +18,21 @@ module InsightsCloud
 
       render json: {
         hits: host.insights.hits,
+      }, status: :ok
+    end
+
+    def resolutions
+      if remediation_all_selected_param
+        hits = InsightsHit.with_playbook.search_for(params[:query])
+      else
+        hits = resource_base_search_and_page.where(id: remediation_ids_param)
+      end
+
+      hits.preload(:host, rule: :resolutions)
+
+      render json: {
+        hits: hits.map { |hit| hit.attributes.merge(hostname: hit.host&.name, resolutions: hit.rule.resolutions.map(&:attributes), reboot: hit.rule.reboot_required) },
+        itemCount: hits.count,
       }, status: :ok
     end
 
@@ -32,6 +48,15 @@ module InsightsCloud
       :insights_hits
     end
 
+    def action_permission
+      case params[:action]
+      when 'resolutions'
+        'view'
+      else
+        super
+      end
+    end
+
     private
 
     def host_id_param
@@ -40,6 +65,14 @@ module InsightsCloud
 
     def remediation_request_params
       params.permit(remediations: [:hit_id, :remediation_id]).require(:remediations)
+    end
+
+    def remediation_ids_param
+      params.require(:ids).map(&:to_i)
+    end
+
+    def remediation_all_selected_param
+      ActiveModel::Type::Boolean.new.cast(params[:isAllSelected])
     end
   end
 end

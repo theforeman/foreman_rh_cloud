@@ -6,7 +6,7 @@ import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { useForemanSettings } from 'foremanReact/Root/Context/ForemanContext';
 import SelectAllAlert from './SelectAllAlert';
 import { columns } from './InsightsTableConstants';
-import TableEmptyState from './components/EmptyState';
+import TableEmptyState from '../../../common/table/EmptyState';
 import {
   modifySelectedRows,
   getSortColumnIndex,
