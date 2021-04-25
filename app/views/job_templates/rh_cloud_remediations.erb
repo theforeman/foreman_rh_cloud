@@ -1,0 +1,14 @@
+<%#
+kind: job_template
+name: Run remediations based on Insights recommendations
+job_category: Red Hat Insights
+description_format: 'Insights remediations for selected issues'
+feature: rh_cloud_remediate_hosts
+template_inputs:
+- name: hit_remediation_pairs
+  description: Pairs of issues and selected remediation
+  input_type: user
+  required: true
+provider_type: Ansible
+%>
+<%= remediations_playbook(input('hit_remediation_pairs')) %>

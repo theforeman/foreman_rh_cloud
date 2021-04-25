@@ -37,5 +37,9 @@ module InsightsCloud
     def host_id_param
       params.require(:host_id)
     end
+
+    def remediation_request_params
+      params.permit(remediations: [:hit_id, :remediation_id]).require(:remediations)
+    end
   end
 end
