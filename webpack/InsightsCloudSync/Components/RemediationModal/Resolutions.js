@@ -3,31 +3,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Radio } from '@patternfly/react-core';
 
-const Resolutions = ({ resolutions, setResolutions, hit_id }) => {
-  const [checkedID, setCheckedID] = React.useState(0);
+const Resolutions = ({
+  resolutions,
+  setResolutions,
+  selectedResolution,
+  hit_id,
+}) => {
+  const [checkedID, setCheckedID] = React.useState(selectedResolution);
 
   if (resolutions.length === 1) return <>{resolutions[0].description}</>;
 
   return (
     <>
-      {resolutions.map((currentRes, i) => (
+      {resolutions.map(({ id: resolution_id, description }) => (
         <Radio
-          key={i}
+          key={resolution_id}
           className="resolution-radio"
-          id={currentRes.rule_id}
-          isChecked={i === checkedID}
+          id={resolution_id}
+          isChecked={resolution_id === checkedID}
           onChange={() =>
             setResolutions(stateRes =>
-              stateRes.map(prevRes => {
-                if (hit_id === prevRes.hit_id) {
-                  setCheckedID(i);
-                  return { ...prevRes, resolution_id: currentRes.id };
+              stateRes.map(res => {
+                if (hit_id === res.hit_id) {
+                  setCheckedID(resolution_id);
+                  return { ...res, resolution_id };
                 }
-                return prevRes;
+                return res;
               })
             )
           }
-          label={currentRes.description}
+          label={description}
         />
       ))}
     </>
@@ -38,11 +43,13 @@ Resolutions.propTypes = {
   setResolutions: PropTypes.func.isRequired,
   resolutions: PropTypes.array,
   hit_id: PropTypes.number,
+  selectedResolution: PropTypes.number,
 };
 
 Resolutions.defaultProps = {
   resolutions: [],
   hit_id: null,
+  selectedResolution: null,
 };
 
 export default Resolutions;

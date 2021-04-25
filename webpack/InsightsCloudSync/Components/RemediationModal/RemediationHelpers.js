@@ -11,11 +11,10 @@ export const modifyRows = (remediations, setResolutions, setHostsIds) => {
     .asMutable()
     .map(({ id, host_id, hostname, title, resolutions, reboot }) => {
       hostsIdsToSubmit.add(host_id);
+      const selectedResolution = resolutions[0]?.id;
       resolutionToSubmit.push({
-        host_id,
         hit_id: id,
-        resolution_id:
-          resolutions[0].id /** defaults to the first resolution if many */,
+        resolution_id: selectedResolution /** defaults to the first resolution if many */,
       });
       return {
         cells: [
@@ -26,6 +25,7 @@ export const modifyRows = (remediations, setResolutions, setHostsIds) => {
               hit_id={id}
               resolutions={resolutions}
               setResolutions={setResolutions}
+              selectedResolution={selectedResolution}
             />
           </div>,
           reboot,
