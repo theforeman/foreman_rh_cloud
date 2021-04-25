@@ -9,6 +9,7 @@ module InsightsCloud
         hasToken: !Setting[:rh_cloud_token].empty?,
         hits: hits.map { |hit| hit.attributes.merge(hostname: hit.host&.name, has_playbook: hit.has_playbook?) },
         itemCount: hits.count,
+        isExperimentalMode: Setting[:lab_features],
       }, status: :ok
     end
 

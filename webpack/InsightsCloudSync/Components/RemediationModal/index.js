@@ -9,6 +9,7 @@ import * as actions from './RemediationActions';
 import RemediationModal from './RemediationModal';
 import { REMEDIATIONS_API_KEY } from './RemediationTableConstants';
 import {
+  selectExperimental,
   selectIsAllSelected,
   selectSearch,
   selectSelectedIds,
@@ -23,6 +24,7 @@ const mapStateToProps = state => ({
   itemCount: selectAPIResponse(state, REMEDIATIONS_API_KEY).itemCount || 0,
   isAllSelected: selectIsAllSelected(state),
   query: selectSearch(state),
+  isExperimentalMode: selectExperimental(state),
 });
 
 // map action dispatchers to props
