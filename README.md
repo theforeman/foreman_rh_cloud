@@ -52,7 +52,7 @@ From command-line:
 
     # all organizations
     /usr/sbin/foreman-rake rh_cloud_insights:sync
-    
+
     # specific organization with id 1
     export organization_id=1
     /usr/sbin/foreman-rake rh_cloud_insights:sync
@@ -60,6 +60,22 @@ From command-line:
 ## TODO
 
 *Todo list here*
+
+## Design
+
+### Endpoints
+
+| purpose                       | url    | ENV setting for the **bold** part
+| ------------------------------| -------| -----------
+| Inventory uploads             | **https://cert.cloud.redhat.com/api/ingress/v1/upload**    | SATELLITE_INVENTORY_UPLOAD_URL
+| Query inventory hosts list    | **https://cloud.redhat.com** /api/inventory/v1/hosts?tags=  | SATELLITE_RH_CLOUD_URL
+| Query insights hits           | **https://cloud.redhat.com** /api/insights/v1/export/hits/  | SATELLITE_RH_CLOUD_URL
+| Query insights rules          | **https://cloud.redhat.com** /api/insights/v1/rule/?impacting=true&rule_status=enabled&has_playbook=true&limit=&offset=  | SATELLITE_RH_CLOUD_URL
+| Query insights resolutions    | **https://cloud.redhat.com** /api/remediations/v1/resolutions| SATELLITE_RH_CLOUD_URL
+| Forward insights-client `/static` requests    | **https://cloud.redhat.com** /api/static    | SATELLITE_RH_CLOUD_URL
+| Forward insights-client legacy `/platform` requests    | **https://cert.cloud.redhat.com** /api    | SATELLITE_CERT_RH_CLOUD_URL
+| Forward insights-client legacy `/redhat_access/r/insights` requests    | **https://cert-api.access.redhat.com** /r/insights    | SATELLITE_LEGACY_INSIGHTS_URL
+
 
 ## Contributing
 
@@ -81,4 +97,3 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
