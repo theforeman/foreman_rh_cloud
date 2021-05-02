@@ -6,11 +6,16 @@ module InsightsCloud
       include ::ForemanRhCloud::CloudAuth
 
       def plan
-        # This can be turned off when we enable automatic status syncs
-        # This step will query cloud inventory to retrieve inventory uuids for each host
-        plan_hosts_sync
-        plan_self
-        plan_rules_sync
+        sequence do
+          # This can be turned off when we enable automatic status syncs
+          # This step will query cloud inventory to retrieve inventory uuids for each host
+          plan_hosts_sync
+          plan_self
+          concurrence do
+            plan_rules_sync
+            plan_notifications
+          end
+        end
       end
 
       def run
@@ -38,6 +43,10 @@ module InsightsCloud
 
       def plan_rules_sync
         plan_action InsightsRulesSync
+      end
+
+      def plan_notifications
+        plan_action InsightsGenerateNotifications
       end
 
       def query_insights_hits

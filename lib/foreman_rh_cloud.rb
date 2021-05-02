@@ -82,4 +82,9 @@ module ForemanRhCloud
 
     transformed_uri.to_s
   end
+
+  # For testing purposes we can override the default hostname with an environment variable SATELLITE_RH_CLOUD_FOREMAN_HOST
+  def self.foreman_host
+    @foreman_host ||= ::Host.unscoped.friendly.find(ENV['SATELLITE_RH_CLOUD_FOREMAN_HOST'] || ::SmartProxy.default_capsule.name)
+  end
 end
