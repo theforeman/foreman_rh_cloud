@@ -42,7 +42,7 @@ In UI: Configure -> Insights -> Sync now
 
 From command-line:
 
-    /usr/sbin/foreman-rake rh_cloud_inventory:sync
+    /usr/sbin/foreman-rake rh_cloud_insights:sync
 
 #### Synchronize inventory status
 
@@ -51,11 +51,11 @@ In UI: Configure -> Inventory Upload -> Sync inventory status
 From command-line:
 
     # all organizations
-    /usr/sbin/foreman-rake rh_cloud_insights:sync
+    /usr/sbin/foreman-rake rh_cloud_inventory:sync
 
     # specific organization with id 1
     export organization_id=1
-    /usr/sbin/foreman-rake rh_cloud_insights:sync
+    /usr/sbin/foreman-rake rh_cloud_inventory:sync
 
 ## TODO
 
