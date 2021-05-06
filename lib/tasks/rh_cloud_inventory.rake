@@ -52,9 +52,17 @@ namespace :rh_cloud_inventory do
     end
   end
 
-  desc "Synchronize Insights hosts hits"
-  task sync: :environment do
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync)
-    puts "Synchronized Insights hosts hits data"
+  desc "Synchronize Hosts inventory"
+  task sync: [:environment, 'dynflow:client'] do
+    if ! ENV['organization_id'].nil?
+      organizations = [ Organization.where(:id => ENV['organization_id']).first ]
+    else
+      organizations = Organization.all
+    end
+
+    organizations.each do |organization|
+      ForemanTasks.async_task(InventorySync::Async::InventoryFullSync, organization)
+      puts "Synchronized inventory for organization '#{organization.name}'"
+    end
   end
 end
