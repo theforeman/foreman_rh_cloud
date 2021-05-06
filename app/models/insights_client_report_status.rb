@@ -51,6 +51,6 @@ class InsightsClientReportStatus < HostStatus::Status
   end
 
   def insights_param
-    host.host_param('host_registration_insights')
+    host.host_parameters.find_by(name: 'host_registration_insights')&.value
   end
 end
