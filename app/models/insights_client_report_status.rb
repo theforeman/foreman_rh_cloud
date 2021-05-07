@@ -36,7 +36,7 @@ class InsightsClientReportStatus < HostStatus::Status
     end
   end
 
-  def to_status(data: nil)
+  def to_status(data: false)
     if insights_param
       return REPORTING if data
       return in_interval? ? REPORTING : NO_REPORT
@@ -45,12 +45,14 @@ class InsightsClientReportStatus < HostStatus::Status
     data ? NOT_MANAGED_WITH_DATA : NOT_MANAGED
   end
 
+  private
+
   def in_interval?
     return false unless reported_at
     (Time.now.utc - reported_at).to_i < REPORT_INTERVAL.to_i
   end
 
   def insights_param
-    host.host_parameters.find_by(name: 'host_registration_insights')&.value
+    host.host_params_hash.dig('host_registration_insights', :value)
   end
 end

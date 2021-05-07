@@ -75,9 +75,9 @@ module InsightsCloud::Api
       return unless request.path == '/redhat_access/r/insights/platform/ingress/v1/upload' ||
                     request.path.include?('/redhat_access/r/insights/uploads/')
 
+      data = @cloud_response.code.to_s.start_with?('2')
       host_status = @host.get_status(InsightsClientReportStatus)
-      host_status.update(reported_at: DateTime.now)
-      host_status.update(status: host_status.to_status(data: @cloud_response.code.to_s.start_with?('2')))
+      host_status.update(reported_at: Time.now.utc, status: host_status.to_status(data: data))
     end
   end
 end
