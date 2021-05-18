@@ -3,6 +3,7 @@ require 'test_helper'
 class InsightsFullSyncTest < ActiveSupport::TestCase
   setup do
     InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_rules_sync)
+    InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_notifications)
 
     uuid1 = 'accdf444-5628-451d-bf3e-cf909ad72756'
     @host1 = FactoryBot.create(:host, :managed, name: 'host1')
@@ -60,6 +61,7 @@ class InsightsFullSyncTest < ActiveSupport::TestCase
 
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_hosts_sync)
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_rules_sync)
+    InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_notifications)
     ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync)
 
     @host1.reload
