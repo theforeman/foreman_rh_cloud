@@ -6,12 +6,14 @@ module ForemanInventoryUpload
       end
 
       def generate
-        locations +
-        hostgroups +
-        host_collections +
-        organizations +
-        content_data +
-        satellite_server_data
+        (
+          locations +
+          hostgroups +
+          host_collections +
+          organizations +
+          content_data +
+          satellite_server_data
+        ).reject { |key, value| value.empty? }
       end
 
       def generate_parameters

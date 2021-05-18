@@ -52,6 +52,16 @@ class TagsGeneratorTest < ActiveSupport::TestCase
     assert_equal @host.organization_id.to_s, actual['organization_id'].first.last
   end
 
+  test 'filters tags with empty values' do
+    generator = create_generator
+
+    @host.stubs(:content_view)
+
+    actual = generator.generate.group_by { |key, value| key }
+
+    assert_equal false, actual.key?('content_view')
+  end
+
   private
 
   def create_generator
