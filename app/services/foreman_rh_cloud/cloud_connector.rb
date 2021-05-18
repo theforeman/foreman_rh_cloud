@@ -59,7 +59,7 @@ module ForemanRhCloud
     end
 
     def foreman_host
-      ::Host.unscoped.friendly.find(::SmartProxy.default_capsule.name)
+      ForemanRhCloud.foreman_host
     end
   end
 end
