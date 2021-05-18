@@ -13,8 +13,14 @@ module ForemanInventoryUpload
         organizations = Organization.unscoped.all
 
         organizations.map do |organization|
-          GenerateReportJob.perform_later(ForemanInventoryUpload.generated_reports_folder, organization.id)
-        end
+          total_hosts = ForemanInventoryUpload::Generators::Queries.for_org(organization.id, use_batches: false).count
+
+          if total_hosts <= ForemanInventoryUpload.max_org_size
+            GenerateReportJob.perform_later(ForemanInventoryUpload.generated_reports_folder, organization.id)
+          else
+            logger.info("Skipping automatic uploads for organization #{organization.name}, too many hosts (#{total_hosts}/#{ForemanInventoryUpload.max_org_size})")
+          end
+        end.compact
       ensure
         self.class.set(:wait => 24.hours).perform_later
       end

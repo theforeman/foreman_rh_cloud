@@ -57,8 +57,12 @@ module ForemanInventoryUpload
   end
 
   def self.slice_size
-    # for testing set ENV to 'https://ci.cloud.redhat.com/api/ingress/v1/upload'
     @slice_size ||= (ENV['SATELLITE_INVENTORY_SLICE_SIZE'] || '1000').to_i
+  end
+
+  def self.max_org_size
+    # Set max amount of hosts per organization for automatic uploads
+    @max_org_size ||= (ENV['SATELLITE_INVENTORY_MAX_ORG_SIZE'] || 150_000).to_i
   end
 
   def self.ensure_folder(folder)
