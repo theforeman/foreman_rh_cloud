@@ -38,10 +38,23 @@ module ForemanRhCloud
   end
 
   def self.proxy_setting(logger: Foreman::Logging.logger('background'))
+    fix_port(proxy_string(logger: logger))
+  end
+
+  def self.proxy_string(logger: Foreman::Logging.logger('background'))
     HttpProxy.default_global_content_proxy&.full_url ||
     ForemanRhCloud.cdn_proxy(logger: logger) ||
     ForemanRhCloud.global_foreman_proxy ||
     ''
+  end
+
+  def self.fix_port(uri_string)
+    return '' if uri_string.empty?
+
+    uri = URI(uri_string)
+    uri.send(:define_singleton_method, :default_port, -> { nil })
+
+    uri.to_s
   end
 
   def self.cdn_proxy(logger: Foreman::Logging.logger('app'))

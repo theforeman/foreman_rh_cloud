@@ -2,16 +2,16 @@ require 'test_plugin_helper'
 
 class RhCloudHttpProxyTest < ActiveSupport::TestCase
   setup do
-    @global_content_proxy_mock = 'http://global:content@localhost:8888'
-    @global_foreman_proxy_mock = 'http://global:foreman@localhost:8888'
+    @global_content_proxy_mock = 'http://global:content@localhost:80'
+    @global_foreman_proxy_mock = 'http://global:foreman@localhost:80'
     @katello_cdn_proxy_mock = {
       host: 'localhost',
-      port: '8888',
+      port: '80',
       user: 'katello',
       password: 'cdn',
       scheme: 'http',
     }
-    @katello_cdn_proxy_string_mock = 'http://katello:cdn@localhost:8888'
+    @katello_cdn_proxy_string_mock = 'http://katello:cdn@localhost:80'
   end
 
   test 'selects global content proxy' do
