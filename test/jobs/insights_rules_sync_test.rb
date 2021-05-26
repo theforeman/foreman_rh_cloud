@@ -1,6 +1,9 @@
 require 'test_helper'
+require 'foreman_tasks/test_helpers'
 
 class InsightsRulesSyncTest < ActiveSupport::TestCase
+  include ForemanTasks::TestHelpers::WithInThreadExecutor
+
   setup do
     rules_json = <<-'RULES_JSON'
     {
