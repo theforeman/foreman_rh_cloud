@@ -2,6 +2,8 @@ module ForemanRhCloud
   module CloudAuth
     extend ActiveSupport::Concern
 
+    include CloudRequest
+
     def rh_credentials
       @rh_credentials ||= query_refresh_token
     end
@@ -27,14 +29,12 @@ module ForemanRhCloud
 
     def execute_cloud_request(params)
       final_params = {
-        verify_ssl: ForemanRhCloud.verify_ssl_method,
-        proxy: ForemanRhCloud.transformed_http_proxy_string(logger: logger),
         headers: {
           Authorization: "Bearer #{rh_credentials}",
         },
       }.deep_merge(params)
 
-      RestClient::Request.execute(final_params)
+      super(final_params)
     end
   end
 end
