@@ -1,9 +1,9 @@
 name: Ruby tests
 on:
   push:
-    branches: [master, foreman_2_1, foreman_1_24]
+    branches: [master, foreman_2_3, foreman_2_1, foreman_1_24]
   pull_request:
-    branches: [master, foreman_2_1, foreman_1_24]
+    branches: [master, foreman_2_3, foreman_2_1, foreman_1_24]
 
 defaults:
   run:
