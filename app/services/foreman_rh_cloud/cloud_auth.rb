@@ -24,5 +24,17 @@ module ForemanRhCloud
       Foreman::Logging.exception('Unable to authenticate using rh_cloud_token setting', e)
       raise ::Foreman::WrappedException.new(e, N_('Unable to authenticate using rh_cloud_token setting'))
     end
+
+    def execute_cloud_request(params)
+      final_params = {
+        verify_ssl: ForemanRhCloud.verify_ssl_method,
+        proxy: ForemanRhCloud.transformed_http_proxy_string(logger: logger),
+        headers: {
+          Authorization: "Bearer #{rh_credentials}",
+        },
+      }.deep_merge(params)
+
+      RestClient::Request.execute(final_params)
+    end
   end
 end

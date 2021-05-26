@@ -2,8 +2,6 @@ require 'rest-client'
 
 module ForemanRhCloud
   class CloudRequestForwarder
-    include ::ForemanRhCloud::CloudAuth
-
     def forward_request(original_request, controller_name, branch_id, certs)
       forward_params = prepare_forward_params(original_request, branch_id)
       logger.debug("Request parameters for telemetry request: #{forward_params}")
