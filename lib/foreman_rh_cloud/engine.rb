@@ -133,13 +133,15 @@ module ForemanRhCloud
         )
         # skip object creation when admin user is not present, for example in test DB
         if User.unscoped.find_by_login(User::ANONYMOUS_ADMIN).present?
-          unless ForemanTasks::RecurringLogic.joins(:tasks).merge(
-            ForemanTasks::Task.where(label: 'InventorySync::Async::InventoryScheduledSync')
-          ).exists?
-            User.as_anonymous_admin do
-              recurring_logic = ForemanTasks::RecurringLogic.new_from_cronline("0 0 * * *")
-              recurring_logic.save!
-              recurring_logic.start(InventorySync::Async::InventoryScheduledSync)
+          ::ForemanTasks.dynflow.config.on_init(false) do |world|
+            unless ForemanTasks::RecurringLogic.joins(:tasks).merge(
+              ForemanTasks::Task.where(label: 'InventorySync::Async::InventoryScheduledSync')
+            ).exists?
+              User.as_anonymous_admin do
+                recurring_logic = ForemanTasks::RecurringLogic.new_from_cronline("0 0 * * *")
+                recurring_logic.save!
+                recurring_logic.start(InventorySync::Async::InventoryScheduledSync)
+              end
             end
           end
         end
