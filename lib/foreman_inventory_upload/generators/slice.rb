@@ -47,7 +47,7 @@ module ForemanInventoryUpload
           @stream.simple_field('account', account_id(host.organization).to_s)
           @stream.simple_field('subscription_manager_id', host.subscription_facet&.uuid)
           @stream.simple_field('satellite_id', host.subscription_facet&.uuid)
-          @stream.simple_field('bios_uuid', fact_value(host, 'dmi::system::uuid'))
+          @stream.simple_field('bios_uuid', bios_uuid(host))
           @stream.simple_field('vm_uuid', fact_value(host, 'virt::uuid'))
           report_ip_addresses(host, host_ips_cache)
           report_mac_addresses(host)

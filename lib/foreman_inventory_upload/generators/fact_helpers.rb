@@ -10,6 +10,8 @@ module ForemanInventoryUpload
       CLOUD_AZURE = 'azure'
       CLOUD_ALIBABA = 'alibaba'
 
+      UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
       def fact_value(host, fact_name)
         value_record = host.fact_values.find do |fact_value|
           fact_value.fact_name_id == ForemanInventoryUpload::Generators::Queries.fact_names[fact_name]
@@ -103,6 +105,12 @@ module ForemanInventoryUpload
 
       def obfuscate_ip(ip, ips_dict)
         "10.230.230.#{ips_dict.count + 1}"
+      end
+
+      def bios_uuid(host)
+        value = fact_value(host, 'dmi::system::uuid') || ''
+        uuid_match = UUID_REGEX.match(value)
+        uuid_match&.to_s
       end
     end
   end

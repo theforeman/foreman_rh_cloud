@@ -629,6 +629,34 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_not_nil(actual_profile['installed_packages'])
   end
 
+  test 'omits malformed bios_uuid field' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['dmi::system::uuid'], value: 'test value', host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_nil actual_host['bios_uuid']
+  end
+
+  test 'passes valid bios_uuid field' do
+    FactoryBot.create(:fact_value, fact_name: fact_names['dmi::system::uuid'], value: 'D30B0B42-7824-2635-C62D-491394DE43F7', host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal 'slice_123', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil actual_host['bios_uuid']
+  end
+
   private
 
   def create_generator(batch, name = 'slice_123')
