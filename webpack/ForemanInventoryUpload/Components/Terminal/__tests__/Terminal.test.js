@@ -29,6 +29,6 @@ describe('Terminal', () => {
     const text = 'some-string-log';
     const modifiedProps = { ...props, logs: text };
     const wrapper = mount(<Terminal {...modifiedProps} />);
-    expect(wrapper.find('.terminal p').text()).toEqual(text);
+    expect(wrapper.find('.rh-cloud-inventory-terminal p').text()).toEqual(text);
   });
 });
