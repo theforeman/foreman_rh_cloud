@@ -7,7 +7,7 @@ exports[`Terminal rendering render with props 1`] = `
   sm={12}
 >
   <div
-    className="terminal"
+    className="rh-cloud-inventory-terminal"
     onScroll={[Function]}
   >
     <Grid
@@ -65,7 +65,7 @@ exports[`Terminal rendering render without Props 1`] = `
   sm={12}
 >
   <div
-    className="terminal"
+    className="rh-cloud-inventory-terminal"
     onScroll={[Function]}
   >
     <Grid

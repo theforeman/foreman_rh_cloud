@@ -72,7 +72,7 @@ class Terminal extends React.Component {
     return (
       <Grid.Col sm={12}>
         <div
-          className="terminal"
+          className="rh-cloud-inventory-terminal"
           ref={this.terminal}
           onScroll={this.handleScroll}
         >
