@@ -296,6 +296,13 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     @host.hostgroup = hostgroup
     @host.save!
 
+    ForemanInventoryUpload::Generators::Tags.any_instance.expects(:generate_parameters).returns(
+      [
+        ['bool_param', true],
+        ['int_param', 1],
+      ]
+    )
+
     Foreman.expects(:instance_id).twice.returns('satellite-id')
     batch = Host.where(id: @host.id).in_batches.first
     generator = create_generator(batch)
@@ -316,6 +323,8 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_tag(@host.location.name, actual_host, 'location')
     assert_tag(@host.organization.name, actual_host, 'organization')
     assert_tag(@host.hostgroup.name, actual_host, 'hostgroup')
+    assert_tag('true', actual_host, 'bool_param', 'satellite_parameter')
+    assert_tag('1', actual_host, 'int_param', 'satellite_parameter')
 
     assert_equal false, satellite_facts['is_hostname_obfuscated']
 
@@ -632,8 +641,8 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     generator
   end
 
-  def assert_tag(expected_value, host, tag_id)
-    actual_tag = host['tags'].find { |tag| tag['namespace'] == 'satellite' && tag['key'] == tag_id }
+  def assert_tag(expected_value, host, tag_id, namespace = 'satellite')
+    actual_tag = host['tags'].find { |tag| tag['namespace'] == namespace && tag['key'] == tag_id }
     assert_not_nil actual_tag
     assert_equal expected_value, actual_tag['value']
   end

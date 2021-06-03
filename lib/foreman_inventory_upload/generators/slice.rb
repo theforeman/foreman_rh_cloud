@@ -85,7 +85,7 @@ module ForemanInventoryUpload
         @stream.object do
           @stream.simple_field('namespace', namespace)
           @stream.simple_field('key', key)
-          @stream.simple_field('value', value, :last)
+          @stream.simple_field('value', value.to_s, :last)
         end
         @stream.comma unless last
       end
