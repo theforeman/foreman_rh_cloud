@@ -23,6 +23,12 @@ namespace :rh_cloud_inventory do
       organizations = [ENV['organization_id']]
       base_folder = ENV['target'] || Dir.pwd
 
+      unless File.writable?(base_folder)
+        puts "#{base_folder} is not writable by the current process"
+        base_folder = Dir.mktmpdir
+        puts "Using #{base_folder} for the output"
+      end
+
       unless portal_user || organizations.empty?
         puts "Must specify either portal_user or organization_id"
       end
