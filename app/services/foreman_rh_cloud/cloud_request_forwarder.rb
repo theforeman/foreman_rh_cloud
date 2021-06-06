@@ -2,7 +2,7 @@ require 'rest-client'
 
 module ForemanRhCloud
   class CloudRequestForwarder
-    include ::ForemanRhCloud::CloudAuth
+    include ForemanRhCloud::CloudRequest
 
     def forward_request(original_request, controller_name, branch_id, certs)
       forward_params = prepare_forward_params(original_request, branch_id)
@@ -22,7 +22,6 @@ module ForemanRhCloud
     def prepare_request_opts(original_request, forward_payload, forward_params, certs)
       base_params = {
         method: original_request.method,
-        verify_ssl: ForemanRhCloud.verify_ssl_method,
         payload: forward_payload,
         headers: {
           params: forward_params,
@@ -31,10 +30,6 @@ module ForemanRhCloud
         },
       }
       base_params.merge(path_params(original_request.path, certs))
-    end
-
-    def execute_cloud_request(request_opts)
-      RestClient::Request.execute request_opts
     end
 
     def prepare_forward_payload(original_request, controller_name)
