@@ -71,7 +71,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_nil actual_host['ip_addresses']
     assert_nil actual_host['mac_addresses']
@@ -102,7 +102,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_system_profile = actual_host['system_profile'])
     assert_equal 4, actual_system_profile['number_of_cpus']
@@ -120,7 +120,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal @host.interfaces.where.not(ip: nil).first.ip, actual_host['ip_addresses'].first
     assert_equal @host.interfaces.where.not(mac: nil).first.mac, actual_host['mac_addresses'].first
@@ -142,7 +142,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal @host.interfaces.where.not(ip: nil).first.ip, actual_host['ip_addresses'].first
     assert_equal @host.interfaces.where.not(mac: nil).first.mac, actual_host['mac_addresses'].first
@@ -172,7 +172,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal @host.interfaces.where.not(ip: nil).first.ip, actual_host['ip_addresses'].first
     assert_equal @host.interfaces.where.not(mac: nil).first.mac, actual_host['mac_addresses'].first
@@ -191,7 +191,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal '10.230.230.1', actual_host['ip_addresses'].first
     assert_not_nil(actual_system_profile = actual_host['system_profile'])
@@ -221,7 +221,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal '10.230.230.100', actual_host['ip_addresses'].first
     assert_not_nil(actual_system_profile = actual_host['system_profile'])
@@ -243,7 +243,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal 'obfuscated_name', actual_host['fqdn']
     assert_equal '1234', actual_host['account']
@@ -263,7 +263,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
 
     obfuscated_fqdn = Digest::SHA1.hexdigest(@host.fqdn) + '.example.com'
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal obfuscated_fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
@@ -282,7 +282,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
@@ -355,7 +355,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_not_nil(host_facts = actual_host['facts']&.first)
@@ -377,7 +377,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_not_nil(host_facts = actual_host['facts']&.first)
@@ -397,7 +397,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
@@ -417,7 +417,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_equal @host.fqdn, actual_host['fqdn']
     assert_equal '1234', actual_host['account']
@@ -436,7 +436,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_equal 1, generator.hosts_count
   end
 
@@ -449,7 +449,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
     assert_equal 1024, actual_profile['system_memory_bytes']
@@ -475,7 +475,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_host['account'])
     assert_not_empty(actual_host['account'])
@@ -492,7 +492,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
     assert_equal 'Red Hat Test Linux 7.1 (TestId)', actual_profile['os_release']
@@ -507,7 +507,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
     assert_equal 'virtual', actual_profile['infrastructure_type']
@@ -522,7 +522,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
     assert_equal 'physical', actual_profile['infrastructure_type']
@@ -537,7 +537,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
     assert_equal 'aws', actual_profile['cloud_provider']
@@ -552,7 +552,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
     assert_equal 'google', actual_profile['cloud_provider']
@@ -567,7 +567,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
     assert_equal 'azure', actual_profile['cloud_provider']
@@ -582,7 +582,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
     assert_equal 'alibaba', actual_profile['cloud_provider']
@@ -597,7 +597,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
     assert_equal 'alibaba', actual_profile['cloud_provider']
@@ -623,7 +623,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
     assert_not_nil(actual_profile['installed_packages'])
@@ -638,7 +638,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_nil actual_host['bios_uuid']
   end
@@ -652,14 +652,14 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render
     actual = JSON.parse(json_str.join("\n"))
 
-    assert_equal 'slice_123', actual['report_slice_id']
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil actual_host['bios_uuid']
   end
 
   private
 
-  def create_generator(batch, name = 'slice_123')
+  def create_generator(batch, name = '00000000-0000-0000-0000-000000000000')
     generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], name)
     if block_given?
       yield(generator)

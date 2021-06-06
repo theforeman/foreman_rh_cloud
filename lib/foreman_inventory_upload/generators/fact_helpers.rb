@@ -109,8 +109,19 @@ module ForemanInventoryUpload
 
       def bios_uuid(host)
         value = fact_value(host, 'dmi::system::uuid') || ''
+        uuid_value(value)
+      end
+
+      def uuid_value(value)
         uuid_match = UUID_REGEX.match(value)
         uuid_match&.to_s
+      end
+
+      def uuid_value!(value)
+        uuid = uuid_value(value)
+        raise Foreman::Exception.new(N_('Value %{value} is not a valid UUID') % {value: value}) if value && uuid.empty?
+
+        uuid
       end
     end
   end
