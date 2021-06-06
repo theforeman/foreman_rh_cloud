@@ -2,6 +2,8 @@ module ForemanRhCloud
   module CloudAuth
     extend ActiveSupport::Concern
 
+    include CloudRequest
+
     def rh_credentials
       @rh_credentials ||= query_refresh_token
     end
@@ -23,6 +25,16 @@ module ForemanRhCloud
     rescue RestClient::ExceptionWithResponse => e
       Foreman::Logging.exception('Unable to authenticate using rh_cloud_token setting', e)
       raise ::Foreman::WrappedException.new(e, N_('Unable to authenticate using rh_cloud_token setting'))
+    end
+
+    def execute_cloud_request(params)
+      final_params = {
+        headers: {
+          Authorization: "Bearer #{rh_credentials}",
+        },
+      }.deep_merge(params)
+
+      super(final_params)
     end
   end
 end

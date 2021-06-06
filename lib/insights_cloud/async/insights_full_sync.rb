@@ -50,28 +50,18 @@ module InsightsCloud
       end
 
       def query_insights_hits
-        hits_response = RestClient::Request.execute(
+        hits_response = execute_cloud_request(
           method: :get,
-          url: InsightsCloud.hits_export_url,
-          verify_ssl: ForemanRhCloud.verify_ssl_method,
-          proxy: ForemanRhCloud.transformed_http_proxy_string(logger: logger),
-          headers: {
-            Authorization: "Bearer #{rh_credentials}",
-          }
+          url: InsightsCloud.hits_export_url
         )
 
         JSON.parse(hits_response)
       end
 
       def query_insights_rules
-        rules_response = RestClient::Request.execute(
+        rules_response = execute_cloud_request(
           method: :get,
-          url: InsightsCloud.rules_url,
-          verify_ssl: ForemanRhCloud.verify_ssl_method,
-          proxy: ForemanRhCloud.transformed_http_proxy_string(logger: logger),
-          headers: {
-            Authorization: "Bearer #{rh_credentials}",
-          }
+          url: InsightsCloud.rules_url
         )
 
         JSON.parse(rules_response)

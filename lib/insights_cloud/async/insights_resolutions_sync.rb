@@ -22,14 +22,11 @@ module InsightsCloud
       private
 
       def query_insights_resolutions(rule_ids)
-        resolutions_response = RestClient::Request.execute(
+        resolutions_response = execute_cloud_request(
           method: :post,
           url: InsightsCloud.resolutions_url,
-          verify_ssl: ForemanRhCloud.verify_ssl_method,
-          proxy: ForemanRhCloud.transformed_http_proxy_string(logger: logger),
           headers: {
             content_type: :json,
-            Authorization: "Bearer #{rh_credentials}",
           },
           payload: {
             issues: rule_ids,
