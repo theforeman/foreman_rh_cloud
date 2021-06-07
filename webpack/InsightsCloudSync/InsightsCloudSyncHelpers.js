@@ -8,3 +8,9 @@ export const cloudTokenSettingUrl = () => {
   settingsUrl.setSearch({ search: 'name = rh_cloud_token' });
   return settingsUrl.toString();
 };
+
+export const foremanTasksApiPath = path =>
+  foremanUrl(`/foreman_tasks/api/tasks/${path}`);
+
+export const foremanTaskDetailsUrl = id =>
+  foremanTasksApiPath(`${id}/details?include_permissions`);

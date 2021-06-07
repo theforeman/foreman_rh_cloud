@@ -36,7 +36,10 @@ const InsightsCloudSync = ({
         toolbarButtons={
           <>
             <RemediationModal />
-            <Button variant="secondary" onClick={syncInsights}>
+            <Button
+              variant="secondary"
+              onClick={() => syncInsights(fetchInsights, query)}
+            >
               {__('Start recommendations sync')}
             </Button>
           </>
