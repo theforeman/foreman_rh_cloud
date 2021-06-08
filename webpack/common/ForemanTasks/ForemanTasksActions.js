@@ -12,38 +12,35 @@ export const setupTaskPolling = ({
   onTaskSuccess,
   onTaskError,
   taskErrorMessage,
-}) => dispatch => {
-  debugger;
-  return dispatch(
-    withInterval(
-      get({
-        key,
-        url: foremanTaskDetailsUrl(taskId),
-        handleSuccess: ({ data }, stopTaskInterval) => {
-          if (data.result === 'success') {
-            stopTaskInterval();
-            onTaskSuccess(data);
+  dispatch = f => f,
+}) =>
+  withInterval(
+    get({
+      key,
+      url: foremanTaskDetailsUrl(taskId),
+      handleSuccess: ({ data }, stopTaskInterval) => {
+        if (data.result === 'success') {
+          stopTaskInterval();
+          dispatch(onTaskSuccess(data));
+        }
+        if (data.result === 'error') {
+          stopTaskInterval();
+          if (taskErrorMessage === undefined) {
+            taskErrorMessage = errorData =>
+              `${__('The task failed with the following error:')} ${
+                errorData.humanized.errors[0]
+              }`;
           }
-          if (data.result === 'error') {
-            stopTaskInterval();
-            if (taskErrorMessage === undefined) {
-              taskErrorMessage = errorData =>
-                `${__('The task failed with the following error:')} ${
-                  errorData.humanized.errors[0]
-                }`;
-            }
-            if (onTaskError === undefined) {
-              onTaskError = errorData =>
-                defaultTaskErrorHandler(errorData, taskErrorMessage);
-            }
-            onTaskError(data);
+          if (onTaskError === undefined) {
+            onTaskError = errorData =>
+              defaultTaskErrorHandler(errorData, taskErrorMessage);
           }
-        },
-        errorToast: error => `Could not get task details: ${error}`,
-      })
-    )
+          dispatch(onTaskError(data));
+        }
+      },
+      errorToast: error => `Could not get task details: ${error}`,
+    })
   );
-};
 
 export const taskRelatedToast = (taskID, type, message) =>
   addToast({
@@ -63,5 +60,5 @@ export const taskRelatedToast = (taskID, type, message) =>
     ),
   });
 
-const defaultTaskErrorHandler = (data, taskErrorMessage) => dispatch =>
-  dispatch(taskRelatedToast(data.id, 'error', taskErrorMessage(data)));
+const defaultTaskErrorHandler = (data, taskErrorMessage) =>
+  taskRelatedToast(data.id, 'error', taskErrorMessage(data));

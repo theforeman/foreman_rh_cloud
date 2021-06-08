@@ -18,7 +18,7 @@ export const syncInsights = (fetchInsights, query) => dispatch =>
         },
       }) => {
         dispatch(syncInsightsStartedToast(id));
-        dispatch(setupInsightsTaskPolling(id, fetchInsights, query));
+        dispatch(setupInsightsTaskPolling(id, fetchInsights, query, dispatch));
       },
       errorToast: error => syncInsightsError(error),
     })
@@ -30,12 +30,13 @@ const syncInsightsError = error =>
 const syncInsightsStartedToast = taskId =>
   taskRelatedToast(taskId, 'info', __('Recommendation sync has started: '));
 
-const setupInsightsTaskPolling = (taskId, fetchInsights, query) => dispatch =>
+const setupInsightsTaskPolling = (taskId, fetchInsights, query, dispatch) =>
   setupTaskPolling({
     taskId,
     key: INSIGHTS_CLOUD_SYNC_TASK,
     onTaskSuccess: () => {
-      dispatch(fetchInsights({ query, page: 1 }));
+      fetchInsights({ query, page: 1 });
     },
-    taskErrorMessage: data => syncInsightsError(data.humanized.error[0]),
+    taskErrorMessage: data => syncInsightsError(data.humanized.errors[0]),
+    dispatch,
   });
