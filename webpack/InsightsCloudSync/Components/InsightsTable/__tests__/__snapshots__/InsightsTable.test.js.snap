@@ -61,7 +61,6 @@ exports[`InsightsTable rendering render with Props 1`] = `
     expandId="expandable-toggle"
     gridBreakPoint="grid-md"
     isStickyHeader={false}
-    isTreeTable={false}
     onSelect={[Function]}
     onSort={[Function]}
     ouiaSafe={true}
@@ -138,7 +137,6 @@ exports[`InsightsTable rendering render with Props 1`] = `
         "currPage": "Current page",
         "items": "",
         "itemsPerPage": "Items per page",
-        "ofWord": "of",
         "optionsToggle": "Items per page",
         "page": "",
         "paginationTitle": "Pagination",
