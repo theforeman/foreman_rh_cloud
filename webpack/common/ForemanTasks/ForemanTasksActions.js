@@ -28,7 +28,7 @@ export const setupTaskPolling = ({
           if (taskErrorMessage === undefined) {
             taskErrorMessage = errorData =>
               `${__('The task failed with the following error:')} ${
-                errorData.humanized.errors[0]
+                errorData.humanized.errors
               }`;
           }
           if (onTaskError === undefined) {
