@@ -35,8 +35,15 @@ const setupInsightsTaskPolling = (taskId, fetchInsights, query, dispatch) =>
     taskId,
     key: INSIGHTS_CLOUD_SYNC_TASK,
     onTaskSuccess: () => {
-      fetchInsights({ query, page: 1 });
+      dispatch(fetchInsights({ query, page: 1 }));
+      dispatch(
+        taskRelatedToast(
+          taskId,
+          'success',
+          __('Recommendations synced successfully')
+        )
+      );
     },
-    taskErrorMessage: data => syncInsightsError(data.humanized.errors[0]),
+    taskErrorMessage: data => syncInsightsError(data.humanized.errors),
     dispatch,
   });

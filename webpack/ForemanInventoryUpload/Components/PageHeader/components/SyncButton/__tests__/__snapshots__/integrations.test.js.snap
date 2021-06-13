@@ -31,6 +31,7 @@ Array [
         "message": Object {
           "message": <span>
             Inventory sync has started:
+            <br />
             <a
               href="/foreman_tasks/tasks/1"
               rel="noopener noreferrer"
@@ -39,7 +40,6 @@ Array [
               view the task page for more details
             </a>
           </span>,
-          "sticky": false,
           "type": "info",
         },
       },

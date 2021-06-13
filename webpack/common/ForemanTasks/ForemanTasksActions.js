@@ -12,7 +12,7 @@ export const setupTaskPolling = ({
   onTaskSuccess,
   onTaskError,
   taskErrorMessage,
-  dispatch = f => f,
+  dispatch,
 }) =>
   withInterval(
     get({
@@ -21,7 +21,7 @@ export const setupTaskPolling = ({
       handleSuccess: ({ data }, stopTaskInterval) => {
         if (data.result === 'success') {
           stopTaskInterval();
-          dispatch(onTaskSuccess(data));
+          onTaskSuccess(data, dispatch);
         }
         if (data.result === 'error') {
           stopTaskInterval();
@@ -33,9 +33,9 @@ export const setupTaskPolling = ({
           }
           if (onTaskError === undefined) {
             onTaskError = errorData =>
-              defaultTaskErrorHandler(errorData, taskErrorMessage);
+              dispatch(defaultTaskErrorHandler(errorData, taskErrorMessage));
           }
-          dispatch(onTaskError(data));
+          onTaskError(data, dispatch);
         }
       },
       errorToast: error => `Could not get task details: ${error}`,
@@ -44,11 +44,11 @@ export const setupTaskPolling = ({
 
 export const taskRelatedToast = (taskID, type, message) =>
   addToast({
-    sticky: false,
     type,
     message: (
       <span>
         {message}
+        <br />
         <a
           target="_blank"
           rel="noopener noreferrer"

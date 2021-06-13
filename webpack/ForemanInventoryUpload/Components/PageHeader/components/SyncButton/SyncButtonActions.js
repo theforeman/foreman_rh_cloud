@@ -49,6 +49,7 @@ export const setupInventorySyncTaskPolling = (id, dispatch) =>
           message: <Toast syncHosts={sync} disconnectHosts={disconnect} />,
         })
       ),
+    dispatch,
   });
 
 const inventorySyncErrorToast = message =>
