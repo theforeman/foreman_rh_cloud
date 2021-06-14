@@ -34,6 +34,7 @@ const RemediateButton = ({ isExperimentalMode, selectedIds, toggleModal }) => {
     button = (
       <Popover
         isVisible={isVisible}
+        aria-label={__('Please enable lab features to use this button')}
         bodyContent={
           <div dangerouslySetInnerHTML={{ __html: popoverContent }} />
         }
