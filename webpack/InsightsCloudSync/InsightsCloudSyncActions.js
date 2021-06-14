@@ -35,7 +35,7 @@ const setupInsightsTaskPolling = (taskId, fetchInsights, query, dispatch) =>
     taskId,
     key: INSIGHTS_CLOUD_SYNC_TASK,
     onTaskSuccess: () => {
-      dispatch(fetchInsights({ query, page: 1 }));
+      fetchInsights({ query, page: 1 });
       dispatch(
         taskRelatedToast(
           taskId,
