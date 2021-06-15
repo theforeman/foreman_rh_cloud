@@ -25,7 +25,7 @@ module ForemanInventoryUpload
 
       def report_slice(hosts_batch)
         @stream.object do
-          @stream.simple_field('report_slice_id', @slice_id)
+          @stream.simple_field('report_slice_id', uuid_value!(@slice_id))
           @stream.array_field('hosts', :last) do
             first = true
             hosts_batch.each do |host|
@@ -45,10 +45,10 @@ module ForemanInventoryUpload
         @stream.object do
           @stream.simple_field('fqdn', fqdn(host))
           @stream.simple_field('account', account_id(host.organization).to_s)
-          @stream.simple_field('subscription_manager_id', host.subscription_facet&.uuid)
-          @stream.simple_field('satellite_id', host.subscription_facet&.uuid)
-          @stream.simple_field('bios_uuid', fact_value(host, 'dmi::system::uuid'))
-          @stream.simple_field('vm_uuid', fact_value(host, 'virt::uuid'))
+          @stream.simple_field('subscription_manager_id', uuid_value!(host.subscription_facet&.uuid))
+          @stream.simple_field('satellite_id', uuid_value!(host.subscription_facet&.uuid))
+          @stream.simple_field('bios_uuid', bios_uuid(host))
+          @stream.simple_field('vm_uuid', uuid_value(fact_value(host, 'virt::uuid')))
           report_ip_addresses(host, host_ips_cache)
           report_mac_addresses(host)
           @stream.object_field('system_profile') do
