@@ -53,4 +53,5 @@ export const setupInventorySyncTaskPolling = (id, dispatch) =>
   });
 
 const inventorySyncErrorToast = message =>
-  `${__('Inventory sync has failed: ')} ${message}`;
+  `${__('Inventory sync has failed: ')} ${message.response?.data?.message ||
+    message}`;
