@@ -1,6 +1,9 @@
 require 'test_plugin_helper'
+require 'foreman_tasks/test_helpers'
 
 class InventoryFullSyncTest < ActiveSupport::TestCase
+  include ForemanTasks::TestHelpers::WithInThreadExecutor
+
   setup do
     User.current = User.find_by(login: 'secret_admin')
 

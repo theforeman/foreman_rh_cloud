@@ -1,6 +1,9 @@
 require 'test_helper'
+require 'foreman_tasks/test_helpers'
 
 class InsightsResolutionsSyncTest < ActiveSupport::TestCase
+  include ForemanTasks::TestHelpers::WithInThreadExecutor
+
   setup do
     @resolutions = {
       "advisor:ansible_deprecated_repo|ANSIBLE_DEPRECATED_REPO" => {
