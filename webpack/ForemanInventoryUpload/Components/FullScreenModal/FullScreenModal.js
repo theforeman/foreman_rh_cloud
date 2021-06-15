@@ -12,7 +12,7 @@ const FullScreenModal = ({
   terminalProps,
 }) => (
   <Modal
-    id="full-screen-terminal"
+    id="rh-cloud-inventory-full-screen-terminal"
     show={showFullScreen}
     onHide={toggleFullScreen}
   >
