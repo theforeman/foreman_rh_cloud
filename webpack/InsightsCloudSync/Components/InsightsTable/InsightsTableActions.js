@@ -19,25 +19,6 @@ export const fetchInsights = (queryParams = {}) => (dispatch, getState) => {
     ...queryParams,
   };
 
-  dispatch(
-    get({
-      key: INSIGHTS_HITS_API_KEY,
-      url: INSIGHTS_HITS_PATH,
-      params: {
-        page,
-        per_page: perPage,
-        search: query,
-        order: `${sortBy} ${sortOrder}`,
-      },
-      handleSuccess: response => {
-        if (isSelectAll) {
-          selectAllIds(dispatch, response.data.hits || []);
-          dispatch(selectAll());
-        }
-      },
-    })
-  );
-
   const uri = new URI();
   uri.search({
     page,
@@ -58,6 +39,25 @@ export const fetchInsights = (queryParams = {}) => (dispatch, getState) => {
   if (!isSelectAll) {
     dispatch(setSelectAllAlert(false));
   }
+
+  return dispatch(
+    get({
+      key: INSIGHTS_HITS_API_KEY,
+      url: INSIGHTS_HITS_PATH,
+      params: {
+        page,
+        per_page: perPage,
+        search: query,
+        order: `${sortBy} ${sortOrder}`,
+      },
+      handleSuccess: response => {
+        if (isSelectAll) {
+          selectAllIds(dispatch, response.data.hits || []);
+          dispatch(selectAll());
+        }
+      },
+    })
+  );
 };
 
 const selectAllIds = (dispatch, results, prevSelectedIds = {}) => {
