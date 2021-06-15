@@ -62,14 +62,11 @@ module ForemanRhCloud
     end
 
     def query_playbook
-      RestClient::Request.execute(
+      execute_cloud_request(
         method: :post,
         url: InsightsCloud.playbook_url,
-        verify_ssl: ForemanRhCloud.verify_ssl_method,
-        proxy: ForemanRhCloud.transformed_http_proxy_string(logger: logger),
         headers: {
           content_type: :json,
-          Authorization: "Bearer #{rh_credentials}",
         },
         payload: playbook_request.to_json
       )

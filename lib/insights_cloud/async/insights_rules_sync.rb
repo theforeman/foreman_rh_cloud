@@ -37,14 +37,9 @@ module InsightsCloud
       private
 
       def query_insights_rules(offset)
-        rules_response = RestClient::Request.execute(
+        rules_response = execute_cloud_request(
           method: :get,
-          url: InsightsCloud.rules_url(offset: offset),
-          verify_ssl: ForemanRhCloud.verify_ssl_method,
-          proxy: ForemanRhCloud.transformed_http_proxy_string(logger: logger),
-          headers: {
-            Authorization: "Bearer #{rh_credentials}",
-          }
+          url: InsightsCloud.rules_url(offset: offset)
         )
 
         JSON.parse(rules_response)

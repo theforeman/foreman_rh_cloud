@@ -29,13 +29,10 @@ module InventorySync
       private
 
       def query_inventory(page = 1)
-        hosts_inventory_response = RestClient::Request.execute(
+        hosts_inventory_response = execute_cloud_request(
           method: :get,
           url: ForemanInventoryUpload.inventory_export_url,
-          verify_ssl: ForemanRhCloud.verify_ssl_method,
-          proxy: ForemanRhCloud.transformed_http_proxy_string(logger: logger),
           headers: {
-            Authorization: "Bearer #{rh_credentials}",
             params: {
               per_page: 100,
               page: page,
