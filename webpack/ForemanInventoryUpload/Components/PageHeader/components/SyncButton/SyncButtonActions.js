@@ -1,6 +1,5 @@
 import React from 'react';
-import { get, post } from 'foremanReact/redux/API';
-import { withInterval } from 'foremanReact/redux/middlewares/IntervalMiddleware';
+import { post } from 'foremanReact/redux/API';
 import { addToast } from 'foremanReact/redux/actions/toasts';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { inventoryUrl } from '../../../../ForemanInventoryHelpers';
@@ -9,7 +8,10 @@ import {
   INVENTORY_SYNC,
   INVENTORY_SYNC_TASK_UPDATE,
 } from './SyncButtonConstants';
-import { foremanUrl } from '../../../../../ForemanRhCloudHelpers';
+import {
+  setupTaskPolling,
+  taskRelatedToast,
+} from '../../../../../common/ForemanTasks';
 
 export const handleSync = () => dispatch => {
   dispatch(
@@ -21,9 +23,9 @@ export const handleSync = () => dispatch => {
           task: { id },
         },
       }) => {
-        dispatch(getSyncTaskInterval(id));
+        dispatch(setupInventorySyncTaskPolling(id, dispatch));
         return dispatch(
-          taskPageRefererToast(id, 'info', __('Inventory sync has started:'))
+          taskRelatedToast(id, 'info', __('Inventory sync has started:'))
         );
       },
       errorToast: inventorySyncErrorToast,
@@ -31,62 +33,25 @@ export const handleSync = () => dispatch => {
   );
 };
 
-export const getSyncTaskInterval = id => dispatch => {
-  dispatch(
-    withInterval(
-      get({
-        key: INVENTORY_SYNC_TASK_UPDATE,
-        url: inventoryUrl(`tasks/${id}`),
-        handleSuccess: ({ data: { result, output } }, stopTaskInterval) => {
-          if (result === 'success') {
-            const {
-              host_statuses: { sync, disconnect },
-            } = output;
-            dispatch(
-              addToast({
-                sticky: true,
-                type: 'success',
-                message: (
-                  <Toast syncHosts={sync} disconnectHosts={disconnect} />
-                ),
-              })
-            );
-          }
-          if (result === 'error') {
-            dispatch(
-              taskPageRefererToast(
-                id,
-                'error',
-                __('Inventory sync has failed:'),
-                true
-              )
-            );
-          }
-          stopTaskInterval();
-        },
-        errorToast: inventorySyncErrorToast,
-      })
-    )
-  );
-};
-
-const inventorySyncErrorToast = ({ message, response }) =>
-  `${__('Inventory sync has failed: ')} ${response.data?.message || message}`;
-
-const taskPageRefererToast = (taskID, toastType, prefix, sticky = false) =>
-  addToast({
-    sticky,
-    type: toastType,
-    message: (
-      <span>
-        {prefix}{' '}
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href={foremanUrl(`/foreman_tasks/tasks/${taskID}`)}
-        >
-          {__('view the task page for more details')}
-        </a>
-      </span>
-    ),
+export const setupInventorySyncTaskPolling = (id, dispatch) =>
+  setupTaskPolling({
+    taskId: id,
+    key: INVENTORY_SYNC_TASK_UPDATE,
+    onTaskSuccess: ({
+      output: {
+        host_statuses: { sync, disconnect },
+      },
+    }) =>
+      dispatch(
+        addToast({
+          sticky: true,
+          type: 'success',
+          message: <Toast syncHosts={sync} disconnectHosts={disconnect} />,
+        })
+      ),
+    dispatch,
   });
+
+const inventorySyncErrorToast = message =>
+  `${__('Inventory sync has failed: ')} ${message.response?.data?.message ||
+    message}`;

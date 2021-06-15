@@ -29,6 +29,20 @@ Array [
   Array [
     Object {
       "payload": Object {
+        "args": Array [
+          Object {
+            "pathname": "/foreman_rh_cloud/insights_cloud",
+            "search": "?page=2&per_page=7&search=&sort_by=&sort_order=&select_all=true",
+          },
+        ],
+        "method": "push",
+      },
+      "type": "@@router/CALL_HISTORY_METHOD",
+    },
+  ],
+  Array [
+    Object {
+      "payload": Object {
         "selectedIds": Object {
           "16": true,
           "17": true,
@@ -59,20 +73,6 @@ Array [
       },
       "type": "get",
       "url": "/insights_cloud/hits",
-    },
-  ],
-  Array [
-    Object {
-      "payload": Object {
-        "args": Array [
-          Object {
-            "pathname": "/foreman_rh_cloud/insights_cloud",
-            "search": "?page=2&per_page=7&search=&sort_by=&sort_order=&select_all=true",
-          },
-        ],
-        "method": "push",
-      },
-      "type": "@@router/CALL_HISTORY_METHOD",
     },
   ],
 ]
