@@ -24,6 +24,7 @@ module InventorySync
 
         logger.debug("Synced hosts amount: #{host_statuses[:sync]}")
         logger.debug("Disconnected hosts amount: #{host_statuses[:disconnect]}")
+        output[:host_statuses] = host_statuses
       end
 
       def update_statuses_batch
@@ -53,7 +54,7 @@ module InventorySync
       end
 
       def host_statuses
-        output[:host_statuses] ||= {
+        @host_statuses ||= {
           sync: 0,
           disconnect: 0,
         }
