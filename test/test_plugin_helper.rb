@@ -33,7 +33,6 @@ module KatelloLocationFix
       FactoryBot.create(:setting, name: 'default_location_subscribed_hosts')
       FactoryBot.create(:setting, name: 'default_location_puppet_content')
       Setting[:default_location_subscribed_hosts] = Location.first.title
-      Setting[:default_location_puppet_content] = Location.first.title
     end
   end
 end
