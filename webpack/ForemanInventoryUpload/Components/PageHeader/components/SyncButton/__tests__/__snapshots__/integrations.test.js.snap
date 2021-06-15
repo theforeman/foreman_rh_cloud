@@ -22,7 +22,7 @@ Array [
       "errorToast": [Function],
       "interval": 3000,
       "type": "API_GET",
-      "url": "/foreman_inventory_upload/tasks/1",
+      "url": "/foreman_tasks/api/tasks/1/details?include_permissions",
     },
   ],
   Array [
@@ -31,7 +31,7 @@ Array [
         "message": Object {
           "message": <span>
             Inventory sync has started:
-             
+            <br />
             <a
               href="/foreman_tasks/tasks/1"
               rel="noopener noreferrer"
@@ -40,7 +40,6 @@ Array [
               view the task page for more details
             </a>
           </span>,
-          "sticky": false,
           "type": "info",
         },
       },
