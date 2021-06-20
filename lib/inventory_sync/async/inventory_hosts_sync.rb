@@ -20,14 +20,19 @@ module InventorySync
       private
 
       def add_missing_insights_facets(uuids_hash)
-        existing_facets = InsightsFacet.where(host_id: uuids_hash.keys).pluck(:host_id)
-        missing_facets = uuids_hash.except(*existing_facets).map do |host_id, uuid|
+        existing_facets = InsightsFacet.where(host_id: uuids_hash.keys).pluck(:host_id, :uuid)
+        missing_facets = uuids_hash.except(*existing_facets.map(&:first)).map do |host_id, uuid|
           {
             host_id: host_id,
             uuid: uuid,
           }
         end
         InsightsFacet.create(missing_facets)
+        missing_uuids = existing_facets.select { |host_id, uuid| uuid.empty? }.map(&:first)
+
+        missing_uuids.each do |host_id|
+          InsightsFacet.where(host_id: host_id).update_all(uuid: uuids_hash[host_id])
+        end
       end
     end
   end
