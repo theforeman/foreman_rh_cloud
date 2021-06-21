@@ -29,8 +29,9 @@ namespace :rh_cloud_inventory do
         puts "Using #{base_folder} for the output"
       end
 
-      unless portal_user || organizations.empty?
+      if portal_user.empty? && organizations.empty?
         puts "Must specify either portal_user or organization_id"
+        return
       end
 
       User.as_anonymous_admin do
