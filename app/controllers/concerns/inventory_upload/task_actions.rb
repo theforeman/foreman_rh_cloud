@@ -21,6 +21,5 @@ module InventoryUpload
 
       ForemanTasks.async_task(InventorySync::Async::InventoryFullSync, selected_org)
     end
-
   end
 end

@@ -11,7 +11,7 @@ module ForemanInventoryUpload
         task: task,
       }, status: :ok
     rescue InventoryUpload::TaskActions::NothingToSyncError => error
-        return render json: { message: error.message }, status: :internal_server_error
+      render json: { message: error.message }, status: :internal_server_error
     end
 
     def show
