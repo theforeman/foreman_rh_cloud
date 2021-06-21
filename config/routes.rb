@@ -40,4 +40,21 @@ Rails.application.routes.draw do
       match '/*path', :constraints => lambda { |req| !req.path.include?('view/api') }, to: 'machine_telemetries#forward_request', via: [:get, :post, :delete,:put, :patch]
     end
   end
+
+  # API routes
+
+  namespace :api, :defaults => {:format => 'json'} do
+    scope '(:apiv)', :module => :v2, :defaults => {:apiv => 'v2'}, :apiv => /v1|v2/, :constraints => ApiConstraints.new(:version => 2, :default => true) do
+      resources :organizations, :only => [:show] do
+        namespace 'rh_cloud' do
+          get 'report', to: 'inventory#download_file'
+          post 'report', to: 'inventory#generate_report'
+
+          post 'inventory_sync', to: 'inventory#sync_inventory_status'
+
+          post 'enable_connector', to: 'inventory#enable_cloud_connector'
+        end
+      end
+    end
+  end
 end

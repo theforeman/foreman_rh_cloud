@@ -1,25 +1,17 @@
 module ForemanInventoryUpload
   class TasksController < ::ApplicationController
+    include InventoryUpload::TaskActions
+
     def create
       selected_org = Organization.current
-      subscribed_hosts_ids = Set.new(
-        ForemanInventoryUpload::Generators::Queries.for_slice(
-          Host.unscoped.where(organization: selected_org)
-        ).pluck(:id)
-      )
 
-      if subscribed_hosts_ids.empty?
-        return render json: {
-          message: N_('Nothing to sync, there are no hosts with subscription for this organization.'),
-        }, status: :method_not_allowed
-      else
-        task = ForemanTasks.async_task(InventorySync::Async::InventoryFullSync, selected_org)
-      end
-      return render json: { message: N_('there was an issue triggering the task') }, status: :internal_server_error unless task
+      task = start_inventory_sync(selected_org)
 
       render json: {
         task: task,
       }, status: :ok
+    rescue InventoryUpload::TaskActions::NothingToSyncError => error
+        return render json: { message: error.message }, status: :internal_server_error
     end
 
     def show
