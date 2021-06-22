@@ -83,6 +83,10 @@ module ForemanRhCloud
 
         subscribe 'host_created.event.foreman', ForemanRhCloud::InsightsSubscriber
 
+        describe_host do
+          overview_buttons_provider :insights_host_overview_buttons
+        end
+
         extend_page 'hosts/show' do |context|
           context.add_pagelet :main_tabs,
             partial: 'hosts/insights_tab',
