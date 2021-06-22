@@ -11,6 +11,8 @@ module Api
           filename, file = report_file(params[:organization_id])
 
           send_file file, disposition: 'attachment', filename: filename
+        rescue InventoryUpload::ReportActions::ReportMissingError => error
+          render json: { message: error.message }, status: :not_found
         end
 
         api :POST, "/organizations/:organization_id/rh_cloud/report", N_("Start report generation")
@@ -34,7 +36,7 @@ module Api
             task: task,
           }, status: :ok
         rescue InventoryUpload::TaskActions::NothingToSyncError => error
-          render json: { message: error.message }, status: :internal_server_error
+          render json: { message: error.message }, status: :bad_request
         end
 
         api :POST, "rh_cloud/enable_connector", N_("Enable cloud connector")

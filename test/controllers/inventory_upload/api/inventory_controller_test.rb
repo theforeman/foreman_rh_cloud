@@ -41,7 +41,7 @@ module InventoryUpload::Api
         .expects(:install)
         .returns(test_job)
 
-      post :enable_cloud_connector, params: { organization_id: @test_org.id }
+      post :enable_cloud_connector
 
       assert_response :success
 

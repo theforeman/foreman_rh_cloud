@@ -51,9 +51,11 @@ Rails.application.routes.draw do
           post 'report', to: 'inventory#generate_report'
 
           post 'inventory_sync', to: 'inventory#sync_inventory_status'
-
-          post 'enable_connector', to: 'inventory#enable_cloud_connector'
         end
+      end
+
+      namespace 'rh_cloud' do
+        post 'enable_connector', to: 'inventory#enable_cloud_connector'
       end
     end
   end
