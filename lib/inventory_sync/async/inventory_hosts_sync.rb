@@ -28,9 +28,8 @@ module InventorySync
           }
         end
         InsightsFacet.create(missing_facets)
-        missing_uuids = existing_facets.select { |host_id, uuid| uuid.empty? }.map(&:first)
 
-        missing_uuids.each do |host_id|
+        existing_facets.select { |host_id, uuid| uuid.empty? }.each do |host_id, _uuid|
           InsightsFacet.where(host_id: host_id).update_all(uuid: uuids_hash[host_id])
         end
       end
