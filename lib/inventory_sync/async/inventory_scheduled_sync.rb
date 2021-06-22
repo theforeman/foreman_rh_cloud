@@ -20,6 +20,10 @@ module InventorySync
       def plan_org_sync(org)
         plan_action InventoryFullSync, org
       end
+
+      def logger
+        action_logger
+      end
     end
   end
 end
