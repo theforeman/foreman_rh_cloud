@@ -24,5 +24,16 @@ exports[`PageDescription rendering render without Props 1`] = `
       About subscription watch
     </a>
   </p>
+  <p>
+    For more information about Insights and Cloud Connector read
+     
+    <a
+      href="https://console.redhat.com/security/insights/"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      Red Hat Insights Data and Application Security
+    </a>
+  </p>
 </div>
 `;
