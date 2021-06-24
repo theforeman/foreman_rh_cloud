@@ -5,6 +5,7 @@ module InsightsCloud::Api
     include ::InsightsCloud::ClientAuthentication
     include ::InsightsCloud::CandlepinCache
 
+    before_action :set_admin_user, only: [:forward_request]
     before_action :cert_uuid, :ensure_org, :ensure_branch_id, :only => [:forward_request, :branch_info]
     before_action :ensure_telemetry_enabled_for_consumer, :only => [:forward_request]
 
