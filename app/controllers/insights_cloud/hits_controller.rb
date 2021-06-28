@@ -3,7 +3,7 @@ module InsightsCloud
     include Foreman::Controller::AutoCompleteSearch
 
     def index
-      hits = resource_base_search_and_page.where(host: Host.authorized).preload(:host, :rule)
+      hits = resource_base_search_and_page.preload(:host, :rule)
 
       render json: {
         hasToken: !Setting[:rh_cloud_token].empty?,
@@ -23,9 +23,9 @@ module InsightsCloud
 
     def resolutions
       if remediation_all_selected_param
-        hits = InsightsHit.with_playbook.search_for(params[:query])
+        hits = resource_base.with_playbook.search_for(params[:query])
       else
-        hits = resource_base_search_and_page.where(id: remediation_ids_param)
+        hits = resource_base_search_and_page.with_playbook.where(id: remediation_ids_param)
       end
 
       hits.preload(:host, rule: :resolutions)
@@ -73,6 +73,10 @@ module InsightsCloud
 
     def remediation_all_selected_param
       ActiveModel::Type::Boolean.new.cast(params[:isAllSelected])
+    end
+
+    def resource_base
+      super.where(host: Host.authorized)
     end
   end
 end
