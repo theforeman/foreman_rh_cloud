@@ -31,6 +31,17 @@ export const PageDescription = () => (
         About subscription watch
       </a>
     </p>
+    <p>
+      {__('For more information about Insights and Cloud Connector read')}
+      &nbsp;
+      <a
+        href="https://console.redhat.com/security/insights/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Red Hat Insights Data and Application Security
+      </a>
+    </p>
   </div>
 );
 
