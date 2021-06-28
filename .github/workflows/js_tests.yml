@@ -18,8 +18,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
+      - name: Copy configuration files
+        run: |
+          cp config/package-lock.json.plugin package-lock.json
       - name: Install plugin npm dependencies
-        run: npm install
+        run: npm ci
       - name: Run plugin linter
         run: |
           npm run lint
