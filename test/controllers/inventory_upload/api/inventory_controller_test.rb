@@ -23,7 +23,7 @@ module InventoryUpload::Api
 
       Api::V2::RhCloud::InventoryController.any_instance
         .expects(:start_inventory_sync)
-        .with(@test_org.id.to_s)
+        .with() { |actual_org| @test_org.id == actual_org.id }
         .returns(test_task)
 
       post :sync_inventory_status, params: { organization_id: @test_org.id }

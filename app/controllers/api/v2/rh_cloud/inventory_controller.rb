@@ -28,7 +28,7 @@ module Api
 
         api :POST, "/organizations/:organization_id/rh_cloud/inventory_sync", N_("Start inventory synchronization")
         def sync_inventory_status
-          selected_org = params[:organization_id]
+          selected_org = Organization.find(params[:organization_id])
 
           task = start_inventory_sync(selected_org)
 
