@@ -1,5 +1,7 @@
 module ForemanInventoryUpload
   class UploadsController < ::ApplicationController
+    include InventoryUpload::ReportActions
+
     def last
       label = ForemanInventoryUpload::Async::UploadReportJob.output_label(params[:organization_id])
       output = ForemanInventoryUpload::Async::ProgressOutput.get(label)&.full_output
@@ -10,11 +12,9 @@ module ForemanInventoryUpload
     end
 
     def download_file
-      filename = ForemanInventoryUpload.facts_archive_name(params[:organization_id])
-      files = Dir["{#{ForemanInventoryUpload.uploads_file_path(filename)},#{ForemanInventoryUpload.done_file_path(filename)}}"]
+      filename, file = report_file(params[:organization_id])
 
-      return send_file files.first, disposition: 'attachment', filename: filename unless files.empty?
-      raise ::Foreman::Exception.new("The report file doesn't exist")
+      send_file file, disposition: 'attachment', filename: filename
     end
 
     def enable_cloud_connector

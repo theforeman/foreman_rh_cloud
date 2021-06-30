@@ -2,6 +2,8 @@
 
 module ForemanInventoryUpload
   class ReportsController < ::ApplicationController
+    include InventoryUpload::ReportActions
+
     def last
       label = ForemanInventoryUpload::Async::GenerateReportJob.output_label(params[:organization_id])
       output = ForemanInventoryUpload::Async::ProgressOutput.get(label)&.full_output
@@ -20,7 +22,7 @@ module ForemanInventoryUpload
     def generate
       organization_id = params[:organization_id]
 
-      ForemanInventoryUpload::Async::GenerateReportJob.perform_later(ForemanInventoryUpload.generated_reports_folder, organization_id)
+      start_report_generation(organization_id)
 
       render json: {
         action_status: 'success',
