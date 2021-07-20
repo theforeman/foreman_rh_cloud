@@ -93,8 +93,6 @@ module ForemanRhCloud
         register_custom_status InventorySync::InventoryStatus
         register_custom_status InsightsClientReportStatus
 
-        subscribe 'host_created.event.foreman', ForemanRhCloud::InsightsSubscriber
-
         describe_host do
           overview_buttons_provider :insights_host_overview_buttons
         end
