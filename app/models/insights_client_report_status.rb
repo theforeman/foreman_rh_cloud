@@ -1,8 +1,8 @@
 class InsightsClientReportStatus < HostStatus::Status
   REPORT_INTERVAL = 48.hours
 
-  REPORTING             = 0 # host_registration_insights = true & getting data
-  NO_REPORT             = 1 # host_registration_insights = true & not getting data
+  REPORTING             = 0
+  NO_REPORT             = 1
 
   scope :stale, -> { where.not(reported_at: (Time.now - REPORT_INTERVAL)..Time.now) }
   scope :reporting, -> { where(status: REPORTING) }
