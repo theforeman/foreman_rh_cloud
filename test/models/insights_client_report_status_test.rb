@@ -1,77 +1,75 @@
 require 'test_plugin_helper'
 
 class InsightsClientReportStatusTest < ActiveSupport::TestCase
-  describe 'to_status' do
-    let(:host) { FactoryBot.create(:host, :managed) }
+  setup do
+    @host = FactoryBot.create(:host, :managed)
+  end
 
-    setup do
-      CommonParameter.where(name: 'host_registration_insights').destroy_all
-    end
+  test 'fresh host does not have insights status' do
+    @host.reload
 
-    test 'host_registration_insights = true & is getting data' do
-      FactoryBot.create(:common_parameter, name: 'host_registration_insights', key_type: 'boolean', value: true)
-      host_status = Host.find_by_name(host.name).reload.get_status(InsightsClientReportStatus)
+    refute @host.host_statuses.where(type: 'InsightsClientReportStatus').exists?
+    insights_status = @host.get_status(InsightsClientReportStatus)
+    refute insights_status.relevant?
+  end
 
-      assert_equal 0, host_status.to_status(data: true)
-    end
+  test 'host can refresh all its statuses' do
+    @host.refresh_statuses
+    @host.reload
 
-    test 'host_registration_insights = true & no data in less than 48 hours' do
-      FactoryBot.create(:common_parameter, name: 'host_registration_insights', key_type: 'boolean', value: true)
-      host_status = Host.find_by_name(host.name).reload.get_status(InsightsClientReportStatus)
-      host_status.update(reported_at: 1.day.ago)
-      assert_equal 0, host_status.to_status
-    end
+    refute @host.host_statuses.where(type: 'InsightsClientReportStatus').exists?
+  end
 
-    test 'host_registration_insights = true & no data in more than 48 hours' do
-      FactoryBot.create(:common_parameter, name: 'host_registration_insights', key_type: 'boolean', value: true)
-      host_status = Host.find_by_name(host.name).reload.get_status(InsightsClientReportStatus)
-      host_status.update(reported_at: 3.days.ago)
-      assert_equal 1, host_status.to_status
-    end
+  test 'host with correct report status sets global status to OK' do
+    global_status = @host.get_status(HostStatus.find_status_by_humanized_name('Global'))
+    # Status has to be OK before action
+    assert_equal HostStatus::Global::OK, global_status.status
 
-    test 'host_registration_insights = false & no data' do
-      FactoryBot.create(:common_parameter, name: 'host_registration_insights', key_type: 'boolean', value: false)
-      host_status = Host.find_by_name(host.name).reload.get_status(InsightsClientReportStatus)
-      assert_equal 2, host_status.to_status
-    end
+    # force create record
+    @host.get_status(InsightsClientReportStatus).refresh!
+    # now refresh should work
+    @host.refresh_statuses([InsightsClientReportStatus])
 
-    test 'host_registration_insights = false & getting data' do
-      FactoryBot.create(:common_parameter, name: 'host_registration_insights', key_type: 'boolean', value: false)
-      host_status = Host.find_by_name(host.name).reload.get_status(InsightsClientReportStatus)
-      assert_equal 3, host_status.to_status(data: true)
-    end
+    @host.reload
+    global_status = @host.get_status(HostStatus.find_status_by_humanized_name('Global'))
+    # Status has to be OK after the action too
+    assert_equal HostStatus::Global::OK, global_status.status
 
-    test 'host_registration_insights = nil & is getting data' do
-      host_status = Host.find_by_name(host.name).reload.get_status(InsightsClientReportStatus)
-      assert_equal 3, host_status.to_status(data: true)
-    end
+    insights_status = @host.get_status(InsightsClientReportStatus)
+    # assert the status would be displayed
+    assert insights_status.relevant?
+  end
 
-    test 'host_registration_insights = nil & no data in less than 48 hours' do
-      host_status = Host.find_by_name(host.name).reload.get_status(InsightsClientReportStatus)
-      host_status.update(reported_at: 1.day.ago)
-      assert_equal 2, host_status.to_status
-    end
+  test 'host will return to OK once the status is refreshed' do
+    global_status = @host.get_status(HostStatus.find_status_by_humanized_name('Global'))
+    # Status has to be OK before action
+    assert_equal HostStatus::Global::OK, global_status.status
 
-    test 'host_registration_insights = nil & no data in more than 48 hours' do
-      host_status = Host.find_by_name(host.name).reload.get_status(InsightsClientReportStatus)
-      host_status.update(reported_at: 3.days.ago)
-      assert_equal 2, host_status.to_status
-    end
+    insights_status = @host.get_status(InsightsClientReportStatus)
+    insights_status.status = InsightsClientReportStatus::NO_REPORT
+    insights_status.save!
+    @host.refresh_global_status!
+    global_status = @host.global_status
+    assert_equal HostStatus::Global::ERROR, global_status
 
-    test 'override param on host level from `false` to `true`' do
-      FactoryBot.create(:common_parameter, name: 'host_registration_insights', key_type: 'boolean', value: false)
-      FactoryBot.create(:host_parameter, name: 'host_registration_insights', key_type: 'boolean', value: true, host: host)
+    @host.refresh_statuses([InsightsClientReportStatus])
 
-      host_status = Host.find_by_name(host.name).reload.get_status(InsightsClientReportStatus)
-      assert_equal 0, host_status.to_status(data: true)
-    end
+    @host.reload
+    # Status has to be OK after the action too
+    assert_equal HostStatus::Global::OK, @host.global_status
+  end
 
-    test 'override param on host level from `true` to `false`' do
-      FactoryBot.create(:common_parameter, name: 'host_registration_insights', key_type: 'boolean', value: true)
-      FactoryBot.create(:host_parameter, name: 'host_registration_insights', key_type: 'boolean', value: false, host: host)
+  test 'host with stale status would set global to ERROR' do
+    global_status = @host.get_status(HostStatus.find_status_by_humanized_name('Global'))
+    # Status has to be OK before action
+    assert_equal HostStatus::Global::OK, global_status.status
 
-      host_status = Host.find_by_name(host.name).reload.get_status(InsightsClientReportStatus)
-      assert_equal 2, host_status.to_status
-    end
+    insights_status = @host.get_status(InsightsClientReportStatus)
+    insights_status.status = InsightsClientReportStatus::NO_REPORT
+    insights_status.save!
+    @host.refresh_global_status!
+    @host.reload
+
+    assert_equal HostStatus::Global::ERROR, @host.global_status
   end
 end
