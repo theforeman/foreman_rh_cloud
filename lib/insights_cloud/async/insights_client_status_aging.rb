@@ -4,9 +4,15 @@ module InsightsCloud
       include ::Actions::RecurringAction
 
       def run
-        # update all stale records to "not reporting" counterpart
-        InsightsClientReportStatus.stale.reporting.update_all(status: InsightsClientReportStatus::NO_REPORT)
-        InsightsClientReportStatus.stale.not_managed_with_data.update_all(status: InsightsClientReportStatus::NOT_MANAGED)
+        host_ids = InsightsClientReportStatus.stale.reporting.pluck(:host_id)
+
+        # update all stale records
+        InsightsClientReportStatus.where(host_id: host_ids).update_all(status: InsightsClientReportStatus::NO_REPORT)
+
+        # refresh global status
+        Host.where(id: host_ids).preload(:host_statuses).find_in_batches do |hosts|
+          hosts.each { |host| host.refresh_global_status! }
+        end
       end
 
       def logger
