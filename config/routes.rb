@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     post 'cloud_connector', to: 'uploads#enable_cloud_connector'
 
     resources :tasks, only: [:create, :show]
+
+    get 'status', to: 'cloud_status#index'
   end
 
   namespace :insights_cloud do
