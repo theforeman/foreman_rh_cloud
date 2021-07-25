@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Switch, FieldLevelHelp } from 'patternfly-react';
 import { translate as __ } from 'foremanReact/common/I18n';
-import './insightsSyncSwitcher.scss';
+import SwitcherPF4 from '../../../common/Switcher/SwitcherPF4';
 
 class InsightsSyncSwitcher extends Component {
   handleToggle = () => {
@@ -16,19 +15,15 @@ class InsightsSyncSwitcher extends Component {
     const { insightsSyncEnabled } = this.props;
 
     return (
-      <div className="insights_sync_switcher">
-        <span>{__('Synchronize Automatically')}</span>
-        <FieldLevelHelp
-          content={__(
-            'Enable automatic synchronization of Insights recommendations from the Red Hat cloud'
-          )}
-        />
-        <Switch
-          size="mini"
-          value={insightsSyncEnabled}
-          onChange={this.handleToggle}
-        />
-      </div>
+      <SwitcherPF4
+        id="insights_sync_switcher"
+        label={__('Auto Sync')}
+        tooltip={__(
+          'Enable automatic synchronization of Insights recommendations from the Red Hat cloud'
+        )}
+        isChecked={insightsSyncEnabled}
+        onChange={this.handleToggle}
+      />
     );
   }
 }

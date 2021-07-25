@@ -1,17 +1,17 @@
 .insights_settings {
-  margin-left: 10px;
   border: 1px solid #ededed;
   border-radius: 4px;
   padding: 10px;
-  margin-bottom: 15px;
-  float: right;
+  position: absolute;
+  top: 80px;
+  right: 20px;
 
   h3 {
     margin-top: 0;
     font-weight: 600;
   }
 
-  .bootstrap-switch {
-    float: right;
+  .switcher-help-label {
+    padding-left: 5px;
   }
 }

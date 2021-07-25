@@ -1,5 +1,17 @@
 .rh-cloud-insights {
-  .btn-toolbar {
-    display: inherit;
+  #main {
+    padding: 0;
+
+    #breadcrumb .form-group {
+      margin-bottom: 0;
+
+      h1 {
+        font-weight: bold;
+      }
+    }
+
+    .btn-toolbar {
+      display: inherit;
+    }
   }
 }
