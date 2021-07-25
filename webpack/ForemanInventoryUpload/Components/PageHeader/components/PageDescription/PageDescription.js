@@ -28,7 +28,7 @@ export const PageDescription = () => (
         target="_blank"
         rel="noopener noreferrer"
       >
-        About subscription watch
+        {__('About subscription watch')}
       </a>
     </p>
     <p>
@@ -39,7 +39,7 @@ export const PageDescription = () => (
         target="_blank"
         rel="noopener noreferrer"
       >
-        Red Hat Insights Data and Application Security
+        {__('Red Hat Insights Data and Application Security')}
       </a>
     </p>
   </div>
