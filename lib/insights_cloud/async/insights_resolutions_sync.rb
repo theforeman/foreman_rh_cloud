@@ -7,6 +7,15 @@ module InsightsCloud
 
       RULE_ID_REGEX = /[^:]*:(?<id>.*)/
 
+      def plan
+        unless cloud_auth_available?
+          logger.debug('Cloud authentication is not available, skipping resolutions sync')
+          return
+        end
+
+        plan_self
+      end
+
       def run
         InsightsResolution.transaction do
           InsightsResolution.delete_all

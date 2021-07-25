@@ -6,6 +6,11 @@ module InsightsCloud
       include ::ForemanRhCloud::CloudAuth
 
       def plan
+        unless cloud_auth_available?
+          logger.debug('Cloud authentication is not available, skipping insights sync')
+          return
+        end
+
         sequence do
           # This can be turned off when we enable automatic status syncs
           # This step will query cloud inventory to retrieve inventory uuids for each host

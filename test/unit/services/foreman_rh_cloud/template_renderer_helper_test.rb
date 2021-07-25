@@ -8,6 +8,7 @@ class TemplateRendererHelperTest < ActiveSupport::TestCase
     response.stubs(:body).returns('TEST PLAYBOOK')
     ForemanRhCloud::RemediationsRetriever.any_instance.stubs(:query_playbook).returns(response)
     @host1 = FactoryBot.create(:host)
+    FactoryBot.create(:setting, name: 'rh_cloud_token', value: 'MOCK_TOKEN')
   end
 
   test 'Generates a playbook for hit and remediation' do

@@ -3,6 +3,15 @@ module InventorySync
     class InventorySelfHostSync < QueryInventoryJob
       set_callback :step, :around, :create_facets
 
+      def plan
+        unless cloud_auth_available?
+          logger.debug('Cloud authentication is not available, skipping self host sync')
+          return
+        end
+
+        plan_self
+      end
+
       def create_facets
         # get the results from the event
         results = yield

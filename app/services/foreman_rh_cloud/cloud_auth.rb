@@ -4,6 +4,10 @@ module ForemanRhCloud
 
     include CloudRequest
 
+    def cloud_auth_available?
+      Setting[:rh_cloud_token].present?
+    end
+
     def rh_credentials
       @rh_credentials ||= query_refresh_token
     end

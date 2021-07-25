@@ -6,6 +6,11 @@ module InsightsCloud
       include ::ForemanRhCloud::CloudAuth
 
       def plan
+        unless cloud_auth_available?
+          logger.debug('Cloud authentication is not available, skipping rules sync')
+          return
+        end
+
         plan_self
         plan_resolutions
       end
