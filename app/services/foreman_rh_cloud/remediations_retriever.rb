@@ -14,7 +14,7 @@ module ForemanRhCloud
     def create_playbook
       unless cloud_auth_available?
         logger.debug('Cloud authentication is not available, cannot continue')
-        return nil
+        return
       end
 
       response = query_playbook
