@@ -35,6 +35,13 @@ exports[`InsightsCloudSync render 1`] = `
         >
           Start recommendations sync
         </Button>
+        <div
+          className="pull-right"
+        >
+          <Pagination
+            variant="top"
+          />
+        </div>
       </React.Fragment>
     }
   >

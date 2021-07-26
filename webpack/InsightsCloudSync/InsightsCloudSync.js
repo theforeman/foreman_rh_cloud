@@ -12,6 +12,7 @@ import {
   INSIGHTS_SEARCH_PROPS,
 } from './InsightsCloudSyncConstants';
 import './InsightsCloudSync.scss';
+import Pagination from './Components/InsightsTable/Pagination';
 
 const InsightsCloudSync = ({
   syncInsights,
@@ -26,6 +27,22 @@ const InsightsCloudSync = ({
       </PageLayout>
     );
   }
+
+  const toolbarButtons = (
+    <>
+      <RemediationModal />
+      <Button
+        variant="secondary"
+        onClick={() => syncInsights(fetchInsights, query)}
+      >
+        {__('Start recommendations sync')}
+      </Button>
+      <div className="pull-right">
+        <Pagination variant="top" />
+      </div>
+    </>
+  );
+
   return (
     <div className="rh-cloud-insights">
       <PageLayout
@@ -33,17 +50,7 @@ const InsightsCloudSync = ({
         searchProps={INSIGHTS_SEARCH_PROPS}
         onSearch={nextQuery => fetchInsights({ query: nextQuery, page: 1 })}
         header={INSIGHTS_SYNC_PAGE_TITLE}
-        toolbarButtons={
-          <>
-            <RemediationModal />
-            <Button
-              variant="secondary"
-              onClick={() => syncInsights(fetchInsights, query)}
-            >
-              {__('Start recommendations sync')}
-            </Button>
-          </>
-        }
+        toolbarButtons={toolbarButtons}
         searchQuery={query}
         beforeToolbarComponent={<InsightsHeader />}
       >

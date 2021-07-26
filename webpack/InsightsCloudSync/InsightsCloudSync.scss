@@ -12,6 +12,11 @@
 
     .btn-toolbar {
       display: inherit;
+      width: 100%;
+    }
+
+    .pf-c-pagination {
+      padding-right: 0;
     }
   }
 }
