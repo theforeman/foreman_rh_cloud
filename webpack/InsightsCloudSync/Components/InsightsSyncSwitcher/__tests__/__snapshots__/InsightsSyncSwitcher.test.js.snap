@@ -4,7 +4,7 @@ exports[`InsightsSyncSwitcher rendering render with props 1`] = `
 <SwitcherPF4
   id="insights_sync_switcher"
   isChecked={true}
-  label="Auto Sync"
+  label="Synchronize Automatically"
   onChange={[Function]}
   tooltip="Enable automatic synchronization of Insights recommendations from the Red Hat cloud"
 />

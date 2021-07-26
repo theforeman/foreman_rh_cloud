@@ -17,7 +17,7 @@ class InsightsSyncSwitcher extends Component {
     return (
       <SwitcherPF4
         id="insights_sync_switcher"
-        label={__('Auto Sync')}
+        label={__('Synchronize Automatically')}
         tooltip={__(
           'Enable automatic synchronization of Insights recommendations from the Red Hat cloud'
         )}
