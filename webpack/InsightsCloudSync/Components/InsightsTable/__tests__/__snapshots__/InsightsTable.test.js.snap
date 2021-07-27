@@ -37,7 +37,7 @@ exports[`InsightsTable rendering render with Props 1`] = `
             [Function],
           ],
           "sortKey": "total_risk",
-          "title": "Total Risk",
+          "title": "Total risk",
           "transforms": Array [
             [Function],
             [Function],

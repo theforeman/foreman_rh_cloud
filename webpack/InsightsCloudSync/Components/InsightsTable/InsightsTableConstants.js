@@ -34,7 +34,7 @@ export const columns = [
   },
   {
     sortKey: 'total_risk',
-    title: __('Total Risk'),
+    title: __('Total risk'),
     transforms: [cellWidth(15), sortable],
     cellTransforms: [totalRiskFormatter],
   },
