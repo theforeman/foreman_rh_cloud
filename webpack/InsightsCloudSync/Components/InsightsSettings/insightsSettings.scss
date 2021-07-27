@@ -1,14 +1,10 @@
 .insights_settings {
-  border: 1px solid #ededed;
-  border-radius: 4px;
-  padding: 10px;
   position: absolute;
-  top: 75px;
-  right: 20px;
+  top: 84px;
+  right: 24px;
 
-  h3 {
-    margin-top: 0;
-    font-weight: 600;
+  .pf-c-switch__label {
+    padding-left: 0;
   }
 
   .switcher-help-label {

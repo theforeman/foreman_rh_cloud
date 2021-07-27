@@ -4,9 +4,6 @@ exports[`InsightsSettings rendering render without Props 1`] = `
 <div
   className="insights_settings"
 >
-  <h3>
-    Settings
-  </h3>
   <InsightsSyncSwitcher
     insightsSyncEnabled={false}
     setInsightsSyncEnabled={[Function]}
