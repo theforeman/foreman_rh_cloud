@@ -74,7 +74,7 @@ exports[`InsightsTable rendering render with Props 1`] = `
         "index": 3,
       }
     }
-    variant={null}
+    variant="compact"
   >
     <TableHeader />
     <Component />
