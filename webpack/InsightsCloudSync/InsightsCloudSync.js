@@ -38,7 +38,7 @@ const InsightsCloudSync = ({
         {__('Start recommendations sync')}
       </Button>
       <div className="pull-right">
-        <Pagination variant="top" />
+        <Pagination variant="top" isCompact />
       </div>
     </>
   );

@@ -39,6 +39,7 @@ exports[`InsightsCloudSync render 1`] = `
           className="pull-right"
         >
           <Pagination
+            isCompact={true}
             variant="top"
           />
         </div>

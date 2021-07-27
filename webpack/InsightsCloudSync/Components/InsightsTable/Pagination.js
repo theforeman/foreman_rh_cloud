@@ -14,7 +14,7 @@ import {
   selectPerPage,
 } from './InsightsTableSelectors';
 
-const Pagination = ({ variant }) => {
+const Pagination = ({ variant, ...props }) => {
   const dispatch = useDispatch();
   const onSetPage = (e, pageNumber) => dispatch(onTableSetPage(e, pageNumber));
   const onPerPageSelect = (e, perPageNumber) =>
@@ -35,6 +35,7 @@ const Pagination = ({ variant }) => {
       onSetPage={onSetPage}
       onPerPageSelect={onPerPageSelect}
       perPageOptions={getPerPageOptions(urlPerPage, appPerPage)}
+      {...props}
     />
   );
 };
