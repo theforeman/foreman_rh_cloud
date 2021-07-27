@@ -1,7 +1,5 @@
 import React from 'react';
-import { Button } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
-import { translate as __ } from 'foremanReact/common/I18n';
 import PageLayout from 'foremanReact/routes/common/PageLayout/PageLayout';
 import InsightsHeader from './Components/InsightsHeader';
 import { NoTokenEmptyState } from './Components/NoTokenEmptyState';
@@ -13,6 +11,7 @@ import {
 } from './InsightsCloudSyncConstants';
 import './InsightsCloudSync.scss';
 import Pagination from './Components/InsightsTable/Pagination';
+import ToolbarDropdown from './Components/ToolbarDropdown';
 
 const InsightsCloudSync = ({
   syncInsights,
@@ -28,15 +27,11 @@ const InsightsCloudSync = ({
     );
   }
 
+  const onRecommendationSync = () => syncInsights(fetchInsights, query);
   const toolbarButtons = (
     <>
       <RemediationModal />
-      <Button
-        variant="secondary"
-        onClick={() => syncInsights(fetchInsights, query)}
-      >
-        {__('Start recommendations sync')}
-      </Button>
+      <ToolbarDropdown onRecommendationSync={onRecommendationSync} />
       <div className="pull-right">
         <Pagination variant="top" isCompact />
       </div>
