@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, DonutChart } from 'patternfly-react';
+import { translate as __ } from 'foremanReact/common/I18n';
 import './statusChart.scss';
 
 const StatusChart = ({ completed }) => {
   const donutConfigData = {
     columns: [
-      ['Completed', completed],
-      ['Remain', 100 - completed],
+      [__('Completed'), completed],
+      [__('Remain'), 100 - completed],
     ],
     order: null,
   };
@@ -37,7 +38,7 @@ const StatusChart = ({ completed }) => {
           title={{
             type: 'percent',
             primary: `${completed}%`,
-            secondary: 'Completed',
+            secondary: __('Completed'),
           }}
         />
       </div>

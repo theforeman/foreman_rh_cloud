@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { translate as __ } from 'foremanReact/common/I18n';
 
 const labelMapper = {
-  1: 'Low',
-  2: 'Moderate',
-  3: 'Important',
-  4: 'Critical',
+  1: __('Low'),
+  2: __('Moderate'),
+  3: __('Important'),
+  4: __('Critical'),
 };
 
 const ListItem = ({ title, totalRisk, resultsUrl, solutionUrl }) => {
