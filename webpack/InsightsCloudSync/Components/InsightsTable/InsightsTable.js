@@ -61,6 +61,7 @@ const InsightsTable = ({
         onSort={onTableSort}
         cells={columns}
         rows={rows}
+        variant="compact"
       >
         <TableHeader />
         <TableBody />
