@@ -48,19 +48,19 @@
           padding: 5px 8px;
           border-radius: 12px;
 
-          &.Low {
+          &.risk-1 {
             background-color: #e7f1fa;
           }
 
-          &.Moderate {
+          &.risk-2 {
             background-color: #fdf7e7;
           }
 
-          &.Important {
+          &.risk-3 {
             background-color: #f9dddd;
           }
 
-          &.Critical {
+          &.risk-4 {
             background-color: #ffecec;
           }
 

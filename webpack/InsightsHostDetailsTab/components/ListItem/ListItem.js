@@ -19,7 +19,7 @@ const ListItem = ({ title, totalRisk, resultsUrl, solutionUrl }) => {
 
   const riskLabel = labelMapper[totalRisk];
   const additionalInfo = [
-    <span key={`risk-info-${title}`} className={`risk-label ${riskLabel}`}>
+    <span key={`risk-info-${title}`} className={`risk-label risk-${totalRisk}`}>
       <p>{riskLabel}</p>
     </span>,
   ];
