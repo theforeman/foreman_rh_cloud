@@ -63,6 +63,7 @@ class InsightsResolutionsSyncTest < ActiveSupport::TestCase
     }
 
     @rule = FactoryBot.create(:insights_rule, rule_id: 'network_tcp_connection_hang|NETWORK_TCP_CONNECTION_HANG_WARN')
+    FactoryBot.create(:setting, name: 'rh_cloud_token', value: 'MOCK_TOKEN')
   end
 
   test 'Resolutions data is replaced with data from cloud' do

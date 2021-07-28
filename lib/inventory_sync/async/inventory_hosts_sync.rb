@@ -5,6 +5,11 @@ module InventorySync
       set_callback :step, :around, :create_facets
 
       def plan
+        unless cloud_auth_available?
+          logger.debug('Cloud authentication is not available, skipping inventory hosts sync')
+          return
+        end
+
         # by default the tasks will be executed concurrently
         plan_self
         plan_self_host_sync
