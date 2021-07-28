@@ -20,7 +20,6 @@ const RemediationModal = ({
   error,
   isAllSelected,
   query,
-  isExperimentalMode,
 }) => {
   const [rows, setRows] = React.useState([]);
   const [open, setOpen] = React.useState(false);
@@ -42,11 +41,7 @@ const RemediationModal = ({
 
   return (
     <React.Fragment>
-      <RemediateButton
-        isExperimentalMode={isExperimentalMode}
-        selectedIds={selectedIds}
-        toggleModal={toggleModal}
-      />{' '}
+      <RemediateButton selectedIds={selectedIds} toggleModal={toggleModal} />{' '}
       <Modal
         id="remediation-modal"
         appendTo={document.body}
@@ -85,7 +80,6 @@ RemediationModal.propTypes = {
   error: PropTypes.string,
   isAllSelected: PropTypes.bool,
   query: PropTypes.string,
-  isExperimentalMode: PropTypes.bool,
 };
 
 RemediationModal.defaultProps = {
@@ -95,7 +89,6 @@ RemediationModal.defaultProps = {
   error: null,
   isAllSelected: false,
   query: null,
-  isExperimentalMode: false,
 };
 
 export default RemediationModal;
