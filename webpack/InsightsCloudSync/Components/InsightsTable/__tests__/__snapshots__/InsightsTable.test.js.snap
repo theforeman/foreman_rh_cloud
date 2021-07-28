@@ -135,10 +135,10 @@ exports[`InsightsTable rendering render with Props 1`] = `
     titles={
       Object {
         "currPage": "Current page",
-        "items": "",
+        "items": "items",
         "itemsPerPage": "Items per page",
         "optionsToggle": "Items per page",
-        "page": "",
+        "page": "page",
         "paginationTitle": "Pagination",
         "perPageSuffix": "per page",
         "toFirstPage": "Go to first page",

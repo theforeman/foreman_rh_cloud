@@ -18,7 +18,7 @@ const SelectAllAlert = ({
       <Alert
         isInline
         variant="info"
-        title={sprintf('Recommendations selected: %s.', selectedCount)}
+        title={sprintf(__('Recommendations selected: %s.'), selectedCount)}
         actionLinks={
           <AlertActionLink onClick={selectAll}>
             {__('Select recommendations from all pages')}

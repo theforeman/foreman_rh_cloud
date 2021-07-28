@@ -45,6 +45,20 @@ export const columns = [
   },
 ];
 
+export const paginationTitles = {
+  items: __('items'),
+  page: __('page'),
+  itemsPerPage: __('Items per page'),
+  perPageSuffix: __('per page'),
+  toFirstPage: __('Go to first page'),
+  toPreviousPage: __('Go to previous page'),
+  toLastPage: __('Go to last page'),
+  toNextPage: __('Go to next page'),
+  optionsToggle: __('Items per page'),
+  currPage: __('Current page'),
+  paginationTitle: __('Pagination'),
+};
+
 export const INSIGHTS_HITS_PATH = foremanUrl('/insights_cloud/hits');
 
 export const INSIGHTS_HITS_API_KEY = 'INSIGHTS_HITS';

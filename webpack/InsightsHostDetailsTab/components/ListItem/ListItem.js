@@ -1,12 +1,13 @@
 import React, { Fragment } from 'react';
 import { ListView, Icon } from 'patternfly-react';
 import PropTypes from 'prop-types';
+import { translate as __ } from 'foremanReact/common/I18n';
 
 const labelMapper = {
-  1: 'Low',
-  2: 'Moderate',
-  3: 'Important',
-  4: 'Critical',
+  1: __('Low'),
+  2: __('Moderate'),
+  3: __('Important'),
+  4: __('Critical'),
 };
 
 const ListItem = ({ title, totalRisk, resultsUrl, solutionUrl }) => {
@@ -18,7 +19,7 @@ const ListItem = ({ title, totalRisk, resultsUrl, solutionUrl }) => {
 
   const riskLabel = labelMapper[totalRisk];
   const additionalInfo = [
-    <span key={`risk-info-${title}`} className={`risk-label ${riskLabel}`}>
+    <span key={`risk-info-${title}`} className={`risk-label risk-${totalRisk}`}>
       <p>{riskLabel}</p>
     </span>,
   ];
@@ -26,7 +27,7 @@ const ListItem = ({ title, totalRisk, resultsUrl, solutionUrl }) => {
   const knowledgebaseLink = solutionUrl && (
     <p>
       <a href={solutionUrl} target="_blank" rel="noopener noreferrer">
-        Knowledgebase article <Icon name="external-link" />
+        {__('Knowledgebase article')} <Icon name="external-link" />
       </a>
     </p>
   );
@@ -34,7 +35,8 @@ const ListItem = ({ title, totalRisk, resultsUrl, solutionUrl }) => {
   const insightsCloudLink = resultsUrl && (
     <p>
       <a href={resultsUrl} target="_blank" rel="noopener noreferrer">
-        Read more about it in RH cloud insights <Icon name="external-link" />
+        {__('Read more about it in RH cloud insights')}{' '}
+        <Icon name="external-link" />
       </a>
     </p>
   );

@@ -5,7 +5,7 @@ import { Pagination, PaginationVariant } from '@patternfly/react-core';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { useForemanSettings } from 'foremanReact/Root/Context/ForemanContext';
 import SelectAllAlert from './SelectAllAlert';
-import { columns } from './InsightsTableConstants';
+import { columns, paginationTitles } from './InsightsTableConstants';
 import TableEmptyState from '../../../common/table/EmptyState';
 import {
   modifySelectedRows,
@@ -82,6 +82,7 @@ const InsightsTable = ({
         onSetPage={onTableSetPage}
         onPerPageSelect={onTablePerPageSelect}
         perPageOptions={getPerPageOptions(urlPerPage, appPerPage)}
+        titles={paginationTitles}
       />
     </React.Fragment>
   );
