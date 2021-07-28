@@ -7,6 +7,7 @@ class InsightsFullSyncTest < ActiveSupport::TestCase
   setup do
     InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_rules_sync)
     InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_notifications)
+    FactoryBot.create(:setting, name: 'rh_cloud_token', value: 'MOCK_TOKEN')
 
     uuid1 = 'accdf444-5628-451d-bf3e-cf909ad72756'
     @host1 = FactoryBot.create(:host, :managed, name: 'host1')

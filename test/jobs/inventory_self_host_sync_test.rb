@@ -6,6 +6,7 @@ class InventorySelfHostSyncTest < ActiveSupport::TestCase
 
   setup do
     User.current = User.find_by(login: 'secret_admin')
+    FactoryBot.create(:setting, name: 'rh_cloud_token', value: 'MOCK_TOKEN')
 
     # this host would pass our plugin queries, so it could be uploaded to the cloud.
     @host1 = FactoryBot.create(:host)
