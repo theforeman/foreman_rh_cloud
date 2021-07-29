@@ -242,6 +242,7 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
   end
 
   test 'Host status should be SYNC for inventory hosts' do
+    FactoryBot.create(:setting, name: 'rh_cloud_token', value: 'TEST TOKEN')
     InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
 
     ForemanTasks.sync_task(InventorySync::Async::InventoryFullSync, @host2.organization)
@@ -253,6 +254,7 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
   end
 
   test 'Host status should be DISCONNECT for hosts that are not returned from cloud' do
+    FactoryBot.create(:setting, name: 'rh_cloud_token', value: 'TEST TOKEN')
     InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
     FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
 
@@ -260,5 +262,13 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
     @host2.reload
 
     assert_equal InventorySync::InventoryStatus::DISCONNECT, InventorySync::InventoryStatus.where(host_id: @host1.id).first.status
+  end
+
+  test 'Task should be aborted if token is not present' do
+    FactoryBot.create(:setting, name: 'rh_cloud_token', value: '')
+
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:plan_self).never
+
+    ForemanTasks.sync_task(InventorySync::Async::InventoryFullSync, @host1.organization)
   end
 end
