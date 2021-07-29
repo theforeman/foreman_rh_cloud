@@ -2,7 +2,8 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
-import { Modal, ModalVariant } from '@patternfly/react-core';
+import { Modal, ModalVariant, Button } from '@patternfly/react-core';
+import { isEmpty } from 'lodash';
 import { STATUS } from 'foremanReact/constants';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { columns } from './RemediationTableConstants';
@@ -10,7 +11,6 @@ import { modifyRows } from './RemediationHelpers';
 import ModalFooter from './RemediationModalFooter';
 import TableEmptyState from '../../../common/table/EmptyState';
 import './RemediationModal.scss';
-import RemediateButton from './RemediateButton';
 
 const RemediationModal = ({
   selectedIds,
@@ -41,7 +41,15 @@ const RemediationModal = ({
 
   return (
     <React.Fragment>
-      <RemediateButton selectedIds={selectedIds} toggleModal={toggleModal} />{' '}
+      <Button
+        variant="primary"
+        isDisabled={isEmpty(selectedIds)}
+        onClick={() => {
+          toggleModal();
+        }}
+      >
+        {__('Remediate')}
+      </Button>{' '}
       <Modal
         id="remediation-modal"
         appendTo={document.body}
