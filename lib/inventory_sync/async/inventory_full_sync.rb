@@ -5,6 +5,11 @@ module InventorySync
       set_callback :step, :around, :update_statuses_batch
 
       def plan(organization)
+        unless cloud_auth_available?
+          logger.debug('Cloud authentication is not available, skipping inventory hosts sync')
+          return
+        end
+
         plan_self(organization_id: organization.id)
       end
 
