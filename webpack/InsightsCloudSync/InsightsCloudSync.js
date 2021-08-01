@@ -30,11 +30,13 @@ const InsightsCloudSync = ({
   const onRecommendationSync = () => syncInsights(fetchInsights, query);
   const toolbarButtons = (
     <>
-      <RemediationModal />
-      <ToolbarDropdown onRecommendationSync={onRecommendationSync} />
-      <div className="pull-right">
+      <span className="insights-toolbar-buttons">
+        <RemediationModal />
+        <ToolbarDropdown onRecommendationSync={onRecommendationSync} />
+      </span>
+      <span className="pull-right">
         <Pagination variant="top" isCompact />
-      </div>
+      </span>
     </>
   );
 

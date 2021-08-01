@@ -13,11 +13,17 @@
     }
 
     .title_filter {
-      width: 30%;
+      width: 520px;
     }
 
     #title_action {
-      width: 70%;
+      width: calc(100% - 520px);
+    }
+
+    @media (max-width: 1138px) {
+      #title_action {
+        width: 70%;
+      }
     }
 
     .search-bar {
