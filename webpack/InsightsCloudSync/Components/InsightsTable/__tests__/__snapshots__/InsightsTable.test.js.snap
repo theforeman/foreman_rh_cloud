@@ -47,7 +47,7 @@ exports[`InsightsTable rendering render with Props 1`] = `
           "cellTransforms": Array [
             [Function],
           ],
-          "title": "Playbook",
+          "title": "Remediate",
           "transforms": Array [
             [Function],
           ],

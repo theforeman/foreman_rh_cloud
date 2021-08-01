@@ -5,7 +5,7 @@ import {
   Section,
 } from '@redhat-cloud-services/frontend-components';
 import { sortable, cellWidth } from '@patternfly/react-table';
-import { CheckCircleIcon } from '@patternfly/react-icons';
+import { AnsibeTowerIcon } from '@patternfly/react-icons';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { foremanUrl } from '../../../ForemanRhCloudHelpers';
 
@@ -18,7 +18,14 @@ export const totalRiskFormatter = ({ title: totalRisk }) => ({
 });
 
 export const hasPlaybookFormatter = ({ title: hasPlaybook }) => ({
-  children: hasPlaybook ? <CheckCircleIcon color="green" /> : __('No'),
+  children: hasPlaybook ? (
+    <span className="td-insights-remediate-playbook">
+      <AnsibeTowerIcon />
+      {__('Playbook')}
+    </span>
+  ) : (
+    <span className="td-insights-remediate-manual">{__('Manual')}</span>
+  ),
 });
 
 export const columns = [
@@ -39,7 +46,7 @@ export const columns = [
     cellTransforms: [totalRiskFormatter],
   },
   {
-    title: __('Playbook'),
+    title: __('Remediate'),
     transforms: [cellWidth(15)],
     cellTransforms: [hasPlaybookFormatter],
   },
