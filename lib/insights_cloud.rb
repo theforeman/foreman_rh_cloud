@@ -28,4 +28,8 @@ module InsightsCloud
   def self.remediation_rule_id(rule_id)
     "advisor:#{rule_id}"
   end
+
+  def self.enable_client_param
+    'host_registration_insights'
+  end
 end
