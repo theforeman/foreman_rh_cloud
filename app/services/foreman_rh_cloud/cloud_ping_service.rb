@@ -39,7 +39,7 @@ module ForemanRhCloud
         certs = candlepin_id_cert(@org)
         execute_cloud_request(
           method: :get,
-          url: ForemanRhCloud.base_url + "/api/inventory/v1/hosts?per_page=1",
+          url: ForemanRhCloud.cert_base_url + "/api/inventory/v1/hosts?per_page=1",
           headers: {
             content_type: :json,
           },
