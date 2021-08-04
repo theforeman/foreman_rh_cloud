@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import InsightsSyncSwitcher from '../InsightsSyncSwitcher';
+import { translate as __ } from 'foremanReact/common/I18n';
+import SwitcherPF4 from '../../../common/Switcher/SwitcherPF4';
 import './insightsSettings.scss';
 
 class InsightsSettings extends Component {
@@ -13,9 +14,14 @@ class InsightsSettings extends Component {
     const { insightsSyncEnabled, setInsightsSyncEnabled } = this.props;
     return (
       <div className="insights_settings">
-        <InsightsSyncSwitcher
-          insightsSyncEnabled={insightsSyncEnabled}
-          setInsightsSyncEnabled={setInsightsSyncEnabled}
+        <SwitcherPF4
+          id="insights_sync_switcher"
+          label={__('Sync automatically')}
+          tooltip={__(
+            'Enable automatic synchronization of Insights recommendations from the Red Hat cloud'
+          )}
+          isChecked={insightsSyncEnabled}
+          onChange={() => setInsightsSyncEnabled(!insightsSyncEnabled)}
         />
       </div>
     );

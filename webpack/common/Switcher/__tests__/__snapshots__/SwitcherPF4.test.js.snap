@@ -3,7 +3,7 @@
 exports[`InsightsCloudSync helpers should return insights cloud Url 1`] = `
 <Switch
   aria-label=""
-  className="foreman-switcher"
+  className="foreman-rh-cloud-switcher"
   id="rh-cloud-switcher-some-id"
   isChecked={true}
   isDisabled={false}
