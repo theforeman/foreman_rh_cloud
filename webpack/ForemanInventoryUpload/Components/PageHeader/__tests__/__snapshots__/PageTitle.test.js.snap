@@ -27,6 +27,11 @@ exports[`PageTitle rendering render without Props 1`] = `
         >
           Documentation
         </DropdownItem>,
+        <DropdownItem
+          onClick={[Function]}
+        >
+          Connectivity test
+        </DropdownItem>,
       ]
     }
     isOpen={false}
@@ -38,6 +43,11 @@ exports[`PageTitle rendering render without Props 1`] = `
         onToggle={[Function]}
       />
     }
+  />
+  <CloudPingModal
+    isOpen={false}
+    title="Connectivity test"
+    toggle={[Function]}
   />
 </div>
 `;
