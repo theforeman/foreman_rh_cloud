@@ -37,9 +37,11 @@ module ForemanRhCloud
 
       def ping
         certs = candlepin_id_cert(@org)
+        return StandardError.new('certificate missing') unless certs
+
         execute_cloud_request(
           method: :get,
-          url: ForemanRhCloud.cert_base_url + "/api/inventory/v1/hosts?per_page=1",
+          url: ForemanRhCloud.cert_base_url + "/api/apicast-tests/ping",
           headers: {
             content_type: :json,
           },
