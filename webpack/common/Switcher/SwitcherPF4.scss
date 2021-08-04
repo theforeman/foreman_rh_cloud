@@ -1,10 +1,9 @@
-.rh-cloud-inventory-page {
-  label.foreman-switcher {
-    font-weight: 400;
-    margin-bottom: 5px;
+label.foreman-rh-cloud-switcher {
+  display: block;
+  font-weight: 400;
+  margin-bottom: 5px;
 
-    .switcher-help-label {
-      padding-left: 5px;
-    }
+  .switcher-help-label {
+    padding-left: 5px;
   }
 }

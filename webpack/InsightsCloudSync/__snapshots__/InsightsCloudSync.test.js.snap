@@ -28,13 +28,22 @@ exports[`InsightsCloudSync render 1`] = `
     searchable={true}
     toolbarButtons={
       <React.Fragment>
-        <UNDEFINED />
-        <Button
-          onClick={[Function]}
-          variant="secondary"
+        <span
+          className="insights-toolbar-buttons"
         >
-          Start recommendations sync
-        </Button>
+          <UNDEFINED />
+          <ToolbarDropdown
+            onRecommendationSync={[Function]}
+          />
+        </span>
+        <span
+          className="pull-right"
+        >
+          <Pagination
+            isCompact={true}
+            variant="top"
+          />
+        </span>
       </React.Fragment>
     }
   >

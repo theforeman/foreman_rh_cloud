@@ -6,7 +6,7 @@ import './SwitcherPF4.scss';
 
 const SwitcherPF4 = ({ id, label, tooltip, isChecked, onChange }) => (
   <Switch
-    className="foreman-switcher"
+    className="foreman-rh-cloud-switcher"
     id={`rh-cloud-switcher-${id}`}
     isChecked={isChecked}
     onChange={onChange}

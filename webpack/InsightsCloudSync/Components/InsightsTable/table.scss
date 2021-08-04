@@ -7,5 +7,15 @@
         display: none;
       }
     }
+
+    .td-insights-remediate-playbook {
+      svg {
+        margin-right: 5px;
+      }
+    }
+
+    .td-insights-remediate-manual {
+      padding-left: 18px;
+    }
   }
 }

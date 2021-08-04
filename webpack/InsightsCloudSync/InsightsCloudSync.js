@@ -1,7 +1,5 @@
 import React from 'react';
-import { Button } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
-import { translate as __ } from 'foremanReact/common/I18n';
 import PageLayout from 'foremanReact/routes/common/PageLayout/PageLayout';
 import InsightsHeader from './Components/InsightsHeader';
 import { NoTokenEmptyState } from './Components/NoTokenEmptyState';
@@ -12,6 +10,8 @@ import {
   INSIGHTS_SEARCH_PROPS,
 } from './InsightsCloudSyncConstants';
 import './InsightsCloudSync.scss';
+import Pagination from './Components/InsightsTable/Pagination';
+import ToolbarDropdown from './Components/ToolbarDropdown';
 
 const InsightsCloudSync = ({
   syncInsights,
@@ -26,6 +26,20 @@ const InsightsCloudSync = ({
       </PageLayout>
     );
   }
+
+  const onRecommendationSync = () => syncInsights(fetchInsights, query);
+  const toolbarButtons = (
+    <>
+      <span className="insights-toolbar-buttons">
+        <RemediationModal />
+        <ToolbarDropdown onRecommendationSync={onRecommendationSync} />
+      </span>
+      <span className="pull-right">
+        <Pagination variant="top" isCompact />
+      </span>
+    </>
+  );
+
   return (
     <div className="rh-cloud-insights">
       <PageLayout
@@ -33,17 +47,7 @@ const InsightsCloudSync = ({
         searchProps={INSIGHTS_SEARCH_PROPS}
         onSearch={nextQuery => fetchInsights({ query: nextQuery, page: 1 })}
         header={INSIGHTS_SYNC_PAGE_TITLE}
-        toolbarButtons={
-          <>
-            <RemediationModal />
-            <Button
-              variant="secondary"
-              onClick={() => syncInsights(fetchInsights, query)}
-            >
-              {__('Start recommendations sync')}
-            </Button>
-          </>
-        }
+        toolbarButtons={toolbarButtons}
         searchQuery={query}
         beforeToolbarComponent={<InsightsHeader />}
       >

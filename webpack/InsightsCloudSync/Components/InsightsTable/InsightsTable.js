@@ -1,17 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Pagination, PaginationVariant } from '@patternfly/react-core';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { useForemanSettings } from 'foremanReact/Root/Context/ForemanContext';
 import SelectAllAlert from './SelectAllAlert';
-import { columns, paginationTitles } from './InsightsTableConstants';
+import { columns } from './InsightsTableConstants';
 import TableEmptyState from '../../../common/table/EmptyState';
-import {
-  modifySelectedRows,
-  getSortColumnIndex,
-  getPerPageOptions,
-} from './InsightsTableHelpers';
+import { modifySelectedRows, getSortColumnIndex } from './InsightsTableHelpers';
+import Pagination from './Pagination';
 import './table.scss';
 
 const InsightsTable = ({
@@ -22,10 +18,7 @@ const InsightsTable = ({
   sortOrder,
   hits,
   query,
-  itemCount,
   fetchInsights,
-  onTableSetPage,
-  onTablePerPageSelect,
   onTableSort,
   onTableSelect,
   selectedIds,
@@ -68,22 +61,13 @@ const InsightsTable = ({
         onSort={onTableSort}
         cells={columns}
         rows={rows}
+        variant="compact"
       >
         <TableHeader />
         <TableBody />
       </Table>
       <TableEmptyState status={status} error={error} />
-      <Pagination
-        itemCount={itemCount}
-        widgetId="recommendation-pagination"
-        perPage={perPage}
-        page={page}
-        variant={PaginationVariant.bottom}
-        onSetPage={onTableSetPage}
-        onPerPageSelect={onTablePerPageSelect}
-        perPageOptions={getPerPageOptions(urlPerPage, appPerPage)}
-        titles={paginationTitles}
-      />
+      <Pagination variant="bottom" />
     </React.Fragment>
   );
 };
@@ -95,9 +79,6 @@ InsightsTable.propTypes = {
   sortBy: PropTypes.string,
   sortOrder: PropTypes.string,
   hits: PropTypes.array.isRequired,
-  itemCount: PropTypes.number.isRequired,
-  onTableSetPage: PropTypes.func.isRequired,
-  onTablePerPageSelect: PropTypes.func.isRequired,
   onTableSort: PropTypes.func.isRequired,
   onTableSelect: PropTypes.func.isRequired,
   selectedIds: PropTypes.object,

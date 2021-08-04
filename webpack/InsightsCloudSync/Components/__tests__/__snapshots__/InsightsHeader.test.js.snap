@@ -5,9 +5,10 @@ exports[`InsightsHeader render 1`] = `
   className="insights-header"
 >
   <Connect(InsightsSettings) />
-  <p>
-    Insights synchronization process is used to provide Insights
-             recommendations output for hosts managed here
-  </p>
+  <Text
+    component="p"
+  >
+    Insights synchronization process is used to provide Insights recommendations output for hosts managed here.
+  </Text>
 </div>
 `;
