@@ -7,3 +7,5 @@ export const DOCS_BUTTON_TEXT = __('Documentation');
 export const ACTIONS_HISTORY_BUTTON_TEXT = __('Actions history');
 
 export const SYNC_BUTTON_TEXT = __(' Sync inventory status');
+
+export const CLOUD_PING_TITLE = __('Connectivity test');
