@@ -49,13 +49,19 @@ module InsightsCloud::Api
     private
 
     def ensure_telemetry_enabled_for_consumer
-      render_message 'Telemetry is not enabled for your organization', :status => 403 unless telemetry_config
+      unless (config = telemetry_config(@host))
+        logger.debug("Rejected telemetry forwarding for host #{@host.name}, insights param is set to: #{config}")
+        render_message 'Telemetry is not enabled for this host', :status => 403
+      end
+      config
     end
 
-    def telemetry_config
-      ::RedhatAccess::TelemetryConfiguration.find_or_create_by(:organization_id => @organization.id) do |conf|
-        conf.enable_telemetry = true
+    def telemetry_config(host)
+      param_value = nil
+      User.as_anonymous_admin do
+        param_value = host.host_param(InsightsCloud.enable_client_param)
       end
+      param_value
     end
 
     def cert_uuid

@@ -67,7 +67,7 @@ module ForemanRhCloud
           url: ForemanRhCloud.legacy_insights_url + request_path.sub('/redhat_access/r/insights', '/r/insights'),
           ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
           ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key]),
-          ssl_ca_file: Class.new.include(RedhatAccess::Telemetry::LookUps).new.get_default_ssl_ca_file,
+          ssl_ca_file: ForemanRhCloud.legacy_insights_ca,
         }
       end
     end

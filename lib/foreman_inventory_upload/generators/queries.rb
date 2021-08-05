@@ -45,25 +45,9 @@ module ForemanInventoryUpload
           )
       end
 
-      def self.for_report(portal_user)
-        org_ids = organizations_for_user(portal_user).pluck(:id)
-        for_org(org_ids)
-      end
-
       def self.for_org(organization_id, use_batches: true)
         base_query = for_slice(Host.unscoped.where(organization_id: organization_id))
         use_batches ? base_query.in_batches(of: ForemanInventoryUpload.slice_size) : base_query
-      end
-
-      def self.organizations_for_user(portal_user)
-        Organization
-          .joins(:telemetry_configuration)
-          .where(
-            redhat_access_telemetry_configurations: {
-              portal_user: portal_user,
-              enable_telemetry: true,
-            }
-          )
       end
     end
   end

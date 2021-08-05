@@ -2,6 +2,10 @@ require 'test_plugin_helper'
 
 module InsightsCloud::Api
   class MachineTelemetriesControllerTest < ActionController::TestCase
+    setup do
+      FactoryBot.create(:common_parameter, name: InsightsCloud.enable_client_param, key_type: 'boolean', value: true)
+    end
+
     context '#forward_request' do
       setup do
         @body = 'Cloud response body'

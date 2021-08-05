@@ -100,4 +100,8 @@ module ForemanRhCloud
   def self.foreman_host
     @foreman_host ||= ::Host.unscoped.friendly.find(ENV['SATELLITE_RH_CLOUD_FOREMAN_HOST'] || ::SmartProxy.default_capsule.name)
   end
+
+  def self.legacy_insights_ca
+    "#{ForemanRhCloud::Engine.root}/config/rh_cert-api_chain.pem"
+  end
 end
