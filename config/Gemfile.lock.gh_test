@@ -4,7 +4,6 @@ PATH
     foreman_rh_cloud (3.0.15)
       foreman_ansible
       katello
-      redhat_access
 
 PATH
   remote: ../katello
@@ -541,13 +540,6 @@ GEM
     rdoc (6.3.0)
     record_tag_helper (1.0.1)
       actionview (>= 5)
-    redhat_access (2.2.18)
-      angular-rails-templates (>= 0.0.4)
-      foreman-tasks
-      katello
-      redhat_access_lib (>= 1.1.5)
-    redhat_access_lib (1.1.5)
-      rest-client (>= 1.6.3)
     redis (4.1.4)
     regexp_parser (1.8.2)
     representable (3.0.4)
