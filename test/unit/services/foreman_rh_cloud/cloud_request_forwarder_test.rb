@@ -2,6 +2,8 @@ require 'test_plugin_helper'
 require 'puma/null_io'
 
 class CloudRequestForwarderTest < ActiveSupport::TestCase
+  include MockCerts
+
   setup do
     @forwarder = ::ForemanRhCloud::CloudRequestForwarder.new
 
@@ -137,5 +139,30 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
       'action_dispatch.request.query_parameters' => params
     )
     assert_equal params.merge(:branch_id => 74), @forwarder.prepare_forward_params(req, 74)
+  end
+
+  test 'should reuse BranchInfo identifiers for user_agent' do
+    user_agent = { :foo => :bar }
+    params = { :page => 5, :per_page => 42 }
+    ForemanRhCloud::BranchInfo.any_instance.expects(:core_app_name).returns('test_app')
+    ForemanRhCloud::BranchInfo.any_instance.expects(:core_app_version).returns('test_ver')
+
+    req = ActionDispatch::Request.new(
+      'REQUEST_URI' => '/foo/bar',
+      'REQUEST_METHOD' => 'GET',
+      'HTTP_USER_AGENT' => user_agent,
+      'rack.input' => ::Puma::NullIO.new,
+      'action_dispatch.request.query_parameters' => params
+    )
+
+    actual = @forwarder.prepare_request_opts(req, 'TEST PAYLOAD', params, generate_certs_hash)
+
+    assert_match /foo/, actual[:headers][:user_agent]
+    assert_match /bar/, actual[:headers][:user_agent]
+    assert_match /test_app/, actual[:headers][:user_agent]
+    assert_match /test_ver/, actual[:headers][:user_agent]
+    assert_equal 'TEST PAYLOAD', actual[:payload]
+    assert_equal 'GET', actual[:method]
+    assert_equal params, actual[:headers][:params]
   end
 end
