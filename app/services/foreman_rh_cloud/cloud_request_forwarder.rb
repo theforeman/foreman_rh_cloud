@@ -96,11 +96,11 @@ module ForemanRhCloud
     end
 
     def core_app_name
-      'Foreman'
+      BranchInfo.new.core_app_name
     end
 
     def core_app_version
-      Foreman::Version.new
+      BranchInfo.new.core_app_version
     end
 
     def http_user_agent(original_request)
