@@ -42,6 +42,8 @@ module ForemanRhCloud
       Foreman::Plugin.register :foreman_rh_cloud do
         requires_foreman '>= 2.3'
 
+        apipie_documented_controllers ["#{ForemanRhCloud::Engine.root}/app/controllers/api/v2/**/*.rb"]
+
         # Add permissions
         security_block :foreman_rh_cloud do
           permission(
