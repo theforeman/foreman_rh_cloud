@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
 
 class InsightsResolutionsSyncTest < ActiveSupport::TestCase
@@ -74,5 +74,14 @@ class InsightsResolutionsSyncTest < ActiveSupport::TestCase
 
     assert_equal 5, InsightsResolution.all.count
     assert_equal 2, @rule.resolutions.count
+  end
+
+  test 'Skips pinging the cloud if no rule ids were found' do
+    InsightsCloud::Async::InsightsResolutionsSync.any_instance.expects(:query_insights_resolutions).never
+    InsightsRule.all.delete_all
+
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsResolutionsSync)
+
+    assert_equal 0, InsightsResolution.all.count
   end
 end
