@@ -39,6 +39,10 @@ module InventorySync
         host_statuses[:sync] += results.touched.size
       end
 
+      def rescue_strategy_for_self
+        Dynflow::Action::Rescue::Fail
+      end
+
       private
 
       def update_hosts_status(status_hashes, touched)

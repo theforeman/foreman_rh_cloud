@@ -28,6 +28,10 @@ module InventorySync
         results
       end
 
+      def rescue_strategy_for_self
+        Dynflow::Action::Rescue::Fail
+      end
+
       private
 
       def add_missing_insights_facets(uuids_hash)

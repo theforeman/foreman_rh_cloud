@@ -50,6 +50,10 @@ module InventorySync
       def request_url
         ForemanInventoryUpload.inventory_export_url
       end
+
+      def rescue_strategy_for_self
+        Dynflow::Action::Rescue::Fail
+      end
     end
   end
 end
