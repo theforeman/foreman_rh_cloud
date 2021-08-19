@@ -12,7 +12,7 @@ exports[`InsightsCloudSync helpers should return insights cloud Url 1`] = `
   >
     <HelpIcon
       color="currentColor"
-      noVerticalAlign={true}
+      noVerticalAlign={false}
       size="sm"
     />
   </button>

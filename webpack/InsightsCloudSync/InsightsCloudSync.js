@@ -12,6 +12,7 @@ import {
 import './InsightsCloudSync.scss';
 import Pagination from './Components/InsightsTable/Pagination';
 import ToolbarDropdown from './Components/ToolbarDropdown';
+import InsightsSettings from './Components/InsightsSettings';
 
 const InsightsCloudSync = ({
   syncInsights,
@@ -42,6 +43,7 @@ const InsightsCloudSync = ({
 
   return (
     <div className="rh-cloud-insights">
+      <InsightsSettings />
       <PageLayout
         searchable
         searchProps={INSIGHTS_SEARCH_PROPS}
