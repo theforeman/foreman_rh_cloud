@@ -11,8 +11,12 @@ module InsightsCloud
           return
         end
 
-        plan_self
-        plan_resolutions
+        # since the tasks are not connected, we need to force sequence execution here
+        # to make sure we don't run resolutions until we synced all our rules
+        sequence do
+          plan_self
+          plan_resolutions
+        end
       end
 
       def plan_resolutions
