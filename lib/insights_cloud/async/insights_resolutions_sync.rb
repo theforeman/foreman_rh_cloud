@@ -19,8 +19,9 @@ module InsightsCloud
       def run
         InsightsResolution.transaction do
           InsightsResolution.delete_all
-          api_response = query_insights_resolutions(relevant_rules)
-          write_resolutions(api_response)
+          rule_ids = relevant_rules
+          api_response = query_insights_resolutions(rule_ids) unless rule_ids.empty?
+          write_resolutions(api_response) if api_response
         end
       end
 
