@@ -7,6 +7,7 @@ module Api
         include InventoryUpload::TaskActions
 
         api :GET, "/organizations/:organization_id/rh_cloud/report", N_("Download latest report")
+        param :organization_id, Integer, required: true, desc: N_("Set the current organization context for the request")
         def download_file
           filename, file = report_file(params[:organization_id])
 
@@ -16,6 +17,7 @@ module Api
         end
 
         api :POST, "/organizations/:organization_id/rh_cloud/report", N_("Start report generation")
+        param :organization_id, Integer, required: true, desc: N_("Set the current organization context for the request")
         def generate_report
           organization_id = params[:organization_id]
 
@@ -27,6 +29,7 @@ module Api
         end
 
         api :POST, "/organizations/:organization_id/rh_cloud/inventory_sync", N_("Start inventory synchronization")
+        param :organization_id, Integer, required: true, desc: N_("Set the current organization context for the request")
         def sync_inventory_status
           selected_org = Organization.find(params[:organization_id])
 
@@ -39,7 +42,7 @@ module Api
           render json: { message: error.message }, status: :bad_request
         end
 
-        api :POST, "rh_cloud/enable_connector", N_("Enable cloud connector")
+        api :POST, "/rh_cloud/enable_connector", N_("Enable cloud connector")
         def enable_cloud_connector
           cloud_connector = ForemanRhCloud::CloudConnector.new
           render json: cloud_connector.install.to_json
