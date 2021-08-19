@@ -71,6 +71,10 @@ module InsightsCloud
       def to_rule_id(resolution_rule_id)
         RULE_ID_REGEX.match(resolution_rule_id).named_captures.fetch('id', resolution_rule_id)
       end
+
+      def rescue_strategy_for_self
+        Dynflow::Action::Rescue::Fail
+      end
     end
   end
 end

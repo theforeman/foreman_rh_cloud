@@ -118,6 +118,10 @@ module InsightsCloud
 
         match || { id: nil }
       end
+
+      def rescue_strategy_for_self
+        Dynflow::Action::Rescue::Fail
+      end
     end
   end
 end
