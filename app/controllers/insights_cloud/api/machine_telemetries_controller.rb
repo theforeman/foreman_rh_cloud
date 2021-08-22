@@ -25,6 +25,14 @@ module InsightsCloud::Api
         }, status: :bad_gateway
       end
 
+      if @cloud_response.code >= 300
+        return render json: {
+          :message => 'Cloud request failed',
+          :headers => {},
+          :response => @cloud_response,
+        }, status: @cloud_response.code
+      end
+
       if @cloud_response.headers[:content_disposition]
         return send_data @cloud_response, disposition: @cloud_response.headers[:content_disposition], type: @cloud_response.headers[:content_type]
       end
