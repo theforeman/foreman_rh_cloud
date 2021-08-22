@@ -4,6 +4,7 @@ exports[`InsightsCloudSync render 1`] = `
 <div
   className="rh-cloud-insights"
 >
+  <Connect(InsightsSettings) />
   <PageLayout
     beforeToolbarComponent={<InsightsHeader />}
     header="Red Hat Insights"

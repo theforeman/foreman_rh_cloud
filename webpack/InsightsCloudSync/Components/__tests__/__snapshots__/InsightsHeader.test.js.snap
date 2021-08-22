@@ -4,7 +4,6 @@ exports[`InsightsHeader render 1`] = `
 <div
   className="insights-header"
 >
-  <Connect(InsightsSettings) />
   <Text
     component="p"
   >

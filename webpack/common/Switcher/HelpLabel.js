@@ -11,7 +11,7 @@ export const HelpLabel = ({ text, id, className }) => {
         onClick={e => e.preventDefault()}
         className={`pf-c-form__group-label-help ${className}`}
       >
-        <HelpIcon noVerticalAlign />
+        <HelpIcon />
       </button>
     </Popover>
   );
