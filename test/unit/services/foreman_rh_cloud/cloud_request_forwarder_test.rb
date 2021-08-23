@@ -17,6 +17,7 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
       "/redhat_access/r/insights/platform/inventory/v1/hosts" => "https://cert.cloud.redhat.com/api/inventory/v1/hosts",
       "/redhat_access/r/insights/platform/ingress/v1/upload" => "https://cert.cloud.redhat.com/api/ingress/v1/upload",
       "/redhat_access/r/insights/uploads/67200803-132b-474b-a6f9-37be74185df4" => "https://cert-api.access.redhat.com/r/insights/uploads/67200803-132b-474b-a6f9-37be74185df4",
+      "/redhat_access/r/insights/" => "https://cert.cloud.redhat.com/api/apicast-tests/ping",
     }
 
     paths.each do |key, value|
