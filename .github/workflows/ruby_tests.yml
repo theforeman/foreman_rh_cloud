@@ -41,35 +41,35 @@ jobs:
         with:
           repository: theforeman/foreman
           path: ${{ github.workspace }}/projects/foreman # checkout Foreman and foreman_rh_cloud as siblings, same as dev env
-          ref: 2.3-stable
+          ref: 2.5-stable
       - name: Checkout Katello repo
         uses: actions/checkout@v2
         with:
           repository: Katello/katello
           path: ${{ github.workspace }}/projects/katello # checkout Foreman and foreman_rh_cloud as siblings, same as dev env
-          ref: KATELLO-3.18
+          ref: KATELLO-4.1
       - name: Checkout Foreman-tasks repo
         uses: actions/checkout@v2
         with:
           repository: theforeman/foreman-tasks
           path: ${{ github.workspace }}/projects/foreman-tasks # checkout Foreman and foreman_rh_cloud as siblings, same as dev env
-          ref: v3.0.5
+          ref: v4.1.3
       - name: check for postgres
         run: file /usr/share/postgresql/12/extension/
       - name: Cache bundler
         uses: actions/cache@v2
         with:
           path: projects/foreman/vendor/bundle
-          key: ${{ runner.os }}-bundle-2_3-${{ hashFiles('projects/foreman_rh_cloud/config/Gemfile.lock.gh_test') }}
+          key: ${{ runner.os }}-bundle-2_5-${{ hashFiles('projects/foreman_rh_cloud/config/Gemfile.lock.gh_test') }}
           restore-keys: |
-            ${{ runner.os }}-bundle-2_3
+            ${{ runner.os }}-bundle-2_5
       - name: Cache npm
         uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-npm-2_3-${{ hashFiles('projects/foreman_rh_cloud/config/package-lock.json.gh_test') }}
+          key: ${{ runner.os }}-npm-2_5-${{ hashFiles('projects/foreman_rh_cloud/config/package-lock.json.gh_test') }}
           restore-keys: |
-            ${{ runner.os }}-npm-2_3
+            ${{ runner.os }}-npm-2_5
       - name: Set up Ruby 2.6
         uses: actions/setup-ruby@v1
         with:
