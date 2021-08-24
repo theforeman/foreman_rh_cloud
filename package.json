@@ -26,7 +26,6 @@
   },
   "devDependencies": {
     "@babel/core": "~7.7.0",
-    "@redhat-cloud-services/frontend-components": "^2.5.0",
     "@theforeman/builder": "~4.14.0",
     "@theforeman/stories": "~4.14.0",
     "@theforeman/test": "~4.14.0",
@@ -43,6 +42,7 @@
   },
   "dependencies": {
     "jed": "~1.1.1",
-    "react-intl": "~2.8.0"
+    "react-intl": "~2.8.0",
+    "@redhat-cloud-services/frontend-components": "^2.5.0"
   }
 }
