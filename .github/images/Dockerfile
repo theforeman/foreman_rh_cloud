@@ -7,7 +7,8 @@ ENV RAILS_ENV=test
 ENV GIT_COMMITTER_NAME="gh_actions"
 ENV GIT_COMMITTER_EMAIL="gh_actions@rh_cloud.foreman"
 ENV WORKDIR=/projects/foreman
-# ARG SCL_PREFIX="scl enable rh-ruby25 rh-nodejs12 sclo-git25 rh-postgresql12 -- "
+ENV BUNDLE_PATH=vendor/bundle
+
 ARG SCLS="rh-ruby25 rh-nodejs12 sclo-git25 rh-postgresql12"
 
 RUN \

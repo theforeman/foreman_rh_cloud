@@ -3,9 +3,9 @@
 bundle install
 
 # wait for postgres
-until PGPASSWORD=$PGPASS psql -h "$host" -U $PGUSER -c '\q'; do
+until PGPASSWORD=$PGPASS psql -h "$PGHOST" -U $PGUSER -c '\q'; do
   >&2 echo "Postgres is unavailable - sleeping"
-  sleep 1
+  sleep 2
 done
 
 if [ "$( psql -tAc "SELECT 1 FROM pg_database WHERE datname='foreman-test'" )" = '1' ]
