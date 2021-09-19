@@ -115,15 +115,6 @@ module ForemanRhCloud
       ::Host::Managed.include RhCloudHost
     end
 
-    initializer "foreman_rh_cloud.set_dynflow.config.on_init", :before => :finisher_hook do |_app|
-      unless Rails.env.test?
-        ForemanTasks.dynflow.config.on_init do |world|
-          ForemanInventoryUpload::Async::GenerateAllReportsJob.spawn_if_missing(world)
-          InsightsCloud::Async::InsightsScheduledSync.spawn_if_missing(world)
-        end
-      end
-    end
-
     rake_tasks do
       Rake::Task['db:seed'].enhance do
         ForemanRhCloud::Engine.load_seed
@@ -139,7 +130,6 @@ module ForemanRhCloud
     config.to_prepare do
       # skip database manipulations while tables do not exist, like in migrations
       if ActiveRecord::Base.connection.data_source_exists?(ForemanTasks::Task.table_name) &&
-
         RemoteExecutionFeature.register(
           :rh_cloud_remediate_hosts,
           N_('Apply Insights recommendations'),
@@ -149,7 +139,9 @@ module ForemanRhCloud
         # skip object creation when admin user is not present, for example in test DB
         if User.unscoped.find_by_login(User::ANONYMOUS_ADMIN).present?
           ::ForemanTasks.dynflow.config.on_init(false) do |world|
+            ForemanRhCloud::Engine.register_scheduled_task(ForemanInventoryUpload::Async::GenerateAllReportsJob, '0 0 * * *')
             ForemanRhCloud::Engine.register_scheduled_task(InventorySync::Async::InventoryScheduledSync, '0 0 * * *')
+            ForemanRhCloud::Engine.register_scheduled_task(InsightsCloud::Async::InsightsScheduledSync, '0 0 * * *')
             ForemanRhCloud::Engine.register_scheduled_task(InsightsCloud::Async::InsightsClientStatusAging, '0 0 * * *')
           end
         end

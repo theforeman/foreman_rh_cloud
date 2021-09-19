@@ -12,7 +12,7 @@ namespace :rh_cloud_inventory do
 
       User.as_anonymous_admin do
         organizations.each do |organization|
-          ForemanInventoryUpload::Async::GenerateReportJob.perform_now(ForemanInventoryUpload.generated_reports_folder, organization.id)
+          ForemanTasks.async_task(ForemanInventoryUpload::Async::GenerateReportJob, ForemanInventoryUpload.generated_reports_folder, organization.id)
           puts "Generated and uploaded inventory report for organization '#{organization.name}'"
         end
       end
@@ -47,7 +47,7 @@ namespace :rh_cloud_inventory do
       base_folder = ENV['target'] || ForemanInventoryUpload.generated_reports_folder
       organization_id = ENV['organization_id']
       report_file = ForemanInventoryUpload.facts_archive_name(organization_id)
-      ForemanInventoryUpload::Async::QueueForUploadJob.perform_now(base_folder, report_file, organization_id)
+      ForemanTasks.sync_task(ForemanInventoryUpload::Async::QueueForUploadJob, base_folder, report_file, organization_id)
       puts "Uploaded #{report_file}"
     end
   end

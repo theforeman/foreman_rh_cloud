@@ -2,13 +2,18 @@ require 'open3'
 
 module ForemanInventoryUpload
   module Async
-    class ShellProcess < ::ApplicationJob
+    class ShellProcess < ::Actions::EntryAction
       include AsyncHelpers
 
-      def perform(instance_label)
+      def plan(instance_label, more_inputs = {})
+        inputs = more_inputs.merge(instance_label: instance_label)
+        plan_self(inputs)
+      end
+
+      def run
         klass_name = self.class.name
         logger.debug("Starting #{klass_name} with label #{instance_label}")
-        progress_output_for(instance_label) do |progress_output|
+        progress_output do |progress_output|
           Open3.popen2e(hash_to_s(env), *preprocess_command(command)) do |_stdin, stdout_stderr, wait_thread|
             progress_output.status = "Running in pid #{wait_thread.pid}"
 
@@ -25,7 +30,7 @@ module ForemanInventoryUpload
       def command
       end
 
-      def progress_output_for(instance_label)
+      def progress_output
         progress_output = ProgressOutput.register(instance_label)
         yield(progress_output)
       ensure
@@ -40,10 +45,18 @@ module ForemanInventoryUpload
         Foreman::Logging.logger('background')
       end
 
+      def rescue_strategy_for_self
+        Dynflow::Action::Rescue::Fail
+      end
+
       private
 
       def preprocess_command(command)
         command.kind_of?(Array) ? command : [command]
+      end
+
+      def instance_label
+        input[:instance_label]
       end
     end
   end

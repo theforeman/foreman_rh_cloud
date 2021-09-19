@@ -1,6 +1,8 @@
 require 'test_plugin_helper'
+require 'foreman_tasks/test_helpers'
 
-class UploadReportJobTest < ActiveJob::TestCase
+class UploadReportJobTest < ActiveSupport::TestCase
+  include ForemanTasks::TestHelpers::WithInThreadExecutor
   include FolderIsolation
 
   test 'returns aborted state when disconnected' do
@@ -12,7 +14,7 @@ class UploadReportJobTest < ActiveJob::TestCase
     )
     FactoryBot.create(:setting, :name => 'content_disconnected', :value => true)
 
-    ForemanInventoryUpload::Async::UploadReportJob.perform_now('', organization.id)
+    ForemanTasks.sync_task(ForemanInventoryUpload::Async::UploadReportJob, '', organization.id)
 
     label = ForemanInventoryUpload::Async::UploadReportJob.output_label(organization.id)
     progress_output = ForemanInventoryUpload::Async::ProgressOutput.get(label)
@@ -24,7 +26,7 @@ class UploadReportJobTest < ActiveJob::TestCase
     organization = FactoryBot.create(:organization)
     Organization.any_instance.expects(:owner_details).returns(nil)
 
-    ForemanInventoryUpload::Async::UploadReportJob.perform_now('', organization.id)
+    ForemanTasks.sync_task(ForemanInventoryUpload::Async::UploadReportJob, '', organization.id)
 
     label = ForemanInventoryUpload::Async::UploadReportJob.output_label(organization.id)
     progress_output = ForemanInventoryUpload::Async::ProgressOutput.get(label)

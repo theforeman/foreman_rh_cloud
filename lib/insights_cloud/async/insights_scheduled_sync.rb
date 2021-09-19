@@ -1,7 +1,9 @@
 module InsightsCloud
   module Async
-    class InsightsScheduledSync < ::ApplicationJob
-      def perform
+    class InsightsScheduledSync < ::Actions::EntryAction
+      include ::Actions::RecurringAction
+
+      def plan
         unless Setting[:allow_auto_insights_sync]
           logger.debug(
             'The scheduled process is disabled due to the "allow_auto_insights_sync"
@@ -10,13 +12,15 @@ module InsightsCloud
           return
         end
 
-        ForemanTasks.async_task InsightsFullSync
-      ensure
-        self.class.set(:wait => 24.hours).perform_later
+        plan_full_sync
       end
 
-      def self.singleton_job_name
-        name
+      def plan_full_sync
+        plan_action InsightsFullSync
+      end
+
+      def rescue_strategy_for_self
+        Dynflow::Action::Rescue::Fail
       end
     end
   end

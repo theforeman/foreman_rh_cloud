@@ -1,9 +1,12 @@
 module ForemanInventoryUpload
   module Async
-    class QueueForUploadJob < ::ApplicationJob
-      def perform(base_folder, report_file, organization_id)
-        @base_folder = base_folder
-        @report_file = report_file
+    class QueueForUploadJob < ::Actions::EntryAction
+      def plan(base_folder, report_file, organization_id)
+        enqueue_task = plan_self(base_folder: base_folder, report_file: report_file)
+        plan_upload_report(enqueue_task.output[:enqueued_file_name], organization_id)
+      end
+
+      def run
         logger.debug('Ensuring objects')
         ensure_ouput_folder
         ensure_output_script
@@ -12,7 +15,7 @@ module ForemanInventoryUpload
         FileUtils.mv(File.join(base_folder, report_file), enqueued_file_name)
         logger.debug("Done copying #{report_file} to #{enqueued_file_name}")
 
-        UploadReportJob.perform_later(enqueued_file_name, organization_id)
+        output[:enqueued_file_name] = enqueued_file_name
       end
 
       def uploads_folder
@@ -46,6 +49,18 @@ module ForemanInventoryUpload
 
       def logger
         Foreman::Logging.logger('background')
+      end
+
+      def base_folder
+        input[:base_folder]
+      end
+
+      def report_file
+        input[:report_file]
+      end
+
+      def plan_upload_report(enqueued_file_name, organization_id)
+        plan_action(UploadReportJob, enqueued_file_name, organization_id)
       end
     end
   end
