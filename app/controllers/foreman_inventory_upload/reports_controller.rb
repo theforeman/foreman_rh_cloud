@@ -7,7 +7,7 @@ module ForemanInventoryUpload
     def last
       label = ForemanInventoryUpload::Async::GenerateReportJob.output_label(params[:organization_id])
       output = ForemanInventoryUpload::Async::ProgressOutput.get(label)&.full_output
-      task_label = ForemanInventoryUpload::Async::GenerateAllReportsJob.singleton_job_name
+      task_label = ForemanInventoryUpload::Async::GenerateAllReportsJob.name
       scheduled = ForemanTasks::Task.where(
         :label => task_label,
         :state => 'scheduled'

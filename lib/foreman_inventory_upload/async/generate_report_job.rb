@@ -5,17 +5,21 @@ module ForemanInventoryUpload
         "report_for_#{label}"
       end
 
-      def perform(base_folder, organization)
-        @base_folder = base_folder
-        @organization = organization
+      def plan(base_folder, organization_id)
+        sequence do
+          super(
+            GenerateReportJob.output_label(organization_id),
+            organization_id: organization_id,
+            base_folder: base_folder
+          )
 
-        super(GenerateReportJob.output_label(organization))
-
-        QueueForUploadJob.perform_later(
-          base_folder,
-          ForemanInventoryUpload.facts_archive_name(organization),
-          organization
-        )
+          plan_action(
+            QueueForUploadJob,
+            base_folder,
+            ForemanInventoryUpload.facts_archive_name(organization_id),
+            organization_id
+          )
+        end
       end
 
       def rake_prefix
@@ -28,9 +32,17 @@ module ForemanInventoryUpload
 
       def env
         super.merge(
-          'target' => @base_folder,
-          'organization_id' => @organization
+          'target' => base_folder,
+          'organization_id' => organization_id
         )
+      end
+
+      def base_folder
+        input[:base_folder]
+      end
+
+      def organization_id
+        input[:organization_id]
       end
     end
   end

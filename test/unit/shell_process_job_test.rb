@@ -1,4 +1,5 @@
 require 'test_plugin_helper'
+require 'foreman_tasks/test_helpers'
 
 class ShellProcessJobTest < ActiveSupport::TestCase
   class TestProcessJob < ForemanInventoryUpload::Async::ShellProcess
@@ -13,11 +14,12 @@ class ShellProcessJobTest < ActiveSupport::TestCase
     end
   end
 
+  include ForemanTasks::TestHelpers::WithInThreadExecutor
   include FolderIsolation
 
   test 'Runs a process with environment vars' do
     label = Foreman.uuid
-    TestProcessJob.perform_now(label)
+    ForemanTasks.sync_task(TestProcessJob, label)
 
     progress_output = ForemanInventoryUpload::Async::ProgressOutput.get(label)
 

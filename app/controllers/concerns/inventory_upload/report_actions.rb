@@ -11,7 +11,7 @@ module InventoryUpload
     end
 
     def start_report_generation(organization_id)
-      ForemanInventoryUpload::Async::GenerateReportJob.perform_later(ForemanInventoryUpload.generated_reports_folder, organization_id)
+      ForemanTasks.async_task(ForemanInventoryUpload::Async::GenerateReportJob, ForemanInventoryUpload.generated_reports_folder, organization_id)
     end
 
     def report_file(organization_id)
