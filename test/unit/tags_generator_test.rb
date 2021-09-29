@@ -65,14 +65,14 @@ class TagsGeneratorTest < ActiveSupport::TestCase
   test 'generates parameter tags' do
     FactoryBot.create(:setting, :name => 'include_parameter_tags', :settings_type => "boolean", :category => "Setting::RhCloud", :default => false, :value => true)
 
-    @host.stubs(:host_inherited_params_objects).returns(
-      [
-        OpenStruct.new(name: 'bool_param', value: true),
-        OpenStruct.new(name: 'false_param', value: false),
-        OpenStruct.new(name: 'int_param', value: 1),
-        OpenStruct.new(name: 'empty_param', value: nil),
-        OpenStruct.new(name: 'empty_str_param', value: ''),
-      ]
+    @host.stubs(:host_params).returns(
+      {
+        'bool_param' => true,
+        'false_param' => false,
+        'int_param' => 1,
+        'empty_param' => nil,
+        'empty_str_param' => '',
+      }
     )
 
     generator = create_generator
@@ -87,14 +87,14 @@ class TagsGeneratorTest < ActiveSupport::TestCase
   test 'skips parameter tags if include_parameter_tags setting is off' do
     FactoryBot.create(:setting, :name => 'include_parameter_tags', :settings_type => "boolean", :category => "Setting::RhCloud", :default => false, :value => false)
 
-    @host.stubs(:host_inherited_params_objects).returns(
-      [
-        OpenStruct.new(name: 'bool_param', value: true),
-        OpenStruct.new(name: 'false_param', value: false),
-        OpenStruct.new(name: 'int_param', value: 1),
-        OpenStruct.new(name: 'empty_param', value: nil),
-        OpenStruct.new(name: 'empty_str_param', value: ''),
-      ]
+    @host.stubs(:host_params).returns(
+      {
+        'bool_param' => true,
+        'false_param' => false,
+        'int_param' => 1,
+        'empty_param' => nil,
+        'empty_str_param' => '',
+      }
     )
 
     generator = create_generator
