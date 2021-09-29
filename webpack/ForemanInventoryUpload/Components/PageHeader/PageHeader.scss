@@ -1,5 +1,21 @@
 .rh-cloud-inventory-page {
   .inventory-upload-header {
+    margin-top: 35px;
+
+    h1 {
+      font-family: 'RedHatDisplay';
+      font-weight: 400;
+      margin: 0;
+    }
+
+    p {
+      font-size: 16px;
+    }
+
+    .pf-c-dropdown__toggle {
+      margin-right: -20px;
+    }
+
     .settings-alert {
       margin-bottom: 30px;
       .pf-c-alert {
@@ -18,10 +34,7 @@
 
     .inventory-upload-header-title {
       margin-top: -15px;
-
-      h1 {
-        margin: 0;
-      }
+      margin-bottom: 8px;
     }
 
     .title-dropdown {
