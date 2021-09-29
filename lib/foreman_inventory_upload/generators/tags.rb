@@ -19,8 +19,7 @@ module ForemanInventoryUpload
       def generate_parameters
         return [] unless Setting[:include_parameter_tags]
 
-        (@host.host_inherited_params_objects || [])
-          .map { |item| [item.name, item.value] }
+        (@host.host_params || {})
           .select { |_name, value| value.present? || value.is_a?(FalseClass) }
       end
 
