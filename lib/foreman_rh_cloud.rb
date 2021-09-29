@@ -98,7 +98,18 @@ module ForemanRhCloud
 
   # For testing purposes we can override the default hostname with an environment variable SATELLITE_RH_CLOUD_FOREMAN_HOST
   def self.foreman_host
-    @foreman_host ||= ::Host.unscoped.friendly.find(ENV['SATELLITE_RH_CLOUD_FOREMAN_HOST'] || ::SmartProxy.default_capsule.name)
+    @foreman_host ||= begin
+                        fullname = foreman_host_name
+                        ::Host.unscoped.friendly.find(fullname)
+                      rescue ActiveRecord::RecordNotFound
+                        # fullname didn't work. Let's try shortname
+                        shortname = /(?<shortname>[^\.]*)\.?.*/.match(fullname)[:shortname]
+                        ::Host.unscoped.friendly.find(shortname)
+                      end
+  end
+
+  def self.foreman_host_name
+    ENV['SATELLITE_RH_CLOUD_FOREMAN_HOST'] || ::SmartProxy.default_capsule.name
   end
 
   def self.legacy_insights_ca
