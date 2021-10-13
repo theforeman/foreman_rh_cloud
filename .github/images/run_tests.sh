@@ -23,6 +23,8 @@ else
 fi
 
 bundle exec rails db:migrate
+# use cache with ttl = 10 weeks, if newer packages are desired, rebuild the container
+npm-proxy-cache -t 6048000 &
 bundle exec npm i
 bundle exec ./script/npm_install_plugins.js
 bundle exec rake foreman_rh_cloud:rubocop

@@ -35,15 +35,23 @@ WORKDIR /projects/foreman
 RUN \
   source scl_source enable $SCLS; \
   gem install bundler:1.17.3; \
-  bundle config path vendor/bundle
+  bundle config path vendor/bundle; \
+  npm install npm-proxy-cache -g; \
+  npm config set proxy http://localhost:8080/; \
+  npm config set https-proxy http://localhost:8080/; \
+  npm config set strict-ssl false
 RUN \
   source scl_source enable $SCLS; \
-  bundle install --jobs=3 --retry=3 --without journald development console; \
+  bundle install --jobs=3 --retry=3 --without journald development console 
+RUN \
+  source scl_source enable $SCLS; \
+  npm-proxy-cache & \
   bundle exec npm install
 
-# RUN \
-#   source scl_source enable $SCLS; \
-#   bundle exec ./script/npm_install_plugins.js
+RUN \
+  source scl_source enable $SCLS; \
+  npm-proxy-cache & \
+  bundle exec ./script/npm_install_plugins.js
 
 COPY ./entrypoint.sh /usr/bin/
 
