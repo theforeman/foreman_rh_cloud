@@ -1,35 +1,49 @@
 PATH
+  remote: ../foreman-tasks
+  specs:
+    foreman-tasks (4.1.5)
+      dynflow (>= 1.2.3)
+      foreman-tasks-core
+      get_process_mem
+      parse-cron (~> 0.1.4)
+      sinatra
+    foreman-tasks-core (0.3.6)
+      dynflow (>= 1.2.0)
+
+PATH
   remote: ../foreman_rh_cloud
   specs:
-    foreman_rh_cloud (3.0.15)
+    foreman_rh_cloud (4.0.27)
+      foreman-tasks
       foreman_ansible
       katello
 
 PATH
   remote: ../katello
   specs:
-    katello (3.18.0.rc1)
+    katello (4.1.4)
       activerecord-import
       anemone
       angular-rails-templates (~> 1.1.0)
       apipie-rails (>= 0.5.14)
       deface (>= 1.0.2, < 2.0.0)
-      dynflow (>= 1.2.0)
-      foreman-tasks (>= 0.14.1)
+      dynflow (< 1.6.0)
+      foreman-tasks (~> 4.0)
+      foreman-tasks-core (< 0.4)
       foreman_remote_execution (>= 3.0)
       fx (< 1.0)
       gettext_i18n_rails
       json
       oauth
       pg
-      pulp_2to3_migration_client (>= 0.3.0, < 0.6.0, != 0.4.0)
-      pulp_ansible_client (>= 0.2, < 0.5)
+      pulp_ansible_client (>= 0.8, < 0.9)
       pulp_certguard_client (< 2.0)
-      pulp_container_client (>= 2.0.0, < 2.2.0)
-      pulp_deb_client (>= 2.6.0, < 2.8.0)
-      pulp_file_client (>= 1.2.0, < 1.4.0)
-      pulp_rpm_client (>= 3.6.2, < 3.8.0)
-      pulpcore_client (>= 3.6.0, < 3.8.0)
+      pulp_container_client (>= 2.7.0, < 2.8.0)
+      pulp_deb_client (>= 2.13.0, < 2.14.0)
+      pulp_file_client (>= 1.8.0, < 1.9.0)
+      pulp_rpm_client (>= 3.13.0, < 3.15.0)
+      pulpcore_client (>= 3.14.0, < 3.15.0)
+      qpid_proton
       rabl
       rails
       rest-client
@@ -84,7 +98,7 @@ GEM
     activerecord (6.0.3.6)
       activemodel (= 6.0.3.6)
       activesupport (= 6.0.3.6)
-    activerecord-import (1.0.8)
+    activerecord-import (1.2.0)
       activerecord (>= 3.2)
     activerecord-nulldb-adapter (0.7.0)
       activerecord (>= 5.2.0, < 6.3)
@@ -105,6 +119,8 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
+    acts_as_list (1.0.4)
+      activerecord (>= 4.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     algebrick (0.7.5)
@@ -133,7 +149,7 @@ GEM
       execjs
     bcrypt (3.1.16)
     benchmark-ips (2.8.4)
-    binding_of_caller (1.0.0)
+    binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
     bootsnap (1.7.3)
       msgpack (~> 1.0)
@@ -189,7 +205,7 @@ GEM
       polyglot
       rails (>= 5.2)
       rainbow (>= 2.1.0)
-    docile (1.3.5)
+    docile (1.4.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     dynflow (1.4.7)
@@ -246,12 +262,12 @@ GEM
       fog-core (~> 2.1)
       fog-json (>= 1.0)
       ipaddress (>= 0.8)
-    fog-ovirt (1.2.5)
+    fog-ovirt (2.0.1)
+      activesupport
       fog-core
       fog-json
       fog-xml
-      ovirt-engine-sdk (>= 4.1.3)
-      rbovirt (~> 0.1.5)
+      ovirt-engine-sdk (>= 4.3.1)
     fog-vsphere (3.5.0)
       fog-core
       rbvmomi (>= 1.9, < 3)
@@ -261,26 +277,19 @@ GEM
     font-awesome-sass (4.6.2)
       sass (>= 3.2)
     foreman (0.87.2)
-    foreman-tasks (3.0.3)
-      dynflow (>= 1.2.3)
-      foreman-tasks-core
-      get_process_mem
-      parse-cron (~> 0.1.4)
-      sinatra
-    foreman-tasks-core (0.3.4)
-      dynflow (>= 1.2.0)
-    foreman_ansible (6.1.1)
+    foreman_ansible (6.4.1)
+      acts_as_list (~> 1.0.3)
       deface (< 2.0)
-      foreman_remote_execution (>= 4.2.0)
+      foreman_remote_execution (>= 4.4.0)
       ipaddress (>= 0.8.0, < 1.0)
     foreman_ansible_core (4.0.0)
       foreman-tasks-core (~> 0.3.2)
       foreman_remote_execution_core (~> 1.1)
       net-ssh
-    foreman_remote_execution (4.2.2)
+    foreman_remote_execution (4.5.6)
       deface
       dynflow (>= 1.0.2, < 2.0.0)
-      foreman-tasks (>= 0.15.1)
+      foreman-tasks (>= 4.1.0)
       foreman_remote_execution_core
     foreman_remote_execution_core (1.4.0)
       foreman-tasks-core (>= 0.3.1)
@@ -342,7 +351,6 @@ GEM
     immigrant (0.3.6)
       activerecord (>= 3.0)
     ipaddress (0.8.3)
-    jaro_winkler (1.5.4)
     journald-logger (3.0.1)
       journald-native (~> 1.0)
     journald-native (1.0.12)
@@ -408,14 +416,14 @@ GEM
     oauth (0.5.5)
     optimist (3.0.1)
     os (1.1.1)
-    ovirt-engine-sdk (4.4.0)
+    ovirt-engine-sdk (4.4.1)
       json (>= 1, < 3)
     paint (2.2.1)
-    parallel (1.20.1)
+    parallel (1.21.0)
     parallel_tests (3.6.0)
       parallel
     parse-cron (0.1.4)
-    parser (3.0.0.0)
+    parser (3.0.2.0)
       ast (~> 2.4.1)
     patternfly-sass (3.59.5)
       bootstrap-sass (~> 3.4.0)
@@ -441,39 +449,34 @@ GEM
     pry-remote (0.1.8)
       pry (~> 0.9)
       slop (~> 3.0)
-    pry-stack_explorer (0.6.0)
-      binding_of_caller (~> 1.0)
+    pry-stack_explorer (0.4.13)
+      binding_of_caller (~> 0.7)
       pry (~> 0.13)
     public_suffix (4.0.6)
-    pulp_2to3_migration_client (0.5.1)
+    pulp_ansible_client (0.8.1)
       faraday (>= 0.14.0)
       json (~> 2.1, >= 2.1.0)
-    pulp_ansible_client (0.4.3)
+    pulp_certguard_client (1.5.1)
       faraday (>= 0.14.0)
       json (~> 2.1, >= 2.1.0)
-    pulp_certguard_client (1.1.0)
+    pulp_container_client (2.7.1)
       faraday (>= 0.14.0)
       json (~> 2.1, >= 2.1.0)
-    pulp_container_client (2.1.0)
+    pulp_deb_client (2.13.1)
       faraday (>= 0.14.0)
       json (~> 2.1, >= 2.1.0)
-    pulp_deb_client (2.7.0)
+    pulp_file_client (1.8.2)
       faraday (>= 0.14.0)
       json (~> 2.1, >= 2.1.0)
-    pulp_file_client (1.3.0)
+    pulp_rpm_client (3.14.6)
       faraday (>= 0.14.0)
       json (~> 2.1, >= 2.1.0)
-    pulp_rpm_client (3.7.0)
+    pulpcore_client (3.14.8)
       faraday (>= 0.14.0)
       json (~> 2.1, >= 2.1.0)
-    pulpcore_client (3.7.3)
-      faraday (>= 0.14.0)
-      json (~> 2.1, >= 2.1.0)
-    puma (4.3.7)
+    puma (5.5.2)
       nio4r (~> 2.0)
-    puma-plugin-systemd (0.1.5)
-      json
-      puma (>= 3.6, < 5)
+    qpid_proton (0.33.0)
     rabl (0.14.3)
       activesupport (>= 2.3.14)
     racc (1.5.2)
@@ -527,9 +530,6 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    rbovirt (0.1.7)
-      nokogiri
-      rest-client (> 1.7.0)
     rbvmomi (2.4.1)
       builder (~> 3.0)
       json (>= 1.8)
@@ -553,7 +553,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     retriable (3.1.2)
-    rexml (3.2.4)
+    rexml (3.2.5)
     rfauxfactory (0.1.5)
     roadie (4.0.0)
       css_parser (~> 1.4)
@@ -564,23 +564,30 @@ GEM
     robotex (1.0.0)
     robottelo_reporter (0.1.1)
       builder (>= 2.1.2)
-    rubocop (0.80.1)
-      jaro_winkler (~> 1.5.1)
+    rubocop (0.89.1)
       parallel (~> 1.10)
-      parser (>= 2.7.0.1)
+      parser (>= 2.7.1.1)
       rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.7)
       rexml
+      rubocop-ast (>= 0.3.0, < 1.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 1.4.0, < 1.7)
+      unicode-display_width (>= 1.4.0, < 2.0)
+    rubocop-ast (0.8.0)
+      parser (>= 2.7.1.5)
     rubocop-checkstyle_formatter (0.4.0)
       rubocop (>= 0.35.1)
-    rubocop-minitest (0.7.0)
-      rubocop (>= 0.74)
-    rubocop-performance (1.5.2)
-      rubocop (>= 0.71.0)
-    rubocop-rails (2.4.2)
+    rubocop-minitest (0.10.3)
+      rubocop (>= 0.87, < 2.0)
+    rubocop-performance (1.8.1)
+      rubocop (>= 0.87.0)
+      rubocop-ast (>= 0.4.0)
+    rubocop-rails (2.8.1)
+      activesupport (>= 4.2.0)
       rack (>= 1.1)
-      rubocop (>= 0.72.0)
+      rubocop (>= 0.87.0)
+    rubocop-rspec (1.43.2)
+      rubocop (~> 0.87)
     ruby-libvirt (0.7.1)
     ruby-openid (2.9.2)
     ruby-progressbar (1.11.0)
@@ -647,7 +654,7 @@ GEM
     simplecov-html (0.12.3)
     simplecov-rcov (0.2.3)
       simplecov (>= 0.4.1)
-    simplecov_json_formatter (0.1.2)
+    simplecov_json_formatter (0.1.3)
     sinatra (2.1.0)
       mustermann (~> 1.0)
       rack (~> 2.2)
@@ -664,10 +671,18 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sqlite3 (1.4.2)
     sshkey (1.9.0)
     statsd-instrument (2.9.2)
     stomp (1.4.10)
     text (1.3.1)
+    theforeman-rubocop (0.0.6)
+      rubocop (~> 0.89.0)
+      rubocop-checkstyle_formatter (~> 0.4.0)
+      rubocop-minitest (~> 0.10.1)
+      rubocop-performance (~> 1.8.1)
+      rubocop-rails (~> 2.8.1)
+      rubocop-rspec (~> 1.43.2)
     thor (1.1.0)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -679,7 +694,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.7)
-    unicode-display_width (1.6.1)
+    unicode-display_width (1.8.0)
     uniform_notifier (1.13.2)
     validates_lengths_from_database (0.8.0)
       activerecord (>= 4)
@@ -717,6 +732,7 @@ DEPENDENCIES
   benchmark-ips (>= 2.8.2)
   bootsnap
   bullet (>= 6.1.0)
+  byebug
   capybara (~> 3.0, < 3.32.1)
   ci_reporter_minitest
   coffee-rails (~> 5.0.0)
@@ -732,12 +748,14 @@ DEPENDENCIES
   fog-aws (>= 3.6.2, < 4)
   fog-core (= 2.1.0)
   fog-google (~> 1.11.0)
-  fog-libvirt (>= 0.7.0)
+  fog-libvirt (>= 0.8.0)
   fog-openstack (>= 1.0.8, < 2.0.0)
-  fog-ovirt (~> 1.2.5)
-  fog-vsphere (>= 3.3.1, < 4.0)
+  fog-ovirt (>= 2.0.1, < 3)
+  fog-vsphere (>= 3.5.0, < 4.0)
   foreman
+  foreman-tasks!
   foreman_ansible_core
+  foreman_remote_execution (~> 4.5.6)
   foreman_rh_cloud!
   friendly_id (>= 5.3.0, < 5.4)
   get_process_mem
@@ -751,10 +769,10 @@ DEPENDENCIES
   i18n (~> 1.1)
   immigrant (~> 0.1)
   jquery-ui-rails (~> 6.0)
-  jwt (~> 2.2.1)
+  jwt (~> 2.2.2)
   katello!
   launchy (~> 2.4)
-  ldap_fluff (>= 0.4.7, < 1.0)
+  ldap_fluff (>= 0.5.0, < 1.0)
   logging (>= 1.8.0, < 3.0.0)
   logging-journald (~> 2.0)
   mail (~> 2.7)
@@ -780,8 +798,8 @@ DEPENDENCIES
   pry-rails
   pry-remote
   pry-stack_explorer
-  puma (< 5.0)
-  puma-plugin-systemd
+  puma (~> 5.1)
+  qpid_proton (~> 0.33.0)
   rabl (~> 0.14.2)
   rack-cors (~> 1.0.2)
   rack-jsonp
@@ -799,11 +817,10 @@ DEPENDENCIES
   rfauxfactory (~> 0.1, >= 0.1.5)
   roadie-rails (~> 2.0)
   robottelo_reporter (~> 0.1)
-  rubocop (~> 0.80.0)
-  rubocop-checkstyle_formatter (~> 0.2)
-  rubocop-minitest (~> 0.7.0)
-  rubocop-performance (~> 1.5.2)
-  rubocop-rails (~> 2.4.2)
+  rubocop
+  rubocop-checkstyle_formatter
+  rubocop-performance
+  rubocop-rails
   ruby-libvirt (~> 0.5)
   safemode (>= 1.3.5, < 2)
   sass-rails (~> 6.0)
@@ -821,8 +838,10 @@ DEPENDENCIES
   spring (>= 1.0, < 3)
   sprockets (~> 4.0)
   sprockets-rails (~> 3.0)
+  sqlite3
   sshkey (~> 1.9)
   statsd-instrument (< 3)
+  theforeman-rubocop (~> 0.0.6)
   uglifier (>= 1.0.3)
   validates_lengths_from_database (~> 0.5)
   vcr (< 4.0.0)
