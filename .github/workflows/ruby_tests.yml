@@ -1,9 +1,9 @@
-name: Ruby tests
+me: Ruby tests
 on:
   push:
-    branches: [master, foreman_2_1, foreman_1_24]
+    branches: [master, foreman_2_3, foreman_2_5]
   pull_request:
-    branches: [master, foreman_2_1, foreman_1_24]
+    branches: [master, foreman_2_3, foreman_2_5]
 
 defaults:
   run:
@@ -11,17 +11,23 @@ defaults:
 
 jobs:
   test_ruby:
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}/projects/foreman
     env:
-      PGHOST: 127.0.0.1
+      PGHOST: postgres
       PGUSER: foreman
       RAILS_ENV: test
+      SCL_PREFIX: "scl enable rh-ruby25 rh-nodejs12 sclo-git25 rh-postgresql12 -- "
+      GIT_COMMITTER_NAME: "gh_actions"
+      GIT_COMMITTER_EMAIL: "gh_actions@rh_cloud.foreman"
 
     runs-on: ubuntu-latest
+    container: centos:7
 
     services:
-      db:
+      postgres:
         image: quay.io/jomitsch/postgres-with-evr
-        ports: ['5432:5432']
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -41,21 +47,19 @@ jobs:
         with:
           repository: theforeman/foreman
           path: ${{ github.workspace }}/projects/foreman # checkout Foreman and foreman_rh_cloud as siblings, same as dev env
-          ref: 2.3-stable
+          ref: 2.5-stable
       - name: Checkout Katello repo
         uses: actions/checkout@v2
         with:
           repository: Katello/katello
           path: ${{ github.workspace }}/projects/katello # checkout Foreman and foreman_rh_cloud as siblings, same as dev env
-          ref: KATELLO-3.18
+          ref: KATELLO-4.1
       - name: Checkout Foreman-tasks repo
         uses: actions/checkout@v2
         with:
           repository: theforeman/foreman-tasks
           path: ${{ github.workspace }}/projects/foreman-tasks # checkout Foreman and foreman_rh_cloud as siblings, same as dev env
-          ref: v3.0.5
-      - name: check for postgres
-        run: file /usr/share/postgresql/12/extension/
+          ref: v4.1.5
       - name: Cache bundler
         uses: actions/cache@v2
         with:
@@ -70,24 +74,20 @@ jobs:
           key: ${{ runner.os }}-npm-2_3-${{ hashFiles('projects/foreman_rh_cloud/config/package-lock.json.gh_test') }}
           restore-keys: |
             ${{ runner.os }}-npm-2_3
-      - name: Set up Ruby 2.6
-        uses: actions/setup-ruby@v1
-        with:
-          ruby-version: 2.6
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
       - name: Install system dependencies
         run: |
-          sudo apt-get update -yqq
-          sudo apt-get -yqq install libsystemd-dev make tar git ruby-libvirt build-essential patch ruby-dev zlib1g-dev liblzma-dev libxml2-dev libcurl4-openssl-dev libpq-dev qemu-kvm libvirt-daemon-system libvirt-dev nodejs
+          yum install -y centos-release-scl epel-release
+          yum install -y systemd-devel make tar libvirt-devel rh-ruby25-ruby-devel zlib-devel libxml2-devel openssl-libs libvirt-devel nodejs rh-ruby25-rubygems automake gcc gcc-c++ kernel-devel libcurl-devel sqlite-devel rh-nodejs12-npm sclo-git25 rh-postgresql12-postgresql-devel qpid-proton-cpp-devel
+          adduser $GIT_COMMITTER_NAME
+          $SCL_PREFIX git config --global user.name $GIT_COMMITTER_NAME
+          $SCL_PREFIX git config --global user.email $GIT_COMMITTER_EMAIL
       - name: Add local plugins to Gemfile
         run: |
           echo "gemspec :path => '../foreman_rh_cloud', :development_group => :dev" > bundler.d/foreman_rh_cloud.local.rb
           echo "gemspec :path => '../katello', :development_group => :dev" > bundler.d/katello.local.rb
           echo "gemspec :path => '../foreman-tasks', :development_group => :dev, :name => 'foreman-tasks'" > bundler.d/foreman-tasks.local.rb
-          echo "gem 'foreman_remote_execution', '< 4.3.0'" > bundler.d/foreman_remote_execution.local.rb
+          echo "gem 'foreman_remote_execution', '~> 4.5.6'" > bundler.d/foreman_remote_execution.local.rb
+          echo "gem 'qpid_proton', '~> 0.33.0'" >> bundler.d/katello.local.rb
       - name: Copy configuration files
         run: |
           cp ../foreman_rh_cloud/config/database.yml.example config/database.yml
@@ -95,22 +95,25 @@ jobs:
           cp ../foreman_rh_cloud/config/package-lock.json.gh_test package-lock.json
       - name: Bundle install
         run: |
-          gem install bundler
-          bundle config path vendor/bundle
-          bundle install --jobs=3 --retry=3 --without journald development mysql2 console
+          $SCL_PREFIX gem install bundler:1.17.3
+          $SCL_PREFIX bundle config path vendor/bundle
+          $SCL_PREFIX bundle install --jobs=3 --retry=3 --without journald development mysql2 console
       - name: npm install
-        run: npm ci
+        run: |
+          $SCL_PREFIX npm install
       - name: Create database
         run: |
-          bundle exec rails db:create
-          bundle exec rails db:create RAILS_ENV=production
+          $SCL_PREFIX bundle exec rails db:create
+          $SCL_PREFIX bundle exec rails db:create RAILS_ENV=production
       - name: Migrate database
-        run: bundle exec rails db:migrate
+        run: $SCL_PREFIX bundle exec rails db:migrate
+      - name: npm install plugins
+        run: $SCL_PREFIX ./script/npm_install_plugins.js
       - name: Run Rubocop
-        run: bundle exec rake foreman_rh_cloud:rubocop
+        run: $SCL_PREFIX bundle exec rake foreman_rh_cloud:rubocop
       - name: Run tests
-        run: bundle exec rake test:foreman_rh_cloud
+        run: $SCL_PREFIX bundle exec rake test:foreman_rh_cloud
       - name: Precompile assets
-        run: bundle exec rake "plugin:assets:precompile[foreman_rh_cloud]" RAILS_ENV=production
+        run: $SCL_PREFIX bundle exec rake "plugin:assets:precompile[foreman_rh_cloud]" RAILS_ENV=production
       - name: Webpack compile
-        run: bundle exec rake webpack:compile
+        run: $SCL_PREFIX bundle exec rake webpack:compile
