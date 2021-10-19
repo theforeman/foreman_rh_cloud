@@ -12,7 +12,6 @@ class Setting::RhCloud < Setting
   end
 
   def self.default_settings
-    return unless ActiveRecord::Base.connection.table_exists?('settings')
     [
       set('allow_auto_inventory_upload', N_('Enable automatic upload of your host inventory to the Red Hat cloud'), true, N_('Automatic inventory upload')),
       set('allow_auto_insights_sync', N_('Enable automatic synchronization of Insights recommendations from the Red Hat cloud'), false, N_('Synchronize recommendations Automatically')),
