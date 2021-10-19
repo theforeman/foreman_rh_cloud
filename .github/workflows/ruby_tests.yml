@@ -1,4 +1,4 @@
-me: Ruby tests
+name: Ruby tests
 on:
   push:
     branches: [master, foreman_2_3, foreman_2_5]
