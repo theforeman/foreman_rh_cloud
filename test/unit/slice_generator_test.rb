@@ -22,7 +22,13 @@ class SliceGeneratorTest < ActiveSupport::TestCase
       location: location
     )
 
-    @host.organization.pools << FactoryBot.create(:katello_pool, account_number: '1234', cp_id: 1)
+    @host.organization.pools << FactoryBot.create(
+      :katello_pool,
+      account_number: '1234',
+      cp_id: 1,
+      organization: env.organization,
+      subscription: FactoryBot.create(:katello_subscription, organization_id: env.organization.id)
+    )
     @host.interfaces.first.identifier = 'test_nic1'
     @host.save!
 
@@ -457,9 +463,23 @@ class SliceGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'reports an account for hosts with multiple pools' do
-    first_pool = @host.organization.pools.first
-    second_pool = FactoryBot.create(:katello_pool, account_number: nil, cp_id: 2)
-    new_org = FactoryBot.create(:organization, pools: [first_pool, second_pool])
+    new_org = FactoryBot.create(:organization)
+    first_pool = FactoryBot.create(
+      :katello_pool,
+      account_number: '5678',
+      cp_id: 2,
+      organization: new_org,
+      subscription: FactoryBot.create(:katello_subscription, organization_id: new_org.id)
+    )
+    second_pool = FactoryBot.create(
+      :katello_pool,
+      account_number: '9012',
+      cp_id: 3,
+      organization: new_org,
+      subscription: FactoryBot.create(:katello_subscription, organization_id: new_org.id)
+    )
+    new_org.pools << first_pool
+    new_org.pools << second_pool
 
     another_host = FactoryBot.create(
       :host,

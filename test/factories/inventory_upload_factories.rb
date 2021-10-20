@@ -55,9 +55,23 @@ FactoryBot.define do
 end
 
 FactoryBot.define do
+  factory :katello_subscription, :class => Katello::Subscription do
+  end
+end
+
+FactoryBot.define do
   factory :katello_pool, :class => Katello::Pool do
     active { true }
     end_date { Date.today + 1.year }
+    cp_id { 1 }
+
+    association :organization, :factory => :katello_organization
+
+    after(:build) do |pool, _evaluator|
+      pool.subscription.organization = pool.organization
+    end
+
+    association :subscription, :factory => :katello_subscription
   end
 end
 
