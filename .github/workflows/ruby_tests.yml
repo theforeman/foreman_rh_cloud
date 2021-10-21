@@ -7,13 +7,13 @@ on:
 
 defaults:
   run:
-    working-directory: ./projects/foreman
+    working-directory: /projects/foreman
 
 jobs:
   test_ruby:
     defaults:
       run:
-        working-directory: ${{ github.workspace }}/projects/foreman
+        working-directory: /projects/foreman
     env:
       PGHOST: postgres
       PGUSER: foreman
@@ -28,8 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: quay.io/shimshtein/tfm_plugin_test:foreman_2_5
-      volumes:
-        - ${{ github.workspace }}/projects/foreman_rh_cloud:/projects/foreman_rh_cloud
+        #      volumes:
+        #- ${{ github.workspace }}/projects/foreman_rh_cloud:/projects/foreman_rh_cloud
 
     services:
       postgres:
@@ -50,6 +50,7 @@ jobs:
           path: ${{ github.workspace }}/projects/foreman_rh_cloud
       - name: Fix git config
         run: |
+          cp -Rf $GITHUB_WORKSPACE/projects/foreman_rh_cloud /projects/
           cd /projects/foreman
           /usr/bin/entrypoint.sh git config --global user.name $GIT_COMMITTER_NAME
           /usr/bin/entrypoint.sh git config --global user.email $GIT_COMMITTER_EMAIL

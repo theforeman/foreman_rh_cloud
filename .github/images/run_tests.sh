@@ -27,6 +27,9 @@ bundle exec rails db:migrate
 npm-proxy-cache -t 6048000 &
 bundle exec npm i
 bundle exec ./script/npm_install_plugins.js
+
+set -e
+
 bundle exec rake foreman_rh_cloud:rubocop
 bundle exec rake test:foreman_rh_cloud
 bundle exec rake "plugin:assets:precompile[foreman_rh_cloud]" RAILS_ENV=production
