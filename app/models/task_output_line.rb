@@ -1,0 +1,2 @@
+class TaskOutputLine < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class TaskOutputStatus < ApplicationRecord
+end
