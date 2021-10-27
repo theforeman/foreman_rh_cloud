@@ -6,6 +6,7 @@ module ForemanInventoryUpload
       end
 
       def self.register(label)
+        TaskOutputLine.where(label: @label).delete_all
         ProgressOutput.new(label, :writer)
       end
 
@@ -14,47 +15,23 @@ module ForemanInventoryUpload
         @mode = mode
       end
 
-      def buffer
-        @buffer ||= begin
-                      File.open(file_name, file_mode)
-                    rescue Errno::ENOENT
-                      StringIO.new
-                    end
-      end
-
       def full_output
-        buffer.read
+        TaskOutputLine.where(label: @label).order(:created_at).pluck(:line).join("\n")
       end
 
       def write_line(line)
-        buffer << line
-        buffer.fsync
+        TaskOutputLine.create!(label: @label, line: line)
       end
 
       def close
-        @buffer&.close
       end
 
       def status
-        File.read(file_name(:status))
-      rescue Errno::ENOENT
-        ''
+        TaskOutputStatus.where(label: @label).pluck(:status).first || ''
       end
 
       def status=(status)
-        File.atomic_write(file_name(:status)) do |status_file|
-          status_file.write(status)
-        end
-      end
-
-      private
-
-      def file_mode
-        (@mode == :reader) ? 'r' : 'w'
-      end
-
-      def file_name(type = 'out')
-        File.join(ForemanInventoryUpload.outputs_folder, "#{@label}.#{type}")
+        TaskOutputStatus.upsert({ label: @label, status: status }, unique_by: :label)
       end
     end
   end
