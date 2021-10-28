@@ -7,6 +7,7 @@ exports[`InsightsCloudSync helpers should return insights cloud Url 1`] = `
   id="rh-cloud-switcher-some-id"
   isChecked={true}
   isDisabled={false}
+  isReversed={false}
   label={
     <div>
       some-label
