@@ -60,7 +60,10 @@ exports[`InsightsTable rendering render with Props 1`] = `
     dropdownPosition="right"
     expandId="expandable-toggle"
     gridBreakPoint="grid-md"
+    isHeaderSelectDisabled={false}
+    isNested={false}
     isStickyHeader={false}
+    isTreeTable={false}
     onSelect={[Function]}
     onSort={[Function]}
     ouiaSafe={true}
@@ -77,7 +80,7 @@ exports[`InsightsTable rendering render with Props 1`] = `
     variant="compact"
   >
     <TableHeader />
-    <Component />
+    <TableBody />
   </Table>
   <TableEmptyState
     error={null}

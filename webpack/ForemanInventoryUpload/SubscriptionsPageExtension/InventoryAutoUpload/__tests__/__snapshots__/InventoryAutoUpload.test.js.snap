@@ -33,7 +33,7 @@ exports[`InventoryAutoUpload rendering render with props 1`] = `
       >
         <Popover
           bodyContent={
-            <UNDEFINED
+            <Memo(Connect(AdvancedSettings))
               autoUploadEnabled={true}
               handleToggle={[Function]}
             />
