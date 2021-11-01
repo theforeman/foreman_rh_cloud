@@ -1,4 +1,12 @@
 .rh-cloud-inventory-page {
+  #main {
+    padding: 0;
+
+    #breadcrumb {
+      display: none;
+    }
+  }
+
   .account-list {
     .pf-c-accordion__toggle {
       margin-top: 10px;

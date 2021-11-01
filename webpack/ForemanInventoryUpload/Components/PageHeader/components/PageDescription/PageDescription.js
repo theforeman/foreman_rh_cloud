@@ -1,24 +1,26 @@
 import React from 'react';
+import { Text } from '@patternfly/react-core';
+
 import { translate as __ } from 'foremanReact/common/I18n';
 
 export const PageDescription = () => (
   <div id="inventory_page_description">
-    <p>
+    <Text>
       {__(
         'Red Hat Insights is a set of cloud services which provide unified subscription reporting, predictive analysis and remediation of issues through this Satellite instance.'
       )}
-    </p>
-    <p>
+    </Text>
+    <Text>
       {__(
         'You can toggle the Auto upload switch to the ON position to enable Satellite to automatically upload your host inventory once a day.'
       )}
-    </p>
-    <p>
+    </Text>
+    <Text>
       {__(
         'Click Restart to upload your host inventory to Red Hat Insights. Perform this step for each organization from which you want to manually upload a host inventory.'
       )}
-    </p>
-    <p>
+    </Text>
+    <Text>
       {__(
         'Enabling inventory uploads is required by subscription watch. For more information about subscription watch see link:'
       )}
@@ -30,8 +32,8 @@ export const PageDescription = () => (
       >
         {__('About subscription watch')}
       </a>
-    </p>
-    <p>
+    </Text>
+    <Text>
       {__('For more information about Insights and Cloud Connector read')}
       &nbsp;
       <a
@@ -41,7 +43,7 @@ export const PageDescription = () => (
       >
         {__('Red Hat Insights Data and Application Security')}
       </a>
-    </p>
+    </Text>
   </div>
 );
 

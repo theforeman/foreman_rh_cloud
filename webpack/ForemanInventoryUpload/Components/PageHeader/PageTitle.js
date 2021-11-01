@@ -4,7 +4,10 @@ import {
   DropdownItem,
   KebabToggle,
   DropdownPosition,
+  Grid,
+  GridItem,
 } from '@patternfly/react-core';
+import Head from 'foremanReact/components/Head';
 import {
   INVENTORY_PAGE_TITLE,
   ACTIONS_HISTORY_BUTTON_TEXT,
@@ -43,23 +46,32 @@ const PageTitle = () => {
     </DropdownItem>,
   ];
   return (
-    <div className="row form-group inventory-upload-header-title">
-      <h1 className="col-md-8">{INVENTORY_PAGE_TITLE}</h1>
-      <Dropdown
-        className="title-dropdown"
-        onSelect={() => setIsDropdownOpen(false)}
-        toggle={<KebabToggle onToggle={isOpen => setIsDropdownOpen(isOpen)} />}
-        isOpen={isDropdownOpen}
-        isPlain
-        dropdownItems={dropdownItems}
-        position={DropdownPosition.right}
-      />
-      <CloudPingModal
-        isOpen={showPingModal}
-        toggle={togglePingModal}
-        title={CLOUD_PING_TITLE}
-      />
-    </div>
+    <Grid className="inventory-upload-header-title">
+      <GridItem span={6}>
+        <Head>
+          <title>{INVENTORY_PAGE_TITLE}</title>
+        </Head>
+        <h1>{INVENTORY_PAGE_TITLE}</h1>
+      </GridItem>
+      <GridItem span={6}>
+        <Dropdown
+          className="title-dropdown"
+          onSelect={() => setIsDropdownOpen(false)}
+          toggle={
+            <KebabToggle onToggle={isOpen => setIsDropdownOpen(isOpen)} />
+          }
+          isOpen={isDropdownOpen}
+          isPlain
+          dropdownItems={dropdownItems}
+          position={DropdownPosition.right}
+        />
+        <CloudPingModal
+          isOpen={showPingModal}
+          toggle={togglePingModal}
+          title={CLOUD_PING_TITLE}
+        />
+      </GridItem>
+    </Grid>
   );
 };
 export default PageTitle;

@@ -4,16 +4,16 @@ exports[`PageDescription rendering render without Props 1`] = `
 <div
   id="inventory_page_description"
 >
-  <p>
+  <Text>
     Red Hat Insights is a set of cloud services which provide unified subscription reporting, predictive analysis and remediation of issues through this Satellite instance.
-  </p>
-  <p>
+  </Text>
+  <Text>
     You can toggle the Auto upload switch to the ON position to enable Satellite to automatically upload your host inventory once a day.
-  </p>
-  <p>
+  </Text>
+  <Text>
     Click Restart to upload your host inventory to Red Hat Insights. Perform this step for each organization from which you want to manually upload a host inventory.
-  </p>
-  <p>
+  </Text>
+  <Text>
     Enabling inventory uploads is required by subscription watch. For more information about subscription watch see link:
      
     <a
@@ -23,8 +23,8 @@ exports[`PageDescription rendering render without Props 1`] = `
     >
       About subscription watch
     </a>
-  </p>
-  <p>
+  </Text>
+  <Text>
     For more information about Insights and Cloud Connector read
      
     <a
@@ -34,6 +34,6 @@ exports[`PageDescription rendering render without Props 1`] = `
     >
       Red Hat Insights Data and Application Security
     </a>
-  </p>
+  </Text>
 </div>
 `;
