@@ -1,21 +1,19 @@
 @import '~@redhat-cloud-services/frontend-components/index.css';
 
-.rh-cloud-insights {
-  .recommendations-table {
-    .pf-c-table__check {
-      input:disabled {
-        display: none;
-      }
+.rh-cloud-recommendations-table {
+  .pf-c-table__check {
+    input:disabled {
+      display: none;
     }
+  }
 
-    .td-insights-remediate-playbook {
-      svg {
-        margin-right: 5px;
-      }
+  .td-insights-remediate-playbook {
+    svg {
+      margin-right: 5px;
     }
+  }
 
-    .td-insights-remediate-manual {
-      padding-left: 18px;
-    }
+  .td-insights-remediate-manual {
+    padding-left: 18px;
   }
 }

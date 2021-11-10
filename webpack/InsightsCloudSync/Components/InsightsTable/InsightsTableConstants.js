@@ -30,22 +30,26 @@ export const hasPlaybookFormatter = ({ title: hasPlaybook }) => ({
 
 export const columns = [
   {
+    id: 'hostname',
     sortKey: 'hostname',
     title: __('Hostname'),
     transforms: [cellWidth(20), sortable],
   },
   {
+    id: 'recommendation',
     sortKey: 'title',
     title: __('Recommendation'),
     transforms: [cellWidth(50), sortable],
   },
   {
+    id: 'total risk',
     sortKey: 'total_risk',
     title: __('Total risk'),
     transforms: [cellWidth(15), sortable],
     cellTransforms: [totalRiskFormatter],
   },
   {
+    id: 'Remediate',
     title: __('Remediate'),
     transforms: [cellWidth(15)],
     cellTransforms: [hasPlaybookFormatter],
@@ -75,3 +79,5 @@ export const INSIGHTS_SET_SELECTED_IDS = 'INSIGHTS_SET_SELECTED_IDS';
 export const INSIGHTS_SET_SELECT_ALL_ALERT = 'INSIGHTS_SET_SELECT_ALL_ALERT';
 
 export const INSIGHTS_SET_SELECT_ALL = 'INSIGHTS_SET_SELECT_ALL';
+
+export const NEW_HOST_PATH = '/new/hosts/';

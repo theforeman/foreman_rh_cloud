@@ -17,6 +17,7 @@ exports[`InsightsTable rendering render with Props 1`] = `
     cells={
       Array [
         Object {
+          "id": "hostname",
           "sortKey": "hostname",
           "title": "Hostname",
           "transforms": Array [
@@ -25,6 +26,7 @@ exports[`InsightsTable rendering render with Props 1`] = `
           ],
         },
         Object {
+          "id": "recommendation",
           "sortKey": "title",
           "title": "Recommendation",
           "transforms": Array [
@@ -36,6 +38,7 @@ exports[`InsightsTable rendering render with Props 1`] = `
           "cellTransforms": Array [
             [Function],
           ],
+          "id": "total risk",
           "sortKey": "total_risk",
           "title": "Total risk",
           "transforms": Array [
@@ -47,6 +50,7 @@ exports[`InsightsTable rendering render with Props 1`] = `
           "cellTransforms": Array [
             [Function],
           ],
+          "id": "Remediate",
           "title": "Remediate",
           "transforms": Array [
             [Function],
@@ -54,7 +58,7 @@ exports[`InsightsTable rendering render with Props 1`] = `
         },
       ]
     }
-    className="recommendations-table"
+    className="rh-cloud-recommendations-table"
     contentId="expanded-content"
     dropdownDirection="down"
     dropdownPosition="right"
