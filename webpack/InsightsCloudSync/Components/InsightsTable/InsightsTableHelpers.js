@@ -1,15 +1,20 @@
 /* eslint-disable camelcase */
-import { columns } from './InsightsTableConstants';
-
-export const modifySelectedRows = (hits, selectedIds, showSelectAllAlert) => {
+export const modifySelectedRows = (
+  hits,
+  selectedIds,
+  showSelectAllAlert,
+  hideHost
+) => {
   if (hits.length === 0) return [];
 
   return hits
     .asMutable()
     .map(({ id, hostname, title, total_risk, has_playbook }) => {
       const disableCheckbox = !has_playbook;
+      const cells = [hostname, title, total_risk, has_playbook];
+      if (hideHost) cells.shift();
       return {
-        cells: [hostname, title, total_risk, has_playbook],
+        cells,
         disableCheckbox,
         id,
         /** The main table checkbox will be seen as selected only if all rows are selected,
@@ -19,7 +24,7 @@ export const modifySelectedRows = (hits, selectedIds, showSelectAllAlert) => {
     });
 };
 
-export const getSortColumnIndex = sortBy => {
+export const getSortColumnIndex = (columns, sortBy) => {
   let colIndex = 0;
   columns.forEach((col, index) => {
     if (col.sortKey === sortBy) {

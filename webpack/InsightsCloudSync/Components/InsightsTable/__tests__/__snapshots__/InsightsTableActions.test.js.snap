@@ -31,7 +31,6 @@ Array [
       "payload": Object {
         "args": Array [
           Object {
-            "pathname": "/foreman_rh_cloud/insights_cloud",
             "search": "?page=2&per_page=7&search=&sort_by=&sort_order=&select_all=true",
           },
         ],

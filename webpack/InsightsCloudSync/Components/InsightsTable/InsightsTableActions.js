@@ -2,14 +2,13 @@ import URI from 'urijs';
 import { push } from 'connected-react-router';
 import { get } from 'foremanReact/redux/API';
 import { selectQueryParams } from './InsightsTableSelectors';
-import { INSIGHTS_PATH } from '../../InsightsCloudSyncConstants';
 import {
-  columns,
   INSIGHTS_HITS_API_KEY,
   INSIGHTS_HITS_PATH,
   INSIGHTS_SET_SELECTED_IDS,
   INSIGHTS_SET_SELECT_ALL_ALERT,
   INSIGHTS_SET_SELECT_ALL,
+  NEW_HOST_PATH,
 } from './InsightsTableConstants';
 
 export const fetchInsights = (queryParams = {}) => (dispatch, getState) => {
@@ -29,15 +28,18 @@ export const fetchInsights = (queryParams = {}) => (dispatch, getState) => {
     select_all: isSelectAll,
   });
 
-  dispatch(
-    push({
-      pathname: INSIGHTS_PATH,
-      search: uri.search(),
-    })
-  );
+  updateUrl(uri, dispatch);
 
   if (!isSelectAll) {
     dispatch(setSelectAllAlert(false));
+  }
+
+  let search = query;
+  if (isNewHostPage(uri)) {
+    const hostname = uri.pathname().split('/new/hosts/')[1];
+    const hostQuery = `hostname = ${hostname}`;
+    const q = query?.trim();
+    search = q ? `${hostQuery} AND (${q})` : hostQuery;
   }
 
   return dispatch(
@@ -47,7 +49,7 @@ export const fetchInsights = (queryParams = {}) => (dispatch, getState) => {
       params: {
         page,
         per_page: perPage,
-        search: query,
+        search,
         order: `${sortBy} ${sortOrder}`,
       },
       handleSuccess: response => {
@@ -96,7 +98,7 @@ export const clearAllSelection = () => dispatch => {
   dispatch(setSelectAll(false));
 };
 
-export const onTableSort = (_event, index, direction) => {
+export const onTableSort = (columns, index, direction) => {
   // The checkbox column shifts the data columns by 1;
   const { sortKey } = columns[index - 1];
   return fetchInsights({
@@ -144,11 +146,16 @@ export const onTableSelect = (
 const setSelectAllUrl = selectAllValue => dispatch => {
   const uri = new URI();
   uri.setSearch({ select_all: selectAllValue });
-
-  dispatch(
-    push({
-      pathname: INSIGHTS_PATH,
-      search: uri.search(),
-    })
-  );
+  updateUrl(uri, dispatch);
 };
+
+const updateUrl = (uri, dispatch) => {
+  const nextUrlParams = { search: uri.search() };
+  if (isNewHostPage(uri)) {
+    // we need to keep the hash so the insights tab will remain selected in the new host details page.
+    nextUrlParams.hash = '/Insights';
+  }
+  dispatch(push(nextUrlParams));
+};
+
+const isNewHostPage = uri => uri.pathname().includes(NEW_HOST_PATH);

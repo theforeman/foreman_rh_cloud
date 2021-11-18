@@ -1,6 +1,7 @@
 import React from 'react';
 import { addGlobalFill } from 'foremanReact/components/common/Fill/GlobalFill';
 import InventoryAutoUploadSwitcher from './ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload';
+import NewHostDetailsTab from './InsightsHostDetailsTab/NewHostDetailsTab';
 
 const fills = [
   {
@@ -8,6 +9,12 @@ const fills = [
     name: 'InventoryAutoUpload',
     component: () => <InventoryAutoUploadSwitcher />,
     weight: 50,
+  },
+  {
+    slot: 'host-details-page-tabs',
+    name: 'Insights',
+    component: props => <NewHostDetailsTab {...props} />,
+    weight: 700,
   },
 ];
 

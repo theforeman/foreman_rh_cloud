@@ -6,18 +6,4 @@
       margin-top: 5px;
     }
   }
-
-  // applies to the backdrop parent of the modal
-  @at-root .pf-c-backdrop {
-    width: calc(100% - 200px);
-    left: 200px;
-  }
-
-  // where the vertical nav breaks: https://github.com/theforeman/foreman/blob/3347fa49d500964f0209122d8d36c920d1feafcc/webpack/assets/javascripts/react_app/components/Layout/components/Toolbar/HeaderToolbar.scss#L26
-  @media (max-width: 768px) {
-    @at-root .pf-c-backdrop {
-      width: 100%;
-      left: 0;
-    }
-  }
 }

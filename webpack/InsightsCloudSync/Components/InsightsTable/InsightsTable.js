@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { useForemanSettings } from 'foremanReact/Root/Context/ForemanContext';
 import SelectAllAlert from './SelectAllAlert';
-import { columns } from './InsightsTableConstants';
+import { columns as defaultColumns } from './InsightsTableConstants';
 import TableEmptyState from '../../../common/table/EmptyState';
 import { modifySelectedRows, getSortColumnIndex } from './InsightsTableHelpers';
 import Pagination from './Pagination';
@@ -27,10 +27,12 @@ const InsightsTable = ({
   clearAllSelection,
   error,
   isAllSelected,
+  hideHost,
 }) => {
   const { perPage: appPerPage } = useForemanSettings();
   const perPage = urlPerPage || appPerPage;
   const [rows, setRows] = React.useState([]);
+  const [columns, setColumns] = React.useState(defaultColumns);
 
   // acts as componentDidMount
   useEffect(() => {
@@ -38,8 +40,12 @@ const InsightsTable = ({
   }, []);
 
   useEffect(() => {
-    setRows(modifySelectedRows(hits, selectedIds, showSelectAllAlert));
-  }, [hits, selectedIds]);
+    setRows(
+      modifySelectedRows(hits, selectedIds, showSelectAllAlert, hideHost)
+    );
+
+    if (hideHost) setColumns(cols => cols.filter(c => c.id !== 'hostname'));
+  }, [hits, selectedIds, hideHost]);
 
   return (
     <React.Fragment>
@@ -51,14 +57,19 @@ const InsightsTable = ({
         isAllSelected={isAllSelected}
       />
       <Table
-        className="recommendations-table"
+        className="rh-cloud-recommendations-table"
         aria-label="Recommendations Table"
         onSelect={(_event, isSelected, rowId) =>
           onTableSelect(isSelected, rowId, rows, selectedIds)
         }
         canSelectAll
-        sortBy={{ index: getSortColumnIndex(sortBy), direction: sortOrder }}
-        onSort={onTableSort}
+        sortBy={{
+          index: getSortColumnIndex(columns, sortBy),
+          direction: sortOrder,
+        }}
+        onSort={(_event, index, direction) =>
+          onTableSort(columns, index, direction)
+        }
         cells={columns}
         rows={rows}
         variant="compact"
@@ -89,6 +100,7 @@ InsightsTable.propTypes = {
   query: PropTypes.string,
   error: PropTypes.string,
   isAllSelected: PropTypes.bool,
+  hideHost: PropTypes.bool,
 };
 
 InsightsTable.defaultProps = {
@@ -102,6 +114,7 @@ InsightsTable.defaultProps = {
   query: '',
   error: '',
   isAllSelected: false,
+  hideHost: false,
 };
 
 export default InsightsTable;
