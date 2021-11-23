@@ -41,7 +41,7 @@ class RhCloudHttpProxyTest < ActiveSupport::TestCase
   end
 
   def setup_global_foreman_proxy
-    FactoryBot.create(:setting, :name => 'http_proxy', :value => @global_foreman_proxy_mock)
+    Setting[:http_proxy] = @global_foreman_proxy_mock
   end
 
   def setup_cdn_proxy

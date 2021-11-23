@@ -4,7 +4,7 @@ class SettingsControllerTest < ActionController::TestCase
   tests InsightsCloud::SettingsController
 
   test 'should return allow_auto_insights_sync setting' do
-    FactoryBot.create(:setting, :name => 'allow_auto_insights_sync', :settings_type => "boolean", :category => "Setting::RhCloud", :default => false, :value => false)
+    Setting[:allow_auto_insights_sync] = false
 
     assert_equal false, Setting[:allow_auto_insights_sync]
 
@@ -16,7 +16,7 @@ class SettingsControllerTest < ActionController::TestCase
   end
 
   test 'should update allow_auto_insights_sync setting' do
-    FactoryBot.create(:setting, :name => 'allow_auto_insights_sync', :settings_type => "boolean", :category => "Setting::RhCloud", :default => false, :value => false)
+    Setting[:allow_auto_insights_sync] = false
 
     assert_equal false, Setting[:allow_auto_insights_sync]
 

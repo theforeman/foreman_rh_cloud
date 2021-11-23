@@ -63,7 +63,7 @@ class TagsGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'generates parameter tags' do
-    FactoryBot.create(:setting, :name => 'include_parameter_tags', :settings_type => "boolean", :category => "Setting::RhCloud", :default => false, :value => true)
+    Setting[:include_parameter_tags] = true
 
     @host.stubs(:host_params).returns(
       {
@@ -85,7 +85,7 @@ class TagsGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'skips parameter tags if include_parameter_tags setting is off' do
-    FactoryBot.create(:setting, :name => 'include_parameter_tags', :settings_type => "boolean", :category => "Setting::RhCloud", :default => false, :value => false)
+    Setting[:include_parameter_tags] = false
 
     @host.stubs(:host_params).returns(
       {

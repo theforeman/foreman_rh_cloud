@@ -12,7 +12,7 @@ class UploadReportJobTest < ActiveSupport::TestCase
         'idCert' => 'TEST_CERT',
       }
     )
-    FactoryBot.create(:setting, :name => 'content_disconnected', :value => true)
+    Setting[:content_disconnected] = true
 
     ForemanTasks.sync_task(ForemanInventoryUpload::Async::UploadReportJob, '', organization.id)
 
