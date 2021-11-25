@@ -6,7 +6,7 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
 
   setup do
     User.current = User.find_by(login: 'secret_admin')
-    FactoryBot.create(:setting, name: 'rh_cloud_token', value: 'MOCK_TOKEN')
+    Setting[:rh_cloud_token] = 'MOCK_TOKEN'
 
     env = FactoryBot.create(:katello_k_t_environment)
     cv = env.content_views << FactoryBot.create(:katello_content_view, organization: env.organization)

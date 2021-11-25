@@ -38,7 +38,7 @@ class BranchInfoTest < ActiveSupport::TestCase
   test 'should generate appropriate labels' do
     2.times { FactoryBot.create(:katello_host_collection, :organization_id => @host.organization.id) }
 
-    FactoryBot.create(:setting, :settings_type => 'boolean', :default => true, :name => :include_parameter_tags)
+    Setting[:include_parameter_tags] = true
 
     Katello::HostCollection.all.map do |collection|
       FactoryBot.create(:katello_host_collection_host, :host_id => @host.id, :host_collection_id => collection.id)

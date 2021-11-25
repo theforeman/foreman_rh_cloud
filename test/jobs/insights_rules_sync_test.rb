@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
 
 class InsightsRulesSyncTest < ActiveSupport::TestCase
@@ -112,7 +112,7 @@ class InsightsRulesSyncTest < ActiveSupport::TestCase
     @hit = FactoryBot.create(:insights_hit, host_id: @host.id)
 
     InsightsCloud::Async::InsightsRulesSync.any_instance.stubs(:plan_resolutions)
-    FactoryBot.create(:setting, name: 'rh_cloud_token', value: 'MOCK_TOKEN')
+    Setting[:rh_cloud_token] = 'MOCK_TOKEN'
   end
 
   test 'Hits data is replaced with data from cloud' do

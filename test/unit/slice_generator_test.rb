@@ -189,7 +189,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'generates obfuscated ip_address fields without inisghts-client' do
-    FactoryBot.create(:setting, :name => 'obfuscate_inventory_ips', :value => true)
+    Setting[:obfuscate_inventory_ips] = true
 
     @host.interfaces << FactoryBot.build(:nic_managed)
     batch = Host.where(id: @host.id).in_batches.first
@@ -260,7 +260,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'obfuscates fqdn when setting set' do
-    FactoryBot.create(:setting, :name => 'obfuscate_inventory_hostnames', :value => true)
+    Setting[:obfuscate_inventory_hostnames] = true
 
     batch = Host.where(id: @host.id).in_batches.first
     generator = create_generator(batch)
@@ -625,7 +625,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'include packages installed in the report' do
-    FactoryBot.create(:setting, :name => 'exclude_installed_packages', :value => false)
+    Setting[:exclude_installed_packages] = false
     installed_package = ::Katello::InstalledPackage.create(name: 'test-package', nvrea: 'test-package-1.0.x86_64', nvra: 'test-package-1.0.x86_64')
 
     another_host = FactoryBot.create(

@@ -5,7 +5,7 @@ class InventoryScheduledSyncTest < ActiveSupport::TestCase
   include ForemanTasks::TestHelpers::WithInThreadExecutor
 
   test 'Schedules an execution if auto upload is enabled' do
-    FactoryBot.create(:setting, :name => 'allow_auto_inventory_upload', :settings_type => "boolean", :category => "Setting::RhCloud", :default => false, :value => true)
+    Setting[:allow_auto_inventory_upload] = true
 
     InventorySync::Async::InventoryScheduledSync.any_instance.expects(:plan_org_sync).times(Organization.unscoped.count)
 
@@ -13,7 +13,7 @@ class InventoryScheduledSyncTest < ActiveSupport::TestCase
   end
 
   test 'Skips execution if auto upload is disabled' do
-    FactoryBot.create(:setting, :name => 'allow_auto_inventory_upload', :settings_type => "boolean", :category => "Setting::RhCloud", :default => false, :value => false)
+    Setting[:allow_auto_inventory_upload] = false
 
     InventorySync::Async::InventoryScheduledSync.any_instance.expects(:plan_org_sync).never
 

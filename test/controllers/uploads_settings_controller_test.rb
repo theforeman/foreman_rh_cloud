@@ -4,7 +4,7 @@ class UploadsSettingsControllerTest < ActionController::TestCase
   tests ForemanInventoryUpload::UploadsSettingsController
 
   test 'should get upload inventory settings' do
-    FactoryBot.create(:setting, :name => 'allow_auto_inventory_upload', :settings_type => "boolean", :category => "Setting::RhCloud", :default => false, :value => true)
+    Setting[:allow_auto_inventory_upload] = true
 
     assert_equal true, Setting[:allow_auto_inventory_upload]
 
@@ -17,7 +17,7 @@ class UploadsSettingsControllerTest < ActionController::TestCase
   end
 
   test 'should update allow_auto_inventory_upload setting' do
-    FactoryBot.create(:setting, :name => 'allow_auto_inventory_upload', :settings_type => "boolean", :category => "Setting::RhCloud", :default => false, :value => false)
+    Setting[:allow_auto_inventory_upload] = false
 
     assert_equal false, Setting[:allow_auto_inventory_upload]
 
