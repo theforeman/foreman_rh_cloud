@@ -38,7 +38,7 @@ export const actionsFormatter = (props, { rowData = {} }) => {
     dropdownItems.push(
       <DropdownItem key="recommendation-url">
         <a href={recommendationUrl} target="_blank" rel="noopener noreferrer">
-          {__('Red Hat Insights')} <ExternalLinkAltIcon />
+          {__('View in Red Hat Insights')} <ExternalLinkAltIcon />
         </a>
       </DropdownItem>
     );
@@ -47,7 +47,7 @@ export const actionsFormatter = (props, { rowData = {} }) => {
     dropdownItems.push(
       <DropdownItem key="access-url">
         <a href={accessRHUrl} target="_blank" rel="noopener noreferrer">
-          {__('Learn more')} <ExternalLinkAltIcon />
+          {__('Knowledgebase article')} <ExternalLinkAltIcon />
         </a>
       </DropdownItem>
     );
