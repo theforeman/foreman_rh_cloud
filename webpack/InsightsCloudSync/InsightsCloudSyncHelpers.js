@@ -9,8 +9,10 @@ export const cloudTokenSettingUrl = () => {
   return settingsUrl.toString();
 };
 
-export const redHatConsole = path => `https://console.redhat.com/${path}`;
-export const redHatInsights = path => redHatConsole(`insights/${path}`);
-export const redHatInventory = path => redHatInsights(`inventory/${path}`);
-export const redHatAdvisor = path => redHatInsights(`advisor/${path}`);
-export const redHatAdvisorSystems = path => redHatAdvisor(`systems/${path}`);
+export const redHatConsole = path => `https://console.redhat.com/${path || ''}`;
+export const redHatInsights = path => redHatConsole(`insights/${path || ''}`);
+export const redHatInventory = path =>
+  redHatInsights(`inventory/${path || ''}`);
+export const redHatAdvisor = path => redHatInsights(`advisor/${path || ''}`);
+export const redHatAdvisorSystems = path =>
+  redHatAdvisor(`systems/${path || ''}`);
