@@ -22,4 +22,8 @@ class InsightsHit < ApplicationRecord
   def has_playbook?
     !rule.nil?
   end
+
+  def host_uuid
+    insights_facet.uuid
+  end
 end

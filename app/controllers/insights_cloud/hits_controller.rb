@@ -7,7 +7,7 @@ module InsightsCloud
 
       render json: {
         hasToken: !Setting[:rh_cloud_token].empty?,
-        hits: hits.map { |hit| hit.attributes.merge(hostname: hit.host&.name, has_playbook: hit.has_playbook?) },
+        hits: hits.map { |hit| hit.attributes.merge(hostname: hit.host&.name, has_playbook: hit.has_playbook?, host_uuid: hit.host_uuid) },
         itemCount: hits.count,
       }, status: :ok
     end
