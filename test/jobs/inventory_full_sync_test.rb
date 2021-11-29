@@ -37,6 +37,18 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
     @host2.subscription_facet.pools << pool
     @host2_inventory_id = '4536bf5c-ff03-4154-a8c9-32ff4b40e40c'
 
+    # this host would pass our plugin queries, so it could be uploaded to the cloud.
+    @host3 = FactoryBot.create(
+      :host,
+      :with_subscription,
+      :with_content,
+      content_view: cv.first,
+      lifecycle_environment: env,
+      organization: env.organization
+    )
+
+    @host3.subscription_facet.pools << pool
+
     ForemanInventoryUpload::Generators::Queries.instance_variable_set(:@fact_names, nil)
 
     inventory_json = <<-INVENTORY_JSON
@@ -151,7 +163,7 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
         {
           "insights_id": "b533848e-465f-4f1a-9b2b-b71cb2d5239d",
           "rhel_machine_id": null,
-          "subscription_manager_id": "d29bde40-348e-437c-8acf-8fa98320fc1b",
+          "subscription_manager_id": "#{@host3.subscription_facet.uuid}",
           "satellite_id": "d29bde40-348e-437c-8acf-8fa98320fc1b",
           "bios_uuid": "3cd5d972-cfb5-451a-8314-fd2f56629d7c",
           "ip_addresses": [
@@ -159,7 +171,7 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
             "fd6e:2298:736e::857",
             "fd6e:2298:736e:0:2c66:6101:9cc6:2b23"
           ],
-          "fqdn": "rhel8-demo.oss-lab.net",
+          "fqdn": "#{@host3.fqdn}",
           "mac_addresses": [
             "6e:66:a6:fe:fc:07",
             "00:00:00:00:00:00"
@@ -270,5 +282,19 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
     InventorySync::Async::InventoryFullSync.any_instance.expects(:plan_self).never
 
     ForemanTasks.sync_task(InventorySync::Async::InventoryFullSync, @host1.organization)
+  end
+
+  test 'Should skip hosts that are not returned in query' do
+    assert_nil InventorySync::InventoryStatus.where(host_id: @host3.id).first
+
+    FactoryBot.create(:setting, name: 'rh_cloud_token', value: 'TEST TOKEN')
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:affected_host_ids).returns([@host1.id, @host2.id])
+    FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
+
+    ForemanTasks.sync_task(InventorySync::Async::InventoryFullSync, @host1.organization)
+    @host2.reload
+
+    assert_nil InventorySync::InventoryStatus.where(host_id: @host3.id).first
   end
 end

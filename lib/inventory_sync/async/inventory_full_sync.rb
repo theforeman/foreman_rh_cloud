@@ -14,11 +14,7 @@ module InventorySync
       end
 
       def setup_statuses
-        @subscribed_hosts_ids = Set.new(
-          ForemanInventoryUpload::Generators::Queries.for_slice(
-            Host.unscoped.where(organization: input[:organization_id])
-          ).pluck(:id)
-        )
+        @subscribed_hosts_ids = Set.new(affected_host_ids)
 
         InventorySync::InventoryStatus.transaction do
           InventorySync::InventoryStatus.where(host_id: @subscribed_hosts_ids).delete_all
@@ -35,15 +31,18 @@ module InventorySync
       def update_statuses_batch
         results = yield
 
-        update_hosts_status(results.status_hashes, results.touched)
-        host_statuses[:sync] += results.touched.size
+        existing_hosts = results.status_hashes.select { |hash| @subscribed_hosts_ids.include?(hash[:host_id]) }
+
+        update_hosts_status(existing_hosts)
+        host_statuses[:sync] += existing_hosts.size
       end
 
       private
 
-      def update_hosts_status(status_hashes, touched)
+      def update_hosts_status(status_hashes)
         InventorySync::InventoryStatus.create(status_hashes)
-        @subscribed_hosts_ids.subtract(touched)
+        updated_ids = status_hashes.map { |hash| hash[:host_id] }
+        @subscribed_hosts_ids.subtract(updated_ids)
       end
 
       def add_missing_hosts_statuses(hosts_ids)
@@ -63,6 +62,12 @@ module InventorySync
           sync: 0,
           disconnect: 0,
         }
+      end
+
+      def affected_host_ids
+        ForemanInventoryUpload::Generators::Queries.for_slice(
+          Host.unscoped.where(organization: input[:organization_id])
+        ).pluck(:id)
       end
     end
   end
