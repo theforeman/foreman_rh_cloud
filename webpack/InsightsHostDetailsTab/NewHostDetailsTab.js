@@ -10,33 +10,54 @@ import {
   DropdownItem,
   KebabToggle,
 } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import InsightsTable from '../InsightsCloudSync/Components/InsightsTable';
 import RemediationModal from '../InsightsCloudSync/Components/RemediationModal';
 import Pagination from '../InsightsCloudSync/Components/InsightsTable/Pagination';
 import { INSIGHTS_SEARCH_PROPS } from '../InsightsCloudSync/InsightsCloudSyncConstants';
 import { fetchInsights } from '../InsightsCloudSync/Components/InsightsTable/InsightsTableActions';
-import { selectSearch } from '../InsightsCloudSync/Components/InsightsTable/InsightsTableSelectors';
+import {
+  selectSearch,
+  selectHits,
+} from '../InsightsCloudSync/Components/InsightsTable/InsightsTableSelectors';
 import './InsightsTab.scss';
+import { redHatAdvisorSystems } from '../InsightsCloudSync/InsightsCloudSyncHelpers';
 
 const NewHostDetailsTab = ({ hostName, router }) => {
   const dispatch = useDispatch();
   const query = useSelector(selectSearch);
+  const hits = useSelector(selectHits);
 
   useEffect(() => () => router.replace({ search: null }), [router]);
 
   const onSearch = q => dispatch(fetchInsights({ query: q, page: 1 }));
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const onSatInsightsClick = () =>
+    router.push({ pathname: '/foreman_rh_cloud/insights_cloud' });
+
   const dropdownItems = [
-    <DropdownItem
-      key="insights-link"
-      onClick={() =>
-        router.push({ pathname: '/foreman_rh_cloud/insights_cloud' })
-      }
-    >
-      {__('Go to Insights page')}
+    <DropdownItem key="insights-link">
+      <a onClick={onSatInsightsClick}>{__('Go to Satellite Insights page')}</a>
     </DropdownItem>,
   ];
+
+  if (hits.length) {
+    const { host_uuid: uuid } = hits[0];
+    dropdownItems.push(
+      <DropdownItem key="insights-advisor-link">
+        <a
+          href={redHatAdvisorSystems(uuid)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {__('View in Red Hat Insights')}
+          {'  '}
+          <ExternalLinkAltIcon />
+        </a>
+      </DropdownItem>
+    );
+  }
 
   return (
     <Grid id="new_host_details_insights_tab" hasGutter>

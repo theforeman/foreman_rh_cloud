@@ -8,3 +8,11 @@ export const cloudTokenSettingUrl = () => {
   settingsUrl.setSearch({ search: 'name = rh_cloud_token' });
   return settingsUrl.toString();
 };
+
+export const redHatConsole = path => `https://console.redhat.com/${path || ''}`;
+export const redHatInsights = path => redHatConsole(`insights/${path || ''}`);
+export const redHatInventory = path =>
+  redHatInsights(`inventory/${path || ''}`);
+export const redHatAdvisor = path => redHatInsights(`advisor/${path || ''}`);
+export const redHatAdvisorSystems = path =>
+  redHatAdvisor(`systems/${path || ''}`);

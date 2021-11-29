@@ -9,19 +9,31 @@ export const modifySelectedRows = (
 
   return hits
     .asMutable()
-    .map(({ id, hostname, title, total_risk, has_playbook }) => {
-      const disableCheckbox = !has_playbook;
-      const cells = [hostname, title, total_risk, has_playbook];
-      if (hideHost) cells.shift();
-      return {
-        cells,
-        disableCheckbox,
+    .map(
+      ({
         id,
-        /** The main table checkbox will be seen as selected only if all rows are selected,
-         * in this case we need to select also the disabled once and hide it with css */
-        selected: selectedIds[id] || (disableCheckbox && showSelectAllAlert),
-      };
-    });
+        hostname,
+        title,
+        total_risk,
+        has_playbook,
+        results_url,
+        solution_url,
+      }) => {
+        const disableCheckbox = !has_playbook;
+        const cells = [hostname, title, total_risk, has_playbook, results_url];
+        if (hideHost) cells.shift();
+        return {
+          cells,
+          disableCheckbox,
+          id,
+          /** The main table checkbox will be seen as selected only if all rows are selected,
+           * in this case we need to select also the disabled once and hide it with css */
+          selected: selectedIds[id] || (disableCheckbox && showSelectAllAlert),
+          recommendationUrl: results_url,
+          accessRHUrl: solution_url,
+        };
+      }
+    );
 };
 
 export const getSortColumnIndex = (columns, sortBy) => {

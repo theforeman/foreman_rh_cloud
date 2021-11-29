@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { useForemanSettings } from 'foremanReact/Root/Context/ForemanContext';
 import SelectAllAlert from './SelectAllAlert';
-import { columns as defaultColumns } from './InsightsTableConstants';
+import {
+  columns as defaultColumns,
+  getColumnsWithoutHostname,
+} from './InsightsTableConstants';
 import TableEmptyState from '../../../common/table/EmptyState';
 import { modifySelectedRows, getSortColumnIndex } from './InsightsTableHelpers';
 import Pagination from './Pagination';
@@ -44,7 +47,7 @@ const InsightsTable = ({
       modifySelectedRows(hits, selectedIds, showSelectAllAlert, hideHost)
     );
 
-    if (hideHost) setColumns(cols => cols.filter(c => c.id !== 'hostname'));
+    if (hideHost) setColumns(getColumnsWithoutHostname());
   }, [hits, selectedIds, hideHost]);
 
   return (

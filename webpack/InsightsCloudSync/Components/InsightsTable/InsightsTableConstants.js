@@ -4,10 +4,12 @@ import {
   InsightsLabel,
   Section,
 } from '@redhat-cloud-services/frontend-components';
+import { DropdownItem } from '@patternfly/react-core';
 import { sortable, cellWidth } from '@patternfly/react-table';
-import { AnsibeTowerIcon } from '@patternfly/react-icons';
+import { AnsibeTowerIcon, ExternalLinkAltIcon } from '@patternfly/react-icons';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { foremanUrl } from '../../../ForemanRhCloudHelpers';
+import DropdownToggle from '../../../common/DropdownToggle';
 
 export const totalRiskFormatter = ({ title: totalRisk }) => ({
   children: (
@@ -27,6 +29,33 @@ export const hasPlaybookFormatter = ({ title: hasPlaybook }) => ({
     <span className="td-insights-remediate-manual">{__('Manual')}</span>
   ),
 });
+
+export const actionsFormatter = (props, { rowData = {} }) => {
+  const { recommendationUrl, accessRHUrl } = rowData;
+  const dropdownItems = [];
+
+  recommendationUrl &&
+    dropdownItems.push(
+      <DropdownItem key="recommendation-url">
+        <a href={recommendationUrl} target="_blank" rel="noopener noreferrer">
+          {__('View in Red Hat Insights')} <ExternalLinkAltIcon />
+        </a>
+      </DropdownItem>
+    );
+
+  accessRHUrl &&
+    dropdownItems.push(
+      <DropdownItem key="access-url">
+        <a href={accessRHUrl} target="_blank" rel="noopener noreferrer">
+          {__('Knowledgebase article')} <ExternalLinkAltIcon />
+        </a>
+      </DropdownItem>
+    );
+
+  return {
+    children: <DropdownToggle items={dropdownItems} />,
+  };
+};
 
 export const columns = [
   {
@@ -49,12 +78,24 @@ export const columns = [
     cellTransforms: [totalRiskFormatter],
   },
   {
-    id: 'Remediate',
+    id: 'remediate',
     title: __('Remediate'),
-    transforms: [cellWidth(15)],
+    transforms: [cellWidth(10)],
     cellTransforms: [hasPlaybookFormatter],
   },
+  {
+    id: 'actions',
+    title: '',
+    transforms: [cellWidth(5)],
+    cellTransforms: [actionsFormatter],
+  },
 ];
+
+export const getColumnsWithoutHostname = () => {
+  const nextCols = columns.slice(1);
+  nextCols[0].transforms = [cellWidth(70), sortable];
+  return nextCols;
+};
 
 export const paginationTitles = {
   items: __('items'),

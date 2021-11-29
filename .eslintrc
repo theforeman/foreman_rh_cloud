@@ -11,6 +11,7 @@
         "identifiers": false,
         "ignoreRequire": true,
         "skipWords": [
+          "advisor",
           "ansible",
           "camelcase",
           "checkbox",
