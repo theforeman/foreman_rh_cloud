@@ -17,7 +17,6 @@ module InventorySync
         @sub_ids.map do |sub_id|
           host_id = host_id(sub_id)
           if host_id
-            touched << host_id
             {
               host_id: host_id,
               status: InventorySync::InventoryStatus::SYNC,
@@ -26,10 +25,6 @@ module InventorySync
             }
           end
         end.compact
-      end
-
-      def touched
-        @touched ||= []
       end
 
       def host_id(sub_id)
