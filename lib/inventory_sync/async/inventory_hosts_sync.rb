@@ -42,7 +42,7 @@ module InventorySync
           }
         end
 
-        InsightsFacet.upsert_all(all_facets, unique_by: :host_id)
+        InsightsFacet.upsert_all(all_facets, unique_by: :host_id) unless all_facets.empty?
       end
 
       def plan_self_host_sync
