@@ -34,6 +34,7 @@ module ForemanInventoryUpload
 
       def self.for_slice(base)
         base
+          .search_for("not params.#{InsightsCloud.enable_client_param} = f")
           .joins(:subscription_facet)
           .preload(
             :interfaces,

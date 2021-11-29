@@ -447,6 +447,18 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_equal 1, generator.hosts_count
   end
 
+  test 'excludes hosts with host_registration_insights set to false' do
+    @host.host_parameters << HostParameter.create(
+      name: 'host_registration_insights',
+      value: "false",
+      parameter_type: 'boolean'
+    )
+
+    count = ForemanInventoryUpload::Generators::Queries.for_org(@host.organization_id).count
+
+    assert_equal 0, count
+  end
+
   test 'shows system_memory_bytes in bytes' do
     FactoryBot.create(:fact_value, fact_name: fact_names['memory::memtotal'], value: '1', host: @host)
 
