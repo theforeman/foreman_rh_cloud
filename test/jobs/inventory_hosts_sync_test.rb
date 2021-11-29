@@ -265,4 +265,19 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
 
     assert_equal @host2_inventory_id, @host2.insights.uuid
   end
+
+  test 'Inventory should sync empty facets list' do
+    empty_inventory = @inventory.deep_clone
+    empty_inventory['results'] = []
+    InventorySync::Async::InventoryHostsSync.any_instance.expects(:query_inventory).returns(empty_inventory)
+    InventorySync::Async::InventoryHostsSync.any_instance.expects(:plan_self_host_sync)
+
+    assert_nil @host2.insights
+
+    ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync)
+
+    @host2.reload
+
+    assert_nil @host2.insights
+  end
 end
