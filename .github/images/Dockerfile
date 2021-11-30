@@ -1,4 +1,4 @@
-FROM centos:7 AS base
+FROM quay.io/centos/centos:centos7 AS base
 
 ENV PGHOST=postgres
 ENV PGUSER=foreman
