@@ -19,17 +19,17 @@ RUN \
   git config --global user.email $GIT_COMMITTER_EMAIL; \
   mkdir /projects; \
   cd /projects; \
-  git clone --depth 1 --branch 2.5-stable https://github.com/theforeman/foreman.git; \
-  git clone --depth 1 --branch KATELLO-4.1 https://github.com/Katello/katello.git; \
-  git clone --depth 1 --branch v4.1.5 https://github.com/theforeman/foreman-tasks.git; \
-  git clone --depth 1 --branch foreman_2_5 https://github.com/theforeman/foreman_rh_cloud.git
+  git clone --depth 1 --branch 3.1-stable https://github.com/theforeman/foreman.git; \
+  git clone --depth 1 --branch KATELLO-4.3 https://github.com/Katello/katello.git; \
+  git clone --depth 1 --branch v5.2.0 https://github.com/theforeman/foreman-tasks.git; \
+  git clone --depth 1 --branch master https://github.com/theforeman/foreman_rh_cloud.git
 
 RUN \
   cd /projects/foreman; \
   echo "gemspec :path => '../foreman_rh_cloud', :development_group => :dev" > bundler.d/foreman_rh_cloud.local.rb; \
   echo "gemspec :path => '../katello', :development_group => :dev" > bundler.d/katello.local.rb; \
   echo "gemspec :path => '../foreman-tasks', :development_group => :dev, :name => 'foreman-tasks'" > bundler.d/foreman-tasks.local.rb; \
-  echo "gem 'foreman_remote_execution', '~> 4.5.6'" > bundler.d/foreman_remote_execution.local.rb; \
+  echo "gem 'foreman_remote_execution', '~> 4.8.0'" > bundler.d/foreman_remote_execution.local.rb; \
   echo "gem 'qpid_proton', '~> 0.33.0'" >> bundler.d/katello.local.rb; \
   cp ../foreman_rh_cloud/config/database.yml.example config/database.yml; \
   cp ../foreman_rh_cloud/config/Gemfile.lock.gh_test Gemfile.lock; \
