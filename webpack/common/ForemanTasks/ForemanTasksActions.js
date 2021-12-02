@@ -1,7 +1,7 @@
 import React from 'react';
 import { get } from 'foremanReact/redux/API';
 import { withInterval } from 'foremanReact/redux/middlewares/IntervalMiddleware';
-import { addToast } from 'foremanReact/redux/actions/toasts';
+import { addToast } from 'foremanReact/components/ToastsList';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { foremanTaskDetailsUrl } from './ForemanTasksHelpers';
 import { foremanUrl } from '../../ForemanRhCloudHelpers';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { post } from 'foremanReact/redux/API';
-import { addToast } from 'foremanReact/redux/actions/toasts';
+import { addToast } from 'foremanReact/components/ToastsList';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { inventoryUrl } from '../../../../ForemanInventoryHelpers';
 import Toast from './components/Toast';
