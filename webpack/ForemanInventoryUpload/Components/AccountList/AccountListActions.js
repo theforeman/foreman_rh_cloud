@@ -1,5 +1,5 @@
 import { API } from 'foremanReact/redux/API';
-import { addToast } from 'foremanReact/redux/actions/toasts';
+import { addToast } from 'foremanReact/components/ToastsList';
 import { inventoryUrl } from '../../ForemanInventoryHelpers';
 import {
   INVENTORY_ACCOUNT_STATUS_POLLING,

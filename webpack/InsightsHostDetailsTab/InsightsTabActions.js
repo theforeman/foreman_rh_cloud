@@ -1,5 +1,5 @@
 import { API } from 'foremanReact/redux/API';
-import { addToast } from 'foremanReact/redux/actions/toasts';
+import { addToast } from 'foremanReact/components/ToastsList';
 import { insightsCloudUrl } from '../InsightsCloudSync/InsightsCloudSyncHelpers';
 import {
   INSIGHTS_HITS_REQUEST,
