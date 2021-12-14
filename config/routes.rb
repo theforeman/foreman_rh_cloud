@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   namespace :insights_cloud do
     resources :tasks, only: [:create]
     resource :settings, only: [:show, :update]
-    resources :hits, except: %i[show] do
+    resources :hits, only: [:index] do
       collection do
         get 'auto_complete_search'
         get 'resolutions', to: 'hits#resolutions'

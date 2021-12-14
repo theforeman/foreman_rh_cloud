@@ -48,13 +48,22 @@ module ForemanRhCloud
         security_block :foreman_rh_cloud do
           permission(
             :generate_foreman_rh_cloud,
-            'foreman_inventory_upload/reports': [:generate]
+            'foreman_inventory_upload/reports': [:generate],
+            'foreman_inventory_upload/tasks': [:create],
+            'api/v2/rh_cloud/inventory': [:sync_inventory_status, :download_file, :generate_report, :enable_cloud_connector],
+            'foreman_inventory_upload/uploads': [:enable_cloud_connector],
+            'foreman_inventory_upload/uploads_settings': [:set_advanced_setting],
+            'insights_cloud/settings': [:save_token_and_sync, :update],
+            'insights_cloud/tasks': [:create]
           )
           permission(
             :view_foreman_rh_cloud,
             'foreman_inventory_upload/accounts': [:index],
             'foreman_inventory_upload/reports': [:last],
             'foreman_inventory_upload/uploads': [:auto_upload, :show_auto_upload, :download_file, :last],
+            'foreman_inventory_upload/tasks': [:show],
+            'foreman_inventory_upload/cloud_status': [:index],
+            'foreman_inventory_upload/uploads_settings': [:index],
             'react': [:index]
           )
           permission(
