@@ -33,7 +33,7 @@ RUN \
   echo "gem 'qpid_proton', '~> 0.33.0'" >> bundler.d/katello.local.rb; \
   cp ../foreman_rh_cloud/config/database.yml.example config/database.yml; \
   cp ../foreman_rh_cloud/config/Gemfile.lock.gh_test Gemfile.lock; \
-  cp ../foreman_rh_cloud/config/config/package-lock.json.gh_test package-lock.json; 
+  cp ../foreman_rh_cloud/config/package-lock.json.gh_test package-lock.json; 
 
 WORKDIR /projects/foreman
 RUN \
