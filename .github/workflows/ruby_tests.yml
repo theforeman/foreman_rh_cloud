@@ -27,7 +27,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: quay.io/shimshtein/tfm_plugin_test:foreman_2_5
+      image: quay.io/shimshtein/tfm_plugin_test:foreman_3_1
         #      volumes:
         #- ${{ github.workspace }}/projects/foreman_rh_cloud:/projects/foreman_rh_cloud
 
