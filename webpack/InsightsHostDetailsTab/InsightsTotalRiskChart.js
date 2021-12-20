@@ -11,7 +11,7 @@ import CardTemplate from 'foremanReact/components/HostDetails/Templates/CardItem
 import { translate as __ } from 'foremanReact/common/I18n';
 import SkeletonLoader from 'foremanReact/components/common/SkeletonLoader';
 import { insightsCloudUrl } from '../InsightsCloudSync/InsightsCloudSyncHelpers';
-import { getInitialRisks } from './InsightsTabConstants';
+import { getInitialRisks, theme } from './InsightsTabConstants';
 
 const InsightsTotalRiskCard = ({ hostDetails: { id } }) => {
   const [totalRisks, setTotalRisks] = useState(getInitialRisks());
@@ -70,19 +70,10 @@ const InsightsTotalRiskCard = ({ hostDetails: { id } }) => {
       orientation="vertical"
       labelComponent={<LegendLabel />}
       data={[
-        { name: `${low.title}: ${low.value}`, symbol: { fill: low.fill } },
-        {
-          name: `${moderate.title}: ${moderate.value}`,
-          symbol: { fill: moderate.fill },
-        },
-        {
-          name: `${important.title}: ${important.value}`,
-          symbol: { fill: important.fill },
-        },
-        {
-          name: `${critical.title}: ${critical.value}`,
-          symbol: { fill: critical.fill },
-        },
+        { name: `${low.title}: ${low.value}` },
+        { name: `${moderate.title}: ${moderate.value}` },
+        { name: `${important.title}: ${important.value}` },
+        { name: `${critical.title}: ${critical.value}` },
       ]}
     />
   );
@@ -108,8 +99,8 @@ const InsightsTotalRiskCard = ({ hostDetails: { id } }) => {
         right: 140,
         top: 20,
       }}
-      colorScale={[low.fill, moderate.fill, important.fill, critical.fill]}
       width={350}
+      theme={theme}
       events={[
         {
           target: 'data',
