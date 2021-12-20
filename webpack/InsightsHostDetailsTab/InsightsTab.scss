@@ -88,3 +88,29 @@
 #new_host_details_insights_tab {
   padding: 24px;
 }
+
+#rh-cloud-total-risk-card {
+  svg {
+    tspan:nth-child(2) {
+      fill: black !important;
+    }
+
+    g:nth-child(2) {
+      path {
+        cursor: pointer;
+      }
+    }
+
+    g:nth-child(3) {
+      a {
+        text {
+          tspan {
+            fill: var(--pf-global--link--Color) !important;
+            text-decoration: underline;
+            text-decoration-color: var(--pf-global--link--Color) !important;
+          }
+        }
+      }
+    }
+  }
+}

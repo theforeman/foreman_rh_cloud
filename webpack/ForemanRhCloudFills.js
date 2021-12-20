@@ -2,6 +2,7 @@ import React from 'react';
 import { addGlobalFill } from 'foremanReact/components/common/Fill/GlobalFill';
 import InventoryAutoUploadSwitcher from './ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload';
 import NewHostDetailsTab from './InsightsHostDetailsTab/NewHostDetailsTab';
+import InsightsTotalRiskCard from './InsightsHostDetailsTab/InsightsTotalRiskChart';
 
 const fills = [
   {
@@ -14,7 +15,13 @@ const fills = [
     slot: 'host-details-page-tabs',
     name: 'Insights',
     component: props => <NewHostDetailsTab {...props} />,
-    weight: 700,
+    weight: 400,
+  },
+  {
+    slot: 'details-cards',
+    name: 'insights-total-risk-chart',
+    component: props => <InsightsTotalRiskCard {...props} />,
+    weight: 1100,
   },
 ];
 
