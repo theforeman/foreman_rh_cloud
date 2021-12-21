@@ -20,7 +20,6 @@ import {
   selectSearch,
   selectHits,
 } from '../InsightsCloudSync/Components/InsightsTable/InsightsTableSelectors';
-import './InsightsTab.scss';
 import { redHatAdvisorSystems } from '../InsightsCloudSync/InsightsCloudSyncHelpers';
 
 const NewHostDetailsTab = ({ hostName, router }) => {
