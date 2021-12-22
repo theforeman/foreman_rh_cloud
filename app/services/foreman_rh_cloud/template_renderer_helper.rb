@@ -15,7 +15,16 @@ module ForemanRhCloud
     end
     def remediations_playbook(hit_remediation_pairs)
       hit_remediation_pairs = JSON.parse(hit_remediation_pairs)
-      retriever = ForemanRhCloud::RemediationsRetriever.new(hit_remediation_pairs, logger: template_logger)
+      retriever = ForemanRhCloud::HitRemediationsRetriever.new(hit_remediation_pairs, logger: template_logger)
+      retriever.create_playbook
+    end
+
+    apipie :method, 'Returns a Red Hat remediation playbook compiled on console.redhat.com' do
+      required :remediation_path, String, desc: ''
+      returns String, desc: 'Playbook downloaded from the cloud'
+    end
+    def download_rh_playbook(playbook_url)
+      retriever = ForemanRhCloud::UrlRemediationsRetriever.new(url: playbook_url, logger: template_logger)
       retriever.create_playbook
     end
   end

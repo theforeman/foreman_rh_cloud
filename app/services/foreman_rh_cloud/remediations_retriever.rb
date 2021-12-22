@@ -4,11 +4,8 @@ module ForemanRhCloud
 
     attr_reader :logger
 
-    def initialize(hit_remediation_pairs, logger: Logger.new(IO::NULL))
-      @hit_remediation_pairs = hit_remediation_pairs
+    def initialize(logger: Logger.new(IO::NULL))
       @logger = logger
-
-      logger.debug("Querying playbook for #{hit_remediation_pairs}")
     end
 
     def create_playbook
@@ -26,55 +23,29 @@ module ForemanRhCloud
 
     private
 
-    def hit_ids
-      @hit_remediation_pairs.map { |pair| pair["hit_id"] }
+    def query_playbook
+      execute_cloud_request(
+        method: method,
+        url: playbook_url,
+        headers: headers,
+        payload: payload
+      )
     end
 
-    def remediation_ids
-      @hit_remediation_pairs.map { |pair| pair["resolution_id"] }
+    def playbook_url
     end
 
-    def hits
-      @hits ||= Hash[
-        InsightsHit.joins(:insights_facet).where(id: hit_ids).pluck(:id, 'insights_facets.uuid')
-      ]
-    end
-
-    def pairs_by_remediation_id
-      @hit_remediation_pairs.group_by { |pair| pair["resolution_id"] }
-    end
-
-    def remediations
-      @remediations ||= Hash[
-        InsightsResolution.where(id: remediation_ids).pluck(:id, :resolution_type, :rule_id).map do |id, resolution_type, rule_id|
-          [id, {resolution_type: resolution_type, rule_id: rule_id}]
-        end
-      ]
-    end
-
-    def playbook_request
+    def headers
       {
-        issues: pairs_by_remediation_id.map do |remediation_id, pairs|
-          {
-            resolution: remediations[remediation_id][:resolution_type],
-            id: InsightsCloud.remediation_rule_id(remediations[remediation_id][:rule_id]),
-            systems: pairs.map do |pair|
-              hits[pair["hit_id"]]
-            end,
-          }
-        end,
+        content_type: :json,
       }
     end
 
-    def query_playbook
-      execute_cloud_request(
-        method: :post,
-        url: InsightsCloud.playbook_url,
-        headers: {
-          content_type: :json,
-        },
-        payload: playbook_request.to_json
-      )
+    def payload
+    end
+
+    def method
+      :get
     end
   end
 end

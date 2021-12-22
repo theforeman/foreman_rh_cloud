@@ -115,4 +115,8 @@ module ForemanRhCloud
   def self.legacy_insights_ca
     "#{ForemanRhCloud::Engine.root}/config/rh_cert-api_chain.pem"
   end
+
+  def self.cloud_url_validator
+    @cloud_url_validator ||= Regexp.new(ENV['SATELLITE_RH_CLOUD_VALIDATOR'] || 'redhat.com$')
+  end
 end
