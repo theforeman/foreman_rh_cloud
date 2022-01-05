@@ -32,32 +32,33 @@ RUN \
   echo "gem 'foreman_remote_execution', '~> 4.8.0'" > bundler.d/foreman_remote_execution.local.rb; \
   echo "gem 'qpid_proton', '~> 0.33.0'" >> bundler.d/katello.local.rb; \
   cp ../foreman_rh_cloud/config/database.yml.example config/database.yml; \
-  cp ../foreman_rh_cloud/config/Gemfile.lock.gh_test Gemfile.lock; \
-  cp ../foreman_rh_cloud/config/package-lock.json.gh_test package-lock.json;
+  cp ../foreman_rh_cloud/config/Gemfile.lock.gh_test Gemfile.lock;
 
 WORKDIR /projects/foreman
 RUN \
   source scl_source enable $SCLS; \
   gem install bundler:1.17.3; \
   bundle config path vendor/bundle; \
-  npm install npm-proxy-cache -g; \
-  npm config set proxy http://localhost:8080/; \
-  npm config set https-proxy http://localhost:8080/; \
-  npm config set strict-ssl false
+  npm install pnpm -g;
 
 RUN \
   source scl_source enable $SCLS; \
   cd /projects/foreman; \
   bundle install --jobs=3 --retry=3 --without journald development console
+
 RUN \
   source scl_source enable $SCLS; \
   cd /projects/foreman; \
-  npm-proxy-cache & \
-  bundle exec npm install
+  bundle exec pnpm install; \
+  pnpm i @redhat-cloud-services/frontend-components; \
+  pnpm i graphql-tag@^2.0.0 # install missing peer dep
+
+RUN rm -rf /projects/foreman/npm_install_plugins.js
+COPY ./npm_install_plugins.js /projects/foreman/script/npm_install_plugins.js
 RUN \
   source scl_source enable $SCLS; \
   cd /projects/foreman; \
-  npm-proxy-cache & \
+  chmod +x ./script/npm_install_plugins.js; \
   bundle exec ./script/npm_install_plugins.js
 
 COPY ./entrypoint.sh /usr/bin/
