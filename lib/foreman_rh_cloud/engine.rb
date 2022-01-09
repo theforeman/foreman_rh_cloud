@@ -76,9 +76,13 @@ module ForemanRhCloud
             },
             :resource_type => ::InsightsHit.name
           )
+          permission(
+            :dispatch_cloud_requests,
+            'api/v2/rh_cloud/cloud_request': [:update]
+          )
         end
 
-        plugin_permissions = [:view_foreman_rh_cloud, :generate_foreman_rh_cloud, :view_insights_hits]
+        plugin_permissions = [:view_foreman_rh_cloud, :generate_foreman_rh_cloud, :view_insights_hits, :dispatch_cloud_requests]
 
         role 'ForemanRhCloud', plugin_permissions, 'Role granting permissions to view the hosts inventory,
                                                     generate a report, upload it to the cloud and download it locally'
@@ -150,7 +154,7 @@ module ForemanRhCloud
           N_('Run RH Cloud playbook'),
           description: N_('Run playbook genrated by Red Hat remediations app'),
           host_action_button: false,
-          provided_inputs: ['playbook_url']
+          provided_inputs: ['playbook_url', 'report_url', 'correlation_id', 'report_interval']
         )
         # skip object creation when admin user is not present, for example in test DB
         if User.unscoped.find_by_login(User::ANONYMOUS_ADMIN).present?
