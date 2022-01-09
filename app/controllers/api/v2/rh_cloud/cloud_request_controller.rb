@@ -10,7 +10,14 @@ module Api::V2::RhCloud
     def update
       handler = KNOWN_DIRECTIVES[directive]
 
-      send(handler) if handler
+      unless handler
+        render json: {
+          :message => "No valid handler is found for directive: #{directive}",
+        }, status: :bad_request
+        return
+      end
+
+      send(handler)
 
       render json: {
         :message => "Handled #{directive} by #{handler}",
@@ -40,9 +47,12 @@ module Api::V2::RhCloud
 
     def handle_run_playbook_request
       logger.error("Playbook URL is not valid: #{content}") && return unless valid_url?(content)
+      logger.error("Reporting URL is not valid: #{metadata['return_url']}") && return unless valid_url?(metadata['return_url'])
 
       hosts = metadata['hosts'].split(',')
       host_ids = host_ids(hosts)
+
+      logger.warning("Some hosts were not found. Looked for: #{hosts}, found ids: #{host_ids}") unless host_ids.length == hosts.length
 
       logger.error("sat_org_id is not present in the metadata") && return unless metadata['sat_org_id']
       org_id = metadata['sat_org_id'].to_i
@@ -53,7 +63,12 @@ module Api::V2::RhCloud
         composer = ::JobInvocationComposer.for_feature(
           :rh_cloud_connector_run_playbook,
           host_ids,
-          { playbook_url: content }
+          {
+            playbook_url: content,
+            report_url: metadata['return_url'],
+            report_interval: metadata['response_interval'].to_i,
+            correlation_id: metadata['correlation_id'],
+          }
         )
         composer.trigger!
       end
@@ -67,7 +82,7 @@ module Api::V2::RhCloud
     end
 
     def host_ids(hosts)
-      hosts.map { |host_name| Host.friendly.find(host_name).id }
+      Host.where(name: hosts).pluck(:id)
     end
   end
 end

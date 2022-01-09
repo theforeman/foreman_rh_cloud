@@ -9,6 +9,18 @@ template_inputs:
   description: URL of the playbook to run
   input_type: user
   required: true
+- name: report_url
+  description: URL for calling the report callback
+  input_type: user
+  required: true
+- name: correlation_id
+  description: correlation ID used to identify the original calling message
+  input_type: user
+  required: true
+- name: report_interval
+  description: Reporting interval for the task. A report will be generated every report_interval seconds.
+  input_type: user
+  required: true
 provider_type: Ansible
 %>
 <%= download_rh_playbook(input('playbook_url')) %>
