@@ -23,9 +23,7 @@ else
 fi
 
 bundle exec rails db:migrate
-# use cache with ttl = 10 weeks, if newer packages are desired, rebuild the container
-npm-proxy-cache -t 6048000 &
-bundle exec npm i
+bundle exec pnpm i
 bundle exec ./script/npm_install_plugins.js
 
 set -e
@@ -33,4 +31,5 @@ set -e
 bundle exec rake foreman_rh_cloud:rubocop
 bundle exec rake test:foreman_rh_cloud
 bundle exec rake "plugin:assets:precompile[foreman_rh_cloud]" RAILS_ENV=production
-bundle exec rake webpack:compile
+#bundle exec rake webpack:compile
+node --max_old_space_size=2048 node_modules/webpack/bin/webpack.js --config /projects/foreman/config/webpack.config.js --bail
