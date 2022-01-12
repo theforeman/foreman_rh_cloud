@@ -13,7 +13,7 @@ module ForemanInventoryUpload
           organizations +
           content_data +
           satellite_server_data
-        ).reject { |key, value| value.empty? }
+        ).reject { |key, value| value.empty? }.map { |key, value| [key, truncated_value(value)] }
       end
 
       def generate_parameters
@@ -22,6 +22,7 @@ module ForemanInventoryUpload
         (@host.host_inherited_params_objects || [])
           .map { |item| [item.name, item.value] }
           .select { |_name, value| value.present? || value.is_a?(FalseClass) }
+          .map { |key, value| [key, truncated_value(value)] }
       end
 
       private
@@ -57,6 +58,12 @@ module ForemanInventoryUpload
           ['satellite_instance_id', Foreman.instance_id],
           ['organization_id', @host.organization_id.to_s],
         ]
+      end
+
+      def truncated_value(value)
+        return 'Original value exceeds 250 characters' if value.to_s.length > 250
+
+        value
       end
     end
   end

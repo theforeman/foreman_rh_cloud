@@ -103,6 +103,21 @@ class TagsGeneratorTest < ActiveSupport::TestCase
     assert_equal 0, actual.count
   end
 
+  test 'truncates parameter tags' do
+    Setting[:include_parameter_tags] = true
+
+    @host.stubs(:host_params).returns(
+      {
+        'str_param' => 'a' * 251,
+      }
+    )
+
+    generator = create_generator
+    actual = Hash[generator.generate_parameters]
+
+    assert_equal 'Original value exceeds 250 characters', actual['str_param']
+  end
+
   private
 
   def create_generator
