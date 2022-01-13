@@ -32,12 +32,7 @@ RUN \
   echo "gem 'foreman_remote_execution', '~> 4.5.6'" > bundler.d/foreman_remote_execution.local.rb; \
   echo "gem 'qpid_proton', '~> 0.33.0'" >> bundler.d/katello.local.rb; \
   cp ../foreman_rh_cloud/config/database.yml.example config/database.yml; \
-<<<<<<< HEAD
-  cp ../foreman_rh_cloud/config/Gemfile.lock.gh_test Gemfile.lock; \
-  cp ../foreman_rh_cloud/config/package-lock.json.gh_test package-lock.json
-=======
   cp ../foreman_rh_cloud/config/Gemfile.lock.gh_test Gemfile.lock;
->>>>>>> da5c0f5... Build container action (#677)
 
 WORKDIR /projects/foreman
 RUN \
