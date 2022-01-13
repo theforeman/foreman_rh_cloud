@@ -104,12 +104,12 @@ class TagsGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'truncates parameter tags' do
-    Setting[:include_parameter_tags] = true
+    FactoryBot.create(:setting, :name => 'include_parameter_tags', :settings_type => "boolean", :category => "Setting::RhCloud", :default => false, :value => true)
 
-    @host.stubs(:host_params).returns(
-      {
-        'str_param' => 'a' * 251,
-      }
+    @host.stubs(:host_inherited_params_objects).returns(
+      [
+        OpenStruct.new(name: 'str_param', value: 'a' * 251),
+      ]
     )
 
     generator = create_generator
