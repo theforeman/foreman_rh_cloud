@@ -30,6 +30,7 @@ RUN \
   echo "gemspec :path => '../katello', :development_group => :dev" > bundler.d/katello.local.rb; \
   echo "gemspec :path => '../foreman-tasks', :development_group => :dev, :name => 'foreman-tasks'" > bundler.d/foreman-tasks.local.rb; \
   echo "gem 'foreman_remote_execution', '~> 4.5.6'" > bundler.d/foreman_remote_execution.local.rb; \
+  echo "gem 'foreman_ansible', '~> 6.3.4'" > bundler.d/foreman_ansible.local.rb; \
   echo "gem 'qpid_proton', '~> 0.33.0'" >> bundler.d/katello.local.rb; \
   cp ../foreman_rh_cloud/config/database.yml.example config/database.yml; \
   cp ../foreman_rh_cloud/config/Gemfile.lock.gh_test Gemfile.lock;
