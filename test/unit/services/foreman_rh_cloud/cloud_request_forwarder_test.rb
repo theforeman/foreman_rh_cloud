@@ -133,4 +133,23 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
     assert_equal 'GET', actual[:method]
     assert_equal params, actual[:headers][:params]
   end
+
+  test 'should forward content type correctly' do
+    user_agent = { :foo => :bar }
+    params = { :page => 5, :per_page => 42 }
+    ForemanRhCloud::BranchInfo.any_instance.expects(:core_app_name).returns('test_app')
+    ForemanRhCloud::BranchInfo.any_instance.expects(:core_app_version).returns('test_ver')
+
+    req = ActionDispatch::Request.new(
+      'REQUEST_URI' => '/foo/bar',
+      'REQUEST_METHOD' => 'GET',
+      'HTTP_USER_AGENT' => user_agent,
+      'rack.input' => ::Puma::NullIO.new,
+      'action_dispatch.request.query_parameters' => params
+    )
+
+    actual = @forwarder.prepare_request_opts(req, 'TEST PAYLOAD', params, generate_certs_hash)
+
+    assert_match /text\/html/, actual[:headers][:content_type]
+  end
 end
