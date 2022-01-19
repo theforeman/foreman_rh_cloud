@@ -103,6 +103,21 @@ class TagsGeneratorTest < ActiveSupport::TestCase
     assert_equal 0, actual.count
   end
 
+  test 'truncates parameter tags' do
+    FactoryBot.create(:setting, :name => 'include_parameter_tags', :settings_type => "boolean", :category => "Setting::RhCloud", :default => false, :value => true)
+
+    @host.stubs(:host_inherited_params_objects).returns(
+      [
+        OpenStruct.new(name: 'str_param', value: 'a' * 251),
+      ]
+    )
+
+    generator = create_generator
+    actual = Hash[generator.generate_parameters]
+
+    assert_equal 'Original value exceeds 250 characters', actual['str_param']
+  end
+
   private
 
   def create_generator

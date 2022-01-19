@@ -53,8 +53,12 @@ RUN \
   pnpm i @redhat-cloud-services/frontend-components; \
   pnpm i graphql-tag@^2.0.0 # install missing peer dep
 
-RUN rm -rf /projects/foreman/npm_install_plugins.js
+RUN \
+  rm -rf /projects/foreman/npm_install_plugins.js; \
+  rm -rf /projects/foreman/config/webpack.config.js
 COPY ./npm_install_plugins.js /projects/foreman/script/npm_install_plugins.js
+COPY ./webpack.config.js /projects/foreman/config/webpack.config.js
+
 RUN \
   source scl_source enable $SCLS; \
   cd /projects/foreman; \
