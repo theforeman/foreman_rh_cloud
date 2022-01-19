@@ -139,4 +139,21 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
     )
     assert_equal params.merge(:branch_id => 74), @forwarder.prepare_forward_params(req, 74)
   end
+
+  test 'should forward content type correctly' do
+    user_agent = { :foo => :bar }
+    params = { :page => 5, :per_page => 42 }
+
+    req = ActionDispatch::Request.new(
+      'REQUEST_URI' => '/foo/bar',
+      'REQUEST_METHOD' => 'GET',
+      'HTTP_USER_AGENT' => user_agent,
+      'rack.input' => ::Puma::NullIO.new,
+      'action_dispatch.request.query_parameters' => params
+    )
+
+    actual = @forwarder.prepare_request_opts(req, 'TEST PAYLOAD', params, { cert: @cert1, key: OpenSSL::PKey::RSA.new(1024).to_pem })
+
+    assert_match /text\/html/, actual[:headers][:content_type]
+  end
 end
