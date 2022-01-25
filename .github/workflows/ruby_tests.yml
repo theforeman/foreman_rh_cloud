@@ -27,7 +27,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: quay.io/shimshtein/tfm_plugin_test:foreman_3_1
+      image: ghcr.io/theforeman/tfm_plugin_test:master
         #      volumes:
         #- ${{ github.workspace }}/projects/foreman_rh_cloud:/projects/foreman_rh_cloud
 
@@ -50,6 +50,7 @@ jobs:
           path: ${{ github.workspace }}/projects/foreman_rh_cloud
       - name: Fix git config
         run: |
+          rm -rf /projects/foreman_rh_cloud/{app,test,lib}
           cp -Rf $GITHUB_WORKSPACE/projects/foreman_rh_cloud /projects/
           cd /projects/foreman
           /usr/bin/entrypoint.sh git config --global user.name $GIT_COMMITTER_NAME
