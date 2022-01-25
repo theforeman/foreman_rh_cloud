@@ -25,7 +25,7 @@ const InsightsTotalRiskCard = ({ hostDetails: { id } }) => {
   } = useAPI('get', insightsCloudUrl(`hits/${id}`), API_OPTIONS);
 
   useEffect(() => {
-    if (status !== STATUS.PENDING) {
+    if (status === STATUS.RESOLVED) {
       const risks = getInitialRisks();
       hits.forEach(({ total_risk: risk }) => {
         risks[risk].value += 1;
