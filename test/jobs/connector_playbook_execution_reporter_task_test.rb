@@ -40,7 +40,7 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
     assert_equal 'TEST_CORRELATION', actual_report_finished['correlation_id']
     assert_equal 'success', actual_report_finished['status']
 
-    assert_not_nil actual_host_finished = actual_jsonl.find { |l| l['type'] == 'playbook_run_finished' && l['host'] == @host1.name }
+    assert_not_nil actual_host_finished = actual_jsonl.find { |l| l['type'] == 'playbook_run_finished' && l['host'] == @host1.insights.uuid }
     assert_equal 'TEST_CORRELATION', actual_host_finished['correlation_id']
     assert_equal 'success', actual_host_finished['status']
   end
@@ -57,7 +57,7 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
     actual_jsonl = read_jsonl(actual_report)
 
     actual_host_updates = actual_jsonl
-      .select { |l| l['type'] == 'playbook_run_update' && l['host'] == @host1.name }
+      .select { |l| l['type'] == 'playbook_run_update' && l['host'] == @host1.insights.uuid }
     assert_equal 1, actual_host_updates.size
     assert_equal 0, actual_host_updates.first['sequence']
   end
@@ -77,12 +77,12 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
     actual_jsonl = read_jsonl(first_report)
 
     actual_host_updates = actual_jsonl
-      .select { |l| l['type'] == 'playbook_run_update' && l['host'] == @host1.name }
+      .select { |l| l['type'] == 'playbook_run_update' && l['host'] == @host1.insights.uuid }
     assert_equal 1, actual_host_updates.size
     assert_equal 0, actual_host_updates.first['sequence']
 
     actual_host_updates = actual_jsonl
-      .select { |l| l['type'] == 'playbook_run_update' && l['host'] == @host2.name }
+      .select { |l| l['type'] == 'playbook_run_update' && l['host'] == @host2.insights.uuid }
     assert_equal 1, actual_host_updates.size
     assert_equal 0, actual_host_updates.first['sequence']
 
@@ -90,12 +90,12 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
     actual_jsonl = read_jsonl(second_report)
 
     actual_host_updates = actual_jsonl
-      .select { |l| l['type'] == 'playbook_run_update' && l['host'] == @host1.name }
+      .select { |l| l['type'] == 'playbook_run_update' && l['host'] == @host1.insights.uuid }
     assert_equal 1, actual_host_updates.size
     assert_equal 1, actual_host_updates.first['sequence']
 
     actual_host_updates = actual_jsonl
-      .select { |l| l['type'] == 'playbook_run_update' && l['host'] == @host2.name }
+      .select { |l| l['type'] == 'playbook_run_update' && l['host'] == @host2.insights.uuid }
     assert_equal 0, actual_host_updates.size
   end
 
@@ -159,8 +159,12 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
       :value => '1'
     )
 
-    @host1 = FactoryBot.create(:host, name: 'host1')
-    @host2 = FactoryBot.create(:host, name: 'host2')
+    @host1 = FactoryBot.create(:host, :with_insights_hits, name: 'host1')
+    @host1.insights.uuid = 'TEST_UUID1'
+    @host1.insights.save!
+    @host2 = FactoryBot.create(:host, :with_insights_hits, name: 'host2')
+    @host2.insights.uuid = 'TEST_UUID2'
+    @host2.insights.save!
 
     targeting = FactoryBot.create(:targeting, hosts: [@host1, @host2])
     job_invocation.targeting = targeting

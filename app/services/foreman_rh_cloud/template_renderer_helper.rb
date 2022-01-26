@@ -25,7 +25,10 @@ module ForemanRhCloud
     end
     def download_rh_playbook(playbook_url)
       retriever = ForemanRhCloud::UrlRemediationsRetriever.new(url: playbook_url, logger: template_logger)
-      retriever.create_playbook
+
+      cached("rh_playbook_#{playbook_url}") do
+        retriever.create_playbook
+      end
     end
   end
 end
