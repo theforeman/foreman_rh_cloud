@@ -82,7 +82,7 @@ module Api::V2::RhCloud
     end
 
     def host_ids(hosts)
-      Host.where(name: hosts).pluck(:id)
+      InsightsFacet.where(uuid: hosts).pluck(:host_id)
     end
   end
 end
