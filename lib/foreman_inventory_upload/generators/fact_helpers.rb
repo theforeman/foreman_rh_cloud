@@ -104,7 +104,9 @@ module ForemanInventoryUpload
       end
 
       def obfuscate_ip(ip, ips_dict)
-        "10.230.230.#{ips_dict.count + 1}"
+        max_obfuscated = ips_dict.values.map { |v| IPAddr.new(v).to_i }.max || IPAddr.new('10.230.230.0').to_i
+
+        IPAddr.new(max_obfuscated + 1, Socket::AF_INET).to_s
       end
 
       def bios_uuid(host)
