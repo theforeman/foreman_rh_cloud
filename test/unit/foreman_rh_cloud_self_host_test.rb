@@ -25,4 +25,11 @@ class ForemanRhCloudSelfHostTest < ActiveSupport::TestCase
 
     assert_not_nil actual
   end
+
+  test 'finds host by infrastructure facet' do
+    @host = FactoryBot.create(:host, :managed, :with_infrastructure_facet)
+    actual = ForemanRhCloud.foreman_host
+
+    assert_equal @host, actual
+  end
 end
