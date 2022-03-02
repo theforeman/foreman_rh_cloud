@@ -41,8 +41,8 @@ module InsightsCloud
         Dynflow::Action::Rescue::Skip
       end
 
-      def done?
-        job_invocation.finished?
+      def done?(current_status = invocation_status)
+        job_invocation.finished? || current_status.map { |_host_id, task_status| task_status['report_done'] }.all?
       end
 
       # noop, we don't want to do anything when the polling task starts
@@ -151,7 +151,7 @@ module InsightsCloud
             status['report_done'] = true
           end
         end
-        generator.job_finished_message if job_invocation.finished?
+        generator.job_finished_message if done?(invocation_status)
 
         send_report(generator.generate)
       end
@@ -163,6 +163,10 @@ module InsightsCloud
           content_type: 'application/vnd.redhat.playbook-sat.v3+jsonl',
           payload: report
         )
+      end
+
+      def logger
+        action_logger
       end
     end
   end
