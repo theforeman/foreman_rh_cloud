@@ -21,5 +21,12 @@ module ForemanInventoryUpload
       cloud_connector = ForemanRhCloud::CloudConnector.new
       render json: cloud_connector.install.to_json
     end
+
+    def announce_presence
+      Organization.unscoped.each do |org|
+        presence = ForemanRhCloud::CloudPresence.new(org, logger)
+        presence.announce_to_sources
+      end
+    end
   end
 end

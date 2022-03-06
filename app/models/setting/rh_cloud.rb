@@ -1,5 +1,5 @@
 class Setting::RhCloud < Setting
-  ::Setting::BLANK_ATTRS.concat %w{rh_cloud_token}
+  ::Setting::BLANK_ATTRS.concat %w{rh_cloud_token, rhc_instance_id}
 
   def self.load_defaults
     return false unless table_exists?
@@ -20,6 +20,7 @@ class Setting::RhCloud < Setting
       set('rh_cloud_token', N_('Authentication token to Red Hat cloud services. Used to authenticate requests to cloud APIs'), nil, N_('Red Hat Cloud token'), nil, encrypted: true),
       set('exclude_installed_packages', N_('Exclude installed packages from being uploaded to the Red Hat cloud'), false, N_("Exclude installed Packages")),
       set('include_parameter_tags', N_('Should import include parameter tags from Foreman?'), false, N_('Include parameters in insights-client reports')),
+      set('rhc_instance_id', N_('RHC daemon id'), nil, N_('ID of the RHC(Yiggdrasil) daemon')),
     ]
   end
 
