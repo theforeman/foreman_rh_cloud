@@ -39,6 +39,9 @@ module ForemanRhCloud
         certs = candlepin_id_cert(@org)
         return StandardError.new('certificate missing') unless certs
 
+        cert_checker = Katello::UpstreamConnectionChecker.new(@org)
+        cert_checker.assert_connection
+
         execute_cloud_request(
           method: :get,
           url: ForemanRhCloud.cert_base_url + "/api/apicast-tests/ping",
@@ -72,7 +75,7 @@ module ForemanRhCloud
               org,
               {
                 success: cert_response.is_a?(RestClient::Response),
-                error: (cert_response.is_a?(Exception) ? cert_response.inspect : nil),
+                error: (cert_response.is_a?(Exception) ? cert_response&.message || cert_response.inspect : nil),
               },
             ]
           end
