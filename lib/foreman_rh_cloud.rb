@@ -109,7 +109,13 @@ module ForemanRhCloud
   end
 
   def self.foreman_host_name
-    ENV['SATELLITE_RH_CLOUD_FOREMAN_HOST'] || ::SmartProxy.default_capsule.name
+    ENV['SATELLITE_RH_CLOUD_FOREMAN_HOST'] || marked_foreman_host&.name || ::SmartProxy.default_capsule.name
+  end
+
+  def self.marked_foreman_host
+    ::Host.unscoped.search_for('infrastructure_facet.foreman = true').first
+  rescue ScopedSearch::QueryNotSupported
+    nil
   end
 
   def self.legacy_insights_ca
