@@ -62,8 +62,8 @@ module ForemanRhCloud
           ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
           ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key]),
           payload: {
-            name: "satellite: #{Foreman.uuid} org: #{@organization.name}",
-            source_ref: Foreman.uuid,
+            name: "satellite: #{Foreman.instance_id} org: #{@organization.name}",
+            source_ref: Foreman.instance_id,
             source_type_id: satellite_source_type
           }.to_json,
         )
@@ -105,7 +105,7 @@ module ForemanRhCloud
     end
 
     def satellite_instance_source_url
-      sources_url("/sources?filter[source_ref]=#{Foreman.uuid}")
+      sources_url("/sources?filter[source_ref]=#{Foreman.instance_id}")
     end
 
     def create_satellite_instance_source_url
