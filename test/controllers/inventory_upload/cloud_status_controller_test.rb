@@ -29,6 +29,8 @@ class CloudStatusControllerTest < ActionController::TestCase
       RestClient::Response.new('TEST RESPONSE ORG 1')
     )
 
+    Katello::UpstreamConnectionChecker.any_instance.expects(:assert_connection).twice.returns(true)
+
     get :index, session: set_session_user
 
     assert_response :success
