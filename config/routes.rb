@@ -9,7 +9,6 @@ Rails.application.routes.draw do
     post 'setting', to: 'uploads_settings#set_advanced_setting'
 
     post 'cloud_connector', to: 'uploads#enable_cloud_connector'
-    post 'announce_presence', to: 'uploads#announce_presence'
 
     resources :tasks, only: [:create, :show]
 

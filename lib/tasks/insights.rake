@@ -19,4 +19,20 @@ namespace :rh_cloud_insights do
 
     puts "Deleted #{deleted_count} insights statuses"
   end
+
+  desc "Re-announce all organizations into Sources on RH cloud."
+  task announce_to_sources: [:environment] do
+    logger = Logging::Logger.new(STDOUT)
+    Organization.unscoped.each do |org|
+      presence = ForemanRhCloud::CloudPresence.new(org, logger)
+      presence.announce_to_sources
+    rescue StandardError => ex
+      require 'pry'
+      binding.pry
+
+      logger.warn(ex)
+    end
+
+    logger.info('Reannounced all organizations')
+  end
 end
