@@ -28,6 +28,8 @@ class CloudStatusServiceTest < ActiveSupport::TestCase
       RestClient::Response.new('TEST RESPONSE ORG 1')
     )
 
+    Katello::UpstreamConnectionChecker.any_instance.expects(:assert_connection).twice.returns(true)
+
     service = ForemanRhCloud::CloudPingService.new(organizations, nil)
     actual = service.ping
 
@@ -54,6 +56,8 @@ class CloudStatusServiceTest < ActiveSupport::TestCase
       RuntimeError,
       'TEST RESPONSE ORG 0'
     )
+
+    Katello::UpstreamConnectionChecker.any_instance.expects(:assert_connection).returns(true)
 
     service = ForemanRhCloud::CloudPingService.new(organizations, nil)
     actual = service.ping

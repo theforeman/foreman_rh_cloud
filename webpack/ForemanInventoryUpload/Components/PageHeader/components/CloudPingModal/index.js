@@ -46,7 +46,7 @@ const CloudPingModal = ({ title, isOpen, toggle }) => {
                       isPending={status === STATUS.PENDING}
                       authStatus={cert}
                     />{' '}
-                    {cert.org_name}
+                    {cert.org_name} {cert.error}
                   </>
                 ),
               },
