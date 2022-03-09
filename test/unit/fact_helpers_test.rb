@@ -30,13 +30,13 @@ class FactHelpersTest < ActiveSupport::TestCase
   test 'obfuscates ips with insights-client data' do
     host = mock('host')
     @instance.expects(:fact_value).with(host, 'insights_client::ips').returns(
-      '[{"obfuscated": "10.230.230.1", "original": "224.0.0.1"}, {"obfuscated": "10.230.230.2", "original": "224.0.0.251"}]'
+      '[{"obfuscated": "10.230.230.1", "original": "224.0.0.1"}, {"obfuscated": "10.230.230.255", "original": "224.0.0.251"}]'
     )
 
     actual = @instance.obfuscated_ips(host)
 
     assert_equal '10.230.230.1', actual['224.0.0.1']
-    assert_equal '10.230.230.3', actual['224.0.0.2']
+    assert_equal '10.230.231.0', actual['224.0.0.2']
   end
 
   test 'obfuscates ips without insights-client data' do
