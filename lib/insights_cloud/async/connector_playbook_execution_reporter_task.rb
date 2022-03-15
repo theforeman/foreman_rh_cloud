@@ -161,8 +161,25 @@ module InsightsCloud
           method: :post,
           url: report_url,
           content_type: 'application/vnd.redhat.playbook-sat.v3+jsonl',
-          payload: report
+          payload: {
+            file: wrap_report(report),
+            multipart: true
+          }
         )
+      end
+
+      # RestClient has to accept an object that responds to :read, :path and :content_type methods
+      # to properly generate a multipart message.
+      # see: https://github.com/rest-client/rest-client/blob/2c72a2e77e2e87d25ff38feba0cf048d51bd5eca/lib/restclient/payload.rb#L161
+      def wrap_report(report)
+        obj = StringIO.new(report)
+        def obj.content_type
+          'application/vnd.redhat.playbook-sat.v3+jsonl'
+        end
+        def obj.path
+          'file'
+        end
+        obj
       end
 
       def logger
