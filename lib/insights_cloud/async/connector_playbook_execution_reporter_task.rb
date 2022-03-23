@@ -163,7 +163,7 @@ module InsightsCloud
           content_type: 'application/vnd.redhat.playbook-sat.v3+jsonl',
           payload: {
             file: wrap_report(report),
-            multipart: true
+            multipart: true,
           }
         )
       end
@@ -176,9 +176,11 @@ module InsightsCloud
         def obj.content_type
           'application/vnd.redhat.playbook-sat.v3+jsonl'
         end
+
         def obj.path
           'file'
         end
+
         obj
       end
 

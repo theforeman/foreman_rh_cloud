@@ -64,8 +64,8 @@ module ForemanRhCloud
           payload: {
             name: "satellite: #{Foreman.instance_id} org: #{@organization.name}",
             source_ref: Foreman.instance_id,
-            source_type_id: satellite_source_type
-          }.to_json,
+            source_type_id: satellite_source_type,
+          }.to_json
         )
       )
 
@@ -86,7 +86,7 @@ module ForemanRhCloud
           ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key]),
           payload: {
             source_id: source_id,
-            rhc_id: Setting[:rhc_instance_id]
+            rhc_id: Setting[:rhc_instance_id],
           }.to_json
         )
       )
