@@ -1,5 +1,5 @@
 class Setting::RhCloud < Setting
-  ::Setting::BLANK_ATTRS.concat %w{rh_cloud_token, rhc_instance_id}
+  ::Setting::BLANK_ATTRS.concat %w{rh_cloud_token rhc_instance_id}
 
   def self.load_defaults
     return false unless table_exists?
