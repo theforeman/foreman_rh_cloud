@@ -27,9 +27,6 @@ namespace :rh_cloud_insights do
       presence = ForemanRhCloud::CloudPresence.new(org, logger)
       presence.announce_to_sources
     rescue StandardError => ex
-      require 'pry'
-      binding.pry
-
       logger.warn(ex)
     end
 

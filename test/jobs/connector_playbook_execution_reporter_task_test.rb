@@ -52,7 +52,7 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
 
     actual_report = actual.output[:saved_reports].first.to_s
 
-    assert_equal 2, actual.output[:saved_reports].size
+    assert_equal 1, actual.output[:saved_reports].size
     assert_not_nil actual_report
     actual_jsonl = read_jsonl(actual_report)
 
@@ -63,7 +63,7 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
   end
 
   test 'It reports two progress messages for in progress host' do
-    TestConnectorPlaybookExecutionReporterTask.any_instance.stubs(:done?).returns(false, true)
+    TestConnectorPlaybookExecutionReporterTask.any_instance.stubs(:done?).returns(false, false, true)
 
     host1_task = @job_invocation.template_invocations.joins(:host).where(hosts: {name: @host1.name}).first.run_host_job_task
     host1_task.state = 'running'
