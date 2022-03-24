@@ -24,7 +24,7 @@ module InsightsCloud
           "version": 3,
           "correlation_id": correlation_id,
           "host": host_name,
-          "status":  exit_code == 0 ? 'success' : 'failure',
+          "status": exit_code == 0 ? 'success' : 'failure',
           "connection_code": 0,
           "execution_code": exit_code,
         }

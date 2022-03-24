@@ -24,12 +24,6 @@ module Api::V2::RhCloud
       }
     end
 
-    def server_features
-      render json: {
-        features: {},
-      }
-    end
-
     private
 
     def metadata
