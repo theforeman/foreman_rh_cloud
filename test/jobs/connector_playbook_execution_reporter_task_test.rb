@@ -14,15 +14,20 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
   end
 
   setup do
-    RemoteExecutionFeature.register(
-      :rh_cloud_connector_run_playbook,
-      N_('Run RH Cloud playbook'),
-      description: N_('Run playbook genrated by Red Hat remediations app'),
-      host_action_button: false,
-      provided_inputs: ['playbook_url', 'report_url', 'correlation_id', 'report_interval']
-    )
+    RemoteExecutionFeature.transaction(isolation: :serializable) do
+      RemoteExecutionFeature.register(
+        :rh_cloud_connector_run_playbook,
+        N_('Run RH Cloud playbook'),
+        description: N_('Run playbook genrated by Red Hat remediations app'),
+        host_action_button: false,
+        provided_inputs: ['playbook_url', 'report_url', 'correlation_id', 'report_interval']
+      )
 
-    @job_invocation = generate_job_invocation
+      @job_invocation = generate_job_invocation
+    end
+
+    # reset connector feature ID cache
+    InsightsCloud::Async::ConnectorPlaybookExecutionReporterTask.instance_variable_set(:@connector_feature_id, nil)
   end
 
   test 'It reports finish playbook messages' do
