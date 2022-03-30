@@ -30,6 +30,8 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
 
     actual = ForemanTasks.sync_task(TestConnectorPlaybookExecutionReporterTask, @job_invocation)
 
+    wait_for_task(actual)
+
     actual_report = actual.output[:saved_reports].first.to_s
 
     assert_equal 1, actual.output[:saved_reports].size
@@ -49,6 +51,8 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
     TestConnectorPlaybookExecutionReporterTask.any_instance.stubs(:done?).returns(false, true)
 
     actual = ForemanTasks.sync_task(TestConnectorPlaybookExecutionReporterTask, @job_invocation)
+
+    wait_for_task(actual)
 
     actual_report = actual.output[:saved_reports].first.to_s
 
@@ -70,6 +74,8 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
     host1_task.save!
 
     actual = ForemanTasks.sync_task(TestConnectorPlaybookExecutionReporterTask, @job_invocation)
+
+    wait_for_task(actual)
 
     assert_equal 2, actual.output[:saved_reports].size
 
@@ -192,5 +198,9 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
 
   def read_jsonl(jsonl)
     jsonl.lines.map { |l| JSON.parse(l) }
+  end
+
+  def wait_for_task(task)
+    sleep(2) while task.reload.state != 'stopped'
   end
 end
