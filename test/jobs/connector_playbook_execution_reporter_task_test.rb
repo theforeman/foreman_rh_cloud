@@ -27,6 +27,7 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
 
   test 'It reports finish playbook messages' do
     TestConnectorPlaybookExecutionReporterTask.any_instance.stubs(:done?).returns(true)
+    TestConnectorPlaybookExecutionReporterTask.any_instance.stubs(:connector_playbook_job?).returns(true)
 
     actual = ForemanTasks.sync_task(TestConnectorPlaybookExecutionReporterTask, @job_invocation)
 
@@ -49,6 +50,7 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
 
   test 'It reports single progress message for done host' do
     TestConnectorPlaybookExecutionReporterTask.any_instance.stubs(:done?).returns(false, true)
+    TestConnectorPlaybookExecutionReporterTask.any_instance.stubs(:connector_playbook_job?).returns(true)
 
     actual = ForemanTasks.sync_task(TestConnectorPlaybookExecutionReporterTask, @job_invocation)
 
@@ -68,6 +70,7 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
 
   test 'It reports two progress messages for in progress host' do
     TestConnectorPlaybookExecutionReporterTask.any_instance.stubs(:done?).returns(false, false, true)
+    TestConnectorPlaybookExecutionReporterTask.any_instance.stubs(:connector_playbook_job?).returns(true)
 
     host1_task = @job_invocation.template_invocations.joins(:host).where(hosts: {name: @host1.name}).first.run_host_job_task
     host1_task.state = 'running'
