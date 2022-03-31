@@ -61,8 +61,9 @@ RUN \
   chmod +x ./script/npm_install_plugins.js; \
   bundle exec ./script/npm_install_plugins.js
 
-# symlink external module for css loader.
-RUN ln -s .pnpm/node_modules/@redhat-cloud-services node_modules/
+RUN \
+  cd /projects/foreman_rh_cloud; \
+  pnpm i @redhat-cloud-services/frontend-components
 
 COPY ./entrypoint.sh /usr/bin/
 
