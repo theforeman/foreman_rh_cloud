@@ -1,0 +1,20 @@
+name: Build container
+on:
+  pull_request:
+    paths:
+      - '**/.github/**/*'
+jobs:
+  build_test_container:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+      - name: Build the test container
+        id: build_image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: tfm_plugin_test
+          containerfiles: |
+            ./.github/images/Dockerfile
+          context: ./.github/images/

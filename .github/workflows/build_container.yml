@@ -1,9 +1,6 @@
 name: Build container
-on:
-  push:
-  pull_request:
-    paths:
-      - '**/.github/**/*'
+on: [push]
+
 jobs:
   build_test_container:
     runs-on: ubuntu-latest
