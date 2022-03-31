@@ -62,6 +62,7 @@ RUN \
   bundle exec ./script/npm_install_plugins.js
 
 RUN \
+  source scl_source enable $SCLS; \
   cd /projects/foreman_rh_cloud; \
   pnpm i @redhat-cloud-services/frontend-components
 
