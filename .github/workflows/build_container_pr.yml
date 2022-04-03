@@ -31,4 +31,4 @@ jobs:
       #       ./.github/images/Dockerfile
       #     context: ./.github/images/
       - name: Build local dockerfile
-        uses: ./
+        uses: ./.github/workflows/
