@@ -7,14 +7,28 @@ jobs:
   build_test_container:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: quay.io/jomitsch/postgres-with-evr
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_USER: foreman
+          POSTGRES_PASSWORD: foreman
+
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v2
-      - name: Build the test container
-        id: build_image
-        uses: redhat-actions/buildah-build@v2
-        with:
-          image: tfm_plugin_test
-          containerfiles: |
-            ./.github/images/Dockerfile
-          context: ./.github/images/
+      # - name: Build the test container
+      #   id: build_image
+      #   uses: redhat-actions/buildah-build@v2
+      #   with:
+      #     image: tfm_plugin_test
+      #     containerfiles: |
+      #       ./.github/images/Dockerfile
+      #     context: ./.github/images/
+      - name: Build local dockerfile
+        uses: ./
