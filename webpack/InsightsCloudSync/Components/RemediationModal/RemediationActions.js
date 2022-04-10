@@ -1,4 +1,5 @@
 import { get } from 'foremanReact/redux/API';
+import { getServerQueryForHostname } from '../InsightsTable/InsightsTableHelpers';
 import {
   REMEDIATIONS_API_KEY,
   REMEDIATIONS_PATH,
@@ -8,5 +9,9 @@ export const fetchRemediations = ({ selectedIds, isAllSelected, query }) =>
   get({
     key: REMEDIATIONS_API_KEY,
     url: REMEDIATIONS_PATH,
-    params: { ids: Object.keys(selectedIds), isAllSelected, query },
+    params: {
+      ids: Object.keys(selectedIds),
+      isAllSelected,
+      query: getServerQueryForHostname(query),
+    },
   });

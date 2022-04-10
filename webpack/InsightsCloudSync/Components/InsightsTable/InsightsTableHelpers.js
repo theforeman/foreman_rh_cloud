@@ -1,4 +1,7 @@
 /* eslint-disable camelcase */
+import URI from 'urijs';
+import { NEW_HOST_PATH } from './InsightsTableConstants';
+
 export const modifySelectedRows = (
   hits,
   selectedIds,
@@ -53,4 +56,23 @@ export const getPerPageOptions = (urlPerPage, appPerPage) => {
   urlPerPage && initialValues.add(urlPerPage);
   const options = [...initialValues].sort((a, b) => a - b);
   return options.map(value => ({ title: value.toString(), value }));
+};
+
+export const isNewHostPage = () => {
+  const uri = new URI();
+  const pathname = uri.pathname();
+  const isIncluded = pathname.includes(NEW_HOST_PATH);
+  return isIncluded ? pathname.split('/new/hosts/')[1] : false; // return hostname or false
+};
+
+// return query or specific hostname with query if it's in the new host page.
+export const getServerQueryForHostname = query => {
+  const isNewHost = isNewHostPage();
+  let serverQuery = query;
+  if (isNewHost) {
+    const hostQuery = `hostname = ${isNewHost}`;
+    const q = query?.trim();
+    serverQuery = q ? `${hostQuery} AND (${q})` : hostQuery;
+  }
+  return serverQuery;
 };
