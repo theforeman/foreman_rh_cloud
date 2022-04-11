@@ -25,11 +25,12 @@ module ForemanRhCloud
       base_params = {
         method: original_request.method,
         payload: forward_payload,
-        headers: original_headers(original_request).merge({
-          params: forward_params,
-          user_agent: http_user_agent(original_request),
-          content_type: original_request.media_type.presence || original_request.format.to_s,
-        }),
+        headers: original_headers(original_request).merge(
+          {
+            params: forward_params,
+            user_agent: http_user_agent(original_request),
+            content_type: original_request.media_type.presence || original_request.format.to_s,
+          }),
       }
       base_params.merge(path_params(original_request.path, certs))
     end
