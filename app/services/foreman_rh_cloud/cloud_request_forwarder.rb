@@ -25,11 +25,11 @@ module ForemanRhCloud
       base_params = {
         method: original_request.method,
         payload: forward_payload,
-        headers: {
+        headers: original_headers(original_request).merge({
           params: forward_params,
           user_agent: http_user_agent(original_request),
           content_type: original_request.media_type.presence || original_request.format.to_s,
-        },
+        }),
       }
       base_params.merge(path_params(original_request.path, certs))
     end
@@ -78,6 +78,16 @@ module ForemanRhCloud
           ssl_ca_file: ForemanRhCloud.legacy_insights_ca,
         }
       end
+    end
+
+    def original_headers(original_request)
+      headers = {
+        if_none_match: original_request.if_none_match,
+        if_modified_since: original_request.if_modified_since,
+      }.compact
+
+      logger.debug("Sending headers: #{headers}")
+      headers
     end
 
     def platform_request?
