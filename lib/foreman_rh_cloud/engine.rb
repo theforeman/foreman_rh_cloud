@@ -156,6 +156,13 @@ module ForemanRhCloud
           host_action_button: false,
           provided_inputs: ['playbook_url', 'report_url', 'correlation_id', 'report_interval']
         )
+        RemoteExecutionFeature.register(
+          :ansible_configure_cloud_connector,
+          N_('Configure Cloud Connector on given hosts'),
+          :description => N_('Configure Cloud Connector on given hosts'),
+          :proxy_selector_override => ::RemoteExecutionProxySelector::INTERNAL_PROXY
+        )
+
         # skip object creation when admin user is not present, for example in test DB
         if User.unscoped.find_by_login(User::ANONYMOUS_ADMIN).present?
           ::ForemanTasks.dynflow.config.on_init(false) do |world|

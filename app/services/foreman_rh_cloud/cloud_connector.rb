@@ -16,7 +16,7 @@ module ForemanRhCloud
         composer = ::JobInvocationComposer.for_feature(
           CLOUD_CONNECTOR_FEATURE,
           [target_host.id],
-          {:satellite_user => service_user.login, :satellite_password => token_value}
+          {:satellite_cloud_connector_user => service_user.login, :satellite_cloud_connector_password => token_value}
         )
         composer.trigger!
       end
