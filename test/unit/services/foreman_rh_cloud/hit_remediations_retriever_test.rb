@@ -1,6 +1,6 @@
 require 'test_plugin_helper'
 
-class RemediationsRetrieverTest < ActiveSupport::TestCase
+class HitRemediationsRetrieverTest < ActiveSupport::TestCase
   setup do
     @host1 = FactoryBot.create(:host)
     @host2 = FactoryBot.create(:host)
@@ -16,7 +16,7 @@ class RemediationsRetrieverTest < ActiveSupport::TestCase
     host2_hit1 = FactoryBot.create(:insights_hit, rule_id: rule1.rule_id, host_id: @host2.id)
 
     pairs = [{'hit_id' => host1_hit1.id, 'resolution_id' => rule1_remediation1.id}, {'hit_id' => host2_hit1.id, 'resolution_id' => rule1_remediation1.id}]
-    retriever = ForemanRhCloud::RemediationsRetriever.new(pairs)
+    retriever = ForemanRhCloud::HitRemediationsRetriever.new(pairs)
 
     actual_request = retriever.send(:playbook_request)
 
@@ -39,7 +39,7 @@ class RemediationsRetrieverTest < ActiveSupport::TestCase
     host2_hit1 = FactoryBot.create(:insights_hit, rule_id: rule1.rule_id, host_id: @host2.id)
 
     pairs = [{'hit_id' => host1_hit1.id, 'resolution_id' => rule1_remediation1.id}, {'hit_id' => host2_hit1.id, 'resolution_id' => rule1_remediation2.id}]
-    retriever = ForemanRhCloud::RemediationsRetriever.new(pairs)
+    retriever = ForemanRhCloud::HitRemediationsRetriever.new(pairs)
 
     actual_request = retriever.send(:playbook_request)
 
