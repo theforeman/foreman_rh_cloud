@@ -73,6 +73,7 @@ module ForemanRhCloud
     end
 
     def register_rhc_instance
+      raise Foreman::Exception.new('rhc_instance_id is empty, cannot register RHC to the cloud') if Setting[:rhc_instance_id].empty?
       source_id = satellite_instance_source || create_satellite_instance_source
 
       create_response = JSON.parse(

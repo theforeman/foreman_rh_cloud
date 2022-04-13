@@ -40,13 +40,14 @@ module Api::V2::RhCloud
     end
 
     def handle_run_playbook_request
+      logger.error("API token is not set, unable to fetch data from the cloud") && return if Setting[:rh_cloud_token].empty?
       logger.error("Playbook URL is not valid: #{content}") && return unless valid_url?(content)
       logger.error("Reporting URL is not valid: #{metadata['return_url']}") && return unless valid_url?(metadata['return_url'])
 
       hosts = metadata['hosts'].split(',')
       host_ids = host_ids(hosts)
 
-      logger.warning("Some hosts were not found. Looked for: #{hosts}, found ids: #{host_ids}") unless host_ids.length == hosts.length
+      logger.warn("Some hosts were not found. Looked for: #{hosts}, found ids: #{host_ids}") unless host_ids.length == hosts.length
 
       logger.error("sat_org_id is not present in the metadata") && return unless metadata['sat_org_id']
       org_id = metadata['sat_org_id'].to_i
