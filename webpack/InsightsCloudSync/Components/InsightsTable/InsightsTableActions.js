@@ -8,8 +8,11 @@ import {
   INSIGHTS_SET_SELECTED_IDS,
   INSIGHTS_SET_SELECT_ALL_ALERT,
   INSIGHTS_SET_SELECT_ALL,
-  NEW_HOST_PATH,
 } from './InsightsTableConstants';
+import {
+  getServerQueryForHostname,
+  isNewHostPage,
+} from './InsightsTableHelpers';
 
 export const fetchInsights = (queryParams = {}) => (dispatch, getState) => {
   const state = getState();
@@ -34,13 +37,7 @@ export const fetchInsights = (queryParams = {}) => (dispatch, getState) => {
     dispatch(setSelectAllAlert(false));
   }
 
-  let search = query;
-  if (isNewHostPage(uri)) {
-    const hostname = uri.pathname().split('/new/hosts/')[1];
-    const hostQuery = `hostname = ${hostname}`;
-    const q = query?.trim();
-    search = q ? `${hostQuery} AND (${q})` : hostQuery;
-  }
+  const search = getServerQueryForHostname(query);
 
   return dispatch(
     get({
@@ -151,11 +148,9 @@ const setSelectAllUrl = selectAllValue => dispatch => {
 
 const updateUrl = (uri, dispatch) => {
   const nextUrlParams = { search: uri.search() };
-  if (isNewHostPage(uri)) {
+  if (isNewHostPage()) {
     // we need to keep the hash so the insights tab will remain selected in the new host details page.
     nextUrlParams.hash = '/Insights';
   }
   dispatch(push(nextUrlParams));
 };
-
-const isNewHostPage = uri => uri.pathname().includes(NEW_HOST_PATH);
