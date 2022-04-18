@@ -37,8 +37,13 @@ module InsightsCloud::Api
         return send_data @cloud_response, disposition: @cloud_response.headers[:content_disposition], type: @cloud_response.headers[:content_type]
       end
 
+      # Append redhat-specific headers
+      @cloud_response.headers.each do |key, value|
+        assign_header(response, @cloud_response, key, false) if key.to_s.start_with?('x_rh_')
+      end
+      # Append general headers
       assign_header(response, @cloud_response, :x_resource_count, true)
-      assign_header(response, @cloud_response, :x_rh_insights_request_id, false)
+      headers[Rack::ETAG] = @cloud_response.headers[:etag]
 
       render json: @cloud_response, status: @cloud_response.code
     end
