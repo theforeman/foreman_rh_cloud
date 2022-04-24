@@ -116,7 +116,7 @@ const InsightsTotalRiskCard = ({ hostDetails: { id } }) => {
 
   return (
     <CardTemplate
-      header={__('Total Risks')}
+      header={__('Total risks')}
       dropdownItems={[
         <DropdownItem
           key="insights-tab"
