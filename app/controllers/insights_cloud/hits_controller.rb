@@ -14,9 +14,16 @@ module InsightsCloud
 
     def show
       host = Host.where(id: host_id_param).first
+      hits = host.insights&.hits
+
+      unless hits
+        return render json: {
+          error: 'No recommendations were found for this host',
+        }, status: :not_found
+      end
 
       render json: {
-        hits: host.insights.hits,
+        hits: hits,
       }, status: :ok
     end
 

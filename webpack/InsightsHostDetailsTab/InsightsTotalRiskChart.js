@@ -19,10 +19,11 @@ const InsightsTotalRiskCard = ({ hostDetails: { id } }) => {
   const dispatch = useDispatch();
   const API_KEY = `HOST_${id}_RECOMMENDATIONS`;
   const API_OPTIONS = useMemo(() => ({ key: API_KEY }), [API_KEY]);
+  const url = id && insightsCloudUrl(`hits/${id}`); // This will keep the API call from being triggered if there's no host id.
   const {
     status = STATUS.PENDING,
     response: { hits = [] },
-  } = useAPI('get', insightsCloudUrl(`hits/${id}`), API_OPTIONS);
+  } = useAPI('get', url, API_OPTIONS);
 
   useEffect(() => {
     if (status === STATUS.RESOLVED) {
