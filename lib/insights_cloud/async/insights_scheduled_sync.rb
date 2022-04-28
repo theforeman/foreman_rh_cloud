@@ -22,6 +22,10 @@ module InsightsCloud
       def rescue_strategy_for_self
         Dynflow::Action::Rescue::Fail
       end
+
+      def logger
+        action_logger
+      end
     end
   end
 end
