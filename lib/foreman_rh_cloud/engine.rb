@@ -6,15 +6,18 @@ module ForemanRhCloud
     engine_name 'foreman_rh_cloud'
 
     def self.register_scheduled_task(task_class, cronline)
-      return if ForemanTasks::RecurringLogic.joins(:tasks)
-                .merge(ForemanTasks::Task.where(label: task_class.name))
-                .exists?
+      ForemanTasks::RecurringLogic.transaction(isolation: :serializable) do
+        return if ForemanTasks::RecurringLogic.joins(:tasks)
+                  .merge(ForemanTasks::Task.where(label: task_class.name))
+                  .exists?
 
-      User.as_anonymous_admin do
-        recurring_logic = ForemanTasks::RecurringLogic.new_from_cronline(cronline)
-        recurring_logic.save!
-        recurring_logic.start(task_class)
+        User.as_anonymous_admin do
+          recurring_logic = ForemanTasks::RecurringLogic.new_from_cronline(cronline)
+          recurring_logic.save!
+          recurring_logic.start(task_class)
+        end
       end
+    rescue ActiveRecord::TransactionIsolationError
     end
 
     initializer 'foreman_rh_cloud.load_default_settings', :before => :load_config_initializers do
@@ -140,9 +143,9 @@ module ForemanRhCloud
       Foreman::Gettext::Support.add_text_domain locale_domain, locale_dir
     end
 
-    config.to_prepare do
+    initializer 'foreman_rh_cloud.register_rex_features', :before => :finisher_hook do |_app|
       # skip database manipulations while tables do not exist, like in migrations
-      if ActiveRecord::Base.connection.data_source_exists?(ForemanTasks::Task.table_name) &&
+      if ActiveRecord::Base.connection.data_source_exists?(ForemanTasks::Task.table_name)
         RemoteExecutionFeature.register(
           :rh_cloud_remediate_hosts,
           N_('Apply Insights recommendations'),
