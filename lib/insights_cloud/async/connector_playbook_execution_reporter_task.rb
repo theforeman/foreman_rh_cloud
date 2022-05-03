@@ -2,7 +2,7 @@ module InsightsCloud
   module Async
     class ConnectorPlaybookExecutionReporterTask < ::Actions::EntryAction
       include Dynflow::Action::Polling
-      include ForemanRhCloud::CloudAuth
+      include ForemanRhCloud::CertAuth
 
       def self.subscribe
         Actions::RemoteExecution::RunHostsJob
@@ -23,6 +23,7 @@ module InsightsCloud
         correlation_id = invocation_inputs['correlation_id']
 
         plan_self(
+          current_org_id: job_invocation.targeted_hosts.first.organization_id,
           report_url: report_url,
           report_interval: report_interval,
           job_invocation_id: job_invocation.id,
@@ -159,6 +160,7 @@ module InsightsCloud
 
       def send_report(report)
         execute_cloud_request(
+          organization: current_org,
           method: :post,
           url: report_url,
           content_type: 'application/vnd.redhat.playbook-sat.v3+jsonl',
@@ -187,6 +189,10 @@ module InsightsCloud
 
       def logger
         action_logger
+      end
+
+      def current_org
+        Organization.find(input[:current_org_id])
       end
     end
   end

@@ -63,5 +63,9 @@ module ForemanRhCloud
     def method
       :post
     end
+
+    def organization
+      InsightsHit.find(@hit_remediation_pairs.first['hit_id']).host.organization
+    end
   end
 end

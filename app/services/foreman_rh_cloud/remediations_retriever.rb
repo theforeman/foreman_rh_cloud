@@ -6,9 +6,6 @@ module ForemanRhCloud
 
     def initialize(logger: Logger.new(IO::NULL))
       @logger = logger
-      @organization = InsightsHit.find(hit_remediation_pairs.first['hit_id']).host.organization
-
-      logger.debug("Querying playbook for #{hit_remediation_pairs}")
     end
 
     def create_playbook
@@ -28,6 +25,7 @@ module ForemanRhCloud
 
     def query_playbook
       execute_cloud_request(
+        organization: organization,
         method: method,
         url: playbook_url,
         headers: headers,
@@ -51,16 +49,7 @@ module ForemanRhCloud
       :get
     end
 
-    def query_playbook
-      execute_cloud_request(
-        organization: @organization,
-        method: :post,
-        url: InsightsCloud.playbook_url,
-        headers: {
-          content_type: :json,
-        },
-        payload: playbook_request.to_json
-      )
+    def organization
     end
   end
 end

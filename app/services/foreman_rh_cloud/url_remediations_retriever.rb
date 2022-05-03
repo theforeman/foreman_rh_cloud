@@ -2,12 +2,13 @@ module ForemanRhCloud
   class UrlRemediationsRetriever < RemediationsRetriever
     attr_reader :url, :payload, :headers
 
-    def initialize(url:, payload: '', headers: {}, logger: Logger.new(IO::NULL))
+    def initialize(url:, organization_id:, payload: '', headers: {}, logger: Logger.new(IO::NULL))
       super(logger: logger)
 
       @url = url
       @payload = payload
       @headers = headers
+      @organization_id = organization_id
     end
 
     private
@@ -32,6 +33,10 @@ module ForemanRhCloud
 
     def method
       :get
+    end
+
+    def organization
+      Organization.find(@organization_id)
     end
   end
 end

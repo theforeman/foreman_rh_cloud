@@ -20,11 +20,12 @@ module ForemanRhCloud
     end
 
     apipie :method, 'Returns a Red Hat remediation playbook compiled on console.redhat.com' do
-      required :remediation_path, String, desc: ''
+      required :playbook_url, String, desc: 'URL of the playbook on console.redhat.com'
+      required :organization_id, Integer, desc: 'Id of the organization that owns the playbook'
       returns String, desc: 'Playbook downloaded from the cloud'
     end
-    def download_rh_playbook(playbook_url)
-      retriever = ForemanRhCloud::UrlRemediationsRetriever.new(url: playbook_url, logger: template_logger)
+    def download_rh_playbook(playbook_url, organization_id)
+      retriever = ForemanRhCloud::UrlRemediationsRetriever.new(url: playbook_url, organization_id: organization_id, logger: template_logger)
 
       cached("rh_playbook_#{playbook_url}") do
         retriever.create_playbook

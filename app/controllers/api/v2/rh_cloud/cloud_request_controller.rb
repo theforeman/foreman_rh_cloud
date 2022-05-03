@@ -60,6 +60,7 @@ module Api::V2::RhCloud
           host_ids,
           {
             playbook_url: content,
+            organization_id: org_id,
             report_url: metadata['return_url'],
             report_interval: metadata['response_interval'].to_i,
             correlation_id: metadata['correlation_id'],

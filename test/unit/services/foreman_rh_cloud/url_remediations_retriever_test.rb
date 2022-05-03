@@ -4,12 +4,15 @@ class UrlRemediationsRetrieverTest < ActiveSupport::TestCase
   test 'Calls the given url' do
     Setting[:rh_cloud_token] = 'TEST_TOKEN'
     retreiver = ForemanRhCloud::UrlRemediationsRetriever.new(
+      organization_id: FactoryBot.create(:organization).id,
       url: 'http://test.example.com',
       payload: 'TEST_PAYLOAD',
       headers: {
         custom1: 'TEST_HEADER',
       }
     )
+
+    retreiver.stubs(:cert_auth_available?).returns(true)
 
     response = mock('response')
     response.stubs(:body).returns('TEST_RESPONSE')
