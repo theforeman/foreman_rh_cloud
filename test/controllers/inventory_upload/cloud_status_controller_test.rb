@@ -10,10 +10,6 @@ class CloudStatusControllerTest < ActionController::TestCase
     User.stubs(:current).returns(user)
     user.stubs(:my_organizations).returns(organizations)
 
-    ForemanRhCloud::CloudPingService::TokenPing.any_instance.expects(:execute_cloud_request).returns(
-      RestClient::Response.new('TEST RESPONSE')
-    )
-
     setup_certs_expectation do
       ForemanRhCloud::CloudPingService::CertPing.any_instance.expects(:candlepin_id_cert).with { |actual| actual.id == organizations[0].id }
     end
@@ -36,8 +32,6 @@ class CloudStatusControllerTest < ActionController::TestCase
     assert_response :success
     actual = JSON.parse(response.body)
     assert_not_nil (actual_ping = actual['ping'])
-    assert actual_ping['token_auth']['success']
-    assert_nil actual_ping['token_auth']['error']
     assert actual_ping['cert_auth'][0]['success']
     assert_nil actual_ping['cert_auth'][0]['error']
     assert actual_ping['cert_auth'][1]['success']

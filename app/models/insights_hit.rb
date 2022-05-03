@@ -8,6 +8,7 @@ class InsightsHit < ApplicationRecord
   has_one :rule, class_name: 'InsightsRule', foreign_key: 'rule_id', primary_key: 'rule_id'
 
   scope :with_playbook, -> { joins(:rule) }
+  scope :for_organizations, ->(organization_ids) { joins(:host).where(hosts: { organization_id: organization_ids}) }
 
   scoped_search on: :title, complete_value: true
   scoped_search on: :total_risk, complete_value: true

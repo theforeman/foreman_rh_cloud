@@ -3,11 +3,16 @@ require 'foreman_tasks/test_helpers'
 
 class InsightsFullSyncTest < ActiveSupport::TestCase
   include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include MockCerts
 
   setup do
     InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_rules_sync)
     InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_notifications)
     Setting[:rh_cloud_token] = 'MOCK_TOKEN'
+
+    setup_certs_expectation do
+      InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:candlepin_id_cert)
+    end
 
     uuid1 = 'accdf444-5628-451d-bf3e-cf909ad72756'
     @host1 = FactoryBot.create(:host, :managed, name: 'host1')
@@ -66,7 +71,7 @@ class InsightsFullSyncTest < ActiveSupport::TestCase
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_hosts_sync)
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_rules_sync)
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_notifications)
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync)
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync, [@host1.organization, @host2.organization])
 
     @host1.reload
     @host2.reload
@@ -80,9 +85,9 @@ class InsightsFullSyncTest < ActiveSupport::TestCase
 
     InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_hosts_sync)
 
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync)
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync, [@host1.organization, @host2.organization])
     # Invoke again
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync)
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync, [@host1.organization, @host2.organization])
 
     @host1.reload
     @host2.reload
@@ -114,7 +119,7 @@ class InsightsFullSyncTest < ActiveSupport::TestCase
     InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_hosts_sync)
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:query_insights_hits).returns(hits)
 
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync)
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync, [@host1.organization, @host2.organization])
 
     @host1.reload
     @host2.reload

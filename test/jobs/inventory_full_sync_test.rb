@@ -3,9 +3,12 @@ require 'foreman_tasks/test_helpers'
 
 class InventoryFullSyncTest < ActiveSupport::TestCase
   include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include MockCerts
 
   setup do
     User.current = User.find_by(login: 'secret_admin')
+
+    InventorySync::Async::InventoryFullSync.any_instance.stubs(:plan_self_host_sync)
 
     env = FactoryBot.create(:katello_k_t_environment)
     cv = env.content_views << FactoryBot.create(:katello_content_view, organization: env.organization)
@@ -254,7 +257,10 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
   end
 
   test 'Host status should be SYNC for inventory hosts' do
-    Setting[:rh_cloud_token] = 'TEST TOKEN'
+    setup_certs_expectation do
+      InventorySync::Async::InventoryFullSync.any_instance.stubs(:candlepin_id_cert)
+    end
+
     InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
 
     ForemanTasks.sync_task(InventorySync::Async::InventoryFullSync, @host2.organization)
@@ -266,7 +272,9 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
   end
 
   test 'Host status should be DISCONNECT for hosts that are not returned from cloud' do
-    Setting[:rh_cloud_token] = 'TEST TOKEN'
+    setup_certs_expectation do
+      InventorySync::Async::InventoryFullSync.any_instance.stubs(:candlepin_id_cert)
+    end
     InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
     FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
 
@@ -277,7 +285,7 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
   end
 
   test 'Task should be aborted if token is not present' do
-    Setting[:rh_cloud_token] = ''
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:upstream_owner).returns(nil)
 
     InventorySync::Async::InventoryFullSync.any_instance.expects(:plan_self).never
 
@@ -287,7 +295,9 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
   test 'Should skip hosts that are not returned in query' do
     assert_nil InventorySync::InventoryStatus.where(host_id: @host3.id).first
 
-    Setting[:rh_cloud_token] = 'TEST TOKEN'
+    setup_certs_expectation do
+      InventorySync::Async::InventoryFullSync.any_instance.stubs(:candlepin_id_cert)
+    end
     InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
     InventorySync::Async::InventoryFullSync.any_instance.expects(:affected_host_ids).returns([@host1.id, @host2.id])
     FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)

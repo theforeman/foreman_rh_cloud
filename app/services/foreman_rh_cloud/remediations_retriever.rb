@@ -1,16 +1,19 @@
 module ForemanRhCloud
   class RemediationsRetriever
-    include CloudAuth
+    include CertAuth
 
     attr_reader :logger
 
     def initialize(logger: Logger.new(IO::NULL))
       @logger = logger
+      @organization = InsightsHit.find(hit_remediation_pairs.first['hit_id']).host.organization
+
+      logger.debug("Querying playbook for #{hit_remediation_pairs}")
     end
 
     def create_playbook
-      unless cloud_auth_available?
-        logger.debug('Cloud authentication is not available, cannot continue')
+      unless cert_auth_available?(@organization)
+        logger.debug('Manifest is not available, cannot continue')
         return
       end
 
@@ -46,6 +49,18 @@ module ForemanRhCloud
 
     def method
       :get
+    end
+
+    def query_playbook
+      execute_cloud_request(
+        organization: @organization,
+        method: :post,
+        url: InsightsCloud.playbook_url,
+        headers: {
+          content_type: :json,
+        },
+        payload: playbook_request.to_json
+      )
     end
   end
 end

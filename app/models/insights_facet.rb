@@ -4,4 +4,5 @@ class InsightsFacet < HostFacets::Base
     primary_key: :host_id,
     class_name: 'InsightsHit',
     dependent: :destroy
+  scope :for_organizations, ->(organization_ids) { joins(:host).where(hosts: { organization_id: organization_ids}) }
 end

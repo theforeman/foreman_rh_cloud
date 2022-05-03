@@ -9,14 +9,6 @@ module InsightsCloud
       render_setting(:insightsSyncEnabled, :allow_auto_insights_sync)
     end
 
-    def save_token_and_sync
-      token = Setting::RhCloud.find_by_name("rh_cloud_token")
-      token.value = params.require(:value)
-      token.save!
-      ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync)
-      redirect_to(:controller => "hits", :action => 'index')
-    end
-
     private
 
     def render_setting(node_name, setting)

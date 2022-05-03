@@ -3,19 +3,14 @@ require 'rest-client'
 module InsightsCloud
   module Async
     class InsightsFullSync < ::Actions::EntryAction
-      include ::ForemanRhCloud::CloudAuth
+      include ::ForemanRhCloud::CertAuth
 
-      def plan
-        unless cloud_auth_available?
-          logger.debug('Cloud authentication is not available, skipping insights sync')
-          return
-        end
-
+      def plan(organizations)
         sequence do
           # This can be turned off when we enable automatic status syncs
           # This step will query cloud inventory to retrieve inventory uuids for each host
-          plan_hosts_sync
-          plan_self
+          plan_hosts_sync(organizations)
+          plan_self(organization_ids: organizations.map(&:id))
           concurrence do
             plan_rules_sync
             plan_notifications
@@ -24,16 +19,23 @@ module InsightsCloud
       end
 
       def run
-        perform_hits_sync
+        organizations.each do |organization|
+          unless cert_auth_available?(organization)
+            logger.debug("Certificate is not available for org: #{organization.name}, skipping insights sync")
+            next
+          end
+
+          perform_hits_sync(organization)
+        end
       end
 
-      def perform_hits_sync
-        hits = query_insights_hits
+      def perform_hits_sync(organization)
+        hits = query_insights_hits(organization)
 
         uuids = hits.map { |hit| hit['uuid'] }
-        setup_host_ids(uuids)
+        setup_host_ids(uuids, organization)
 
-        replace_hits_data(hits)
+        replace_hits_data(hits, organization)
       end
 
       def logger
@@ -42,20 +44,21 @@ module InsightsCloud
 
       private
 
-      def plan_hosts_sync
-        plan_action InventorySync::Async::InventoryHostsSync
+      def plan_hosts_sync(organizations)
+        plan_action(InventorySync::Async::InventoryHostsSync, organizations)
       end
 
-      def plan_rules_sync
-        plan_action InsightsRulesSync
+      def plan_rules_sync(organizations)
+        plan_action(InsightsRulesSync, organizations)
       end
 
       def plan_notifications
         plan_action InsightsGenerateNotifications
       end
 
-      def query_insights_hits
+      def query_insights_hits(organization)
         hits_response = execute_cloud_request(
+          organization: organization,
           method: :get,
           url: InsightsCloud.hits_export_url
         )
@@ -72,9 +75,9 @@ module InsightsCloud
         JSON.parse(rules_response)
       end
 
-      def setup_host_ids(uuids)
+      def setup_host_ids(uuids, organization)
         @host_ids = Hash[
-          InsightsFacet.where(uuid: uuids).pluck(:uuid, :host_id)
+          InsightsFacet.for_organizations(organization.id).where(uuid: uuids).pluck(:uuid, :host_id)
         ]
       end
 
@@ -82,11 +85,11 @@ module InsightsCloud
         @host_ids[uuid]
       end
 
-      def replace_hits_data(hits)
+      def replace_hits_data(hits, organization)
         InsightsHit.transaction do
           # Reset hit counters to 0, they will be recreated later
-          InsightsFacet.unscoped.update_all(hits_count: 0)
-          InsightsHit.delete_all
+          InsightsFacet.for_organizations(organization.id).update_all(hits_count: 0)
+          InsightsHit.for_organizations(organization.id).delete_all
           InsightsHit.create(hits.map { |hits_hash| to_model_hash(hits_hash) }.compact)
         end
       end
@@ -121,6 +124,10 @@ module InsightsCloud
 
       def rescue_strategy_for_self
         Dynflow::Action::Rescue::Fail
+      end
+
+      def organizations
+        @organizations ||= Organization.where(id: input[:organization_ids])
       end
     end
   end

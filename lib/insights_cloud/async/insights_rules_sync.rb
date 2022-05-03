@@ -3,18 +3,13 @@ require 'rest-client'
 module InsightsCloud
   module Async
     class InsightsRulesSync < ::Actions::EntryAction
-      include ::ForemanRhCloud::CloudAuth
+      include ::ForemanRhCloud::CertAuth
 
-      def plan
-        unless cloud_auth_available?
-          logger.debug('Cloud authentication is not available, skipping rules sync')
-          return
-        end
-
+      def plan(organizations)
         # since the tasks are not connected, we need to force sequence execution here
         # to make sure we don't run resolutions until we synced all our rules
         sequence do
-          plan_self
+          plan_self(organization_ids: organizations.map(&:id))
           plan_resolutions
         end
       end
@@ -26,16 +21,20 @@ module InsightsCloud
       def run
         offset = 0
         InsightsRule.transaction do
-          InsightsRule.delete_all
-          loop do
-            api_response = query_insights_rules(offset)
-            results = RulesResult.new(api_response)
-            logger.debug("Downloaded #{offset + results.count} of #{results.total}")
-            write_rules_page(results.rules)
-            offset += results.count
-            output[:rules_count] = results.total
-            break if offset >= results.total
+          organizations.each do |organization|
+            loop do
+              api_response = query_insights_rules(offset, organization)
+              results = RulesResult.new(api_response)
+              logger.debug("Downloaded #{offset + results.count} of #{results.total}")
+              write_rules_page(results.rules)
+              offset += results.count
+              output[:rules_count] = results.total
+              break if offset >= results.total
+            end
           end
+
+          # Remove all rules that do not have hits associated with them
+          cleanup_rules
         end
       end
 
@@ -45,8 +44,9 @@ module InsightsCloud
 
       private
 
-      def query_insights_rules(offset)
+      def query_insights_rules(offset, organization)
         rules_response = execute_cloud_request(
+          organization: organization,
           method: :get,
           url: InsightsCloud.rules_url(offset: offset)
         )
@@ -57,7 +57,7 @@ module InsightsCloud
       def write_rules_page(rules)
         rules_attributes = rules.map { |rule| to_rule_hash(rule) }
 
-        InsightsRule.create(rules_attributes)
+        InsightsRule.upsert_all(rules_attributes, unique_by: :rule_id)
       end
 
       def to_rule_hash(rule_hash)
@@ -76,8 +76,16 @@ module InsightsCloud
         }
       end
 
+      def cleanup_rules
+        InsightsRule.left_outer_joins(:hits).where(insights_hits: { id: nil }).delete_all
+      end
+
       def rescue_strategy_for_self
         Dynflow::Action::Rescue::Fail
+      end
+
+      def organizations
+        @organizations ||= Organization.where(id: input[:organization_ids])
       end
     end
   end

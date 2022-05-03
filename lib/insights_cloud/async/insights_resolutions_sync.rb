@@ -3,25 +3,19 @@ require 'rest-client'
 module InsightsCloud
   module Async
     class InsightsResolutionsSync < ::Actions::EntryAction
-      include ::ForemanRhCloud::CloudAuth
+      include ::ForemanRhCloud::CertAuth
 
       RULE_ID_REGEX = /[^:]*:(?<id>.*)/
-
-      def plan
-        unless cloud_auth_available?
-          logger.debug('Cloud authentication is not available, skipping resolutions sync')
-          return
-        end
-
-        plan_self
-      end
 
       def run
         InsightsResolution.transaction do
           InsightsResolution.delete_all
           rule_ids = relevant_rules
-          api_response = query_insights_resolutions(rule_ids) unless rule_ids.empty?
-          write_resolutions(api_response) if api_response
+          Organization.all.each do |organization|
+            api_response = query_insights_resolutions(rule_ids, organization) unless rule_ids.empty?
+            written_rules = write_resolutions(api_response) if api_response
+            rule_ids -= Array(written_rules)
+          end
         end
       end
 
@@ -31,8 +25,9 @@ module InsightsCloud
 
       private
 
-      def query_insights_resolutions(rule_ids)
+      def query_insights_resolutions(rule_ids, organization)
         resolutions_response = execute_cloud_request(
+          organization: organization,
           method: :post,
           url: InsightsCloud.resolutions_url,
           headers: {
@@ -66,6 +61,7 @@ module InsightsCloud
         end.flatten
 
         InsightsResolution.create(all_resolutions)
+        response.keys
       end
 
       def to_rule_id(resolution_rule_id)

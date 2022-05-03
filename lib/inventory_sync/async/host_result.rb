@@ -1,9 +1,10 @@
 module InventorySync
   module Async
     class HostResult
-      attr_reader :uuid_by_fqdn
+      attr_reader :uuid_by_fqdn, :organization
 
-      def initialize(result)
+      def initialize(result, organization)
+        @organization = organization
         @total = result['total']
         @count = result['count']
         @page = result['page']
