@@ -49,7 +49,13 @@ module InsightsCloud::Api
     end
 
     def branch_info
-      render :json => ForemanRhCloud::BranchInfo.new.generate(@uuid, @host, @branch_id, request.host).to_json
+      payload = nil
+
+      User.as_anonymous_admin do
+        payload = ForemanRhCloud::BranchInfo.new.generate(@uuid, @host, @branch_id, request.host).to_json
+      end
+
+      render :json => payload
     end
 
     def assign_header(res, cloud_res, header, transform)

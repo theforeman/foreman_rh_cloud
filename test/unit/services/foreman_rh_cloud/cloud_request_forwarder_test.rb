@@ -6,18 +6,23 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
 
   setup do
     @forwarder = ::ForemanRhCloud::CloudRequestForwarder.new
+
+    ForemanRhCloud.stubs(:base_url).returns('https://cloud.example.com')
+    ForemanRhCloud.stubs(:cert_base_url).returns('https://cert.cloud.example.com')
+    ForemanRhCloud.stubs(:legacy_insights_url).returns('https://cert-api.access.example.com')
+    ForemanRhCloud.stubs(:authentication_url).returns('https://sso.example.com/auth/realms/redhat-external/protocol/openid-connect/token')
   end
 
   test 'should prepare correct cloud url' do
     paths = {
-      "/redhat_access/r/insights/platform/module-update-router/v1/channel?module=insights-core" => "https://cert.cloud.redhat.com/api/module-update-router/v1/channel?module=insights-core",
-      "/redhat_access/r/insights/v1/static/release/insights-core.egg" => "https://cert-api.access.redhat.com/r/insights/v1/static/release/insights-core.egg",
-      "/redhat_access/r/insights/v1/static/uploader.v2.json" => "https://cert-api.access.redhat.com/r/insights/v1/static/uploader.v2.json",
-      "/redhat_access/r/insights/v1/static/uploader.v2.json.asc" => "https://cert-api.access.redhat.com/r/insights/v1/static/uploader.v2.json.asc",
-      "/redhat_access/r/insights/platform/inventory/v1/hosts" => "https://cert.cloud.redhat.com/api/inventory/v1/hosts",
-      "/redhat_access/r/insights/platform/ingress/v1/upload" => "https://cert.cloud.redhat.com/api/ingress/v1/upload",
-      "/redhat_access/r/insights/uploads/67200803-132b-474b-a6f9-37be74185df4" => "https://cert-api.access.redhat.com/r/insights/uploads/67200803-132b-474b-a6f9-37be74185df4",
-      "/redhat_access/r/insights/" => "https://cert.cloud.redhat.com/api/apicast-tests/ping",
+      "/redhat_access/r/insights/platform/module-update-router/v1/channel?module=insights-core" => "https://cert.cloud.example.com/api/module-update-router/v1/channel?module=insights-core",
+      "/redhat_access/r/insights/v1/static/release/insights-core.egg" => "https://cert-api.access.example.com/r/insights/v1/static/release/insights-core.egg",
+      "/redhat_access/r/insights/v1/static/uploader.v2.json" => "https://cert-api.access.example.com/r/insights/v1/static/uploader.v2.json",
+      "/redhat_access/r/insights/v1/static/uploader.v2.json.asc" => "https://cert-api.access.example.com/r/insights/v1/static/uploader.v2.json.asc",
+      "/redhat_access/r/insights/platform/inventory/v1/hosts" => "https://cert.cloud.example.com/api/inventory/v1/hosts",
+      "/redhat_access/r/insights/platform/ingress/v1/upload" => "https://cert.cloud.example.com/api/ingress/v1/upload",
+      "/redhat_access/r/insights/uploads/67200803-132b-474b-a6f9-37be74185df4" => "https://cert-api.access.example.com/r/insights/uploads/67200803-132b-474b-a6f9-37be74185df4",
+      "/redhat_access/r/insights/" => "https://cert.cloud.example.com/api/apicast-tests/ping",
     }
 
     paths.each do |key, value|

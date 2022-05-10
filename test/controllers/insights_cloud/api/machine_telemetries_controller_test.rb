@@ -116,6 +116,10 @@ module InsightsCloud::Api
       test 'should get branch info' do
         get :branch_info
 
+        res = JSON.parse(@response.body)
+
+        assert_not_equal 0, res['labels'].find { |l| l['key'] == 'hostgroup' }.count
+
         assert_response :success
       end
 
