@@ -40,7 +40,7 @@ RUN \
   source scl_source enable $SCLS; \
   gem install bundler:1.17.3; \
   bundle config path vendor/bundle; \
-  npm install pnpm -g;
+  npm install pnpm@latest-6 -g;
 
 RUN \
   source scl_source enable $SCLS; \
