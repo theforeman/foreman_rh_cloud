@@ -56,7 +56,7 @@ module ForemanRhCloud
             'api/v2/rh_cloud/inventory': [:sync_inventory_status, :download_file, :generate_report, :enable_cloud_connector],
             'foreman_inventory_upload/uploads': [:enable_cloud_connector],
             'foreman_inventory_upload/uploads_settings': [:set_advanced_setting],
-            'insights_cloud/settings': [:save_token_and_sync, :update],
+            'insights_cloud/settings': [:update],
             'insights_cloud/tasks': [:create]
           )
           permission(

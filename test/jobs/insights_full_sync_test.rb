@@ -8,7 +8,6 @@ class InsightsFullSyncTest < ActiveSupport::TestCase
   setup do
     InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_rules_sync)
     InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_notifications)
-    Setting[:rh_cloud_token] = 'MOCK_TOKEN'
 
     setup_certs_expectation do
       InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:candlepin_id_cert)

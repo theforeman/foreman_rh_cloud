@@ -284,7 +284,7 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
     assert_equal InventorySync::InventoryStatus::DISCONNECT, InventorySync::InventoryStatus.where(host_id: @host1.id).first.status
   end
 
-  test 'Task should be aborted if token is not present' do
+  test 'Task should be aborted if manifest is not present' do
     InventorySync::Async::InventoryFullSync.any_instance.expects(:upstream_owner).returns(nil)
 
     InventorySync::Async::InventoryFullSync.any_instance.expects(:plan_self).never

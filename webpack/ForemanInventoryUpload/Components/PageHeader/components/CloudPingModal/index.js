@@ -21,18 +21,16 @@ import { translate as __, sprintf } from 'foremanReact/common/I18n';
 import { STATUS } from 'foremanReact/constants';
 import { selectAPIStatus } from 'foremanReact/redux/API/APISelectors';
 import { inventoryUrl } from '../../../../ForemanInventoryHelpers';
-import './index.scss';
 
 export const API_KEY = 'CLOUD_PING';
 
 const CloudPingModal = ({ title, isOpen, toggle }) => {
   const [rows, setRows] = useState([]);
-  const [tokenStatus, setTokenStatus] = useState({});
   const dispatch = useDispatch();
   const handleSuccess = useCallback(
     ({
       data: {
-        ping: { cert_auth = [], token_auth = {} },
+        ping: { cert_auth = [] },
       },
     }) => {
       cert_auth.length &&
@@ -53,7 +51,6 @@ const CloudPingModal = ({ title, isOpen, toggle }) => {
             ],
           }))
         );
-      setTokenStatus(token_auth);
     },
     [status]
   );
@@ -83,12 +80,6 @@ const CloudPingModal = ({ title, isOpen, toggle }) => {
         isOpen={isOpen}
         onClose={toggle}
       >
-        <Card className="token-status">
-          <CardTitle>
-            <StatusIcon isPending={isPending} authStatus={tokenStatus} />{' '}
-            {__('API token status')}
-          </CardTitle>
-        </Card>
         <Card className="certs-status">
           <CardTitle>{__('Organization status')}</CardTitle>
           <CardBody>

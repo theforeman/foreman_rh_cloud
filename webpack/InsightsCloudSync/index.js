@@ -5,14 +5,10 @@ import * as actions from './InsightsCloudSyncActions';
 import { fetchInsights } from './Components/InsightsTable/InsightsTableActions';
 import InsightsCloudSync from './InsightsCloudSync';
 import insightsCloudSyncReducers from './InsightsCloudSyncReducers';
-import {
-  selectSearch,
-  selectHasToken,
-} from './Components/InsightsTable/InsightsTableSelectors';
+import { selectSearch } from './Components/InsightsTable/InsightsTableSelectors';
 // map state to props
 const mapStateToProps = state => ({
   query: selectSearch(state),
-  hasToken: selectHasToken(state),
 });
 
 // map action dispatchers to props

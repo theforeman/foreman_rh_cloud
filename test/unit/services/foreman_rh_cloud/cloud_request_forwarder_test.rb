@@ -10,7 +10,6 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
     ForemanRhCloud.stubs(:base_url).returns('https://cloud.example.com')
     ForemanRhCloud.stubs(:cert_base_url).returns('https://cert.cloud.example.com')
     ForemanRhCloud.stubs(:legacy_insights_url).returns('https://cert-api.access.example.com')
-    ForemanRhCloud.stubs(:authentication_url).returns('https://sso.example.com/auth/realms/redhat-external/protocol/openid-connect/token')
   end
 
   test 'should prepare correct cloud url' do

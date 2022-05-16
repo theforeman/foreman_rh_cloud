@@ -112,7 +112,6 @@ class InsightsRulesSyncTest < ActiveSupport::TestCase
     @hit = FactoryBot.create(:insights_hit, host_id: @host.id)
 
     InsightsCloud::Async::InsightsRulesSync.any_instance.stubs(:plan_resolutions)
-    Setting[:rh_cloud_token] = 'MOCK_TOKEN'
   end
 
   test 'Hits data is replaced with data from cloud' do
