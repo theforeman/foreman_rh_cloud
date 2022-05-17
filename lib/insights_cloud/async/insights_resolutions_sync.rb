@@ -12,6 +12,7 @@ module InsightsCloud
           InsightsResolution.delete_all
           rule_ids = relevant_rules
           Organization.all.each do |organization|
+            next if !cert_auth_available?(organization) || organization.manifest_expired?
             api_response = query_insights_resolutions(rule_ids, organization) unless rule_ids.empty?
             written_rules = write_resolutions(api_response) if api_response
             rule_ids -= Array(written_rules)

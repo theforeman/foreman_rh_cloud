@@ -57,7 +57,7 @@ module InsightsCloud
       def write_rules_page(rules)
         rules_attributes = rules.map { |rule| to_rule_hash(rule) }
 
-        InsightsRule.upsert_all(rules_attributes, unique_by: :rule_id)
+        InsightsRule.upsert_all(rules_attributes, unique_by: :rule_id) unless rules_attributes.empty?
       end
 
       def to_rule_hash(rule_hash)

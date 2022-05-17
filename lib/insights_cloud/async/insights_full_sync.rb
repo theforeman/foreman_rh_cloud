@@ -6,13 +6,22 @@ module InsightsCloud
       include ::ForemanRhCloud::CertAuth
 
       def plan(organizations)
+        organizations = organizations.select do |organization|
+          if cert_auth_available?(organization)
+            true
+          else
+            logger.debug("Certificate is not available for org: #{organization.name}, skipping insights sync")
+            false
+          end
+        end
+
         sequence do
           # This can be turned off when we enable automatic status syncs
           # This step will query cloud inventory to retrieve inventory uuids for each host
           plan_hosts_sync(organizations)
           plan_self(organization_ids: organizations.map(&:id))
           concurrence do
-            plan_rules_sync
+            plan_rules_sync(organizations)
             plan_notifications
           end
         end

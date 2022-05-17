@@ -68,6 +68,8 @@ class InsightsResolutionsSyncTest < ActiveSupport::TestCase
     setup_certs_expectation do
       InsightsCloud::Async::InsightsResolutionsSync.any_instance.stubs(:candlepin_id_cert)
     end
+
+    Organization.any_instance.stubs(:manifest_expired?).returns(false)
   end
 
   test 'Resolutions data is replaced with data from cloud' do

@@ -21,10 +21,12 @@ module InventorySync
       def run
         run_callbacks :iteration do
           organizations.each do |organization|
-            unless cert_auth_available?(organization)
+            if !cert_auth_available?(organization) || organization.manifest_expired?
               logger.debug("Subscription manifest not available, skipping #{action_name} for organization #{organization.name}")
               next
             end
+
+            logger.debug("Executing #{action_name} for organization #{organization.name}")
 
             page = 1
             loop do

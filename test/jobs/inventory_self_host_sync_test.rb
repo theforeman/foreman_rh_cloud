@@ -11,6 +11,7 @@ class InventorySelfHostSyncTest < ActiveSupport::TestCase
     setup_certs_expectation do
       InventorySync::Async::InventorySelfHostSync.any_instance.stubs(:candlepin_id_cert)
     end
+    Organization.any_instance.stubs(:manifest_expired?).returns(false)
 
     # this host would pass our plugin queries, so it could be uploaded to the cloud.
     @host1 = FactoryBot.create(:host)

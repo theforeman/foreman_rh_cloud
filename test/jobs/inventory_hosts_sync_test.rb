@@ -40,6 +40,8 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
 
     ForemanInventoryUpload::Generators::Queries.instance_variable_set(:@fact_names, nil)
 
+    Organization.any_instance.stubs(:manifest_expired?).returns(false)
+
     inventory_json = <<-INVENTORY_JSON
     {
       "total": 3,

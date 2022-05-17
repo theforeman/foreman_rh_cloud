@@ -9,6 +9,7 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
     User.current = User.find_by(login: 'secret_admin')
 
     InventorySync::Async::InventoryFullSync.any_instance.stubs(:plan_self_host_sync)
+    Organization.any_instance.stubs(:manifest_expired?).returns(false)
 
     env = FactoryBot.create(:katello_k_t_environment)
     cv = env.content_views << FactoryBot.create(:katello_content_view, organization: env.organization)
