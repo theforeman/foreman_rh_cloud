@@ -12,11 +12,20 @@ module ForemanRhCloud
       target_host = foreman_host
       composer = nil
 
+      input = {
+        :satellite_cloud_connector_user => service_user.login,
+        :satellite_cloud_connector_password => token_value,
+      }
+
+      if (http_proxy = ForemanRhCloud.proxy_setting(logger: Foreman::Logging.logger('app')))
+        input[:satellite_cloud_connector_http_proxy] = http_proxy
+      end
+
       Taxonomy.as_taxonomy(target_host.organization, target_host.location) do
         composer = ::JobInvocationComposer.for_feature(
           CLOUD_CONNECTOR_FEATURE,
           [target_host.id],
-          {:satellite_cloud_connector_user => service_user.login, :satellite_cloud_connector_password => token_value}
+          input
         )
         composer.trigger!
       end
