@@ -2,28 +2,6 @@ require 'rest-client'
 
 module ForemanRhCloud
   class CloudPingService
-    class TokenPing
-      include ForemanRhCloud::CloudAuth
-
-      attr_accessor :logger
-
-      def initialize(logger)
-        @logger = logger
-      end
-
-      def ping
-        execute_cloud_request(
-          method: :get,
-          url: ForemanRhCloud.base_url + "/api/inventory/v1/hosts?per_page=1",
-          headers: {
-            content_type: :json,
-          }
-        )
-      rescue StandardError => ex
-        ex
-      end
-    end
-
     class CertPing
       include ForemanRhCloud::CloudRequest
       include InsightsCloud::CandlepinCache
@@ -62,12 +40,7 @@ module ForemanRhCloud
     end
 
     def ping
-      token_response = TokenPing.new(@logger).ping
       {
-        token_auth: {
-          success: token_response.is_a?(RestClient::Response),
-          error: (token_response.is_a?(Exception) ? token_response.inspect : nil),
-        },
         cert_auth: Hash[
           @organizations.map do |org|
             cert_response = CertPing.new(org, @logger).ping

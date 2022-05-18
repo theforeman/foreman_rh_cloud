@@ -16,7 +16,7 @@ module InsightsCloud
       end
 
       def plan_full_sync
-        plan_action InsightsFullSync
+        plan_action(InsightsFullSync, Organization.unscoped.all)
       end
 
       def rescue_strategy_for_self

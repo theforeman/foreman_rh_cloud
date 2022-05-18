@@ -78,7 +78,6 @@ export const APIState = {
         url: '/insights_cloud/hits',
       },
       response: {
-        hasToken: true,
         hits,
         itemCount: 2,
       },

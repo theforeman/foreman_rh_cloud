@@ -3,10 +3,10 @@ require 'foreman_tasks/test_helpers'
 
 class InventoryHostsSyncTest < ActiveSupport::TestCase
   include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include MockCerts
 
   setup do
     User.current = User.find_by(login: 'secret_admin')
-    Setting[:rh_cloud_token] = 'MOCK_TOKEN'
 
     env = FactoryBot.create(:katello_k_t_environment)
     cv = env.content_views << FactoryBot.create(:katello_content_view, organization: env.organization)
@@ -39,6 +39,8 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
     @host2_inventory_id = '4536bf5c-ff03-4154-a8c9-32ff4b40e40c'
 
     ForemanInventoryUpload::Generators::Queries.instance_variable_set(:@fact_names, nil)
+
+    Organization.any_instance.stubs(:manifest_expired?).returns(false)
 
     inventory_json = <<-INVENTORY_JSON
     {
@@ -246,9 +248,13 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
     InventorySync::Async::InventoryHostsSync.any_instance.expects(:query_inventory).returns(@inventory)
     InventorySync::Async::InventoryHostsSync.any_instance.expects(:plan_self_host_sync)
 
+    setup_certs_expectation do
+      InventorySync::Async::InventoryHostsSync.any_instance.stubs(:candlepin_id_cert)
+    end
+
     @host2.build_insights.save
 
-    ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync)
+    ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync, [@host1.organization, @host2.organization])
 
     @host2.reload
 
@@ -259,7 +265,11 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
     InventorySync::Async::InventoryHostsSync.any_instance.expects(:query_inventory).returns(@inventory)
     InventorySync::Async::InventoryHostsSync.any_instance.expects(:plan_self_host_sync)
 
-    ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync)
+    setup_certs_expectation do
+      InventorySync::Async::InventoryHostsSync.any_instance.stubs(:candlepin_id_cert)
+    end
+
+    ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync, [@host1.organization, @host2.organization])
 
     @host2.reload
 
@@ -272,9 +282,13 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
     InventorySync::Async::InventoryHostsSync.any_instance.expects(:query_inventory).returns(empty_inventory)
     InventorySync::Async::InventoryHostsSync.any_instance.expects(:plan_self_host_sync)
 
+    setup_certs_expectation do
+      InventorySync::Async::InventoryHostsSync.any_instance.stubs(:candlepin_id_cert)
+    end
+
     assert_nil @host2.insights
 
-    ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync)
+    ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync, [@host1.organization, @host2.organization])
 
     @host2.reload
 

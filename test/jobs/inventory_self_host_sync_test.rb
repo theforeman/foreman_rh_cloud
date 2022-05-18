@@ -3,10 +3,15 @@ require 'foreman_tasks/test_helpers'
 
 class InventorySelfHostSyncTest < ActiveSupport::TestCase
   include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include MockCerts
 
   setup do
     User.current = User.find_by(login: 'secret_admin')
-    Setting[:rh_cloud_token] = 'MOCK_TOKEN'
+
+    setup_certs_expectation do
+      InventorySync::Async::InventorySelfHostSync.any_instance.stubs(:candlepin_id_cert)
+    end
+    Organization.any_instance.stubs(:manifest_expired?).returns(false)
 
     # this host would pass our plugin queries, so it could be uploaded to the cloud.
     @host1 = FactoryBot.create(:host)

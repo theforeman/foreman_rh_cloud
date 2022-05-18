@@ -1,6 +1,6 @@
 module ForemanRhCloud
   class RemediationsRetriever
-    include CloudAuth
+    include CertAuth
 
     attr_reader :logger
 
@@ -9,8 +9,8 @@ module ForemanRhCloud
     end
 
     def create_playbook
-      unless cloud_auth_available?
-        logger.debug('Cloud authentication is not available, cannot continue')
+      unless cert_auth_available?(@organization)
+        logger.debug('Manifest is not available, cannot continue')
         return
       end
 
@@ -25,6 +25,7 @@ module ForemanRhCloud
 
     def query_playbook
       execute_cloud_request(
+        organization: organization,
         method: method,
         url: playbook_url,
         headers: headers,
@@ -46,6 +47,9 @@ module ForemanRhCloud
 
     def method
       :get
+    end
+
+    def organization
     end
   end
 end

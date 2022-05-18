@@ -3,7 +3,6 @@ import { insightsStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
 import { routerState, APIState, APIErrorState } from './fixtures';
 import {
   selectError,
-  selectHasToken,
   selectHits,
   selectInsightsCloudTable,
   selectIsAllSelected,
@@ -46,7 +45,6 @@ const fixtures = {
   'should return API error': () => selectError({ ...state, ...APIErrorState }),
   'should return API hits': () => selectHits(state),
   'should return API item count': () => selectItemCount(state),
-  'should return API has token': () => selectHasToken(state),
   'should return insights table': () => selectInsightsCloudTable(state),
   'should return insights selectedIds': () => selectSelectedIds(state),
   'should return insights isAllSelected': () => selectIsAllSelected(state),

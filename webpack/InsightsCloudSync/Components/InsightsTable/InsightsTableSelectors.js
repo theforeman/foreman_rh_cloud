@@ -73,6 +73,3 @@ export const selectShowSelectAllAlert = state =>
 
 export const selectItemCount = state =>
   selectAPIResponse(state, INSIGHTS_HITS_API_KEY).itemCount || 0;
-
-export const selectHasToken = state =>
-  selectAPIResponse(state, INSIGHTS_HITS_API_KEY).hasToken;

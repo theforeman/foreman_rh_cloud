@@ -2,13 +2,17 @@ require 'test_plugin_helper'
 
 class TemplateRendererHelperTest < ActiveSupport::TestCase
   include ForemanRhCloud::TemplateRendererHelper
+  include MockCerts
 
   setup do
     response = mock('respone')
     response.stubs(:body).returns('TEST PLAYBOOK')
     ForemanRhCloud::RemediationsRetriever.any_instance.stubs(:query_playbook).returns(response)
     @host1 = FactoryBot.create(:host)
-    Setting[:rh_cloud_token] = 'MOCK_TOKEN'
+
+    setup_certs_expectation do
+      ForemanRhCloud::RemediationsRetriever.any_instance.stubs(:candlepin_id_cert)
+    end
   end
 
   test 'Generates a playbook for hit and remediation' do

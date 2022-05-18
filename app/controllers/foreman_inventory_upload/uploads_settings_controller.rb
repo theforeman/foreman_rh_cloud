@@ -7,7 +7,6 @@ module ForemanInventoryUpload
         ipsObfuscationEnabled: Setting[:obfuscate_inventory_ips],
         excludePackagesEnabled: Setting[:exclude_installed_packages],
         CloudConnectorStatus: ForemanInventoryUpload::UploadsSettingsController.cloud_connector_status,
-        cloudToken: !Setting[:rh_cloud_token].empty?,
         lastSyncTask: last_successful_inventory_sync_task,
       }, status: :ok
     end

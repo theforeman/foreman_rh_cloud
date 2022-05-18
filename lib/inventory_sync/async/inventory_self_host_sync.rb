@@ -4,12 +4,7 @@ module InventorySync
       set_callback :step, :around, :create_facets
 
       def plan
-        unless cloud_auth_available?
-          logger.debug('Cloud authentication is not available, skipping self host sync')
-          return
-        end
-
-        plan_self
+        super(ForemanRhCloud.foreman_host.organization)
       end
 
       def create_facets
@@ -37,6 +32,10 @@ module InventorySync
 
       def request_url
         ForemanInventoryUpload.inventory_self_url
+      end
+
+      def action_name
+        'self host sync'
       end
     end
   end

@@ -9,6 +9,10 @@ template_inputs:
   description: URL of the playbook to run
   input_type: user
   required: true
+- name: organization_id
+  description: Id of the organization that owns the playbook
+  input_type: user
+  required: true
 - name: report_url
   description: URL for calling the report callback
   input_type: user
@@ -23,4 +27,4 @@ template_inputs:
   required: true
 provider_type: Ansible
 %>
-<%= download_rh_playbook(input('playbook_url')) %>
+<%= download_rh_playbook(input('playbook_url'), input('organization_id')) %>

@@ -15,5 +15,3 @@ export const selectIpsObfuscationEnabled = state =>
 
 export const selectExcludePackages = state =>
   selectSettings(state).excludePackagesEnabled;
-
-export const selectCloudToken = state => selectSettings(state).cloudToken;

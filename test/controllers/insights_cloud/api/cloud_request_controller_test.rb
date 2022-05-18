@@ -19,7 +19,6 @@ module InsightsCloud::Api
     end
 
     test 'Starts playbook run for correct directive' do
-      Setting[:rh_cloud_token] = 'MOCK_TOKEN'
       host1 = FactoryBot.create(:host, :with_insights_hits)
       host1.insights.uuid = 'TEST_UUID1'
       host1.insights.save!

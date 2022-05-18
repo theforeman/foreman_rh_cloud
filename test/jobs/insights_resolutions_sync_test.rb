@@ -3,6 +3,7 @@ require 'foreman_tasks/test_helpers'
 
 class InsightsResolutionsSyncTest < ActiveSupport::TestCase
   include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include MockCerts
 
   setup do
     @resolutions = {
@@ -63,7 +64,12 @@ class InsightsResolutionsSyncTest < ActiveSupport::TestCase
     }
 
     @rule = FactoryBot.create(:insights_rule, rule_id: 'network_tcp_connection_hang|NETWORK_TCP_CONNECTION_HANG_WARN')
-    Setting[:rh_cloud_token] = 'MOCK_TOKEN'
+
+    setup_certs_expectation do
+      InsightsCloud::Async::InsightsResolutionsSync.any_instance.stubs(:candlepin_id_cert)
+    end
+
+    Organization.any_instance.stubs(:manifest_expired?).returns(false)
   end
 
   test 'Resolutions data is replaced with data from cloud' do

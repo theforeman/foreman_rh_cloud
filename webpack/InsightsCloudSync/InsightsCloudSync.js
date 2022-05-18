@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PageLayout from 'foremanReact/routes/common/PageLayout/PageLayout';
 import InsightsHeader from './Components/InsightsHeader';
-import { NoTokenEmptyState } from './Components/NoTokenEmptyState';
 import InsightsTable from './Components/InsightsTable';
 import RemediationModal from './Components/RemediationModal';
 import {
@@ -14,20 +13,7 @@ import Pagination from './Components/InsightsTable/Pagination';
 import ToolbarDropdown from './Components/ToolbarDropdown';
 import InsightsSettings from './Components/InsightsSettings';
 
-const InsightsCloudSync = ({
-  syncInsights,
-  query,
-  fetchInsights,
-  hasToken,
-}) => {
-  if (!hasToken) {
-    return (
-      <PageLayout header={INSIGHTS_SYNC_PAGE_TITLE} searchable={false}>
-        <NoTokenEmptyState />
-      </PageLayout>
-    );
-  }
-
+const InsightsCloudSync = ({ syncInsights, query, fetchInsights }) => {
   const onRecommendationSync = () => syncInsights(fetchInsights, query);
   const toolbarButtons = (
     <>
@@ -63,12 +49,10 @@ InsightsCloudSync.propTypes = {
   syncInsights: PropTypes.func.isRequired,
   fetchInsights: PropTypes.func.isRequired,
   query: PropTypes.string,
-  hasToken: PropTypes.bool,
 };
 
 InsightsCloudSync.defaultProps = {
   query: '',
-  hasToken: true,
 };
 
 export default InsightsCloudSync;

@@ -16,11 +16,6 @@ module ForemanRhCloud
     @legacy_insights_url ||= ENV['SATELLITE_LEGACY_INSIGHTS_URL'] || 'https://cert-api.access.redhat.com'
   end
 
-  def self.authentication_url
-    # https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
-    @authentication_url ||= ENV['SATELLITE_RH_CLOUD_SSO_URL'] || 'https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token'
-  end
-
   def self.verify_ssl_method
     @verify_ssl_method ||= ENV['SATELLITE_RH_CLOUD_URL'] ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER
   end

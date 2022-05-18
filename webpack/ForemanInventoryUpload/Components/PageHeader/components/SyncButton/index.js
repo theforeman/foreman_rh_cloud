@@ -3,12 +3,10 @@ import { connect } from 'react-redux';
 
 import * as actions from './SyncButtonActions';
 import SyncButton from './SyncButton';
-import { selectCloudToken } from '../../../InventorySettings/InventorySettingsSelectors';
 import { selectTaskStatus } from './SyncButtonSelectors';
 
 // map state to props
 const mapStateToProps = state => ({
-  cloudToken: selectCloudToken(state),
   status: selectTaskStatus(state),
 });
 

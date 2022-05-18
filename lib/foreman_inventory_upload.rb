@@ -71,7 +71,7 @@ module ForemanInventoryUpload
   end
 
   def self.inventory_base_url
-    ForemanRhCloud.base_url + "/api/inventory/v1/hosts"
+    ForemanRhCloud.cert_base_url + "/api/inventory/v1/hosts"
   end
 
   def self.inventory_export_url

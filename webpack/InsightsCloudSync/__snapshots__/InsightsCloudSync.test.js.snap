@@ -52,12 +52,3 @@ exports[`InsightsCloudSync render 1`] = `
   </PageLayout>
 </div>
 `;
-
-exports[`InsightsCloudSync render no token 1`] = `
-<PageLayout
-  header="Red Hat Insights"
-  searchable={false}
->
-  <NoTokenEmptyState />
-</PageLayout>
-`;

@@ -112,13 +112,14 @@ class InsightsRulesSyncTest < ActiveSupport::TestCase
     @hit = FactoryBot.create(:insights_hit, host_id: @host.id)
 
     InsightsCloud::Async::InsightsRulesSync.any_instance.stubs(:plan_resolutions)
-    Setting[:rh_cloud_token] = 'MOCK_TOKEN'
   end
 
   test 'Hits data is replaced with data from cloud' do
-    InsightsCloud::Async::InsightsRulesSync.any_instance.expects(:query_insights_rules).returns(@rules)
+    InsightsCloud::Async::InsightsRulesSync.any_instance.expects(:query_insights_rules).returns(@rules).times(Organization.count)
+    # do not cleanup unused rules for tests
+    InsightsCloud::Async::InsightsRulesSync.any_instance.stubs(:cleanup_rules)
 
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsRulesSync)
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsRulesSync, Organization.all)
     @hit.reload
 
     assert_equal 2, InsightsRule.all.count
@@ -197,7 +198,10 @@ class InsightsRulesSyncTest < ActiveSupport::TestCase
     InsightsCloud::Async::InsightsRulesSync.any_instance.
       stubs(:query_insights_rules).returns(@rules).then.returns(@last_rule)
 
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsRulesSync)
+    # do not cleanup unused rules for tests
+    InsightsCloud::Async::InsightsRulesSync.any_instance.stubs(:cleanup_rules)
+
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsRulesSync, Organization.all)
 
     assert_equal 3, InsightsRule.all.count
   end
