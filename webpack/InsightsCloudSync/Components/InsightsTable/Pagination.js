@@ -5,6 +5,7 @@ import {
   Pagination as PfPagination,
   PaginationVariant,
 } from '@patternfly/react-core';
+import { translate as __ } from 'foremanReact/common/I18n';
 import { useForemanSettings } from 'foremanReact/Root/Context/ForemanContext';
 import { onTablePerPageSelect, onTableSetPage } from './InsightsTableActions';
 import { getPerPageOptions } from './InsightsTableHelpers';
@@ -13,6 +14,20 @@ import {
   selectPage,
   selectPerPage,
 } from './InsightsTableSelectors';
+
+const paginationTitles = {
+  items: __('items'),
+  page: '', // doesn't work well with translations as it adds 's' for plural, see: https://github.com/patternfly/patternfly-react/issues/6707
+  itemsPerPage: __('Items per page'),
+  perPageSuffix: __('per page'),
+  toFirstPage: __('Go to first page'),
+  toPreviousPage: __('Go to previous page'),
+  toLastPage: __('Go to last page'),
+  toNextPage: __('Go to next page'),
+  optionsToggle: __('Items per page'),
+  currPage: __('Current page'),
+  paginationTitle: __('Pagination'),
+};
 
 const Pagination = ({ variant, ...props }) => {
   const dispatch = useDispatch();
@@ -35,6 +50,7 @@ const Pagination = ({ variant, ...props }) => {
       onSetPage={onSetPage}
       onPerPageSelect={onPerPageSelect}
       perPageOptions={getPerPageOptions(urlPerPage, appPerPage)}
+      titles={paginationTitles}
       {...props}
     />
   );
