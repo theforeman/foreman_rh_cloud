@@ -1,16 +1,6 @@
 class Setting::RhCloud < Setting
   ::Setting::BLANK_ATTRS.concat %w{rhc_instance_id}
 
-  def self.load_defaults
-    return false unless table_exists?
-    transaction do
-      # If the user had auto_upload default setting, we will not surprise him, and force the value to false
-      # for new users, the default will be set to true and the value will remain nil
-      Setting.where(name: 'allow_auto_inventory_upload', value: nil).where("settings.default LIKE '%false%'").update_all(value: "--- false\n...")
-      super
-    end
-  end
-
   def self.default_settings
     [
       set('allow_auto_inventory_upload', N_('Enable automatic upload of your host inventory to the Red Hat cloud'), true, N_('Automatic inventory upload')),
