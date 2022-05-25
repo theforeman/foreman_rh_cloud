@@ -9,7 +9,7 @@ module ForemanRhCloud
     end
 
     def create_playbook
-      unless cert_auth_available?(@organization)
+      unless cert_auth_available?(organization)
         logger.debug('Manifest is not available, cannot continue')
         return
       end
