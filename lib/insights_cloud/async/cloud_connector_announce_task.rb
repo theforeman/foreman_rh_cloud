@@ -15,7 +15,7 @@ module InsightsCloud
         plan_self
       end
 
-      def finalize(*_args)
+      def finalize
         Organization.unscoped.each do |org|
           presence = ForemanRhCloud::CloudPresence.new(org, logger)
           presence.announce_to_sources
