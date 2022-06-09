@@ -15,10 +15,7 @@ module InsightsCloud
         plan_self
       end
 
-      def run(event = nil)
-        # Handle skip events
-        return if event == Dynflow::Action::Skip
-
+      def finalize(*_args)
         Organization.unscoped.each do |org|
           presence = ForemanRhCloud::CloudPresence.new(org, logger)
           presence.announce_to_sources
