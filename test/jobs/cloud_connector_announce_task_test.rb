@@ -7,7 +7,7 @@ class CloudConnectorAnnounceTaskTest < ActiveSupport::TestCase
   include ForemanTasks::TestHelpers::WithInThreadExecutor
 
   setup do
-    feature = RemoteExecutionFeature.register(
+    RemoteExecutionFeature.register(
       :ansible_configure_cloud_connector,
       N_('Configure Cloud Connector on given hosts'),
       :description => N_('Configure Cloud Connector on given hosts'),
@@ -23,7 +23,7 @@ class CloudConnectorAnnounceTaskTest < ActiveSupport::TestCase
   test 'It executes cloud presence announcer' do
     ForemanRhCloud::CloudPresence.any_instance.expects(:announce_to_sources).times(Organization.unscoped.count)
 
-    actual = ForemanTasks.sync_task(InsightsCloud::Async::CloudConnectorAnnounceTask, @job_invocation)
+    ForemanTasks.sync_task(InsightsCloud::Async::CloudConnectorAnnounceTask, @job_invocation)
   end
 
   private
