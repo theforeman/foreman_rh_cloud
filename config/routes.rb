@@ -25,6 +25,8 @@ Rails.application.routes.draw do
       end
     end
     match 'hits/:host_id', to: 'hits#show', via: :get
+
+    post ':organization_id/parameter', to: 'settings#set_org_parameter', constraints: { organization_id: %r{[^\/]+} }
   end
 
   namespace :foreman_rh_cloud do
