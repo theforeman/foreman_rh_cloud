@@ -137,6 +137,7 @@ module InsightsCloud
 
       def report_job_progress(invocation_status)
         generator = InsightsCloud::Generators::PlaybookProgressGenerator.new(correlation_id)
+        all_hosts_success = true
 
         invocation_status.each do |host_name, status|
           # skip host if the host already reported that it's finished
@@ -151,9 +152,10 @@ module InsightsCloud
           if status['state'] == 'stopped'
             generator.host_finished_message(host_name, status['exit_status'])
             status['report_done'] = true
+            all_hosts_success &&= status['exit_status'] == 0
           end
         end
-        generator.job_finished_message if done?(invocation_status)
+        generator.job_finished_message(all_hosts_success) if done?(invocation_status)
 
         send_report(generator.generate)
       end
