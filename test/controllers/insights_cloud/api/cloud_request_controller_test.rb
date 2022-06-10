@@ -40,6 +40,33 @@ module InsightsCloud::Api
       assert_response :success
     end
 
+    test 'Starts playbook run for correct directive with capitalized keys' do
+      host1 = FactoryBot.create(:host, :with_insights_hits)
+      host1.insights.uuid = 'TEST_UUID1'
+      host1.insights.save!
+      host2 = FactoryBot.create(:host, :with_insights_hits)
+      host2.insights.uuid = 'TEST_UUID2'
+      host2.insights.save!
+
+      mock_composer = mock('composer')
+      ::JobInvocationComposer.expects(:for_feature).with do |feature, host_ids, params|
+        feature == :rh_cloud_connector_run_playbook &&
+        host_ids.first == host1.id &&
+        host_ids.last == host2.id
+      end.returns(mock_composer)
+      mock_composer.expects(:trigger!)
+      mock_composer.expects(:job_invocation)
+
+      params = run_playbook_request
+      params['Directive'] = params.delete('directive')
+      params['Metadata'] = params.delete('metadata')
+      params['Content'] = params.delete('content')
+
+      post :update, params: run_playbook_request
+
+      assert_response :success
+    end
+
     private
 
     def run_playbook_request
