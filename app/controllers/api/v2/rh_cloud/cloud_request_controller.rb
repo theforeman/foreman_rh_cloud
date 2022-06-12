@@ -27,16 +27,18 @@ module Api::V2::RhCloud
     private
 
     def metadata
-      params['metadata']
+      params['Metadata'] || params['metadata']
     end
 
     def content
+      content = params['Content'] || params['content']
+
       # the content received as base 64 of the string in double quotes
-      Base64.decode64(params['content']).tr('"', '')
+      Base64.decode64(content).tr('"', '')
     end
 
     def directive
-      params['directive']
+      params['Directive'] || params['directive']
     end
 
     def handle_run_playbook_request
