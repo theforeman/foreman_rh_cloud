@@ -51,7 +51,7 @@ class PlaybookProgressGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'Outputs job finished message' do
-    @generator.job_finished_message
+    @generator.job_finished_message(true)
 
     actual = @generator.generate
     actual_message = JSON.parse(actual)

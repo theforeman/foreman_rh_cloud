@@ -30,12 +30,12 @@ module InsightsCloud
         }
       end
 
-      def job_finished_message
+      def job_finished_message(success)
         @messages << {
           "type": "playbook_run_completed",
           "version": 3,
           "correlation_id": correlation_id,
-          "status": "success",
+          "status": success ? 'success' : 'failure',
         }
       end
 
