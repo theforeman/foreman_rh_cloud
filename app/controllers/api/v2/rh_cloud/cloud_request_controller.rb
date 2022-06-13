@@ -44,7 +44,11 @@ module Api::V2::RhCloud
       logger.error("Reporting URL is not valid: #{metadata['return_url']}") && return unless valid_url?(metadata['return_url'])
 
       hosts = metadata['hosts'].split(',')
-      host_ids = Host.search_for("not params.#{InsightsCloud.enable_cloud_remediations_param} = f").where(id: host_ids(hosts)).pluck(:id)
+
+      # select hosts from the metadata list that are not disabled by the parameter.
+      host_ids = Host.search_for("not params.#{InsightsCloud.enable_cloud_remediations_param} = f")
+                     .where(id: host_ids(hosts))
+                     .pluck(:id)
 
       logger.warn("Some hosts were not found/ignored. Looked for: #{hosts}, found ids: #{host_ids}") unless host_ids.length == hosts.length
 
