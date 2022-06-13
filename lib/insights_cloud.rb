@@ -28,4 +28,8 @@ module InsightsCloud
   def self.enable_client_param
     'host_registration_insights'
   end
+
+  def self.enable_cloud_remediations_param
+    'enable_cloud_remediations'
+  end
 end

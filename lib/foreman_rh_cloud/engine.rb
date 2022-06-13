@@ -83,9 +83,13 @@ module ForemanRhCloud
             :dispatch_cloud_requests,
             'api/v2/rh_cloud/cloud_request': [:update]
           )
+          permission(
+            :control_organization_insights,
+            'insights_cloud/settings': [:set_org_parameter]
+          )
         end
 
-        plugin_permissions = [:view_foreman_rh_cloud, :generate_foreman_rh_cloud, :view_insights_hits, :dispatch_cloud_requests]
+        plugin_permissions = [:view_foreman_rh_cloud, :generate_foreman_rh_cloud, :view_insights_hits, :dispatch_cloud_requests, :control_organization_insights]
 
         role 'ForemanRhCloud', plugin_permissions, 'Role granting permissions to view the hosts inventory,
                                                     generate a report, upload it to the cloud and download it locally'

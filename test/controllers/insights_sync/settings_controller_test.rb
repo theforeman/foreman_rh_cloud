@@ -27,4 +27,21 @@ class SettingsControllerTest < ActionController::TestCase
     assert_equal true, actual['insightsSyncEnabled']
     assert_equal true, Setting[:allow_auto_insights_sync]
   end
+
+  test 'Should update an organization parameter' do
+    FactoryBot.create(:common_parameter, name: InsightsCloud.enable_cloud_remediations_param, value: false)
+    host = FactoryBot.create(:host)
+
+    # make sure the parameter is there
+    assert_equal false, host.host_params[InsightsCloud.enable_cloud_remediations_param]
+
+    post :set_org_parameter, params: { parameter: InsightsCloud.enable_cloud_remediations_param, value: true, organization_id: host.organization.id }, session: set_session_user
+
+    # needed for properly access host_params
+    User.as_anonymous_admin do
+      # refresh the host record
+      host = Host.find(host.id)
+      assert_equal true, host.host_params[InsightsCloud.enable_cloud_remediations_param]
+    end
+  end
 end
