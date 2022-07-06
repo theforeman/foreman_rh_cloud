@@ -22,6 +22,7 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
       "/redhat_access/r/insights/platform/ingress/v1/upload" => "https://cert.cloud.example.com/api/ingress/v1/upload",
       "/redhat_access/r/insights/uploads/67200803-132b-474b-a6f9-37be74185df4" => "https://cert-api.access.example.com/r/insights/uploads/67200803-132b-474b-a6f9-37be74185df4",
       "/redhat_access/r/insights/" => "https://cert.cloud.example.com/api/apicast-tests/ping",
+      "/api/pes/repomap.json" => "https://cert.cloud.example.com/api/pes/repomap.json",
     }
 
     paths.each do |key, value|

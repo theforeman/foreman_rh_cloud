@@ -46,6 +46,10 @@ Rails.application.routes.draw do
 
   # API routes
 
+  scope :module => :'insights_cloud/api', :path => '/api/pes' do
+    match '(/*path)(/)', to: 'machine_telemetries#forward_request', via: [:get]
+  end
+
   namespace :api, :defaults => {:format => 'json'} do
     scope '(:apiv)', :module => :v2, :defaults => {:apiv => 'v2'}, :apiv => /v1|v2/, :constraints => ApiConstraints.new(:version => 2, :default => true) do
       resources :organizations, :only => [:show] do
