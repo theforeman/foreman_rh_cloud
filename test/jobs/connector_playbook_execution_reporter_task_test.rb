@@ -14,7 +14,7 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
   end
 
   setup do
-    feature = RemoteExecutionFeature.register(
+    RemoteExecutionFeature.register(
       :rh_cloud_connector_run_playbook,
       N_('Run RH Cloud playbook'),
       description: N_('Run playbook genrated by Red Hat remediations app'),
@@ -22,14 +22,10 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
       provided_inputs: ['playbook_url', 'report_url', 'correlation_id', 'report_interval']
     )
 
-    puts "REX Register: #{feature.id}"
-
     @job_invocation = generate_job_invocation
 
     # reset connector feature ID cache
     TestConnectorPlaybookExecutionReporterTask.instance_variable_set(:@connector_feature_id, nil)
-
-    puts RemoteExecutionFeature.all.to_a
   end
 
   test 'It reports finish playbook messages' do
@@ -114,8 +110,6 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
       :template => 'BLEH'
     )
     feature = RemoteExecutionFeature.feature!(:rh_cloud_connector_run_playbook).id
-
-    puts "Generated feature: #{feature}"
 
     job_invocation = FactoryBot.create(
       :job_invocation,

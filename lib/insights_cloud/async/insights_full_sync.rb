@@ -1,3 +1,4 @@
+require 'cgi'
 require 'rest-client'
 
 module InsightsCloud
@@ -122,7 +123,7 @@ module InsightsCloud
       end
 
       def to_rule_id(results_url)
-        URI.decode(safe_results_match(results_url)[:id] || '')
+        CGI.unescape(safe_results_match(results_url)[:id] || '')
       end
 
       def safe_results_match(results_url)
