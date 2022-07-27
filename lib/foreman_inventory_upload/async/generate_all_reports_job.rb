@@ -32,6 +32,10 @@ module ForemanInventoryUpload
       def plan_generate_report(folder, organization)
         plan_action(ForemanInventoryUpload::Async::GenerateReportJob, folder, organization.id)
       end
+
+      def logger
+        action_logger
+      end
     end
   end
 end
