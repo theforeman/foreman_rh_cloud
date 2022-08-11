@@ -21,7 +21,7 @@ module ForemanRhCloud
     end
 
     initializer 'foreman_rh_cloud.load_default_settings', :before => :load_config_initializers do
-      require_dependency File.expand_path('../../app/models/setting/rh_cloud.rb', __dir__)
+      require_dependency File.expand_path('settings.rb', __dir__)
     end
 
     config.autoload_paths += Dir["#{config.root}/app/controllers/concerns"]
@@ -29,7 +29,6 @@ module ForemanRhCloud
     config.autoload_paths += Dir["#{config.root}/app/models/concerns"]
     config.autoload_paths += Dir["#{config.root}/app/services"]
     config.autoload_paths += Dir["#{config.root}/app/overrides"]
-    config.autoload_paths += Dir["#{config.root}/app/services"]
     config.autoload_paths += Dir["#{config.root}/lib"]
 
     config.eager_load_paths += Dir["#{config.root}/lib"]

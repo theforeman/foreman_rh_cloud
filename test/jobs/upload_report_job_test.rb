@@ -12,7 +12,7 @@ class UploadReportJobTest < ActiveSupport::TestCase
         'idCert' => 'TEST_CERT',
       }
     )
-    Setting[:content_disconnected] = true
+    ForemanInventoryUpload::Async::UploadReportJob.any_instance.expects(:content_disconnected?).returns(true)
 
     ForemanTasks.sync_task(ForemanInventoryUpload::Async::UploadReportJob, '', organization.id)
 

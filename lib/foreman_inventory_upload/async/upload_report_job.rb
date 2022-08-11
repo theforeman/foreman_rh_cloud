@@ -13,7 +13,7 @@ module ForemanInventoryUpload
       end
 
       def run
-        if Setting[:content_disconnected]
+        if content_disconnected?
           progress_output do |progress_output|
             progress_output.write_line('Upload was stopped since disconnected mode setting is enabled for content on this instance.')
             progress_output.status = "Task aborted, exit 1"
@@ -73,6 +73,10 @@ module ForemanInventoryUpload
 
       def organization
         @organization ||= Organization.find(input[:organization_id])
+      end
+
+      def content_disconnected?
+        Setting[:content_disconnected]
       end
     end
   end
