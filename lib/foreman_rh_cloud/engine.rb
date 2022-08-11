@@ -42,7 +42,7 @@ module ForemanRhCloud
 
     initializer 'foreman_rh_cloud.register_plugin', :before => :finisher_hook do |_app|
       Foreman::Plugin.register :foreman_rh_cloud do
-        requires_foreman '>= 2.3'
+        requires_foreman '>= 3.3'
 
         apipie_documented_controllers ["#{ForemanRhCloud::Engine.root}/app/controllers/api/v2/**/*.rb"]
 
