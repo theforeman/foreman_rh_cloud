@@ -63,19 +63,19 @@ module ForemanRhCloud
         {
           url: ForemanRhCloud.cert_base_url + request_path.sub('/redhat_access/r/insights/platform', '/api'),
           ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-          ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key]),
+          ssl_client_key: OpenSSL::PKey.read(certs[:key]),
         }
       when connection_test_request?
         {
           url: ForemanRhCloud.cert_base_url + '/api/apicast-tests/ping',
           ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-          ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key]),
+          ssl_client_key: OpenSSL::PKey.read(certs[:key]),
         }
       else # Legacy insights API
         {
           url: ForemanRhCloud.legacy_insights_url + request_path.sub('/redhat_access/r/insights', '/r/insights'),
           ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-          ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key]),
+          ssl_client_key: OpenSSL::PKey.read(certs[:key]),
           ssl_ca_file: ForemanRhCloud.legacy_insights_ca,
         }
       end

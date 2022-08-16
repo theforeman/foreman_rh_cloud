@@ -24,7 +24,7 @@ module ForemanRhCloud
               content_type: :json,
             },
             ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-            ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key])
+            ssl_client_key: OpenSSL::PKey.read(certs[:key])
           )
         )
 
@@ -42,7 +42,7 @@ module ForemanRhCloud
               content_type: :json,
             },
             ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-            ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key])
+            ssl_client_key: OpenSSL::PKey.read(certs[:key])
           )
         )
 
@@ -60,7 +60,7 @@ module ForemanRhCloud
             content_type: :json,
           },
           ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-          ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key]),
+          ssl_client_key: OpenSSL::PKey.read(certs[:key]),
           payload: {
             name: "satellite: #{Foreman.instance_id} org: #{@organization.name}",
             source_ref: Foreman.instance_id,
@@ -84,7 +84,7 @@ module ForemanRhCloud
             content_type: :json,
           },
           ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-          ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key]),
+          ssl_client_key: OpenSSL::PKey.read(certs[:key]),
           payload: {
             source_id: source_id,
             rhc_id: Setting[:rhc_instance_id],

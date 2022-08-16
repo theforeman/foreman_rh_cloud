@@ -27,7 +27,7 @@ module ForemanRhCloud
             content_type: :json,
           },
           ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-          ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key])
+          ssl_client_key: OpenSSL::PKey.read(certs[:key])
         )
       rescue StandardError => ex
         ex

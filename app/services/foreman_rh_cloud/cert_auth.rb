@@ -13,7 +13,7 @@ module ForemanRhCloud
       certs = candlepin_id_cert(params.delete(:organization))
       final_params = {
         ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-        ssl_client_key: OpenSSL::PKey::RSA.new(certs[:key]),
+        ssl_client_key: OpenSSL::PKey.read(certs[:key]),
       }.deep_merge(params)
 
       super(final_params)
