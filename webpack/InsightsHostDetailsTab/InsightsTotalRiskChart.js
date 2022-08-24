@@ -121,6 +121,7 @@ const InsightsTotalRiskCard = ({ hostDetails: { id } }) => {
       dropdownItems={[
         <DropdownItem
           key="insights-tab"
+          ouiaId="insights-tab-dropdown-item"
           onClick={() => hashHistory.push(`/Insights`)}
         >
           {__('View all recommendations')}
@@ -131,7 +132,9 @@ const InsightsTotalRiskCard = ({ hostDetails: { id } }) => {
         status={status}
         emptyState={
           <Bullseye>
-            <Title headingLevel="h4"> {__('No results found')} </Title>
+            <Title ouiaId="no-results-title" headingLevel="h4">
+              {__('No results found')}
+            </Title>
           </Bullseye>
         }
       >
