@@ -67,7 +67,6 @@ module InsightsCloud
       private
 
       def connector_playbook_job?(job_invocation)
-        puts "Job invocation id: #{job_invocation&.remote_execution_feature_id}, feature id: #{connector_feature_id}"
         job_invocation&.remote_execution_feature_id == connector_feature_id
       end
 
