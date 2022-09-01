@@ -1,6 +1,6 @@
 {
   "name": "foreman_rh_cloud",
-  "version": "5.0.41",
+  "version": "5.0.42",
   "description": "Inventory Upload =============",
   "main": "index.js",
   "scripts": {
