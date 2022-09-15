@@ -36,7 +36,7 @@ const NewHostDetailsTab = ({ hostName, router }) => {
     router.push({ pathname: '/foreman_rh_cloud/insights_cloud' });
 
   const dropdownItems = [
-    <DropdownItem key="insights-link">
+    <DropdownItem key="insights-link" ouiaId="insights-link">
       <a onClick={onSatInsightsClick}>{__('Go to Satellite Insights page')}</a>
     </DropdownItem>,
   ];
@@ -44,7 +44,7 @@ const NewHostDetailsTab = ({ hostName, router }) => {
   if (hits.length) {
     const { host_uuid: uuid } = hits[0];
     dropdownItems.push(
-      <DropdownItem key="insights-advisor-link">
+      <DropdownItem key="insights-advisor-link" ouiaId="insights-advisor-link">
         <a
           href={redHatAdvisorSystems(uuid)}
           target="_blank"
@@ -71,6 +71,7 @@ const NewHostDetailsTab = ({ hostName, router }) => {
         <RemediationModal />
         <Dropdown
           className="insights-dropdown"
+          ouiaId="insights-dropdown"
           onSelect={() => setIsDropdownOpen(false)}
           toggle={
             <KebabToggle onToggle={isOpen => setIsDropdownOpen(isOpen)} />
@@ -81,7 +82,7 @@ const NewHostDetailsTab = ({ hostName, router }) => {
         />
       </GridItem>
       <GridItem span={3}>
-        <Pagination variant="top" isCompact />
+        <Pagination ouiaId="insights-pagination" variant="top" isCompact />
       </GridItem>
       <GridItem>
         <InsightsTable hideHost hostname={hostName} />
