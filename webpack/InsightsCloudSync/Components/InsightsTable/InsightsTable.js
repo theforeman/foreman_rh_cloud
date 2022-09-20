@@ -31,6 +31,7 @@ const InsightsTable = ({
   error,
   isAllSelected,
   hideHost,
+  hostname,
 }) => {
   const { perPage: appPerPage } = useForemanSettings();
   const perPage = urlPerPage || appPerPage;
@@ -40,7 +41,7 @@ const InsightsTable = ({
   // acts as componentDidMount
   useEffect(() => {
     fetchInsights({ page, perPage, query, sortBy, sortOrder });
-  }, []);
+  }, [hostname]);
 
   useEffect(() => {
     setRows(
@@ -104,6 +105,7 @@ InsightsTable.propTypes = {
   error: PropTypes.string,
   isAllSelected: PropTypes.bool,
   hideHost: PropTypes.bool,
+  hostname: PropTypes.string,
 };
 
 InsightsTable.defaultProps = {
@@ -118,6 +120,7 @@ InsightsTable.defaultProps = {
   error: '',
   isAllSelected: false,
   hideHost: false,
+  hostname: '',
 };
 
 export default InsightsTable;
