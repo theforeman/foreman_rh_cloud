@@ -72,6 +72,17 @@ module InsightsCloud::Api
         assert_equal etag, @response.headers[Rack::ETAG]
       end
 
+      test "should set content type header to response from cloud" do
+        req = RestClient::Request.new(:method => 'GET', :url => 'http://test.theforeman.org')
+        net_http_resp = Net::HTTPResponse.new(1.0, 200, "OK")
+        net_http_resp[:content_type] = 'application/zip'
+        res = RestClient::Response.create(@body, net_http_resp, req)
+        ::ForemanRhCloud::CloudRequestForwarder.any_instance.stubs(:forward_request).returns(res)
+
+        get :forward_request, params: { "path" => "static/v1/release/insights-core.egg" }
+        assert_equal net_http_resp[:content_type], @response.headers['Content-Type']
+      end
+
       test "should handle failed authentication to cloud" do
         net_http_resp = Net::HTTPResponse.new(1.0, 401, "Unauthorized")
         res = RestClient::Response.create(@body, net_http_resp, @http_req)
