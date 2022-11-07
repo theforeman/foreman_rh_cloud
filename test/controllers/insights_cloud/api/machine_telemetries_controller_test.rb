@@ -71,12 +71,12 @@ module InsightsCloud::Api
       test "should set content type header to response from cloud" do
         req = RestClient::Request.new(:method => 'GET', :url => 'http://test.theforeman.org')
         net_http_resp = Net::HTTPResponse.new(1.0, 200, "OK")
-        net_http_resp[:content_type] = 'application/zip'
+        net_http_resp['Content-Type'] = 'application/zip'
         res = RestClient::Response.create(@body, net_http_resp, req)
         ::ForemanRhCloud::CloudRequestForwarder.any_instance.stubs(:forward_request).returns(res)
 
         get :forward_request, params: { "path" => "static/v1/release/insights-core.egg" }
-        assert_equal net_http_resp[:content_type], @response.headers['Content-Type']
+        assert_equal net_http_resp['Content-Type'], @response.headers['Content-Type']
       end
 
       test "should handle failed authentication to cloud" do
