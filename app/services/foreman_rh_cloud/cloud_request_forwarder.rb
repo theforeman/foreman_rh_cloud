@@ -17,17 +17,20 @@ module ForemanRhCloud
       logger.debug("Sending request to: #{request_opts[:url]}")
 
       execute_cloud_request(request_opts)
+    rescue RestClient::Exception => error_response
+      error_response.response
     end
 
     def prepare_request_opts(original_request, forward_payload, forward_params, certs)
       base_params = {
         method: original_request.method,
         payload: forward_payload,
-        headers: {
-          params: forward_params,
-          user_agent: http_user_agent(original_request),
-          content_type: original_request.media_type.presence || original_request.format.to_s,
-        },
+        headers: original_headers(original_request).merge(
+          {
+            params: forward_params,
+            user_agent: http_user_agent(original_request),
+            content_type: original_request.media_type.presence || original_request.format.to_s,
+          }),
       }
       base_params.merge(path_params(original_request.path, certs))
     end
@@ -76,6 +79,16 @@ module ForemanRhCloud
           ssl_ca_file: Class.new.include(RedhatAccess::Telemetry::LookUps).new.get_default_ssl_ca_file,
         }
       end
+    end
+
+    def original_headers(original_request)
+      headers = {
+        if_none_match: original_request.if_none_match,
+        if_modified_since: original_request.if_modified_since,
+      }.compact
+
+      logger.debug("Sending headers: #{headers}")
+      headers
     end
 
     def platform_request?
