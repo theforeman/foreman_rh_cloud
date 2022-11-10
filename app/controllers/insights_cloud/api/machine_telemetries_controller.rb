@@ -33,14 +33,25 @@ module InsightsCloud::Api
         }, status: @cloud_response.code
       end
 
-      if @cloud_response.headers[:content_disposition]
-        return send_data @cloud_response, disposition: @cloud_response.headers[:content_disposition], type: @cloud_response.headers[:content_type]
+      # Append redhat-specific headers
+      @cloud_response.headers.each do |key, value|
+        assign_header(response, @cloud_response, key, false) if key.to_s.start_with?('x_rh_')
       end
-
+      # Append general headers
       assign_header(response, @cloud_response, :x_resource_count, true)
-      assign_header(response, @cloud_response, :x_rh_insights_request_id, false)
+      headers[Rack::ETAG] = @cloud_response.headers[:etag]
 
-      render json: @cloud_response, status: @cloud_response.code
+      if @cloud_response.headers[:content_disposition]
+        # If there is a Content-Disposition header, it means we are forwarding binary data, send the raw data with proper
+        # content type
+        send_data @cloud_response, disposition: @cloud_response.headers[:content_disposition], type: @cloud_response.headers[:content_type]
+      elsif @cloud_response.headers[:content_type] =~ /zip/
+        # if there is no Content-Disposition, but the content type is binary according the content type,
+        # forward the request as binry too
+        send_data @cloud_response, type: @cloud_response.headers[:content_type]
+      else
+        render json: @cloud_response, status: @cloud_response.code
+      end
     end
 
     def branch_info
