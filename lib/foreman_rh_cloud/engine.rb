@@ -5,11 +5,19 @@ module ForemanRhCloud
   class Engine < ::Rails::Engine
     engine_name 'foreman_rh_cloud'
 
-    def self.register_scheduled_task(task_class, cronline)
+    def self.register_scheduled_task(task_class, cronline, env_cronline = nil)
       ForemanTasks::RecurringLogic.transaction(isolation: :serializable) do
-        return if ForemanTasks::RecurringLogic.joins(:tasks)
-                  .merge(ForemanTasks::Task.where(label: task_class.name))
-                  .exists?
+        existing_logic = ForemanTasks::RecurringLogic.joins(:tasks)
+                         .merge(ForemanTasks::Task.where(label: task_class.name))
+                         .where(state: 'active')
+                         .first
+        if existing_logic
+          # don't replace the recurring logic if the cronline is already set by ENV
+          return if existing_logic.cronline == env_cronline
+
+          existing_logic.cancel
+          existing_logic.destroy
+        end
 
         User.as_anonymous_admin do
           recurring_logic = ForemanTasks::RecurringLogic.new_from_cronline(cronline)
@@ -18,6 +26,12 @@ module ForemanRhCloud
         end
       end
     rescue ActiveRecord::TransactionIsolationError
+    end
+
+    def self.randomize_cron_line
+      # Randomize task run time during the first 3 hours of a day
+      random_time = DateTime.now.beginning_of_day + Random.new.rand(3.hours.minutes)
+      "#{random_time.minute} #{random_time.hour} * * *"
     end
 
     initializer 'foreman_rh_cloud.load_default_settings', :before => :load_config_initializers do
@@ -172,10 +186,26 @@ module ForemanRhCloud
         # skip object creation when admin user is not present, for example in test DB
         if User.unscoped.find_by_login(User::ANONYMOUS_ADMIN).present?
           ::ForemanTasks.dynflow.config.on_init(false) do |world|
-            ForemanRhCloud::Engine.register_scheduled_task(ForemanInventoryUpload::Async::GenerateAllReportsJob, '0 0 * * *')
-            ForemanRhCloud::Engine.register_scheduled_task(InventorySync::Async::InventoryScheduledSync, '0 0 * * *')
-            ForemanRhCloud::Engine.register_scheduled_task(InsightsCloud::Async::InsightsScheduledSync, '0 0 * * *')
-            ForemanRhCloud::Engine.register_scheduled_task(InsightsCloud::Async::InsightsClientStatusAging, '0 0 * * *')
+            ForemanRhCloud::Engine.register_scheduled_task(
+              ForemanInventoryUpload::Async::GenerateAllReportsJob,
+              ForemanRhCloud::Engine.randomize_cron_line,
+              ENV['SATELLITE_RH_CLOUD_GENERATE_REPORTS_CRON']
+            )
+            ForemanRhCloud::Engine.register_scheduled_task(
+              InventorySync::Async::InventoryScheduledSync,
+              ForemanRhCloud::Engine.randomize_cron_line,
+              ENV['SATELLITE_RH_CLOUD_INVENTORY_SYNC_CRON']
+            )
+            ForemanRhCloud::Engine.register_scheduled_task(
+              InsightsCloud::Async::InsightsScheduledSync,
+              ForemanRhCloud::Engine.randomize_cron_line,
+              ENV['SATELLITE_RH_CLOUD_INSIGHTS_SYNC_CRON']
+            )
+            ForemanRhCloud::Engine.register_scheduled_task(
+              InsightsCloud::Async::InsightsClientStatusAging,
+              ForemanRhCloud::Engine.randomize_cron_line,
+              ENV['SATELLITE_RH_CLOUD_STATUS_AGING_CRON']
+            )
           end
         end
       end
