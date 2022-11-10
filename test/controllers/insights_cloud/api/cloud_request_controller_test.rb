@@ -26,11 +26,13 @@ module InsightsCloud::Api
       host2.insights.uuid = 'TEST_UUID2'
       host2.insights.save!
 
+      expected_ids = [host1.id, host2.id].sort
+
       mock_composer = mock('composer')
       ::JobInvocationComposer.expects(:for_feature).with do |feature, host_ids, params|
         feature == :rh_cloud_connector_run_playbook &&
-        host_ids.first == host1.id &&
-        host_ids.last == host2.id
+        host_ids.min == expected_ids.first &&
+        host_ids.max == expected_ids.last
       end.returns(mock_composer)
       mock_composer.expects(:trigger!)
       mock_composer.expects(:job_invocation)
