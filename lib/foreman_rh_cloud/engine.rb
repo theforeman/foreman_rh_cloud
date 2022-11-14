@@ -11,18 +11,26 @@ module ForemanRhCloud
                          .merge(ForemanTasks::Task.where(label: task_class.name))
                          .where(state: 'active')
                          .first
+
         if existing_logic
-          # don't replace the recurring logic if the cronline is already set by ENV
-          return if existing_logic.cronline == env_cronline
+          # Refresh existing record if cronline specified by ENV, or it is set to exactly 00:00
+          # treat uploads at exactly 00:00 as a value that needs to be changed (this is the old value)
+          if existing_logic.cron_line == '0 0 * * *' || env_cronline
+            # if the actual cronline is the same as the one from the ENV, we can skip the update
+            return if existing_logic.cron_line == env_cronline
 
-          existing_logic.cancel
-          existing_logic.destroy
-        end
+            existing_logic.cancel
+            existing_logic.destroy
+          end
 
-        User.as_anonymous_admin do
-          recurring_logic = ForemanTasks::RecurringLogic.new_from_cronline(cronline)
-          recurring_logic.save!
-          recurring_logic.start(task_class)
+          # Save the new schedule
+          existing_logic.update(cron_line: env_cronline || cronline)
+        else
+          User.as_anonymous_admin do
+            recurring_logic = ForemanTasks::RecurringLogic.new_from_cronline(env_cronline || cronline)
+            recurring_logic.save!
+            recurring_logic.start(task_class)
+          end
         end
       end
     rescue ActiveRecord::TransactionIsolationError
@@ -32,6 +40,14 @@ module ForemanRhCloud
       # Randomize task run time during the first 3 hours of a day
       random_time = DateTime.now.beginning_of_day + Random.new.rand(3.hours.minutes)
       "#{random_time.minute} #{random_time.hour} * * *"
+    end
+
+    def self.create_recurring_logic(task_class, cronline)
+      User.as_anonymous_admin do
+        recurring_logic = ForemanTasks::RecurringLogic.new_from_cronline(cronline)
+        recurring_logic.save!
+        recurring_logic.start(task_class)
+      end
     end
 
     initializer 'foreman_rh_cloud.load_default_settings', :before => :load_config_initializers do
