@@ -4,10 +4,11 @@ module InsightsCloud
   module Async
     class InsightsResolutionsSync < ::Actions::EntryAction
       include ::ForemanRhCloud::CertAuth
+      include ::ForemanRhCloud::Async::ExponentialBackoff
 
       RULE_ID_REGEX = /[^:]*:(?<id>.*)/
 
-      def run
+      def try_execute
         InsightsResolution.transaction do
           InsightsResolution.delete_all
           rule_ids = relevant_rules
@@ -18,6 +19,7 @@ module InsightsCloud
             rule_ids -= Array(written_rules)
           end
         end
+        done!
       end
 
       def logger

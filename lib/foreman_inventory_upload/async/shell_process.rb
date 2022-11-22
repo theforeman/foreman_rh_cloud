@@ -4,13 +4,14 @@ module ForemanInventoryUpload
   module Async
     class ShellProcess < ::Actions::EntryAction
       include AsyncHelpers
+      include ::ForemanRhCloud::Async::ExponentialBackoff
 
       def plan(instance_label, more_inputs = {})
         inputs = more_inputs.merge(instance_label: instance_label)
         plan_self(inputs)
       end
 
-      def run
+      def try_execute
         klass_name = self.class.name
         logger.debug("Starting #{klass_name} with label #{instance_label}")
         progress_output do |progress_output|
@@ -25,6 +26,9 @@ module ForemanInventoryUpload
           end
         end
         logger.debug("Finished job #{klass_name} with label #{instance_label}")
+
+        assert_task_status(ProgressOutput.get(instance_label).status)
+        done!
       end
 
       def command
@@ -57,6 +61,10 @@ module ForemanInventoryUpload
 
       def instance_label
         input[:instance_label]
+      end
+
+      def assert_task_status(status)
+        raise Foreman::Exception.new('Process exited with an unknown status: %{status}', status: status) unless status.match?(/pid \d+ exit 0/)
       end
     end
   end

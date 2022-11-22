@@ -5,6 +5,7 @@ module InventorySync
     class QueryInventoryJob < ::Actions::EntryAction
       include ActiveSupport::Callbacks
       include ::ForemanRhCloud::CertAuth
+      include ::ForemanRhCloud::Async::ExponentialBackoff
 
       define_callbacks :iteration, :step
 
@@ -18,7 +19,7 @@ module InventorySync
         plan_self(actual_params)
       end
 
-      def run
+      def try_execute
         run_callbacks :iteration do
           organizations.each do |organization|
             if !cert_auth_available?(organization) || organization.manifest_expired?
@@ -43,6 +44,8 @@ module InventorySync
             end
           end
         end
+        # declare the action as finished to stop iterations
+        done!
       end
 
       private
