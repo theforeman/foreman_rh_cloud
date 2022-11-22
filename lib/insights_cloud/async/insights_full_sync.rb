@@ -5,6 +5,7 @@ module InsightsCloud
   module Async
     class InsightsFullSync < ::Actions::EntryAction
       include ::ForemanRhCloud::CertAuth
+      include ::ForemanRhCloud::Async::ExponentialBackoff
 
       def plan(organizations)
         organizations = organizations.select do |organization|
@@ -28,7 +29,7 @@ module InsightsCloud
         end
       end
 
-      def run
+      def try_execute
         organizations.each do |organization|
           unless cert_auth_available?(organization)
             logger.debug("Certificate is not available for org: #{organization.name}, skipping insights sync")
@@ -37,6 +38,7 @@ module InsightsCloud
 
           perform_hits_sync(organization)
         end
+        done!
       end
 
       def perform_hits_sync(organization)

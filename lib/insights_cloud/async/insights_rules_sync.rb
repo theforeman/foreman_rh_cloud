@@ -4,6 +4,7 @@ module InsightsCloud
   module Async
     class InsightsRulesSync < ::Actions::EntryAction
       include ::ForemanRhCloud::CertAuth
+      include ::ForemanRhCloud::Async::ExponentialBackoff
 
       def plan(organizations)
         # since the tasks are not connected, we need to force sequence execution here
@@ -18,7 +19,7 @@ module InsightsCloud
         plan_action InsightsResolutionsSync
       end
 
-      def run
+      def try_execute
         offset = 0
         InsightsRule.transaction do
           organizations.each do |organization|
@@ -36,6 +37,7 @@ module InsightsCloud
           # Remove all rules that do not have hits associated with them
           cleanup_rules
         end
+        done!
       end
 
       def logger

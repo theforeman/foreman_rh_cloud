@@ -12,11 +12,12 @@ module ForemanInventoryUpload
         super(label, filename: filename, organization_id: organization_id)
       end
 
-      def run
+      def try_execute
         if content_disconnected?
           progress_output do |progress_output|
             progress_output.write_line('Upload was stopped since disconnected mode setting is enabled for content on this instance.')
             progress_output.status = "Task aborted, exit 1"
+            done!
           end
           return
         end
@@ -26,6 +27,7 @@ module ForemanInventoryUpload
           progress_output do |progress_output|
             progress_output.write_line("Skipping organization #{organization}, no candlepin certificate defined.")
             progress_output.status = "Task aborted, exit 1"
+            done!
           end
           return
         end
