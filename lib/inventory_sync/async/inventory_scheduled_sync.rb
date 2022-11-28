@@ -2,6 +2,7 @@ module InventorySync
   module Async
     class InventoryScheduledSync < ::Actions::EntryAction
       include ::Actions::RecurringAction
+      include ForemanInventoryUpload::Async::DelayedStart
 
       def plan
         unless Setting[:allow_auto_inventory_upload]
@@ -12,8 +13,10 @@ module InventorySync
           return
         end
 
-        Organization.unscoped.each do |org|
-          plan_org_sync(org)
+        after_delay do
+          Organization.unscoped.each do |org|
+            plan_org_sync(org)
+          end
         end
       end
 
