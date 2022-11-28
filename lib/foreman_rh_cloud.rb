@@ -120,4 +120,8 @@ module ForemanRhCloud
   def self.cloud_url_validator
     @cloud_url_validator ||= Regexp.new(ENV['SATELLITE_RH_CLOUD_VALIDATOR'] || 'redhat.com$')
   end
+
+  def self.requests_delay
+    @requests_delay ||= ENV['SATELLITE_RH_CLOUD_REQUESTS_DELAY']
+  end
 end

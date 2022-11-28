@@ -2,6 +2,7 @@ module InsightsCloud
   module Async
     class InsightsScheduledSync < ::Actions::EntryAction
       include ::Actions::RecurringAction
+      include ForemanInventoryUpload::Async::DelayedStart
 
       def plan
         unless Setting[:allow_auto_insights_sync]
@@ -12,7 +13,9 @@ module InsightsCloud
           return
         end
 
-        plan_full_sync
+        after_delay do
+          plan_full_sync
+        end
       end
 
       def plan_full_sync
