@@ -20,7 +20,7 @@ RUN \
   git clone --depth 1 --branch 3.3-stable https://github.com/theforeman/foreman.git; \
   git clone --depth 1 --branch KATELLO-4.5 https://github.com/Katello/katello.git; \
   git clone --depth 1 --branch v6.0.2 https://github.com/theforeman/foreman-tasks.git; \
-  git clone --depth 1 --branch master https://github.com/theforeman/foreman_rh_cloud.git
+  git clone --depth 1 --branch foreman_3_3 https://github.com/theforeman/foreman_rh_cloud.git
 
 RUN \
   cd /projects/foreman; \
