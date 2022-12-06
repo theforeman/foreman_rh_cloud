@@ -1,11 +1,11 @@
 name: Ruby tests
 on:
   push:
-    branches: [master, foreman_2_1, foreman_1_24]
+    branches: [foreman_3_3]
     paths-ignore:
     - '**/.github/**/*'
   pull_request:
-    branches: [master, foreman_2_1, foreman_1_24]
+    branches: [foreman_3_3]
     paths-ignore:
     - '**/.github/**/*'
 
@@ -31,7 +31,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/theforeman/tfm_plugin_test:master
+      image: ghcr.io/theforeman/tfm_plugin_test:foreman_3_3
 
     services:
       postgres:
