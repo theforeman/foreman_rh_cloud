@@ -55,7 +55,6 @@ jobs:
           rm -rf /projects/foreman_rh_cloud/{app,test,lib}
           cp -Rf $GITHUB_WORKSPACE/projects/foreman_rh_cloud /projects/
           /usr/bin/entrypoint.sh pnpm config set store-dir /root/.local/share/pnpm/store/v3
-          /usr/bin/entrypoint.sh pnpm i @redhat-cloud-services/frontend-components
           cd /projects/foreman
           /usr/bin/entrypoint.sh git config --global user.name $GIT_COMMITTER_NAME
           /usr/bin/entrypoint.sh git config --global user.email $GIT_COMMITTER_EMAIL

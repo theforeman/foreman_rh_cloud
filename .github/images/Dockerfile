@@ -49,13 +49,8 @@ RUN \
   cd /projects/foreman; \
   chmod +x ./script/npm_install_plugins.js; \
   bundle exec pnpm install; \
-  pnpm i @redhat-cloud-services/frontend-components; \
   pnpm i graphql-tag@^2.0.0; \
   bundle exec ./script/npm_install_plugins.js
-
-RUN \
-  cd /projects/foreman_rh_cloud; \
-  pnpm i @redhat-cloud-services/frontend-components
 
 COPY ./entrypoint.sh /usr/bin/
 
