@@ -30,6 +30,7 @@ set -e
 
 bundle exec rake foreman_rh_cloud:rubocop
 bundle exec rake test:foreman_rh_cloud
+RAILS_ENV=production bundle exec rails db:migrate RAILS_ENV=production
 bundle exec rake "plugin:assets:precompile[foreman_rh_cloud]" RAILS_ENV=production
 #bundle exec rake webpack:compile
 node --max_old_space_size=2048 node_modules/webpack/bin/webpack.js --config /projects/foreman/config/webpack.config.js --bail
