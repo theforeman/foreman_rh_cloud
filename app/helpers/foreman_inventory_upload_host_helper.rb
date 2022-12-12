@@ -6,8 +6,6 @@ module ForemanInventoryUploadHostHelper
   def hits_counts_cell(host)
     host_hits = hits_counts[host.id]
     host_link = Setting['host_details_ui'] ? "#{host_details_page_path(host)}#/Insights" : "#{host_path(host)}#insights"
-    tag.td class: ['hidden-xs', 'ellipsis', 'text-center'] do
-      link_to(host_hits, host_link) if host_hits
-    end
+    link_to(host_hits, host_link) if host_hits
   end
 end

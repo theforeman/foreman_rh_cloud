@@ -42,7 +42,7 @@ module ForemanRhCloud
 
     initializer 'foreman_rh_cloud.register_plugin', :before => :finisher_hook do |_app|
       Foreman::Plugin.register :foreman_rh_cloud do
-        requires_foreman '>= 3.3'
+        requires_foreman '>= 3.4'
 
         apipie_documented_controllers ["#{ForemanRhCloud::Engine.root}/app/controllers/api/v2/**/*.rb"]
 
@@ -123,6 +123,13 @@ module ForemanRhCloud
             name: _('Insights'),
             id: 'insights',
             onlyif: proc { |host| host.insights }
+        end
+
+        extend_page 'hosts/_list' do |context|
+          context.with_profile :cloud, _('RH Cloud'), default: true do
+            add_pagelet :hosts_table_column_header, key: :insights_recommendations_count, label: _('Recommendations'), sortable: true, width: '12%', class: 'hidden-xs ellipsis', priority: 100
+            add_pagelet :hosts_table_column_content, key: :insights_recommendations_count, callback: ->(host) { hits_counts_cell(host) }, class: 'hidden-xs ellipsis text-center', priority: 100
+          end
         end
 
         extend_template_helpers ForemanRhCloud::TemplateRendererHelper
