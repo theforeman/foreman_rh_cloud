@@ -21,7 +21,7 @@ const fills = [
     slot: 'host-overview-cards',
     name: 'insights-total-risk-chart',
     component: props => <InsightsTotalRiskCard {...props} />,
-    weight: 1100,
+    weight: 2800,
   },
 ];
 
