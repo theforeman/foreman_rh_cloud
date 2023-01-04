@@ -9,11 +9,6 @@ exports[`SyncButton rendering render with Props 1`] = `
     size="lg"
     variant="secondary"
   >
-    <RedoIcon
-      color="currentColor"
-      noVerticalAlign={false}
-      size="sm"
-    />
      Sync inventory status
   </Button>
 </Fragment>
