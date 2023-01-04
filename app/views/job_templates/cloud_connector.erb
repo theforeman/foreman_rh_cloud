@@ -30,6 +30,7 @@ feature: ansible_configure_cloud_connector
 
 ---
 - hosts: all
+  become: true
   vars:
     satellite_cloud_connector_url: "<%= foreman_server_url %>"
   roles:
