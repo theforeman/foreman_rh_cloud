@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Spinner, Button } from '@patternfly/react-core';
-import { RedoIcon } from '@patternfly/react-icons';
 import { STATUS } from 'foremanReact/constants';
 import { SYNC_BUTTON_TEXT } from '../../../../ForemanInventoryConstants';
 
@@ -27,7 +26,7 @@ class SyncButton extends React.Component {
           isDisabled={status === STATUS.PENDING}
           variant="secondary"
         >
-          {status === STATUS.PENDING ? <Spinner size="sm" /> : <RedoIcon />}
+          {status === STATUS.PENDING && <Spinner size="sm" />}
           {SYNC_BUTTON_TEXT}
         </Button>
       </React.Fragment>
