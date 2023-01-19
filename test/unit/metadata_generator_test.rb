@@ -10,6 +10,7 @@ class MetadataGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render do
     end
     actual = JSON.parse(json_str.join("\n"))
+    puts actual
 
     assert_not_nil actual['report_id']
     assert_equal 'Satellite', actual['source']
