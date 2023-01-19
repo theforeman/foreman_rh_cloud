@@ -2,6 +2,7 @@ require 'test_plugin_helper'
 
 class MetadataGeneratorTest < ActiveSupport::TestCase
   setup do
+    ::SmartProxy.default_capsule.name = 'satellite.example.com'
   end
 
   test 'generates an empty report' do
