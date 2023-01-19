@@ -2,7 +2,7 @@ require 'test_plugin_helper'
 
 class MetadataGeneratorTest < ActiveSupport::TestCase
   setup do
-    ::SmartProxy.default_capsule.name = 'satellite.example.com'
+    @foreman_host = 'satellite.example.com'
   end
 
   test 'generates an empty report' do
@@ -11,7 +11,7 @@ class MetadataGeneratorTest < ActiveSupport::TestCase
     json_str = generator.render do
     end
     actual = JSON.parse(json_str.join("\n"))
-    puts actual
+    actual.inspect
 
     assert_not_nil actual['report_id']
     assert_equal 'Satellite', actual['source']
