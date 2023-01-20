@@ -1,2 +1,2 @@
 # Matches foreman_rh_cloud.gemspec
-_('TODO: Description of ForemanRhCloud.')
+_('Foreman plugin that process & upload data to Red Hat Cloud')
