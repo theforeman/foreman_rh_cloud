@@ -109,6 +109,18 @@ module ForemanInventoryUpload
         IPAddr.new(max_obfuscated + 1, Socket::AF_INET).to_s
       end
 
+      def hostname_match
+        bash_hostname = `uname -n`.chomp
+        foreman_hostname = ForemanRhCloud.foreman_host&.name
+        if bash_hostname == foreman_hostname
+          fqdn(foreman_hostname)
+        elsif Setting[:obfuscate_inventory_hostnames]
+          obfuscate_fqdn(bash_hostname)
+        else
+          bash_hostname
+        end
+      end
+
       def bios_uuid(host)
         value = fact_value(host, 'dmi::system::uuid') || ''
         uuid_value(value)
