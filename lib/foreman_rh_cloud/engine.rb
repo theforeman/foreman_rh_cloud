@@ -127,7 +127,8 @@ module ForemanRhCloud
 
         extend_page 'hosts/_list' do |context|
           context.with_profile :cloud, _('RH Cloud'), default: true do
-            add_pagelet :hosts_table_column_header, key: :insights_recommendations_count, label: _('Recommendations'), sortable: true, width: '12%', class: 'hidden-xs ellipsis', priority: 100
+            add_pagelet :hosts_table_column_header, key: :insights_recommendations_count, label: _('Recommendations'), sortable: true, width: '12%', class: 'hidden-xs ellipsis', priority: 100,
+                        export_data: CsvExporter::ExportDefinition.new(:insights_recommendations_count, callback: ->(host) { host&.insights_hits&.count })
             add_pagelet :hosts_table_column_content, key: :insights_recommendations_count, callback: ->(host) { hits_counts_cell(host) }, class: 'hidden-xs ellipsis text-center', priority: 100
           end
         end
