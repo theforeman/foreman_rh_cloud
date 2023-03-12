@@ -1,6 +1,8 @@
 require 'test_plugin_helper'
 
 class ArchivedReportGeneratorTest < ActiveSupport::TestCase
+  include MockForemanHostname
+
   setup do
     User.current = User.find_by(login: 'secret_admin')
 
