@@ -89,3 +89,14 @@ module MockCerts
     )
   end
 end
+
+module MockForemanHostname
+  extend ActiveSupport::Concern
+
+  included do
+    setup do
+      @foreman_host = FactoryBot.create(:host, :managed)
+      ForemanRhCloud.expects(:foreman_host_name).returns(@foreman_host.name)
+    end
+  end
+end
