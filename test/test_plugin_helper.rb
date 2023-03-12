@@ -96,7 +96,7 @@ module MockForemanHostname
   included do
     setup do
       @foreman_host = FactoryBot.create(:host, :managed)
-      ForemanRhCloud.expects(:foreman_host_name).returns(@foreman_host.name)
+      ForemanRhCloud.stubs(:foreman_host_name).returns(@foreman_host.name)
     end
   end
 end
