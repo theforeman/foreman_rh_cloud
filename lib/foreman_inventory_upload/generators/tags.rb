@@ -45,11 +45,9 @@ module ForemanInventoryUpload
       end
 
       def content_data
-        [
-          ['lifecycle_environment', @host.lifecycle_environment&.name],
-          ['content_view', @host.content_view&.name],
-        ] +
-        (@host.activation_keys || []).map { |item| ['activation_key', item.name] }
+        (@host.lifecycle_environments.uniq || []).map { |item| ['lifecycle_environment', item.name] } +
+        (@host.activation_keys || []).map { |item| ['activation_key', item.name] } +
+        (@host.content_views || []).map { |item| ['content_view', item.name] }
       end
 
       def satellite_server_data

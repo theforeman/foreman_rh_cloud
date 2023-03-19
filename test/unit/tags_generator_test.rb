@@ -7,7 +7,7 @@ class TagsGeneratorTest < ActiveSupport::TestCase
     User.current = User.find_by(login: 'secret_admin')
 
     env = FactoryBot.create(:katello_k_t_environment)
-    cv = env.content_views << FactoryBot.create(:katello_content_view, organization: env.organization)
+    env2 = FactoryBot.create(:katello_k_t_environment, organization: env.organization)
 
     @location1 = FactoryBot.create(:location)
     @location2 = FactoryBot.create(:location, parent: @location1)
@@ -20,15 +20,27 @@ class TagsGeneratorTest < ActiveSupport::TestCase
       :redhat,
       :with_subscription,
       :with_content,
-      content_view: cv.first,
-      lifecycle_environment: env,
       organization: env.organization,
       location: @location2,
-      hostgroup: @hostgroup2
+      hostgroup: @hostgroup2,
+      content_view_environments: [
+        FactoryBot.create(
+          :katello_content_view_environment,
+          content_view: FactoryBot.create(:katello_content_view, organization: env.organization),
+          lifecycle_environment: env),
+        FactoryBot.create(
+          :katello_content_view_environment,
+          content_view: FactoryBot.create(:katello_content_view, organization: env.organization),
+          lifecycle_environment: env2),
+      ]
     )
 
     @host.organization.pools << FactoryBot.create(:katello_pool, account_number: '1234', cp_id: 1)
     @host.interfaces.first.identifier = 'test_nic1'
+    # Don't try to update CP in tests
+    Katello::Resources::Candlepin::Consumer.stubs(:update)
+    # Don't try update facts for the host
+    Katello::Host::SubscriptionFacet.stubs(:update_facts)
     @host.save!
   end
 
@@ -46,8 +58,10 @@ class TagsGeneratorTest < ActiveSupport::TestCase
     assert_nil actual['host collection']
 
     assert_equal @host.organization.name, actual['organization'].first.last
-    assert_equal @host.lifecycle_environment.name, actual['lifecycle_environment'].first.last
-    assert_equal @host.content_view.name, actual['content_view'].first.last
+    assert_equal @host.lifecycle_environments.pluck(:name).min, actual['lifecycle_environment'].map(&:second).min
+    assert_equal @host.lifecycle_environments.pluck(:name).max, actual['lifecycle_environment'].map(&:second).max
+    assert_equal @host.content_views.pluck(:name).min, actual['content_view'].map(&:second).min
+    assert_equal @host.content_views.pluck(:name).max, actual['content_view'].map(&:second).max
     assert_equal Foreman.instance_id, actual['satellite_instance_id'].first.last
     assert_equal @host.organization_id.to_s, actual['organization_id'].first.last
   end
@@ -55,7 +69,7 @@ class TagsGeneratorTest < ActiveSupport::TestCase
   test 'filters tags with empty values' do
     generator = create_generator
 
-    @host.stubs(:content_view)
+    @host.stubs(:content_views).returns([])
 
     actual = generator.generate.group_by { |key, value| key }
 

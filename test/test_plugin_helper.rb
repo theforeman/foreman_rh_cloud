@@ -8,6 +8,12 @@ FactoryBot.definition_file_paths << File.join(File.dirname(__FILE__), 'factories
 # FactoryBot.definition_file_paths << "#{Katello::Engine.root}/test/factories"
 FactoryBot.reload
 
+begin
+  require 'pry-rescue/minitest'
+rescue LoadError
+  # if the extension is not loaded - please continue, no harm done.
+end
+
 module FolderIsolation
   extend ActiveSupport::Concern
 

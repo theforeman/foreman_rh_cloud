@@ -30,7 +30,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
       subscription: FactoryBot.create(:katello_subscription, organization_id: env.organization.id)
     )
     @host.interfaces.first.identifier = 'test_nic1'
-    @host.save!
+    @host.interfaces.first.save!
 
     ForemanInventoryUpload::Generators::Queries.instance_variable_set(:@fact_names, nil)
   end
@@ -300,6 +300,11 @@ class SliceGeneratorTest < ActiveSupport::TestCase
 
   test 'generates a report with satellite facts' do
     hostgroup = FactoryBot.create(:hostgroup, name: 'Special"name')
+    # Don't try to update CP in tests
+    Katello::Resources::Candlepin::Consumer.stubs(:update)
+    # Don't try update facts for the host
+    Katello::Host::SubscriptionFacet.stubs(:update_facts)
+
     @host.hostgroup = hostgroup
     @host.save!
 
@@ -326,7 +331,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     actual_host = actual['hosts'].first
     assert_tag('satellite-id', actual_host, 'satellite_instance_id')
     assert_tag(@host.organization_id.to_s, actual_host, 'organization_id')
-    assert_tag(@host.content_view.name, actual_host, 'content_view')
+    assert_tag(@host.content_views.first.name, actual_host, 'content_view')
     assert_tag(@host.location.name, actual_host, 'location')
     assert_tag(@host.organization.name, actual_host, 'organization')
     assert_tag(@host.hostgroup.name, actual_host, 'hostgroup')
@@ -348,13 +353,13 @@ class SliceGeneratorTest < ActiveSupport::TestCase
       :host,
       :with_subscription,
       :with_content,
-      content_view: @host.content_view,
-      lifecycle_environment: @host.lifecycle_environment,
+      content_view: @host.content_views.first,
+      lifecycle_environment: @host.lifecycle_environments.first,
       organization: @host.organization
     )
 
     @host.subscription_facet.hypervisor_host = hypervisor_host
-    @host.save!
+    @host.subscription_facet.save!
 
     batch = Host.where(id: @host.id).in_batches.first
     generator = create_generator(batch)
@@ -497,8 +502,8 @@ class SliceGeneratorTest < ActiveSupport::TestCase
       :host,
       :with_subscription,
       :with_content,
-      content_view: @host.content_view,
-      lifecycle_environment: @host.lifecycle_environment,
+      content_view: @host.content_views.first,
+      lifecycle_environment: @host.lifecycle_environments.first,
       organization: new_org
     )
 
@@ -644,8 +649,8 @@ class SliceGeneratorTest < ActiveSupport::TestCase
       :host,
       :with_subscription,
       :with_content,
-      content_view: @host.content_view,
-      lifecycle_environment: @host.lifecycle_environment,
+      content_view: @host.content_views.first,
+      lifecycle_environment: @host.lifecycle_environments.first,
       organization: @host.organization,
       installed_packages: [installed_package]
     )
