@@ -110,7 +110,7 @@ module InsightsCloud::Api
         User.current = User.find_by(login: 'secret_admin')
 
         @env = FactoryBot.create(:katello_k_t_environment)
-        cv = @env.content_views << FactoryBot.create(:katello_content_view, organization: @env.organization)
+        @env2 = FactoryBot.create(:katello_k_t_environment, organization: @env.organization)
 
         @host = FactoryBot.create(
           :host,
@@ -118,8 +118,16 @@ module InsightsCloud::Api
           :with_content,
           :with_hostgroup,
           :with_parameter,
-          content_view: cv.first,
-          lifecycle_environment: @env,
+          content_view_environments: [
+            FactoryBot.create(
+              :katello_content_view_environment,
+              content_view: FactoryBot.create(:katello_content_view, organization: @env.organization),
+              lifecycle_environment: @env),
+            FactoryBot.create(
+              :katello_content_view_environment,
+              content_view: FactoryBot.create(:katello_content_view, organization: @env.organization),
+              lifecycle_environment: @env2),
+          ],
           organization: @env.organization
         )
 

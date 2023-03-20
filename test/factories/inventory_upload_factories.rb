@@ -34,6 +34,13 @@ FactoryBot.define do
 end
 
 FactoryBot.define do
+  factory :katello_content_view_environment, :class => Katello::ContentViewEnvironment do
+    sequence(:name) { |n| "name#{n}" }
+    sequence(:label) { |n| "label#{n}" }
+  end
+end
+
+FactoryBot.define do
   factory :katello_k_t_environment, :aliases => [:katello_environment], :class => Katello::KTEnvironment do
     sequence(:name) { |n| "Environment#{n}" }
     sequence(:label) { |n| "environment#{n}" }
@@ -93,6 +100,7 @@ FactoryBot.modify do
       content_view { nil }
       lifecycle_environment { nil }
       content_source { nil }
+      content_view_environments { [] }
     end
 
     trait :with_content do
@@ -100,9 +108,14 @@ FactoryBot.modify do
 
       after(:build) do |host, evaluator|
         if host.content_facet
-          host.content_facet.content_view = evaluator.content_view if evaluator.content_view
-          host.content_facet.lifecycle_environment = evaluator.lifecycle_environment if evaluator.lifecycle_environment
+          if evaluator.content_view && evaluator.lifecycle_environment
+            host.content_facet.assign_single_environment(
+              content_view_id: evaluator.content_view.id,
+              lifecycle_environment_id: evaluator.lifecycle_environment.id
+            )
+          end
           host.content_facet.content_source = evaluator.content_source if evaluator.content_source
+          host.content_facet.content_view_environments = evaluator.content_view_environments unless evaluator.content_view_environments.empty?
         end
       end
     end
