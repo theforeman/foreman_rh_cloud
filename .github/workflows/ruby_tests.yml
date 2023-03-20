@@ -31,7 +31,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/theforeman/tfm_plugin_test:master
+      image: ghcr.io/theforeman/tfm_plugin_test:foreman_3_7
 
     services:
       postgres:
