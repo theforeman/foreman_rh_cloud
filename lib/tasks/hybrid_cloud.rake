@@ -22,9 +22,9 @@ namespace :rh_cloud do |args|
       exit(1)
     end
     
-    organization = Organization.find_by(id: ENV['org_id'].to_i) # saw this coming in as a string, so making sure it gets passed as an integer.
-    
-    @uid = cp_owner_id(organization)
+    @organization = Organization.find_by(id: ENV['org_id'].to_i) # saw this coming in as a string, so making sure it gets passed as an integer.
+    @uid = cp_owner_id(@organization)
+    @hostname = ForemanRhCloud.foreman_host_name
     logger.error('Organization provided does not have a manifest imported.') + exit(1) if @uid.nil?
 
     puts 'Paste your token, output will be hidden.'
@@ -39,7 +39,8 @@ namespace :rh_cloud do |args|
 
     def payload
       {
-        "uid": @uid
+        "uid": @uid,
+        "display_name": "#{@hostname}+#{@organization.label}"
       }
     end
 
@@ -49,7 +50,7 @@ namespace :rh_cloud do |args|
 
     begin
       response = execute_cloud_request(
-        organization: organization,
+        organization: @organization,
         method: method,
         url: registrations_url,
         headers: headers,
