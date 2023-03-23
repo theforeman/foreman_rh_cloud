@@ -57,6 +57,10 @@ From command-line:
     export organization_id=1
     /usr/sbin/foreman-rake rh_cloud_inventory:sync
 
+## Hints
+
+**Configure** / **Inventory Upload** / **Configure Cloud Connector** runs an ansible Playbook on the Foreman Server which requires Inventory information to be readable. In order to do so, _/tmp_ has to be mounted without the _noexec_ mount flag. Adjust _/etc/systemd/system/tmp.mount.d/tmp_options.conf_ accordingly and remount _/tmp_ afterwards.
+
 ## TODO
 
 *Todo list here*
