@@ -106,3 +106,13 @@ module MockForemanHostname
     end
   end
 end
+
+module CandlepinIsolation
+  extend ActiveSupport::Concern
+
+  included do
+    setup do
+      Katello::Host::SubscriptionFacet.any_instance.stubs(:backend_update_needed?).returns(false)
+    end
+  end
+end

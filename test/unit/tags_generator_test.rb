@@ -2,6 +2,7 @@ require 'test_plugin_helper'
 
 class TagsGeneratorTest < ActiveSupport::TestCase
   include KatelloLocationFix
+  include CandlepinIsolation
 
   setup do
     User.current = User.find_by(login: 'secret_admin')
