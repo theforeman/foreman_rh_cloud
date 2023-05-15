@@ -1,0 +1,2 @@
+class InsightsMissingHosts < ApplicationRecord
+end
