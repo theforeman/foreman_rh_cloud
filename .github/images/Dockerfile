@@ -36,7 +36,7 @@ RUN \
 WORKDIR /projects/foreman
 RUN \
   bundle config path vendor/bundle; \
-  npm install pnpm -g;
+  npm install pnpm@^7.x.x -g;
 
 RUN \
   cd /projects/foreman; \
