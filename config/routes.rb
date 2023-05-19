@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     post ':organization_id/reports', to: 'reports#generate', constraints: { organization_id: %r{[^\/]+} }
     get ':organization_id/uploads/last', to: 'uploads#last', constraints: { organization_id: %r{[^\/]+} }
     get ':organization_id/uploads/file', to: 'uploads#download_file', constraints: { organization_id: %r{[^\/]+} }
+    get 'missing_hosts', to: 'missing_hosts#index'
     get 'accounts', to: 'accounts#index'
     get 'settings', to: 'uploads_settings#index'
     post 'setting', to: 'uploads_settings#set_advanced_setting'
@@ -50,10 +51,12 @@ Rails.application.routes.draw do
     scope '(:apiv)', :module => :v2, :defaults => {:apiv => 'v2'}, :apiv => /v1|v2/, :constraints => ApiConstraints.new(:version => 2, :default => true) do
       resources :organizations, :only => [:show] do
         namespace 'rh_cloud' do
+          get 'missing_hosts', to: 'inventory#get_hosts'
           get 'report', to: 'inventory#download_file'
           post 'report', to: 'inventory#generate_report'
 
           post 'inventory_sync', to: 'inventory#sync_inventory_status'
+          post 'missing_hosts', to: 'inventory#remove_hosts'
         end
       end
 

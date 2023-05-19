@@ -52,9 +52,10 @@ module ForemanRhCloud
             :generate_foreman_rh_cloud,
             'foreman_inventory_upload/reports': [:generate],
             'foreman_inventory_upload/tasks': [:create],
-            'api/v2/rh_cloud/inventory': [:sync_inventory_status, :download_file, :generate_report, :enable_cloud_connector],
+            'api/v2/rh_cloud/inventory': [:get_hosts, :remove_hosts, :sync_inventory_status, :download_file, :generate_report, :enable_cloud_connector],
             'foreman_inventory_upload/uploads': [:enable_cloud_connector],
             'foreman_inventory_upload/uploads_settings': [:set_advanced_setting],
+            'foreman_inventory_upload/missing_hosts': [:remove_hosts],
             'insights_cloud/settings': [:update],
             'insights_cloud/tasks': [:create]
           )
@@ -66,6 +67,7 @@ module ForemanRhCloud
             'foreman_inventory_upload/tasks': [:show],
             'foreman_inventory_upload/cloud_status': [:index],
             'foreman_inventory_upload/uploads_settings': [:index],
+            'foreman_inventory_upload/missing_hosts': [:index],
             'react': [:index]
           )
           permission(
