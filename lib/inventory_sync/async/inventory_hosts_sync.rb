@@ -1,8 +1,11 @@
 module InventorySync
   module Async
     class InventoryHostsSync < QueryInventoryJob
+      MAX_IP_STRING_SIZE = 254
+
       set_callback :iteration, :around, :setup_facet_transaction
       set_callback :step, :around, :create_facets
+      set_callback :step, :around, :create_missing_hosts
 
       def plan(organizations)
         # by default the tasks will be executed concurrently
@@ -11,7 +14,7 @@ module InventorySync
       end
 
       def setup_facet_transaction
-        InsightsFacet.transaction do
+        ActiveRecord::Base.transaction do
           yield
         end
       end
@@ -21,6 +24,17 @@ module InventorySync
         results = yield
         add_missing_insights_facets(results.organization, results.host_uuids)
         results
+      end
+
+      def create_missing_hosts
+        results = yield
+        missing_hosts = results.missing_hosts.map { |host| to_missing_host_record(host, results.organization) }
+        # remove records that are no longer in the query results
+        InsightsMissingHost.
+          where.not(insights_id: missing_hosts.map { |host_hash| host_hash[:insights_id] }).
+          where(organization_id: results.organization.id).delete_all
+        # readd new hosts that appear in the results, but the subscription_id is missing from the DB.
+        InsightsMissingHost.upsert_all(missing_hosts) if missing_hosts.present?
       end
 
       def rescue_strategy_for_self
@@ -40,6 +54,21 @@ module InventorySync
         end
 
         InsightsFacet.upsert_all(all_facets, unique_by: :host_id) unless all_facets.empty?
+      end
+
+      def to_missing_host_record(host_result, organization)
+        {
+          name: host_result['fqdn'],
+          insights_id: host_result['id'],
+          rhsm_id: host_result['subscription_manager_id'],
+          ip_address: to_ip_address_string(host_result['ip_addresses']),
+          organization_id: organization.id,
+        }
+      end
+
+      def to_ip_address_string(ip_addresses)
+        string_size = 0
+        ip_addresses.take_while { |address| (string_size += address.length) <= MAX_IP_STRING_SIZE }
       end
 
       def plan_self_host_sync

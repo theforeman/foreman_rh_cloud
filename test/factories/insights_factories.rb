@@ -41,6 +41,14 @@ FactoryBot.define do
     resolution_risk { 1 }
     resolution_type { 'fix' }
   end
+
+  factory :insights_missing_host do
+    organization { association :organization }
+    sequence(:name) { |n| "removed.host#{n}.test" }
+    insights_id { Foreman.uuid }
+    rhsm_id { Foreman.uuid }
+    ip_address { "192.168.1.1,192.168.2.1" }
+  end
 end
 
 FactoryBot.modify do

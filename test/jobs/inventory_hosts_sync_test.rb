@@ -294,4 +294,36 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
 
     assert_nil @host2.insights
   end
+
+  test 'Inventory should create new missing host records' do
+    org = FactoryBot.create(:organization)
+
+    InventorySync::Async::InventoryHostsSync.any_instance.expects(:query_inventory).returns(@inventory)
+    InventorySync::Async::InventoryHostsSync.any_instance.expects(:plan_self_host_sync)
+
+    setup_certs_expectation do
+      InventorySync::Async::InventoryHostsSync.any_instance.stubs(:candlepin_id_cert)
+    end
+
+    ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync, [org])
+
+    assert_equal 2, InsightsMissingHost.count
+  end
+
+  test 'Inventory should remove old missing host records' do
+    org = FactoryBot.create(:organization)
+
+    InventorySync::Async::InventoryHostsSync.any_instance.expects(:query_inventory).returns(@inventory)
+    InventorySync::Async::InventoryHostsSync.any_instance.expects(:plan_self_host_sync)
+
+    FactoryBot.create(:insights_missing_host, organization: org)
+
+    setup_certs_expectation do
+      InventorySync::Async::InventoryHostsSync.any_instance.stubs(:candlepin_id_cert)
+    end
+
+    ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync, [org])
+
+    assert_equal 2, InsightsMissingHost.count
+  end
 end
