@@ -111,13 +111,16 @@ module InsightsCloud
       end
 
       def invocation_status
-        Hash[job_invocation.targeting.hosts.map do |host|
-          next unless host.insights&.uuid
-          [
-            host.insights.uuid,
-            task_status(job_invocation.sub_task_for_host(host), host.insights.uuid),
-          ]
-        end.compact]
+        hosts = job_invocation.targeting.hosts.select { |host| host.insights&.uuid }
+        actions = hosts.map { |host| job_invocation.sub_task_for_host(host) }.compact.map(&:main_action)
+        ::ForemanTasks::ProxyTaskStatusRetriever.with_rails_cache_for(actions) do
+          Hash[hosts.map do |host|
+                 [
+                   host.insights.uuid,
+                   task_status(job_invocation.sub_task_for_host(host), host.insights.uuid),
+                 ]
+               end]
+        end
       end
 
       def task_status(host_task, host_name)
