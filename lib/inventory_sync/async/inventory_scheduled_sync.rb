@@ -14,14 +14,25 @@ module InventorySync
         end
 
         after_delay do
-          Organization.unscoped.each do |org|
-            plan_org_sync(org)
+          # perform a sequence of sync then delete in parallel for all organizations
+          concurrence do
+            Organization.unscoped.each do |org|
+              sequence do
+                plan_org_sync(org)
+                plan_remove_insights_hosts(org) if Setting[:allow_auto_insights_mismatch_delete]
+              end
+            end
           end
         end
       end
 
       def plan_org_sync(org)
         plan_action InventoryFullSync, org
+      end
+
+      def plan_remove_insights_hosts
+        # plan a remove hosts action with search set to empty (all records)
+        plan_action(ForemanInventoryUpload::Async::RemoveInsightsHostsJob, '', org.id)
       end
 
       def logger
