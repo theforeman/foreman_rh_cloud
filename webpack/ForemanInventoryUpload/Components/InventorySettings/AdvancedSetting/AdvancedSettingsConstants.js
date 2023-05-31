@@ -25,4 +25,11 @@ export const settingsDict = {
       'Exclude installed packages from being uploaded to the Red Hat cloud'
     ),
   },
+  allowAutoInsightsMismatchDelete: {
+    name: 'allow_auto_insights_mismatch_delete',
+    label: __('Automatic mismatch deletion'),
+    tooltip: __(
+      'Enable automatic deletion of mismatched host records from the Red Hat cloud'
+    ),
+  },
 };

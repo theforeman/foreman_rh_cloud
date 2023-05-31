@@ -15,3 +15,6 @@ export const selectIpsObfuscationEnabled = state =>
 
 export const selectExcludePackages = state =>
   selectSettings(state).excludePackagesEnabled;
+
+export const selectMismatchDelete = state =>
+  selectSettings(state).allowAutoInsightsMismatchDelete;
