@@ -12,6 +12,7 @@ module InventorySync
         @sub_ids = result["results"].map { |host| host['subscription_manager_id'] }
         @uuid_by_sub_id = Hash[result["results"].map { |host| [host['subscription_manager_id'], host['id']] }]
         @uuid_by_fqdn = Hash[result["results"].map { |host| [host['fqdn']&.downcase, host['id']] }]
+        @results = result["results"]
       end
 
       def status_hashes
@@ -40,6 +41,10 @@ module InventorySync
 
       def host_uuids
         @host_uuids ||= Hash[@sub_ids.map { |sub_id| [host_id(sub_id), @uuid_by_sub_id[sub_id]] }].except(nil)
+      end
+
+      def missing_hosts
+        @results.select { |host| hosts[host['subscription_manager_id']].nil? }
       end
 
       def percentage

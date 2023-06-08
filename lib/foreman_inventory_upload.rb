@@ -71,7 +71,7 @@ module ForemanInventoryUpload
   end
 
   def self.inventory_base_url
-    ForemanRhCloud.cert_base_url + "/api/inventory/v1/hosts"
+    "#{ForemanRhCloud.cert_base_url}/api/inventory/v1/hosts"
   end
 
   def self.inventory_export_url
@@ -81,5 +81,10 @@ module ForemanInventoryUpload
 
   def self.inventory_self_url
     inventory_base_url + "?hostname_or_id=#{ForemanRhCloud.foreman_host.fqdn}"
+  end
+
+  def self.hosts_by_ids_url(host_ids)
+    host_ids_string = host_ids.join(',')
+    "#{inventory_base_url}/#{host_ids_string}"
   end
 end

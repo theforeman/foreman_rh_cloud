@@ -6,6 +6,7 @@ module ForemanInventoryUpload
         hostObfuscationEnabled: Setting[:obfuscate_inventory_hostnames],
         ipsObfuscationEnabled: Setting[:obfuscate_inventory_ips],
         excludePackagesEnabled: Setting[:exclude_installed_packages],
+        allowAutoInsightsMismatchDelete: Setting[:allow_auto_insights_mismatch_delete],
         CloudConnectorStatus: ForemanInventoryUpload::UploadsSettingsController.cloud_connector_status,
         lastSyncTask: last_successful_inventory_sync_task,
       }, status: :ok

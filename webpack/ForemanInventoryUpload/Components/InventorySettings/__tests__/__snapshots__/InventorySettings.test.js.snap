@@ -23,5 +23,9 @@ exports[`InventorySettings rendering render without Props 1`] = `
     key="excludePackagesEnabled"
     setting="excludePackagesEnabled"
   />
+  <AdvancedSetting
+    key="allowAutoInsightsMismatchDelete"
+    setting="allowAutoInsightsMismatchDelete"
+  />
 </div>
 `;

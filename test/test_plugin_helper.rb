@@ -10,6 +10,7 @@ FactoryBot.reload
 
 begin
   require 'pry-rescue/minitest'
+  require 'pry-byebug'
 rescue LoadError
   # if the extension is not loaded - please continue, no harm done.
 end
