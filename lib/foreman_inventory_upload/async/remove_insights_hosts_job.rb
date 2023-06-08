@@ -44,6 +44,7 @@ module ForemanInventoryUpload
 
       def delete_page(host_uuids, organization)
         execute_cloud_request(
+          organization: organization,
           method: :delete,
           url: ForemanInventoryUpload.hosts_by_ids_url(host_uuids),
           headers: {
