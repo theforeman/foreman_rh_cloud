@@ -5,16 +5,39 @@ exports[`PageDescription rendering render without Props 1`] = `
   id="inventory_page_description"
 >
   <Text>
-    Red Hat Insights is a set of cloud services which provide unified subscription reporting, predictive analysis and remediation of issues through this Satellite instance.
+    The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Satellite instance.
   </Text>
   <Text>
-    You can toggle the Auto upload switch to the ON position to enable Satellite to automatically upload your host inventory once a day.
+    The Satellite inventory upload plugin automatically uploads Satellite host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.
   </Text>
   <Text>
-    Click Restart to upload your host inventory to Red Hat Insights. Perform this step for each organization from which you want to manually upload a host inventory.
+    <FormattedMessage
+      defaultMessage="To enable this reporting for all Satellite organizations, set {uploadButtonName} to on. The data will be reported automatically once per day."
+      id="enable-upload-hint"
+      values={
+        Object {
+          "uploadButtonName": <strong>
+            Automatic inventory upload
+          </strong>,
+        }
+      }
+    />
   </Text>
   <Text>
-    Enabling inventory uploads is required by subscription watch. For more information about subscription watch see link:
+    <FormattedMessage
+      defaultMessage="To manually upload the data for a specific organization, select an organization and click {restartButtonName}."
+      id="restart-button-hint"
+      values={
+        Object {
+          "restartButtonName": <strong>
+            Restart
+          </strong>,
+        }
+      }
+    />
+  </Text>
+  <Text>
+    For more information about the Subscriptions service, see:
      
     <a
       href="https://access.redhat.com/documentation/en-us/subscription_central/2020-04/html/getting_started_with_subscription_watch/assembly-about-subscriptionwatch"
@@ -25,7 +48,7 @@ exports[`PageDescription rendering render without Props 1`] = `
     </a>
   </Text>
   <Text>
-    For more information about Insights and Cloud Connector read
+    For more information about Insights and Cloud Connector, see:
      
     <a
       href="https://console.redhat.com/security/insights/"
