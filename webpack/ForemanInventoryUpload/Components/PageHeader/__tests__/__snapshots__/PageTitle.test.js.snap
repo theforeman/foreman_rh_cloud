@@ -31,7 +31,7 @@ exports[`PageTitle rendering render without Props 1`] = `
             Actions history
           </DropdownItem>,
           <DropdownItem
-            href="/links/manual/+?root_url=https%3A%2F%2Faccess.redhat.com%2Fproducts%2Fsubscription-central"
+            href="/links/manual/?root_url=https%3A%2F%2Faccess.redhat.com%2Fproducts%2Fsubscription-central"
             rel="noopener noreferrer"
             target="_blank"
           >

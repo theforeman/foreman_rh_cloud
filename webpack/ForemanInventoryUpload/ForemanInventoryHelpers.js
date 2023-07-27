@@ -6,7 +6,7 @@ export const inventoryUrl = path =>
 
 export const getInventoryDocsUrl = () =>
   foremanUrl(
-    `/links/manual/+?root_url=${URI.encode(
+    `/links/manual/?root_url=${URI.encode(
       'https://access.redhat.com/products/subscription-central'
     )}`
   );
