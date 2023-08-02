@@ -2,28 +2,44 @@ import React from 'react';
 import { Text } from '@patternfly/react-core';
 
 import { translate as __ } from 'foremanReact/common/I18n';
+import { FormattedMessage } from 'react-intl';
 
 export const PageDescription = () => (
   <div id="inventory_page_description">
     <Text>
       {__(
-        'Red Hat Insights is a set of cloud services which provide unified subscription reporting, predictive analysis and remediation of issues through this Satellite instance.'
+        'The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Satellite instance.'
       )}
     </Text>
     <Text>
       {__(
-        'You can toggle the Auto upload switch to the ON position to enable Satellite to automatically upload your host inventory once a day.'
+        'The Satellite inventory upload plugin automatically uploads Satellite host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.'
       )}
     </Text>
     <Text>
-      {__(
-        'Click Restart to upload your host inventory to Red Hat Insights. Perform this step for each organization from which you want to manually upload a host inventory.'
-      )}
+      <FormattedMessage
+        id="enable-upload-hint"
+        defaultMessage={__(
+          'To enable this reporting for all Satellite organizations, set {uploadButtonName} to on. The data will be reported automatically once per day.'
+        )}
+        values={{
+          uploadButtonName: <strong>{__('Automatic inventory upload')}</strong>,
+        }}
+      />
     </Text>
     <Text>
-      {__(
-        'Enabling inventory uploads is required by subscription watch. For more information about subscription watch see link:'
-      )}
+      <FormattedMessage
+        id="restart-button-hint"
+        defaultMessage={__(
+          'To manually upload the data for a specific organization, select an organization and click {restartButtonName}.'
+        )}
+        values={{
+          restartButtonName: <strong>{__('Restart')}</strong>,
+        }}
+      />
+    </Text>
+    <Text>
+      {__('For more information about the Subscriptions service, see:')}
       &nbsp;
       <a
         href="https://access.redhat.com/documentation/en-us/subscription_central/2020-04/html/getting_started_with_subscription_watch/assembly-about-subscriptionwatch"
@@ -34,7 +50,7 @@ export const PageDescription = () => (
       </a>
     </Text>
     <Text>
-      {__('For more information about Insights and Cloud Connector read')}
+      {__('For more information about Insights and Cloud Connector, see:')}
       &nbsp;
       <a
         href="https://console.redhat.com/security/insights/"
