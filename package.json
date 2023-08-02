@@ -9,10 +9,7 @@
     "test": "tfm-test --plugin",
     "test:watch": "tfm-test --plugin --watchAll",
     "test:current": "tfm-test --plugin --watch",
-    "publish-coverage": "tfm-publish-coverage",
-    "stories": "tfm-stories --plugin",
-    "stories:build": "tfm-build-stories --plugin",
-    "stories:deploy": "surge --project .storybook-dist"
+    "publish-coverage": "tfm-publish-coverage"
   },
   "repository": {
     "type": "git",
@@ -27,7 +24,6 @@
   "devDependencies": {
     "@babel/core": "~7.7.0",
     "@theforeman/builder": ">= 10.1.1",
-    "@theforeman/stories": ">= 10.1.1",
     "@theforeman/test": ">= 10.1.1",
     "@theforeman/eslint-plugin-foreman": ">= 10.1.1",
     "babel-eslint": "~10.0.0",
