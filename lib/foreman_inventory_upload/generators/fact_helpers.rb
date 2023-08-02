@@ -113,7 +113,7 @@ module ForemanInventoryUpload
         bash_hostname = `uname -n`.chomp
         foreman_hostname = ForemanRhCloud.foreman_host&.name
         if bash_hostname == foreman_hostname
-          fqdn(foreman_hostname)
+          fqdn(ForemanRhCloud.foreman_host)
         elsif Setting[:obfuscate_inventory_hostnames]
           obfuscate_fqdn(bash_hostname)
         else
