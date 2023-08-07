@@ -17,8 +17,8 @@ RUN \
   git config --global user.email $GIT_COMMITTER_EMAIL; \
   mkdir /projects; \
   cd /projects; \
-  git clone --depth 1 --branch 3.6-stable https://github.com/theforeman/foreman.git; \
-  git clone --depth 1 --branch KATELLO-4.8 https://github.com/Katello/katello.git; \
+  git clone --depth 1 --branch 3.7-stable https://github.com/theforeman/foreman.git; \
+  git clone --depth 1 --branch KATELLO-4.9 https://github.com/Katello/katello.git; \
   git clone --depth 1 --branch v7.2.1 https://github.com/theforeman/foreman-tasks.git; \
   git clone --depth 1 --branch foreman_3_7 https://github.com/theforeman/foreman_rh_cloud.git
 
@@ -36,7 +36,7 @@ RUN \
 WORKDIR /projects/foreman
 RUN \
   bundle config path vendor/bundle; \
-  npm install pnpm@^7.x.x -g;
+  npm install pnpm@^7.16.0 -g;
 
 RUN \
   cd /projects/foreman; \
