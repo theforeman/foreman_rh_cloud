@@ -27,6 +27,7 @@
     "@theforeman/test": ">= 10.1.1",
     "@theforeman/eslint-plugin-foreman": ">= 10.1.1",
     "babel-eslint": "~10.0.0",
+    "cosmiconfig-typescript-loader": "~4.3.0",
     "eslint": "~6.7.2",
     "eslint-plugin-spellcheck": "~0.0.17",
     "jed": "~1.1.1",
