@@ -147,7 +147,7 @@ module ForemanInventoryUpload
           @stream.array_field('installed_packages') do
             first = true
             host.installed_packages.each do |package|
-              @stream.raw("#{first ? '' : ', '}#{@stream.stringify_value(package.nvra)}")
+              @stream.raw("#{first ? '' : ', '}#{@stream.stringify_value(package.nvrea)}")
               first = false
             end
           end
