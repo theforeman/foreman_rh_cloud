@@ -45,6 +45,7 @@ RUN \
 
 RUN rm -rf /projects/foreman/npm_install_plugins.js
 COPY ./npm_install_plugins.js /projects/foreman/script/npm_install_plugins.js
+COPY ./.pnpmfile.cjs /projects/foreman/.pnpmfile.cjs
 RUN \
   cd /projects/foreman; \
   chmod +x ./script/npm_install_plugins.js; \
