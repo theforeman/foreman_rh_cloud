@@ -29,7 +29,11 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
   end
 
   test 'It reports finish playbook messages' do
-    TestConnectorPlaybookExecutionReporterTask.any_instance.stubs(:done?).returns(true)
+    host1_task = @job_invocation.sub_task_for_host(Host.where(name: 'host1').first)
+    host1_task.state = 'stopped'
+    host1_task.save!
+
+    TestConnectorPlaybookExecutionReporterTask.any_instance.stubs(:job_finished?).returns(true)
 
     actual = ForemanTasks.sync_task(TestConnectorPlaybookExecutionReporterTask, @job_invocation)
 
@@ -38,6 +42,9 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
     assert_equal 1, actual.output[:saved_reports].size
     assert_not_nil actual_report
     actual_jsonl = read_jsonl(actual_report)
+
+    assert_equal true, @job_invocation.finished?
+    assert_equal 'stopped', @job_invocation.sub_task_for_host(Host.where(name: 'host1').first)['state']
 
     assert_not_nil actual_report_finished = actual_jsonl.find { |l| l['type'] == 'playbook_run_completed' }
     assert_equal 'TEST_CORRELATION', actual_report_finished['correlation_id']
@@ -49,57 +56,121 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
   end
 
   test 'It reports single progress message for done host' do
-    TestConnectorPlaybookExecutionReporterTask.any_instance.stubs(:done?).returns(false, true)
+    class ArrangeTestHost < InsightsCloud::Async::ConnectorPlaybookExecutionReporterTask
+      def send_report(report)
+        host1_task = @job_invocation.sub_task_for_host(Host.where(name: 'host1').first)
+        host1_task.state = 'stopped'
+        host1_task.save!
 
-    actual = ForemanTasks.sync_task(TestConnectorPlaybookExecutionReporterTask, @job_invocation)
+        output[:saved_reports] = (output[:saved_reports] || []) << report
+      end
+    end
 
-    actual_report = actual.output[:saved_reports].first.to_s
-
-    assert_equal 1, actual.output[:saved_reports].size
-    assert_not_nil actual_report
-    actual_jsonl = read_jsonl(actual_report)
-
-    actual_host_updates = actual_jsonl
-      .select { |l| l['type'] == 'playbook_run_update' && l['host'] == @host1.insights.uuid }
-    assert_equal 1, actual_host_updates.size
-    assert_equal 0, actual_host_updates.first['sequence']
-  end
-
-  test 'It reports two progress messages for in progress host' do
-    TestConnectorPlaybookExecutionReporterTask.any_instance.stubs(:done?).returns(false, false, true)
-
-    host1_task = @job_invocation.template_invocations.joins(:host).where(hosts: {name: @host1.name}).first.run_host_job_task
+    ArrangeTestHost.instance_variable_set(:@connector_feature_id, nil)
+    host1_task = @job_invocation.sub_task_for_host(Host.where(name: 'host1').first)
     host1_task.state = 'running'
     host1_task.save!
 
-    actual = ForemanTasks.sync_task(TestConnectorPlaybookExecutionReporterTask, @job_invocation)
+    ArrangeTestHost.any_instance.stubs(:job_finished?).returns(false, true)
+
+    actual = ForemanTasks.sync_task(ArrangeTestHost, @job_invocation)
+
+    actual_report1 = actual.output[:saved_reports].first.to_s
+    actual_report2 = actual.output[:saved_reports].second.to_s
 
     assert_equal 2, actual.output[:saved_reports].size
+    assert_not_nil actual_report1
+    assert_not_nil actual_report2
 
-    first_report = actual.output[:saved_reports].first.to_s
-    actual_jsonl = read_jsonl(first_report)
+    actual_json1 = read_jsonl(actual_report1)
+    actual_json2 = read_jsonl(actual_report2)
 
-    actual_host_updates = actual_jsonl
-      .select { |l| l['type'] == 'playbook_run_update' && l['host'] == @host1.insights.uuid }
-    assert_equal 1, actual_host_updates.size
-    assert_equal 0, actual_host_updates.first['sequence']
+    assert_equal 'stopped', @job_invocation.sub_task_for_host(Host.where(name: 'host1').first)['state']
 
-    actual_host_updates = actual_jsonl
-      .select { |l| l['type'] == 'playbook_run_update' && l['host'] == @host2.insights.uuid }
-    assert_equal 1, actual_host_updates.size
-    assert_equal 0, actual_host_updates.first['sequence']
+    assert_not_nil actual_report_updated = actual_json1.find { |l| l['type'] == 'playbook_run_update' && l['host'] == 'TEST_UUID1' }
+    assert_equal 'TEST_CORRELATION', actual_report_updated['correlation_id']
+    assert_equal 'TEST_UUID1', actual_report_updated['host']
+    assert_equal 0, actual_report_updated['sequence']
+    assert_equal 6, actual_report_updated.size
 
-    second_report = actual.output[:saved_reports].last.to_s
-    actual_jsonl = read_jsonl(second_report)
+    assert_not_nil actual_report_updated = actual_json2.find { |l| l['type'] == 'playbook_run_update' && l['host'] == 'TEST_UUID1' }
+    assert_equal 'TEST_CORRELATION', actual_report_updated['correlation_id']
+    assert_equal 'TEST_UUID1', actual_report_updated['host']
+    assert_equal 1, actual_report_updated['sequence']
+    assert_equal 6, actual_report_updated.size
 
-    actual_host_updates = actual_jsonl
-      .select { |l| l['type'] == 'playbook_run_update' && l['host'] == @host1.insights.uuid }
-    assert_equal 1, actual_host_updates.size
-    assert_equal 1, actual_host_updates.first['sequence']
+    assert_not_nil actual_host_finished = actual_json2.find { |l| l['type'] == 'playbook_run_finished' && l['host'] == 'TEST_UUID1' }
+    assert_equal 'TEST_CORRELATION', actual_host_finished['correlation_id']
+    assert_equal 'TEST_UUID1', actual_host_finished['host']
+    assert_equal 'success', actual_host_finished['status']
+    assert_equal 7, actual_host_finished.size
 
-    actual_host_updates = actual_jsonl
-      .select { |l| l['type'] == 'playbook_run_update' && l['host'] == @host2.insights.uuid }
-    assert_equal 0, actual_host_updates.size
+    assert_not_nil actual_report_finished = actual_json2.find { |l| l['type'] == 'playbook_run_completed' }
+    assert_equal 'TEST_CORRELATION', actual_report_finished['correlation_id']
+    assert_equal 'success', actual_report_finished['status']
+    assert_equal 4, actual_report_finished.size
+  end
+
+  test 'It reports two progress messages for in progress host' do
+    class ArrangeTestHostTwo < InsightsCloud::Async::ConnectorPlaybookExecutionReporterTask
+      def send_report(report)
+        iteration_number = output[:iteration_number].to_i
+
+        if iteration_number == 1
+          host1_task = job_invocation.sub_task_for_host(Host.where(name: 'host1').first)
+          host1_task.state = 'stopped'
+          host1_task.save!
+        end
+
+        output[:iteration_number] = iteration_number + 1
+        output[:saved_reports] = (output[:saved_reports] || []) << report
+      end
+    end
+
+    ArrangeTestHostTwo.instance_variable_set(:@connector_feature_id, nil)
+    host1_task = @job_invocation.sub_task_for_host(Host.where(name: 'host1').first)
+    host1_task.state = 'running'
+    host1_task.save!
+
+    ArrangeTestHostTwo.any_instance.stubs(:job_finished?).returns(false, false, true)
+
+    actual = ForemanTasks.sync_task(ArrangeTestHostTwo, @job_invocation)
+
+    actual_report1 = actual.output[:saved_reports].first.to_s
+    actual_report2 = actual.output[:saved_reports].second.to_s
+    actual_report3 = actual.output[:saved_reports].third.to_s
+
+    assert_equal 3, actual.output[:saved_reports].size
+    assert_not_nil actual_report1
+    assert_not_nil actual_report2
+    assert_not_nil actual_report3
+
+    actual_json1 = read_jsonl(actual_report1)
+    actual_json2 = read_jsonl(actual_report2)
+    actual_json3 = read_jsonl(actual_report3)
+
+    assert_not_nil actual_report_updated = actual_json1.find { |l| l['type'] == 'playbook_run_update' && l['host'] == 'TEST_UUID1' }
+    assert_equal 'TEST_CORRELATION', actual_report_updated['correlation_id']
+    assert_equal 'TEST_UUID1', actual_report_updated['host']
+    assert_equal 0, actual_report_updated['sequence']
+    assert_equal 6, actual_report_updated.size
+
+    assert_not_nil actual_report_updated = actual_json2.find { |l| l['type'] == 'playbook_run_update' && l['host'] == 'TEST_UUID1' }
+    assert_equal 'TEST_CORRELATION', actual_report_updated['correlation_id']
+    assert_equal 'TEST_UUID1', actual_report_updated['host']
+    assert_equal 1, actual_report_updated['sequence']
+    assert_equal 6, actual_report_updated.size
+
+    assert_not_nil actual_host_finished = actual_json3.find { |l| l['type'] == 'playbook_run_finished' && l['host'] == 'TEST_UUID1' }
+    assert_equal 'TEST_CORRELATION', actual_host_finished['correlation_id']
+    assert_equal 'TEST_UUID1', actual_host_finished['host']
+    assert_equal 'success', actual_host_finished['status']
+    assert_equal 7, actual_host_finished.size
+
+    assert_not_nil actual_report_finished = actual_json3.find { |l| l['type'] == 'playbook_run_completed' }
+    assert_equal 'TEST_CORRELATION', actual_report_finished['correlation_id']
+    assert_equal 'success', actual_report_finished['status']
+    assert_equal 4, actual_report_finished.size
   end
 
   private
@@ -164,10 +235,12 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
       :value => '1'
     )
 
-    @host1 = FactoryBot.create(:host, :with_insights_hits, name: 'host1')
+    @host1 = FactoryBot.create(:host, :with_insights_hits)
+    @host1.name = 'host1' # overriding name since there is an issue with Factorybot and setting the name correctly, same for 2nd host
     @host1.insights.uuid = 'TEST_UUID1'
     @host1.insights.save!
-    @host2 = FactoryBot.create(:host, :with_insights_hits, name: 'host2')
+    @host2 = FactoryBot.create(:host, :with_insights_hits)
+    @host2.name = 'host2'
     @host2.insights.uuid = 'TEST_UUID2'
     @host2.insights.save!
 
