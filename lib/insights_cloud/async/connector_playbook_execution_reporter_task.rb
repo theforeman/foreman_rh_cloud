@@ -43,7 +43,17 @@ module InsightsCloud
       end
 
       def done?(current_status = invocation_status)
-        job_invocation.finished? || current_status.map { |_host_id, task_status| task_status['report_done'] }.all?
+        ActiveModel::Type::Boolean.new.cast(current_status[:task_state][:task_done_reported])
+      end
+
+      def job_finished?
+        job_invocation.finished?
+      end
+
+      def all_hosts_finished?(current_status)
+        current_status[:hosts_state].values.all? do |status|
+          ActiveModel::Type::Boolean.new.cast(status['report_done'] == true)
+        end
       end
 
       # noop, we don't want to do anything when the polling task starts
@@ -95,7 +105,11 @@ module InsightsCloud
       end
 
       def host_status(host)
-        external_task&.dig('invocation_status', host)
+        external_task&.dig('invocation_status', :hosts_state, host)
+      end
+
+      def task_done_state
+        ActiveModel::Type::Boolean.new.cast(external_task&.dig('invocation_status', :task_state, :task_done_reported))
       end
 
       def sequence(host)
@@ -111,13 +125,15 @@ module InsightsCloud
       end
 
       def invocation_status
-        Hash[job_invocation.targeting.hosts.map do |host|
+        hosts_state = Hash[job_invocation.targeting.hosts.map do |host|
           next unless host.insights&.uuid
           [
             host.insights.uuid,
             task_status(job_invocation.sub_task_for_host(host), host.insights.uuid),
           ]
         end.compact]
+
+        {task_state: {task_done_reported: task_done_state}, hosts_state: hosts_state}
       end
 
       def task_status(host_task, host_name)
@@ -138,9 +154,9 @@ module InsightsCloud
         generator = InsightsCloud::Generators::PlaybookProgressGenerator.new(correlation_id)
         all_hosts_success = true
 
-        invocation_status.each do |host_name, status|
+        invocation_status[:hosts_state].each do |host_name, status|
           # skip host if the host already reported that it's finished
-          next if status['report_done']
+          next if ActiveModel::Type::Boolean.new.cast(status['report_done'])
 
           unless status['state'] == 'unknown'
             sequence = status['sequence']
@@ -154,7 +170,11 @@ module InsightsCloud
             all_hosts_success &&= status['exit_status'] == 0
           end
         end
-        generator.job_finished_message(all_hosts_success) if done?(invocation_status)
+
+        if (job_finished? || all_hosts_finished?(invocation_status))
+          generator.job_finished_message(all_hosts_success)
+          invocation_status[:task_state][:task_done_reported] = true
+        end
 
         send_report(generator.generate)
       end
