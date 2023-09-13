@@ -144,7 +144,7 @@ module InsightsCloud
         {
           'state' => host_task.state,
           'output' => host_task.main_action.live_output.map { |line| line['output'] }.join("\n"),
-          'exit_status' => host_task.main_action.exit_status,
+          'exit_status' => ActiveModel::Type::Integer.new.cast(host_task.main_action.exit_status),
           'sequence' => sequence(host_name),
           'report_done' => host_done?(host_name),
         }

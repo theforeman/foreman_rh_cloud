@@ -43,6 +43,10 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
     assert_not_nil actual_report
     actual_jsonl = read_jsonl(actual_report)
 
+    assert_equal true, actual.output['task']['invocation_status']['task_state']['task_done_reported']
+    assert_equal 0, actual.output['task']['invocation_status']['hosts_state']['TEST_UUID1']['exit_status']
+    assert_equal 0, actual.output['task']['invocation_status']['hosts_state']['TEST_UUID2']['exit_status']
+
     assert_equal true, @job_invocation.finished?
     assert_equal 'stopped', @job_invocation.sub_task_for_host(Host.where(name: 'host1').first)['state']
 
@@ -84,6 +88,9 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
 
     actual_json1 = read_jsonl(actual_report1)
     actual_json2 = read_jsonl(actual_report2)
+
+    assert_equal true, actual.output['task']['invocation_status']['task_state']['task_done_reported']
+    assert_equal 0, actual.output['task']['invocation_status']['hosts_state']['TEST_UUID1']['exit_status']
 
     assert_equal 'stopped', @job_invocation.sub_task_for_host(Host.where(name: 'host1').first)['state']
 
@@ -148,6 +155,9 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
     actual_json1 = read_jsonl(actual_report1)
     actual_json2 = read_jsonl(actual_report2)
     actual_json3 = read_jsonl(actual_report3)
+
+    assert_equal true, actual.output['task']['invocation_status']['task_state']['task_done_reported']
+    assert_equal 0, actual.output['task']['invocation_status']['hosts_state']['TEST_UUID1']['exit_status']
 
     assert_not_nil actual_report_updated = actual_json1.find { |l| l['type'] == 'playbook_run_update' && l['host'] == 'TEST_UUID1' }
     assert_equal 'TEST_CORRELATION', actual_report_updated['correlation_id']
@@ -263,7 +273,7 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
       { 'timestamp' => (Time.now - (5 - i)).to_f, 'output' => "#{i}\n" }
     end
     Support::DummyDynflowAction.any_instance.stubs(:live_output).returns(fake_output)
-    Support::DummyDynflowAction.any_instance.stubs(:exit_status).returns(0)
+    Support::DummyDynflowAction.any_instance.stubs(:exit_status).returns("0")
 
     job_invocation
   end
