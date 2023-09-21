@@ -127,7 +127,7 @@ module ForemanInventoryUpload
         @stream.simple_field('os_kernel_version', fact_value(host, 'uname::release'))
         @stream.simple_field('arch', host.architecture&.name)
         @stream.simple_field('subscription_status', host.subscription_status_label)
-        @stream.simple_field('katello_agent_running', host.content_facet&.katello_agent_installed?)
+        @stream.simple_field('katello_agent_running', false)
         @stream.simple_field(
           'infrastructure_type',
           ActiveModel::Type::Boolean.new.cast(fact_value(host, 'virt::is_guest')) ? 'virtual' : 'physical'
