@@ -19,7 +19,7 @@ module InventorySync
             Organization.unscoped.each do |org|
               sequence do
                 plan_org_sync(org)
-                plan_remove_insights_hosts(org) if Setting[:allow_auto_insights_mismatch_delete]
+                plan_remove_insights_hosts(org.id) if Setting[:allow_auto_insights_mismatch_delete]
               end
             end
           end
@@ -30,9 +30,9 @@ module InventorySync
         plan_action InventoryFullSync, org
       end
 
-      def plan_remove_insights_hosts
+      def plan_remove_insights_hosts(org_id)
         # plan a remove hosts action with search set to empty (all records)
-        plan_action(ForemanInventoryUpload::Async::RemoveInsightsHostsJob, '', org.id)
+        plan_action(ForemanInventoryUpload::Async::RemoveInsightsHostsJob, '', org_id)
       end
 
       def logger
