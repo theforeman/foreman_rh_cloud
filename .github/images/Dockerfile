@@ -12,24 +12,23 @@ ENV BUNDLE_PATH=vendor/bundle
 RUN \
   dnf module install -y ruby:2.7 nodejs:14 postgresql:12;\
   dnf install -y epel-release; \
-  dnf install -y redhat-rpm-config libpq-devel ruby-devel systemd-devel make tar libvirt-devel zlib-devel libxml2-devel openssl-libs libvirt-devel nodejs automake gcc gcc-c++ kernel-devel libcurl-devel sqlite-devel npm git postgresql-server-devel qpid-proton-cpp-devel; \
+  dnf install -y redhat-rpm-config libpq-devel ruby-devel systemd-devel make tar libvirt-devel zlib-devel libxml2-devel openssl-libs libvirt-devel nodejs automake gcc gcc-c++ kernel-devel libcurl-devel sqlite-devel npm git postgresql-server-devel; \
   git config --global user.name $GIT_COMMITTER_NAME; \
   git config --global user.email $GIT_COMMITTER_EMAIL; \
   mkdir /projects; \
   cd /projects; \
-  git clone --depth 1 --branch 3.6-stable https://github.com/theforeman/foreman.git; \
-  git clone --depth 1 --branch KATELLO-4.8 https://github.com/Katello/katello.git; \
-  git clone --depth 1 --branch v7.2.1 https://github.com/theforeman/foreman-tasks.git; \
-  git clone --depth 1 --branch foreman_3_7 https://github.com/theforeman/foreman_rh_cloud.git
+  git clone --depth 1 --branch 3.8-stable https://github.com/theforeman/foreman.git; \
+  git clone --depth 1 --branch KATELLO-4.10 https://github.com/Katello/katello.git; \
+  git clone --depth 1 --branch v8.2.0 https://github.com/theforeman/foreman-tasks.git; \
+  git clone --depth 1 --branch foreman_3_9 https://github.com/theforeman/foreman_rh_cloud.git
 
 RUN \
   cd /projects/foreman; \
   echo "gemspec :path => '../foreman_rh_cloud', :development_group => :dev" > bundler.d/foreman_rh_cloud.local.rb; \
   echo "gemspec :path => '../katello', :development_group => :dev" > bundler.d/katello.local.rb; \
   echo "gemspec :path => '../foreman-tasks', :development_group => :dev, :name => 'foreman-tasks'" > bundler.d/foreman-tasks.local.rb; \
-  echo "gem 'foreman_remote_execution', '~> 9.0.1'" > bundler.d/foreman_remote_execution.local.rb; \
-  echo "gem 'foreman_ansible', '~> 11.1.1'" > bundler.d/foreman_ansible.local.rb; \
-  echo "gem 'qpid_proton', '~> 0.33.0'" >> bundler.d/katello.local.rb; \
+  echo "gem 'foreman_remote_execution', '~> 11.0.0'" > bundler.d/foreman_remote_execution.local.rb; \
+  echo "gem 'foreman_ansible', '~> 12.0.7'" > bundler.d/foreman_ansible.local.rb; \
   cp ../foreman_rh_cloud/config/database.yml.example config/database.yml; \
   cp ../foreman_rh_cloud/config/Gemfile.lock.gh_test Gemfile.lock;
 
