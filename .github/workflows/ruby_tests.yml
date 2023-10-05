@@ -1,11 +1,11 @@
 name: Ruby tests
 on:
   push:
-    branches: [foreman_3_7]
+    branches: [foreman_3_9]
     paths-ignore:
     - '**/.github/**/*'
   pull_request:
-    branches: [foreman_3_7]
+    branches: [foreman_3_9]
     paths-ignore:
     - '**/.github/**/*'
 
