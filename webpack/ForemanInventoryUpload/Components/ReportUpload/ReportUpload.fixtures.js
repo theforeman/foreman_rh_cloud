@@ -5,6 +5,7 @@ export const exitCode = 'exit 0';
 export const logs = ['No running process'];
 export const completed = 0;
 export const restartProcess = noop;
+export const restartDisconnected = noop;
 export const downloadReports = noop;
 export const error = null;
 export const props = {
@@ -13,6 +14,7 @@ export const props = {
   logs,
   completed,
   restartProcess,
+  restartDisconnected,
   downloadReports,
   error,
 };

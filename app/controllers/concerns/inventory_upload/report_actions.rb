@@ -10,7 +10,7 @@ module InventoryUpload
       end
     end
 
-    def start_report_generation(organization_id)
+    def start_report_generation(organization_id, disconnected)
       ForemanTasks.async_task(ForemanInventoryUpload::Async::GenerateReportJob, ForemanInventoryUpload.generated_reports_folder, organization_id)
     end
 

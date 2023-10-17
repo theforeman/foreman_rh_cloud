@@ -12,6 +12,7 @@ const ReportGenerate = ({
   completed,
   error,
   restartProcess,
+  restartDisconnected,
   toggleFullScreen,
   scheduled,
 }) => (
@@ -19,6 +20,7 @@ const ReportGenerate = ({
     <TabHeader
       exitCode={exitCode}
       onRestart={restartProcess}
+      restartDisconnected={restartDisconnected}
       toggleFullScreen={toggleFullScreen}
     />
     <TabBody
@@ -39,6 +41,7 @@ ReportGenerate.propTypes = {
   ]),
   completed: PropTypes.number,
   error: PropTypes.string,
+  restartDisconnected: PropTypes.func,
   restartProcess: PropTypes.func,
   toggleFullScreen: PropTypes.func,
   scheduled: PropTypes.string,
@@ -50,6 +53,7 @@ ReportGenerate.defaultProps = {
   completed: 0,
   error: null,
   restartProcess: noop,
+  restartDisconnected: noop,
   toggleFullScreen: noop,
   scheduled: null,
 };

@@ -40,6 +40,40 @@ export const stopAccountStatusPolling = pollingProcessID => dispatch => {
   });
 };
 
+export const restartDisconnected = (accountID, activeTab) => async dispatch => {
+  let processController = null;
+  let processStatusName = null;
+  let disconnected = true
+
+  if (activeTab === 'uploading') {
+    processController = 'uploads';
+    processStatusName = 'upload_report_status';
+  } else {
+    processController = 'reports';
+    processStatusName = 'generate_report_status';
+  }
+
+  try {
+    await API.post(inventoryUrl(`${accountID}/${processController}`));
+    dispatch({
+      type: INVENTORY_PROCESS_RESTART,
+      payload: {
+        accountID,
+        disconnected,
+        processStatusName,
+      },
+    });
+  } catch (error) {
+    dispatch(
+      addToast({
+        sticky: true,
+        type: 'error',
+        message: error.message,
+      })
+    );
+  }
+};
+
 export const restartProcess = (accountID, activeTab) => async dispatch => {
   let processController = null;
   let processStatusName = null;

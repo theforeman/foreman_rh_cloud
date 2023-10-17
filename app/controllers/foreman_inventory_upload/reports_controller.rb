@@ -21,8 +21,9 @@ module ForemanInventoryUpload
 
     def generate
       organization_id = params[:organization_id]
+      disconnected = params[:disconnected]
 
-      start_report_generation(organization_id)
+      start_report_generation(organization_id, disconnected)
 
       render json: {
         action_status: 'success',
