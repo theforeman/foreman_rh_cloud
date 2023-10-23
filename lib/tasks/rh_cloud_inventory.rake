@@ -47,7 +47,8 @@ namespace :rh_cloud_inventory do
       base_folder = ENV['target'] || ForemanInventoryUpload.generated_reports_folder
       organization_id = ENV['organization_id']
       report_file = ForemanInventoryUpload.facts_archive_name(organization_id)
-      ForemanTasks.sync_task(ForemanInventoryUpload::Async::QueueForUploadJob, base_folder, report_file, organization_id)
+      disconnected = false
+      ForemanTasks.sync_task(ForemanInventoryUpload::Async::QueueForUploadJob, base_folder, report_file, organization_id, disconnected)
       puts "Uploaded #{report_file}"
     end
   end
