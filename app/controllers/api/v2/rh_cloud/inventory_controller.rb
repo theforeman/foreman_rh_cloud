@@ -18,10 +18,12 @@ module Api
 
         api :POST, "/organizations/:organization_id/rh_cloud/report", N_("Start report generation")
         param :organization_id, Integer, required: true, desc: N_("Set the current organization context for the request")
+        param :disconnected, :bool, required: false, desc: N_('Generate the report, but do not upload')
         def generate_report
           organization_id = params[:organization_id]
+          disconnected = params[:disconnected]
 
-          start_report_generation(organization_id)
+          start_report_generation(organization_id, disconnected)
 
           render json: {
             action_status: 'success',
