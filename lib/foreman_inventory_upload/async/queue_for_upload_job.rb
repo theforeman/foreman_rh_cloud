@@ -1,9 +1,9 @@
 module ForemanInventoryUpload
   module Async
     class QueueForUploadJob < ::Actions::EntryAction
-      def plan(base_folder, report_file, organization_id)
+      def plan(base_folder, report_file, organization_id, disconnected)
         enqueue_task = plan_self(base_folder: base_folder, report_file: report_file)
-        plan_upload_report(enqueue_task.output[:enqueued_file_name], organization_id)
+        plan_upload_report(enqueue_task.output[:enqueued_file_name], organization_id) unless disconnected
       end
 
       def run

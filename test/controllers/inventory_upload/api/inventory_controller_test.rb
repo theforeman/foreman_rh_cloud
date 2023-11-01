@@ -6,14 +6,15 @@ module InventoryUpload::Api
 
     setup do
       @test_org = FactoryBot.create(:organization)
+      @disconnected = false
     end
 
     test 'Starts report generation' do
       Api::V2::RhCloud::InventoryController.any_instance
         .expects(:start_report_generation)
-        .with(@test_org.id.to_s)
+        .with(@test_org.id.to_s, @disconnected)
 
-      post :generate_report, params: { organization_id: @test_org.id }
+      post :generate_report, params: { organization_id: @test_org.id, disconnected: @disconnected}
 
       assert_response :success
     end
