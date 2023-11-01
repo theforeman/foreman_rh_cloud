@@ -5,7 +5,7 @@ module ForemanInventoryUpload
         "report_for_#{label}"
       end
 
-      def plan(base_folder, organization_id)
+      def plan(base_folder, organization_id, disconnected)
         sequence do
           super(
             GenerateReportJob.output_label(organization_id),
@@ -17,7 +17,8 @@ module ForemanInventoryUpload
             QueueForUploadJob,
             base_folder,
             ForemanInventoryUpload.facts_archive_name(organization_id),
-            organization_id
+            organization_id,
+            disconnected
           )
         end
       end
