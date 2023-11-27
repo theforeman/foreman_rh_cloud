@@ -42,7 +42,8 @@ module ForemanRhCloud
 
     initializer 'foreman_rh_cloud.register_plugin', :before => :finisher_hook do |_app|
       Foreman::Plugin.register :foreman_rh_cloud do
-        requires_foreman '>= 3.4'
+        requires_foreman '>= 3.7'
+        register_gettext
 
         apipie_documented_controllers ["#{ForemanRhCloud::Engine.root}/app/controllers/api/v2/**/*.rb"]
 
@@ -148,12 +149,6 @@ module ForemanRhCloud
       Rake::Task['db:seed'].enhance do
         ForemanRhCloud::Engine.load_seed
       end
-    end
-
-    initializer 'foreman_rh_cloud.register_gettext', after: :load_config_initializers do |_app|
-      locale_dir = File.join(File.expand_path('../..', __dir__), 'locale')
-      locale_domain = 'foreman_rh_cloud'
-      Foreman::Gettext::Support.add_text_domain locale_domain, locale_dir
     end
 
     initializer 'foreman_rh_cloud.register_rex_features', :before => :finisher_hook do |_app|
