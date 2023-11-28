@@ -1,0 +1,498 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the foreman_rh_cloud package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# Translators:
+# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2023
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: foreman_rh_cloud 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-01-20 13:26+0000\n"
+"Last-Translator: Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarde"
+"n.nl>, 2023\n"
+"Language-Team: Japanese (https://app.transifex.com/foreman/teams/114/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid " Sync inventory status"
+msgstr " インベントリーステータスの同期"
+
+msgid "%s organizations"
+msgstr "組織 %s 件"
+
+msgid "About subscription watch"
+msgstr "サブスクリプションウォッチの概要"
+
+msgid "Actions history"
+msgstr "アクション履歴"
+
+msgid "Advanced Inventory Settings"
+msgstr "インベントリーの詳細設定"
+
+msgid "All recommendations are now selected."
+msgstr "すべての推奨事項が選択されました。"
+
+msgid "Any Organization"
+msgstr "任意の組織"
+
+msgid "Apply Insights recommendations"
+msgstr "Insights の推奨事項の適用"
+
+msgid "Automatic inventory upload"
+msgstr "自動インベントリーアップロード"
+
+msgid "Automatic mismatch deletion"
+msgstr ""
+
+msgid "Cancel"
+msgstr "取り消し"
+
+msgid "Clear"
+msgstr "消去"
+
+msgid "Clear Selection"
+msgstr "選択項目を解除する"
+
+msgid "Cloud Connector has been configured however obfuscating host names setting is enabled, it's recommended to disable it"
+msgstr "Cloud Connector が設定されていますが、ホスト名の設定が難読化されています。この設定を無効にすることを推奨します"
+
+msgid "Cloud Connector has been configured however the inventory auto-upload is disabled, it's recommended to enable it"
+msgstr "Cloud Connector が設定されていますが、インベントリーの自動アップロードは無効になっています。この設定を有効にすることを推奨します"
+
+msgid "Cloud Connector is in progress"
+msgstr "Cloud Connector が設定中です"
+
+msgid "Cloud connector job link"
+msgstr "Cloud Connector のジョブリンク"
+
+msgid "Cloud connector setup has failed: "
+msgstr "Cloud Connector の設定に失敗しました:"
+
+msgid "Cloud connector setup has started: "
+msgstr "Cloud Connector の設定が開始しました:"
+
+msgid "Cloud connector setup is in progress now: "
+msgstr "Cloud Connector の設定が進行中です:"
+
+msgid "Completed"
+msgstr "完了"
+
+msgid "Configure"
+msgstr "設定"
+
+msgid "Configure Cloud Connector"
+msgstr "Cloud Connector の設定"
+
+msgid "Configure Cloud Connector on given hosts"
+msgstr "特定のホストで Cloud Connector を設定します。"
+
+msgid "Connectivity test"
+msgstr "接続性テスト"
+
+msgid "Critical"
+msgstr "重大"
+
+msgid "Current page"
+msgstr "現在のページ"
+
+msgid "Disconnected hosts: "
+msgstr "切断されたホスト: "
+
+msgid "Displays manifest statuses per accessible organizations."
+msgstr "アクセス可能な組織別にマニフェストステータスを表示します。"
+
+msgid "Documentation"
+msgstr "ドキュメント"
+
+msgid "Download Report"
+msgstr "レポートのダウンロード"
+
+msgid "Download latest report"
+msgstr "最新レポートのダウンロード"
+
+msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
+msgstr ""
+
+msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud"
+msgstr "Red Hat クラウドから Insights の推奨事項の自動同期を有効にする"
+
+msgid "Enable automatic upload of your host inventory to the Red Hat cloud"
+msgstr "ホストインベントリーの Red Hat クラウドに対して自動アップロードを有効にする"
+
+msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
+msgstr "ホストインベントリーの Red Hat クラウドに対して自動アップロードを有効にする"
+
+msgid "Enable cloud connector"
+msgstr "Cloud Connector の有効化"
+
+msgid "Enable inventory upload"
+msgstr "インベントリーアップロードの有効化"
+
+msgid "Encountered an error while trying to access the server:"
+msgstr "サーバーへのアクセス時にエラーが発生しました:"
+
+msgid "Exclude installed Packages"
+msgstr "インストール済みパッケージの除外"
+
+msgid "Exclude installed packages from being uploaded to the Red Hat cloud"
+msgstr "Red Hat クラウドにアップロードされないようにインストール済みパッケージを除外する"
+
+msgid "Exclude packages"
+msgstr "パッケージの除外"
+
+msgid "Exclude packages from being uploaded to the Red Hat cloud"
+msgstr "パッケージが Red Hat クラウドにアップロードされないように除外する"
+
+msgid "Exit Code: %s"
+msgstr "終了コード: %s"
+
+msgid "Fetching data about your accounts"
+msgstr "アカウントに関するデータの取得"
+
+msgid "Filter.."
+msgstr "フィルター.."
+
+msgid "Fix host"
+msgstr "ホストの修正"
+
+msgid "For more info, please visit the"
+msgstr "詳細は、以下を参照してください。"
+
+msgid "For more information about Insights and Cloud Connector, see:"
+msgstr ""
+
+msgid "For more information about the Subscriptions service, see:"
+msgstr ""
+
+msgid "Foreman plugin that process & upload data to Red Hat Cloud"
+msgstr "データを処理して Red Hat Cloud にアップロードする Foreman プラグイン"
+
+msgid "Full Screen"
+msgstr "全画面"
+
+msgid "Generate the report, but do not upload"
+msgstr ""
+
+msgid "Generating"
+msgstr "生成中"
+
+msgid "Go to Satellite Insights page"
+msgstr "Satellite Insights ページに移動する"
+
+msgid "Go to first page"
+msgstr "最初のページに移動"
+
+msgid "Go to last page"
+msgstr "最後のページに移動"
+
+msgid "Go to next page"
+msgstr "次のページに移動"
+
+msgid "Go to previous page"
+msgstr "前のページに移動"
+
+msgid "Grab hosts that are missing in RH Cloud"
+msgstr ""
+
+msgid "Host Insights recommendations"
+msgstr "ホストに関する Insights の推奨事項"
+
+msgid "Host was not uploaded to your RH cloud inventory"
+msgstr "ホストが RH クラウドインベントリーにアップロードされませんでした"
+
+msgid "Hostname"
+msgstr "ホスト名"
+
+msgid "Hosts with subscription in organization: "
+msgstr "組織のサブスクリプションが割り当てられたホスト:"
+
+msgid "ID of the RHC(Yggdrasil) daemon"
+msgstr "RHC (Yggdrasil) デーモンの ID"
+
+msgid "Important"
+msgstr "重要"
+
+msgid "Include parameters in insights-client reports"
+msgstr "Insights クライアントレポートにパラメーターを含める"
+
+msgid "Insights"
+msgstr "Insights"
+
+msgid "Insights synchronization process is used to provide Insights recommendations output for hosts managed here."
+msgstr "Insights の同期プロセスを使用して、ここで管理するホストに対して Insights の推奨事項の出力を提供します。"
+
+msgid "Inventory"
+msgstr "インベントリー"
+
+msgid "Inventory Auto Upload"
+msgstr "インベントリーの自動アップロード"
+
+msgid "Inventory Upload"
+msgstr "インベントリーのアップロード"
+
+msgid "Inventory sync has failed: "
+msgstr "インベントリーの同期に失敗しました:"
+
+msgid "Inventory sync has started:"
+msgstr "インベントリーの同期が開始されました:"
+
+msgid "Items per page"
+msgstr "各ページの項目"
+
+msgid "Knowledgebase article"
+msgstr "ナレッジベースアーティクル"
+
+msgid "Loading"
+msgstr "ロード中"
+
+msgid "Loading..."
+msgstr "ロード中..."
+
+msgid "Low"
+msgstr "低"
+
+msgid "Manual"
+msgstr "手動"
+
+msgid "Moderate"
+msgstr "中程度"
+
+msgid "More details can be found in"
+msgstr "詳細は、以下を参照してください: "
+
+msgid "Next run: "
+msgstr "次の実行: "
+
+msgid "No"
+msgstr "いいえ"
+
+msgid "No recommendations were found for this host!"
+msgstr "このホストに関する推奨事項は見つかりませんでした。"
+
+msgid "No results found"
+msgstr "結果は見つかりませんでした"
+
+msgid "No task was found"
+msgstr "タスクが見つかりませんでした"
+
+msgid "Not reporting"
+msgstr "報告なし"
+
+msgid "Nothing to sync, there are no hosts with subscription for this organization."
+msgstr "同期するものがありません。この組織でサブスクリプションが割り当てられているホストはありません。"
+
+msgid "Notice"
+msgstr "注意"
+
+msgid "Obfuscate IPs"
+msgstr "IP の難読化"
+
+msgid "Obfuscate host ipv4 addresses"
+msgstr "ホストの ipv4 アドレスの難読化"
+
+msgid "Obfuscate host names"
+msgstr "ホスト名の難読化"
+
+msgid "Obfuscate host names sent to the Red Hat cloud"
+msgstr "Red Hat クラウドに送信するホスト名を難読化する"
+
+msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud"
+msgstr "Red Hat クラウドに送信する ipv4 アドレスを難読化する"
+
+msgid "Oops! Couldn't find organization that matches your query"
+msgstr "クエリーに合致する組織が見つかりませんでした"
+
+msgid "Organization status"
+msgstr "組織ステータス"
+
+msgid "Pagination"
+msgstr "ページ付け"
+
+msgid "Playbook"
+msgstr "Playbook"
+
+msgid "RH Cloud"
+msgstr "RH Cloud"
+
+msgid "RHC daemon id"
+msgstr "RHC デーモン ID"
+
+msgid "RHCloud"
+msgstr "RHCloud"
+
+msgid "Read more about it in RH cloud insights"
+msgstr "詳細は、RH cloud insights を参照してください。"
+
+msgid "Reboot Required"
+msgstr "再起動が必要です"
+
+msgid "Recommendation"
+msgstr "推奨事項"
+
+msgid "Recommendation sync has failed: "
+msgstr "推奨事項の同期に失敗しました: "
+
+msgid "Recommendation sync has started: "
+msgstr "推奨事項の同期が開始されました: "
+
+msgid "Recommendations"
+msgstr "推奨事項"
+
+msgid "Recommendations selected: %s."
+msgstr "選択済みの推奨事項: %s 件"
+
+msgid "Recommendations synced successfully"
+msgstr "推奨事項が正常に同期されました"
+
+msgid "Reconfigure Cloud Connector"
+msgstr "Cloud Connector の再設定"
+
+msgid "Red Hat Cloud Inventory"
+msgstr "Red Hat Cloud インベントリー"
+
+msgid "Red Hat Insights"
+msgstr "Red Hat Insights"
+
+msgid "Red Hat Insights Data and Application Security"
+msgstr "Red Hat Insights データおよびアプリケーションセキュリティー"
+
+msgid "Red Hat Inventory"
+msgstr "Red Hat インベントリー"
+
+msgid "Remain"
+msgstr "そのままにする"
+
+msgid "Remediate"
+msgstr "修復"
+
+msgid "Remediation summary"
+msgstr "修復の概要"
+
+msgid "Reporting"
+msgstr "レポート"
+
+msgid "Resolution"
+msgstr "解決策"
+
+msgid "Restart"
+msgstr "再起動"
+
+msgid "Run RH Cloud playbook"
+msgstr "RH Cloud Playbook の実行"
+
+msgid "Run playbook genrated by Red Hat remediations app"
+msgstr "Red Hat 修復アプリが生成した Playbook の実行"
+
+msgid "Run remediation playbook generated by Insights"
+msgstr "Insights で生成された修復 Playbook の実行"
+
+msgid "Satellite server has %{hits_count} recommendations by Red Hat"
+msgstr "Satellite Server には、Red Hat からの推奨事項が %{hits_count} 件あります。"
+
+msgid "Scoped search string for host removal"
+msgstr ""
+
+msgid "Select recommendations from all pages"
+msgstr "すべてのページから推奨事項を選択する"
+
+msgid "Set the current organization context for the request"
+msgstr "要求に現在の組織コンテキストを設定します"
+
+msgid "Settings"
+msgstr "設定"
+
+msgid "Should import include parameter tags from Foreman?"
+msgstr "インポートには Foreman からのパラメータータグを含める必要がありますか?"
+
+msgid "Show Advanced Settings"
+msgstr "詳細設定の表示"
+
+msgid "Start inventory synchronization"
+msgstr "インベントリー同期の開始"
+
+msgid "Start report generation"
+msgstr "レポート生成の開始"
+
+msgid "Successfully synced hosts: "
+msgstr "ホストが正常に同期されました:"
+
+msgid "Successfully uploaded to your RH cloud inventory"
+msgstr "RH クラウドインベントリーへのアップロードに成功しました"
+
+msgid "Sync automatically"
+msgstr "自動同期"
+
+msgid "Sync recommendations"
+msgstr "同期の推奨事項"
+
+msgid "Synchronize recommendations Automatically"
+msgstr "推奨事項を自動的に同期する"
+
+msgid "The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Satellite instance."
+msgstr ""
+
+msgid "The Satellite inventory upload plugin automatically uploads Satellite host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required."
+msgstr ""
+
+msgid "The report file %{filename} doesn't exist"
+msgstr "%{filename} レポートファイルがありません"
+
+msgid "The server returned the following error: %s"
+msgstr "サーバーは以下のエラーを返しました: %s"
+
+msgid "The task failed with the following error:"
+msgstr "タスクは以下のエラーで失敗しました: "
+
+msgid "This action will also enable automatic reports upload"
+msgstr "このアクションを実行すると、自動レポートのアップロードも有効になります。"
+
+msgid "To enable this reporting for all Satellite organizations, set {uploadButtonName} to on. The data will be reported automatically once per day."
+msgstr ""
+
+msgid "To manually upload the data for a specific organization, select an organization and click {restartButtonName}."
+msgstr ""
+
+msgid "Total risk"
+msgstr "リスクの総数"
+
+msgid "Total risks"
+msgstr "リスクの総数"
+
+msgid "Uploading"
+msgstr "アップロード中..."
+
+msgid "Value %{value} is not a valid UUID"
+msgstr "%{value} の値は有効な UUID ではありません"
+
+msgid "View all recommendations"
+msgstr "すべての推奨事項の表示"
+
+msgid "View in Red Hat Insights"
+msgstr "Red Hat Insights での表示"
+
+msgid "Wait and %s"
+msgstr "待機して %s"
+
+msgid "hosts page"
+msgstr "ホストページ"
+
+msgid "items"
+msgstr "項目"
+
+msgid "page"
+msgstr "ページ"
+
+msgid "per page"
+msgstr "/ページ"
+
+msgid "view the job in progress"
+msgstr "処理中のジョブを表示する"
+
+msgid "view the task page for more details"
+msgstr "詳細は、タスクページを表示します。"

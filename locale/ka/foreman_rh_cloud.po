@@ -1,0 +1,497 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the foreman_rh_cloud package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# Translators:
+# Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2023
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: foreman_rh_cloud 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-01-20 13:26+0000\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2023\n"
+"Language-Team: Georgian (https://app.transifex.com/foreman/teams/114/ka/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ka\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+msgid " Sync inventory status"
+msgstr " ინვენტარის სტატუსის სინქრონიზაცია"
+
+msgid "%s organizations"
+msgstr "%s ორგანიზაცია"
+
+msgid "About subscription watch"
+msgstr "გამოწერის ყურების შესახებ"
+
+msgid "Actions history"
+msgstr "აქტივობების ისტორია"
+
+msgid "Advanced Inventory Settings"
+msgstr "ინვენტარის დამატებითი პარამეტრები"
+
+msgid "All recommendations are now selected."
+msgstr "ახლა ყველა რეკომენდაცია მონიშნულია."
+
+msgid "Any Organization"
+msgstr "ნებისმიერი ორგანიზაცია"
+
+msgid "Apply Insights recommendations"
+msgstr "Insights-ის რეკომენდაციების გადატარება"
+
+msgid "Automatic inventory upload"
+msgstr "ინვენტარის ავტომატური ატვირთვა"
+
+msgid "Automatic mismatch deletion"
+msgstr ""
+
+msgid "Cancel"
+msgstr "გაუქმება"
+
+msgid "Clear"
+msgstr "გაწმენდა"
+
+msgid "Clear Selection"
+msgstr "მონიშნულის გასუფთავება"
+
+msgid "Cloud Connector has been configured however obfuscating host names setting is enabled, it's recommended to disable it"
+msgstr "Cloud Connector-ი მორგებულია, მაგრამ ჰოსტის სახელების დამახინჯება ჩართულია. რეკომენდებულია, გამორთოთ ის"
+
+msgid "Cloud Connector has been configured however the inventory auto-upload is disabled, it's recommended to enable it"
+msgstr "Cloud Connector-ი მორგებულია, მაგრამ ინვენტარის ავტომატური ატვირთვა გამორთულია. რეკომენდებულია, ჩართოთ ის"
+
+msgid "Cloud Connector is in progress"
+msgstr "მიმდინარეობს ღრუბელთან მიერთება"
+
+msgid "Cloud connector job link"
+msgstr "Cloud connector-ის დავალების ბმული"
+
+msgid "Cloud connector setup has failed: "
+msgstr "Cloud connector-ის მორგების შეცდომა: "
+
+msgid "Cloud connector setup has started: "
+msgstr "Cloud connector-ის მორგება დაიწყო: "
+
+msgid "Cloud connector setup is in progress now: "
+msgstr "მიმდინარეობს Cloud connector-ის მორგება: "
+
+msgid "Completed"
+msgstr "დასრულებულია"
+
+msgid "Configure"
+msgstr "მორგება"
+
+msgid "Configure Cloud Connector"
+msgstr "ღრუბელთან მიერთების მორგება"
+
+msgid "Configure Cloud Connector on given hosts"
+msgstr "მითითებულ ჰოსტებზე Cloud Connector-ის მორგება"
+
+msgid "Connectivity test"
+msgstr "მიერთების შემოწმება"
+
+msgid "Critical"
+msgstr "კრიტიკული"
+
+msgid "Current page"
+msgstr "მიმდინარე გვერდი"
+
+msgid "Disconnected hosts: "
+msgstr "გამორთული ჰოსტები: "
+
+msgid "Displays manifest statuses per accessible organizations."
+msgstr "მანიფესტის სტატუსების ჩვენება თითოეული წვდომადი ორგანიზაციისთვის."
+
+msgid "Documentation"
+msgstr "დოკუმენტაცია"
+
+msgid "Download Report"
+msgstr "ანგარიშის გადმოწერა"
+
+msgid "Download latest report"
+msgstr "უახლესი ანგარიშის გადმოწერა"
+
+msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
+msgstr ""
+
+msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud"
+msgstr "Red Hat Cloud-დან Insight-ის რეკომენდაციების ავტომატური სინქრონიზაციების ჩართვა"
+
+msgid "Enable automatic upload of your host inventory to the Red Hat cloud"
+msgstr "თქვენი ჰოსტების ინვენტარის Red Hat Cloud-ში ავტომატური ატვირთვის ჩართვა"
+
+msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
+msgstr "თქვენი ჰოსტების ინვენტარის Red Hat Cloud-ში ავტომატური ატვირთვის ჩართვა"
+
+msgid "Enable cloud connector"
+msgstr "ღრუბელთან მიერთების ჩართვა"
+
+msgid "Enable inventory upload"
+msgstr "ინვენტარის ატვირთვის ჩართვა"
+
+msgid "Encountered an error while trying to access the server:"
+msgstr "შეცდომა სერვერთან წვდომის მცდელობისას:"
+
+msgid "Exclude installed Packages"
+msgstr "დაყენებული პაკეტების გამორიცხვა"
+
+msgid "Exclude installed packages from being uploaded to the Red Hat cloud"
+msgstr "Red Hat cloud-ში ატვირთული პაკეტების სიიდან დაყენებული პაკეტების ამოღება"
+
+msgid "Exclude packages"
+msgstr "პაკეტების გამორიცხვა"
+
+msgid "Exclude packages from being uploaded to the Red Hat cloud"
+msgstr "პაკეტების ამოღება Red Hat Cloud-ზე ასატვირთი სიიდან"
+
+msgid "Exit Code: %s"
+msgstr "გასვლის კოდი: %s"
+
+msgid "Fetching data about your accounts"
+msgstr "მონაცემების გამოთხოვა თქვენი ანგარიშების შესახებ"
+
+msgid "Filter.."
+msgstr "ფილტრი..."
+
+msgid "Fix host"
+msgstr "ჰოსტის გასწორება"
+
+msgid "For more info, please visit the"
+msgstr "მეტი ინფორმაციისთვის ეწვიეთ"
+
+msgid "For more information about Insights and Cloud Connector, see:"
+msgstr ""
+
+msgid "For more information about the Subscriptions service, see:"
+msgstr ""
+
+msgid "Foreman plugin that process & upload data to Red Hat Cloud"
+msgstr "Foreman-ის დამატება, რომელიც მონაცემების დამუშავებაზე და Red Hat Cloud-ში ატვირთვაზე აგებს პასუხს"
+
+msgid "Full Screen"
+msgstr "სრულეკრანიანი რეჟიმი"
+
+msgid "Generate the report, but do not upload"
+msgstr ""
+
+msgid "Generating"
+msgstr "გენერაცია"
+
+msgid "Go to Satellite Insights page"
+msgstr "Satellite Insights-ის გვერდზე გადასვლა"
+
+msgid "Go to first page"
+msgstr "პირველ გვერდზე"
+
+msgid "Go to last page"
+msgstr "ბოლო გვერდზე"
+
+msgid "Go to next page"
+msgstr "შემდეგ გვერდზე გადასვლა"
+
+msgid "Go to previous page"
+msgstr "წინა გვერდზე"
+
+msgid "Grab hosts that are missing in RH Cloud"
+msgstr ""
+
+msgid "Host Insights recommendations"
+msgstr "ჰოსტის Insights-ის რეკომენდაციები"
+
+msgid "Host was not uploaded to your RH cloud inventory"
+msgstr "ჰოსტის თქვენი RH-ის ღრუბლოვან ინვენტარში არ ატვირთულა"
+
+msgid "Hostname"
+msgstr "ჰოსტის სახელი"
+
+msgid "Hosts with subscription in organization: "
+msgstr "გამოწერის მქონე ჰოსტები ორგანიზაციაში: "
+
+msgid "ID of the RHC(Yggdrasil) daemon"
+msgstr "RHC(Yggdrasil)-ის დემონის ID"
+
+msgid "Important"
+msgstr "მნიშვნელოვანი"
+
+msgid "Include parameters in insights-client reports"
+msgstr "ჩასმის პარამეტრები insghts-client-ის ანგარიშებში"
+
+msgid "Insights"
+msgstr "Insights"
+
+msgid "Insights synchronization process is used to provide Insights recommendations output for hosts managed here."
+msgstr "აქედან მართული ჰოსტებისთვის Insights-ის რეკომენდაციის მისაწოდებლად Insights-ის სინქრონიზაციის პროცესი გამოიყენება."
+
+msgid "Inventory"
+msgstr "ინვენტარი"
+
+msgid "Inventory Auto Upload"
+msgstr "ინვენტარის ავტომატური ატვირთვა"
+
+msgid "Inventory Upload"
+msgstr "ინვენტარის ატვირთვა"
+
+msgid "Inventory sync has failed: "
+msgstr "ინვენტარის სინქრონიზაციის რეჟიმი: "
+
+msgid "Inventory sync has started:"
+msgstr "ინვენტარის სინქრონიზაცია დაიწყო:"
+
+msgid "Items per page"
+msgstr "ჩანაწერი გვერდზე"
+
+msgid "Knowledgebase article"
+msgstr "ცოდნის ბაზის სტატია"
+
+msgid "Loading"
+msgstr "იტვირთება"
+
+msgid "Loading..."
+msgstr "იტვირთება..."
+
+msgid "Low"
+msgstr "დაბალი"
+
+msgid "Manual"
+msgstr "ხელით"
+
+msgid "Moderate"
+msgstr "საშუალო"
+
+msgid "More details can be found in"
+msgstr "მეტი დეტალი შეგიძლიათ იპოვოთ"
+
+msgid "Next run: "
+msgstr "შემდეგი გაშვება: "
+
+msgid "No"
+msgstr "არა"
+
+msgid "No recommendations were found for this host!"
+msgstr "ამ ჰოსტისთვის რეკომენდაციები აღმოჩენილი არაა!"
+
+msgid "No results found"
+msgstr "შედეგების გარეშე"
+
+msgid "No task was found"
+msgstr "ამოცანა ვერ ვიპოვე"
+
+msgid "Not reporting"
+msgstr "ანგარიშების გარეშე"
+
+msgid "Nothing to sync, there are no hosts with subscription for this organization."
+msgstr "დასასინქრონებელი არაფერია. ამ ორგანიზაციისთვის გამოწერის მქონე ჰოსტები არ არსებობს."
+
+msgid "Notice"
+msgstr "გაფრთხილება"
+
+msgid "Obfuscate IPs"
+msgstr "IP-ების ობფუსკაცია"
+
+msgid "Obfuscate host ipv4 addresses"
+msgstr "ჰოსტის ipv4 მისამართების ობფუსკაცია"
+
+msgid "Obfuscate host names"
+msgstr "ჰოსტის სახელების ობფუსკაცია"
+
+msgid "Obfuscate host names sent to the Red Hat cloud"
+msgstr "Red Hat cloud-ში გაგზავნილი ჰოსტის სახელების დამახინჯება"
+
+msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud"
+msgstr "Red Hat cloud-ში გაგზავნილი IPv4 მისამართების დამახინჯება"
+
+msgid "Oops! Couldn't find organization that matches your query"
+msgstr "ვაი! ორგანიზაცია, რომელიც თქვენს პირობებში ჯდება, ვერ ვიპოვე"
+
+msgid "Organization status"
+msgstr "ორგანიზაციის სტატუსი"
+
+msgid "Pagination"
+msgstr "გვერდებად დაყოფა"
+
+msgid "Playbook"
+msgstr "Playbook"
+
+msgid "RH Cloud"
+msgstr "RH Cloud"
+
+msgid "RHC daemon id"
+msgstr "RHC დემონის ID"
+
+msgid "RHCloud"
+msgstr "RHCloud"
+
+msgid "Read more about it in RH cloud insights"
+msgstr "გაიგეთ მეტი RH Cloud insights-ის შესახებ"
+
+msgid "Reboot Required"
+msgstr "საჭიროა გადატვირთვა"
+
+msgid "Recommendation"
+msgstr "რეკომენდაცია"
+
+msgid "Recommendation sync has failed: "
+msgstr "რეკომენდაციის სინქრონიზაციის შეცდომა: "
+
+msgid "Recommendation sync has started: "
+msgstr "რეკომენდაციის სინქრონიზაციის გაეშვა: "
+
+msgid "Recommendations"
+msgstr "რეკომენდაციები"
+
+msgid "Recommendations selected: %s."
+msgstr "არჩეული რეკომენდაციები: %s."
+
+msgid "Recommendations synced successfully"
+msgstr "რეკომენდაციების სინქრონიზაცია წარმატებულია"
+
+msgid "Reconfigure Cloud Connector"
+msgstr "ღრუბელთან მიერთების თავიდან მორგება"
+
+msgid "Red Hat Cloud Inventory"
+msgstr "Red Hat Cloud-ის ინვენტარი"
+
+msgid "Red Hat Insights"
+msgstr "Red Hat Insights"
+
+msgid "Red Hat Insights Data and Application Security"
+msgstr "Red Hat Insights-ის მონაცემებისა და აპლიკაციის უსაფრთხოება"
+
+msgid "Red Hat Inventory"
+msgstr "Red Hat-ის ინვენტარი"
+
+msgid "Remain"
+msgstr "დარჩენა"
+
+msgid "Remediate"
+msgstr "გამოსწორება"
+
+msgid "Remediation summary"
+msgstr "აღდგენის შეჯამება"
+
+msgid "Reporting"
+msgstr "ანგარიში"
+
+msgid "Resolution"
+msgstr "გარჩევადობა"
+
+msgid "Restart"
+msgstr "გადატვრთვა"
+
+msgid "Run RH Cloud playbook"
+msgstr "RH Cloud-ის Playbok-ის გაშვება"
+
+msgid "Run playbook genrated by Red Hat remediations app"
+msgstr "Red Hat-ის აღდგენის აპის მიერ გენერირებული Playbook-ის გაშვება"
+
+msgid "Run remediation playbook generated by Insights"
+msgstr "Insights-ის მიერ გენერირებული აღდგენის playbook-ის გაშვება"
+
+msgid "Satellite server has %{hits_count} recommendations by Red Hat"
+msgstr "Satellite -ის სერვერს Red Hat-სგან %{hits_count} რეკომენდაცია გააჩნია"
+
+msgid "Scoped search string for host removal"
+msgstr ""
+
+msgid "Select recommendations from all pages"
+msgstr "რეკომენდაციების მონიშვნა ყველა გვერდიდან"
+
+msgid "Set the current organization context for the request"
+msgstr "მოთხოვნის მიმდინარე ორგანიზაციის კონტექსტის დაყენება"
+
+msgid "Settings"
+msgstr "მორგება"
+
+msgid "Should import include parameter tags from Foreman?"
+msgstr "უნდა შეიცავდეს შემოტანა პარამეტრის ჭდეებს Foreman-დან?"
+
+msgid "Show Advanced Settings"
+msgstr "დამატებითი პარამეტრების ცვენება"
+
+msgid "Start inventory synchronization"
+msgstr "ინვენტარის სინქრონიზაციის დაწყება"
+
+msgid "Start report generation"
+msgstr "ანგარიშის გენერაციის დაწყება"
+
+msgid "Successfully synced hosts: "
+msgstr "წარმატებით სინქრონიზებული ჰოსტები: "
+
+msgid "Successfully uploaded to your RH cloud inventory"
+msgstr "ჰოსტი თქვენი RH-ის ღრუბლოვან ინვენტარში არ ატვირთულა"
+
+msgid "Sync automatically"
+msgstr "ავტომატური სინქრონიზაცია"
+
+msgid "Sync recommendations"
+msgstr "სინქრონიზაციის რეკომენდაციები"
+
+msgid "Synchronize recommendations Automatically"
+msgstr "რეკომენდაციების ავტომატური სინქრონიზაცია"
+
+msgid "The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Satellite instance."
+msgstr ""
+
+msgid "The Satellite inventory upload plugin automatically uploads Satellite host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required."
+msgstr ""
+
+msgid "The report file %{filename} doesn't exist"
+msgstr "ანგარიშის ფაილი %{filename} არ არსებობს"
+
+msgid "The server returned the following error: %s"
+msgstr "სერვერმა შემდეგი შეცდომა დააბრუნა: %ს"
+
+msgid "The task failed with the following error:"
+msgstr "დავალება შემდეგი შეცდომით დასრულდა:"
+
+msgid "This action will also enable automatic reports upload"
+msgstr "ეს ქმედება ავტომატურად ანგარიშების ატვირთვასაც ჩართავს"
+
+msgid "To enable this reporting for all Satellite organizations, set {uploadButtonName} to on. The data will be reported automatically once per day."
+msgstr ""
+
+msgid "To manually upload the data for a specific organization, select an organization and click {restartButtonName}."
+msgstr ""
+
+msgid "Total risk"
+msgstr "სრული რისკი"
+
+msgid "Total risks"
+msgstr "სულ რისკები"
+
+msgid "Uploading"
+msgstr "ატვირთვა"
+
+msgid "Value %{value} is not a valid UUID"
+msgstr "მნიშვნელობა %{value} არასწორი UUID-ია"
+
+msgid "View all recommendations"
+msgstr "ყველა რეკომენდაციის ნახვა"
+
+msgid "View in Red Hat Insights"
+msgstr "Red Hat Insights-ში ნახვა"
+
+msgid "Wait and %s"
+msgstr "დაელოდეთ და %s"
+
+msgid "hosts page"
+msgstr "ჰოსტების გვერდი"
+
+msgid "items"
+msgstr "ელემენტი"
+
+msgid "page"
+msgstr "პანელი"
+
+msgid "per page"
+msgstr "გვერდზე"
+
+msgid "view the job in progress"
+msgstr "გაშვებული დავალების ნახვა"
+
+msgid "view the task page for more details"
+msgstr "მეტი დეტალებისთვის იხილეთ ამოცანის გვერდი"

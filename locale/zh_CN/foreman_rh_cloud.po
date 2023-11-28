@@ -1,163 +1,173 @@
-# foreman_rh_cloud
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the foreman_rh_cloud package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-# This file is distributed under the same license as foreman_rh_cloud.
+# Translators:
+# tim123, 2023
+# 0868a4d1af5275b3f70b0a6dac4c99a4, 2023
+# Bryan Kearney <bryan.kearney@gmail.com>, 2023
+# Amit Upadhye <aupadhye@redhat.com>, 2023
+# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2023
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: version 0.0.1\n"
+"Project-Id-Version: foreman_rh_cloud 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2014-08-20 08:54+0100\n"
-"Last-Translator: Foreman Team <foreman-dev@googlegroups.com>\n"
-"Language-Team: Foreman Team <foreman-dev@googlegroups.com>\n"
-"Language: \n"
+"PO-Revision-Date: 2023-01-20 13:26+0000\n"
+"Last-Translator: Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarde"
+"n.nl>, 2023\n"
+"Language-Team: Chinese (China) (https://app.transifex.com/foreman/teams/114/zh"
+"_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid " Sync inventory status"
-msgstr ""
+msgstr " 同步清单状态"
 
 msgid "%s organizations"
-msgstr ""
+msgstr "%s 机构"
 
 msgid "About subscription watch"
-msgstr ""
+msgstr "订阅查看"
 
 msgid "Actions history"
-msgstr ""
+msgstr "操作历史记录"
 
 msgid "Advanced Inventory Settings"
-msgstr ""
+msgstr "高级清单设置"
 
 msgid "All recommendations are now selected."
-msgstr ""
+msgstr "现在选择了所有建议。"
 
 msgid "Any Organization"
-msgstr ""
+msgstr "任意机构"
 
 msgid "Apply Insights recommendations"
-msgstr ""
+msgstr "应用 Insights 建议"
 
 msgid "Automatic inventory upload"
-msgstr ""
+msgstr "自动清单上传"
 
 msgid "Automatic mismatch deletion"
 msgstr ""
 
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 msgid "Clear"
-msgstr ""
+msgstr "清除"
 
 msgid "Clear Selection"
-msgstr ""
+msgstr "清除选择"
 
 msgid "Cloud Connector has been configured however obfuscating host names setting is enabled, it's recommended to disable it"
-msgstr ""
+msgstr "已配置了云连接器，但启用了模糊主机名设置，建议禁用它"
 
 msgid "Cloud Connector has been configured however the inventory auto-upload is disabled, it's recommended to enable it"
-msgstr ""
+msgstr "已配置了云连接器，但禁用了清单自动上传，建议启用它"
 
 msgid "Cloud Connector is in progress"
-msgstr ""
+msgstr "云连接器正在进行"
 
 msgid "Cloud connector job link"
-msgstr ""
+msgstr "云连接器作业链接"
 
 msgid "Cloud connector setup has failed: "
-msgstr ""
+msgstr "云连接器设置失败： "
 
 msgid "Cloud connector setup has started: "
-msgstr ""
+msgstr "云连接器设置已启动： "
 
 msgid "Cloud connector setup is in progress now: "
-msgstr ""
+msgstr "云连接器设置现在正在进行： "
 
 msgid "Completed"
-msgstr ""
+msgstr "完成"
 
 msgid "Configure"
-msgstr ""
+msgstr "配置"
 
 msgid "Configure Cloud Connector"
-msgstr ""
+msgstr "配置云连接器"
 
 msgid "Configure Cloud Connector on given hosts"
-msgstr ""
+msgstr "在给定主机上配置 Cloud Connector"
 
 msgid "Connectivity test"
-msgstr ""
+msgstr "连接测试"
 
 msgid "Critical"
-msgstr ""
+msgstr "关键"
 
 msgid "Current page"
-msgstr ""
+msgstr "当前页"
 
 msgid "Disconnected hosts: "
-msgstr ""
+msgstr "断开连接的主机："
 
 msgid "Displays manifest statuses per accessible organizations."
-msgstr ""
+msgstr "显示每个可访问的机构的清单状态。"
 
 msgid "Documentation"
-msgstr ""
+msgstr "文档"
 
 msgid "Download Report"
-msgstr ""
+msgstr "下载报告"
 
 msgid "Download latest report"
-msgstr ""
+msgstr "下载最新報告"
 
 msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
 msgstr ""
 
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud"
-msgstr ""
+msgstr "启用来自红帽云的 Insights 建议自动同步"
 
 msgid "Enable automatic upload of your host inventory to the Red Hat cloud"
-msgstr ""
+msgstr "启用自动将主机清单上传到红帽云"
 
 msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
-msgstr ""
+msgstr "启用自动将主机清单上传到红帽云"
 
 msgid "Enable cloud connector"
-msgstr ""
+msgstr "启用云连接器"
 
 msgid "Enable inventory upload"
-msgstr ""
+msgstr "启用清单上传"
 
 msgid "Encountered an error while trying to access the server:"
-msgstr ""
+msgstr "在尝试访问服务器时遇到错误："
 
 msgid "Exclude installed Packages"
-msgstr ""
+msgstr "排除安装的软件包"
 
 msgid "Exclude installed packages from being uploaded to the Red Hat cloud"
-msgstr ""
+msgstr "将安装的软件包上传到红帽云"
 
 msgid "Exclude packages"
-msgstr ""
+msgstr "排除软件包"
 
 msgid "Exclude packages from being uploaded to the Red Hat cloud"
-msgstr ""
+msgstr "排除软件包上传到红帽云"
 
 msgid "Exit Code: %s"
-msgstr ""
+msgstr "退出代码：%s"
 
 msgid "Fetching data about your accounts"
-msgstr ""
+msgstr "获取有关您的帐户的数据"
 
 msgid "Filter.."
-msgstr ""
+msgstr "过滤器..."
 
 msgid "Fix host"
-msgstr ""
+msgstr "修复主机"
 
 msgid "For more info, please visit the"
-msgstr ""
+msgstr "如需更多信息，请访问"
 
 msgid "For more information about Insights and Cloud Connector, see:"
 msgstr ""
@@ -166,268 +176,268 @@ msgid "For more information about the Subscriptions service, see:"
 msgstr ""
 
 msgid "Foreman plugin that process & upload data to Red Hat Cloud"
-msgstr ""
+msgstr "处理数据并将其上传到红帽云的 Foreman 插件"
 
 msgid "Full Screen"
-msgstr ""
+msgstr "全屏"
 
 msgid "Generate the report, but do not upload"
 msgstr ""
 
 msgid "Generating"
-msgstr ""
+msgstr "生成中"
 
 msgid "Go to Satellite Insights page"
-msgstr ""
+msgstr "进入 Satellite Insights 页面"
 
 msgid "Go to first page"
-msgstr ""
+msgstr "前往第一页"
 
 msgid "Go to last page"
-msgstr ""
+msgstr "前往最后一页"
 
 msgid "Go to next page"
-msgstr ""
+msgstr "前往下一页"
 
 msgid "Go to previous page"
-msgstr ""
+msgstr "前往上一页"
 
 msgid "Grab hosts that are missing in RH Cloud"
 msgstr ""
 
 msgid "Host Insights recommendations"
-msgstr ""
+msgstr "主机 Insights 建议"
 
 msgid "Host was not uploaded to your RH cloud inventory"
-msgstr ""
+msgstr "主机没有上传到您的 RH 云清单"
 
 msgid "Hostname"
-msgstr ""
+msgstr "主机名"
 
 msgid "Hosts with subscription in organization: "
-msgstr ""
+msgstr "机构中具有订阅的主机： "
 
 msgid "ID of the RHC(Yggdrasil) daemon"
-msgstr ""
+msgstr "RHC (Yggdrasil)守护进程的 ID"
 
 msgid "Important"
-msgstr ""
+msgstr "重要"
 
 msgid "Include parameters in insights-client reports"
-msgstr ""
+msgstr "在 insights-client 报告中包含参数"
 
 msgid "Insights"
-msgstr ""
+msgstr "Insights"
 
 msgid "Insights synchronization process is used to provide Insights recommendations output for hosts managed here."
-msgstr ""
+msgstr "Insights 同步过程用于为此处管理的主机提供 Insights 建议输出。"
 
 msgid "Inventory"
-msgstr ""
+msgstr "清单"
 
 msgid "Inventory Auto Upload"
-msgstr ""
+msgstr "清单自动上传"
 
 msgid "Inventory Upload"
-msgstr ""
+msgstr "清单上传"
 
 msgid "Inventory sync has failed: "
-msgstr ""
+msgstr "清单同步失败： "
 
 msgid "Inventory sync has started:"
-msgstr ""
+msgstr "清单同步已启动："
 
 msgid "Items per page"
-msgstr ""
+msgstr "每页的项"
 
 msgid "Knowledgebase article"
-msgstr ""
+msgstr "知识库文章"
 
 msgid "Loading"
-msgstr ""
+msgstr "加载"
 
 msgid "Loading..."
-msgstr ""
+msgstr "载入中..."
 
 msgid "Low"
-msgstr ""
+msgstr "低"
 
 msgid "Manual"
-msgstr ""
+msgstr "手册"
 
 msgid "Moderate"
-msgstr ""
+msgstr "中等"
 
 msgid "More details can be found in"
-msgstr ""
+msgstr "如需更多详细信息，请参阅"
 
 msgid "Next run: "
-msgstr ""
+msgstr "下一次运行 ："
 
 msgid "No"
-msgstr ""
+msgstr "否"
 
 msgid "No recommendations were found for this host!"
-msgstr ""
+msgstr "没有找到此主机的建议！"
 
 msgid "No results found"
-msgstr ""
+msgstr "没有找到结果"
 
 msgid "No task was found"
-msgstr ""
+msgstr "没有找到任务"
 
 msgid "Not reporting"
-msgstr ""
+msgstr "未报告"
 
 msgid "Nothing to sync, there are no hosts with subscription for this organization."
-msgstr ""
+msgstr "没有同步，此机构没有带有订阅的主机。"
 
 msgid "Notice"
-msgstr ""
+msgstr "注意事項"
 
 msgid "Obfuscate IPs"
-msgstr ""
+msgstr "模糊 IP"
 
 msgid "Obfuscate host ipv4 addresses"
-msgstr ""
+msgstr "模糊的主机 ipv4 地址"
 
 msgid "Obfuscate host names"
-msgstr ""
+msgstr "模糊主机名"
 
 msgid "Obfuscate host names sent to the Red Hat cloud"
-msgstr ""
+msgstr "发送到红帽云的模糊主机名"
 
 msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud"
-msgstr ""
+msgstr "发送到红帽云的模糊 ipv4 地址"
 
 msgid "Oops! Couldn't find organization that matches your query"
-msgstr ""
+msgstr "未找到与您的查询匹配的机构"
 
 msgid "Organization status"
-msgstr ""
+msgstr "机构标签"
 
 msgid "Pagination"
-msgstr ""
+msgstr "分页"
 
 msgid "Playbook"
-msgstr ""
+msgstr "运行 playbook"
 
 msgid "RH Cloud"
-msgstr ""
+msgstr "RH Cloud"
 
 msgid "RHC daemon id"
-msgstr ""
+msgstr "RHC 守护进程 ID"
 
 msgid "RHCloud"
-msgstr ""
+msgstr "RHCloud"
 
 msgid "Read more about it in RH cloud insights"
-msgstr ""
+msgstr "在 RH Cloud insights 中了解更多有关它的信息"
 
 msgid "Reboot Required"
-msgstr ""
+msgstr "需要重启"
 
 msgid "Recommendation"
-msgstr ""
+msgstr "建议"
 
 msgid "Recommendation sync has failed: "
-msgstr ""
+msgstr "建议同步失败： "
 
 msgid "Recommendation sync has started: "
-msgstr ""
+msgstr "建议同步已启动： "
 
 msgid "Recommendations"
-msgstr ""
+msgstr "建议"
 
 msgid "Recommendations selected: %s."
-msgstr ""
+msgstr "选择的建议：%s。"
 
 msgid "Recommendations synced successfully"
-msgstr ""
+msgstr "成功同步建议"
 
 msgid "Reconfigure Cloud Connector"
-msgstr ""
+msgstr "重新配置云连接器"
 
 msgid "Red Hat Cloud Inventory"
-msgstr ""
+msgstr "红帽云清单"
 
 msgid "Red Hat Insights"
-msgstr ""
+msgstr "Red Hat Insights"
 
 msgid "Red Hat Insights Data and Application Security"
-msgstr ""
+msgstr "Red Hat Insights 数据和应用程序安全"
 
 msgid "Red Hat Inventory"
-msgstr ""
+msgstr "Red Hat 清单"
 
 msgid "Remain"
-msgstr ""
+msgstr "保留"
 
 msgid "Remediate"
-msgstr ""
+msgstr "补救"
 
 msgid "Remediation summary"
-msgstr ""
+msgstr "补救概述"
 
 msgid "Reporting"
-msgstr ""
+msgstr "报告"
 
 msgid "Resolution"
-msgstr ""
+msgstr "解决方案"
 
 msgid "Restart"
-msgstr ""
+msgstr "重新开始"
 
 msgid "Run RH Cloud playbook"
-msgstr ""
+msgstr "运行 RH Cloud playbook"
 
 msgid "Run playbook genrated by Red Hat remediations app"
-msgstr ""
+msgstr "运行由红帽补救应用生成的 playbook"
 
 msgid "Run remediation playbook generated by Insights"
-msgstr ""
+msgstr "运行 Insights 生成的补救 playbook"
 
 msgid "Satellite server has %{hits_count} recommendations by Red Hat"
-msgstr ""
+msgstr "Satellite 服务器有 %{hits_count} 个红帽提供的建议"
 
 msgid "Scoped search string for host removal"
 msgstr ""
 
 msgid "Select recommendations from all pages"
-msgstr ""
+msgstr "在所有页面中选择建议"
 
 msgid "Set the current organization context for the request"
-msgstr ""
+msgstr "设置请求的当前机构上下文"
 
 msgid "Settings"
-msgstr ""
+msgstr "设置"
 
 msgid "Should import include parameter tags from Foreman?"
-msgstr ""
+msgstr "应从 Foreman 导入包含参数标签？"
 
 msgid "Show Advanced Settings"
-msgstr ""
+msgstr "显示高级设置"
 
 msgid "Start inventory synchronization"
-msgstr ""
+msgstr "启动清单同步"
 
 msgid "Start report generation"
-msgstr ""
+msgstr "开始报告生成"
 
 msgid "Successfully synced hosts: "
-msgstr ""
+msgstr "成功同步的主机："
 
 msgid "Successfully uploaded to your RH cloud inventory"
-msgstr ""
+msgstr "成功上传到您的 RH 云清单"
 
 msgid "Sync automatically"
-msgstr ""
+msgstr "自动同步"
 
 msgid "Sync recommendations"
-msgstr ""
+msgstr "同步建议"
 
 msgid "Synchronize recommendations Automatically"
-msgstr ""
+msgstr "自动同步建议"
 
 msgid "The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Satellite instance."
 msgstr ""
@@ -436,16 +446,16 @@ msgid "The Satellite inventory upload plugin automatically uploads Satellite hos
 msgstr ""
 
 msgid "The report file %{filename} doesn't exist"
-msgstr ""
+msgstr "报告文件 %{filename} 不存在"
 
 msgid "The server returned the following error: %s"
-msgstr ""
+msgstr "服务器返回以下错误：%s"
 
 msgid "The task failed with the following error:"
-msgstr ""
+msgstr "任务失败，错误为:"
 
 msgid "This action will also enable automatic reports upload"
-msgstr ""
+msgstr "此操作还会启用自动报告上传"
 
 msgid "To enable this reporting for all Satellite organizations, set {uploadButtonName} to on. The data will be reported automatically once per day."
 msgstr ""
@@ -454,40 +464,40 @@ msgid "To manually upload the data for a specific organization, select an organi
 msgstr ""
 
 msgid "Total risk"
-msgstr ""
+msgstr "总风险"
 
 msgid "Total risks"
-msgstr ""
+msgstr "总风险"
 
 msgid "Uploading"
-msgstr ""
+msgstr "上载中"
 
 msgid "Value %{value} is not a valid UUID"
-msgstr ""
+msgstr "值 %{value} 不是一个有效的 UUID"
 
 msgid "View all recommendations"
-msgstr ""
+msgstr "查看所有建议"
 
 msgid "View in Red Hat Insights"
-msgstr ""
+msgstr "禁用 Red Hat Insights"
 
 msgid "Wait and %s"
-msgstr ""
+msgstr "等待和 %s"
 
 msgid "hosts page"
-msgstr ""
+msgstr "主机页"
 
 msgid "items"
-msgstr ""
+msgstr "项"
 
 msgid "page"
-msgstr ""
+msgstr "page"
 
 msgid "per page"
-msgstr ""
+msgstr "每页"
 
 msgid "view the job in progress"
-msgstr ""
+msgstr "查看正在进行中的任务"
 
 msgid "view the task page for more details"
-msgstr ""
+msgstr "查看任务页面以了解更多详细信息"

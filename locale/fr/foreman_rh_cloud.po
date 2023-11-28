@@ -1,0 +1,505 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the foreman_rh_cloud package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# Translators:
+# Baptiste Agasse <baptiste.agasse@gmail.com>, 2023
+# Romain Vrignaud <rvrignaud@gmail.com>, 2023
+# 21966816214bc546c1fc8a185e75ca1c, 2023
+# Claer <transiblu@claer.hammock.fr>, 2023
+# Amit Upadhye <aupadhye@redhat.com>, 2023
+# Bryan Kearney <bryan.kearney@gmail.com>, 2023
+# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2023
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: foreman_rh_cloud 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-01-20 13:26+0000\n"
+"Last-Translator: Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarde"
+"n.nl>, 2023\n"
+"Language-Team: French (https://app.transifex.com/foreman/teams/114/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 100000"
+"0 == 0 ? 1 : 2;\n"
+
+msgid " Sync inventory status"
+msgstr "Sync statuts inventaires"
+
+msgid "%s organizations"
+msgstr "%s organisations"
+
+msgid "About subscription watch"
+msgstr "Informations sur la vérification des abonnements"
+
+msgid "Actions history"
+msgstr "Historique des actions"
+
+msgid "Advanced Inventory Settings"
+msgstr "Paramètres d'inventaire avancés"
+
+msgid "All recommendations are now selected."
+msgstr "Toutes les recommandations sont maintenant sélectionnées."
+
+msgid "Any Organization"
+msgstr "Toute Organisation"
+
+msgid "Apply Insights recommendations"
+msgstr "Appliquer les recommandations d'Insights"
+
+msgid "Automatic inventory upload"
+msgstr "Chargement automatique de l'inventaire"
+
+msgid "Automatic mismatch deletion"
+msgstr ""
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Clear"
+msgstr "Effacer"
+
+msgid "Clear Selection"
+msgstr "Annuler la sélection"
+
+msgid "Cloud Connector has been configured however obfuscating host names setting is enabled, it's recommended to disable it"
+msgstr "Le connecteur cloud a été configuré mais le paramètre Obfusquer les noms d'hôtes est activé, il est recommandé de le désactiver."
+
+msgid "Cloud Connector has been configured however the inventory auto-upload is disabled, it's recommended to enable it"
+msgstr "Le connecteur cloud a été configuré mais le chargement automatique de l'inventaire est désactivé, il est recommandé de l'activer."
+
+msgid "Cloud Connector is in progress"
+msgstr "Connecteur cloud en cours"
+
+msgid "Cloud connector job link"
+msgstr "Lien au job de connecteur cloud"
+
+msgid "Cloud connector setup has failed: "
+msgstr "L'installation du connecteur cloud a échoué : "
+
+msgid "Cloud connector setup has started: "
+msgstr "L'installation du connecteur cloud a commencé : "
+
+msgid "Cloud connector setup is in progress now: "
+msgstr "L'installation du connecteur cloud est en cours : "
+
+msgid "Completed"
+msgstr "Terminé"
+
+msgid "Configure"
+msgstr "Configurer"
+
+msgid "Configure Cloud Connector"
+msgstr "Configurer le connecteur cloud"
+
+msgid "Configure Cloud Connector on given hosts"
+msgstr "Configurer Cloud Connector sur des hôtes donnés"
+
+msgid "Connectivity test"
+msgstr "Test de connectivité"
+
+msgid "Critical"
+msgstr "Critique"
+
+msgid "Current page"
+msgstr "Page actuelle"
+
+msgid "Disconnected hosts: "
+msgstr "Hôtes déconnectés : "
+
+msgid "Displays manifest statuses per accessible organizations."
+msgstr "Affiche les statuts des manifestes par organisation accessible."
+
+msgid "Documentation"
+msgstr "Documentation"
+
+msgid "Download Report"
+msgstr "Télécharger le rapport"
+
+msgid "Download latest report"
+msgstr "Télécharger le dernier rapport"
+
+msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
+msgstr ""
+
+msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud"
+msgstr "Activer la synchronisation automatique des recommandations Insights à partir de Red Hat Cloud"
+
+msgid "Enable automatic upload of your host inventory to the Red Hat cloud"
+msgstr "Activer le téléchargement automatique de votre inventaire d'hôtes dans Red Hat Cloud"
+
+msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
+msgstr "Activer le téléchargement automatique de l'inventaire de vos hôtes dans Red Hat Cloud"
+
+msgid "Enable cloud connector"
+msgstr "Activer le connecteur cloud"
+
+msgid "Enable inventory upload"
+msgstr "Activer le téléchargement de l'inventaire"
+
+msgid "Encountered an error while trying to access the server:"
+msgstr "Une erreur s'est produite lors de l'accès au serveur :"
+
+msgid "Exclude installed Packages"
+msgstr "Exclure les paquets installés"
+
+msgid "Exclude installed packages from being uploaded to the Red Hat cloud"
+msgstr "Exclure les paquets installés du téléchargement dans Red Hat Cloud"
+
+msgid "Exclude packages"
+msgstr "Exclure les paquets"
+
+msgid "Exclude packages from being uploaded to the Red Hat cloud"
+msgstr "Exclure les paquets du téléchargement vers Red Hat Cloud"
+
+msgid "Exit Code: %s"
+msgstr "Code de sortie : %s"
+
+msgid "Fetching data about your accounts"
+msgstr "Récupérer des données sur vos comptes"
+
+msgid "Filter.."
+msgstr "Filtrer.."
+
+msgid "Fix host"
+msgstr "Fixer l'hôte"
+
+msgid "For more info, please visit the"
+msgstr "Pour plus d'informations, veuillez consulter"
+
+msgid "For more information about Insights and Cloud Connector, see:"
+msgstr ""
+
+msgid "For more information about the Subscriptions service, see:"
+msgstr ""
+
+msgid "Foreman plugin that process & upload data to Red Hat Cloud"
+msgstr "Plugin Foreman qui traite et télécharge les données vers Red Hat Cloud"
+
+msgid "Full Screen"
+msgstr "Plein écran"
+
+msgid "Generate the report, but do not upload"
+msgstr ""
+
+msgid "Generating"
+msgstr "En cours de génération"
+
+msgid "Go to Satellite Insights page"
+msgstr "Aller à la page Satellite Insights"
+
+msgid "Go to first page"
+msgstr "Aller à la première page"
+
+msgid "Go to last page"
+msgstr "Aller à la dernière page"
+
+msgid "Go to next page"
+msgstr "Aller à la page suivante"
+
+msgid "Go to previous page"
+msgstr "Aller à la page précédente"
+
+msgid "Grab hosts that are missing in RH Cloud"
+msgstr ""
+
+msgid "Host Insights recommendations"
+msgstr "Recommandations de Host Insights"
+
+msgid "Host was not uploaded to your RH cloud inventory"
+msgstr "L'hôte n'a pas été téléchargé dans votre inventaire RH Cloud."
+
+msgid "Hostname"
+msgstr "Nom d'hôte"
+
+msgid "Hosts with subscription in organization: "
+msgstr "Hôtes avec abonnement dans l'organisation : "
+
+msgid "ID of the RHC(Yggdrasil) daemon"
+msgstr "ID du démon RHC(Yggdrasil)"
+
+msgid "Important"
+msgstr "Important"
+
+msgid "Include parameters in insights-client reports"
+msgstr "Inclure des paramètres dans les rapports insights-clients"
+
+msgid "Insights"
+msgstr "Insights"
+
+msgid "Insights synchronization process is used to provide Insights recommendations output for hosts managed here."
+msgstr "Le processus de synchronisation Insights est utilisé pour fournir des recommandations Insights pour les hôtes gérés ici."
+
+msgid "Inventory"
+msgstr "Inventaire"
+
+msgid "Inventory Auto Upload"
+msgstr "Chargement automatique des iinventaires"
+
+msgid "Inventory Upload"
+msgstr "Téléchargement de l'inventaire"
+
+msgid "Inventory sync has failed: "
+msgstr "La synchronisation de l'inventaire a échoué : "
+
+msgid "Inventory sync has started:"
+msgstr "La synchronisation de l'inventaire a commencé :"
+
+msgid "Items per page"
+msgstr "Articles par page"
+
+msgid "Knowledgebase article"
+msgstr "Article de base de connaissances"
+
+msgid "Loading"
+msgstr "Chargement"
+
+msgid "Loading..."
+msgstr "Chargement..."
+
+msgid "Low"
+msgstr "Faible"
+
+msgid "Manual"
+msgstr "Manuelle"
+
+msgid "Moderate"
+msgstr "Modéré"
+
+msgid "More details can be found in"
+msgstr "Pour plus de détails, voir"
+
+msgid "Next run: "
+msgstr "Exécution suivante :"
+
+msgid "No"
+msgstr "Non"
+
+msgid "No recommendations were found for this host!"
+msgstr "Aucune recommandation n'a été trouvée pour cet hôte !"
+
+msgid "No results found"
+msgstr "Aucun résultat"
+
+msgid "No task was found"
+msgstr "Aucune tâche n'a été trouvée"
+
+msgid "Not reporting"
+msgstr "Non rapporté"
+
+msgid "Nothing to sync, there are no hosts with subscription for this organization."
+msgstr "Rien à synchroniser, il n'y a pas d'hôtes avec abonnement pour cette organisation."
+
+msgid "Notice"
+msgstr "Note"
+
+msgid "Obfuscate IPs"
+msgstr "Obfusquer les adresses IP"
+
+msgid "Obfuscate host ipv4 addresses"
+msgstr "Obfusquer les adresses ipv4 des hôtes"
+
+msgid "Obfuscate host names"
+msgstr "Obfusquer les noms d'hôtes"
+
+msgid "Obfuscate host names sent to the Red Hat cloud"
+msgstr "Obfusquer les noms d'hôtes envoyés à Red Hat Cloud"
+
+msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud"
+msgstr "Obfusquer les adresses ipv4 envoyées à Red Hat Cloud"
+
+msgid "Oops! Couldn't find organization that matches your query"
+msgstr "Oups ! Nous n'avons pas trouvé d'organisation correspondant à votre demande."
+
+msgid "Organization status"
+msgstr "Statut de l'organisation"
+
+msgid "Pagination"
+msgstr "Pagination"
+
+msgid "Playbook"
+msgstr "Playbook"
+
+msgid "RH Cloud"
+msgstr "RH Cloud"
+
+msgid "RHC daemon id"
+msgstr "Id du démon RHC"
+
+msgid "RHCloud"
+msgstr "RHCloud"
+
+msgid "Read more about it in RH cloud insights"
+msgstr "Plus d'informations dans RH cloud insights"
+
+msgid "Reboot Required"
+msgstr "Redémarrage nécessaire"
+
+msgid "Recommendation"
+msgstr "Recommandation"
+
+msgid "Recommendation sync has failed: "
+msgstr "La sync des recommandations a échoué : "
+
+msgid "Recommendation sync has started: "
+msgstr "La sync des recommandations a commencé : "
+
+msgid "Recommendations"
+msgstr "Recommandations"
+
+msgid "Recommendations selected: %s."
+msgstr "Recommandations sélectionnées : %s."
+
+msgid "Recommendations synced successfully"
+msgstr "Les recommandations ont été synchronisées"
+
+msgid "Reconfigure Cloud Connector"
+msgstr "Reconfigurer le connecteur cloud"
+
+msgid "Red Hat Cloud Inventory"
+msgstr "Inventaire Red Hat Cloud"
+
+msgid "Red Hat Insights"
+msgstr "Red Hat Insights"
+
+msgid "Red Hat Insights Data and Application Security"
+msgstr "Red Hat Insights - Sécurité des données et des applications"
+
+msgid "Red Hat Inventory"
+msgstr "Inventaire Red Hat"
+
+msgid "Remain"
+msgstr "Restant"
+
+msgid "Remediate"
+msgstr "Remédier"
+
+msgid "Remediation summary"
+msgstr "Résumé de remédiation"
+
+msgid "Reporting"
+msgstr "Rapports"
+
+msgid "Resolution"
+msgstr "Résolution"
+
+msgid "Restart"
+msgstr "Redémarrer"
+
+msgid "Run RH Cloud playbook"
+msgstr "Exécuter le playbook RH Cloud"
+
+msgid "Run playbook genrated by Red Hat remediations app"
+msgstr "Exécuter le playbook généré par l'app de remédiations de Red Hat"
+
+msgid "Run remediation playbook generated by Insights"
+msgstr "Exécuter le playbook de remédiation généré par Insights"
+
+msgid "Satellite server has %{hits_count} recommendations by Red Hat"
+msgstr "Le serveur satellite a %{hits_count} recommandations de Red Hat"
+
+msgid "Scoped search string for host removal"
+msgstr ""
+
+msgid "Select recommendations from all pages"
+msgstr "Sélectionner des recommandations sur toutes les pages"
+
+msgid "Set the current organization context for the request"
+msgstr "Définir le contexte organisationnel actuel de la demande"
+
+msgid "Settings"
+msgstr "Paramètres de configuration"
+
+msgid "Should import include parameter tags from Foreman?"
+msgstr "L'importation doit-elle inclure les balises de paramètres de Foreman ?"
+
+msgid "Show Advanced Settings"
+msgstr "Afficher les paramètres avancés"
+
+msgid "Start inventory synchronization"
+msgstr "Démarrer la synchronisation de l'inventaire"
+
+msgid "Start report generation"
+msgstr "Lancer la génération du rapport"
+
+msgid "Successfully synced hosts: "
+msgstr "Synchronisation des hôtes réussie : "
+
+msgid "Successfully uploaded to your RH cloud inventory"
+msgstr "Téléchargement réussi dans votre inventaire RH cloud"
+
+msgid "Sync automatically"
+msgstr "Sync automatique"
+
+msgid "Sync recommendations"
+msgstr "Recommandations de sync"
+
+msgid "Synchronize recommendations Automatically"
+msgstr "Synchroniser automatiquement les recommandations"
+
+msgid "The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Satellite instance."
+msgstr ""
+
+msgid "The Satellite inventory upload plugin automatically uploads Satellite host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required."
+msgstr ""
+
+msgid "The report file %{filename} doesn't exist"
+msgstr "Le fichier de rapport %{filename} n'existe pas"
+
+msgid "The server returned the following error: %s"
+msgstr "Le serveur a renvoyé l'erreur suivante : %s"
+
+msgid "The task failed with the following error:"
+msgstr "La tâche a échoué avec l'erreur suivante :"
+
+msgid "This action will also enable automatic reports upload"
+msgstr "Cette action permettra également le téléchargement automatique des rapports"
+
+msgid "To enable this reporting for all Satellite organizations, set {uploadButtonName} to on. The data will be reported automatically once per day."
+msgstr ""
+
+msgid "To manually upload the data for a specific organization, select an organization and click {restartButtonName}."
+msgstr ""
+
+msgid "Total risk"
+msgstr "Risque total"
+
+msgid "Total risks"
+msgstr "Risques totaux"
+
+msgid "Uploading"
+msgstr "Téléchargement"
+
+msgid "Value %{value} is not a valid UUID"
+msgstr "La valeur %{value} ne correspond pas à un UUID valide"
+
+msgid "View all recommendations"
+msgstr "Voir toutes les recommandations"
+
+msgid "View in Red Hat Insights"
+msgstr "Afficher Red Hat Insights."
+
+msgid "Wait and %s"
+msgstr "Attendez et %s"
+
+msgid "hosts page"
+msgstr "page hôtes"
+
+msgid "items"
+msgstr "articles"
+
+msgid "page"
+msgstr "page"
+
+msgid "per page"
+msgstr "par page"
+
+msgid "view the job in progress"
+msgstr "visualiser job en cours"
+
+msgid "view the task page for more details"
+msgstr "consulter la page de la tâche pour plus de détails"
