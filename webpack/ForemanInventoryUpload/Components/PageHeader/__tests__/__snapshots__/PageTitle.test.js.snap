@@ -24,6 +24,11 @@ exports[`PageTitle rendering render without Props 1`] = `
       dropdownItems={
         Array [
           <DropdownItem
+            onClick={[Function]}
+          >
+            Settings
+          </DropdownItem>,
+          <DropdownItem
             href="/foreman_tasks/tasks?search=action++%3D++ForemanInventoryUpload%3A%3AAsync%3A%3AGenerateReportJob+or+action++%3D++ForemanInventoryUpload%3A%3AAsync%3A%3AGenerateAllReportsJob&page=1"
             rel="noopener noreferrer"
             target="_blank"
@@ -42,6 +47,11 @@ exports[`PageTitle rendering render without Props 1`] = `
           >
             Connectivity test
           </DropdownItem>,
+          <DropdownItem
+            onClick={[Function]}
+          >
+            About
+          </DropdownItem>,
         ]
       }
       isOpen={false}
@@ -57,6 +67,16 @@ exports[`PageTitle rendering render without Props 1`] = `
     <CloudPingModal
       isOpen={false}
       title="Connectivity test"
+      toggle={[Function]}
+    />
+    <AboutModal
+      isOpen={false}
+      title="About"
+      toggle={[Function]}
+    />
+    <SettingsModal
+      isOpen={false}
+      title="Settings"
       toggle={[Function]}
     />
   </GridItem>

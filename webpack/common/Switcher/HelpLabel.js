@@ -19,7 +19,7 @@ export const HelpLabel = ({ text, id, className }) => {
 
 HelpLabel.propTypes = {
   id: PropTypes.string.isRequired,
-  text: PropTypes.string,
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   className: PropTypes.string,
 };
 HelpLabel.defaultProps = {

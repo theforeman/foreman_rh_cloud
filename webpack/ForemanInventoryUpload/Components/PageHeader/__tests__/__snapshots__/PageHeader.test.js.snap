@@ -6,12 +6,6 @@ exports[`PageHeader rendering render without Props 1`] = `
 >
   <ConnectedSettingsWarning />
   <PageTitle />
-  <div
-    className="inventory-upload-header-description"
-  >
-    <ConnectedInventorySettings />
-    <PageDescription />
-  </div>
   <Row
     bsClass="row"
     componentClass="div"
