@@ -46,6 +46,9 @@ class TagsGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'generates tags for a single host' do
+    instance_id = Foreman.uuid
+    Foreman.stubs(:instance_id).returns(instance_id)
+
     generator = create_generator
 
     actual = generator.generate.group_by { |key, value| key }
