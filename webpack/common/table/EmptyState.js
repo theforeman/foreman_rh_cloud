@@ -38,7 +38,7 @@ const TableEmptyState = ({ status, error, rowsLength }) => {
     case STATUS.RESOLVED:
       if (rowsLength > 0) return null;
       return (
-        <EmptyState variant={EmptyStateVariant.small}>
+        <EmptyState variant={EmptyStateVariant.large}>
           <EmptyStateIcon variant="container" component={CheckIcon} />
           <Title headingLevel="h2" size="lg">
             {__('There are no recommendations for your hosts')}
