@@ -14,7 +14,7 @@ exports[`InsightsTable rendering render with Props 1`] = `
     aria-label="Recommendations Table"
     borders={true}
     canCollapseAll={false}
-    canSelectAll={true}
+    canSelectAll={false}
     canSortFavorites={true}
     cells={
       Array [
@@ -101,6 +101,7 @@ exports[`InsightsTable rendering render with Props 1`] = `
   </Table>
   <TableEmptyState
     error={null}
+    rowsLength={0}
     status="RESOLVED"
   />
   <Pagination

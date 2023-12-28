@@ -7,12 +7,12 @@ import {
   EmptyStateVariant,
   Title,
 } from '@patternfly/react-core';
-import { ExclamationCircleIcon } from '@patternfly/react-icons';
+import { ExclamationCircleIcon, CheckIcon } from '@patternfly/react-icons';
 
 import { STATUS } from 'foremanReact/constants';
 import { translate as __, sprintf } from 'foremanReact/common/I18n';
 
-const TableEmptyState = ({ status, error }) => {
+const TableEmptyState = ({ status, error, rowsLength }) => {
   switch (status) {
     case STATUS.PENDING:
       return (
@@ -35,6 +35,16 @@ const TableEmptyState = ({ status, error }) => {
           </Title>
         </EmptyState>
       );
+    case STATUS.RESOLVED:
+      if (rowsLength > 0) return null;
+      return (
+        <EmptyState variant={EmptyStateVariant.large}>
+          <EmptyStateIcon variant="container" component={CheckIcon} />
+          <Title headingLevel="h2" size="lg">
+            {__('There are no recommendations for your hosts')}
+          </Title>
+        </EmptyState>
+      );
     default:
       return null;
   }
@@ -43,11 +53,13 @@ const TableEmptyState = ({ status, error }) => {
 TableEmptyState.propTypes = {
   status: PropTypes.string,
   error: PropTypes.string,
+  rowsLength: PropTypes.number,
 };
 
 TableEmptyState.defaultProps = {
   status: '',
   error: '',
+  rowsLength: 0,
 };
 
 export default TableEmptyState;

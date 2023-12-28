@@ -66,7 +66,7 @@ const InsightsTable = ({
         onSelect={(_event, isSelected, rowId) =>
           onTableSelect(isSelected, rowId, rows, selectedIds)
         }
-        canSelectAll
+        canSelectAll={rows.length > 0}
         sortBy={{
           index: getSortColumnIndex(columns, sortBy),
           direction: sortOrder,
@@ -81,7 +81,7 @@ const InsightsTable = ({
         <TableHeader />
         <TableBody />
       </Table>
-      <TableEmptyState status={status} error={error} />
+      <TableEmptyState status={status} error={error} rowsLength={rows.length} />
       <Pagination variant="bottom" />
     </React.Fragment>
   );
