@@ -10,8 +10,10 @@ exports[`InsightsTable rendering render with Props 1`] = `
     showSelectAllAlert={false}
   />
   <Table
+    actionsMenuAppendTo="inline"
     aria-label="Recommendations Table"
     borders={true}
+    canCollapseAll={false}
     canSelectAll={true}
     canSortFavorites={true}
     cells={
@@ -69,6 +71,7 @@ exports[`InsightsTable rendering render with Props 1`] = `
       ]
     }
     className="rh-cloud-recommendations-table"
+    collapseAllAriaLabel=""
     contentId="expanded-content"
     dropdownDirection="down"
     dropdownPosition="right"
