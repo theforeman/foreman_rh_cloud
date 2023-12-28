@@ -39,12 +39,9 @@ const TableEmptyState = ({ status, error, rowsLength }) => {
       if (rowsLength > 0) return null;
       return (
         <EmptyState variant={EmptyStateVariant.small}>
-          <EmptyStateIcon
-            variant="container"
-            component={CheckIcon}
-          />
+          <EmptyStateIcon variant="container" component={CheckIcon} />
           <Title headingLevel="h2" size="lg">
-            {__('There are no remmediations for your hosts')}
+            {__('There are no recommendations for your hosts')}
           </Title>
         </EmptyState>
       );
