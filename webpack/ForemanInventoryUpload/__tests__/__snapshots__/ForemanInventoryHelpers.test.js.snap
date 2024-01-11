@@ -2,4 +2,4 @@
 
 exports[`ForemanInventoryUpload helpers should return inventory Url 1`] = `"/foreman_inventory_upload/test_path"`;
 
-exports[`ForemanInventoryUpload helpers should return inventory docs url 1`] = `"/links/manual/?root_url=https%3A%2F%2Faccess.redhat.com%2Fproducts%2Fsubscription-central"`;
+exports[`ForemanInventoryUpload helpers should return inventory docs url 1`] = `"/links/manual/?root_url=https%3A%2F%2Faccess.redhat.com%2Fdocumentation%2Fen-us%2Fred_hat_insights%2F2023%2Fhtml%2Fred_hat_insights_remediations_guide%2Fhost-communication-with-insights_red-hat-insights-remediation-guide%23uploading-satellite-host-inventory-to-insights_configuring-satellite-cloud-connector"`;
