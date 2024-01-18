@@ -2,63 +2,24 @@ name: Ruby tests
 on:
   push:
     branches: [foreman_3_9]
-    paths-ignore:
-    - '**/.github/**/*'
   pull_request:
     branches: [foreman_3_9]
-    paths-ignore:
-    - '**/.github/**/*'
 
-defaults:
-  run:
-    working-directory: /projects/foreman
+
+concurrency:
+  group: ${{ github.ref_name }}-${{ github.workflow }}
+  cancel-in-progress: true
 
 jobs:
-  test_ruby:
-    defaults:
-      run:
-        working-directory: /projects/foreman
-    env:
-      PGHOST: postgres
-      PGUSER: foreman
-      PGPASS: foreman
-      RAILS_ENV: test
-      host: postgres
-      WORKDIR: /projects/foreman
-      BUNDLE_PATH: vendor/bundle
-      GIT_COMMITTER_NAME: "gh_actions"
-      GIT_COMMITTER_EMAIL: "gh_actions@rh_cloud.foreman"
+  rubocop:
+    name: Rubocop
+    uses: theforeman/actions/.github/workflows/rubocop.yml@v0
 
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/theforeman/tfm_plugin_test:foreman_3_9
-
-    services:
-      postgres:
-        image: quay.io/jomitsch/postgres-with-evr
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        env:
-          POSTGRES_USER: foreman
-          POSTGRES_PASSWORD: foreman
-
-    steps:
-      - name: Checkout foreman_rh_cloud repo
-        uses: actions/checkout@v2
-        with:
-          path: ${{ github.workspace }}/projects/foreman_rh_cloud
-      - name: Fix git config
-        run: |
-          rm -rf /projects/foreman_rh_cloud/{app,test,lib}
-          cp -Rf $GITHUB_WORKSPACE/projects/foreman_rh_cloud /projects/
-          /usr/bin/entrypoint.sh pnpm config set store-dir /root/.local/share/pnpm/store/v3
-          cd /projects/foreman
-          /usr/bin/entrypoint.sh git config --global user.name $GIT_COMMITTER_NAME
-          /usr/bin/entrypoint.sh git config --global user.email $GIT_COMMITTER_EMAIL
-      - name: Run tests suite
-        run: |
-          cd /projects/foreman
-          /usr/bin/entrypoint.sh /usr/bin/run_tests.sh
+  test:
+    name: Ruby
+    needs: rubocop
+    uses: theforeman/actions/.github/workflows/foreman_plugin.yml@v0
+    with:
+      plugin: foreman_rh_cloud
+      postgresql_container: ghcr.io/theforeman/postgresql-evr
+      test_existing_database: false
