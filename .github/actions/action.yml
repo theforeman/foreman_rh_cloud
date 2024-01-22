@@ -1,5 +1,0 @@
-name: 'Build local dockerfile'
-description: 'Builds local dockerfile and runs the defailt action'
-runs:
-  using: 'docker'
-  image: '../images/Dockerfile'
