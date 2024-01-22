@@ -57,7 +57,7 @@ namespace :rh_cloud do |args|
         payload: payload.to_json
       )
       logger.debug(response)
-    rescue Exception => ex
+    rescue StandardError => ex
       logger.error(ex)
     end
   end
