@@ -8,4 +8,3 @@ blueprints = [
 ]
 
 blueprints.each { |blueprint| UINotifications::Seed.new(blueprint).configure }
-

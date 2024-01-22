@@ -4,10 +4,10 @@ namespace :rh_cloud_inventory do
   namespace :report do
     desc 'Generate inventory report and send it to Red Hat cloud'
     task generate_upload: [:environment, 'dynflow:client'] do
-      unless ENV['organization_id'].nil?
-        organizations = [ Organization.where(:id => ENV['organization_id']).first ]
-      else
+      if ENV['organization_id'].nil?
         organizations = Organization.unscoped.all
+      else
+        organizations = [Organization.where(:id => ENV['organization_id']).first]
       end
 
       User.as_anonymous_admin do
@@ -55,8 +55,8 @@ namespace :rh_cloud_inventory do
 
   desc "Synchronize Hosts inventory"
   task sync: [:environment, 'dynflow:client'] do
-    if ! ENV['organization_id'].nil?
-      organizations = [ Organization.where(:id => ENV['organization_id']).first ]
+    if !ENV['organization_id'].nil?
+      organizations = [Organization.where(:id => ENV['organization_id']).first]
     else
       organizations = Organization.all
     end

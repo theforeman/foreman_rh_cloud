@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     end
 
     scope '/r/insights' do
-      match '(/*path)(/)', :constraints => lambda { |req| !req.path.include?('view/api') }, to: 'machine_telemetries#forward_request', via: [:get, :post, :delete,:put, :patch]
+      match '(/*path)(/)', constraints: ->(req) { !req.path.include?('view/api') }, to: 'machine_telemetries#forward_request', via: [:get, :post, :delete, :put, :patch]
     end
   end
 

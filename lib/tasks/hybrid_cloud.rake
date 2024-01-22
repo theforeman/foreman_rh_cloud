@@ -7,7 +7,7 @@ namespace :rh_cloud do |args|
   task hybridcloud_register: [:environment] do
     include ::ForemanRhCloud::CertAuth
     include ::InsightsCloud::CandlepinCache
-    
+
     def logger
       @logger ||= Logger.new(STDOUT)
     end
@@ -21,7 +21,7 @@ namespace :rh_cloud do |args|
       logger.error('ERROR: org_id needs to be specified.')
       exit(1)
     end
-    
+
     @organization = Organization.find_by(id: ENV['org_id'].to_i) # saw this coming in as a string, so making sure it gets passed as an integer.
     @uid = cp_owner_id(@organization)
     @hostname = ForemanRhCloud.foreman_host_name
@@ -33,14 +33,14 @@ namespace :rh_cloud do |args|
 
     def headers
       {
-        Authorization: "Bearer #{@token}"
+        Authorization: "Bearer #{@token}",
       }
     end
 
     def payload
       {
         "uid": @uid,
-        "display_name": "#{@hostname}+#{@organization.label}"
+        "display_name": "#{@hostname}+#{@organization.label}",
       }
     end
 
