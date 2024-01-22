@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
   s.test_files = Dir['test/**/*']
   s.test_files -= Dir['test/**/*.orig']
 
+  s.required_ruby_version = '>= 2.7', '< 4'
+
   s.add_dependency 'foreman_ansible'
   s.add_dependency 'foreman-tasks'
   s.add_dependency 'katello'
