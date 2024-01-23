@@ -1,7 +1,5 @@
 import React from 'react';
 import { Grid } from 'patternfly-react';
-import InventorySettings from '../InventorySettings';
-import PageDescription from './components/PageDescription';
 import InventoryFilter from '../InventoryFilter';
 import ToolbarButtons from './components/ToolbarButtons';
 import SettingsWarning from './components/SettingsWarning';
@@ -12,10 +10,6 @@ const PageHeader = () => (
   <div className="inventory-upload-header">
     <SettingsWarning />
     <PageTitle />
-    <div className="inventory-upload-header-description">
-      <InventorySettings />
-      <PageDescription />
-    </div>
     <Grid.Row>
       <Grid.Col xs={4}>
         <InventoryFilter />

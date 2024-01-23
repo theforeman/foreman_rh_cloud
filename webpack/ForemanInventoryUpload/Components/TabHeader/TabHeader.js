@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Button, Icon } from 'patternfly-react';
+import { Grid, Icon } from 'patternfly-react';
+import { Button } from '@patternfly/react-core';
 import { noop } from 'foremanReact/common/helpers';
 import { sprintf, translate as __ } from 'foremanReact/common/I18n';
 import { isExitCodeLoading } from '../../ForemanInventoryHelpers';
@@ -15,19 +16,19 @@ const TabHeader = ({ exitCode, onRestart, onDownload, toggleFullScreen }) => (
       <div className="tab-action-buttons">
         {onRestart ? (
           <Button
-            bsStyle="primary"
+            variant="primary"
             onClick={onRestart}
-            disabled={isExitCodeLoading(exitCode)}
+            isDisabled={isExitCodeLoading(exitCode)}
           >
             {__('Restart')}
           </Button>
         ) : null}
         {onDownload ? (
-          <Button onClick={onDownload}>
+          <Button onClick={onDownload} variant="secondary">
             {__('Download Report')} <Icon name="download" />
           </Button>
         ) : null}
-        <Button onClick={toggleFullScreen}>
+        <Button onClick={toggleFullScreen} variant="secondary">
           {__('Full Screen')}
           <Icon name="arrows-alt" />
         </Button>

@@ -24,12 +24,8 @@ exports[`TabHeader rendering render without Props 1`] = `
       className="tab-action-buttons"
     >
       <Button
-        active={false}
-        block={false}
-        bsClass="btn"
-        bsStyle="default"
-        disabled={false}
         onClick={[Function]}
+        variant="secondary"
       >
         Full Screen
         <Icon

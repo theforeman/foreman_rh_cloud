@@ -4,9 +4,6 @@ exports[`InventorySettings rendering render without Props 1`] = `
 <div
   className="inventory-settings"
 >
-  <h3>
-    Settings
-  </h3>
   <AdvancedSetting
     key="autoUploadEnabled"
     setting="autoUploadEnabled"
