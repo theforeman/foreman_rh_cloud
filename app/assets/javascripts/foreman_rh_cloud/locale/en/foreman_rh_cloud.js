@@ -491,6 +491,9 @@
       "The server returned the following error: %s": [
         ""
       ],
+      "There are no recommendations for your hosts": [
+        ""
+      ],
       "Foreman plugin that process & upload data to Red Hat Cloud": [
         ""
       ]

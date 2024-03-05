@@ -449,6 +449,9 @@ msgstr "サーバーは以下のエラーを返しました: %s"
 msgid "The task failed with the following error:"
 msgstr "タスクは以下のエラーで失敗しました: "
 
+msgid "There are no recommendations for your hosts"
+msgstr ""
+
 msgid "This action will also enable automatic reports upload"
 msgstr "このアクションを実行すると、自動レポートのアップロードも有効になります。"
 

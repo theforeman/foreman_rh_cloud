@@ -444,6 +444,9 @@ msgstr ""
 msgid "The task failed with the following error:"
 msgstr ""
 
+msgid "There are no recommendations for your hosts"
+msgstr ""
+
 msgid "This action will also enable automatic reports upload"
 msgstr ""
 

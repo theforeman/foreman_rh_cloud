@@ -491,6 +491,9 @@
       "The server returned the following error: %s": [
         "Le serveur a renvoyé l'erreur suivante : %s"
       ],
+      "There are no recommendations for your hosts": [
+        ""
+      ],
       "Foreman plugin that process & upload data to Red Hat Cloud": [
         "Plugin Foreman qui traite et télécharge les données vers Red Hat Cloud"
       ]
