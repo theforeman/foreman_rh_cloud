@@ -456,6 +456,9 @@ msgstr "Le serveur a renvoyé l'erreur suivante : %s"
 msgid "The task failed with the following error:"
 msgstr "La tâche a échoué avec l'erreur suivante :"
 
+msgid "There are no recommendations for your hosts"
+msgstr ""
+
 msgid "This action will also enable automatic reports upload"
 msgstr "Cette action permettra également le téléchargement automatique des rapports"
 

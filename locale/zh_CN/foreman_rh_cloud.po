@@ -454,6 +454,9 @@ msgstr "服务器返回以下错误：%s"
 msgid "The task failed with the following error:"
 msgstr "任务失败，错误为:"
 
+msgid "There are no recommendations for your hosts"
+msgstr ""
+
 msgid "This action will also enable automatic reports upload"
 msgstr "此操作还会启用自动报告上传"
 

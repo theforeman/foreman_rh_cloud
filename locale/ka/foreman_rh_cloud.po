@@ -448,6 +448,9 @@ msgstr "სერვერმა შემდეგი შეცდომა დ
 msgid "The task failed with the following error:"
 msgstr "დავალება შემდეგი შეცდომით დასრულდა:"
 
+msgid "There are no recommendations for your hosts"
+msgstr ""
+
 msgid "This action will also enable automatic reports upload"
 msgstr "ეს ქმედება ავტომატურად ანგარიშების ატვირთვასაც ჩართავს"
 

@@ -491,6 +491,9 @@
       "The server returned the following error: %s": [
         "服务器返回以下错误：%s"
       ],
+      "There are no recommendations for your hosts": [
+        ""
+      ],
       "Foreman plugin that process & upload data to Red Hat Cloud": [
         "处理数据并将其上传到红帽云的 Foreman 插件"
       ]
