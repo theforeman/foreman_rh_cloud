@@ -23,7 +23,6 @@ jobs:
       matrix:
         foreman:
           - 3.9-stable
-          - develop
     uses: theforeman/actions/.github/workflows/foreman_plugin.yml@v0
     with:
       plugin: foreman_rh_cloud
