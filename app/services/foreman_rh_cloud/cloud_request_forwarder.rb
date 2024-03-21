@@ -38,7 +38,7 @@ module ForemanRhCloud
     def prepare_forward_payload(original_request, controller_name)
       forward_payload = original_request.request_parameters[controller_name]
 
-      forward_payload = original_request.raw_post.clone if original_request.post? && original_request.raw_post
+      forward_payload = original_request.raw_post.clone if (original_request.post? || original_request.patch?) && original_request.raw_post
       forward_payload = original_request.body.read if original_request.put?
 
       forward_payload = original_request.params.slice(:file, :metadata) if original_request.params[:file]
