@@ -20,7 +20,8 @@ module ForemanInventoryUpload
             total_hosts = ForemanInventoryUpload::Generators::Queries.for_org(organization.id, use_batches: false).count
 
             if total_hosts <= ForemanInventoryUpload.max_org_size
-              plan_generate_report(ForemanInventoryUpload.generated_reports_folder, organization)
+              disconnected = false
+              plan_generate_report(ForemanInventoryUpload.generated_reports_folder, organization, disconnected)
             else
               logger.info("Skipping automatic uploads for organization #{organization.name}, too many hosts (#{total_hosts}/#{ForemanInventoryUpload.max_org_size})")
             end
