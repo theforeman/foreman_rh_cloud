@@ -29,3 +29,5 @@ jobs:
       postgresql_container: ghcr.io/theforeman/postgresql-evr
       test_existing_database: false
       foreman_version: ${{ matrix.foreman }}
+      environment_variables: |
+        FOREMAN_VERSION=${{ matrix.foreman }}
