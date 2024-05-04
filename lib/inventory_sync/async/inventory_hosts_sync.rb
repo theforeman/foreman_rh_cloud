@@ -68,7 +68,7 @@ module InventorySync
 
       def to_ip_address_string(ip_addresses)
         string_size = 0
-        ip_addresses.take_while { |address| (string_size += address.length) <= MAX_IP_STRING_SIZE }
+        ip_addresses&.take_while { |address| (string_size += address.length) <= MAX_IP_STRING_SIZE }
       end
 
       def plan_self_host_sync
