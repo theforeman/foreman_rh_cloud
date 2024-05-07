@@ -1,9 +1,9 @@
 name: Ruby tests
 on:
   push:
-    branches: [foreman_3_9]
+    branches: [v10]
   pull_request:
-    branches: [foreman_3_9]
+    branches: [v10]
 
 
 concurrency:
@@ -22,7 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         foreman:
-          - 3.9-stable
+          - develop
     uses: theforeman/actions/.github/workflows/foreman_plugin.yml@v0
     with:
       plugin: foreman_rh_cloud
