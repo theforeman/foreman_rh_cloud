@@ -65,16 +65,15 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
   end
 
   test 'should forward patch payload' do
-    params = { 'pumpkin' => 'pie' }
+    post_data = 'Random PATCH data'
     req = ActionDispatch::Request.new(
       'REQUEST_URI' => '/foo/bar?baz=awesome',
       'REQUEST_METHOD' => 'PATCH',
       'rack.input' => ::Puma::NullIO.new,
-      'RAW_POST_DATA' => 'Random PATCH data',
-      "action_dispatch.request.path_parameters" => { :format => "json" },
-      "action_dispatch.request.request_parameters" => { 'vegetables' => params }
+      'RAW_POST_DATA' => post_data,
+      "action_dispatch.request.path_parameters" => { :format => "json" }
     )
-    assert_equal params.to_json, @forwarder.prepare_forward_payload(req, 'vegetables')
+    assert_equal post_data, @forwarder.prepare_forward_payload(req, 'Random PATCH data')
   end
 
   test 'should forward file with metadata' do
