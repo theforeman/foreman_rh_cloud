@@ -14,12 +14,12 @@ module RhCloudHost
 
     has_one :insights_client_report_status_object, :class_name => '::InsightsClientReportStatus', :foreign_key => 'host_id'
     scoped_search :relation => :insights_client_report_status_object, :on => :status, :rename => :insights_client_report_status,
-                  :complete_value => { :reporting => ::InsightsClientReportStatus::REPORTING,
-                                       :no_report => ::InsightsClientReportStatus::NO_REPORT }
+      :complete_value => { :reporting => ::InsightsClientReportStatus::REPORTING,
+                           :no_report => ::InsightsClientReportStatus::NO_REPORT }
 
     has_one :inventory_sync_status_object, :class_name => '::InventorySync::InventoryStatus', :foreign_key => 'host_id'
     scoped_search :relation => :inventory_sync_status_object, :on => :status, :rename => :insights_inventory_sync_status,
-                  :complete_value => { :disconnect => ::InventorySync::InventoryStatus::DISCONNECT,
-                                       :sync => ::InventorySync::InventoryStatus::SYNC }
+      :complete_value => { :disconnect => ::InventorySync::InventoryStatus::DISCONNECT,
+                           :sync => ::InventorySync::InventoryStatus::SYNC }
   end
 end

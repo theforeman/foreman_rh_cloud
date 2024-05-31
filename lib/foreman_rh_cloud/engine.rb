@@ -97,8 +97,8 @@ module ForemanRhCloud
                                                     generate a report, upload it to the cloud and download it locally'
 
         add_permissions_to_default_roles Role::ORG_ADMIN => plugin_permissions,
-                                         Role::MANAGER => plugin_permissions,
-                                         Role::SYSTEM_ADMIN => plugin_permissions
+          Role::MANAGER => plugin_permissions,
+          Role::SYSTEM_ADMIN => plugin_permissions
 
         # Adding a sub menu after hosts menu
         divider :top_menu, caption: N_('RH Cloud'), parent: :configure_menu
