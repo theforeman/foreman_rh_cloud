@@ -133,7 +133,7 @@ module InsightsCloud
           ]
         end.compact]
 
-        {task_state: {task_done_reported: task_done_state}, hosts_state: hosts_state}
+        { task_state: { task_done_reported: task_done_state }, hosts_state: hosts_state }
       end
 
       def task_status(host_task, host_name)

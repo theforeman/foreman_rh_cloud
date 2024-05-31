@@ -20,7 +20,7 @@ class TemplateRendererHelperTest < ActiveSupport::TestCase
     hit = FactoryBot.create(:insights_hit, rule: rule, host_id: @host1.id)
     remediation = FactoryBot.create(:insights_resolution, rule: rule)
 
-    pairs = [{hit_id: hit.id, remediation_id: remediation.id}].to_json
+    pairs = [{ hit_id: hit.id, remediation_id: remediation.id }].to_json
 
     actual_playbook = remediations_playbook(pairs)
 

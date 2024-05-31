@@ -83,26 +83,6 @@ Layout/RescueEnsureAlignment:
   Exclude:
     - 'lib/foreman_rh_cloud.rb'
 
-# Offense count: 33
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces.
-# SupportedStyles: space, no_space, compact
-# SupportedStylesForEmptyBraces: space, no_space
-Layout/SpaceInsideHashLiteralBraces:
-  Exclude:
-    - 'app/controllers/concerns/insights_cloud/client_authentication.rb'
-    - 'app/models/insights_facet.rb'
-    - 'app/models/insights_hit.rb'
-    - 'app/services/foreman_rh_cloud/hit_remediations_retriever.rb'
-    - 'config/routes.rb'
-    - 'lib/foreman_inventory_upload/generators/fact_helpers.rb'
-    - 'lib/insights_cloud/async/connector_playbook_execution_reporter_task.rb'
-    - 'lib/insights_cloud/async/insights_generate_notifications.rb'
-    - 'test/controllers/insights_cloud/api/machine_telemetries_controller_test.rb'
-    - 'test/controllers/inventory_upload/api/inventory_controller_test.rb'
-    - 'test/factories/inventory_upload_factories.rb'
-    - 'test/unit/services/foreman_rh_cloud/hit_remediations_retriever_test.rb'
-    - 'test/unit/services/foreman_rh_cloud/template_renderer_helper_test.rb'
 
 # Offense count: 2
 # Configuration parameters: IgnoredMethods.
