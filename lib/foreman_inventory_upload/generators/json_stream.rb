@@ -2,6 +2,7 @@ module ForemanInventoryUpload
   module Generators
     class JsonStream
       attr_reader :out
+
       def initialize(out)
         @out = out
       end

@@ -2,6 +2,7 @@ module InsightsCloud
   module Generators
     class PlaybookProgressGenerator
       attr_reader :correlation_id
+
       def initialize(correlation_id)
         @messages = []
         @correlation_id = correlation_id

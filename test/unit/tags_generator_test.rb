@@ -28,11 +28,13 @@ class TagsGeneratorTest < ActiveSupport::TestCase
         FactoryBot.create(
           :katello_content_view_environment,
           content_view: FactoryBot.create(:katello_content_view, organization: env.organization),
-          lifecycle_environment: env),
+          lifecycle_environment: env
+        ),
         FactoryBot.create(
           :katello_content_view_environment,
           content_view: FactoryBot.create(:katello_content_view, organization: env.organization),
-          lifecycle_environment: env2),
+          lifecycle_environment: env2
+        ),
       ]
     )
 

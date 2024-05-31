@@ -13,19 +13,19 @@ class InsightsClientReportStatus < HostStatus::Status
 
   def to_label(_options = {})
     case status
-      when REPORTING
-        N_('Reporting')
-      when NO_REPORT
-        N_('Not reporting')
+    when REPORTING
+      N_('Reporting')
+    when NO_REPORT
+      N_('Not reporting')
     end
   end
 
   def to_global(_options = {})
     case status
-      when REPORTING
-        ::HostStatus::Global::OK
-      when NO_REPORT
-        ::HostStatus::Global::ERROR
+    when REPORTING
+      ::HostStatus::Global::OK
+    when NO_REPORT
+      ::HostStatus::Global::ERROR
     end
   end
 
