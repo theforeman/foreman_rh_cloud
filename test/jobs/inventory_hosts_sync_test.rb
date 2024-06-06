@@ -44,11 +44,59 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
 
     inventory_json = <<-INVENTORY_JSON
     {
-      "total": 3,
-      "count": 3,
+      "total": 4,
+      "count": 4,
       "page": 1,
-      "per_page": 3,
+      "per_page": 4,
       "results": [
+        {
+          "insights_id": "72d29d75-dbbf-4121-9566-2f581ab77f39",
+          "rhel_machine_id": null,
+          "subscription_manager_id": "d29bde40-348e-437c-8acf-8fa98320fc1c",
+          "satellite_id": "bb72bf95-0a19-4090-8009-f0d8c68aca61",
+          "bios_uuid": "b48a7e5f-cb50-4029-a75e-366bf43db642",
+          "fqdn": "rhel81-demo.oss-lab.net",
+          "mac_addresses": [
+            "52:54:00:aa:12:12",
+            "00:00:00:00:00:00"
+          ],
+          "external_id": null,
+          "id": "59ab38db-c25b-4fc7-bfb2-c8eb01d865a4",
+          "account": "1460290",
+          "display_name": "insights-rh71.example.com",
+          "ansible_host": null,
+          "facts": [
+            {
+              "namespace": "satellite",
+              "facts": {
+                "virtual_host_name": "virt-who-nobody.home-1",
+                "satellite_instance_id": "fc4d0cb0-a0b0-421e-b096-b028319b8e47",
+                "is_simple_content_access": false,
+                "distribution_version": "7.3",
+                "satellite_version": "6.8.4",
+                "organization_id": 1,
+                "is_hostname_obfuscated": false,
+                "virtual_host_uuid": "a90e6294-4766-420a-8dc0-3ec5b96d60ec"
+              }
+            },
+            {
+              "namespace": "yupana",
+              "facts": {
+                "report_platform_id": "d37afa50-08ce-4efb-a0e5-759c2a016661",
+                "report_slice_id": "5bf791d7-5e30-4a3c-929a-11dd9fa6eb72",
+                "source": "Satellite",
+                "yupana_host_id": "e85958b6-58db-4cfd-aeb6-01ee81bc0f43",
+                "account": "1460290"
+              }
+            }
+          ],
+          "reporter": "puptoo",
+          "stale_timestamp": "2021-03-19T07:57:42.466399+00:00",
+          "stale_warning_timestamp": "2021-03-26T07:57:42.466399+00:00",
+          "culled_timestamp": "2021-04-02T07:57:42.466399+00:00",
+          "created": "2021-02-08T14:36:03.613880+00:00",
+          "updated": "2021-03-18T02:57:42.535250+00:00"
+        },
         {
           "insights_id": "72d29d75-dbbf-4121-9566-2f581ab77f36",
           "rhel_machine_id": null,
@@ -307,7 +355,7 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
 
     ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync, [org])
 
-    assert_equal 2, InsightsMissingHost.count
+    assert_equal 3, InsightsMissingHost.count
   end
 
   test 'Inventory should remove old missing host records' do
@@ -324,6 +372,6 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
 
     ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync, [org])
 
-    assert_equal 2, InsightsMissingHost.count
+    assert_equal 3, InsightsMissingHost.count
   end
 end
