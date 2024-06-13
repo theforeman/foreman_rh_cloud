@@ -75,7 +75,7 @@ module ForemanInventoryUpload
   end
 
   def self.inventory_export_url
-    tags = URI.encode("satellite/satellite_instance_id=#{Foreman.instance_id}")
+    tags = CGI.escape("satellite/satellite_instance_id=#{Foreman.instance_id}")
     inventory_base_url + "?tags=#{tags}"
   end
 
