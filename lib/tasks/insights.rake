@@ -15,9 +15,10 @@ namespace :rh_cloud_insights do
     end
 
     cleaner = ForemanRhCloud::InsightsStatusCleaner.new
-    deleted_count = cleaner.clean(hosts_search)
-
-    puts "Deleted #{deleted_count} insights statuses"
+    User.as_anonymous_admin do
+      deleted_count = cleaner.clean(hosts_search)
+      puts "Deleted #{deleted_count} insights statuses"
+    end
   end
 
   desc "Re-announce all organizations into Sources on RH cloud."
