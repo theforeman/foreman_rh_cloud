@@ -6,7 +6,7 @@ module ForemanInventoryUpload
       extend ActiveSupport::Concern
 
       CLOUD_AMAZON = 'aws'
-      CLOUD_GOOGLE = 'google'
+      CLOUD_GOOGLE = 'gcp'
       CLOUD_AZURE = 'azure'
       CLOUD_ALIBABA = 'alibaba'
 

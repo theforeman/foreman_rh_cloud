@@ -594,7 +594,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
-    assert_equal 'google', actual_profile['cloud_provider']
+    assert_equal 'gcp', actual_profile['cloud_provider']
   end
 
   test 'Identifies Azure cloud provider' do
