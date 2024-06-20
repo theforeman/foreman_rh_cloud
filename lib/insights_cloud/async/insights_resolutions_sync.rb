@@ -60,7 +60,13 @@ module InsightsCloud
 
       def write_resolutions(response)
         all_resolutions = response.map do |rule_id, rule_details|
-          rule_details['resolutions'].map { |resolution| to_resolution_hash(to_rule_id(rule_id), resolution) }
+          if rule_details
+            rule_details['resolutions'].map { |resolution| to_resolution_hash(to_rule_id(rule_id), resolution) }
+          else
+            logger.info("Rules response: #{rule_id} #{rule_details}")
+            logger.debug("Response: #{response}\n Failed id #{rule_id}")
+            []
+          end
         end.flatten
 
         InsightsResolution.create(all_resolutions)
