@@ -14,7 +14,7 @@ module InventoryUpload::Api
         .expects(:start_report_generation)
         .with(@test_org.id.to_s, @disconnected)
 
-      post :generate_report, params: { organization_id: @test_org.id, disconnected: @disconnected}
+      post :generate_report, params: { organization_id: @test_org.id, disconnected: @disconnected }
 
       assert_response :success
     end

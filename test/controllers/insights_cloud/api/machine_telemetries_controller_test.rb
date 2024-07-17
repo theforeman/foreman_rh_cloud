@@ -42,7 +42,7 @@ module InsightsCloud::Api
         end.returns(res)
         InsightsCloud::Api::MachineTelemetriesController.any_instance.expects(:cp_owner_id).returns('123')
 
-        post :forward_request, as: :json, params: { "path" => "static/v1/test", "machine_telemetry" => {"foo" => "bar"} }
+        post :forward_request, as: :json, params: { "path" => "static/v1/test", "machine_telemetry" => { "foo" => "bar" } }
         assert_equal @body, @response.body
       end
 
@@ -62,7 +62,7 @@ module InsightsCloud::Api
 
       test "should set etag header to response from cloud" do
         etag = '12345'
-        req = RestClient::Request.new(:method => 'GET', :url => 'http://test.theforeman.org', :headers => { "If-None-Match": etag})
+        req = RestClient::Request.new(:method => 'GET', :url => 'http://test.theforeman.org', :headers => { "If-None-Match": etag })
         net_http_resp = Net::HTTPResponse.new(1.0, 200, "OK")
         net_http_resp[Rack::ETAG] = etag
         res = RestClient::Response.create(@body, net_http_resp, req)
@@ -122,11 +122,13 @@ module InsightsCloud::Api
             FactoryBot.create(
               :katello_content_view_environment,
               content_view: FactoryBot.create(:katello_content_view, organization: @env.organization),
-              lifecycle_environment: @env),
+              lifecycle_environment: @env
+            ),
             FactoryBot.create(
               :katello_content_view_environment,
               content_view: FactoryBot.create(:katello_content_view, organization: @env.organization),
-              lifecycle_environment: @env2),
+              lifecycle_environment: @env2
+            ),
           ],
           organization: @env.organization
         )

@@ -17,7 +17,7 @@ module InsightsCloud
     end
 
     def subscribed_host_by_uuid(uuid)
-      @host = Host.unscoped.joins(:subscription_facet).where(:katello_subscription_facets => {:uuid => uuid }).first
+      @host = Host.unscoped.joins(:subscription_facet).where(:katello_subscription_facets => { :uuid => uuid }).first
     end
   end
 end

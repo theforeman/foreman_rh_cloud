@@ -30,7 +30,8 @@ module ForemanRhCloud
             params: forward_params,
             user_agent: http_user_agent(original_request),
             content_type: original_request.media_type.presence || original_request.format.to_s,
-          }),
+          }
+        ),
       }
       base_params.merge(path_params(original_request.path, certs))
     end

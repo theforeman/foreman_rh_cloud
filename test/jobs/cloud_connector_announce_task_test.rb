@@ -60,8 +60,7 @@ class CloudConnectorAnnounceTaskTest < ActiveSupport::TestCase
 
     template_invocation = FactoryBot.build(:template_invocation,
       :template => job_template,
-      :job_invocation => job_invocation
-    )
+      :job_invocation => job_invocation)
 
     template_invocation.input_values << FactoryBot.create(
       :template_invocation_input_value,

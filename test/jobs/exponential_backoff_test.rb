@@ -27,7 +27,8 @@ class ExponentialBackoffTest < ActiveSupport::TestCase
       lambda do |instance|
         instance.done!
         raise ::Foreman::Exception('Foo')
-      end)
+      end
+    )
 
     ForemanTasks.sync_task(TestAction)
   end

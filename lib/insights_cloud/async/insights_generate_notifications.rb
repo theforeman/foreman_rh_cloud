@@ -41,7 +41,7 @@ module InsightsCloud
         Notification.create!(
           initiator: User.anonymous_admin,
           audience: ::Notification::AUDIENCE_ADMIN,
-          message: UINotifications::StringParser.new(blueprint.message, {hits_count: hits_count}).to_s,
+          message: UINotifications::StringParser.new(blueprint.message, { hits_count: hits_count }).to_s,
           notification_blueprint: blueprint,
           actions: {
             links: [

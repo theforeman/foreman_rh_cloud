@@ -133,7 +133,7 @@ module ForemanInventoryUpload
 
       def uuid_value!(value)
         uuid = uuid_value(value)
-        raise Foreman::Exception.new(N_('Value %{value} is not a valid UUID') % {value: value}) if value && uuid.empty?
+        raise Foreman::Exception.new(N_('Value %{value} is not a valid UUID') % { value: value }) if value && uuid.empty?
 
         uuid
       end

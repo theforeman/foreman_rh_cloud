@@ -29,7 +29,7 @@ module ForemanRhCloud
     def remediations
       @remediations ||= Hash[
         InsightsResolution.where(id: remediation_ids).pluck(:id, :resolution_type, :rule_id).map do |id, resolution_type, rule_id|
-          [id, {resolution_type: resolution_type, rule_id: rule_id}]
+          [id, { resolution_type: resolution_type, rule_id: rule_id }]
         end
       ]
     end

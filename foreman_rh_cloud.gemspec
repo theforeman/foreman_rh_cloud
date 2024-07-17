@@ -25,5 +25,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'katello'
 
   s.add_development_dependency 'rdoc'
-  s.add_development_dependency 'theforeman-rubocop', '~> 0.0.6'
+  s.add_development_dependency 'theforeman-rubocop', '~> 0.1.0'
 end
