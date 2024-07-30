@@ -1,5 +1,5 @@
 module ForemanRhCloud
-  class UrlRemediationsRetriever < RemediationsRetriever
+  class URLRemediationsRetriever < RemediationsRetriever
     attr_reader :url, :payload, :headers
 
     def initialize(url:, organization_id:, payload: '', headers: {}, logger: Logger.new(IO::NULL))

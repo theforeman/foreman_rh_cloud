@@ -1,8 +1,8 @@
 require 'test_plugin_helper'
 
-class UrlRemediationsRetrieverTest < ActiveSupport::TestCase
+class URLRemediationsRetrieverTest < ActiveSupport::TestCase
   test 'Calls the given url' do
-    retreiver = ForemanRhCloud::UrlRemediationsRetriever.new(
+    retreiver = ForemanRhCloud::URLRemediationsRetriever.new(
       organization_id: FactoryBot.create(:organization).id,
       url: 'http://test.example.com',
       payload: 'TEST_PAYLOAD',
