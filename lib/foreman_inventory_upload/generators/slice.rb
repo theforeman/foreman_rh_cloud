@@ -126,6 +126,7 @@ module ForemanInventoryUpload
         ) { |v| os_release_value(*v) }
         @stream.simple_field('os_kernel_version', fact_value(host, 'uname::release'))
         @stream.simple_field('arch', host.architecture&.name)
+        @stream.simple_field('subscription_status', host.subscription_status_label)
         @stream.simple_field('katello_agent_running', false)
         @stream.simple_field(
           'infrastructure_type',
