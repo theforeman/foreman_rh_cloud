@@ -47,6 +47,7 @@ module ForemanInventoryUpload
           @stream.simple_field('account', account_id(host.organization).to_s)
           @stream.simple_field('subscription_manager_id', uuid_value!(host.subscription_facet&.uuid))
           @stream.simple_field('satellite_id', uuid_value!(host.subscription_facet&.uuid))
+          @stream.simple_field('convert2rhel_through_foreman', host.subscription_facet&.convert2rhel_through_foreman)
           @stream.simple_field('bios_uuid', bios_uuid(host))
           @stream.simple_field('vm_uuid', uuid_value(fact_value(host, 'virt::uuid')))
           @stream.simple_field('insights_id', uuid_value(fact_value(host, 'insights_id')))
