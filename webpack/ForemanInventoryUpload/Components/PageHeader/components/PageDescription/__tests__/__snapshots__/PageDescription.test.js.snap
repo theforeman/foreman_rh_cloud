@@ -5,14 +5,14 @@ exports[`PageDescription rendering render without Props 1`] = `
   id="inventory_page_description"
 >
   <Text>
-    The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Satellite instance.
+    The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Foreman instance.
   </Text>
   <Text>
-    The Satellite inventory upload plugin automatically uploads Satellite host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.
+    The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.
   </Text>
   <Text>
     <FormattedMessage
-      defaultMessage="To enable this reporting for all Satellite organizations, set {uploadButtonName} to on. The data will be reported automatically once per day."
+      defaultMessage="To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day."
       id="enable-upload-hint"
       values={
         Object {
