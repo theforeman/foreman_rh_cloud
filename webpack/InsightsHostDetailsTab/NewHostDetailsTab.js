@@ -37,7 +37,7 @@ const NewHostDetailsTab = ({ hostName, router }) => {
 
   const dropdownItems = [
     <DropdownItem key="insights-link" ouiaId="insights-link">
-      <a onClick={onSatInsightsClick}>{__('Go to Satellite Insights page')}</a>
+      <a onClick={onSatInsightsClick}>{__('Go to Foreman Insights page')}</a>
     </DropdownItem>,
   ];
 

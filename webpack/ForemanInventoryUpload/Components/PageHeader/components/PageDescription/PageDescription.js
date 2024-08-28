@@ -8,19 +8,19 @@ export const PageDescription = () => (
   <div id="inventory_page_description">
     <Text>
       {__(
-        'The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Satellite instance.'
+        'The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Foreman instance.'
       )}
     </Text>
     <Text>
       {__(
-        'The Satellite inventory upload plugin automatically uploads Satellite host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.'
+        'The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.'
       )}
     </Text>
     <Text>
       <FormattedMessage
         id="enable-upload-hint"
         defaultMessage={__(
-          'To enable this reporting for all Satellite organizations, set {uploadButtonName} to on. The data will be reported automatically once per day.'
+          'To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day.'
         )}
         values={{
           uploadButtonName: <strong>{__('Automatic inventory upload')}</strong>,
