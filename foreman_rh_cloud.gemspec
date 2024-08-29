@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'foreman_ansible'
   s.add_dependency 'foreman-tasks'
-  s.add_dependency 'katello'
+  s.add_runtime_dependency 'katello', '>= 4.14.0.rc1.1'
 
   s.add_development_dependency 'rdoc'
   s.add_development_dependency 'theforeman-rubocop', '~> 0.1.0'
