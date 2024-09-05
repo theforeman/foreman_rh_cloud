@@ -117,3 +117,11 @@ module CandlepinIsolation
     end
   end
 end
+
+module UpstreamOnlySettingsTestHelper
+  def self.set_if_available(setting_name, value: true)
+    Setting[setting_name] = value
+  rescue Foreman::Exception
+    skip "Setting #{setting_name} is not available in Foreman"
+  end
+end
