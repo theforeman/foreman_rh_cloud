@@ -7,14 +7,10 @@ exports[`InsightsCloudSync helpers should return insights cloud Url 1`] = `
   id="some-id-help"
 >
   <button
-    className="pf-c-form__group-label-help some-class"
+    className="pf-v5-c-form__group-label-help some-class"
     onClick={[Function]}
   >
-    <HelpIcon
-      color="currentColor"
-      noVerticalAlign={false}
-      size="sm"
-    />
+    <HelpIcon />
   </button>
 </Popover>
 `;

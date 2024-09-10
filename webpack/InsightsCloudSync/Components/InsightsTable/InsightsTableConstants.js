@@ -4,7 +4,9 @@ import {
   InsightsLabel,
   Section,
 } from '@redhat-cloud-services/frontend-components';
-import { DropdownItem } from '@patternfly/react-core';
+import {
+	DropdownItem
+} from '@patternfly/react-core/deprecated';
 import { sortable, cellWidth } from '@patternfly/react-table';
 import { AnsibeTowerIcon, ExternalLinkAltIcon } from '@patternfly/react-icons';
 import { translate as __ } from 'foremanReact/common/I18n';

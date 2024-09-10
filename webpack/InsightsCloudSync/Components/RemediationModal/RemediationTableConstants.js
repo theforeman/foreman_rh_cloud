@@ -1,11 +1,12 @@
 import React from 'react';
 import { cellWidth } from '@patternfly/react-table';
+import { Icon } from '@patternfly/react-core';
 import { CheckCircleIcon } from '@patternfly/react-icons';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { foremanUrl } from '../../../ForemanRhCloudHelpers';
 
 export const rebootFormatter = ({ title: reboot }) => ({
-  children: reboot ? <CheckCircleIcon color="green" /> : __('No'),
+  children: reboot ? <Icon color="green"><CheckCircleIcon /></Icon> : __('No'),
 });
 
 export const columns = [

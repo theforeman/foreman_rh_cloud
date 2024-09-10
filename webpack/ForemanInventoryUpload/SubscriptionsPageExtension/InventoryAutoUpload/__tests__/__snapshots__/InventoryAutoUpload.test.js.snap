@@ -56,11 +56,7 @@ exports[`InventoryAutoUpload rendering render with props 1`] = `
           >
             Show Advanced Settings
              
-            <CaretRightIcon
-              color="currentColor"
-              noVerticalAlign={false}
-              size="sm"
-            />
+            <CaretRightIcon />
           </Button>
         </Popover>
       </Col>
@@ -78,11 +74,7 @@ exports[`InventoryAutoUpload rendering render with props 1`] = `
         <Text
           component="p"
         >
-          <InfoAltIcon
-            color="currentColor"
-            noVerticalAlign={false}
-            size="sm"
-          />
+          <InfoAltIcon />
            
           More details can be found in
            
