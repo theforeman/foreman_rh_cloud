@@ -2,7 +2,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Table, TableBody, TableHeader } from '@patternfly/react-table';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+} from '@patternfly/react-table/deprecated';
 import {
   Card,
   CardTitle,
@@ -11,6 +15,7 @@ import {
   ModalVariant,
   Spinner,
   Text,
+  Icon,
 } from '@patternfly/react-core';
 import {
   CheckCircleIcon,
@@ -108,8 +113,18 @@ const CloudPingModal = ({ title, isOpen, toggle }) => {
 
 const StatusIcon = ({ isPending, authStatus }) => {
   if (isPending) return <Spinner size="sm" />;
-  if (authStatus.success) return <CheckCircleIcon color="green" />;
-  if (authStatus.error) return <ExclamationCircleIcon color="red" />;
+  if (authStatus.success)
+    return (
+      <Icon color="green">
+        <CheckCircleIcon />
+      </Icon>
+    );
+  if (authStatus.error)
+    return (
+      <Icon color="red">
+        <ExclamationCircleIcon />
+      </Icon>
+    );
   return <Spinner size="sm" />;
 };
 

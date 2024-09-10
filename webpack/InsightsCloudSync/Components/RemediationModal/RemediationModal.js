@@ -1,7 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Table, TableHeader, TableBody } from '@patternfly/react-table';
+import {
+	Table,
+	TableHeader,
+	TableBody
+} from '@patternfly/react-table/deprecated';
 import { Modal, ModalVariant, Button } from '@patternfly/react-core';
 import { isEmpty } from 'lodash';
 import { STATUS } from 'foremanReact/constants';

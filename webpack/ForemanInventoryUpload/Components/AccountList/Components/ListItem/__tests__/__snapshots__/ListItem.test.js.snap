@@ -10,13 +10,7 @@ exports[`ListItem rendering render with Props 1`] = `
       <Label
         className="account-icon"
         color="blue"
-        icon={
-          <UserIcon
-            color="currentColor"
-            noVerticalAlign={false}
-            size="sm"
-          />
-        }
+        icon={<UserIcon />}
         variant="outline"
       />
       test

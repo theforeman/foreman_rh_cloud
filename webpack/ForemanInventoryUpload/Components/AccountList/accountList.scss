@@ -8,11 +8,11 @@
   }
 
   .account-list {
-    .pf-c-accordion__toggle {
+    .pf-v5-c-accordion__toggle {
       margin-top: 10px;
     }
 
-    .pf-c-accordion__toggle-text {
+    .pf-v5-c-accordion__toggle-text {
       font-size: 16px;
       display: flex;
       justify-content: space-between;
@@ -21,7 +21,7 @@
       .account-icon {
         margin-right: 5px;
 
-        .pf-c-label__icon {
+        .pf-v5-c-label__icon {
           margin: 0;
         }
       }

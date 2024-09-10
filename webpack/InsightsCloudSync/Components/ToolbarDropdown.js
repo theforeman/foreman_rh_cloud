@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { translate as __ } from 'foremanReact/common/I18n';
-import { Dropdown, DropdownItem, KebabToggle } from '@patternfly/react-core';
+import {
+	Dropdown,
+	DropdownItem,
+	KebabToggle
+} from '@patternfly/react-core/deprecated';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import { redHatAdvisorSystems } from '../InsightsCloudSyncHelpers';
 
@@ -30,7 +34,7 @@ const ToolbarDropdown = ({ onRecommendationSync }) => {
     <Dropdown
       className="title-dropdown"
       onSelect={() => setIsDropdownOpen(false)}
-      toggle={<KebabToggle onToggle={isOpen => setIsDropdownOpen(isOpen)} />}
+      toggle={<KebabToggle onToggle={(_event, isOpen) => setIsDropdownOpen(isOpen)} />}
       isOpen={isDropdownOpen}
       isPlain
       dropdownItems={dropdownItems}

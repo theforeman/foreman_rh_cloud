@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { useHistory } from 'react-router-dom';
-import { DropdownItem, Bullseye, Title } from '@patternfly/react-core';
+import {
+	Bullseye,
+	Title
+} from '@patternfly/react-core';
+import {
+	DropdownItem
+} from '@patternfly/react-core/deprecated';
 import { ChartDonut, ChartLegend, ChartLabel } from '@patternfly/react-charts';
 import { STATUS } from 'foremanReact/constants';
 import { useAPI } from 'foremanReact/common/hooks/API/APIHooks';

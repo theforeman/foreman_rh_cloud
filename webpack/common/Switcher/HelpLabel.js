@@ -9,7 +9,7 @@ export const HelpLabel = ({ text, id, className }) => {
     <Popover id={`${id}-help`} bodyContent={text} aria-label="help-text">
       <button
         onClick={e => e.preventDefault()}
-        className={`pf-c-form__group-label-help ${className}`}
+        className={`pf-v5-c-form__group-label-help ${className}`}
       >
         <HelpIcon />
       </button>

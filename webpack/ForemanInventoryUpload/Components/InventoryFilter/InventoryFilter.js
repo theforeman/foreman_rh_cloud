@@ -29,7 +29,7 @@ const InventoryFilter = ({
           value={filterTerm}
           type="text"
           placeholder={__('Filter..')}
-          onChange={handleFilterChange}
+          onChange={(e, v) => handleFilterChange(v)}
         />
         <ClearButton onClear={handleFilterClear} />
       </FormGroup>
