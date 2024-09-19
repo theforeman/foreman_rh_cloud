@@ -1,9 +1,9 @@
 name: Ruby tests
 on:
   push:
-    branches: [v10]
+    branches: [develop]
   pull_request:
-    branches: [v10]
+    branches: [develop]
 
 
 concurrency:
