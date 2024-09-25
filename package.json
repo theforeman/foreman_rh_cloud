@@ -22,7 +22,7 @@
     "@theforeman/vendor": ">= 10.1.1"
   },
   "devDependencies": {
-    "@babel/core": "~7.7.0",
+    "@babel/core": "^7.7.0",
     "@theforeman/builder": ">= 10.1.1",
     "@theforeman/test": ">= 10.1.1",
     "@theforeman/eslint-plugin-foreman": ">= 10.1.1",
