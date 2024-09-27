@@ -2,7 +2,8 @@ import React from 'react';
 import { addGlobalFill } from 'foremanReact/components/common/Fill/GlobalFill';
 import InventoryAutoUploadSwitcher from './ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload';
 import NewHostDetailsTab from './InsightsHostDetailsTab/NewHostDetailsTab';
-import InsightsTotalRiskCard from './InsightsHostDetailsTab/InsightsTotalRiskChart';
+import { InsightsTotalRiskChartWrapper } from './InsightsHostDetailsTab/InsightsTotalRiskChartWrapper';
+import { isNotRhelHost } from './ForemanRhCloudHelpers';
 
 const fills = [
   {
@@ -16,22 +17,27 @@ const fills = [
     name: 'Insights',
     component: props => <NewHostDetailsTab {...props} />,
     weight: 400,
+    metadata: {
+      hideTab: isNotRhelHost,
+    },
   },
   {
     slot: 'host-overview-cards',
     name: 'insights-total-risk-chart',
-    component: props => <InsightsTotalRiskCard {...props} />,
+    component: props => <InsightsTotalRiskChartWrapper {...props} />,
     weight: 2800,
   },
 ];
 
 export const registerFills = () => {
-  fills.forEach(({ slot, name, component: Component, weight }, index) =>
-    addGlobalFill(
-      slot,
-      name,
-      <Component key={`rh-cloud-fill-${index}`} />,
-      weight
-    )
+  fills.forEach(
+    ({ slot, name, component: Component, weight, metadata }, index) =>
+      addGlobalFill(
+        slot,
+        name,
+        <Component key={`rh-cloud-fill-${index}`} />,
+        weight,
+        metadata
+      )
   );
 };
