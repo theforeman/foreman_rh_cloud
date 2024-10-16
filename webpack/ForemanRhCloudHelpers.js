@@ -4,3 +4,7 @@
  * should be imported once core moves it to the ReactApp folder.
  */
 export const foremanUrl = path => `${window.URL_PREFIX}${path}`;
+
+export const isNotRhelHost = ({ hostDetails }) =>
+  // eslint-disable-next-line camelcase
+  !new RegExp('red\\s?hat', 'i').test(hostDetails?.operatingsystem_name);
