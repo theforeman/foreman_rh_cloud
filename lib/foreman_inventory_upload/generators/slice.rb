@@ -40,6 +40,16 @@ module ForemanInventoryUpload
         end
       end
 
+      def report_conversions(host)
+        @stream.simple_field('convert2rhel_through_foreman', host.subscription_facet&.convert2rhel_through_foreman)
+        @stream.simple_field('activity', fact_value(host, 'conversions::activity'))
+        @stream.simple_field('packages_0_nevra', fact_value(host, 'conversions::packages::0::nevra'))
+        @stream.simple_field('packages_0_signature', fact_value(host, 'conversions::packages::0::signature'))
+        @stream.simple_field('activity_started', fact_value(host, 'conversions::activity_started'))
+        @stream.simple_field('activity_ended', fact_value(host, 'conversions::activity_ended'))
+        @stream.simple_field('success', fact_value(host, 'conversions::success'), :last)
+      end
+
       def report_host(host)
         host_ips_cache = host_ips(host)
         @stream.object do
@@ -48,6 +58,19 @@ module ForemanInventoryUpload
           @stream.simple_field('subscription_manager_id', uuid_value!(host.subscription_facet&.uuid))
           @stream.simple_field('satellite_id', uuid_value!(host.subscription_facet&.uuid))
           @stream.simple_field('convert2rhel_through_foreman', host.subscription_facet&.convert2rhel_through_foreman)
+          if host.subscription_facet&.convert2rhel_through_foreman.present?
+            @stream.object_field('conversions') do
+              @stream.object_field('source_os') do
+                @stream.simple_field('name', fact_value(host, 'conversions::source_os::name'))
+                @stream.simple_field('version', fact_value(host, 'conversions::source_os::version'), :last)
+              end
+              @stream.object_field('target_os') do
+                @stream.simple_field('name', fact_value(host, 'conversions::target_os::name'))
+                @stream.simple_field('version', fact_value(host, 'conversions::target_os::version'), :last)
+              end
+              report_conversions(host)
+            end
+          end
           @stream.simple_field('bios_uuid', bios_uuid(host))
           @stream.simple_field('vm_uuid', uuid_value(fact_value(host, 'virt::uuid')))
           @stream.simple_field('insights_id', uuid_value(fact_value(host, 'insights_id')))

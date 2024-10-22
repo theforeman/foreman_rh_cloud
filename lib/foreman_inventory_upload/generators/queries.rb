@@ -28,6 +28,16 @@ module ForemanInventoryUpload
               'insights_client::hostname',
               'insights_client::ips',
               'insights_id',
+              'conversions::activity',
+              'conversions::packages::0::nevra',
+              'conversions::packages::0::signature',
+              'conversions::activity_started',
+              'conversions::activity_ended',
+              'conversions::success',
+              'conversions::source_os::name',
+              'conversions::source_os::version',
+              'conversions::target_os::name',
+              'conversions::target_os::version',
             ]).pluck(:name, :id)
           ]
       end
