@@ -1,3 +1,5 @@
+require "#{ForemanRhCloud::Engine.root}/lib/foreman_rh_cloud/version"
+
 module ForemanInventoryUpload
   module Generators
     class Metadata
