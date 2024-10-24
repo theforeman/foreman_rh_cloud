@@ -1,4 +1,5 @@
 require 'rest-client'
+require "#{ForemanRhCloud::Engine.root}/lib/foreman_rh_cloud/version"
 
 module ForemanRhCloud
   class CloudRequestForwarder
