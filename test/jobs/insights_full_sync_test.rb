@@ -65,6 +65,8 @@ class InsightsFullSyncTest < ActiveSupport::TestCase
   end
 
   test 'Hits data is replaced with data from cloud' do
+    Organization.any_instance.stubs(:manifest_expired?).returns(false)
+    Katello::UpstreamConnectionChecker.any_instance.stubs(:can_connect?).returns(true)
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:query_insights_hits).returns(@hits)
 
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_hosts_sync)
@@ -79,7 +81,31 @@ class InsightsFullSyncTest < ActiveSupport::TestCase
     assert_equal 1, @host2.insights.hits.count
   end
 
+  test 'Manifest is expired do not run task steps' do
+    Organization.any_instance.stubs(:manifest_expired?).returns(true)
+    Katello::UpstreamConnectionChecker.any_instance.stubs(:can_connect?).returns(true)
+
+    InsightsCloud::Async::InsightsFullSync.any_instance.expects(:query_insights_hits).never
+    InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_hosts_sync).never
+    InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_self).never
+
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync, [@host1.organization])
+  end
+
+  test 'Manifest is deleted do not run task steps' do
+    Organization.any_instance.stubs(:manifest_expired?).returns(false)
+    Katello::UpstreamConnectionChecker.any_instance.stubs(:can_connect?).returns(false)
+
+    InsightsCloud::Async::InsightsFullSync.any_instance.expects(:query_insights_hits).never
+    InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_hosts_sync).never
+    InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_self).never
+
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync, [@host1.organization])
+  end
+
   test 'Hits counters are reset correctly' do
+    Organization.any_instance.stubs(:manifest_expired?).returns(false)
+    Katello::UpstreamConnectionChecker.any_instance.stubs(:can_connect?).returns(true)
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:query_insights_hits).returns(@hits).twice
 
     InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_hosts_sync)
@@ -97,6 +123,8 @@ class InsightsFullSyncTest < ActiveSupport::TestCase
   end
 
   test 'Hits ignoring non-existent hosts' do
+    Organization.any_instance.stubs(:manifest_expired?).returns(false)
+    Katello::UpstreamConnectionChecker.any_instance.stubs(:can_connect?).returns(true)
     hits_json = <<-HITS_JSON
     [
         {
