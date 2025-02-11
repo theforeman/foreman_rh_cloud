@@ -9,10 +9,11 @@ module InsightsCloud
 
       def plan(organizations)
         organizations = organizations.select do |organization|
-          if cert_auth_available?(organization)
+          checker = ::Katello::UpstreamConnectionChecker.new(organization)
+          if cert_auth_available?(organization) && !organization.manifest_expired? && checker.can_connect?
             true
           else
-            logger.debug("Certificate is not available for org: #{organization.name}, skipping insights sync")
+            logger.info("A manifest is not available for org: #{organization.name}, or it has expired, or been deleted. skipping insights sync")
             false
           end
         end
@@ -20,19 +21,23 @@ module InsightsCloud
         sequence do
           # This can be turned off when we enable automatic status syncs
           # This step will query cloud inventory to retrieve inventory uuids for each host
-          plan_hosts_sync(organizations)
-          plan_self(organization_ids: organizations.map(&:id))
-          concurrence do
-            plan_rules_sync(organizations)
-            plan_notifications
+          valid_organizations = organizations.reject(&:manifest_expired?)
+          if valid_organizations.any?
+            plan_hosts_sync(organizations)
+            plan_self(organization_ids: organizations.map(&:id))
+            concurrence do
+              plan_rules_sync(organizations)
+              plan_notifications
+            end
           end
         end
       end
 
       def try_execute
         organizations.each do |organization|
-          unless cert_auth_available?(organization)
-            logger.debug("Certificate is not available for org: #{organization.name}, skipping insights sync")
+          checker = ::Katello::UpstreamConnectionChecker.new(organization)
+          if !cert_auth_available?(organization) && organization.manifest_expired && !checker.can_connect?
+            logger.info("A manifest is not available for org: #{organization.name}, or it has expired, or been deleted. skipping insights sync")
             next
           end
 

@@ -13,7 +13,11 @@ module InsightsCloud
           InsightsResolution.delete_all
           rule_ids = relevant_rules
           Organization.all.each do |organization|
-            next if !cert_auth_available?(organization) || organization.manifest_expired?
+            checker = ::Katello::UpstreamConnectionChecker.new(organization)
+            if !cert_auth_available?(organization) || organization.manifest_expired? || !checker.can_connect?
+              logger.info("A manifest is not available for org: #{organization.name}, or it has expired, or been deleted. skipping resolutions sync")
+              next
+            end
             api_response = query_insights_resolutions(rule_ids, organization) unless rule_ids.empty?
             written_rules = write_resolutions(api_response) if api_response
             rule_ids -= Array(written_rules)
