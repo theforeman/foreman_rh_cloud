@@ -73,6 +73,7 @@ class InsightsResolutionsSyncTest < ActiveSupport::TestCase
   end
 
   test 'Resolutions data is replaced with data from cloud' do
+    Katello::UpstreamConnectionChecker.any_instance.stubs(:can_connect?).returns(true)
     InsightsCloud::Async::InsightsResolutionsSync.any_instance.stubs(:query_insights_resolutions).returns(@resolutions)
 
     ForemanTasks.sync_task(InsightsCloud::Async::InsightsResolutionsSync)
@@ -82,7 +83,28 @@ class InsightsResolutionsSyncTest < ActiveSupport::TestCase
     assert_equal 2, @rule.resolutions.count
   end
 
+  test 'Manifest is deleted do not run task steps' do
+    Organization.any_instance.stubs(:manifest_expired?).returns(false)
+    Katello::UpstreamConnectionChecker.any_instance.stubs(:can_connect?).returns(false)
+    InsightsCloud::Async::InsightsResolutionsSync.any_instance.expects(:query_insights_resolutions).never
+
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsResolutionsSync)
+
+    assert_equal 0, InsightsResolution.all.count
+  end
+
+  test 'Manifest is expired do not run task steps' do
+    Organization.any_instance.stubs(:manifest_expired?).returns(true)
+    Katello::UpstreamConnectionChecker.any_instance.stubs(:can_connect?).returns(true)
+    InsightsCloud::Async::InsightsResolutionsSync.any_instance.expects(:query_insights_resolutions).never
+
+    ForemanTasks.sync_task(InsightsCloud::Async::InsightsResolutionsSync)
+
+    assert_equal 0, InsightsResolution.all.count
+  end
+
   test 'Skips pinging the cloud if no rule ids were found' do
+    Katello::UpstreamConnectionChecker.any_instance.stubs(:can_connect?).returns(true)
     InsightsCloud::Async::InsightsResolutionsSync.any_instance.expects(:query_insights_resolutions).never
     InsightsRule.all.delete_all
 
