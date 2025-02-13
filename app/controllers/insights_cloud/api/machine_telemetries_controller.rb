@@ -16,7 +16,15 @@ module InsightsCloud::Api
     # The method that "proxies" requests over to Cloud
     def forward_request
       certs = candlepin_id_cert @organization
-      @cloud_response = ::ForemanRhCloud::CloudRequestForwarder.new.forward_request(request, controller_name, @branch_id, certs)
+      begin
+        @cloud_response = ::ForemanRhCloud::CloudRequestForwarder.new.forward_request(request, controller_name, @branch_id, certs)
+      rescue RestClient::Exception => e
+        logger.info("Forwarding request failed with exception: #{e}")
+        return render json: { error: e }, status: :bad_gateway
+      rescue RestClient::Timeout => e
+        logger.info("Forwarding request failed with timeout: #{e}")
+        return render json: { error: e }, status: :gateway_timeout
+      end
 
       if @cloud_response.code == 401
         return render json: {
