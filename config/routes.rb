@@ -9,7 +9,9 @@ Rails.application.routes.draw do
     get 'settings', to: 'uploads_settings#index'
     post 'setting', to: 'uploads_settings#set_advanced_setting'
 
-    post 'cloud_connector', to: 'uploads#enable_cloud_connector'
+    unless ForemanRhCloud.with_local_advisor_engine?
+      post 'cloud_connector', to: 'uploads#enable_cloud_connector'
+    end
 
     resources :tasks, only: [:create, :show]
 
@@ -31,7 +33,9 @@ Rails.application.routes.draw do
   end
 
   namespace :foreman_rh_cloud do
-    get 'inventory_upload', to: '/react#index'
+    unless ForemanRhCloud.with_local_advisor_engine?
+      get 'inventory_upload', to: '/react#index'
+    end
     get 'insights_cloud', to: '/react#index' # Uses foreman's react controller
   end
 
@@ -61,8 +65,10 @@ Rails.application.routes.draw do
       end
 
       namespace 'rh_cloud' do
-        post 'enable_connector', to: 'inventory#enable_cloud_connector'
-        post 'cloud_request', to: 'cloud_request#update'
+        unless ForemanRhCloud.with_local_advisor_engine?
+          post 'enable_connector', to: 'inventory#enable_cloud_connector'
+          post 'cloud_request', to: 'cloud_request#update'
+        end
         get 'advisor_engine_config', to: 'advisor_engine_config#show'
       end
 

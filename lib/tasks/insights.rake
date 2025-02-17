@@ -24,13 +24,16 @@ namespace :rh_cloud_insights do
   desc "Re-announce all organizations into Sources on RH cloud."
   task announce_to_sources: [:environment] do
     logger = Logging::Logger.new(STDOUT)
-    Organization.unscoped.each do |org|
-      presence = ForemanRhCloud::CloudPresence.new(org, logger)
-      presence.announce_to_sources
-    rescue StandardError => ex
-      logger.warn(ex)
+    if ForemanRhCloud.with_local_advisor_engine?
+      logger.warn('Task announce_to_sources is not available when using local advisor engine')
+    else
+      Organization.unscoped.each do |org|
+        presence = ForemanRhCloud::CloudPresence.new(org, logger)
+        presence.announce_to_sources
+      rescue StandardError => ex
+        logger.warn(ex)
+      end
+      logger.info('Reannounced all organizations')
     end
-
-    logger.info('Reannounced all organizations')
   end
 end

@@ -9,10 +9,15 @@ namespace :rh_cloud_inventory do
       else
         organizations = [Organization.where(:id => ENV['organization_id']).first]
       end
-
+      disconnected = ForemanRhCloud.with_local_advisor_engine?
       User.as_anonymous_admin do
         organizations.each do |organization|
-          ForemanTasks.async_task(ForemanInventoryUpload::Async::GenerateReportJob, ForemanInventoryUpload.generated_reports_folder, organization.id, false)
+          ForemanTasks.async_task(
+            ForemanInventoryUpload::Async::GenerateReportJob,
+            ForemanInventoryUpload.generated_reports_folder,
+            organization.id,
+            disconnected
+          )
           puts "Generated and uploaded inventory report for organization '#{organization.name}'"
         end
       end
@@ -47,7 +52,7 @@ namespace :rh_cloud_inventory do
       base_folder = ENV['target'] || ForemanInventoryUpload.generated_reports_folder
       organization_id = ENV['organization_id']
       report_file = ForemanInventoryUpload.facts_archive_name(organization_id)
-      disconnected = false
+      disconnected = ForemanRhCloud.with_local_advisor_engine?
       ForemanTasks.sync_task(ForemanInventoryUpload::Async::QueueForUploadJob, base_folder, report_file, organization_id, disconnected)
       puts "Uploaded #{report_file}"
     end
