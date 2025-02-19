@@ -72,8 +72,11 @@ class HitsUploaderTest < ActiveSupport::TestCase
   setup do
     @host = FactoryBot.create(:host)
     @uuid = SecureRandom.uuid
-    uploader = ForemanRhCloud::HitsUploader.new(host: @host, payload: PAYLOAD, uuid: @uuid)
-    uploader.upload!
+    rules_resolutions = [PAYLOAD[:rules], PAYLOAD[:resolutions]]
+    ForemanRhCloud::RulesIngester.any_instance.
+      expects(:fetch_rules_and_resolutions).returns(rules_resolutions)
+    @uploader = ForemanRhCloud::HitsUploader.new(host: @host, payload: PAYLOAD, uuid: @uuid)
+    @uploader.upload!
     @host.reload
   end
 
@@ -84,6 +87,14 @@ class HitsUploaderTest < ActiveSupport::TestCase
   test 'hits' do
     assert_equal PAYLOAD[:hits].count, @host.insights_facet.hits_count
     assert_includes @host.insights_facet.hits.pluck(:rule_id), "R124"
+  end
+
+  test 'assert reupload does not trigger rules download' do
+    # rules must already be in the database so dont retrigger
+    # rules download.
+    ForemanRhCloud::RulesIngester.any_instance.
+      expects(:ingest_rules_and_resolutions!).never
+    @uploader.upload!
   end
 
   test "resolutions" do

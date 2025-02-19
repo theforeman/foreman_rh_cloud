@@ -35,14 +35,9 @@ module ForemanRhCloud
 
     def update_rules_and_resolutions
       return if @payload[:rules].blank?
-      # rubocop:disable Rails/SkipsModelValidations
-      ::InsightsRule.upsert_all(@payload[:rules], unique_by: :rule_id)
-      rules = @payload[:rules].map { |rule| rule[:rule_id] }
-
-      return if @payload[:resolutions].blank?
-      ::InsightsResolution.where(rule_id: rules).delete_all
-      ::InsightsResolution.insert_all(@payload[:resolutions])
-      # rubocop:enable Rails/SkipsModelValidations
+      rule_ids = @payload[:rules].map { |rule| rule[:rule_id] }
+      has_missing_rules = InsightsRule.where(rule_id: rule_ids).count != rule_ids.count
+      RulesIngester.new.ingest_rules_and_resolutions! if has_missing_rules
     end
 
     def update_details
