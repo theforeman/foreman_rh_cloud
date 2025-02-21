@@ -74,7 +74,11 @@ const RemediationModal = ({
           <TableHeader />
           <TableBody />
         </Table>
-        <TableEmptyState status={status} error={error} />
+        <TableEmptyState
+          status={status}
+          error={error}
+          rowsLength={rows.length}
+        />
       </Modal>
     </React.Fragment>
   );
