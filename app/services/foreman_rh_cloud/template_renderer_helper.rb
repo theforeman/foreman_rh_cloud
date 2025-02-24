@@ -25,7 +25,7 @@ module ForemanRhCloud
       returns String, desc: 'Playbook downloaded from the cloud'
     end
     def download_rh_playbook(playbook_url, organization_id)
-      retriever = ForemanRhCloud::UrlRemediationsRetriever.new(url: playbook_url, organization_id: organization_id, logger: template_logger)
+      retriever = ForemanRhCloud::URLRemediationsRetriever.new(url: playbook_url, organization_id: organization_id, logger: template_logger)
 
       cached("rh_playbook_#{playbook_url}") do
         retriever.create_playbook
