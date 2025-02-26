@@ -52,7 +52,9 @@ module ForemanRhCloud
 
     def prepare_forward_params(original_request, branch_id)
       forward_params = original_request.query_parameters
-      if original_request.user_agent && !original_request.user_agent.include?('redhat_access_cfme')
+      compliance_request = original_request.path.match?(/compliance\/v2(\/.*)?/)
+      user_agent = original_request.user_agent.present? && !original_request.user_agent.include?('redhat_access_cfme')
+      if user_agent && !compliance_request
         forward_params = forward_params.merge(:branch_id => branch_id)
       end
 
