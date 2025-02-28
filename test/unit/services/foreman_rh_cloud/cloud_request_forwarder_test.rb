@@ -112,6 +112,30 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
     assert_equal params.merge(:branch_id => 74), @forwarder.prepare_forward_params(req, 74)
   end
 
+  test 'should NOT add branch id into forwarded params for compliance urls' do
+    user_agent = { :foo => :bar }
+    params = { :page => 5, :per_page => 42 }
+
+    uris = [
+      "/redhat_access/r/insights/platform/compliance/v2/systems/MyUUID/policies",
+      "/redhat_access/r/insights/platform/compliance/v2/policies/MyUUID",
+      "/redhat_access/r/insights/platform/compliance/v2/systems/MyUUID",
+      "/redhat_access/r/insights/platform/compliance/v2/policies",
+      "/redhat_access/r/insights/platform/compliance/v2/",
+    ]
+    uris.each do |uri|
+      req = ActionDispatch::Request.new(
+        'REQUEST_URI' => uri,
+        'REQUEST_METHOD' => 'GET',
+        'HTTP_USER_AGENT' => user_agent,
+        'rack.input' => ::Puma::NullIO.new,
+        'action_dispatch.request.query_parameters' => params
+      )
+      req.stubs(:path).returns(uri)
+      refute @forwarder.prepare_forward_params(req, 74).key?(:branch_id), "Branch id should not be added for #{uri}"
+    end
+  end
+
   test 'should reuse BranchInfo identifiers for user_agent' do
     user_agent = { :foo => :bar }
     params = { :page => 5, :per_page => 42 }
