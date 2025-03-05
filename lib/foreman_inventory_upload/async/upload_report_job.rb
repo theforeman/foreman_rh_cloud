@@ -78,7 +78,7 @@ module ForemanInventoryUpload
       end
 
       def content_disconnected?
-        Setting[:content_disconnected]
+        !Setting[:subscription_connection_enabled]
       end
     end
   end
