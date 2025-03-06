@@ -19,7 +19,7 @@
     "url": "http://projects.theforeman.org/projects/foreman_rh_cloud/issues"
   },
   "peerDependencies": {
-    "@theforeman/vendor": ">= 10.1.1"
+    "@theforeman/vendor": "~14.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.0",
