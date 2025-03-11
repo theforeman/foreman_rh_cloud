@@ -18,6 +18,8 @@ module InsightsCloud::Api
       certs = candlepin_id_cert @organization
       @cloud_response = ::ForemanRhCloud::CloudRequestForwarder.new.forward_request(request, controller_name, @branch_id, certs)
 
+      return render json: { message: @cloud_response.to_s }, status: :gateway_timeout if @cloud_response.is_a?(RestClient::Exceptions::OpenTimeout)
+
       if @cloud_response.code == 401
         return render json: {
           :message => 'Authentication to the Insights Service failed.',
