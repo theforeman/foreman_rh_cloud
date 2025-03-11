@@ -26,6 +26,8 @@ module InsightsCloud::Api
         return render json: { error: e }, status: :gateway_timeout
       end
 
+      return render json: { message: @cloud_response.to_s }, status: :gateway_timeout if @cloud_response.is_a?(RestClient::Exceptions::OpenTimeout)
+
       if @cloud_response.code == 401
         return render json: {
           :message => 'Authentication to the Insights Service failed.',
