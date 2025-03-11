@@ -1,4 +1,5 @@
 require 'test_plugin_helper'
+require 'rest-client'
 
 module InsightsCloud::Api
   class MachineTelemetriesControllerTest < ActionController::TestCase
@@ -31,6 +32,18 @@ module InsightsCloud::Api
 
         get :forward_request, params: { "path" => "platform/module-update-router/v1/channel" }
         assert_equal @body, @response.body
+      end
+
+      test "should handle timeout from cloud" do
+        ::ForemanRhCloud::CloudRequestForwarder.any_instance.
+          stubs(:forward_request).
+          raises(RestClient::Exceptions::OpenTimeout.new("Timed out connecting to server"))
+
+        get :forward_request, params: { "path" => "platform/module-update-router/v1/channel" }
+        request_response = JSON.parse(@response.body)
+        # I can't get @response.status to take a nil value so I'm not asserting for that
+
+        assert_equal 'Timed out connecting to server', request_response['error']
       end
 
       test "should respond with the same content type" do
