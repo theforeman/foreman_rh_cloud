@@ -6,7 +6,7 @@
         "Project-Id-Version": "foreman_rh_cloud 11.1.0",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
-        "Last-Translator": "Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2023",
+        "Last-Translator": "Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025",
         "Language-Team": "Japanese (https://app.transifex.com/foreman/teams/114/ja/)",
         "MIME-Version": "1.0",
         "Content-Type": "text/plain; charset=UTF-8",
@@ -18,13 +18,13 @@
         "plural_forms": "nplurals=1; plural=0;"
       },
       " Sync all inventory status": [
-        ""
+        " すべてのインベントリー状況を同期する"
       ],
       "%s organizations": [
         "組織 %s 件"
       ],
       "About subscription watch": [
-        "サブスクリプションウォッチの概要"
+        "Subscription Watch の概要"
       ],
       "Actions history": [
         "アクション履歴"
@@ -45,7 +45,7 @@
         "自動インベントリーアップロード"
       ],
       "Automatic mismatch deletion": [
-        ""
+        "不一致の自動削除"
       ],
       "Cancel": [
         "取り消し"
@@ -87,7 +87,7 @@
         "特定のホストで Cloud Connector を設定します。"
       ],
       "Configure cloud connector": [
-        ""
+        "Cloud Connector の設定"
       ],
       "Connectivity test": [
         "接続性テスト"
@@ -99,7 +99,7 @@
         "現在のページ"
       ],
       "Disconnected hosts: ": [
-        "切断されたホスト: "
+        "非接続ホスト: "
       ],
       "Displays manifest statuses per accessible organizations.": [
         "アクセス可能な組織別にマニフェストステータスを表示します。"
@@ -114,7 +114,7 @@
         "最新レポートのダウンロード"
       ],
       "Enable automatic deletion of mismatched host records from the Red Hat cloud": [
-        ""
+        "不一致のホストレコードを Red Hat クラウドから自動的に削除できるようにする"
       ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud": [
         "Red Hat クラウドから Insights の推奨事項の自動同期を有効にする"
@@ -150,7 +150,7 @@
         "終了コード: %s"
       ],
       "Fetch Insights-related host details": [
-        ""
+        "Insights 関連のホスト詳細を取得する"
       ],
       "Fetching data about your accounts": [
         "アカウントに関するデータの取得"
@@ -165,10 +165,10 @@
         "詳細は、以下を参照してください。"
       ],
       "For more information about Insights and Cloud Connector, see:": [
-        ""
+        "Insights と Cloud Connector の詳細は、以下を参照してください。"
       ],
       "For more information about the Subscriptions service, see:": [
-        ""
+        "サブスクリプションサービスの詳細は、以下を参照してください。"
       ],
       "Foreman plugin that process & upload data to Red Hat Cloud": [
         "データを処理して Red Hat Cloud にアップロードする Foreman プラグイン"
@@ -177,16 +177,16 @@
         "全画面"
       ],
       "Generate and upload report": [
-        ""
+        "レポートの生成およびアップロード"
       ],
       "Generate the report, but do not upload": [
-        ""
+        "レポートを生成するがアップロードしない"
       ],
       "Generating": [
         "生成中"
       ],
       "Go to Foreman Insights page": [
-        ""
+        "Foreman Insights ページへ移動する"
       ],
       "Go to first page": [
         "最初のページに移動"
@@ -201,7 +201,7 @@
         "前のページに移動"
       ],
       "Grab hosts that are missing in RH Cloud": [
-        ""
+        "RH Cloud にないホストを取得する"
       ],
       "Host Insights recommendations": [
         "ホストに関する Insights の推奨事項"
@@ -249,13 +249,13 @@
         "ナレッジベースアーティクル"
       ],
       "List of host UUIDs": [
-        ""
+        "ホスト UUID のリスト"
       ],
       "Loading": [
         "ロード中"
       ],
       "Loading...": [
-        "ロード中..."
+        "読み込み中..."
       ],
       "Low": [
         "低"
@@ -264,7 +264,7 @@
         "手動"
       ],
       "Moderate": [
-        "中程度"
+        "中"
       ],
       "More details can be found in": [
         "詳細は、以下を参照してください: "
@@ -354,7 +354,7 @@
         "推奨事項が正常に同期されました"
       ],
       "Reconfigure cloud connector": [
-        ""
+        "Cloud Connector の再設定"
       ],
       "Red Hat Cloud Inventory": [
         "Red Hat Cloud インベントリー"
@@ -396,7 +396,7 @@
         "Satellite Server には、Red Hat からの推奨事項が %{hits_count} 件あります。"
       ],
       "Scoped search string for host removal": [
-        ""
+        "ホストを削除する場合に対象を特定の範囲に限定する検索文字列"
       ],
       "Select recommendations from all pages": [
         "すべてのページから推奨事項を選択する"
@@ -414,7 +414,7 @@
         "詳細設定の表示"
       ],
       "Show if system is configured to use local iop-advisor-engine.": [
-        ""
+        "システムがローカル iop-advisor-engine を使用するように設定されているかどうかを表示します。"
       ],
       "Start inventory synchronization": [
         "インベントリー同期の開始"
@@ -438,16 +438,16 @@
         "推奨事項を自動的に同期する"
       ],
       "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.": [
-        ""
+        "Foreman インベントリーアップロードプラグインは、Foreman ホストのインベントリーデータを Insights のインベントリーサービスに自動的にアップロードします。このデータは、サブスクリプションサービスでもサブスクリプションレポートに使用できます。サブスクリプションサービスを使用する場合は、インベントリーアップロードを有効にする必要があります。"
       ],
       "The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Foreman instance.": [
-        ""
+        "Red Hat Hybrid Cloud Console は、この Foreman インスタンスの予測分析、問題の修復、統合サブスクリプションレポートを提供する Red Hat Insights およびサブスクリプションを含む一連のクラウドサービスを提供します。"
       ],
       "The report file %{filename} doesn't exist": [
         "%{filename} レポートファイルがありません"
       ],
       "The scheduled process is disabled because this Foreman is configured with the use_local_advisor_engine option.": [
-        ""
+        "この Foreman は use_local_advisor_engine オプションで設定されているため、スケジュールされたプロセスは無効になっています。"
       ],
       "The server returned the following error: %s": [
         "サーバーは以下のエラーを返しました: %s"
@@ -456,16 +456,16 @@
         "タスクは以下のエラーで失敗しました: "
       ],
       "There are no recommendations for your hosts": [
-        ""
+        "ホストに関する推奨事項はありません"
       ],
       "This action will also enable automatic reports upload": [
         "このアクションを実行すると、自動レポートのアップロードも有効になります。"
       ],
       "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day.": [
-        ""
+        "すべての Foreman 組織でこのレポートを有効にするには、{uploadButtonName} をオンに設定します。データは 1 日に 1 回自動的にレポートされます。"
       ],
       "To manually upload the data for a specific organization, select an organization and click {restartButtonName}.": [
-        ""
+        "特定の組織のデータを手動でアップロードするには、組織を選択して {restartButtonName} をクリックします。"
       ],
       "Total risk": [
         "リスクの総数"
@@ -474,13 +474,13 @@
         "リスクの総数"
       ],
       "Upload hits from iop-advisor-engine": [
-        ""
+        "iop-advisor-engine からの検索結果をアップロードする"
       ],
       "Upload hits information": [
-        ""
+        "検索結果の情報をアップロードする"
       ],
       "Upload rules related to the hits": [
-        ""
+        "検索結果に関するアップロードルール"
       ],
       "Uploading": [
         "アップロード中..."
@@ -498,31 +498,31 @@
         "待機して %s"
       ],
       "Whether the resolution requires reboot": [
-        ""
+        "解決策には再起動が必要かどうか"
       ],
       "category name": [
-        ""
+        "カテゴリー名"
       ],
       "generic": [
-        ""
+        "汎用"
       ],
       "hosts page": [
         "ホストページ"
       ],
       "impact name": [
-        ""
+        "影響名"
       ],
       "iop payload including resolutions, rules, hits": [
-        ""
+        "解決策、ルール、検索結果を含む iop ペイロード"
       ],
       "items": [
         "項目"
       ],
       "likelihood number": [
-        ""
+        "適用可能な確率"
       ],
       "more info": [
-        ""
+        "詳細情報"
       ],
       "page": [
         "ページ"
@@ -531,52 +531,52 @@
         "/ページ"
       ],
       "publish date (YYYY-MM-DD)": [
-        ""
+        "公開日 (YYYY-MM-DD)"
       ],
       "rating": [
-        ""
+        "評価"
       ],
       "reason": [
-        ""
+        "理由"
       ],
       "reboot required": [
-        ""
+        "再起動が必要です"
       ],
       "resolution description": [
-        ""
+        "解決策の説明"
       ],
       "resolution risk": [
-        ""
+        "解決策のリスク"
       ],
       "result url": [
-        ""
+        "結果 URL"
       ],
       "rule description": [
-        ""
+        "ルールの説明"
       ],
       "rule id": [
-        ""
+        "ルール ID"
       ],
       "rule title": [
-        ""
+        "ルールタイトル"
       ],
       "solution url": [
-        ""
+        "ソリューション URL"
       ],
       "summary": [
-        ""
+        "要約"
       ],
       "total risk": [
-        ""
+        "リスクの総数"
       ],
       "type": [
-        ""
+        "タイプ"
       ],
       "upload hits details json": [
-        ""
+        "検索結果の詳細 JSON をアップロード"
       ],
       "upload resolutions related to the hits": [
-        ""
+        "検索結果に関連する解決策をアップロードする"
       ],
       "view the job in progress": [
         "処理中のジョブを表示する"

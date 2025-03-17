@@ -4,19 +4,20 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
+# Bryan Kearney <bryan.kearney@gmail.com>, 2023
 # tim123, 2023
 # 0868a4d1af5275b3f70b0a6dac4c99a4, 2023
-# Bryan Kearney <bryan.kearney@gmail.com>, 2023
 # Amit Upadhye <aupadhye@redhat.com>, 2023
-# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2023
+# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: foreman_rh_cloud 11.1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
 "Last-Translator: Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarde"
-"n.nl>, 2023\n"
+"n.nl>, 2025\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/foreman/teams/114/zh"
 "_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +27,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid " Sync all inventory status"
-msgstr ""
+msgstr " 同步所有清单状态"
 
 msgid "%s organizations"
 msgstr "%s 机构"
@@ -53,7 +54,7 @@ msgid "Automatic inventory upload"
 msgstr "自动清单上传"
 
 msgid "Automatic mismatch deletion"
-msgstr ""
+msgstr "自动清单删除"
 
 msgid "Cancel"
 msgstr "取消"
@@ -95,7 +96,7 @@ msgid "Configure Cloud Connector on given hosts"
 msgstr "在给定主机上配置 Cloud Connector"
 
 msgid "Configure cloud connector"
-msgstr ""
+msgstr "配置云连接器"
 
 msgid "Connectivity test"
 msgstr "连接测试"
@@ -119,10 +120,10 @@ msgid "Download Report"
 msgstr "下载报告"
 
 msgid "Download latest report"
-msgstr "下载最新報告"
+msgstr "下载最新的报告"
 
 msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
-msgstr ""
+msgstr "启用自动删除来自红帽云的主机记录"
 
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud"
 msgstr "启用来自红帽云的 Insights 建议自动同步"
@@ -158,7 +159,7 @@ msgid "Exit Code: %s"
 msgstr "退出代码：%s"
 
 msgid "Fetch Insights-related host details"
-msgstr ""
+msgstr "获取与 Insights 相关的主机详情"
 
 msgid "Fetching data about your accounts"
 msgstr "获取有关您的帐户的数据"
@@ -173,10 +174,10 @@ msgid "For more info, please visit the"
 msgstr "如需更多信息，请访问"
 
 msgid "For more information about Insights and Cloud Connector, see:"
-msgstr ""
+msgstr "有关 Insights 和云连接器的更多信息，请参阅"
 
 msgid "For more information about the Subscriptions service, see:"
-msgstr ""
+msgstr "有关订阅服务的更多信息，请参阅："
 
 msgid "Foreman plugin that process & upload data to Red Hat Cloud"
 msgstr "处理数据并将其上传到红帽云的 Foreman 插件"
@@ -185,16 +186,16 @@ msgid "Full Screen"
 msgstr "全屏"
 
 msgid "Generate and upload report"
-msgstr ""
+msgstr "生成并上传报告"
 
 msgid "Generate the report, but do not upload"
-msgstr ""
+msgstr "生成报告，但不上传"
 
 msgid "Generating"
 msgstr "生成中"
 
 msgid "Go to Foreman Insights page"
-msgstr ""
+msgstr "进入 Foreman Insights 页面"
 
 msgid "Go to first page"
 msgstr "前往第一页"
@@ -209,7 +210,7 @@ msgid "Go to previous page"
 msgstr "前往上一页"
 
 msgid "Grab hosts that are missing in RH Cloud"
-msgstr ""
+msgstr "获取 RH Cloud 中缺少的主机"
 
 msgid "Host Insights recommendations"
 msgstr "主机 Insights 建议"
@@ -257,7 +258,7 @@ msgid "Knowledgebase article"
 msgstr "知识库文章"
 
 msgid "List of host UUIDs"
-msgstr ""
+msgstr "主机 UUID 列表"
 
 msgid "Loading"
 msgstr "加载"
@@ -362,7 +363,7 @@ msgid "Recommendations synced successfully"
 msgstr "成功同步建议"
 
 msgid "Reconfigure cloud connector"
-msgstr ""
+msgstr "重新配置云连接器"
 
 msgid "Red Hat Cloud Inventory"
 msgstr "红帽云清单"
@@ -404,7 +405,7 @@ msgid "Satellite server has %{hits_count} recommendations by Red Hat"
 msgstr "Satellite 服务器有 %{hits_count} 个红帽提供的建议"
 
 msgid "Scoped search string for host removal"
-msgstr ""
+msgstr "用于删除主机的有范围的搜索字符串"
 
 msgid "Select recommendations from all pages"
 msgstr "在所有页面中选择建议"
@@ -422,7 +423,7 @@ msgid "Show Advanced Settings"
 msgstr "显示高级设置"
 
 msgid "Show if system is configured to use local iop-advisor-engine."
-msgstr ""
+msgstr "显示系统是否被配置为使用本地 iop-advisor-engine。"
 
 msgid "Start inventory synchronization"
 msgstr "启动清单同步"
@@ -446,16 +447,16 @@ msgid "Synchronize recommendations Automatically"
 msgstr "自动同步建议"
 
 msgid "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required."
-msgstr ""
+msgstr "Foreman 清单上传插件会自动将 Foreman 主机清单数据上传到 Insights 的 Inventory 服务，订阅服务使用这些信息来提供订阅报告。如果使用订阅服务，则需要启用清单上传。"
 
 msgid "The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Foreman instance."
-msgstr ""
+msgstr "Red Hat Hybrid Cloud Console 提供了一组云服务，包括 Red Hat Insights 和订阅，提供预测分析、修复问题以及针对此 Foreman 实例的统一订阅报告。"
 
 msgid "The report file %{filename} doesn't exist"
 msgstr "报告文件 %{filename} 不存在"
 
 msgid "The scheduled process is disabled because this Foreman is configured with the use_local_advisor_engine option."
-msgstr ""
+msgstr "调度的进程被禁用，因为此 Foreman 配置了 use_local_advisor_engine 选项。"
 
 msgid "The server returned the following error: %s"
 msgstr "服务器返回以下错误：%s"
@@ -464,16 +465,16 @@ msgid "The task failed with the following error:"
 msgstr "任务失败，错误为:"
 
 msgid "There are no recommendations for your hosts"
-msgstr ""
+msgstr "没有适用于您的主机的建议"
 
 msgid "This action will also enable automatic reports upload"
 msgstr "此操作还会启用自动报告上传"
 
 msgid "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day."
-msgstr ""
+msgstr "要为所有 Foreman 机构启用此报告，请将 {uploadButtonName} 设置为 on。数据将每天自动报告一次。"
 
 msgid "To manually upload the data for a specific organization, select an organization and click {restartButtonName}."
-msgstr ""
+msgstr "要手动上传特定机构的数据，请选择机构并点 {restartButtonName}。"
 
 msgid "Total risk"
 msgstr "总风险"
@@ -482,13 +483,13 @@ msgid "Total risks"
 msgstr "总风险"
 
 msgid "Upload hits from iop-advisor-engine"
-msgstr ""
+msgstr "从 iop-advisor-engine 上传 hits"
 
 msgid "Upload hits information"
-msgstr ""
+msgstr "上传 hits 信息"
 
 msgid "Upload rules related to the hits"
-msgstr ""
+msgstr "上传与 hits 相关的 rule"
 
 msgid "Uploading"
 msgstr "上载中"
@@ -506,85 +507,85 @@ msgid "Wait and %s"
 msgstr "等待和 %s"
 
 msgid "Whether the resolution requires reboot"
-msgstr ""
+msgstr "resolution 是否需要重启"
 
 msgid "category name"
-msgstr ""
+msgstr "类别名称"
 
 msgid "generic"
-msgstr ""
+msgstr "通用"
 
 msgid "hosts page"
 msgstr "主机页"
 
 msgid "impact name"
-msgstr ""
+msgstr "影响名称"
 
 msgid "iop payload including resolutions, rules, hits"
-msgstr ""
+msgstr "IOP 有效负载，包括 resolutions, rules, hits"
 
 msgid "items"
 msgstr "项"
 
 msgid "likelihood number"
-msgstr ""
+msgstr "可能性号"
 
 msgid "more info"
-msgstr ""
+msgstr "更多信息"
 
 msgid "page"
-msgstr "page"
+msgstr "页"
 
 msgid "per page"
 msgstr "每页"
 
 msgid "publish date (YYYY-MM-DD)"
-msgstr ""
+msgstr "发布日期 (YYYY-MM-DD)"
 
 msgid "rating"
-msgstr ""
+msgstr "评级"
 
 msgid "reason"
-msgstr ""
+msgstr "原因"
 
 msgid "reboot required"
-msgstr ""
+msgstr "需要重启"
 
 msgid "resolution description"
-msgstr ""
+msgstr "resolution 描述"
 
 msgid "resolution risk"
-msgstr ""
+msgstr "resolution 风险"
 
 msgid "result url"
-msgstr ""
+msgstr "结果 url"
 
 msgid "rule description"
-msgstr ""
+msgstr "rule 描述"
 
 msgid "rule id"
-msgstr ""
+msgstr "rule id"
 
 msgid "rule title"
-msgstr ""
+msgstr "rule 标题"
 
 msgid "solution url"
-msgstr ""
+msgstr "solution url"
 
 msgid "summary"
-msgstr ""
+msgstr "摘要"
 
 msgid "total risk"
-msgstr ""
+msgstr "总风险"
 
 msgid "type"
-msgstr ""
+msgstr "类型"
 
 msgid "upload hits details json"
-msgstr ""
+msgstr "上传 hits 详情 json"
 
 msgid "upload resolutions related to the hits"
-msgstr ""
+msgstr "上传与 hits 相关的 resolutions"
 
 msgid "view the job in progress"
 msgstr "查看正在进行中的任务"

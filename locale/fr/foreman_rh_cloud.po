@@ -4,21 +4,21 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Baptiste Agasse <baptiste.agasse@gmail.com>, 2023
 # Romain Vrignaud <rvrignaud@gmail.com>, 2023
 # 21966816214bc546c1fc8a185e75ca1c, 2023
+# Bryan Kearney <bryan.kearney@gmail.com>, 2023
 # Claer <transiblu@claer.hammock.fr>, 2023
 # Amit Upadhye <aupadhye@redhat.com>, 2023
-# Bryan Kearney <bryan.kearney@gmail.com>, 2023
-# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2023
+# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: foreman_rh_cloud 11.1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
 "Last-Translator: Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarde"
-"n.nl>, 2023\n"
+"n.nl>, 2025\n"
 "Language-Team: French (https://app.transifex.com/foreman/teams/114/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,7 +28,7 @@ msgstr ""
 "0 == 0 ? 1 : 2;\n"
 
 msgid " Sync all inventory status"
-msgstr ""
+msgstr " Sync tous les statuts d'inventaire"
 
 msgid "%s organizations"
 msgstr "%s organisations"
@@ -55,7 +55,7 @@ msgid "Automatic inventory upload"
 msgstr "Chargement automatique de l'inventaire"
 
 msgid "Automatic mismatch deletion"
-msgstr ""
+msgstr "Suppression automatique des non-concordances"
 
 msgid "Cancel"
 msgstr "Annuler"
@@ -97,7 +97,7 @@ msgid "Configure Cloud Connector on given hosts"
 msgstr "Configurer Cloud Connector sur des hôtes donnés"
 
 msgid "Configure cloud connector"
-msgstr ""
+msgstr "Configurer le connecteur cloud"
 
 msgid "Connectivity test"
 msgstr "Test de connectivité"
@@ -124,7 +124,7 @@ msgid "Download latest report"
 msgstr "Télécharger le dernier rapport"
 
 msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
-msgstr ""
+msgstr "Activer la suppression automatique des enregistrements d'hôtes incompatibles du cloud Red Hat"
 
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud"
 msgstr "Activer la synchronisation automatique des recommandations Insights à partir de Red Hat Cloud"
@@ -160,7 +160,7 @@ msgid "Exit Code: %s"
 msgstr "Code de sortie : %s"
 
 msgid "Fetch Insights-related host details"
-msgstr ""
+msgstr "Récupérer les détails de l'hôte liés à Insights"
 
 msgid "Fetching data about your accounts"
 msgstr "Récupérer des données sur vos comptes"
@@ -175,10 +175,10 @@ msgid "For more info, please visit the"
 msgstr "Pour plus d'informations, veuillez consulter"
 
 msgid "For more information about Insights and Cloud Connector, see:"
-msgstr ""
+msgstr "Pour plus d'informations sur Insights et Cloud Connector, consultez :"
 
 msgid "For more information about the Subscriptions service, see:"
-msgstr ""
+msgstr "Pour plus d'informations sur le service d'abonnements, consultez :"
 
 msgid "Foreman plugin that process & upload data to Red Hat Cloud"
 msgstr "Plugin Foreman qui traite et télécharge les données vers Red Hat Cloud"
@@ -187,16 +187,16 @@ msgid "Full Screen"
 msgstr "Plein écran"
 
 msgid "Generate and upload report"
-msgstr ""
+msgstr "Générer et télécharger un rapport"
 
 msgid "Generate the report, but do not upload"
-msgstr ""
+msgstr "Générer le rapport, mais ne pas le télécharger"
 
 msgid "Generating"
 msgstr "En cours de génération"
 
 msgid "Go to Foreman Insights page"
-msgstr ""
+msgstr "Accéder à la page Foreman Insights"
 
 msgid "Go to first page"
 msgstr "Aller à la première page"
@@ -211,7 +211,7 @@ msgid "Go to previous page"
 msgstr "Aller à la page précédente"
 
 msgid "Grab hosts that are missing in RH Cloud"
-msgstr ""
+msgstr "Récupérer les hôtes manquants dans RH Cloud"
 
 msgid "Host Insights recommendations"
 msgstr "Recommandations de Host Insights"
@@ -253,13 +253,13 @@ msgid "Inventory sync has started:"
 msgstr "La synchronisation de l'inventaire a commencé :"
 
 msgid "Items per page"
-msgstr "Articles par page"
+msgstr "Items par page"
 
 msgid "Knowledgebase article"
 msgstr "Article de base de connaissances"
 
 msgid "List of host UUIDs"
-msgstr ""
+msgstr "Liste des UUID d'hôtes"
 
 msgid "Loading"
 msgstr "Chargement"
@@ -364,7 +364,7 @@ msgid "Recommendations synced successfully"
 msgstr "Les recommandations ont été synchronisées"
 
 msgid "Reconfigure cloud connector"
-msgstr ""
+msgstr "Reconfigurer le connecteur cloud"
 
 msgid "Red Hat Cloud Inventory"
 msgstr "Inventaire Red Hat Cloud"
@@ -406,7 +406,7 @@ msgid "Satellite server has %{hits_count} recommendations by Red Hat"
 msgstr "Le serveur satellite a %{hits_count} recommandations de Red Hat"
 
 msgid "Scoped search string for host removal"
-msgstr ""
+msgstr "Chaîne de recherche limitée pour la suppression de l'hôte"
 
 msgid "Select recommendations from all pages"
 msgstr "Sélectionner des recommandations sur toutes les pages"
@@ -424,7 +424,7 @@ msgid "Show Advanced Settings"
 msgstr "Afficher les paramètres avancés"
 
 msgid "Show if system is configured to use local iop-advisor-engine."
-msgstr ""
+msgstr "Indique si le système est configuré pour utiliser le moteur iop-advisor local."
 
 msgid "Start inventory synchronization"
 msgstr "Démarrer la synchronisation de l'inventaire"
@@ -448,16 +448,16 @@ msgid "Synchronize recommendations Automatically"
 msgstr "Synchroniser automatiquement les recommandations"
 
 msgid "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required."
-msgstr ""
+msgstr "Le plugin de téléchargement d'inventaire Foreman télécharge automatiquement les données d'inventaire des hôtes Foreman vers le service Inventaire d'Insights, où elles peuvent également être utilisées par le service Abonnements pour générer des rapports d'abonnement. Si vous utilisez le service Abonnements, l'activation du téléchargement d'inventaire est requise."
 
 msgid "The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Foreman instance."
-msgstr ""
+msgstr "La console Red Hat Hybrid Cloud fournit un ensemble de services cloud, notamment Red Hat Insights et Subscriptions, qui fournissent une analyse prédictive, une correction des problèmes et des rapports d'abonnement unifiés pour cette instance Foreman."
 
 msgid "The report file %{filename} doesn't exist"
 msgstr "Le fichier de rapport %{filename} n'existe pas"
 
 msgid "The scheduled process is disabled because this Foreman is configured with the use_local_advisor_engine option."
-msgstr ""
+msgstr "Le processus planifié est désactivé car ce contremaître est configuré avec l'option use_local_advisor_engine."
 
 msgid "The server returned the following error: %s"
 msgstr "Le serveur a renvoyé l'erreur suivante : %s"
@@ -466,16 +466,16 @@ msgid "The task failed with the following error:"
 msgstr "La tâche a échoué avec l'erreur suivante :"
 
 msgid "There are no recommendations for your hosts"
-msgstr ""
+msgstr "Il n'y a aucune recommandation pour vos hôtes"
 
 msgid "This action will also enable automatic reports upload"
 msgstr "Cette action permettra également le téléchargement automatique des rapports"
 
 msgid "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day."
-msgstr ""
+msgstr "Pour activer ce rapport pour toutes les organisations Foreman, définissez{uploadButtonName} à activé. Les données seront signalées automatiquement une fois par jour."
 
 msgid "To manually upload the data for a specific organization, select an organization and click {restartButtonName}."
-msgstr ""
+msgstr "Pour télécharger manuellement les données d'une organisation spécifique, sélectionnez une organisation et cliquez sur{restartButtonName} ."
 
 msgid "Total risk"
 msgstr "Risque total"
@@ -484,13 +484,13 @@ msgid "Total risks"
 msgstr "Risques totaux"
 
 msgid "Upload hits from iop-advisor-engine"
-msgstr ""
+msgstr "Télécharger les hits depuis iop-advisor-engine"
 
 msgid "Upload hits information"
-msgstr ""
+msgstr "Télécharger les informations sur les hits"
 
 msgid "Upload rules related to the hits"
-msgstr ""
+msgstr "Règles de téléchargement liées aux hits"
 
 msgid "Uploading"
 msgstr "Téléchargement"
@@ -508,31 +508,31 @@ msgid "Wait and %s"
 msgstr "Attendez et %s"
 
 msgid "Whether the resolution requires reboot"
-msgstr ""
+msgstr "Si la résolution nécessite un redémarrage"
 
 msgid "category name"
-msgstr ""
+msgstr "nom de la catégorie"
 
 msgid "generic"
-msgstr ""
+msgstr "générique"
 
 msgid "hosts page"
 msgstr "page hôtes"
 
 msgid "impact name"
-msgstr ""
+msgstr "nom de l'impact"
 
 msgid "iop payload including resolutions, rules, hits"
-msgstr ""
+msgstr "charge utile iop incluant les résolutions, les règles et les hits"
 
 msgid "items"
-msgstr "articles"
+msgstr "items"
 
 msgid "likelihood number"
-msgstr ""
+msgstr "nombre de vraisemblance"
 
 msgid "more info"
-msgstr ""
+msgstr "plus d'infos"
 
 msgid "page"
 msgstr "page"
@@ -541,52 +541,52 @@ msgid "per page"
 msgstr "par page"
 
 msgid "publish date (YYYY-MM-DD)"
-msgstr ""
+msgstr "date de publication (AAAA-MM-JJ)"
 
 msgid "rating"
-msgstr ""
+msgstr "notation"
 
 msgid "reason"
-msgstr ""
+msgstr "raison"
 
 msgid "reboot required"
-msgstr ""
+msgstr "redémarrage requis"
 
 msgid "resolution description"
-msgstr ""
+msgstr "description de la résolution"
 
 msgid "resolution risk"
-msgstr ""
+msgstr "risque de résolution"
 
 msgid "result url"
-msgstr ""
+msgstr "URL du résultat"
 
 msgid "rule description"
-msgstr ""
+msgstr "description de la règle"
 
 msgid "rule id"
-msgstr ""
+msgstr "identifiant de règle"
 
 msgid "rule title"
-msgstr ""
+msgstr "titre de la règle"
 
 msgid "solution url"
-msgstr ""
+msgstr "URL de la solution"
 
 msgid "summary"
-msgstr ""
+msgstr "résumé"
 
 msgid "total risk"
-msgstr ""
+msgstr "risque total"
 
 msgid "type"
-msgstr ""
+msgstr "type"
 
 msgid "upload hits details json"
-msgstr ""
+msgstr "détails des hits de téléchargement json"
 
 msgid "upload resolutions related to the hits"
-msgstr ""
+msgstr "télécharger les résolutions liées aux hits"
 
 msgid "view the job in progress"
 msgstr "visualiser job en cours"
