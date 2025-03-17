@@ -6,7 +6,7 @@
         "Project-Id-Version": "foreman_rh_cloud 11.1.0",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
-        "Last-Translator": "Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2023",
+        "Last-Translator": "Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025",
         "Language-Team": "Chinese (China) (https://app.transifex.com/foreman/teams/114/zh_CN/)",
         "MIME-Version": "1.0",
         "Content-Type": "text/plain; charset=UTF-8",
@@ -18,7 +18,7 @@
         "plural_forms": "nplurals=1; plural=0;"
       },
       " Sync all inventory status": [
-        ""
+        " 同步所有清单状态"
       ],
       "%s organizations": [
         "%s 机构"
@@ -45,7 +45,7 @@
         "自动清单上传"
       ],
       "Automatic mismatch deletion": [
-        ""
+        "自动清单删除"
       ],
       "Cancel": [
         "取消"
@@ -87,7 +87,7 @@
         "在给定主机上配置 Cloud Connector"
       ],
       "Configure cloud connector": [
-        ""
+        "配置云连接器"
       ],
       "Connectivity test": [
         "连接测试"
@@ -111,10 +111,10 @@
         "下载报告"
       ],
       "Download latest report": [
-        "下载最新報告"
+        "下载最新的报告"
       ],
       "Enable automatic deletion of mismatched host records from the Red Hat cloud": [
-        ""
+        "启用自动删除来自红帽云的主机记录"
       ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud": [
         "启用来自红帽云的 Insights 建议自动同步"
@@ -150,7 +150,7 @@
         "退出代码：%s"
       ],
       "Fetch Insights-related host details": [
-        ""
+        "获取与 Insights 相关的主机详情"
       ],
       "Fetching data about your accounts": [
         "获取有关您的帐户的数据"
@@ -165,10 +165,10 @@
         "如需更多信息，请访问"
       ],
       "For more information about Insights and Cloud Connector, see:": [
-        ""
+        "有关 Insights 和云连接器的更多信息，请参阅"
       ],
       "For more information about the Subscriptions service, see:": [
-        ""
+        "有关订阅服务的更多信息，请参阅："
       ],
       "Foreman plugin that process & upload data to Red Hat Cloud": [
         "处理数据并将其上传到红帽云的 Foreman 插件"
@@ -177,16 +177,16 @@
         "全屏"
       ],
       "Generate and upload report": [
-        ""
+        "生成并上传报告"
       ],
       "Generate the report, but do not upload": [
-        ""
+        "生成报告，但不上传"
       ],
       "Generating": [
         "生成中"
       ],
       "Go to Foreman Insights page": [
-        ""
+        "进入 Foreman Insights 页面"
       ],
       "Go to first page": [
         "前往第一页"
@@ -201,7 +201,7 @@
         "前往上一页"
       ],
       "Grab hosts that are missing in RH Cloud": [
-        ""
+        "获取 RH Cloud 中缺少的主机"
       ],
       "Host Insights recommendations": [
         "主机 Insights 建议"
@@ -249,7 +249,7 @@
         "知识库文章"
       ],
       "List of host UUIDs": [
-        ""
+        "主机 UUID 列表"
       ],
       "Loading": [
         "加载"
@@ -354,7 +354,7 @@
         "成功同步建议"
       ],
       "Reconfigure cloud connector": [
-        ""
+        "重新配置云连接器"
       ],
       "Red Hat Cloud Inventory": [
         "红帽云清单"
@@ -396,7 +396,7 @@
         "Satellite 服务器有 %{hits_count} 个红帽提供的建议"
       ],
       "Scoped search string for host removal": [
-        ""
+        "用于删除主机的有范围的搜索字符串"
       ],
       "Select recommendations from all pages": [
         "在所有页面中选择建议"
@@ -414,7 +414,7 @@
         "显示高级设置"
       ],
       "Show if system is configured to use local iop-advisor-engine.": [
-        ""
+        "显示系统是否被配置为使用本地 iop-advisor-engine。"
       ],
       "Start inventory synchronization": [
         "启动清单同步"
@@ -438,16 +438,16 @@
         "自动同步建议"
       ],
       "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.": [
-        ""
+        "Foreman 清单上传插件会自动将 Foreman 主机清单数据上传到 Insights 的 Inventory 服务，订阅服务使用这些信息来提供订阅报告。如果使用订阅服务，则需要启用清单上传。"
       ],
       "The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Foreman instance.": [
-        ""
+        "Red Hat Hybrid Cloud Console 提供了一组云服务，包括 Red Hat Insights 和订阅，提供预测分析、修复问题以及针对此 Foreman 实例的统一订阅报告。"
       ],
       "The report file %{filename} doesn't exist": [
         "报告文件 %{filename} 不存在"
       ],
       "The scheduled process is disabled because this Foreman is configured with the use_local_advisor_engine option.": [
-        ""
+        "调度的进程被禁用，因为此 Foreman 配置了 use_local_advisor_engine 选项。"
       ],
       "The server returned the following error: %s": [
         "服务器返回以下错误：%s"
@@ -456,16 +456,16 @@
         "任务失败，错误为:"
       ],
       "There are no recommendations for your hosts": [
-        ""
+        "没有适用于您的主机的建议"
       ],
       "This action will also enable automatic reports upload": [
         "此操作还会启用自动报告上传"
       ],
       "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day.": [
-        ""
+        "要为所有 Foreman 机构启用此报告，请将 {uploadButtonName} 设置为 on。数据将每天自动报告一次。"
       ],
       "To manually upload the data for a specific organization, select an organization and click {restartButtonName}.": [
-        ""
+        "要手动上传特定机构的数据，请选择机构并点 {restartButtonName}。"
       ],
       "Total risk": [
         "总风险"
@@ -474,13 +474,13 @@
         "总风险"
       ],
       "Upload hits from iop-advisor-engine": [
-        ""
+        "从 iop-advisor-engine 上传 hits"
       ],
       "Upload hits information": [
-        ""
+        "上传 hits 信息"
       ],
       "Upload rules related to the hits": [
-        ""
+        "上传与 hits 相关的 rule"
       ],
       "Uploading": [
         "上载中"
@@ -498,85 +498,85 @@
         "等待和 %s"
       ],
       "Whether the resolution requires reboot": [
-        ""
+        "resolution 是否需要重启"
       ],
       "category name": [
-        ""
+        "类别名称"
       ],
       "generic": [
-        ""
+        "通用"
       ],
       "hosts page": [
         "主机页"
       ],
       "impact name": [
-        ""
+        "影响名称"
       ],
       "iop payload including resolutions, rules, hits": [
-        ""
+        "IOP 有效负载，包括 resolutions, rules, hits"
       ],
       "items": [
         "项"
       ],
       "likelihood number": [
-        ""
+        "可能性号"
       ],
       "more info": [
-        ""
+        "更多信息"
       ],
       "page": [
-        "page"
+        "页"
       ],
       "per page": [
         "每页"
       ],
       "publish date (YYYY-MM-DD)": [
-        ""
+        "发布日期 (YYYY-MM-DD)"
       ],
       "rating": [
-        ""
+        "评级"
       ],
       "reason": [
-        ""
+        "原因"
       ],
       "reboot required": [
-        ""
+        "需要重启"
       ],
       "resolution description": [
-        ""
+        "resolution 描述"
       ],
       "resolution risk": [
-        ""
+        "resolution 风险"
       ],
       "result url": [
-        ""
+        "结果 url"
       ],
       "rule description": [
-        ""
+        "rule 描述"
       ],
       "rule id": [
-        ""
+        "rule id"
       ],
       "rule title": [
-        ""
+        "rule 标题"
       ],
       "solution url": [
-        ""
+        "solution url"
       ],
       "summary": [
-        ""
+        "摘要"
       ],
       "total risk": [
-        ""
+        "总风险"
       ],
       "type": [
-        ""
+        "类型"
       ],
       "upload hits details json": [
-        ""
+        "上传 hits 详情 json"
       ],
       "upload resolutions related to the hits": [
-        ""
+        "上传与 hits 相关的 resolutions"
       ],
       "view the job in progress": [
         "查看正在进行中的任务"

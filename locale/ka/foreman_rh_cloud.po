@@ -6,6 +6,7 @@
 # Translators:
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2023
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: foreman_rh_cloud 11.1.0\n"
