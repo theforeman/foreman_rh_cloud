@@ -5,17 +5,18 @@
 #
 # Translators:
 # 진선재, 2023
-# 0868a4d1af5275b3f70b0a6dac4c99a4, 2023
 # Bryan Kearney <bryan.kearney@gmail.com>, 2023
-# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2024
+# 0868a4d1af5275b3f70b0a6dac4c99a4, 2023
+# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: foreman_rh_cloud 1.0.0\n"
+"Project-Id-Version: foreman_rh_cloud 11.1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
 "Last-Translator: Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarde"
-"n.nl>, 2024\n"
+"n.nl>, 2025\n"
 "Language-Team: Korean (https://app.transifex.com/foreman/teams/114/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,7 +25,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid " Sync all inventory status"
-msgstr ""
+msgstr "모든 인벤토리 상태 동기화"
 
 msgid "%s organizations"
 msgstr "%s 조직"
@@ -51,10 +52,10 @@ msgid "Automatic inventory upload"
 msgstr "자동 인벤토리 업로드"
 
 msgid "Automatic mismatch deletion"
-msgstr ""
+msgstr "자동 불일치 삭제"
 
 msgid "Cancel"
-msgstr "취소"
+msgstr "취소 "
 
 msgid "Clear"
 msgstr "삭제"
@@ -93,7 +94,7 @@ msgid "Configure Cloud Connector on given hosts"
 msgstr "지정된 호스트에서 Cloud Connector 구성"
 
 msgid "Configure cloud connector"
-msgstr ""
+msgstr "클라우드 커넥터 구성"
 
 msgid "Connectivity test"
 msgstr "연결성 테스트"
@@ -120,7 +121,7 @@ msgid "Download latest report"
 msgstr "최신 보고서 다운로드"
 
 msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
-msgstr ""
+msgstr "Red Hat 클라우드에서 일치하지 않는 호스트 기록의 자동 삭제를 활성화하십시오."
 
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud"
 msgstr "Red Hat 클라우드에서 Insights 권장 사항의 자동 동기화를 활성화합니다."
@@ -156,7 +157,7 @@ msgid "Exit Code: %s"
 msgstr "종료 코드: %s"
 
 msgid "Fetch Insights-related host details"
-msgstr ""
+msgstr "Insights 관련 호스트 세부 정보 가져오기"
 
 msgid "Fetching data about your accounts"
 msgstr "귀하의 계정에 대한 데이터를 가져오는 중"
@@ -171,10 +172,10 @@ msgid "For more info, please visit the"
 msgstr "자세한 내용은 다음에서 참조하세요"
 
 msgid "For more information about Insights and Cloud Connector, see:"
-msgstr ""
+msgstr "Insights 및 Cloud Connector에 대한 자세한 내용은 다음을 참조하세요."
 
 msgid "For more information about the Subscriptions service, see:"
-msgstr ""
+msgstr "서브스크립션 서비스에 대한 자세한 정보는 다음을 참조하십시오:"
 
 msgid "Foreman plugin that process & upload data to Red Hat Cloud"
 msgstr "Red Hat Cloud에 데이터를 처리하고 업로드하는 Foreman 플러그인"
@@ -183,16 +184,16 @@ msgid "Full Screen"
 msgstr "전체 화면"
 
 msgid "Generate and upload report"
-msgstr ""
+msgstr "보고서 생성 및 업로드"
 
 msgid "Generate the report, but do not upload"
-msgstr ""
+msgstr "보고서를 생성하되 업로드하지 마십시오."
 
 msgid "Generating"
 msgstr "생성 중"
 
 msgid "Go to Foreman Insights page"
-msgstr ""
+msgstr "Foreman Insights 페이지로 이동"
 
 msgid "Go to first page"
 msgstr "첫 번째 페이지로 이동"
@@ -207,7 +208,7 @@ msgid "Go to previous page"
 msgstr "이전 페이지로 이동"
 
 msgid "Grab hosts that are missing in RH Cloud"
-msgstr ""
+msgstr "RH Cloud에 없는 호스트를 가져오십시오."
 
 msgid "Host Insights recommendations"
 msgstr "호스트 Insights 추천"
@@ -255,7 +256,7 @@ msgid "Knowledgebase article"
 msgstr "지식베이스 문서"
 
 msgid "List of host UUIDs"
-msgstr ""
+msgstr "호스트 UUID 목록"
 
 msgid "Loading"
 msgstr "로딩 중 "
@@ -360,7 +361,7 @@ msgid "Recommendations synced successfully"
 msgstr "추천사항이 성공적으로 동기화되었습니다."
 
 msgid "Reconfigure cloud connector"
-msgstr ""
+msgstr "클라우드 커넥터 재구성"
 
 msgid "Red Hat Cloud Inventory"
 msgstr "Red Hat 클라우드 인벤토리"
@@ -402,7 +403,7 @@ msgid "Satellite server has %{hits_count} recommendations by Red Hat"
 msgstr "Satellite 서버에는 Red Hat의 권장 사항이 %{hits_count} 개 있습니다"
 
 msgid "Scoped search string for host removal"
-msgstr ""
+msgstr "호스트 제거를 위한 범위 검색 문자열"
 
 msgid "Select recommendations from all pages"
 msgstr "모든 페이지에서 추천을 선택하세요"
@@ -420,7 +421,7 @@ msgid "Show Advanced Settings"
 msgstr "고급 설정 표시"
 
 msgid "Show if system is configured to use local iop-advisor-engine."
-msgstr ""
+msgstr "시스템이 로컬 iop-advisor-engine을 사용하도록 구성되어 있는지 표시하십시오."
 
 msgid "Start inventory synchronization"
 msgstr "인벤토리 동기화 시작"
@@ -444,16 +445,16 @@ msgid "Synchronize recommendations Automatically"
 msgstr "추천 사항을 자동으로 동기화합니다"
 
 msgid "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required."
-msgstr ""
+msgstr "Foreman 인벤토리 업로드 플러그인은 Foreman 호스트 인벤토리 데이터를 자동으로 Insights의 인벤토리 서비스에 업로드하며, 이 데이터는 서브스크립션 보고서를 위한 서브스크립션 서비스에서도 사용할 수 있습니다. 서브스크립션 서비스를 사용하는 경우, 인벤토리 업로드를 활성화하는 것이 필수입니다."
 
 msgid "The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Foreman instance."
-msgstr ""
+msgstr "Red Hat 하이브리드 클라우드 콘솔은 이 Foreman 인스턴스를 위한 예측 분석, 문제 해결, 통합된 서브스크립션 보고서를 제공하는 Red Hat Insights와 서브스크립션을 포함한 클라우드 서비스 세트를 제공합니다."
 
 msgid "The report file %{filename} doesn't exist"
 msgstr "보고서 파일%{filename}이/가 존재하지 않습니다"
 
 msgid "The scheduled process is disabled because this Foreman is configured with the use_local_advisor_engine option."
-msgstr ""
+msgstr "예약된 프로세스는 이 Foreman이 use_local_advisor_engine 옵션으로 구성되어 있기 때문에 비활성화되었습니다."
 
 msgid "The server returned the following error: %s"
 msgstr "서버에서 다음 오류가 반환되었습니다. %s"
@@ -462,16 +463,16 @@ msgid "The task failed with the following error:"
 msgstr "다음 오류로 인해 작업이 실패했습니다."
 
 msgid "There are no recommendations for your hosts"
-msgstr ""
+msgstr "호스트에 대한 권장 사항이 없음"
 
 msgid "This action will also enable automatic reports upload"
 msgstr "이 작업을 수행하면 자동 보고서 업로드도 활성화됩니다."
 
 msgid "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day."
-msgstr ""
+msgstr "이 보고서를 모든 Foreman 조직에 대해 활성화하려면 {uploadButtonName}를 켬으로 설정하십시오. 데이터는 하루에 한 번 자동으로 보고됩니다."
 
 msgid "To manually upload the data for a specific organization, select an organization and click {restartButtonName}."
-msgstr ""
+msgstr "특정 조직에 대한 데이터를 수동으로 업로드하려면 조직을 선택하고 {restartButtonName}를 클릭하십시오."
 
 msgid "Total risk"
 msgstr "총 위험"
@@ -480,13 +481,13 @@ msgid "Total risks"
 msgstr "총 위험"
 
 msgid "Upload hits from iop-advisor-engine"
-msgstr ""
+msgstr "iop-advisor-engine에서 히트 업로드"
 
 msgid "Upload hits information"
-msgstr ""
+msgstr "히트 정보 업로드"
 
 msgid "Upload rules related to the hits"
-msgstr ""
+msgstr "히트와 관련된 규칙 업로드"
 
 msgid "Uploading"
 msgstr "업로드 중"
@@ -504,31 +505,31 @@ msgid "Wait and %s"
 msgstr "대기 및 %s"
 
 msgid "Whether the resolution requires reboot"
-msgstr ""
+msgstr "해결을 위해 재부팅이 필요한지 여부"
 
 msgid "category name"
-msgstr ""
+msgstr "카테고리 이름"
 
 msgid "generic"
-msgstr ""
+msgstr "일반"
 
 msgid "hosts page"
 msgstr "호스트 페이지"
 
 msgid "impact name"
-msgstr ""
+msgstr "영향 이름"
 
 msgid "iop payload including resolutions, rules, hits"
-msgstr ""
+msgstr "해결책, 규칙, 히트를 포함한 IOP 페이로드"
 
 msgid "items"
 msgstr "항목"
 
 msgid "likelihood number"
-msgstr ""
+msgstr "가능성 점수"
 
 msgid "more info"
-msgstr ""
+msgstr "상세 정보"
 
 msgid "page"
 msgstr "페이지"
@@ -537,52 +538,52 @@ msgid "per page"
 msgstr "페이지 당"
 
 msgid "publish date (YYYY-MM-DD)"
-msgstr ""
+msgstr "게시 날짜 (YYYY-MM-DD)"
 
 msgid "rating"
-msgstr ""
+msgstr "등급"
 
 msgid "reason"
-msgstr ""
+msgstr "이유"
 
 msgid "reboot required"
-msgstr ""
+msgstr "재부팅 필요"
 
 msgid "resolution description"
-msgstr ""
+msgstr "해결 방법"
 
 msgid "resolution risk"
-msgstr ""
+msgstr "해결책 리스크"
 
 msgid "result url"
-msgstr ""
+msgstr "결과 URL"
 
 msgid "rule description"
-msgstr ""
+msgstr "규칙 설명"
 
 msgid "rule id"
-msgstr ""
+msgstr "규칙 ID"
 
 msgid "rule title"
-msgstr ""
+msgstr "규칙 제목"
 
 msgid "solution url"
-msgstr ""
+msgstr "솔루션 URL"
 
 msgid "summary"
-msgstr ""
+msgstr "요약"
 
 msgid "total risk"
-msgstr ""
+msgstr "전체 리스크"
 
 msgid "type"
-msgstr ""
+msgstr "유형"
 
 msgid "upload hits details json"
-msgstr ""
+msgstr "히트 상세정보 json 업로드"
 
 msgid "upload resolutions related to the hits"
-msgstr ""
+msgstr "히트와 관련된 해결책 업로드"
 
 msgid "view the job in progress"
 msgstr "진행중인 작업 보기"

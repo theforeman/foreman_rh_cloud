@@ -6,7 +6,7 @@
         "Project-Id-Version": "foreman_rh_cloud 11.1.0",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
-        "Last-Translator": "Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2023",
+        "Last-Translator": "Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025",
         "Language-Team": "French (https://app.transifex.com/foreman/teams/114/fr/)",
         "MIME-Version": "1.0",
         "Content-Type": "text/plain; charset=UTF-8",
@@ -18,7 +18,7 @@
         "plural_forms": "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
       },
       " Sync all inventory status": [
-        ""
+        " Sync tous les statuts d'inventaire"
       ],
       "%s organizations": [
         "%s organisations"
@@ -45,7 +45,7 @@
         "Chargement automatique de l'inventaire"
       ],
       "Automatic mismatch deletion": [
-        ""
+        "Suppression automatique des non-concordances"
       ],
       "Cancel": [
         "Annuler"
@@ -87,7 +87,7 @@
         "Configurer Cloud Connector sur des hôtes donnés"
       ],
       "Configure cloud connector": [
-        ""
+        "Configurer le connecteur cloud"
       ],
       "Connectivity test": [
         "Test de connectivité"
@@ -114,7 +114,7 @@
         "Télécharger le dernier rapport"
       ],
       "Enable automatic deletion of mismatched host records from the Red Hat cloud": [
-        ""
+        "Activer la suppression automatique des enregistrements d'hôtes incompatibles du cloud Red Hat"
       ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud": [
         "Activer la synchronisation automatique des recommandations Insights à partir de Red Hat Cloud"
@@ -150,7 +150,7 @@
         "Code de sortie : %s"
       ],
       "Fetch Insights-related host details": [
-        ""
+        "Récupérer les détails de l'hôte liés à Insights"
       ],
       "Fetching data about your accounts": [
         "Récupérer des données sur vos comptes"
@@ -165,10 +165,10 @@
         "Pour plus d'informations, veuillez consulter"
       ],
       "For more information about Insights and Cloud Connector, see:": [
-        ""
+        "Pour plus d'informations sur Insights et Cloud Connector, consultez :"
       ],
       "For more information about the Subscriptions service, see:": [
-        ""
+        "Pour plus d'informations sur le service d'abonnements, consultez :"
       ],
       "Foreman plugin that process & upload data to Red Hat Cloud": [
         "Plugin Foreman qui traite et télécharge les données vers Red Hat Cloud"
@@ -177,16 +177,16 @@
         "Plein écran"
       ],
       "Generate and upload report": [
-        ""
+        "Générer et télécharger un rapport"
       ],
       "Generate the report, but do not upload": [
-        ""
+        "Générer le rapport, mais ne pas le télécharger"
       ],
       "Generating": [
         "En cours de génération"
       ],
       "Go to Foreman Insights page": [
-        ""
+        "Accéder à la page Foreman Insights"
       ],
       "Go to first page": [
         "Aller à la première page"
@@ -201,7 +201,7 @@
         "Aller à la page précédente"
       ],
       "Grab hosts that are missing in RH Cloud": [
-        ""
+        "Récupérer les hôtes manquants dans RH Cloud"
       ],
       "Host Insights recommendations": [
         "Recommandations de Host Insights"
@@ -243,13 +243,13 @@
         "La synchronisation de l'inventaire a commencé :"
       ],
       "Items per page": [
-        "Articles par page"
+        "Items par page"
       ],
       "Knowledgebase article": [
         "Article de base de connaissances"
       ],
       "List of host UUIDs": [
-        ""
+        "Liste des UUID d'hôtes"
       ],
       "Loading": [
         "Chargement"
@@ -354,7 +354,7 @@
         "Les recommandations ont été synchronisées"
       ],
       "Reconfigure cloud connector": [
-        ""
+        "Reconfigurer le connecteur cloud"
       ],
       "Red Hat Cloud Inventory": [
         "Inventaire Red Hat Cloud"
@@ -396,7 +396,7 @@
         "Le serveur satellite a %{hits_count} recommandations de Red Hat"
       ],
       "Scoped search string for host removal": [
-        ""
+        "Chaîne de recherche limitée pour la suppression de l'hôte"
       ],
       "Select recommendations from all pages": [
         "Sélectionner des recommandations sur toutes les pages"
@@ -414,7 +414,7 @@
         "Afficher les paramètres avancés"
       ],
       "Show if system is configured to use local iop-advisor-engine.": [
-        ""
+        "Indique si le système est configuré pour utiliser le moteur iop-advisor local."
       ],
       "Start inventory synchronization": [
         "Démarrer la synchronisation de l'inventaire"
@@ -438,16 +438,16 @@
         "Synchroniser automatiquement les recommandations"
       ],
       "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.": [
-        ""
+        "Le plugin de téléchargement d'inventaire Foreman télécharge automatiquement les données d'inventaire des hôtes Foreman vers le service Inventaire d'Insights, où elles peuvent également être utilisées par le service Abonnements pour générer des rapports d'abonnement. Si vous utilisez le service Abonnements, l'activation du téléchargement d'inventaire est requise."
       ],
       "The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Foreman instance.": [
-        ""
+        "La console Red Hat Hybrid Cloud fournit un ensemble de services cloud, notamment Red Hat Insights et Subscriptions, qui fournissent une analyse prédictive, une correction des problèmes et des rapports d'abonnement unifiés pour cette instance Foreman."
       ],
       "The report file %{filename} doesn't exist": [
         "Le fichier de rapport %{filename} n'existe pas"
       ],
       "The scheduled process is disabled because this Foreman is configured with the use_local_advisor_engine option.": [
-        ""
+        "Le processus planifié est désactivé car ce contremaître est configuré avec l'option use_local_advisor_engine."
       ],
       "The server returned the following error: %s": [
         "Le serveur a renvoyé l'erreur suivante : %s"
@@ -456,16 +456,16 @@
         "La tâche a échoué avec l'erreur suivante :"
       ],
       "There are no recommendations for your hosts": [
-        ""
+        "Il n'y a aucune recommandation pour vos hôtes"
       ],
       "This action will also enable automatic reports upload": [
         "Cette action permettra également le téléchargement automatique des rapports"
       ],
       "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day.": [
-        ""
+        "Pour activer ce rapport pour toutes les organisations Foreman, définissez{uploadButtonName} à activé. Les données seront signalées automatiquement une fois par jour."
       ],
       "To manually upload the data for a specific organization, select an organization and click {restartButtonName}.": [
-        ""
+        "Pour télécharger manuellement les données d'une organisation spécifique, sélectionnez une organisation et cliquez sur{restartButtonName} ."
       ],
       "Total risk": [
         "Risque total"
@@ -474,13 +474,13 @@
         "Risques totaux"
       ],
       "Upload hits from iop-advisor-engine": [
-        ""
+        "Télécharger les hits depuis iop-advisor-engine"
       ],
       "Upload hits information": [
-        ""
+        "Télécharger les informations sur les hits"
       ],
       "Upload rules related to the hits": [
-        ""
+        "Règles de téléchargement liées aux hits"
       ],
       "Uploading": [
         "Téléchargement"
@@ -498,31 +498,31 @@
         "Attendez et %s"
       ],
       "Whether the resolution requires reboot": [
-        ""
+        "Si la résolution nécessite un redémarrage"
       ],
       "category name": [
-        ""
+        "nom de la catégorie"
       ],
       "generic": [
-        ""
+        "générique"
       ],
       "hosts page": [
         "page hôtes"
       ],
       "impact name": [
-        ""
+        "nom de l'impact"
       ],
       "iop payload including resolutions, rules, hits": [
-        ""
+        "charge utile iop incluant les résolutions, les règles et les hits"
       ],
       "items": [
-        "articles"
+        "items"
       ],
       "likelihood number": [
-        ""
+        "nombre de vraisemblance"
       ],
       "more info": [
-        ""
+        "plus d'infos"
       ],
       "page": [
         "page"
@@ -531,52 +531,52 @@
         "par page"
       ],
       "publish date (YYYY-MM-DD)": [
-        ""
+        "date de publication (AAAA-MM-JJ)"
       ],
       "rating": [
-        ""
+        "notation"
       ],
       "reason": [
-        ""
+        "raison"
       ],
       "reboot required": [
-        ""
+        "redémarrage requis"
       ],
       "resolution description": [
-        ""
+        "description de la résolution"
       ],
       "resolution risk": [
-        ""
+        "risque de résolution"
       ],
       "result url": [
-        ""
+        "URL du résultat"
       ],
       "rule description": [
-        ""
+        "description de la règle"
       ],
       "rule id": [
-        ""
+        "identifiant de règle"
       ],
       "rule title": [
-        ""
+        "titre de la règle"
       ],
       "solution url": [
-        ""
+        "URL de la solution"
       ],
       "summary": [
-        ""
+        "résumé"
       ],
       "total risk": [
-        ""
+        "risque total"
       ],
       "type": [
-        ""
+        "type"
       ],
       "upload hits details json": [
-        ""
+        "détails des hits de téléchargement json"
       ],
       "upload resolutions related to the hits": [
-        ""
+        "télécharger les résolutions liées aux hits"
       ],
       "view the job in progress": [
         "visualiser job en cours"
