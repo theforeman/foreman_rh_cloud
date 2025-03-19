@@ -40,7 +40,7 @@ module ForemanRhCloud
           apipie_documented_controllers ["#{ForemanRhCloud::Engine.root}/app/controllers/api/v2/**/*.rb"]
 
           settings do
-            category(:rh_cloud, N_('RHCloud')) do
+            category(:rh_cloud, N_('Insights')) do
               setting('allow_auto_inventory_upload', type: :boolean, description: N_('Enable automatic upload of your host inventory to the Red Hat cloud'), default: true, full_name: N_('Automatic inventory upload'))
               setting('allow_auto_insights_sync', type: :boolean, description: N_('Enable automatic synchronization of Insights recommendations from the Red Hat cloud'), default: true, full_name: N_('Synchronize recommendations Automatically'))
               setting('allow_auto_insights_mismatch_delete', type: :boolean, description: N_('Enable automatic deletion of mismatched host records from the Red Hat cloud'), default: false, full_name: N_('Automatic mismatch deletion'))
