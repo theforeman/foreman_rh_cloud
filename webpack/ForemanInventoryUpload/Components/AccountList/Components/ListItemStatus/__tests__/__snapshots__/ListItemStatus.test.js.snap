@@ -12,11 +12,7 @@ exports[`ListItemStatus rendering render with Props 1`] = `
     <p>
       Generating
     </p>
-    <CheckIcon
-      color="currentColor"
-      noVerticalAlign={false}
-      size="sm"
-    />
+    <CheckIcon />
   </GridItem>
   <GridItem
     className="item"

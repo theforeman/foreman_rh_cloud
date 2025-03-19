@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import SearchBar from 'foremanReact/components/SearchBar';
 import { translate as __ } from 'foremanReact/common/I18n';
+import { Grid, GridItem } from '@patternfly/react-core';
 import {
-  Grid,
-  GridItem,
   Dropdown,
   DropdownItem,
   KebabToggle,
-} from '@patternfly/react-core';
+} from '@patternfly/react-core/deprecated';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import InsightsTable from '../InsightsCloudSync/Components/InsightsTable';
 import RemediationModal from '../InsightsCloudSync/Components/RemediationModal';
@@ -76,7 +75,9 @@ const NewHostDetailsTab = ({ hostName, router }) => {
           ouiaId="insights-dropdown"
           onSelect={() => setIsDropdownOpen(false)}
           toggle={
-            <KebabToggle onToggle={isOpen => setIsDropdownOpen(isOpen)} />
+            <KebabToggle
+              onToggle={(_event, isOpen) => setIsDropdownOpen(isOpen)}
+            />
           }
           isOpen={isDropdownOpen}
           isPlain

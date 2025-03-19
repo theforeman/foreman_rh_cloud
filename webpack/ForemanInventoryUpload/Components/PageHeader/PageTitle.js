@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
+import { Grid, GridItem } from '@patternfly/react-core';
 import {
   Dropdown,
   DropdownItem,
   KebabToggle,
   DropdownPosition,
-  Grid,
-  GridItem,
-} from '@patternfly/react-core';
+} from '@patternfly/react-core/deprecated';
 import Head from 'foremanReact/components/Head';
 import {
   INVENTORY_PAGE_TITLE,
@@ -58,7 +57,9 @@ const PageTitle = () => {
           className="title-dropdown"
           onSelect={() => setIsDropdownOpen(false)}
           toggle={
-            <KebabToggle onToggle={isOpen => setIsDropdownOpen(isOpen)} />
+            <KebabToggle
+              onToggle={(_event, isOpen) => setIsDropdownOpen(isOpen)}
+            />
           }
           isOpen={isDropdownOpen}
           isPlain

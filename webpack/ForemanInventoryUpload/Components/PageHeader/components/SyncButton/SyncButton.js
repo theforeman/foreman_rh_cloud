@@ -22,7 +22,6 @@ class SyncButton extends React.Component {
         <Button
           className="sync_button"
           onClick={handleClick}
-          size="lg"
           isDisabled={status === STATUS.PENDING}
           variant="secondary"
         >

@@ -19,13 +19,13 @@
     "url": "http://projects.theforeman.org/projects/foreman_rh_cloud/issues"
   },
   "peerDependencies": {
-    "@theforeman/vendor": ">= 10.1.1"
+    "@theforeman/vendor": ">= 15.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.7.0",
-    "@theforeman/builder": ">= 10.1.1",
-    "@theforeman/test": ">= 10.1.1",
-    "@theforeman/eslint-plugin-foreman": ">= 10.1.1",
+    "@theforeman/builder": ">= 15.0.1",
+    "@theforeman/test": ">= 15.0.1",
+    "@theforeman/eslint-plugin-foreman": ">= 15.0.1",
     "babel-eslint": "~10.0.0",
     "eslint": "~6.7.2",
     "eslint-plugin-spellcheck": "~0.0.17",

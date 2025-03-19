@@ -5,7 +5,7 @@ import {
   EmptyStateIcon,
   Spinner,
   EmptyStateVariant,
-  Title,
+  EmptyStateHeader,
 } from '@patternfly/react-core';
 import { ExclamationCircleIcon, CheckIcon } from '@patternfly/react-icons';
 
@@ -16,33 +16,40 @@ const TableEmptyState = ({ status, error, rowsLength }) => {
   switch (status) {
     case STATUS.PENDING:
       return (
-        <EmptyState variant={EmptyStateVariant.small}>
-          <EmptyStateIcon variant="container" component={Spinner} />
-          <Title headingLevel="h2" size="lg">
-            {__('Loading')}
-          </Title>
+        <EmptyState variant={EmptyStateVariant.sm}>
+          <EmptyStateHeader
+            titleText={<>{__('Loading')}</>}
+            icon={<EmptyStateIcon icon={Spinner} />}
+            headingLevel="h2"
+          />
         </EmptyState>
       );
     case STATUS.ERROR:
       return (
-        <EmptyState variant={EmptyStateVariant.small}>
-          <EmptyStateIcon
-            variant="container"
-            component={ExclamationCircleIcon}
+        <EmptyState variant={EmptyStateVariant.sm}>
+          <EmptyStateHeader
+            titleText={
+              <>
+                {sprintf(
+                  __('The server returned the following error: %s'),
+                  error
+                )}
+              </>
+            }
+            icon={<EmptyStateIcon icon={ExclamationCircleIcon} />}
+            headingLevel="h2"
           />
-          <Title headingLevel="h2" size="lg">
-            {sprintf(__('The server returned the following error: %s'), error)}
-          </Title>
         </EmptyState>
       );
     case STATUS.RESOLVED:
       if (rowsLength > 0) return null;
       return (
-        <EmptyState variant={EmptyStateVariant.large}>
-          <EmptyStateIcon variant="container" component={CheckIcon} />
-          <Title headingLevel="h2" size="lg">
-            {__('There are no recommendations for your hosts')}
-          </Title>
+        <EmptyState variant={EmptyStateVariant.lg}>
+          <EmptyStateHeader
+            titleText={<>{__('There are no recommendations for your hosts')}</>}
+            icon={<EmptyStateIcon icon={CheckIcon} />}
+            headingLevel="h2"
+          />
         </EmptyState>
       );
     default:
