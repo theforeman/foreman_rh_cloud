@@ -5,7 +5,12 @@ import { push } from 'connected-react-router';
 import { useHistory } from 'react-router-dom';
 import { Bullseye, Title } from '@patternfly/react-core';
 import { DropdownItem } from '@patternfly/react-core/deprecated';
-import { ChartDonut, ChartLegend, ChartLabel } from '@patternfly/react-charts';
+import {
+  ChartDonut,
+  ChartLegend,
+  ChartLabel,
+  ChartTooltip,
+} from '@patternfly/react-charts';
 import { STATUS } from 'foremanReact/constants';
 import { useAPI } from 'foremanReact/common/hooks/API/APIHooks';
 import CardTemplate from 'foremanReact/components/HostDetails/Templates/CardItem/CardTemplate';
@@ -91,6 +96,9 @@ const InsightsTotalRiskCard = ({ hostDetails: { id } }) => {
         { x: critical.title, y: critical.value },
       ]}
       labels={({ datum: { x, y } }) => `${x}: ${y}`}
+      labelComponent={
+        <ChartTooltip constrainToVisibleArea renderInPortal={false} />
+      }
       legendComponent={legend}
       legendPosition="right"
       subTitle="Recommendations"
