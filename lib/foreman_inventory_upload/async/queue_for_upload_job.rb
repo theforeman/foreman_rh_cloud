@@ -3,7 +3,7 @@ module ForemanInventoryUpload
     class QueueForUploadJob < ::Actions::EntryAction
       def plan(base_folder, report_file, organization_id, disconnected)
         enqueue_task = plan_self(base_folder: base_folder, report_file: report_file)
-        plan_upload_report(enqueue_task.output[:enqueued_file_name], organization_id) unless disconnected
+        plan_upload_report(enqueue_task.output[:enqueued_file_name], organization_id, disconnected)
       end
 
       def run
@@ -59,8 +59,8 @@ module ForemanInventoryUpload
         input[:report_file]
       end
 
-      def plan_upload_report(enqueued_file_name, organization_id)
-        plan_action(UploadReportJob, enqueued_file_name, organization_id)
+      def plan_upload_report(enqueued_file_name, organization_id, disconnected)
+        plan_action(UploadReportJob, enqueued_file_name, organization_id, disconnected)
       end
     end
   end

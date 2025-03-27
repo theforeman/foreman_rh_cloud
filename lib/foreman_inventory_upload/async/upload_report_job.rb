@@ -7,15 +7,15 @@ module ForemanInventoryUpload
         "upload_for_#{label}"
       end
 
-      def plan(filename, organization_id)
+      def plan(filename, organization_id, disconnected = false)
         label = UploadReportJob.output_label(organization_id)
-        super(label, filename: filename, organization_id: organization_id)
+        super(label, filename: filename, organization_id: organization_id, disconnected: disconnected)
       end
 
       def try_execute
         if content_disconnected?
           progress_output do |progress_output|
-            progress_output.write_line('Upload was stopped since disconnected mode setting is enabled for content on this instance.')
+            progress_output.write_line('Upload canceled because connection to Insights is not enabled or the --no-upload option was passed.')
             progress_output.status = "Task aborted, exit 1"
             done!
           end
@@ -78,7 +78,7 @@ module ForemanInventoryUpload
       end
 
       def content_disconnected?
-        !Setting[:subscription_connection_enabled]
+        input[:disconnected] || !Setting[:subscription_connection_enabled]
       end
     end
   end

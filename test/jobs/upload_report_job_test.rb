@@ -18,7 +18,7 @@ class UploadReportJobTest < ActiveSupport::TestCase
 
     label = ForemanInventoryUpload::Async::UploadReportJob.output_label(organization.id)
     progress_output = ForemanInventoryUpload::Async::ProgressOutput.get(label)
-    assert_match(/Upload was stopped/, progress_output.full_output)
+    assert_match(/Upload canceled/, progress_output.full_output)
     assert_match(/exit 1/, progress_output.status)
   end
 

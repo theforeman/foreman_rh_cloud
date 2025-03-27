@@ -71,3 +71,6 @@ Style/WordArray:
 
 Style/RaiseArgs:
   EnforcedStyle: compact
+
+Style/OptionalBooleanParameter:
+  Enabled: false
