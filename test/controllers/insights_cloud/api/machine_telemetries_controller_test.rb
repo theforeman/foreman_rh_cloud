@@ -3,6 +3,8 @@ require 'rest-client'
 
 module InsightsCloud::Api
   class MachineTelemetriesControllerTest < ActionController::TestCase
+    include KatelloCVEHelper
+
     setup do
       FactoryBot.create(:common_parameter, name: InsightsCloud.enable_client_param, key_type: 'boolean', value: true)
     end
@@ -122,9 +124,8 @@ module InsightsCloud::Api
       setup do
         UpstreamOnlySettingsTestHelper.set_if_available('allow_multiple_content_views')
         User.current = User.find_by(login: 'secret_admin')
-
-        @env = FactoryBot.create(:katello_k_t_environment)
-        @env2 = FactoryBot.create(:katello_k_t_environment, organization: @env.organization)
+        env = FactoryBot.create(:katello_k_t_environment)
+        env2 = FactoryBot.create(:katello_k_t_environment, organization: env.organization)
 
         @host = FactoryBot.create(
           :host,
@@ -132,19 +133,8 @@ module InsightsCloud::Api
           :with_content,
           :with_hostgroup,
           :with_parameter,
-          content_view_environments: [
-            FactoryBot.create(
-              :katello_content_view_environment,
-              content_view: FactoryBot.create(:katello_content_view, organization: @env.organization),
-              lifecycle_environment: @env
-            ),
-            FactoryBot.create(
-              :katello_content_view_environment,
-              content_view: FactoryBot.create(:katello_content_view, organization: @env.organization),
-              lifecycle_environment: @env2
-            ),
-          ],
-          organization: @env.organization
+          content_view_environments: [make_cve(lifecycle_environment: env), make_cve(lifecycle_environment: env2)],
+          organization: env.organization
         )
 
         @host.subscription_facet.pools << FactoryBot.create(:katello_pool, account_number: '5678', cp_id: 1)
