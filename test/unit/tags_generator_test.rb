@@ -3,6 +3,7 @@ require 'test_plugin_helper'
 class TagsGeneratorTest < ActiveSupport::TestCase
   include KatelloLocationFix
   include CandlepinIsolation
+  include KatelloCVEHelper
 
   setup do
     UpstreamOnlySettingsTestHelper.set_if_available('allow_multiple_content_views')
@@ -25,18 +26,7 @@ class TagsGeneratorTest < ActiveSupport::TestCase
       organization: env.organization,
       location: @location2,
       hostgroup: @hostgroup2,
-      content_view_environments: [
-        FactoryBot.create(
-          :katello_content_view_environment,
-          content_view: FactoryBot.create(:katello_content_view, organization: env.organization),
-          lifecycle_environment: env
-        ),
-        FactoryBot.create(
-          :katello_content_view_environment,
-          content_view: FactoryBot.create(:katello_content_view, organization: env.organization),
-          lifecycle_environment: env2
-        ),
-      ]
+      content_view_environments: [make_cve(lifecycle_environment: env), make_cve(lifecycle_environment: env2)]
     )
 
     @host.organization.pools << FactoryBot.create(:katello_pool, account_number: '1234', cp_id: 1)

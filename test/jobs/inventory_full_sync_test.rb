@@ -4,6 +4,7 @@ require 'foreman_tasks/test_helpers'
 class InventoryFullSyncTest < ActiveSupport::TestCase
   include ForemanTasks::TestHelpers::WithInThreadExecutor
   include MockCerts
+  include KatelloCVEHelper
 
   setup do
     User.current = User.find_by(login: 'secret_admin')
@@ -11,15 +12,15 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
     InventorySync::Async::InventoryFullSync.any_instance.stubs(:plan_self_host_sync)
     Organization.any_instance.stubs(:manifest_expired?).returns(false)
 
-    env = FactoryBot.create(:katello_k_t_environment)
-    cv = env.content_views << FactoryBot.create(:katello_content_view, organization: env.organization)
+    cve = make_cve
+    env = cve.lifecycle_environment
 
     # this host would pass our plugin queries, so it could be uploaded to the cloud.
     @host1 = FactoryBot.create(
       :host,
       :with_subscription,
       :with_content,
-      content_view: cv.first,
+      content_view: cve.content_view,
       lifecycle_environment: env,
       organization: env.organization
     )
@@ -33,7 +34,7 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
       :host,
       :with_subscription,
       :with_content,
-      content_view: cv.first,
+      content_view: cve.content_view,
       lifecycle_environment: env,
       organization: env.organization
     )
@@ -46,7 +47,7 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
       :host,
       :with_subscription,
       :with_content,
-      content_view: cv.first,
+      content_view: cve.content_view,
       lifecycle_environment: env,
       organization: env.organization
     )
