@@ -118,6 +118,20 @@ module CandlepinIsolation
   end
 end
 
+module KatelloCVEHelper
+  def make_cve(lifecycle_environment: nil, content_view: nil)
+    env = lifecycle_environment || FactoryBot.create(:katello_k_t_environment)
+    content_view ||= FactoryBot.create(:katello_content_view, organization: env.organization)
+    cvv = ::Katello::ContentViewVersion.create!(:major => 2, :content_view => content_view)
+    FactoryBot.create(
+      :katello_content_view_environment,
+      content_view_version: cvv,
+      content_view: content_view,
+      lifecycle_environment: env
+    )
+  end
+end
+
 module UpstreamOnlySettingsTestHelper
   def self.set_if_available(setting_name, value: true)
     Setting[setting_name] = value
