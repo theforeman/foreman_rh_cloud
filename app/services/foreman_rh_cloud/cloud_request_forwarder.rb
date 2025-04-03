@@ -34,7 +34,13 @@ module ForemanRhCloud
         ),
       }
       requested_url = original_request.original_fullpath.end_with?('/') ? original_request.path + '/' : original_request.path
-      base_params.merge(path_params(requested_url, certs))
+      params = path_params(requested_url, certs)
+
+      if ForemanRhCloud.with_local_advisor_engine?
+        params[:ssl_ca_file] = ForemanRhCloud.ca_cert
+      end
+
+      base_params.merge(params)
     end
 
     def prepare_forward_payload(original_request, controller_name)

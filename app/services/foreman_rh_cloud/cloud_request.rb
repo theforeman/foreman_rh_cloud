@@ -8,6 +8,10 @@ module ForemanRhCloud
         proxy: ForemanRhCloud.transformed_http_proxy_string,
       }.deep_merge(params)
 
+      if ForemanRhCloud.with_local_advisor_engine?
+        final_params[:ssl_ca_file] ||= ForemanRhCloud.ca_cert
+      end
+
       response = RestClient::Request.execute(final_params)
 
       logger.debug("Response headers for request url #{final_params[:url]} are: #{response.headers}")

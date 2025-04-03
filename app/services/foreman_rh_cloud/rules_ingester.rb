@@ -13,7 +13,18 @@ module ForemanRhCloud
 
     def fetch_rules_data
       advisor_url = "#{ForemanRhCloud.on_premise_url}/r/insights/v1/static/release/content.json"
-      JSON.parse(Net::HTTP.get(URI.parse(advisor_url)), symbolize_names: true)
+      uri = URI.parse(advisor_url)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+
+      # Set CA certificate
+      http.ca_file = ForemanRhCloud.ca_cert
+      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+
+      request = Net::HTTP::Get.new(uri.request_uri)
+
+      response = http.request(request)
+      JSON.parse(response.body, symbolize_names: true)
     end
 
     def fetch_rules_and_resolutions
