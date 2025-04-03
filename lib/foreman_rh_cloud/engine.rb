@@ -212,4 +212,15 @@ module ForemanRhCloud
   def self.with_local_advisor_engine?
     SETTINGS.dig(:foreman_rh_cloud, :use_local_advisor_engine) || false
   end
+
+  def self.ca_cert
+    # The reference to candlepin ca_cert_file can be removed
+    # once the setting is dropped. Foreman 3.15 introduces
+    # a single CA file that bundles all CAs.
+    if ::SETTINGS.dig(:katello, :candlepin, :ca_cert_file)
+      ::SETTINGS[:katello][:candlepin][:ca_cert_file]
+    else
+      ::SETTINGS[:ssl_ca_file]
+    end
+  end
 end
