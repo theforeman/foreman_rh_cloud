@@ -49,6 +49,10 @@ Rails.application.routes.draw do
     end
   end
 
+  scope :module => :'insights_cloud/api' do
+    match '/api/lightspeed/*path', to: 'machine_telemetries#forward_request', via: :all
+  end
+
   # API routes
 
   namespace :api, :defaults => { :format => 'json' } do

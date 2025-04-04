@@ -63,6 +63,12 @@ module ForemanRhCloud
 
     def path_params(request_path, certs)
       case request_path
+      when lightspeed?
+        {
+          url: ForemanRhCloud.cert_base_url + request_path,
+          ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
+          ssl_client_key: OpenSSL::PKey.read(certs[:key]),
+        }
       when platform_request?
         {
           url: ForemanRhCloud.cert_base_url + request_path.sub('/redhat_access/r/insights/platform', '/api'),
@@ -93,6 +99,10 @@ module ForemanRhCloud
 
       logger.debug("Sending headers: #{headers}")
       headers
+    end
+
+    def lightspeed?
+      ->(request_path) { request_path.include? '/lightspeed' }
     end
 
     def platform_request?
