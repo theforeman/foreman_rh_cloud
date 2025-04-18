@@ -1,8 +1,14 @@
-import { selectAPIResponse } from 'foremanReact/redux/API/APISelectors';
+import {
+  selectAPIResponse,
+  selectAPIStatus,
+} from 'foremanReact/redux/API/APISelectors';
 import { INVENTORY_SETTINGS } from './InventorySettingsConstants';
 
 export const selectSettings = state =>
   selectAPIResponse(state, INVENTORY_SETTINGS);
+
+export const selectSettingsStatus = state =>
+  selectAPIStatus(state, INVENTORY_SETTINGS);
 
 export const selectAutoUploadEnabled = state =>
   selectSettings(state).autoUploadEnabled;
@@ -21,3 +27,6 @@ export const selectExcludePackages = state =>
 
 export const selectMismatchDelete = state =>
   selectSettings(state).allowAutoInsightsMismatchDelete;
+
+export const selectInsightsMinimalDataCollection = state =>
+  selectSettings(state).insightsMinimalDataCollection;

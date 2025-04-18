@@ -2,6 +2,7 @@ module ForemanInventoryUpload
   class UploadsSettingsController < ::ApplicationController
     def index
       render json: {
+        insightsMinimalDataCollection: Setting[:insights_minimal_data_collection],
         autoUploadEnabled: Setting[:allow_auto_inventory_upload],
         subscriptionConnectionEnabled: Setting[:subscription_connection_enabled],
         hostObfuscationEnabled: Setting[:obfuscate_inventory_hostnames],

@@ -4,9 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectSettings } from '../InventorySettingsSelectors';
 import { handleToggle } from './AdvancedSettingActions';
 import SwitcherPF4 from '../../../../common/Switcher/SwitcherPF4';
-import { settingsDict } from './AdvancedSettingsConstants';
 
-const AdvancedSetting = ({ setting }) => {
+const AdvancedSetting = ({ setting, settingsDict, isLocked, lockedValue }) => {
   const settingValue = useSelector(store => selectSettings(store)[setting]);
   const dispatch = useDispatch();
   const onToggle = () =>
@@ -16,7 +15,8 @@ const AdvancedSetting = ({ setting }) => {
       id={settingsDict[setting].name}
       label={settingsDict[setting].label}
       tooltip={settingsDict[setting].tooltip}
-      isChecked={settingValue}
+      isChecked={isLocked ? lockedValue : settingValue}
+      isDisabled={isLocked}
       onChange={onToggle}
     />
   );
@@ -24,6 +24,14 @@ const AdvancedSetting = ({ setting }) => {
 
 AdvancedSetting.propTypes = {
   setting: PropTypes.string.isRequired,
+  settingsDict: PropTypes.shape({}).isRequired,
+  isLocked: PropTypes.bool,
+  lockedValue: PropTypes.bool,
+};
+
+AdvancedSetting.defaultProps = {
+  isLocked: false,
+  lockedValue: true,
 };
 
 export default AdvancedSetting;

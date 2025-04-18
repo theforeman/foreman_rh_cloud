@@ -6,8 +6,8 @@ import { FormGroup, Grid } from 'patternfly-react';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { foremanUrl } from '../../../ForemanRhCloudHelpers';
 import Switcher from '../../../common/Switcher';
-import AdvancedSettings from './components/AdvancedSettings';
 import { settingsDict } from '../../Components/InventorySettings/AdvancedSetting/AdvancedSettingsConstants';
+import InventorySettings from '../../Components/InventorySettings/InventorySettings';
 
 const InventoryAutoUploadSwitcher = ({
   autoUploadEnabled,
@@ -44,12 +44,7 @@ const InventoryAutoUploadSwitcher = ({
               headerContent={
                 <strong>{__('Advanced Inventory Settings')}</strong>
               }
-              bodyContent={
-                <AdvancedSettings
-                  autoUploadEnabled={autoUploadEnabled}
-                  handleToggle={handleToggle}
-                />
-              }
+              bodyContent={<InventorySettings />}
               position="right"
             >
               <Button
