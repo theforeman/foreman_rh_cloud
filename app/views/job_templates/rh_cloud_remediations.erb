@@ -11,4 +11,23 @@ template_inputs:
   required: true
 provider_type: Ansible
 %>
+---
+- hosts: all
+  tasks:
+    - name: Collect bootc status
+      shell:
+        cmd: 'bootc status --json'
+      register: bootc_status
+      ignore_errors: true
+    - name: Parse bootc status json
+      set_fact:
+        bootc_status_json: "{{ bootc_status.stdout | from_json }}"
+      when: bootc_status.rc == 0
+    - name: Enable bootc overlay
+      shell:
+        cmd: 'bootc usr-overlay'
+      register: out
+      ignore_errors: true
+      when: bootc_status_json is defined and bootc_status_json['status']['booted'] != 'null'
+    - debug: var=out
 <%= remediations_playbook(input('hit_remediation_pairs')) %>
