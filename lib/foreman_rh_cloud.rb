@@ -47,6 +47,8 @@ module ForemanRhCloud
   end
 
   def self.proxy_string
+    return '' if ForemanRhCloud.with_local_advisor_engine?
+
     HttpProxy.default_global_content_proxy&.full_url ||
     ForemanRhCloud.global_foreman_proxy ||
     ''
