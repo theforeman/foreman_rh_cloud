@@ -16,29 +16,41 @@ module InsightsCloud::Api
     # The method that "proxies" requests over to Cloud
     def forward_request
       certs = candlepin_id_cert @organization
-      @cloud_response = ::ForemanRhCloud::CloudRequestForwarder.new.forward_request(request, controller_name, @branch_id, certs)
+      begin
+        @cloud_response = ::ForemanRhCloud::CloudRequestForwarder.new.forward_request(request, controller_name, @branch_id, certs)
+      rescue RestClient::Exceptions::Timeout => e
+        response_obj = e.response.presence || e.exception
+        return render json: { message: response_obj.to_s, error: response_obj.to_s }, status: :gateway_timeout
+      rescue RestClient::Unauthorized => e
+        logger.info("Forwarding request auth error: #{e}")
+        message = 'Authentication to the Insights Service failed.'
+        return render json: { message: message, error: message }, status: :unauthorized
+      rescue RestClient::NotModified => e
+        logger.info("Forwarding request not modified: #{e}")
+        message = 'Cloud request not modified'
+        return render json: { message: message, error: message }, status: :not_modified
+      rescue RestClient::ExceptionWithResponse => e
+        response_obj = e.response.presence || e.exception
+        code = response_obj.try(:code) || response_obj.try(:http_code) || 500
+        message = 'Cloud request failed'
 
-      return render json: { message: @cloud_response.to_s }, status: :gateway_timeout if @cloud_response.is_a?(RestClient::Exceptions::OpenTimeout)
-
-      if @cloud_response.code == 401
         return render json: {
-          :message => 'Authentication to the Insights Service failed.',
+          :message => message,
+          :error => response_obj.to_s,
           :headers => {},
-        }, status: :bad_gateway
-      end
-
-      if @cloud_response.code >= 300
-        return render json: {
-          :message => 'Cloud request failed',
-          :headers => {},
-          :response => @cloud_response,
-        }, status: @cloud_response.code
+          :response => response_obj,
+        }, status: code
+      rescue StandardError => e
+        # Catch any other exceptions here, such as Errno::ECONNREFUSED
+        logger.info("Cloud request failed with exception: #{e}")
+        return render json: { error: e }, status: :bad_gateway
       end
 
       # Append redhat-specific headers
       @cloud_response.headers.each do |key, value|
         assign_header(response, @cloud_response, key, false) if key.to_s.start_with?('x_rh_')
       end
+
       # Append general headers
       assign_header(response, @cloud_response, :x_resource_count, true)
       headers[Rack::ETAG] = @cloud_response.headers[:etag]
@@ -48,8 +60,8 @@ module InsightsCloud::Api
         # content type
         send_data @cloud_response, disposition: @cloud_response.headers[:content_disposition], type: @cloud_response.headers[:content_type]
       elsif @cloud_response.headers[:content_type] =~ /zip/
-        # if there is no Content-Disposition, but the content type is binary according the content type,
-        # forward the request as binry too
+        # If there is no Content-Disposition, but the content type is binary according to Content-Type, send the raw data
+        # with proper content type
         send_data @cloud_response, type: @cloud_response.headers[:content_type]
       else
         render json: @cloud_response, status: @cloud_response.code
