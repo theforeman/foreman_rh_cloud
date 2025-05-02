@@ -98,13 +98,25 @@ module InsightsCloud::Api
         assert_equal net_http_resp[:content_type], @response.headers['Content-Type']
       end
 
+      test "should handle 304 cloud" do
+        net_http_resp = Net::HTTPResponse.new(1.0, 304, "Not Modified")
+        res = RestClient::Response.create(@body, net_http_resp, @http_req)
+
+        ::ForemanRhCloud::CloudRequestForwarder.any_instance.stubs(:execute_cloud_request).raises(RestClient::NotModified.new(res))
+
+        get :forward_request, params: { "path" => "platform/module-update-router/v1/channel" }
+        assert_equal 304, @response.status
+        assert_equal 'Cloud request not modified', JSON.parse(@response.body)['message']
+      end
+
       test "should handle failed authentication to cloud" do
         net_http_resp = Net::HTTPResponse.new(1.0, 401, "Unauthorized")
         res = RestClient::Response.create(@body, net_http_resp, @http_req)
-        ::ForemanRhCloud::CloudRequestForwarder.any_instance.stubs(:forward_request).returns(res)
+
+        ::ForemanRhCloud::CloudRequestForwarder.any_instance.stubs(:execute_cloud_request).raises(RestClient::Unauthorized.new(res))
 
         get :forward_request, params: { "path" => "platform/module-update-router/v1/channel" }
-        assert_equal 502, @response.status
+        assert_equal 401, @response.status
         assert_equal 'Authentication to the Insights Service failed.', JSON.parse(@response.body)['message']
       end
 
