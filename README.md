@@ -3,7 +3,7 @@
 
 # ForemanRhCloud
 
-*Introdction here*
+*Introduction here*
 
 ## Installation
 
