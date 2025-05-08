@@ -22,7 +22,7 @@ module InsightsCloud::Api
         response_obj = e.response.presence || e.exception
         return render json: { message: response_obj.to_s, error: response_obj.to_s }, status: :gateway_timeout
       rescue RestClient::Unauthorized => e
-        logger.info("Forwarding request auth error: #{e}")
+        logger.warn("Forwarding request auth error: #{e}")
         message = 'Authentication to the Insights Service failed.'
         return render json: { message: message, error: message }, status: :unauthorized
       rescue RestClient::NotModified => e
@@ -42,8 +42,8 @@ module InsightsCloud::Api
         }, status: code
       rescue StandardError => e
         # Catch any other exceptions here, such as Errno::ECONNREFUSED
-        logger.info("Cloud request failed with exception: #{e}")
-        return render json: { error: e }, status: :bad_gateway
+        logger.warn("Cloud request failed with exception: #{e}")
+        return render json: { error: e.to_s }, status: :bad_gateway
       end
 
       # Append redhat-specific headers
