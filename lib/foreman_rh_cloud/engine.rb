@@ -128,7 +128,7 @@ module ForemanRhCloud
 
           register_facet InsightsFacet, :insights do
             configure_host do
-              api_view :list => 'api/v2/hosts/insights/insights'
+              api_view :list => 'api/v2/hosts/insights/insights', :single => 'api/v2/hosts/insights/single'
               set_dependent_action :destroy
             end
           end

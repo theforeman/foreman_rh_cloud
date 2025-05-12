@@ -1,3 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ForemanRhCloud helpers should return foreman Url 1`] = `"MY_TEST_URL_PREFIX.example.com/test_path"`;
+
+exports[`ForemanRhCloud helpers vulnerabilityDisabled returns false for RHEL host with vulnerability enabled 1`] = `false`;
+
+exports[`ForemanRhCloud helpers vulnerabilityDisabled returns true for RHEL host with vulnerability disabled 1`] = `true`;
+
+exports[`ForemanRhCloud helpers vulnerabilityDisabled returns true for missing hostDetails 1`] = `true`;
+
+exports[`ForemanRhCloud helpers vulnerabilityDisabled returns true for missing vulnerability object 1`] = `true`;
+
+exports[`ForemanRhCloud helpers vulnerabilityDisabled returns true for non-RHEL host 1`] = `true`;
