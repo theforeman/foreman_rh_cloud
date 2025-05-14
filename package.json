@@ -35,5 +35,8 @@
     "stylelint-config-standard": "~18.0.0",
     "surge": "~0.20.3",
     "redux-mock-store": "~1.2.2"
+  },
+  "dependencies": {
+    "@redhat-cloud-services/frontend-components": "^6.0.7"
   }
 }
