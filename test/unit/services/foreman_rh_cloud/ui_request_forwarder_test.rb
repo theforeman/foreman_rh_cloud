@@ -15,7 +15,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
 
   test 'should scope GET requests with proper tags' do
     user_agent = { :foo => :bar }
-    params = { }
+    params = {}
 
     req = ActionDispatch::Request.new(
       'REQUEST_URI' => '/foo/bar',
@@ -27,9 +27,9 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
 
     actual = @forwarder.prepare_forward_params(req, user: @user, organization: @organization, location: @location)
 
-    assert_equal @user.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ /satellite\/user/ }[1])
-    assert_equal @organization.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ /satellite\/organization/ }[1])
-    assert_equal @location.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ /satellite\/location/ }[1])
+    assert_equal @user.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/user} }[1])
+    assert_equal @organization.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/organization} }[1])
+    assert_equal @location.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/location} }[1])
   end
 
   test 'should merge URI params in GET requests' do
@@ -46,9 +46,9 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
 
     actual = @forwarder.prepare_forward_params(req, user: @user, organization: @organization, location: @location)
 
-    assert_equal @user.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ /satellite\/user/ }[1])
-    assert_equal @organization.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ /satellite\/organization/ }[1])
-    assert_equal @location.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ /satellite\/location/ }[1])
+    assert_equal @user.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/user} }[1])
+    assert_equal @organization.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/organization} }[1])
+    assert_equal @location.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/location} }[1])
     assert_equal 5, actual.find { |param| param[0] == :page }[1]
     assert_equal 42, actual.find { |param| param[0] == :per_page }[1]
   end

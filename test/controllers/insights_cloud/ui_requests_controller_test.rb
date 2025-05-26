@@ -42,8 +42,8 @@ module InsightsCloud
           stubs(:forward_request).
           raises(RestClient::Exceptions::OpenTimeout.new("Timed out connecting to server"))
 
-          get :forward_request, params: { "path" => "vulnerabilities/cves" }, session: set_session
-          request_response = JSON.parse(@response.body)
+        get :forward_request, params: { "path" => "vulnerabilities/cves" }, session: set_session
+        request_response = JSON.parse(@response.body)
         # I can't get @response.status to take a nil value so I'm not asserting for that
 
         assert_equal 'Timed out connecting to server', request_response['error']
@@ -137,7 +137,7 @@ module InsightsCloud
         get :forward_request, params: { "path" => "vulnerabilities/cves" }, session: set_session
         assert_equal 500, @response.status
         assert_equal 'Cloud request failed', JSON.parse(@response.body)['message']
-        assert_match /#{@body}/, JSON.parse(@response.body)['response']
+        assert_match(/#{@body}/, JSON.parse(@response.body)['response'])
       end
     end
 

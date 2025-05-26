@@ -39,7 +39,7 @@ module ForemanRhCloud
           }
         ),
       }
-      requested_url = original_request.original_fullpath.end_with?('/') ? original_request.path + '/' : original_request.path
+      requested_url = original_request.original_fullpath.end_with?('/') ? "#{original_request.path}/" : original_request.path
       params = path_params(requested_url, base_url, certs)
 
       if ForemanRhCloud.with_local_advisor_engine?

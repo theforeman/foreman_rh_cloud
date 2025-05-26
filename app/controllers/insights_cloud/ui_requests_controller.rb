@@ -48,7 +48,7 @@ module InsightsCloud
       end
 
       # Append redhat-specific headers
-      @cloud_response.headers.each do |key, value|
+      @cloud_response.headers.each do |key, _value|
         assign_header(response, @cloud_response, key, false) if key.to_s.start_with?('x_rh_')
       end
 
