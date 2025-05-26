@@ -1,26 +1,23 @@
 module ForemanRhCloud
-  module CertAuth
+  module GatewayRequest
     extend ActiveSupport::Concern
 
     include CloudRequest
-    include InsightsCloud::CandlepinCache
-
-    def cert_auth_available?(organization)
-      !!candlepin_id_cert(organization)
-    end
 
     def execute_cloud_request(params)
-      certs = ForemanRhCloud.with_local_advisor_engine? ? foreman_certificate : candlepin_id_cert(params.delete(:organization))
+      certs = params.delete(:certs) || foreman_certificates
       final_params = {
         ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
         ssl_client_key: OpenSSL::PKey.read(certs[:key]),
+        ssl_ca_file: Setting[:ssl_ca_file],
+        verify_ssl: OpenSSL::SSL::VERIFY_PEER,
       }.deep_merge(params)
 
       super(final_params)
     end
 
-    def foreman_certificate
-      @foreman_certificate ||= {
+    def foreman_certificates
+      {
         cert: File.read(Setting[:ssl_certificate]),
         key: File.read(Setting[:ssl_priv_key]),
       }

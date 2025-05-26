@@ -50,9 +50,11 @@ module InsightsCloud::Api
 
       mock_composer = mock('composer')
       ::JobInvocationComposer.expects(:for_feature).with do |feature, host_ids, params|
+        actual_ids = host_ids.sort
+        expected_ids = [host1.id, host2.id].sort
         feature == :rh_cloud_connector_run_playbook &&
-        host_ids.first == host1.id &&
-        host_ids.last == host2.id
+        actual_ids.first == expected_ids.first &&
+        actual_ids.last == expected_ids.last
       end.returns(mock_composer)
       mock_composer.expects(:trigger!)
       mock_composer.expects(:job_invocation)

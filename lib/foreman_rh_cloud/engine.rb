@@ -84,6 +84,7 @@ module ForemanRhCloud
                 '/foreman_rh_cloud/insights_cloud': [:index], # for bookmarks and later for showing the page
                 'insights_cloud/hits': [:index, :show, :auto_complete_search, :resolutions],
                 'insights_cloud/settings': [:index, :show],
+                'insights_cloud/ui_requests': [:forward_request],
                 'react': [:index],
               },
               :resource_type => ::InsightsHit.name
@@ -114,8 +115,7 @@ module ForemanRhCloud
               caption: N_('Inventory Upload'),
               url: '/foreman_rh_cloud/inventory_upload',
               url_hash: { controller: :react, action: :index },
-              parent: :insights_menu,
-              if: -> { !ForemanRhCloud.with_local_advisor_engine? }
+              parent: :insights_menu
             menu :top_menu, :insights_hits, caption: N_('Recommendations'), url: '/foreman_rh_cloud/insights_cloud', url_hash: { controller: :react, action: :index }, parent: :insights_menu
             menu :top_menu,
               :insights_vulnerability,
@@ -165,6 +165,8 @@ module ForemanRhCloud
         ::Katello::UINotifications::Subscriptions::ManifestImportSuccess.include ForemanInventoryUpload::Notifications::ManifestImportSuccessNotificationOverride if defined?(Katello)
 
         ::Host::Managed.include RhCloudHost
+
+        ::Katello::Api::Rhsm::CandlepinDynflowProxyController.include InsightsCloud::PackageProfileUploadExtensions
       end
     end
 
@@ -210,6 +212,30 @@ module ForemanRhCloud
       )
     end
 
+    # Ideally this code belongs to an initializer. The problem is that Katello controllers are not initialized completely until after the end of the to_prepare blocks
+    # This means I can patch the controller only in the after_initialize block that is promised to run after the to_prepare
+    # initializer 'foreman_rh_cloud.allow_smart_proxy_actions', :before => :finisher_hook, :after => 'katello.register_plugin'  do |_app|
+    # end
+    config.after_initialize do
+      # skip overrides in migrations, since the controller initialization depends on tables existense
+      if defined?(Katello) && !Foreman.in_setup_db_rake?
+        Katello::Api::V2::OrganizationsController.include Foreman::Controller::SmartProxyAuth
+        # patch the callbacks order for :download_debug_certificate, since local_find_taxonomy has to run after the user is already initialized
+        Katello::Api::V2::OrganizationsController.skip_before_action(:local_find_taxonomy, only: :download_debug_certificate)
+        Katello::Api::V2::OrganizationsController.add_smart_proxy_filters(
+          [:index, :download_debug_certificate],
+          features: ForemanRhCloud.on_prem_smart_proxy_features
+        )
+        Katello::Api::V2::OrganizationsController.before_action(:local_find_taxonomy, only: :download_debug_certificate)
+
+        Katello::Api::V2::RepositoriesController.include Foreman::Controller::SmartProxyAuth
+        Katello::Api::V2::RepositoriesController.add_smart_proxy_filters(
+          :index,
+          features: ForemanRhCloud.on_prem_smart_proxy_features
+        )
+      end
+    end
+
     rake_tasks do
       Rake::Task['db:seed'].enhance do
         ForemanRhCloud::Engine.load_seed
@@ -230,5 +256,9 @@ module ForemanRhCloud
     else
       ::SETTINGS[:ssl_ca_file]
     end
+  end
+
+  def self.on_prem_smart_proxy_features
+    ['insights']
   end
 end

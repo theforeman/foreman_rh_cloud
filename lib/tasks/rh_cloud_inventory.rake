@@ -26,6 +26,7 @@ namespace :rh_cloud_inventory do
     task generate: :environment do
       organizations = [ENV['organization_id']]
       base_folder = ENV['target'] || Dir.pwd
+      filter = ENV['hosts_filter']
 
       unless File.writable?(base_folder)
         puts "#{base_folder} is not writable by the current process"
@@ -40,9 +41,9 @@ namespace :rh_cloud_inventory do
 
       User.as_anonymous_admin do
         organizations.each do |organization|
-          target = File.join(base_folder, ForemanInventoryUpload.facts_archive_name(organization))
+          target = File.join(base_folder, ForemanInventoryUpload.facts_archive_name(organization, filter))
           archived_report_generator = ForemanInventoryUpload::Generators::ArchivedReport.new(target, Logger.new(STDOUT))
-          archived_report_generator.render(organization: organization)
+          archived_report_generator.render(organization: organization, filter: filter)
           puts "Successfully generated #{target} for organization id #{organization}"
         end
       end

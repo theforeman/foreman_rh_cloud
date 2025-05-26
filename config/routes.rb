@@ -30,6 +30,8 @@ Rails.application.routes.draw do
     match 'hits/:host_id', to: 'hits#show', via: :get
 
     post ':organization_id/parameter', to: 'settings#set_org_parameter', constraints: { organization_id: %r{[^\/]+} }
+
+    match '/*path', constraints: { path: %r{api/[^\?]+} }, to: 'ui_requests#forward_request', via: :all
   end
 
   namespace :foreman_rh_cloud do
