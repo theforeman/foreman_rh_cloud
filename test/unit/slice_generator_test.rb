@@ -64,9 +64,10 @@ class SliceGeneratorTest < ActiveSupport::TestCase
       'dmi::system::product_name',
       'dmi::chassis::asset_tag',
       'insights_client::obfuscate_hostname_enabled',
+      'insights_client::obfuscated_hostname',
+      'insights_client::obfuscate_ipv4_enabled',
+      'insights_client::obfuscated_ipv4',
       'insights_client::hostname',
-      'insights_client::obfuscate_ip_enabled',
-      'insights_client::ips',
       'insights_id',
     ]
   end
@@ -418,14 +419,14 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_equal 1, generator.hosts_count
   end
 
-  test 'generates obfuscated ip_address fields with inisghts-client' do
+  test 'generates obfuscated ip_address fields with insights-client' do
     nic = FactoryBot.build(:nic_managed)
     @host.interfaces << nic
 
-    FactoryBot.create(:fact_value, fact_name: fact_names['insights_client::obfuscate_ip_enabled'], value: 'true', host: @host)
+    FactoryBot.create(:fact_value, fact_name: fact_names['insights_client::obfuscate_ipv4_enabled'], value: 'true', host: @host)
     FactoryBot.create(
       :fact_value,
-      fact_name: fact_names['insights_client::ips'],
+      fact_name: fact_names['insights_client::obfuscated_ipv4'],
       value: "[{\"obfuscated\": \"10.230.230.100\", \"original\": \"#{nic.ip}\"}]",
       host: @host
     )
@@ -449,8 +450,16 @@ class SliceGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'obfuscates fqdn when instructed by insights-client' do
+    obfuscated_hostname_data = [
+      { 'original' => @host.fqdn, 'obfuscated' => '0dd449d0a027.example.com' },
+      { 'original' => 'satellite.theforeman.org', 'obfuscated' => 'host2.example.com' }
+    ]
+    obfuscated_hostname_value = JSON.generate(obfuscated_hostname_data)
+    FactoryBot.create(:fact_value,
+                  fact_name: fact_names['insights_client::obfuscated_hostname'],
+                  value: obfuscated_hostname_value,
+                  host: @host)
     FactoryBot.create(:fact_value, fact_name: fact_names['insights_client::obfuscate_hostname_enabled'], value: 'true', host: @host)
-    FactoryBot.create(:fact_value, fact_name: fact_names['insights_client::hostname'], value: 'obfuscated_name', host: @host)
 
     batch = Host.where(id: @host.id).in_batches.first
     generator = create_generator(batch)
@@ -460,7 +469,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
 
     assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
     assert_not_nil(actual_host = actual['hosts'].first)
-    assert_equal 'obfuscated_name', actual_host['fqdn']
+    assert_equal obfuscated_hostname_data.first['obfuscated'], actual_host['fqdn']
     assert_equal '1234', actual_host['account']
     assert_not_nil(actual_facts = actual_host['facts'].first['facts'])
     assert_equal true, actual_facts['is_hostname_obfuscated']
@@ -487,9 +496,35 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_equal 1, generator.hosts_count
   end
 
+  test 'obfuscates fqdn on host with insights-client when setting set' do
+    Setting[:obfuscate_inventory_hostnames] = true
+    FactoryBot.create(:fact_value, fact_name: fact_names['insights_client::hostname'], value: @host.fqdn, host: @host)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    obfuscated_fqdn = Digest::SHA1.hexdigest(@host.fqdn) + '.example.com'
+
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_equal obfuscated_fqdn, actual_host['fqdn']
+    assert_equal '1234', actual_host['account']
+    assert_not_nil(actual_facts = actual_host['facts'].first['facts'])
+    assert_equal true, actual_facts['is_hostname_obfuscated']
+    assert_equal 1, generator.hosts_count
+  end
+
   test 'does not obfuscate fqdn when insights-client sets to false' do
+    obfuscated_hostname_data = [
+      { 'original' => @host.fqdn, 'obfuscated' => '0dd449d0a027.example.com' },
+      { 'original' => 'satellite.theforeman.org', 'obfuscated' => 'host2.example.com' }
+    ]
+    obfuscated_hostname_value = JSON.generate(obfuscated_hostname_data)
     FactoryBot.create(:fact_value, fact_name: fact_names['insights_client::obfuscate_hostname_enabled'], value: 'false', host: @host)
-    FactoryBot.create(:fact_value, fact_name: fact_names['insights_client::hostname'], value: 'obfuscated_name', host: @host)
+    FactoryBot.create(:fact_value, fact_name: fact_names['insights_client::obfuscated_hostname'], value: obfuscated_hostname_value, host: @host)
 
     batch = Host.where(id: @host.id).in_batches.first
     generator = create_generator(batch)
