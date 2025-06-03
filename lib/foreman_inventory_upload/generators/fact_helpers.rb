@@ -184,7 +184,16 @@ module ForemanInventoryUpload
         # Example format of `insights_client_ips`:
         # [{"original": "192.168.1.10", "obfuscated": "10.230.230.1"},
         #  {"original": "192.168.1.11", "obfuscated": "10.230.230.2"}]
-        insights_client_ips = JSON.parse(fact_value(host, 'insights_client::obfuscated_ipv4') || '[]')
+        begin
+          raw_ipv4_fact = fact_value(host, 'insights_client::obfuscated_ipv4')
+          insights_client_ips = if raw_ipv4_fact.nil? || raw_ipv4_fact.strip.empty?
+            []
+          else
+            JSON.parse(raw_ipv4_fact)
+          end
+        rescue JSON::ParserError
+          insights_client_ips = []
+        end
 
         # Create a new Hash to store the mapping from original IP addresses to their obfuscated versions.
         # The `map` function transforms each `ip_record` into a key-value pair,
