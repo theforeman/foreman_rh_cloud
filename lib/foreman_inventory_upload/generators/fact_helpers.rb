@@ -100,7 +100,12 @@ module ForemanInventoryUpload
           # Example format of `parsed_insights_array`:
           # [{"original"=>"host.example.com", "obfuscated"=>"0dd449d0a027.example.com"},
           #  {"original"=>"satellite.example.com", "obfuscated"=>"host2.example.com"}]
-          parsed_insights_array = JSON.parse(fact_value(host, 'insights_client::obfuscated_hostname') || '[]')
+          fact = fact_value(host, 'insights_client::obfuscated_hostname')
+          parsed_insights_array = begin
+            JSON.parse(fact.presence || '[]')
+          rescue JSON::ParserError
+            []
+          end
 
           # Find the specific item in the parsed array where the 'original' hostname matches
           # the host's actual FQDN.
