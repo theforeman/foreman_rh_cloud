@@ -5,6 +5,8 @@ module ForemanRhCloud
     include ForemanRhCloud::CloudRequest
 
     def forward_request(original_request, base_url, controller_name, user, organization, location, certs)
+      TagsAuth.new(user, logger).update_tag if scope_request?(original_request)
+
       forward_params = prepare_forward_params(original_request, user: user, organization: organization, location: location).to_a
       logger.debug("Request parameters for UI request: #{forward_params}")
 
@@ -21,7 +23,7 @@ module ForemanRhCloud
 
     def prepare_tags(user, organization, location)
       [
-        CGI.escape("satellite/user=#{user}"),
+        CGI.escape(TagsAuth.auth_tag_for(user)),
         CGI.escape("satellite/organization=#{organization}"),
         CGI.escape("satellite/location=#{location}"),
       ].map { |tag_value| [:tag, tag_value] }

@@ -21,6 +21,7 @@ module InsightsCloud
         host = FactoryBot.create(:host, :with_subscription, :organization => @org)
         User.current = ::Katello::CpConsumerUser.new(:uuid => host.subscription_facet.uuid, :login => host.subscription_facet.uuid)
         InsightsCloud::UIRequestsController.any_instance.stubs(:upstream_owner).returns({ 'uuid' => 'abcdefg' })
+        ForemanRhCloud::TagsAuth.any_instance.stubs(:execute_cloud_request)
 
         setup_certs_expectation do
           InsightsCloud::UIRequestsController.any_instance.stubs(:candlepin_id_cert)

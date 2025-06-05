@@ -9,6 +9,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     @user = FactoryBot.build(:user)
     @organization = FactoryBot.build(:organization)
     @location = FactoryBot.build(:location)
+    @certs = generate_certs_hash
 
     ForemanRhCloud.stubs(:cert_base_url).returns('https://cert.cloud.example.com')
   end
@@ -25,11 +26,19 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       'action_dispatch.request.query_parameters' => params
     )
 
-    actual = @forwarder.prepare_forward_params(req, user: @user, organization: @organization, location: @location)
+    ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag)
+    @forwarder.expects(:execute_cloud_request).with do |actual_params|
+      actual = actual_params[:headers][:params]
+      assert_equal @user.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ /#{ForemanRhCloud::TagsAuth::TAG_NAME}/ }[1])
+      assert_equal @organization.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/organization} }[1])
+      assert_equal @location.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/location} }[1])
+      true
+    end
 
-    assert_equal @user.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/user} }[1])
-    assert_equal @organization.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/organization} }[1])
-    assert_equal @location.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/location} }[1])
+    @forwarder.forward_request(req, 'https://foreman.example.com/', 'test_controller', @user, @organization, @location, @certs)
+
+    # This test asserts the parameters that are sent to the execute_cloud_request method.
+    # This is done by setting the expectation before the actual call.
   end
 
   test 'should merge URI params in GET requests' do
@@ -44,13 +53,21 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       'action_dispatch.request.query_parameters' => params
     )
 
-    actual = @forwarder.prepare_forward_params(req, user: @user, organization: @organization, location: @location)
+    ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag)
+    @forwarder.expects(:execute_cloud_request).with do |actual_params|
+      actual = actual_params[:headers][:params]
+      assert_equal @user.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ /#{ForemanRhCloud::TagsAuth::TAG_NAME}/ }[1])
+      assert_equal @organization.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/organization} }[1])
+      assert_equal @location.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/location} }[1])
+      assert_equal 5, actual.find { |param| param[0] == :page }[1]
+      assert_equal 42, actual.find { |param| param[0] == :per_page }[1]
+      true
+    end
 
-    assert_equal @user.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/user} }[1])
-    assert_equal @organization.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/organization} }[1])
-    assert_equal @location.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/location} }[1])
-    assert_equal 5, actual.find { |param| param[0] == :page }[1]
-    assert_equal 42, actual.find { |param| param[0] == :per_page }[1]
+    @forwarder.forward_request(req, 'https://foreman.example.com/', 'test_controller', @user, @organization, @location, @certs)
+
+    # This test asserts the parameters that are sent to the execute_cloud_request method.
+    # This is done by setting the expectation before the actual call.
   end
 
   test 'should not scope POST requests' do
@@ -61,9 +78,18 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       'rack.input' => ::Puma::NullIO.new,
       'RAW_POST_DATA' => post_data
     )
-    actual = @forwarder.prepare_forward_params(req, user: @user, organization: @organization, location: @location)
 
-    assert_equal 0, actual.length
+    ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag).never
+    @forwarder.expects(:execute_cloud_request).with do |actual_params|
+      actual = actual_params[:headers][:params]
+      assert_equal 0, actual.count
+      true
+    end
+
+    @forwarder.forward_request(req, 'https://foreman.example.com/', 'test_controller', @user, @organization, @location, @certs)
+
+    # This test asserts the parameters that are sent to the execute_cloud_request method.
+    # This is done by setting the expectation before the actual call.
   end
 
   test 'should not scope PUT requests' do
@@ -74,9 +100,18 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       'rack.input' => ::Puma::NullIO.new,
       'RAW_POST_DATA' => put_data
     )
-    actual = @forwarder.prepare_forward_params(req, user: @user, organization: @organization, location: @location)
 
-    assert_equal 0, actual.length
+    ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag).never
+    @forwarder.expects(:execute_cloud_request).with do |actual_params|
+      actual = actual_params[:headers][:params]
+      assert_equal 0, actual.count
+      true
+    end
+
+    @forwarder.forward_request(req, 'https://foreman.example.com/', 'test_controller', @user, @organization, @location, @certs)
+
+    # This test asserts the parameters that are sent to the execute_cloud_request method.
+    # This is done by setting the expectation before the actual call.
   end
 
   test 'should not scope PATCH requests' do
@@ -88,9 +123,18 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       'RAW_POST_DATA' => post_data,
       "action_dispatch.request.path_parameters" => { :format => "json" }
     )
-    actual = @forwarder.prepare_forward_params(req, user: @user, organization: @organization, location: @location)
 
-    assert_equal 0, actual.length
+    ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag).never
+    @forwarder.expects(:execute_cloud_request).with do |actual_params|
+      actual = actual_params[:headers][:params]
+      assert_equal 0, actual.count
+      true
+    end
+
+    @forwarder.forward_request(req, 'https://foreman.example.com/', 'test_controller', @user, @organization, @location, @certs)
+
+    # This test asserts the parameters that are sent to the execute_cloud_request method.
+    # This is done by setting the expectation before the actual call.
   end
 
   def tag_value(param_value)
