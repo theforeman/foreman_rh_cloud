@@ -37,6 +37,7 @@ Rails.application.routes.draw do
       get 'inventory_upload', to: '/react#index'
     end
     get 'insights_cloud', to: '/react#index' # Uses foreman's react controller
+    get 'insights_vulnerabilities', to: '/react#index'
   end
 
   scope :module => :'insights_cloud/api', :path => :redhat_access do
