@@ -1,0 +1,25 @@
+section.ins-l-content {
+  padding: var(--pf-t--global--spacer--lg);
+}
+
+section.ins-l-button-group {
+  > * { display: inline; }
+  * + * { margin-left: 0.3125rem; } // 5px = 0.3125rem
+  margin: 1.5rem 0; // 24px = 1.5rem
+}
+
+section.ins-l-icon-group {
+  * + * { margin-left: 0.625rem; } // 10px = 0.625rem
+}
+
+section.ins-l-icon-group__with-major {
+  * + * { margin-left: 0.46875rem; } // 7.5px = 0.46875rem
+  .ins-battery:last-of-type {
+    padding-left: 0.9375rem; // 15px = 0.9375rem
+    border-left: 2px solid #eaeaea;
+    span.label{
+      font-weight: 500;
+      margin: 0 0.625rem; // 10px = 0.625rem
+    }
+  }
+}

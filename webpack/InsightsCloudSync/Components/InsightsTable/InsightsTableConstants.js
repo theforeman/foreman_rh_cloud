@@ -1,21 +1,19 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import {
-  InsightsLabel,
-  Section,
-} from '@redhat-cloud-services/frontend-components';
 import { DropdownItem } from '@patternfly/react-core/deprecated';
 import { sortable, cellWidth } from '@patternfly/react-table';
 import { AnsibeTowerIcon, ExternalLinkAltIcon } from '@patternfly/react-icons';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { foremanUrl } from '../../../ForemanRhCloudHelpers';
 import DropdownToggle from '../../../common/DropdownToggle';
+import InsightsSection from './InsightsSection';
+import InsightsLabel from './InsightsLabel';
 
 export const totalRiskFormatter = ({ title: totalRisk }) => ({
   children: (
-    <Section className="insights-total-risk" type="icon-group">
+    <InsightsSection className="insights-total-risk" type="icon-group">
       <InsightsLabel value={totalRisk} />
-    </Section>
+    </InsightsSection>
   ),
 });
 
