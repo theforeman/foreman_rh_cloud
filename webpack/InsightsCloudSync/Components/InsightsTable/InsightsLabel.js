@@ -15,9 +15,8 @@ const VALUE_TO_STATE = {
   4: { icon: <CriticalRiskIcon />, text: 'Critical', color: 'red' },
 };
 
-const InsightsLabel = ({ value = 1, text, hideIcon, rest, ...props }) => (
+const InsightsLabel = ({ value = 1, text, hideIcon, ...props }) => (
   <Label
-    {...rest}
     {...props}
     color={VALUE_TO_STATE[value].color}
     icon={!hideIcon && VALUE_TO_STATE[value].icon}
@@ -30,14 +29,12 @@ InsightsLabel.propTypes = {
   value: PropTypes.oneOf([1, 2, 3, 4]),
   text: PropTypes.string,
   hideIcon: PropTypes.bool,
-  rest: PropTypes.shape({}),
 };
 
 InsightsLabel.defaultProps = {
   value: 1,
   text: '',
   hideIcon: false,
-  rest: {},
 };
 
 export default InsightsLabel;
