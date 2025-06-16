@@ -1,6 +1,6 @@
 module ForemanRhCloud
   class TagsAuth
-    include CloudRequest
+    include GatewayRequest
 
     TAG_NAMESPACE = 'sat_iam'.freeze
     TAG_SHORT_NAME = 'user'.freeze
@@ -22,7 +22,7 @@ module ForemanRhCloud
 
       params = {
         method: :post,
-        url: "#{ForemanRhCloud.base_url}/tags",
+        url: "#{InsightsCloud.gateway_url}/tags",
         headers: {
           content_type: :json,
         },

@@ -24,7 +24,7 @@ module InsightsCloud
         ForemanRhCloud::TagsAuth.any_instance.stubs(:execute_cloud_request)
 
         setup_certs_expectation do
-          InsightsCloud::UIRequestsController.any_instance.stubs(:candlepin_id_cert)
+          ForemanRhCloud::UIRequestForwarder.any_instance.stubs(:foreman_certificates)
         end
       end
 
@@ -34,7 +34,7 @@ module InsightsCloud
         res = RestClient::Response.create(@body, net_http_resp, @http_req)
         ::ForemanRhCloud::UIRequestForwarder.any_instance.stubs(:forward_request).returns(res)
 
-        get :forward_request, params: { "path" => "vulnerabilities/cves" }, session: set_session
+        get :forward_request, params: { "controller" => "vulnerabilities", "path" => "api/vulnerability/v1/cves" }, session: set_session
         assert_equal @body, @response.body
       end
 
@@ -43,7 +43,7 @@ module InsightsCloud
           stubs(:forward_request).
           raises(RestClient::Exceptions::OpenTimeout.new("Timed out connecting to server"))
 
-        get :forward_request, params: { "path" => "vulnerabilities/cves" }, session: set_session
+        get :forward_request, params: { "controller" => "vulnerabilities", "path" => "api/vulnerability/v1/cves" }, session: set_session
         request_response = JSON.parse(@response.body)
         # I can't get @response.status to take a nil value so I'm not asserting for that
 
@@ -59,7 +59,7 @@ module InsightsCloud
         res = RestClient::Response.create(@body, net_http_resp, @http_req)
         ::ForemanRhCloud::UIRequestForwarder.any_instance.stubs(:forward_request).returns(res)
 
-        get :forward_request, params: { "path" => "vulnerabilities/cves" }, session: set_session
+        get :forward_request, params: { "controller" => "vulnerabilities", "path" => "api/vulnerability/v1/cves" }, session: set_session
         assert_equal x_resource_count, @response.headers['x-resource-count']
         assert_equal x_rh_insights_request_id, @response.headers['x_rh_insights_request_id']
       end
@@ -72,7 +72,7 @@ module InsightsCloud
         res = RestClient::Response.create(@body, net_http_resp, req)
         ::ForemanRhCloud::UIRequestForwarder.any_instance.stubs(:forward_request).returns(res)
 
-        get :forward_request, params: { "path" => "vulnerabilities/cves" }, session: set_session
+        get :forward_request, params: { "controller" => "vulnerabilities", "path" => "api/vulnerability/v1/cves" }, session: set_session
         assert_equal etag, @response.headers[Rack::ETAG]
       end
 
@@ -83,7 +83,7 @@ module InsightsCloud
         res = RestClient::Response.create(@body, net_http_resp, req)
         ::ForemanRhCloud::UIRequestForwarder.any_instance.stubs(:forward_request).returns(res)
 
-        get :forward_request, params: { "path" => "vulnerabilities/cves" }, session: set_session
+        get :forward_request, params: { "controller" => "vulnerabilities", "path" => "api/vulnerability/v1/cves" }, session: set_session
         assert_equal net_http_resp[:content_type], @response.headers['Content-Type']
       end
 
@@ -91,7 +91,7 @@ module InsightsCloud
         error_message = "Connection refused"
         ::ForemanRhCloud::UIRequestForwarder.any_instance.stubs(:execute_cloud_request).raises(Errno::ECONNREFUSED.new)
 
-        get :forward_request, params: { "path" => "vulnerabilities/cves" }, session: set_session
+        get :forward_request, params: { "controller" => "vulnerabilities", "path" => "api/vulnerability/v1/cves" }, session: set_session
         assert_equal 502, @response.status
         body = JSON.parse(@response.body)
         assert_equal error_message, body['error']
@@ -103,7 +103,7 @@ module InsightsCloud
 
         ::ForemanRhCloud::UIRequestForwarder.any_instance.stubs(:execute_cloud_request).raises(RestClient::NotModified.new(res))
 
-        get :forward_request, params: { "path" => "vulnerabilities/cves" }, session: set_session
+        get :forward_request, params: { "controller" => "vulnerabilities", "path" => "api/vulnerability/v1/cves" }, session: set_session
         assert_equal 304, @response.status
         assert_equal 'Cloud request not modified', JSON.parse(@response.body)['message']
       end
@@ -112,7 +112,7 @@ module InsightsCloud
         timeout_message = "execution expired"
         ::ForemanRhCloud::UIRequestForwarder.any_instance.stubs(:execute_cloud_request).raises(RestClient::Exceptions::Timeout.new(timeout_message))
 
-        get :forward_request, params: { "path" => "vulnerabilities/cves" }, session: set_session
+        get :forward_request, params: { "controller" => "vulnerabilities", "path" => "api/vulnerability/v1/cves" }, session: set_session
         assert_equal 504, @response.status
         body = JSON.parse(@response.body)
         assert_equal timeout_message, body['message']
@@ -125,7 +125,7 @@ module InsightsCloud
 
         ::ForemanRhCloud::UIRequestForwarder.any_instance.stubs(:execute_cloud_request).raises(RestClient::Unauthorized.new(res))
 
-        get :forward_request, params: { "path" => "vulnerabilities/cves" }, session: set_session
+        get :forward_request, params: { "controller" => "vulnerabilities", "path" => "api/vulnerability/v1/cves" }, session: set_session
         assert_equal 401, @response.status
         assert_equal 'Authentication to the Insights Service failed.', JSON.parse(@response.body)['message']
       end
@@ -135,7 +135,7 @@ module InsightsCloud
         res = RestClient::Response.create(@body, net_http_resp, @http_req)
         ::ForemanRhCloud::UIRequestForwarder.any_instance.stubs(:execute_cloud_request).raises(RestClient::InternalServerError.new(res))
 
-        get :forward_request, params: { "path" => "vulnerabilities/cves" }, session: set_session
+        get :forward_request, params: { "controller" => "vulnerabilities", "path" => "api/vulnerability/v1/cves" }, session: set_session
         assert_equal 500, @response.status
         assert_equal 'Cloud request failed', JSON.parse(@response.body)['message']
         assert_match(/#{@body}/, JSON.parse(@response.body)['response'])

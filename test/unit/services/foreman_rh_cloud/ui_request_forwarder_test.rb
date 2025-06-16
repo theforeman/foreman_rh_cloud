@@ -9,7 +9,10 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     @user = FactoryBot.build(:user)
     @organization = FactoryBot.build(:organization)
     @location = FactoryBot.build(:location)
-    @certs = generate_certs_hash
+
+    setup_certs_expectation do
+      @forwarder.stubs(:foreman_certificates)
+    end
 
     ForemanRhCloud.stubs(:cert_base_url).returns('https://cert.cloud.example.com')
   end
@@ -35,7 +38,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       true
     end
 
-    @forwarder.forward_request(req, 'https://foreman.example.com/', 'test_controller', @user, @organization, @location, @certs)
+    @forwarder.forward_request(req, '/api/vulnerability/v1/cves', 'test_controller', @user, @organization, @location)
 
     # This test asserts the parameters that are sent to the execute_cloud_request method.
     # This is done by setting the expectation before the actual call.
@@ -64,8 +67,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       true
     end
 
-    @forwarder.forward_request(req, 'https://foreman.example.com/', 'test_controller', @user, @organization, @location, @certs)
-
+    @forwarder.forward_request(req, '/api/vulnerability/v1/cves', 'test_controller', @user, @organization, @location)
     # This test asserts the parameters that are sent to the execute_cloud_request method.
     # This is done by setting the expectation before the actual call.
   end
@@ -86,7 +88,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       true
     end
 
-    @forwarder.forward_request(req, 'https://foreman.example.com/', 'test_controller', @user, @organization, @location, @certs)
+    @forwarder.forward_request(req, '/api/vulnerability/v1/cves', 'test_controller', @user, @organization, @location)
 
     # This test asserts the parameters that are sent to the execute_cloud_request method.
     # This is done by setting the expectation before the actual call.
@@ -108,7 +110,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       true
     end
 
-    @forwarder.forward_request(req, 'https://foreman.example.com/', 'test_controller', @user, @organization, @location, @certs)
+    @forwarder.forward_request(req, '/api/vulnerability/v1/cves', 'test_controller', @user, @organization, @location)
 
     # This test asserts the parameters that are sent to the execute_cloud_request method.
     # This is done by setting the expectation before the actual call.
@@ -131,7 +133,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       true
     end
 
-    @forwarder.forward_request(req, 'https://foreman.example.com/', 'test_controller', @user, @organization, @location, @certs)
+    @forwarder.forward_request(req, '/api/vulnerability/v1/cves', 'test_controller', @user, @organization, @location)
 
     # This test asserts the parameters that are sent to the execute_cloud_request method.
     # This is done by setting the expectation before the actual call.

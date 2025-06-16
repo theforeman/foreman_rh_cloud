@@ -2,22 +2,18 @@ module InsightsCloud
   class UIRequestsController < ::ApplicationController
     layout false
 
-    include ::InsightsCloud::CandlepinCache
-
     before_action :ensure_org, :ensure_loc, :only => [:forward_request]
 
     # The method that "proxies" requests over to Cloud
     def forward_request
-      certs = candlepin_id_cert @organization
       begin
         @cloud_response = ::ForemanRhCloud::UIRequestForwarder.new.forward_request(
           request,
-          base_url,
+          params.require(:path),
           controller_name,
           User.current,
           @organization,
-          @location,
-          certs
+          @location
         )
       rescue RestClient::Exceptions::Timeout => e
         response_obj = e.response.presence || e.exception

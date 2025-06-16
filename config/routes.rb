@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 
     post ':organization_id/parameter', to: 'settings#set_org_parameter', constraints: { organization_id: %r{[^\/]+} }
 
-    match '/ui/*path', to: 'ui_requests#forward_request', via: :all
+    match '/ui/*path', constraints: { path: /[^\?]+/ }, to: 'ui_requests#forward_request', via: :all
   end
 
   namespace :foreman_rh_cloud do

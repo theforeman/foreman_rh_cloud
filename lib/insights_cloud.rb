@@ -21,8 +21,12 @@ module InsightsCloud
     ForemanRhCloud.cert_base_url + '/api/remediations/v1/playbook'
   end
 
+  def self.gateway_url
+    ForemanRhCloud.cert_base_url
+  end
+
   def self.ui_base_url
-    ForemanRhCloud.cert_base_url + '/ui'
+    InsightsCloud.gateway_url
   end
 
   def self.remediation_rule_id(rule_id)

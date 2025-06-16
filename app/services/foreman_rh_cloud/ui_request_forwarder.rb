@@ -2,9 +2,9 @@ require 'rest-client'
 
 module ForemanRhCloud
   class UIRequestForwarder
-    include ForemanRhCloud::CloudRequest
+    include ForemanRhCloud::GatewayRequest
 
-    def forward_request(original_request, base_url, controller_name, user, organization, location, certs)
+    def forward_request(original_request, path, controller_name, user, organization, location)
       TagsAuth.new(user, logger).update_tag if scope_request?(original_request)
 
       forward_params = prepare_forward_params(original_request, user: user, organization: organization, location: location).to_a
@@ -14,7 +14,7 @@ module ForemanRhCloud
 
       logger.debug("User agent for UI is: #{http_user_agent(original_request)}")
 
-      request_opts = prepare_request_opts(original_request, base_url, forward_payload, forward_params, certs)
+      request_opts = prepare_request_opts(original_request, path, forward_payload, forward_params)
 
       logger.debug("Sending request to: #{request_opts[:url]}")
 
@@ -29,7 +29,7 @@ module ForemanRhCloud
       ].map { |tag_value| [:tag, tag_value] }
     end
 
-    def prepare_request_opts(original_request, base_url, forward_payload, forward_params, certs)
+    def prepare_request_opts(original_request, path, forward_payload, forward_params)
       base_params = {
         method: original_request.method,
         payload: forward_payload,
@@ -41,12 +41,7 @@ module ForemanRhCloud
           }
         ),
       }
-      requested_url = original_request.original_fullpath.end_with?('/') ? "#{original_request.path}/" : original_request.path
-      params = path_params(requested_url, base_url, certs)
-
-      if ForemanRhCloud.with_local_advisor_engine?
-        params[:ssl_ca_file] = ForemanRhCloud.ca_cert
-      end
+      params = path_params(path)
 
       base_params.merge(params)
     end
@@ -72,11 +67,9 @@ module ForemanRhCloud
       forward_params
     end
 
-    def path_params(request_path, base_url, certs)
+    def path_params(path)
       {
-        url: ForemanRhCloud.cert_base_url + request_path.sub(base_url, '/ui'),
-        ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-        ssl_client_key: OpenSSL::PKey.read(certs[:key]),
+        url: "#{InsightsCloud.ui_base_url}/#{path}",
       }
     end
 
