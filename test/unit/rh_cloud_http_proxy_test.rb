@@ -4,6 +4,7 @@ class RhCloudHttpProxyTest < ActiveSupport::TestCase
   setup do
     @global_content_proxy_mock = 'http://global:content@localhost:80'
     @global_foreman_proxy_mock = 'http://global:foreman@localhost:80'
+    ForemanRhCloud.stubs(:with_local_advisor_engine?).returns(false)
   end
 
   test 'selects global content proxy' do
@@ -16,6 +17,13 @@ class RhCloudHttpProxyTest < ActiveSupport::TestCase
     setup_global_foreman_proxy
 
     assert_equal @global_foreman_proxy_mock, ForemanRhCloud.proxy_setting
+  end
+
+  test 'returns empty string in on-prem setup' do
+    ForemanRhCloud.unstub(:with_local_advisor_engine?)
+    ForemanRhCloud.stubs(:with_local_advisor_engine?).returns(true)
+
+    assert_empty ForemanRhCloud.proxy_setting
   end
 
   def setup_global_content_proxy
