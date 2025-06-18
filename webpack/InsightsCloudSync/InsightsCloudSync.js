@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import PageLayout from 'foremanReact/routes/common/PageLayout/PageLayout';
+import { ScalprumComponent } from '@scalprum/react-core';
+import {
+  ScalprumContextWrapper,
+  ScalprumContext,
+} from '../common/ScalprumModule/ScalprumContext';
 import InsightsTable from './Components/InsightsTable';
+import { useAdvisorEngineConfig } from '../common/Hooks/ConfigHooks';
 import RemediationModal from './Components/RemediationModal';
 import {
   INSIGHTS_SYNC_PAGE_TITLE,
@@ -54,4 +60,47 @@ InsightsCloudSync.defaultProps = {
   query: '',
 };
 
-export default InsightsCloudSync;
+const LocalAdvisorPlaceholder = props => {
+  const { config, setConfig } = useContext(ScalprumContext);
+  const path = 'apps/advisor';
+  const scope = 'advisor';
+  const module = './SatelliteDemoComponent';
+
+  useEffect(() => {
+    setConfig({
+      [scope]: {
+        name: scope,
+        manifestLocation: `https://stage.foo.redhat.com:1337/${path}/fed-mods.json`,
+        cdnPath: `${window.location.origin}/scalprum/${path}/`,
+      },
+    });
+  }, [setConfig]);
+
+  return (
+    config[scope] && (
+      <ScalprumComponent scope={scope} module={module} {...props} />
+    )
+  );
+};
+
+const LocalAdvisorPlaceholderWrapped = () => (
+  <ScalprumContextWrapper>
+    <LocalAdvisorPlaceholder IopRemediationModal={RemediationModal} />
+  </ScalprumContextWrapper>
+);
+
+const RecommendationsPage = props => {
+  // TODO: remove next line before merging
+  return <LocalAdvisorPlaceholderWrapped />;
+
+  // eslint-disable-next-line no-unreachable
+  const isLocalAdvisorEngine = useAdvisorEngineConfig();
+
+  return isLocalAdvisorEngine ? (
+    <LocalAdvisorPlaceholder />
+  ) : (
+    <InsightsCloudSync {...props} />
+  );
+};
+
+export default RecommendationsPage;
