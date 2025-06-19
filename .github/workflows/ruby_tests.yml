@@ -28,6 +28,5 @@ jobs:
     uses: theforeman/actions/.github/workflows/foreman_plugin.yml@v0
     with:
       plugin: foreman_rh_cloud
-      postgresql_container: ghcr.io/theforeman/postgresql-evr
       test_existing_database: false
       foreman_version: ${{ matrix.foreman }}
