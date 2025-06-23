@@ -118,9 +118,9 @@ module ForemanRhCloud
               if: -> { !ForemanRhCloud.with_local_advisor_engine? }
             menu :top_menu, :insights_hits, caption: N_('Recommendations'), url: '/foreman_rh_cloud/insights_cloud', url_hash: { controller: :react, action: :index }, parent: :insights_menu
             menu :top_menu,
-              :insights_vulnerabilities,
-              caption: N_('Vulnerabilities'),
-              url: '/foreman_rh_cloud/insights_vulnerabilities',
+              :insights_vulnerability,
+              caption: N_('Vulnerability'),
+              url: '/foreman_rh_cloud/insights_vulnerability',
               url_hash: { controller: :react, action: :index },
               parent: :insights_menu,
               if: -> { ForemanRhCloud.with_local_advisor_engine? }

@@ -1,2 +1,0 @@
-module InsightsVulnerabilities
-end
