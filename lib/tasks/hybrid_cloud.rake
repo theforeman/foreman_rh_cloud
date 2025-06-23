@@ -17,14 +17,40 @@ namespace :rh_cloud do
     include ::ForemanRhCloud::CertAuth
     include ::InsightsCloud::CandlepinCache
 
+    def default_registrations_url
+      URI.join(ForemanRhCloud.base_url, '/api/identity/certificate/registrations').to_s
+    end
+
     # Helper method to get the registrations URL, with a warning for default usage
     def registrations_url(custom_url)
       if custom_url.empty?
-        logger.warn("Custom url is not set, using the default one: #{ForemanRhCloud.base_url}")
-        URI.join(ForemanRhCloud.base_url, '/api/identity/certificate/registrations').to_s
+        logger.warn("Custom url is not set, using the default one: #{default_registrations_url}")
+        default_registrations_url
       else
-        URI.join(custom_url, '/api/identity/certificate/registrations').to_s
+        if URI(custom_url).scheme.nil?
+          logger.warn("Custom URL lacks a scheme; prepending https:// prefix.")
+          custom_url = "https://" + custom_url
+        end
+        custom_url
       end
+    end
+
+    def get_organization(user_org_id)
+      maybe_organization = Organization.find_by(id: user_org_id)
+      if maybe_organization.nil?
+        logger.error("Organization with ID '#{user_org_id}' not found.")
+        exit(1)
+      end
+      maybe_organization
+    end
+
+    def get_uid(organization)
+      maybe_uid = cp_owner_id(organization)
+      if maybe_uid.nil?
+        logger.error("Organization '#{organization}' does not have a manifest imported.")
+        exit(1)
+      end
+      maybe_uid
     end
 
     # --- Input Collection ---
@@ -40,38 +66,26 @@ namespace :rh_cloud do
     end
 
     puts "\n" + "-" * 50 + "\n\n"
-    puts 'Paste in your Custom Insights URL. If nothing is entered, the default will be used.'
+    puts "Paste in your custom Insights URL. If nothing is entered, the default will be used (#{default_registrations_url})."
     insights_user_input = STDIN.gets.chomp
-
-    # --- Data Preparation ---
-
-    organization = Organization.find_by(id: @user_org_id)
-
-    if organization.nil?
-      logger.error("Organization with ID '#{@user_org_id}' not found.")
-      exit(1)
-    end
-
-    uid = cp_owner_id(organization)
-    if uid.nil?
-      logger.error('Organization provided does not have a manifest imported.')
-      exit(1)
-    end
-
-    hostname = ForemanRhCloud.foreman_host_name
-    insights_url = registrations_url(insights_user_input)
 
     puts "\n" + "-" * 50 + "\n\n"
     puts 'Paste in your Hybrid Cloud API token, output will be hidden.'
     puts 'This token can be retrieved from the Hybrid Cloud console.'
     token = STDIN.noecho(&:gets).chomp
-
     if token.empty?
       logger.error('Token was not entered.')
       exit(1)
     end
 
-    # --- API Request Configuration ---
+    # --- Data Preparation ---
+
+    organization = get_organization(@user_org_id)
+    uid = get_uid(organization)
+    hostname = ForemanRhCloud.foreman_host_name
+    insights_url = registrations_url(insights_user_input)
+
+    # --- API Request ---
 
     headers = {
       Authorization: "Bearer #{token}",
@@ -82,8 +96,6 @@ namespace :rh_cloud do
       "display_name": "#{hostname}+#{organization.label}",
     }
 
-    # --- Execute Request ---
-
     begin
       response = execute_cloud_request(
         organization: organization,
@@ -93,8 +105,8 @@ namespace :rh_cloud do
         payload: payload.to_json
       )
       logger.debug("Cloud request completed: status=#{response.code}, body_preview=#{response.body&.slice(0, 200)}")
-    # Add a more specific rescue for 401 Unauthorized errors
     rescue RestClient::Unauthorized => _ex
+      # Add a more specific rescue for 401 Unauthorized errors
       logger.error('Registration failed: Your token is invalid or unauthorized. Please check your token and try again.')
       # Optionally, you can still log the full debug info if helpful for advanced troubleshooting
       # logger.debug(ex.backtrace.join("\n"))
@@ -108,12 +120,10 @@ namespace :rh_cloud do
       end
       logger.error("Registration failed with HTTP status #{status_code}: #{ex.message}")
       logger.debug("Response body (if available): #{ex.response.body}")
-      # logger.debug(ex.backtrace.join("\n"))
       exit(1)
     rescue StandardError => ex
       # This is the catch-all for any other unexpected errors
       logger.error("An unexpected error occurred during registration: #{ex.message}")
-      # logger.debug(ex.backtrace.join("\n")) # Log backtrace for more info
       exit(1)
     end
 
