@@ -3,7 +3,10 @@ module InsightsCloud
     extend ActiveSupport::Concern
 
     included do
+      # This method explicitly listens on Katello actions
+      # rubocop:disable Rails/LexicallyScopedActionFilter
       after_action :generate_host_report, only: [:upload_package_profile, :upload_profiles]
+      # rubocop:enable Rails/LexicallyScopedActionFilter
     end
 
     def generate_host_report
@@ -19,10 +22,10 @@ module InsightsCloud
 
       # in IoP case, the hosts are identified by the sub-man ID, and we can assume they already
       # exist in the local inventory. This will also handle facet creation for new hosts.
-      unless @host.insights
-        insights_facet = @host.build_insights(uuid: @host.subscription_facet.uuid)
-        insights_facet.save
-      end
+      return if @host.insights
+
+      insights_facet = @host.build_insights(uuid: @host.subscription_facet.uuid)
+      insights_facet.save
     end
   end
 end

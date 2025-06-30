@@ -76,12 +76,10 @@ module ForemanInventoryUpload
       end
 
       def foreman_certificate
-        @foreman_certificate ||= begin
-          {
-            cert: File.read(Setting[:ssl_certificate]),
-            key: File.read(Setting[:ssl_priv_key]),
-          }
-        end
+        @foreman_certificate ||= {
+          cert: File.read(Setting[:ssl_certificate]),
+          key: File.read(Setting[:ssl_priv_key]),
+        }
       end
 
       def filename
