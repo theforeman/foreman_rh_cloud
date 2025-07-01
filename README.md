@@ -1,5 +1,6 @@
 [![Ruby tests](https://github.com/theforeman/foreman_rh_cloud/actions/workflows/ruby_tests.yml/badge.svg)](https://github.com/theforeman/foreman_rh_cloud/actions/workflows/ruby_tests.yml)
 [![JS](https://github.com/theforeman/foreman_rh_cloud/actions/workflows/js_tests.yml/badge.svg)](https://github.com/theforeman/foreman_rh_cloud/actions/workflows/js_tests.yml)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/theforeman/foreman_rh_cloud)
 
 # ForemanRhCloud
 
