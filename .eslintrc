@@ -14,6 +14,7 @@
           "advisor",
           "ansible",
           "camelcase",
+          "cdn",
           "checkbox",
           "csrf",
           "dropdown",
@@ -22,6 +23,7 @@
           "href",
           "ips",
           "ipv4",
+          "dropdown",
           "jed",
           "katello",
           "knowledgebase",
@@ -30,15 +32,15 @@
           "nowrap",
           "pid",
           "redhat",
+          "redux",
           "remediate",
           "remediations",
           "repo",
           "rhc",
+          "scalprum",
           "theforeman",
           "tooltip",
-          "unmount",
-          "redux",
-          "dropdown"
+          "unmount"
         ],
         "minLength": 3
       }
