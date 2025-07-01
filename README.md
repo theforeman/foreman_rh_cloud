@@ -4,16 +4,13 @@
 
 # ForemanRhCloud
 
-*Introduction here*
-
 ## Installation
 
 See [How_to_Install_a_Plugin](http://projects.theforeman.org/projects/foreman/wiki/How_to_Install_a_Plugin)
 for how to install Foreman plugins
 
-## Usage
-
-*Usage here*
+## Project overview
+See our [wiki](https://deepwiki.com/theforeman/foreman_rh_cloud)
 
 ### In Satellite
 
