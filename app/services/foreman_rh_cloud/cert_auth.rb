@@ -10,7 +10,8 @@ module ForemanRhCloud
     end
 
     def execute_cloud_request(params)
-      certs = ForemanRhCloud.with_local_advisor_engine? ? foreman_certificate : candlepin_id_cert(params.delete(:organization))
+      organization = params.delete(:organization)
+      certs = ForemanRhCloud.with_local_advisor_engine? ? foreman_certificate : candlepin_id_cert(organization)
       final_params = {
         ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
         ssl_client_key: OpenSSL::PKey.read(certs[:key]),

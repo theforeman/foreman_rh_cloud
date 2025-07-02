@@ -12,12 +12,14 @@ module InsightsCloud
     def generate_host_report
       return unless ForemanRhCloud.with_local_advisor_engine?
 
+      logger.debug("Generating host-specific report for host #{@host.name}")
+
       ForemanTasks.async_task(
         ForemanInventoryUpload::Async::GenerateReportJob,
         ForemanInventoryUpload.generated_reports_folder,
         @host.organization_id,
         false,
-        { id: @host.id }
+        "id=#{@host.id}"
       )
 
       # in IoP case, the hosts are identified by the sub-man ID, and we can assume they already
