@@ -8,7 +8,7 @@ class InsightsClientReportStatus < HostStatus::Status
   scope :reporting, -> { where(status: REPORTING) }
 
   def self.status_name
-    N_('Insights')
+    _('Insights')
   end
 
   def to_label(_options = {})

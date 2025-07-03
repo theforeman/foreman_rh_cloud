@@ -15,7 +15,7 @@ const fills = [
   },
   {
     slot: 'host-details-page-tabs',
-    name: 'Insights',
+    name: __('Insights'),
     component: props => <NewHostDetailsTab {...props} />,
     weight: 400,
     metadata: {
