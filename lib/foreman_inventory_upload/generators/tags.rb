@@ -43,7 +43,7 @@ module ForemanInventoryUpload
       def organizations
         [
           ['organization', @host.organization.name],
-          ['organization_label', @host.organization.title],
+          ['organization_label', @host.organization.label],
         ]
       end
 

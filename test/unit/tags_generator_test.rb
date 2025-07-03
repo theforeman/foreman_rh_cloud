@@ -61,7 +61,7 @@ class TagsGeneratorTest < ActiveSupport::TestCase
     assert_equal @host.content_views.pluck(:name).max, actual['content_view'].map(&:second).max
     assert_equal Foreman.instance_id, actual['satellite_instance_id'].first.last
     assert_equal @host.organization_id.to_s, actual['organization_id'].first.last
-    assert_equal @host.organization.title, actual['organization_label'].first.last
+    assert_equal @host.organization.label, actual['organization_label'].first.last
   end
 
   test 'filters tags with empty values' do
