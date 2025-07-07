@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Bullseye, Title } from '@patternfly/react-core';
 import { DropdownItem } from '@patternfly/react-core/deprecated';
 import {
@@ -21,7 +21,7 @@ import { getInitialRisks, theme } from './InsightsTabConstants';
 
 const InsightsTotalRiskCard = ({ hostDetails: { id } }) => {
   const [totalRisks, setTotalRisks] = useState(getInitialRisks());
-  const hashHistory = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const API_KEY = `HOST_${id}_RECOMMENDATIONS`;
   const API_OPTIONS = useMemo(() => ({ key: API_KEY }), [API_KEY]);
@@ -43,7 +43,7 @@ const InsightsTotalRiskCard = ({ hostDetails: { id } }) => {
   }, [hits, status]);
 
   const onChartClick = (evt, { index }) => {
-    hashHistory.push(`/Insights`);
+    navigate('/Insights');
     dispatch(
       push({
         search: `search=total_risk+%3D+${index + 1}`,
@@ -131,7 +131,7 @@ const InsightsTotalRiskCard = ({ hostDetails: { id } }) => {
         <DropdownItem
           key="insights-tab"
           ouiaId="insights-tab-dropdown-item"
-          onClick={() => hashHistory.push(`/Insights`)}
+          onClick={() => navigate('/Insights')}
         >
           {__('View all recommendations')}
         </DropdownItem>,
