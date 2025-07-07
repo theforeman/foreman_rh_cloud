@@ -1,13 +1,22 @@
 require 'rest-client'
 
 module ForemanRhCloud
-  class UIRequestForwarder
+  class InsightsApiForwarder
     include ForemanRhCloud::GatewayRequest
 
-    def forward_request(original_request, path, controller_name, user, organization, location)
-      TagsAuth.new(user, logger).update_tag if scope_request?(original_request)
+    SCOPED_REQUESTS = [
+      %r{/api/vulnerability/v1/vulnerabilities/cves},
+      %r{/api/vulnerability/v1/dashbar},
+      %r{/api/vulnerability/v1/cves/[^/]+/affected_systems},
+      %r{/api/insights/.*},
+      %r{/api/inventory/.*},
+      %r{/api/tasks/.*},
+    ].freeze
 
-      forward_params = prepare_forward_params(original_request, user: user, organization: organization, location: location).to_a
+    def forward_request(original_request, path, controller_name, user, organization, location)
+      TagsAuth.new(user, logger).update_tag if scope_request?(original_request, path)
+
+      forward_params = prepare_forward_params(original_request, path, user: user, organization: organization, location: location).to_a
       logger.debug("Request parameters for UI request: #{forward_params}")
 
       forward_payload = prepare_forward_payload(original_request, controller_name)
@@ -23,9 +32,9 @@ module ForemanRhCloud
 
     def prepare_tags(user, organization, location)
       [
-        CGI.escape(TagsAuth.auth_tag_for(user)),
-        CGI.escape("satellite/organization=#{organization}"),
-        CGI.escape("satellite/location=#{location}"),
+        TagsAuth.auth_tag_for(user),
+        "satellite/organization=#{organization}",
+        "satellite/location=#{location}",
       ].map { |tag_value| [:tag, tag_value] }
     end
 
@@ -59,10 +68,10 @@ module ForemanRhCloud
       forward_payload
     end
 
-    def prepare_forward_params(original_request, user:, organization:, location:)
+    def prepare_forward_params(original_request, path, user:, organization:, location:)
       forward_params = original_request.query_parameters.to_a
 
-      forward_params += prepare_tags(user, organization, location) if scope_request?(original_request)
+      forward_params += prepare_tags(user, organization, location) if scope_request?(original_request, path)
 
       forward_params
     end
@@ -83,8 +92,10 @@ module ForemanRhCloud
       headers
     end
 
-    def scope_request?(original_request)
-      original_request.get?
+    def scope_request?(original_request, path)
+      return false unless original_request.get?
+
+      SCOPED_REQUESTS.any? { |request_pattern| request_pattern.match?(path) }
     end
 
     def core_app_name

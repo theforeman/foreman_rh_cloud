@@ -5,7 +5,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
   include MockCerts
 
   setup do
-    @forwarder = ::ForemanRhCloud::UIRequestForwarder.new
+    @forwarder = ::ForemanRhCloud::InsightsApiForwarder.new
     @user = FactoryBot.build(:user)
     @organization = FactoryBot.build(:organization)
     @location = FactoryBot.build(:location)
@@ -22,7 +22,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     params = {}
 
     req = ActionDispatch::Request.new(
-      'REQUEST_URI' => '/foo/bar',
+      'REQUEST_URI' => '/api/vulnerability/v1/cves/abc-123/affected_systems',
       'REQUEST_METHOD' => 'GET',
       'HTTP_USER_AGENT' => user_agent,
       'rack.input' => ::Puma::NullIO.new,
@@ -38,7 +38,32 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       true
     end
 
-    @forwarder.forward_request(req, '/api/vulnerability/v1/cves', 'test_controller', @user, @organization, @location)
+    @forwarder.forward_request(req, '/api/vulnerability/v1/cves/abc-123/affected_systems', 'test_controller', @user, @organization, @location)
+
+    # This test asserts the parameters that are sent to the execute_cloud_request method.
+    # This is done by setting the expectation before the actual call.
+  end
+
+  test 'should not scope GET requests for unknown uris' do
+    user_agent = { :foo => :bar }
+    params = {}
+
+    req = ActionDispatch::Request.new(
+      'REQUEST_URI' => '/api/vulnerability/foo/bar',
+      'REQUEST_METHOD' => 'GET',
+      'HTTP_USER_AGENT' => user_agent,
+      'rack.input' => ::Puma::NullIO.new,
+      'action_dispatch.request.query_parameters' => params
+    )
+
+    ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag).never
+    @forwarder.expects(:execute_cloud_request).with do |actual_params|
+      actual = actual_params[:headers][:params]
+      assert_equal 0, actual.count
+      true
+    end
+
+    @forwarder.forward_request(req, '/api/vulnerability/foo/bar', 'test_controller', @user, @organization, @location)
 
     # This test asserts the parameters that are sent to the execute_cloud_request method.
     # This is done by setting the expectation before the actual call.
@@ -49,7 +74,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     params = { :page => 5, :per_page => 42 }
 
     req = ActionDispatch::Request.new(
-      'REQUEST_URI' => '/foo/bar',
+      'REQUEST_URI' => '/api/vulnerability/v1/cves/abc-123/affected_systems',
       'REQUEST_METHOD' => 'GET',
       'HTTP_USER_AGENT' => user_agent,
       'rack.input' => ::Puma::NullIO.new,
@@ -67,7 +92,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       true
     end
 
-    @forwarder.forward_request(req, '/api/vulnerability/v1/cves', 'test_controller', @user, @organization, @location)
+    @forwarder.forward_request(req, '/api/vulnerability/v1/cves/abc-123/affected_systems', 'test_controller', @user, @organization, @location)
     # This test asserts the parameters that are sent to the execute_cloud_request method.
     # This is done by setting the expectation before the actual call.
   end

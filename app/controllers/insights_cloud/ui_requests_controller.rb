@@ -7,7 +7,7 @@ module InsightsCloud
     # The method that "proxies" requests over to Cloud
     def forward_request
       begin
-        @cloud_response = ::ForemanRhCloud::UIRequestForwarder.new.forward_request(
+        @cloud_response = ::ForemanRhCloud::InsightsApiForwarder.new.forward_request(
           request,
           params.require(:path),
           controller_name,
