@@ -11,3 +11,6 @@ export const isNotRhelHost = ({ hostDetails }) =>
     // eslint-disable-next-line camelcase
     hostDetails?.operatingsystem_name
   );
+
+export const vulnerabilityDisabled = ({ hostDetails }) =>
+  isNotRhelHost({ hostDetails }) || !hostDetails?.vulnerability?.enabled;

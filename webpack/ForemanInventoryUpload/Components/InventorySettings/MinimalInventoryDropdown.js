@@ -25,7 +25,7 @@ const MinimalInventoryDropdown = ({ setChosenValue }) => {
       ),
     },
     optional: {
-      title: __('Optional data collection'),
+      title: __('Analytics data collection'),
       description: __(
         'Send additional data to enhance Insights services, as per the settings'
       ),
