@@ -4,7 +4,7 @@ module ForemanRhCloud
   class CloudRequestForwarder
     include ForemanRhCloud::CloudRequest
 
-    def forward_request(original_request, controller_name, branch_id, certs)
+    def forward_request(original_request, controller_name, branch_id, certs, host)
       forward_params = prepare_forward_params(original_request, branch_id)
       logger.debug("Request parameters for telemetry request: #{forward_params}")
 
@@ -12,14 +12,14 @@ module ForemanRhCloud
 
       logger.debug("User agent for telemetry is: #{http_user_agent original_request}")
 
-      request_opts = prepare_request_opts(original_request, forward_payload, forward_params, certs)
+      request_opts = prepare_request_opts(original_request, forward_payload, forward_params, certs, host)
 
       logger.debug("Sending request to: #{request_opts[:url]}")
 
       execute_cloud_request(request_opts)
     end
 
-    def prepare_request_opts(original_request, forward_payload, forward_params, certs)
+    def prepare_request_opts(original_request, forward_payload, forward_params, certs, host)
       base_params = {
         method: original_request.method,
         payload: forward_payload,
@@ -28,6 +28,7 @@ module ForemanRhCloud
             params: forward_params,
             user_agent: http_user_agent(original_request),
             content_type: original_request.media_type.presence || original_request.format.to_s,
+            Forwarded: prepare_forwarded_header(host),
           }
         ),
       }
@@ -103,6 +104,10 @@ module ForemanRhCloud
 
       logger.debug("Sending headers: #{headers}")
       headers
+    end
+
+    def prepare_forwarded_header(host)
+      "for=\"_#{host.subscription_facet.uuid}\""
     end
 
     def lightspeed?
