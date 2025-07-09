@@ -3,6 +3,7 @@ require 'puma/null_io'
 
 class CloudRequestForwarderTest < ActiveSupport::TestCase
   include MockCerts
+  include KatelloCVEHelper
 
   setup do
     @forwarder = ::ForemanRhCloud::CloudRequestForwarder.new
@@ -10,6 +11,22 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
     ForemanRhCloud.stubs(:base_url).returns('https://cloud.example.com')
     ForemanRhCloud.stubs(:cert_base_url).returns('https://cert.cloud.example.com')
     ForemanRhCloud.stubs(:legacy_insights_url).returns('https://cert-api.access.example.com')
+
+    UpstreamOnlySettingsTestHelper.set_if_available('allow_multiple_content_views')
+    env = FactoryBot.create(:katello_k_t_environment)
+    env2 = FactoryBot.create(:katello_k_t_environment, organization: env.organization)
+
+    @host = FactoryBot.create(
+      :host,
+      :with_subscription,
+      :with_content,
+      :with_hostgroup,
+      :with_parameter,
+      content_view_environments: [make_cve(lifecycle_environment: env), make_cve(lifecycle_environment: env2)],
+      organization: env.organization
+    )
+
+    @host.subscription_facet.pools << FactoryBot.create(:katello_pool, account_number: '5678', cp_id: 1)
   end
 
   test 'should prepare correct cloud url' do
@@ -150,7 +167,7 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
       'action_dispatch.request.query_parameters' => params
     )
 
-    actual = @forwarder.prepare_request_opts(req, 'TEST PAYLOAD', params, generate_certs_hash)
+    actual = @forwarder.prepare_request_opts(req, 'TEST PAYLOAD', params, generate_certs_hash, @host)
 
     assert_match /foo/, actual[:headers][:user_agent]
     assert_match /bar/, actual[:headers][:user_agent]
@@ -175,7 +192,7 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
       'action_dispatch.request.query_parameters' => params
     )
 
-    actual = @forwarder.prepare_request_opts(req, 'TEST PAYLOAD', params, generate_certs_hash)
+    actual = @forwarder.prepare_request_opts(req, 'TEST PAYLOAD', params, generate_certs_hash, @host)
 
     assert_match /text\/html/, actual[:headers][:content_type]
   end
