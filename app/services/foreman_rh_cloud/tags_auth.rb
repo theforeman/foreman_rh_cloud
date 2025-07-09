@@ -3,22 +3,24 @@ module ForemanRhCloud
     include GatewayRequest
 
     TAG_NAMESPACE = 'sat_iam'.freeze
-    TAG_SHORT_NAME = 'user'.freeze
+    TAG_SHORT_NAME = 'scope'.freeze
     TAG_NAME = "#{TAG_NAMESPACE}/#{TAG_SHORT_NAME}".freeze
 
-    def self.auth_tag_for(user)
-      new(user, nil).auth_tag
+    def self.auth_tag_for(user, org, loc)
+      new(user, org, loc, nil).auth_tag
     end
 
     attr_reader :logger
 
-    def initialize(user, logger)
+    def initialize(user, org, loc, logger)
       @user = user
+      @org = org
+      @loc = loc
       @logger = logger
     end
 
     def update_tag
-      logger.debug("Updating tags for user: #{@user}")
+      logger.debug("Updating tags for user: #{@user}, org: #{@org.name}, loc: #{@loc.name}")
 
       params = {
         method: :post,
@@ -32,7 +34,7 @@ module ForemanRhCloud
     end
 
     def allowed_hosts
-      Host.authorized_as(@user, nil, nil).joins(:subscription_facet).pluck('katello_subscription_facets.uuid')
+      Host.authorized_as(@user, nil, nil).where(organization: @org, location: @loc).joins(:subscription_facet).pluck('katello_subscription_facets.uuid')
     end
 
     def tags_query_payload
@@ -43,7 +45,7 @@ module ForemanRhCloud
     end
 
     def tag_value
-      @user.login
+      "U:\"#{@user.login}\"O:\"#{@org.name}\"L:\"#{@loc.name}\""
     end
 
     def auth_tag

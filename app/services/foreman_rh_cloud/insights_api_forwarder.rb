@@ -8,13 +8,14 @@ module ForemanRhCloud
       %r{/api/vulnerability/v1/vulnerabilities/cves},
       %r{/api/vulnerability/v1/dashbar},
       %r{/api/vulnerability/v1/cves/[^/]+/affected_systems},
+      %r{/api/vulnerability/v1/systems/[^/]+/cves},
       %r{/api/insights/.*},
       %r{/api/inventory/.*},
       %r{/api/tasks/.*},
     ].freeze
 
     def forward_request(original_request, path, controller_name, user, organization, location)
-      TagsAuth.new(user, logger).update_tag if scope_request?(original_request, path)
+      TagsAuth.new(user, organization, location, logger).update_tag if scope_request?(original_request, path)
 
       forward_params = prepare_forward_params(original_request, path, user: user, organization: organization, location: location).to_a
       logger.debug("Request parameters for UI request: #{forward_params}")
@@ -32,9 +33,7 @@ module ForemanRhCloud
 
     def prepare_tags(user, organization, location)
       [
-        TagsAuth.auth_tag_for(user),
-        "satellite/organization=#{organization}",
-        "satellite/location=#{location}",
+        TagsAuth.auth_tag_for(user, organization, location),
       ].map { |tag_value| [:tag, tag_value] }
     end
 

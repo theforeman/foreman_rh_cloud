@@ -5,7 +5,9 @@ class TagsAuthTest < ActiveSupport::TestCase
   setup do
     @user = FactoryBot.build(:user)
     @logger = Logger.new(IO::NULL)
-    @auth = ::ForemanRhCloud::TagsAuth.new(@user, @logger)
+    @org = FactoryBot.build(:organization)
+    @loc = FactoryBot.build(:location)
+    @auth = ::ForemanRhCloud::TagsAuth.new(@user, @org, @loc, @logger)
   end
 
   test 'Generates tags update request' do
@@ -19,7 +21,7 @@ class TagsAuthTest < ActiveSupport::TestCase
       assert_includes actual['host_id_list'], uuid2
       assert_equal ForemanRhCloud::TagsAuth::TAG_SHORT_NAME, actual['tags'].first['key']
       assert_equal ForemanRhCloud::TagsAuth::TAG_NAMESPACE, actual['tags'].first['namespace']
-      assert_equal @user.login, actual['tags'].first['value']
+      assert_equal "U:\"#{@user.login}\"O:\"#{@org.name}\"L:\"#{@loc.name}\"", actual['tags'].first['value']
     end
 
     @auth.update_tag

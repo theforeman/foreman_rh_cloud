@@ -32,9 +32,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag)
     @forwarder.expects(:execute_cloud_request).with do |actual_params|
       actual = actual_params[:headers][:params]
-      assert_equal @user.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ /#{ForemanRhCloud::TagsAuth::TAG_NAME}/ }[1])
-      assert_equal @organization.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/organization} }[1])
-      assert_equal @location.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/location} }[1])
+      assert_equal "U:\"#{@user.login}\"O:\"#{@organization.name}\"L:\"#{@location.name}\"", tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ /#{ForemanRhCloud::TagsAuth::TAG_NAME}/ }[1])
       true
     end
 
@@ -84,9 +82,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag)
     @forwarder.expects(:execute_cloud_request).with do |actual_params|
       actual = actual_params[:headers][:params]
-      assert_equal @user.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ /#{ForemanRhCloud::TagsAuth::TAG_NAME}/ }[1])
-      assert_equal @organization.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/organization} }[1])
-      assert_equal @location.name, tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ %r{satellite/location} }[1])
+      assert_equal "U:\"#{@user.login}\"O:\"#{@organization.name}\"L:\"#{@location.name}\"", tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ /#{ForemanRhCloud::TagsAuth::TAG_NAME}/ }[1])
       assert_equal 5, actual.find { |param| param[0] == :page }[1]
       assert_equal 42, actual.find { |param| param[0] == :per_page }[1]
       true
