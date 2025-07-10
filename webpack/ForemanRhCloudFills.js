@@ -5,6 +5,7 @@ import NewHostDetailsTab from './InsightsHostDetailsTab/NewHostDetailsTab';
 import { InsightsTotalRiskChartWrapper } from './InsightsHostDetailsTab/InsightsTotalRiskChartWrapper';
 import { isNotRhelHost, vulnerabilityDisabled } from './ForemanRhCloudHelpers';
 import CVEsHostDetailsTab from './CVEsHostDetailsTab/CVEsHostDetailsTab';
+import { translate as __ } from 'foremanReact/common/I18n';
 
 const fills = [
   {
@@ -15,11 +16,12 @@ const fills = [
   },
   {
     slot: 'host-details-page-tabs',
-    name: __('Insights'),
+    name: 'Insights',
     component: props => <NewHostDetailsTab {...props} />,
     weight: 400,
     metadata: {
       hideTab: isNotRhelHost,
+      title: __('Insights'),    
     },
   },
   {
