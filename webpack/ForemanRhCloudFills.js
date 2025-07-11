@@ -1,11 +1,11 @@
 import React from 'react';
 import { addGlobalFill } from 'foremanReact/components/common/Fill/GlobalFill';
+import { translate as __ } from 'foremanReact/common/I18n';
 import InventoryAutoUploadSwitcher from './ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload';
 import NewHostDetailsTab from './InsightsHostDetailsTab/NewHostDetailsTab';
 import { InsightsTotalRiskChartWrapper } from './InsightsHostDetailsTab/InsightsTotalRiskChartWrapper';
 import { isNotRhelHost, vulnerabilityDisabled } from './ForemanRhCloudHelpers';
 import CVEsHostDetailsTab from './CVEsHostDetailsTab/CVEsHostDetailsTab';
-import { translate as __ } from 'foremanReact/common/I18n';
 
 const fills = [
   {
@@ -21,7 +21,7 @@ const fills = [
     weight: 400,
     metadata: {
       hideTab: isNotRhelHost,
-      title: __('Insights'),    
+      title: __('Insights'),
     },
   },
   {
