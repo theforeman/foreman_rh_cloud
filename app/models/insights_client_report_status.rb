@@ -6,7 +6,7 @@ class InsightsClientReportStatus < HostStatus::Status
 
   scope :stale, -> { where.not(reported_at: (Time.now - REPORT_INTERVAL)..Time.now) }
   scope :reporting, -> { where(status: REPORTING) }
- 
+
   def self.status_name
     N_('Insights')
   end
