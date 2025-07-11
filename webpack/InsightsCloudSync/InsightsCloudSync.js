@@ -108,14 +108,10 @@ const LocalAdvisorPlaceholderWrapped = () => (
 );
 
 const RecommendationsPage = props => {
-  // TODO: remove next line before merging
-  return <LocalAdvisorPlaceholderWrapped />;
-
-  // eslint-disable-next-line no-unreachable
   const isLocalAdvisorEngine = useAdvisorEngineConfig();
 
   return isLocalAdvisorEngine ? (
-    <LocalAdvisorPlaceholder />
+    <LocalAdvisorPlaceholderWrapped />
   ) : (
     <InsightsCloudSync {...props} />
   );
