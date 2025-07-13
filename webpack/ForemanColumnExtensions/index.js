@@ -1,6 +1,7 @@
 import React from 'react';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { propsToCamelCase } from 'foremanReact/common/helpers';
+import { CVECountCell } from '../InsightsVulnerabilityHostIndexExtensions/CVECountCell';
 
 const RecommendationsCell = hostDetails => {
   const insightsAttributes = propsToCamelCase(
@@ -22,6 +23,8 @@ const RecommendationsCell = hostDetails => {
   return <a href={hitsUrl}>{hitsCount}</a>;
 };
 
+const insightsCategoryName = __('Insights');
+
 const hostsIndexColumnExtensions = [
   {
     columnName: 'insights_recommendations_count',
@@ -29,13 +32,20 @@ const hostsIndexColumnExtensions = [
     wrapper: RecommendationsCell,
     weight: 1500,
     isSorted: true,
+    tableName: 'hosts',
+    categoryName: insightsCategoryName,
+    categoryKey: 'insights',
+  },
+  {
+    columnName: 'cves_count',
+    title: __('Total CVEs'),
+    wrapper: hostDetails => <CVECountCell hostDetails={hostDetails} />,
+    weight: 2600,
+    tableName: 'hosts',
+    categoryName: insightsCategoryName,
+    categoryKey: 'insights',
+    isSorted: false,
   },
 ];
-
-hostsIndexColumnExtensions.forEach(column => {
-  column.tableName = 'hosts';
-  column.categoryName = 'Insights';
-  column.categoryKey = 'insights';
-});
 
 export default hostsIndexColumnExtensions;
