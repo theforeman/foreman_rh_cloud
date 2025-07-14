@@ -66,7 +66,7 @@ const LocalAdvisorPlaceholder = props => {
   const [scope, setScope] = useState('advisor');
   const path = `apps/${scope}`;
   const module = './SatelliteDemoComponent';
-  const manifestLocation = `https://stage.foo.redhat.com:1337/${path}/fed-mods.json`;
+  const manifestLocation = `/${path}/fed-mods.json`;
 
   const [value, setValue] = useState(scope);
 
@@ -75,7 +75,7 @@ const LocalAdvisorPlaceholder = props => {
       [scope]: {
         name: scope,
         manifestLocation,
-        cdnPath: `${window.location.origin}/scalprum/${path}/`,
+        cdnPath: `/${path}/`,
       },
     });
   }, [setConfig, scope, path, manifestLocation]);
