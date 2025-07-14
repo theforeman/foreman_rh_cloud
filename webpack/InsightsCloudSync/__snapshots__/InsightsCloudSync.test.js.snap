@@ -1,54 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InsightsCloudSync render 1`] = `
-<div
-  className="rh-cloud-insights"
->
-  <Connect(InsightsSettings) />
-  <PageLayout
-    beforeToolbarComponent={null}
-    header="Red Hat Insights"
-    onSearch={[Function]}
-    searchProps={
-      Object {
-        "autocomplete": Object {
-          "id": "searchBar",
-          "searchQuery": "",
-          "url": "/insights_cloud/hits/auto_complete_search",
-          "useKeyShortcuts": true,
-        },
-        "bookmarks": Object {
-          "canCreateBookmarks": true,
-          "documentationUrl": "4.1.5Searching",
-          "url": "/api/bookmarks",
-        },
-        "controller": "insights_hits",
-      }
-    }
-    searchQuery=""
-    searchable={true}
-    toolbarButtons={
-      <React.Fragment>
-        <span
-          className="insights-toolbar-buttons"
-        >
-          <Memo(Connect(RemediationModal)) />
-          <ToolbarDropdown
-            onRecommendationSync={[Function]}
-          />
-        </span>
-        <span
-          className="pull-right"
-        >
-          <Pagination
-            isCompact={true}
-            variant="top"
-          />
-        </span>
-      </React.Fragment>
-    }
-  >
-    <Connect(InsightsTable) />
-  </PageLayout>
-</div>
+<InsightsCloudSync
+  fetchInsights={[Function]}
+  query=""
+  status="RESOLVED"
+  syncInsights={[Function]}
+/>
 `;
