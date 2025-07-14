@@ -33,8 +33,8 @@ module ForemanInventoryUpload
         end
 
         Tempfile.create([organization.name, '.pem']) do |cer_file|
-          cer_file.write(rh_credentials[:cert])
-          cer_file.write(rh_credentials[:key])
+          cer_file.write(certificate[:cert])
+          cer_file.write(certificate[:key])
           cer_file.flush
           @cer_path = cer_file.path
           super
@@ -59,14 +59,25 @@ module ForemanInventoryUpload
         env_vars
       end
 
-      def rh_credentials
-        @rh_credentials ||= begin
+      def certificate
+        ForemanRhCloud.with_local_advisor_engine? ? foreman_certificate : manifest_certificate
+      end
+
+      def manifest_certificate
+        @manifest_certificate ||= begin
           candlepin_id_certificate = organization.owner_details['upstreamConsumer']['idCert']
           {
             cert: candlepin_id_certificate['cert'],
             key: candlepin_id_certificate['key'],
           }
         end
+      end
+
+      def foreman_certificate
+        @foreman_certificate ||= {
+          cert: File.read(Setting[:ssl_certificate]),
+          key: File.read(Setting[:ssl_priv_key]),
+        }
       end
 
       def filename

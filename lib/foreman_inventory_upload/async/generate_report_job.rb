@@ -5,18 +5,19 @@ module ForemanInventoryUpload
         "report_for_#{label}"
       end
 
-      def plan(base_folder, organization_id, disconnected)
+      def plan(base_folder, organization_id, disconnected, hosts_filter = nil)
         sequence do
           super(
-            GenerateReportJob.output_label(organization_id),
+            GenerateReportJob.output_label("#{organization_id}#{hosts_filter.empty? ? nil : "[#{hosts_filter.to_s.parameterize}]"}"),
             organization_id: organization_id,
-            base_folder: base_folder
+            base_folder: base_folder,
+            hosts_filter: hosts_filter
           )
 
           plan_action(
             QueueForUploadJob,
             base_folder,
-            ForemanInventoryUpload.facts_archive_name(organization_id),
+            ForemanInventoryUpload.facts_archive_name(organization_id, hosts_filter),
             organization_id,
             disconnected
           )
@@ -34,7 +35,8 @@ module ForemanInventoryUpload
       def env
         super.merge(
           'target' => base_folder,
-          'organization_id' => organization_id
+          'organization_id' => organization_id,
+          'hosts_filter' => hosts_filter
         )
       end
 
@@ -44,6 +46,10 @@ module ForemanInventoryUpload
 
       def organization_id
         input[:organization_id]
+      end
+
+      def hosts_filter
+        input[:hosts_filter]
       end
     end
   end

@@ -8,6 +8,8 @@ module InventorySync
       set_callback :step, :around, :create_missing_hosts
 
       def plan(organizations)
+        # Do not run for local advisor, since we use sub-man id to identify hosts.
+        return if ForemanRhCloud.with_local_advisor_engine?
         # by default the tasks will be executed concurrently
         super(organizations)
         plan_self_host_sync

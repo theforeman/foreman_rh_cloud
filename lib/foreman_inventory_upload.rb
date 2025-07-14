@@ -52,8 +52,8 @@ module ForemanInventoryUpload
     'uploader.sh'
   end
 
-  def self.facts_archive_name(organization)
-    "report_for_#{organization}.tar.xz"
+  def self.facts_archive_name(organization, filter = nil)
+    "report_for_#{organization}#{filter.empty? ? nil : "[#{filter.to_s.parameterize}]"}.tar.xz"
   end
 
   def self.upload_url

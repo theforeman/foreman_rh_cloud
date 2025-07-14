@@ -50,7 +50,7 @@ class ArchivedReportGeneratorTest < ActiveSupport::TestCase
     batches = Host.where(id: @host.id).in_batches
     test_org = FactoryBot.create(:organization)
 
-    ForemanInventoryUpload::Generators::Queries.expects(:for_org).with(test_org.id).returns(batches)
+    ForemanInventoryUpload::Generators::Queries.expects(:for_org).with(test_org.id, hosts_query: '').returns(batches)
     ForemanInventoryUpload::Generators::Slice.any_instance.stubs(:golden_ticket?).returns(false)
     Dir.mktmpdir do |tmpdir|
       target = File.join(tmpdir, 'test.tar.gz')
