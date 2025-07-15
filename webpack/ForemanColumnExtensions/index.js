@@ -2,16 +2,33 @@ import React from 'react';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { propsToCamelCase } from 'foremanReact/common/helpers';
 import { CVECountCell } from '../InsightsVulnerabilityHostIndexExtensions/CVECountCell';
+import { RhCloudScalprumComponent } from '../common/ScalprumModule/RhCloudScalprumComponent';
+import { ScalprumContextWrapper } from '../common/ScalprumModule/ScalprumContext';
+
+const scope = 'advisor';
+const module = './RecommendationsCellWrapped';
+const path = `apps/${scope}`;
+const manifestLocation = `/${path}/fed-mods.json`;
 
 const RecommendationsCell = hostDetails => {
   const insightsAttributes = propsToCamelCase(
     // eslint-disable-next-line camelcase
     hostDetails?.insights_attributes ?? {}
   );
+
   // Local insights advisor
   if (insightsAttributes.useLocalAdvisorEngine) {
-    // TODO: Replace this placeholder with the actual local advisor integration
-    return <span>Local advisor placeholder</span>;
+    return (
+      <ScalprumContextWrapper>
+        <RhCloudScalprumComponent
+          scope={scope}
+          module={module}
+          path={path}
+          manifestLocation={manifestLocation}
+          hostDetails={hostDetails}
+        />
+      </ScalprumContextWrapper>
+    );
   }
 
   // Hosted insights advisor

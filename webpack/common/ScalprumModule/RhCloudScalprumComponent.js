@@ -26,7 +26,7 @@ export const RhCloudScalprumComponent = ({
     });
   }, [setConfig, manifestLocation, path, scope]);
 
-  if (!config[scope]) return null;
+  if (!config?.[scope]) return null;
   return <ScalprumComponent scope={scope} module={module} {...props} />;
 };
 
