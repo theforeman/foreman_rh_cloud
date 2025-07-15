@@ -1,17 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { translate as __ } from 'foremanReact/common/I18n';
+import PageLayout from 'foremanReact/routes/common/PageLayout/PageLayout';
+import { ScalprumComponent } from '@scalprum/react-core';
+import { ScalprumContextWrapper } from '../common/ScalprumModule/ScalprumContext';
 
-const CVEsHostDetailsTab = ({ hostName }) => (
-  <div>
-    <h1>
-      {__('CVEs tab for host:')} {hostName}
-    </h1>
-  </div>
-);
+const CVEsHostDetailsTab = () => {
+  const scope = 'vulnerability';
+  const module = './SystemDetailTable';
+  return (
+    <div className="rh-cloud-insights-vulnerability-page">
+      <ScalprumComponent scope={scope} module={module} />
 
-CVEsHostDetailsTab.propTypes = {
-  hostName: PropTypes.string.isRequired,
+      <PageLayout searchable={false} header={__('Vulnerability')}>
+        <div className="insights-vulnerability">
+          <p>
+            This page is under development. Please check back soon for updates.
+          </p>
+        </div>
+      </PageLayout>
+    </div>
+  );
 };
 
-export default CVEsHostDetailsTab;
+const CVEsHostDetailsTabWrapper = () => (
+  <ScalprumContextWrapper>
+    <CVEsHostDetailsTab />
+  </ScalprumContextWrapper>
+);
+
+export default CVEsHostDetailsTabWrapper;
