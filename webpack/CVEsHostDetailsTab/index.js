@@ -1,3 +1,3 @@
-import CVEsHostDetailsTab from './CVEsHostDetailsTab';
+import CVEsHostDetailsTabWrapper from './CVEsHostDetailsTab';
 
-export default CVEsHostDetailsTab;
+export default CVEsHostDetailsTabWrapper;
