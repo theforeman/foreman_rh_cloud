@@ -42,7 +42,7 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
     }
 
     paths.each do |key, value|
-      actual_params = @forwarder.path_params(key, generate_certs_hash)
+      actual_params = @forwarder.path_params(key)
       assert_equal value, actual_params[:url]
     end
   end
@@ -167,7 +167,7 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
       'action_dispatch.request.query_parameters' => params
     )
 
-    actual = @forwarder.prepare_request_opts(req, 'TEST PAYLOAD', params, generate_certs_hash, @host)
+    actual = @forwarder.prepare_request_opts(req, 'TEST PAYLOAD', params, @host)
 
     assert_match /foo/, actual[:headers][:user_agent]
     assert_match /bar/, actual[:headers][:user_agent]
@@ -192,7 +192,7 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
       'action_dispatch.request.query_parameters' => params
     )
 
-    actual = @forwarder.prepare_request_opts(req, 'TEST PAYLOAD', params, generate_certs_hash, @host)
+    actual = @forwarder.prepare_request_opts(req, 'TEST PAYLOAD', params, @host)
 
     assert_match /text\/html/, actual[:headers][:content_type]
   end

@@ -3,8 +3,9 @@ require 'rest-client'
 module ForemanRhCloud
   class CloudRequestForwarder
     include ForemanRhCloud::CloudRequest
+    include ForemanRhCloud::CertAuth
 
-    def forward_request(original_request, controller_name, branch_id, certs, host)
+    def forward_request(original_request, controller_name, branch_id, host)
       forward_params = prepare_forward_params(original_request, branch_id)
       logger.debug("Request parameters for telemetry request: #{forward_params}")
 
@@ -12,14 +13,15 @@ module ForemanRhCloud
 
       logger.debug("User agent for telemetry is: #{http_user_agent original_request}")
 
-      request_opts = prepare_request_opts(original_request, forward_payload, forward_params, certs, host)
+      request_opts = prepare_request_opts(original_request, forward_payload, forward_params, host)
+      request_opts[:organization] = host.organization
 
       logger.debug("Sending request to: #{request_opts[:url]}")
 
       execute_cloud_request(request_opts)
     end
 
-    def prepare_request_opts(original_request, forward_payload, forward_params, certs, host)
+    def prepare_request_opts(original_request, forward_payload, forward_params, host)
       base_params = {
         method: original_request.method,
         payload: forward_payload,
@@ -33,7 +35,7 @@ module ForemanRhCloud
         ),
       }
       requested_url = original_request.original_fullpath.end_with?('/') ? original_request.path + '/' : original_request.path
-      params = path_params(requested_url, certs)
+      params = path_params(requested_url)
 
       if ForemanRhCloud.with_local_advisor_engine?
         params[:ssl_ca_file] = ForemanRhCloud.ca_cert
@@ -66,31 +68,23 @@ module ForemanRhCloud
       forward_params
     end
 
-    def path_params(request_path, certs)
+    def path_params(request_path)
       case request_path
       when lightspeed?
         {
           url: ForemanRhCloud.cert_base_url + request_path,
-          ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-          ssl_client_key: OpenSSL::PKey.read(certs[:key]),
         }
       when platform_request?
         {
           url: ForemanRhCloud.cert_base_url + request_path.sub('/redhat_access/r/insights/platform', '/api'),
-          ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-          ssl_client_key: OpenSSL::PKey.read(certs[:key]),
         }
       when connection_test_request?
         {
           url: ForemanRhCloud.cert_base_url + '/api/apicast-tests/ping',
-          ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-          ssl_client_key: OpenSSL::PKey.read(certs[:key]),
         }
       else # Legacy insights API
         {
           url: ForemanRhCloud.legacy_insights_url + request_path.sub('/redhat_access/r/insights', '/r/insights'),
-          ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
-          ssl_client_key: OpenSSL::PKey.read(certs[:key]),
           ssl_ca_file: ForemanRhCloud.legacy_insights_ca,
         }
       end
