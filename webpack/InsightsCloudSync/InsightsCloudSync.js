@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import PageLayout from 'foremanReact/routes/common/PageLayout/PageLayout';
-import { TextInput, Button } from '@patternfly/react-core';
 import { ScalprumComponent } from '@scalprum/react-core';
 import {
   ScalprumContextWrapper,
@@ -61,49 +60,30 @@ InsightsCloudSync.defaultProps = {
   query: '',
 };
 
-const LocalAdvisorPlaceholder = props => {
-  const { config, setConfig } = useContext(ScalprumContext);
-  const [scope, setScope] = useState('advisor');
-  const path = `apps/${scope}`;
-  const module = './SatelliteDemoComponent';
-  const manifestLocation = `/${path}/fed-mods.json`;
+const scope = 'advisor';
+const path = `apps/${scope}`;
+const module = './RulesTableWrapped';
+const manifestLocation = `/${path}/fed-mods.json`;
 
-  const [value, setValue] = useState(scope);
+const LocalAdvisorRecommendationsPage = props => {
+  const { setConfig } = useContext(ScalprumContext);
 
   useEffect(() => {
     setConfig({
       [scope]: {
         name: scope,
         manifestLocation,
-        cdnPath: `/${path}/`,
+        cdnPath: `${window.location.origin}/${path}/`,
       },
     });
-  }, [setConfig, scope, path, manifestLocation]);
+  }, [setConfig]);
 
-  return (
-    <>
-      <span>
-        <TextInput
-          value={value}
-          type="text"
-          onChange={(_event, val) => setValue(val)}
-          aria-label="manifest location"
-        />
-        <Button variant="primary" onClick={() => setScope(value)}>
-          Set scope
-        </Button>
-      </span>
-      <pre style={{ paddingBottom: '2em' }}>{manifestLocation}</pre>
-      {config[scope] && (
-        <ScalprumComponent scope={scope} module={module} {...props} />
-      )}
-    </>
-  );
+  return <ScalprumComponent scope={scope} module={module} {...props} />;
 };
 
-const LocalAdvisorPlaceholderWrapped = () => (
+const LocalAdvisorRecommendationsPageWrapped = () => (
   <ScalprumContextWrapper>
-    <LocalAdvisorPlaceholder IopRemediationModal={RemediationModal} />
+    <LocalAdvisorRecommendationsPage IopRemediationModal={RemediationModal} />
   </ScalprumContextWrapper>
 );
 
@@ -111,7 +91,7 @@ const RecommendationsPage = props => {
   const isLocalAdvisorEngine = useAdvisorEngineConfig();
 
   return isLocalAdvisorEngine ? (
-    <LocalAdvisorPlaceholderWrapped />
+    <LocalAdvisorRecommendationsPageWrapped />
   ) : (
     <InsightsCloudSync {...props} />
   );
