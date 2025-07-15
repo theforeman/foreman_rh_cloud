@@ -1,11 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import PageLayout from 'foremanReact/routes/common/PageLayout/PageLayout';
-import { ScalprumComponent } from '@scalprum/react-core';
-import {
-  ScalprumContextWrapper,
-  ScalprumContext,
-} from '../common/ScalprumModule/ScalprumContext';
+import { ScalprumContextWrapper } from '../common/ScalprumModule/ScalprumContext';
+import { RhCloudScalprumComponent } from '../common/ScalprumModule/RhCloudScalprumComponent';
 import InsightsTable from './Components/InsightsTable';
 import { useAdvisorEngineConfig } from '../common/Hooks/ConfigHooks';
 import RemediationModal from './Components/RemediationModal';
@@ -61,29 +58,20 @@ InsightsCloudSync.defaultProps = {
 };
 
 const scope = 'advisor';
-const path = `apps/${scope}`;
 const module = './RulesTableWrapped';
+const path = `apps/${scope}`;
 const manifestLocation = `/${path}/fed-mods.json`;
 
-const LocalAdvisorRecommendationsPage = props => {
-  const { setConfig } = useContext(ScalprumContext);
-
-  useEffect(() => {
-    setConfig({
-      [scope]: {
-        name: scope,
-        manifestLocation,
-        cdnPath: `${window.location.origin}/${path}/`,
-      },
-    });
-  }, [setConfig]);
-
-  return <ScalprumComponent scope={scope} module={module} {...props} />;
-};
-
-const LocalAdvisorRecommendationsPageWrapped = () => (
+const LocalAdvisorRecommendationsPage = props => (
   <ScalprumContextWrapper>
-    <LocalAdvisorRecommendationsPage IopRemediationModal={RemediationModal} />
+    <RhCloudScalprumComponent
+      scope={scope}
+      module={module}
+      path={path}
+      manifestLocation={manifestLocation}
+      IopRemediationModal={RemediationModal}
+      {...props}
+    />
   </ScalprumContextWrapper>
 );
 
@@ -91,7 +79,7 @@ const RecommendationsPage = props => {
   const isLocalAdvisorEngine = useAdvisorEngineConfig();
 
   return isLocalAdvisorEngine ? (
-    <LocalAdvisorRecommendationsPageWrapped />
+    <LocalAdvisorRecommendationsPage />
   ) : (
     <InsightsCloudSync {...props} />
   );
