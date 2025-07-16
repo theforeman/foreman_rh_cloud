@@ -18,6 +18,7 @@ const Resolutions = ({
       {resolutions.map(({ id: resolution_id, description }) => (
         <Radio
           key={resolution_id}
+          ouiaId={`resolution-radio-${resolution_id}`}
           className="resolution-radio"
           id={resolution_id}
           isChecked={resolution_id === checkedID}

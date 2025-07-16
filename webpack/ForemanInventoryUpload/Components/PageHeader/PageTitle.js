@@ -26,6 +26,7 @@ const PageTitle = () => {
   const dropdownItems = [
     <DropdownItem
       key="tasks-history-button"
+      ouiaId="tasks-history-button"
       href={getActionsHistoryUrl()}
       target="_blank"
       rel="noopener noreferrer"
@@ -34,13 +35,18 @@ const PageTitle = () => {
     </DropdownItem>,
     <DropdownItem
       key="inventory-documentation-button"
+      ouiaId="inventory-documentation-button"
       href={getInventoryDocsUrl()}
       target="_blank"
       rel="noopener noreferrer"
     >
       {DOCS_BUTTON_TEXT}
     </DropdownItem>,
-    <DropdownItem key="cloud-ping" onClick={togglePingModal}>
+    <DropdownItem
+      key="cloud-ping"
+      ouiaId="dropdownItem-cloud-ping"
+      onClick={togglePingModal}
+    >
       {CLOUD_PING_TITLE}
     </DropdownItem>,
   ];
@@ -55,6 +61,7 @@ const PageTitle = () => {
       <GridItem span={6}>
         <Dropdown
           className="title-dropdown"
+          ouiaId="title-dropdown"
           onSelect={() => setIsDropdownOpen(false)}
           toggle={
             <KebabToggle

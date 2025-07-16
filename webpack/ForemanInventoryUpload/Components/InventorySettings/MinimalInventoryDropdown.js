@@ -68,6 +68,7 @@ const MinimalInventoryDropdown = ({ setChosenValue }) => {
   };
   return (
     <Dropdown
+      ouiaId="inventory-dropdown"
       isOpen={isOpen}
       onSelect={onSelect}
       onOpenChange={val => setIsOpen(val)}
@@ -90,6 +91,7 @@ const MinimalInventoryDropdown = ({ setChosenValue }) => {
               value={value}
               key={value}
               description={item.description}
+              ouiaId={`inventory-dropdownItem-${value}`}
             >
               {item.title}
             </DropdownItem>

@@ -41,6 +41,7 @@ exports[`InventoryAutoUpload rendering render with props 1`] = `
           position="right"
         >
           <Button
+            ouiaId="button-advanced-settings"
             style={
               Object {
                 "fontSize": "small",
@@ -68,6 +69,7 @@ exports[`InventoryAutoUpload rendering render with props 1`] = `
       >
         <Text
           component="p"
+          ouiaId="text-more-details"
         >
           <InfoAltIcon />
            
@@ -76,6 +78,7 @@ exports[`InventoryAutoUpload rendering render with props 1`] = `
           <Text
             component="a"
             href="/foreman_rh_cloud/inventory_upload"
+            ouiaId="text-details-link"
             rel="noopener noreferrer"
             target="_blank"
           >

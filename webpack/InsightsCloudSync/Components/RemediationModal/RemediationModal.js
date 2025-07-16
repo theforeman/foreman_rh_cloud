@@ -46,6 +46,7 @@ const RemediationModal = ({
   return (
     <React.Fragment>
       <Button
+        ouiaId="button-remediate"
         variant="primary"
         isDisabled={isEmpty(selectedIds)}
         onClick={() => {
@@ -56,6 +57,7 @@ const RemediationModal = ({
       </Button>{' '}
       <Modal
         id="remediation-modal"
+        ouiaId="remediation-modal"
         appendTo={document.body}
         variant={ModalVariant.large}
         title={__('Remediation summary')}
@@ -71,6 +73,7 @@ const RemediationModal = ({
       >
         <Table
           className="remediations-table"
+          ouiaId="remediations-table"
           aria-label="remediations Table"
           cells={columns}
           rows={rows}

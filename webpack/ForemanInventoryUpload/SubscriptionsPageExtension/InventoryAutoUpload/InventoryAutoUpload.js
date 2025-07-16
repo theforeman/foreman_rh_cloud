@@ -48,6 +48,7 @@ const InventoryAutoUploadSwitcher = ({
               position="right"
             >
               <Button
+                ouiaId="button-advanced-settings"
                 variant="secondary"
                 style={{ fontSize: 'small', marginTop: '-4px' }}
               >
@@ -59,9 +60,10 @@ const InventoryAutoUploadSwitcher = ({
         <br />
         <Grid.Row>
           <Grid.Col sm={12}>
-            <Text component={TextVariants.p}>
+            <Text component={TextVariants.p} ouiaId="text-more-details">
               <InfoAltIcon /> {__('More details can be found in')}{' '}
               <Text
+                ouiaId="text-details-link"
                 component={TextVariants.a}
                 href={foremanUrl('/foreman_rh_cloud/inventory_upload')}
                 target="_blank"

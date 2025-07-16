@@ -9,10 +9,20 @@ const ModalFooter = ({ toggleModal, resolutions, hostsIds }) => {
   token = token?.content || '';
   return (
     <form action={JOB_INVOCATION_PATH} method="post">
-      <Button type="submit" key="confirm" variant="primary">
+      <Button
+        type="submit"
+        ouiaId="button-confirm"
+        key="confirm"
+        variant="primary"
+      >
         {__('Remediate')}
       </Button>
-      <Button key="cancel" variant="link" onClick={toggleModal}>
+      <Button
+        key="cancel"
+        ouiaId="button-cancel"
+        variant="link"
+        onClick={toggleModal}
+      >
         {__('Cancel')}
       </Button>
       <input type="hidden" name="feature" value="rh_cloud_remediate_hosts" />

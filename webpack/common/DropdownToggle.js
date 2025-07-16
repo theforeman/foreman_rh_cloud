@@ -6,6 +6,7 @@ const DropdownToggle = ({ items, ...props }) => {
   const [isOpen, setOpen] = useState(false);
   return (
     <Dropdown
+      ouiaId="toggle-dropdown"
       onSelect={() => setOpen(false)}
       toggle={<KebabToggle onToggle={(_event, value) => setOpen(value)} />}
       isOpen={isOpen}

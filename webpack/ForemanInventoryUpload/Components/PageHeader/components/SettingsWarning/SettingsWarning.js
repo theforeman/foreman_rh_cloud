@@ -22,6 +22,7 @@ export const SettingsWarning = ({
     alerts.push(
       <Alert
         key="auto-upload"
+        ouiaId="auto-upload"
         variant="warning"
         title={__(
           "Cloud Connector has been configured however the inventory auto-upload is disabled, it's recommended to enable it"
@@ -36,6 +37,7 @@ export const SettingsWarning = ({
     alerts.push(
       <Alert
         key="obfuscating-host"
+        ouiaId="obfuscating-host"
         variant="warning"
         title={__(
           "Cloud Connector has been configured however obfuscating host names setting is enabled, it's recommended to disable it"

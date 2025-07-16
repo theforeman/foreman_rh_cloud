@@ -8,6 +8,7 @@ exports[`InventoryFilter rendering render with props 1`] = `
     <TextInput
       id="inventory_filter_input"
       onChange={[Function]}
+      ouiaId="inventory_filter_input"
       placeholder="Filter.."
       type="text"
       value="test_filter_term"

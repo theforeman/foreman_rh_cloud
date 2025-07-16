@@ -49,6 +49,7 @@ const Switcher = ({
     <Grid.Col sm={SwitchCol} style={{ marginBottom: '5px' }}>
       <Switch
         id={`rh-cloud-switcher-${id}`}
+        ouiaId={`rh-cloud-switcher-${id}`}
         isChecked={isChecked}
         onChange={onChange}
         label=" "

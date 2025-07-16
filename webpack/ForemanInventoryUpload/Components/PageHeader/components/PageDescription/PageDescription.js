@@ -13,18 +13,18 @@ export const PageDescription = () => {
 
   return (
     <div id="inventory_page_description">
-      <Text>
+      <Text ouiaId="text-cloud-console">
         {__(
           'The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Foreman instance.'
         )}
       </Text>
-      <Text>
+      <Text ouiaId="text-inventory-upload">
         {__(
           'The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.'
         )}
       </Text>
       {subscriptionConnectionEnabled && (
-        <Text>
+        <Text ouiaId="text-enable-report">
           <FormattedMessage
             id="enable-upload-hint"
             defaultMessage={__(
@@ -39,7 +39,7 @@ export const PageDescription = () => {
         </Text>
       )}
       {subscriptionConnectionEnabled && (
-        <Text>
+        <Text ouiaId="text-restart-button">
           <FormattedMessage
             id="restart-button-hint"
             defaultMessage={__(
@@ -53,7 +53,7 @@ export const PageDescription = () => {
           />
         </Text>
       )}
-      <Text>
+      <Text ouiaId="text-more-info-subscription">
         {__('For more information about the Subscriptions service, see:')}
         &nbsp;
         <a
@@ -64,7 +64,7 @@ export const PageDescription = () => {
           {__('About subscription watch')}
         </a>
       </Text>
-      <Text>
+      <Text ouiaId="text-more-info-insights">
         {__('For more information about Insights and Cloud Connector, see:')}
         &nbsp;
         <a

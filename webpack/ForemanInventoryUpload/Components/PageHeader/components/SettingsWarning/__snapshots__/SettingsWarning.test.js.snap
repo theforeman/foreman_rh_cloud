@@ -11,6 +11,7 @@ exports[`SettingsWarning with 2 alerts 1`] = `
       />
     }
     key="auto-upload"
+    ouiaId="auto-upload"
     title="Cloud Connector has been configured however the inventory auto-upload is disabled, it's recommended to enable it"
     variant="warning"
   />
@@ -21,6 +22,7 @@ exports[`SettingsWarning with 2 alerts 1`] = `
       />
     }
     key="obfuscating-host"
+    ouiaId="obfuscating-host"
     title="Cloud Connector has been configured however obfuscating host names setting is enabled, it's recommended to disable it"
     variant="warning"
   />

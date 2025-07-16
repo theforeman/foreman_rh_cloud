@@ -75,6 +75,7 @@ const InsightsTable = ({
       />
       <Table
         className="rh-cloud-recommendations-table"
+        ouiaId="rh-cloud-recommendations-table"
         aria-label="Recommendations Table"
         onSelect={(_event, isSelected, rowId) =>
           onTableSelect(isSelected, rowId, rows, selectedIds)

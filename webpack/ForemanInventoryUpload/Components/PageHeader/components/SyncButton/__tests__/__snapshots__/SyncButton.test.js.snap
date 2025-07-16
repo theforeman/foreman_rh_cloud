@@ -6,6 +6,7 @@ exports[`SyncButton rendering render with Props 1`] = `
     className="sync_button"
     isDisabled={false}
     onClick={[Function]}
+    ouiaId="sync-button"
     variant="secondary"
   >
      Sync all inventory status

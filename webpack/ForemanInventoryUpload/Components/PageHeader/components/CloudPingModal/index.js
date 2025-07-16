@@ -79,26 +79,32 @@ const CloudPingModal = ({ title, isOpen, toggle }) => {
     <>
       <Modal
         id="cloud-ping-modal"
+        ouiaId="cloud-ping-modal"
         appendTo={document.getElementsByClassName('react-container')[0]}
         variant={ModalVariant.large}
         title={title}
         isOpen={isOpen}
         onClose={toggle}
       >
-        <Card className="certs-status">
+        <Card className="certs-status" ouiaId="card-org-status">
           <CardTitle>{__('Organization status')}</CardTitle>
           <CardBody>
-            <Text>
+            <Text ouiaId="text-description">
               {__('Displays manifest statuses per accessible organizations.')}
             </Text>
             {isPending ? (
               <Spinner size="xl" />
             ) : (
               <>
-                <Text className="pull-right">
+                <Text className="pull-right" ouiaId="text-org-count">
                   {sprintf(__('%s organizations'), rows.length)}
                 </Text>
-                <Table aria-label="Simple Table" cells={['']} rows={rows}>
+                <Table
+                  aria-label="Simple Table"
+                  ouiaId="simple-table"
+                  cells={['']}
+                  rows={rows}
+                >
                   <TableHeader />
                   <TableBody />
                 </Table>{' '}

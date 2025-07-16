@@ -25,6 +25,7 @@ exports[`PageTitle rendering render without Props 1`] = `
         Array [
           <DropdownItem
             href="/foreman_tasks/tasks?search=label+%3D+ForemanInventoryUpload%3A%3AAsync%3A%3AGenerateReportJob+or+label+%3D+ForemanInventoryUpload%3A%3AAsync%3A%3AGenerateAllReportsJob&page=1"
+            ouiaId="tasks-history-button"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -32,6 +33,7 @@ exports[`PageTitle rendering render without Props 1`] = `
           </DropdownItem>,
           <DropdownItem
             href="/links/manual/?root_url=https%3A%2F%2Faccess.redhat.com%2Fdocumentation%2Fen-us%2Fred_hat_insights%2F2023%2Fhtml%2Fred_hat_insights_remediations_guide%2Fhost-communication-with-insights_red-hat-insights-remediation-guide%23uploading-satellite-host-inventory-to-insights_configuring-satellite-cloud-connector"
+            ouiaId="inventory-documentation-button"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -39,6 +41,7 @@ exports[`PageTitle rendering render without Props 1`] = `
           </DropdownItem>,
           <DropdownItem
             onClick={[Function]}
+            ouiaId="dropdownItem-cloud-ping"
           >
             Connectivity test
           </DropdownItem>,
@@ -47,6 +50,7 @@ exports[`PageTitle rendering render without Props 1`] = `
       isOpen={false}
       isPlain={true}
       onSelect={[Function]}
+      ouiaId="title-dropdown"
       position="right"
       toggle={
         <KebabToggle

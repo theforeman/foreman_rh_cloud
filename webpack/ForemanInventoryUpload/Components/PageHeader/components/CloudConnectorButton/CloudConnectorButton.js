@@ -26,7 +26,7 @@ export const CloudConnectorButton = ({ status, onClick, jobLink }) => {
           className="cloud-connector-pending-button"
           onMouseEnter={() => setIsPopoverVisible(true)}
         >
-          <Button variant="secondary" isDisabled>
+          <Button variant="secondary" ouiaId="button-in-progress" isDisabled>
             <Spinner size="sm" /> {__('Cloud Connector is in progress')}
           </Button>
         </div>
@@ -36,14 +36,14 @@ export const CloudConnectorButton = ({ status, onClick, jobLink }) => {
 
   if (status === CONNECTOR_STATUS.RESOLVED) {
     return (
-      <Button variant="secondary" onClick={onClick}>
+      <Button variant="secondary" ouiaId="button-reconfigure" onClick={onClick}>
         {__('Reconfigure cloud connector')}
       </Button>
     );
   }
 
   return (
-    <Button variant="secondary" onClick={onClick}>
+    <Button variant="secondary" ouiaId="button-configure" onClick={onClick}>
       {__('Configure cloud connector')}
     </Button>
   );

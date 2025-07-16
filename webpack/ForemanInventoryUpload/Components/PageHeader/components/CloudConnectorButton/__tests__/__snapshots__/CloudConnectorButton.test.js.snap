@@ -3,6 +3,7 @@
 exports[`CloudConnectorButton render no cloud connector 1`] = `
 <Button
   onClick={[MockFunction]}
+  ouiaId="button-configure"
   variant="secondary"
 >
   Configure cloud connector
@@ -34,6 +35,7 @@ exports[`CloudConnectorButton render pending connector 1`] = `
   >
     <Button
       isDisabled={true}
+      ouiaId="button-in-progress"
       variant="secondary"
     >
       <Spinner
@@ -49,6 +51,7 @@ exports[`CloudConnectorButton render pending connector 1`] = `
 exports[`CloudConnectorButton render resolved cloud connector 1`] = `
 <Button
   onClick={[MockFunction]}
+  ouiaId="button-reconfigure"
   variant="secondary"
 >
   Reconfigure cloud connector

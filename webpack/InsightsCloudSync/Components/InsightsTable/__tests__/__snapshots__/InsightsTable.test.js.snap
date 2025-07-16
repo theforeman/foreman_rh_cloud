@@ -83,6 +83,7 @@ exports[`InsightsTable rendering render with Props 1`] = `
     isTreeTable={false}
     onSelect={[Function]}
     onSort={[Function]}
+    ouiaId="rh-cloud-recommendations-table"
     ouiaSafe={true}
     role="grid"
     rowLabeledBy="simple-node"

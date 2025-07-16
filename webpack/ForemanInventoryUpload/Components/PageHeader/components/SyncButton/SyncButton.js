@@ -21,6 +21,7 @@ class SyncButton extends React.Component {
       <React.Fragment>
         <Button
           className="sync_button"
+          ouiaId="sync-button"
           onClick={handleClick}
           isDisabled={status === STATUS.PENDING}
           variant="secondary"

@@ -26,6 +26,7 @@ const InventoryFilter = ({
       <FormGroup>
         <TextInput
           id="inventory_filter_input"
+          ouiaId="inventory_filter_input"
           value={filterTerm}
           type="text"
           placeholder={__('Filter..')}

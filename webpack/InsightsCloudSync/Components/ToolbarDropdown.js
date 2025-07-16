@@ -19,11 +19,15 @@ const ToolbarDropdown = ({ onRecommendationSync }) => {
   const dropdownItems = [
     <DropdownItem
       key="recommendation-manual-sync"
+      ouiaId="recommendation-manual-sync"
       onClick={onRecommendationSync}
     >
       {__('Sync recommendations')}
     </DropdownItem>,
-    <DropdownItem key="cloud-advisor-systems-link">
+    <DropdownItem
+      key="cloud-advisor-systems-link"
+      ouiaId="cloud-advisor-systems-link"
+    >
       <a
         href={redHatAdvisorSystems()}
         target="_blank"
@@ -38,6 +42,7 @@ const ToolbarDropdown = ({ onRecommendationSync }) => {
   return (
     <Dropdown
       className="title-dropdown"
+      ouiaId="title-dropdown"
       onSelect={() => setIsDropdownOpen(false)}
       toggle={
         <KebabToggle onToggle={(_event, isOpen) => setIsDropdownOpen(isOpen)} />

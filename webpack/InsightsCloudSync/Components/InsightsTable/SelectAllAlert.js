@@ -18,6 +18,7 @@ const SelectAllAlert = ({
       <Alert
         isInline
         variant="info"
+        ouiaId="alert-recommendations-selected"
         title={sprintf(__('Recommendations selected: %s.'), selectedCount)}
         actionLinks={
           <AlertActionLink onClick={selectAll}>
@@ -32,6 +33,7 @@ const SelectAllAlert = ({
     <Alert
       isInline
       variant="info"
+      ouiaId="alert-all-selected"
       title={__('All recommendations are now selected.')}
       actionLinks={
         <AlertActionLink onClick={clearAllSelection}>

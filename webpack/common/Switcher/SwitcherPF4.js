@@ -14,6 +14,7 @@ const SwitcherPF4 = ({
 }) => (
   <Switch
     className="foreman-rh-cloud-switcher"
+    ouiaId="foreman-rh-cloud-switcher"
     id={`rh-cloud-switcher-${id}`}
     isChecked={isChecked}
     isDisabled={isDisabled}
