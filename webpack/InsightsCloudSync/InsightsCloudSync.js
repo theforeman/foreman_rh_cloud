@@ -5,6 +5,7 @@ import { ScalprumContextWrapper } from '../common/ScalprumModule/ScalprumContext
 import { RhCloudScalprumComponent } from '../common/ScalprumModule/RhCloudScalprumComponent';
 import InsightsTable from './Components/InsightsTable';
 import { useAdvisorEngineConfig } from '../common/Hooks/ConfigHooks';
+import { foremanUrl } from '../ForemanRhCloudHelpers';
 import RemediationModal from './Components/RemediationModal';
 import {
   INSIGHTS_SYNC_PAGE_TITLE,
@@ -15,6 +16,7 @@ import Pagination from './Components/InsightsTable/Pagination';
 import ToolbarDropdown from './Components/ToolbarDropdown';
 import InsightsSettings from './Components/InsightsSettings';
 
+// Hosted Insights advisor
 const InsightsCloudSync = ({ syncInsights, query, fetchInsights }) => {
   const onRecommendationSync = () => syncInsights(fetchInsights, query);
   const toolbarButtons = (
@@ -57,10 +59,14 @@ InsightsCloudSync.defaultProps = {
   query: '',
 };
 
+// Local Insights advisor
 const scope = 'advisor';
 const module = './RulesTableWrapped';
 const path = `apps/${scope}`;
 const manifestLocation = `/${path}/fed-mods.json`;
+
+const generateRuleUrl = ruleId =>
+  foremanUrl(`/foreman_rh_cloud/recommendations/${ruleId}`);
 
 const LocalAdvisorRecommendationsPage = props => (
   <ScalprumContextWrapper>
@@ -70,6 +76,7 @@ const LocalAdvisorRecommendationsPage = props => (
       path={path}
       manifestLocation={manifestLocation}
       IopRemediationModal={RemediationModal}
+      generateRuleUrl={generateRuleUrl}
       {...props}
     />
   </ScalprumContextWrapper>

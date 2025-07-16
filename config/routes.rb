@@ -38,6 +38,10 @@ Rails.application.routes.draw do
     unless ForemanRhCloud.with_local_advisor_engine?
       get 'inventory_upload', to: '/react#index'
     end
+    if ForemanRhCloud.with_local_advisor_engine?
+      get 'recommendations', to: '/react#index'
+      get 'recommendations/:rule_id', to: '/react#index'
+    end
     get 'insights_cloud', to: '/react#index' # Uses foreman's react controller
     get 'insights_vulnerability', to: '/react#index'
     get 'insights_vulnerability/:cve_id', to: '/react#index'
