@@ -21,7 +21,11 @@ import {
 } from '../InsightsCloudSync/Components/InsightsTable/InsightsTableSelectors';
 import { redHatAdvisorSystems } from '../InsightsCloudSync/InsightsCloudSyncHelpers';
 import { useAdvisorEngineConfig } from '../common/Hooks/ConfigHooks';
+import { ScalprumContextWrapper } from '../common/ScalprumModule/ScalprumContext';
+import { RhCloudScalprumComponent } from '../common/ScalprumModule/RhCloudScalprumComponent';
+import { generateRuleUrl } from '../InsightsCloudSync/InsightsCloudSync';
 
+// Hosted Insights advisor
 const NewHostDetailsTab = ({ hostName, router }) => {
   const dispatch = useDispatch();
   const query = useSelector(selectSearch);
@@ -104,4 +108,50 @@ NewHostDetailsTab.defaultProps = {
   router: {},
 };
 
-export default NewHostDetailsTab;
+// Local Insights advisor
+const scope = 'advisor';
+// eslint-disable-next-line spellcheck/spell-checker
+const module = './HostDetailsLightspeedTabWrapped';
+const path = `apps/${scope}`;
+const manifestLocation = `/${path}/fed-mods.json`;
+
+const LocalAdvisorLightspeedTab = props => (
+  <ScalprumContextWrapper>
+    <RhCloudScalprumComponent
+      scope={scope}
+      module={module}
+      path={path}
+      manifestLocation={manifestLocation}
+      IopRemediationModal={RemediationModal}
+      generateRuleUrl={generateRuleUrl}
+      {...props}
+    />
+  </ScalprumContextWrapper>
+);
+
+const LightspeedTab = props => {
+  const { response } = props;
+  const isLocalAdvisorEngine =
+    // eslint-disable-next-line camelcase
+    response?.insights_attributes?.use_local_advisor_engine;
+
+  return isLocalAdvisorEngine ? (
+    <LocalAdvisorLightspeedTab />
+  ) : (
+    <NewHostDetailsTab {...props} />
+  );
+};
+
+LightspeedTab.propTypes = {
+  response: PropTypes.shape({
+    insights_attributes: {
+      use_local_advisor_engine: PropTypes.bool,
+    },
+  }),
+};
+
+LightspeedTab.defaultProps = {
+  response: {},
+};
+
+export default LightspeedTab;

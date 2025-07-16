@@ -65,7 +65,7 @@ const module = './RulesTableWrapped';
 const path = `apps/${scope}`;
 const manifestLocation = `/${path}/fed-mods.json`;
 
-const generateRuleUrl = ruleId =>
+export const generateRuleUrl = ruleId =>
   foremanUrl(`/foreman_rh_cloud/recommendations/${ruleId}`);
 
 const LocalAdvisorRecommendationsPage = props => (
