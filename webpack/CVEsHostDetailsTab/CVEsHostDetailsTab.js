@@ -1,31 +1,37 @@
 import React from 'react';
-import { translate as __ } from 'foremanReact/common/I18n';
-import PageLayout from 'foremanReact/routes/common/PageLayout/PageLayout';
-import { ScalprumComponent } from '@scalprum/react-core';
-import { ScalprumContextWrapper } from '../common/ScalprumModule/ScalprumContext';
+import PropTypes from 'prop-types';
+import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
+import { providerOptions } from '../common/ScalprumModule/ScalprumContext';
 
-const CVEsHostDetailsTab = () => {
+const CVEsHostDetailsTab = ({ systemId }) => {
   const scope = 'vulnerability';
   const module = './SystemDetailTable';
   return (
-    <div className="rh-cloud-insights-vulnerability-page">
-      <ScalprumComponent scope={scope} module={module} />
-
-      <PageLayout searchable={false} header={__('Vulnerability')}>
-        <div className="insights-vulnerability">
-          <p>
-            This page is under development. Please check back soon for updates.
-          </p>
-        </div>
-      </PageLayout>
+    <div className="rh-cloud-insights-vulnerability-host-details-component">
+      <ScalprumComponent scope={scope} module={module} systemId={systemId} />
     </div>
   );
 };
 
-const CVEsHostDetailsTabWrapper = () => (
-  <ScalprumContextWrapper>
-    <CVEsHostDetailsTab />
-  </ScalprumContextWrapper>
+CVEsHostDetailsTab.propTypes = {
+  systemId: PropTypes.string.isRequired,
+};
+
+const CVEsHostDetailsTabWrapper = ({ response }) => (
+  <ScalprumProvider {...providerOptions}>
+    <CVEsHostDetailsTab
+      // eslint-disable-next-line camelcase
+      systemId={response?.subscription_facet_attributes?.uuid}
+    />
+  </ScalprumProvider>
 );
+
+CVEsHostDetailsTabWrapper.propTypes = {
+  response: PropTypes.shape({
+    subscription_facet_attributes: PropTypes.shape({
+      uuid: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
+};
 
 export default CVEsHostDetailsTabWrapper;

@@ -7,7 +7,6 @@ import { InsightsTotalRiskChartWrapper } from './InsightsHostDetailsTab/Insights
 import { isNotRhelHost, vulnerabilityDisabled } from './ForemanRhCloudHelpers';
 import CVEsHostDetailsTabWrapper from './CVEsHostDetailsTab/CVEsHostDetailsTab';
 
-
 const fills = [
   {
     slot: 'katello-manage-manifest-form',
@@ -38,6 +37,7 @@ const fills = [
     weight: 300,
     metadata: {
       hideTab: vulnerabilityDisabled,
+      title: __('Vulnerability'),
     },
   },
 ];

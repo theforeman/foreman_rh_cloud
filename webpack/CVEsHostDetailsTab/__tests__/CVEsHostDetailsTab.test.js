@@ -1,18 +1,25 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import CVEsHostDetailsTab from '../CVEsHostDetailsTab';
+import { render } from '@testing-library/react';
+import CVEsHostDetailsTabWrapper from '../CVEsHostDetailsTab';
 
-describe('CVEsHostDetailsTab', () => {
+jest.mock('@scalprum/react-core', () => ({
+  ScalprumComponent: jest.fn(props => (
+    <div data-testid="mock-scalprum-component">{JSON.stringify(props)}</div>
+  )),
+  ScalprumProvider: jest.fn(({ children }) => <div>{children}</div>),
+}));
+
+describe('CVEsHostDetailsTabWrapper', () => {
   it('renders without crashing', () => {
-    render(<CVEsHostDetailsTab hostName="test-host.example.com" />);
+    const { container } = render(
+      <CVEsHostDetailsTabWrapper
+        response={{ subscription_facet_attributes: { uuid: '1-2-3' } }}
+      />
+    );
     expect(
-      screen.getByText('CVEs tab for host: test-host.example.com')
+      container.querySelector(
+        '.rh-cloud-insights-vulnerability-host-details-component'
+      )
     ).toBeTruthy();
-  });
-
-  it('renders the host name', () => {
-    const hostName = 'test-host.example.com';
-    render(<CVEsHostDetailsTab hostName={hostName} />);
-    expect(screen.getByText(`CVEs tab for host: ${hostName}`)).toBeTruthy();
   });
 });
