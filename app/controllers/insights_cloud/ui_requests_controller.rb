@@ -7,9 +7,12 @@ module InsightsCloud
     # The method that "proxies" requests over to Cloud
     def forward_request
       begin
+        path_match = request.original_fullpath.match(%r{^/insights_cloud/(?<path>[^?]*)})&.[](:path)
+        path_to_forward = path_match || params.require(:path)
+
         @cloud_response = ::ForemanRhCloud::InsightsApiForwarder.new.forward_request(
           request,
-          params.require(:path),
+          path_to_forward,
           controller_name,
           User.current,
           @organization,
