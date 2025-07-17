@@ -1,0 +1,21 @@
+name: Assert Single Commit (non-blocking)
+
+on: pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 30
+    - name: Checkout develop
+      run: git fetch origin develop
+    - name: create local develop branch
+      run: git branch develop origin/develop
+    - name: Commit Count Check
+      run: test `git log  --oneline --no-merges HEAD ^develop | wc -l ` = 1
