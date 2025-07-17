@@ -18,6 +18,7 @@
           "checkbox",
           "csrf",
           "cve",
+          "cves",
           "dropdown",
           "donut",
           "hostnames",
