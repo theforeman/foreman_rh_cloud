@@ -32,12 +32,12 @@ const fills = [
   },
   {
     slot: 'host-details-page-tabs',
-    name: 'CVEs',
+    name: 'Vulnerabilities',
     component: props => <CVEsHostDetailsTabWrapper {...props} />,
     weight: 300,
     metadata: {
       hideTab: vulnerabilityDisabled,
-      title: __('Vulnerability'),
+      title: __('Vulnerabilities'),
     },
   },
 ];
