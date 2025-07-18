@@ -4,7 +4,7 @@ export const modulesConfig = {
     manifestLocation: `${window.location.origin}/assets/apps/vulnerability/fed-mods.json`,
     cdnPath: `${window.location.origin}/assets/apps/vulnerability/`,
   },
-  insights: {
+  advisor: {
     name: 'insights',
     manifestLocation: `${window.location.origin}/assets/apps/insights/fed-mods.json`,
     cdnPath: `${window.location.origin}/assets/apps/insights/`,
