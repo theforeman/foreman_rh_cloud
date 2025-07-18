@@ -1,45 +1,44 @@
 import React from 'react';
 import { useRouteMatch } from 'react-router-dom';
-import { ScalprumContextWrapper } from '../common/ScalprumModule/ScalprumContext';
-import { RhCloudScalprumComponent } from '../common/ScalprumModule/RhCloudScalprumComponent';
+import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
+
 import RemediationModal from '../InsightsCloudSync/Components/RemediationModal';
+import { providerOptions } from '../common/ScalprumModule/ScalprumContext';
 
 const scope = 'advisor';
 const module = './RecommendationDetailsWrapped';
-const path = `apps/${scope}`;
-const manifestLocation = `/${path}/fed-mods.json`;
 
 const invScope = 'inventory';
 const invModule = './HybridInventoryTabs';
-const invPath = `apps/${invScope}`;
-const invManifestLocation = `/${invPath}/fed-mods.json`;
 
 const IopRecommendationDetails = props => {
   const urlParams = useRouteMatch('/foreman_rh_cloud/recommendations/:rule_id');
   // eslint-disable-next-line camelcase
   const ruleId = urlParams?.params?.rule_id;
   return (
-    <ScalprumContextWrapper>
-      <RhCloudScalprumComponent
+    <div className="rh-cloud-recommendation-details-cell">
+      <ScalprumComponent
         scope={scope}
         module={module}
-        path={path}
-        manifestLocation={manifestLocation}
         IopRemediationModal={RemediationModal}
         ruleId={ruleId}
         {...props}
       />
-      <RhCloudScalprumComponent
+      <ScalprumComponent
         scope={invScope}
         module={invModule}
-        path={invPath}
-        manifestLocation={invManifestLocation}
         IopRemediationModal={RemediationModal}
         ruleId={ruleId}
         {...props}
       />
-    </ScalprumContextWrapper>
+    </div>
   );
 };
 
-export default IopRecommendationDetails;
+const IopRecommendationDetailsWrapped = props => (
+  <ScalprumProvider {...providerOptions}>
+    <IopRecommendationDetails {...props} />
+  </ScalprumProvider>
+);
+
+export default IopRecommendationDetailsWrapped;

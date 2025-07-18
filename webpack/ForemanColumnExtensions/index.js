@@ -1,43 +1,52 @@
 import React from 'react';
+import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { propsToCamelCase } from 'foremanReact/common/helpers';
 import { CVECountCell } from '../InsightsVulnerabilityHostIndexExtensions/CVECountCell';
-import { RhCloudScalprumComponent } from '../common/ScalprumModule/RhCloudScalprumComponent';
-import { ScalprumContextWrapper } from '../common/ScalprumModule/ScalprumContext';
+import { providerOptions } from '../common/ScalprumModule/ScalprumContext';
 
-const scope = 'advisor';
-const module = './RecommendationsCellWrapped';
-const path = `apps/${scope}`;
-const manifestLocation = `/${path}/fed-mods.json`;
-
-const RecommendationsCell = hostDetails => {
+const HostedRecommendationsCell = hostDetails => {
   const insightsAttributes = propsToCamelCase(
     // eslint-disable-next-line camelcase
     hostDetails?.insights_attributes ?? {}
   );
-
-  // Local insights advisor
-  if (insightsAttributes.useLocalAdvisorEngine) {
-    return (
-      <ScalprumContextWrapper>
-        <RhCloudScalprumComponent
-          scope={scope}
-          module={module}
-          path={path}
-          manifestLocation={manifestLocation}
-          hostDetails={hostDetails}
-        />
-      </ScalprumContextWrapper>
-    );
-  }
-
-  // Hosted insights advisor
   const { insightsHitsCount: hitsCount } = insightsAttributes;
   if (hitsCount === undefined || hitsCount === null) return '—';
   const hostname = hostDetails?.name;
   const encodedHostname = encodeURIComponent(hostname);
   const hitsUrl = `/foreman_rh_cloud/insights_cloud?search=hostname+%3D+${encodedHostname}`;
   return <a href={hitsUrl}>{hitsCount}</a>;
+};
+
+const IopRecommendationsCell = hostDetails => {
+  const scope = 'advisor';
+  const module = './RecommendationsCellWrapped';
+
+  return (
+    <span className="rh-cloud-insights-recommendations-cell">
+      <ScalprumComponent scope={scope} module={module} />
+    </span>
+  );
+};
+
+const IopRecommendationsCellWrapped = hostDetails => (
+  <ScalprumProvider {...providerOptions}>
+    <IopRecommendationsCell hostDetails={hostDetails} />
+  </ScalprumProvider>
+);
+
+const RecommendationsCell = hostDetails => {
+  console.log(providerOptions);
+  const insightsAttributes = propsToCamelCase(
+    // eslint-disable-next-line camelcase
+    hostDetails?.insights_attributes ?? {}
+  );
+
+  return insightsAttributes.useLocalAdvisorEngine ? (
+    <IopRecommendationsCellWrapped hostDetails={hostDetails} />
+  ) : (
+    <HostedRecommendationsCell hostDetails={hostDetails} />
+  );
 };
 
 const insightsCategoryName = __('Insights');

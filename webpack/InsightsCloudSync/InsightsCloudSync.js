@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PageLayout from 'foremanReact/routes/common/PageLayout/PageLayout';
-import { ScalprumContextWrapper } from '../common/ScalprumModule/ScalprumContext';
-import { RhCloudScalprumComponent } from '../common/ScalprumModule/RhCloudScalprumComponent';
+import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
 import InsightsTable from './Components/InsightsTable';
 import { useAdvisorEngineConfig } from '../common/Hooks/ConfigHooks';
 import { foremanUrl } from '../ForemanRhCloudHelpers';
@@ -15,6 +14,7 @@ import './InsightsCloudSync.scss';
 import Pagination from './Components/InsightsTable/Pagination';
 import ToolbarDropdown from './Components/ToolbarDropdown';
 import InsightsSettings from './Components/InsightsSettings';
+import { providerOptions } from '../common/ScalprumModule/ScalprumContext';
 
 // Hosted Insights advisor
 const InsightsCloudSync = ({ syncInsights, query, fetchInsights }) => {
@@ -62,31 +62,31 @@ InsightsCloudSync.defaultProps = {
 // Local Insights advisor
 const scope = 'advisor';
 const module = './ListWrapped';
-const path = `apps/${scope}`;
-const manifestLocation = `/${path}/fed-mods.json`;
 
 export const generateRuleUrl = ruleId =>
   foremanUrl(`/foreman_rh_cloud/recommendations/${ruleId}`);
 
-const LocalAdvisorRecommendationsPage = props => (
-  <ScalprumContextWrapper>
-    <RhCloudScalprumComponent
-      scope={scope}
-      module={module}
-      path={path}
-      manifestLocation={manifestLocation}
-      IopRemediationModal={RemediationModal}
-      generateRuleUrl={generateRuleUrl}
-      {...props}
-    />
-  </ScalprumContextWrapper>
+const IopRecommendationsPage = props => (
+  <ScalprumComponent
+    scope={scope}
+    module={module}
+    IopRemediationModal={RemediationModal}
+    generateRuleUrl={generateRuleUrl}
+    {...props}
+  />
+);
+
+const IopRecommendationsPageWrapped = props => (
+  <ScalprumProvider {...providerOptions}>
+    <IopRecommendationsPage {...props} />
+  </ScalprumProvider>
 );
 
 const RecommendationsPage = props => {
   const isLocalAdvisorEngine = useAdvisorEngineConfig();
 
   return isLocalAdvisorEngine ? (
-    <LocalAdvisorRecommendationsPage />
+    <IopRecommendationsPageWrapped {...props} />
   ) : (
     <InsightsCloudSync {...props} />
   );

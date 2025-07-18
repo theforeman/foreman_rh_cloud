@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import SearchBar from 'foremanReact/components/SearchBar';
 import { translate as __ } from 'foremanReact/common/I18n';
+import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
 import { Grid, GridItem } from '@patternfly/react-core';
 import {
   Dropdown,
@@ -21,9 +22,8 @@ import {
 } from '../InsightsCloudSync/Components/InsightsTable/InsightsTableSelectors';
 import { redHatAdvisorSystems } from '../InsightsCloudSync/InsightsCloudSyncHelpers';
 import { useAdvisorEngineConfig } from '../common/Hooks/ConfigHooks';
-import { ScalprumContextWrapper } from '../common/ScalprumModule/ScalprumContext';
-import { RhCloudScalprumComponent } from '../common/ScalprumModule/RhCloudScalprumComponent';
 import { generateRuleUrl } from '../InsightsCloudSync/InsightsCloudSync';
+import { providerOptions } from '../common/ScalprumModule/ScalprumContext';
 
 // Hosted Insights advisor
 const NewHostDetailsTab = ({ hostName, router }) => {
@@ -112,21 +112,21 @@ NewHostDetailsTab.defaultProps = {
 const scope = 'advisor';
 // eslint-disable-next-line spellcheck/spell-checker
 const module = './HostDetailsLightspeedTabWrapped';
-const path = `apps/${scope}`;
-const manifestLocation = `/${path}/fed-mods.json`;
 
-const LocalAdvisorLightspeedTab = props => (
-  <ScalprumContextWrapper>
-    <RhCloudScalprumComponent
-      scope={scope}
-      module={module}
-      path={path}
-      manifestLocation={manifestLocation}
-      IopRemediationModal={RemediationModal}
-      generateRuleUrl={generateRuleUrl}
-      {...props}
-    />
-  </ScalprumContextWrapper>
+const IopInsightsTab = props => (
+  <ScalprumComponent
+    scope={scope}
+    module={module}
+    IopRemediationModal={RemediationModal}
+    generateRuleUrl={generateRuleUrl}
+    {...props}
+  />
+);
+
+const IopInsightsTabWrapped = props => (
+  <ScalprumProvider {...providerOptions}>
+    <IopInsightsTab {...props} />
+  </ScalprumProvider>
 );
 
 const LightspeedTab = props => {
@@ -136,7 +136,7 @@ const LightspeedTab = props => {
     response?.insights_attributes?.use_local_advisor_engine;
 
   return isLocalAdvisorEngine ? (
-    <LocalAdvisorLightspeedTab />
+    <IopInsightsTabWrapped {...props} />
   ) : (
     <NewHostDetailsTab {...props} />
   );
