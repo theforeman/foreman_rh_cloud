@@ -61,7 +61,7 @@ InsightsCloudSync.defaultProps = {
 
 // Local Insights advisor
 const scope = 'advisor';
-const module = './RulesTableWrapped';
+const module = './ListWrapped';
 const path = `apps/${scope}`;
 const manifestLocation = `/${path}/fed-mods.json`;
 

@@ -9,6 +9,11 @@ const module = './RecommendationDetailsWrapped';
 const path = `apps/${scope}`;
 const manifestLocation = `/${path}/fed-mods.json`;
 
+const invScope = 'inventory';
+const invModule = './HybridInventoryTabs';
+const invPath = `apps/${invScope}`;
+const invManifestLocation = `/${invPath}/fed-mods.json`;
+
 const IopRecommendationDetails = props => {
   const urlParams = useRouteMatch('/foreman_rh_cloud/recommendations/:rule_id');
   // eslint-disable-next-line camelcase
@@ -20,6 +25,15 @@ const IopRecommendationDetails = props => {
         module={module}
         path={path}
         manifestLocation={manifestLocation}
+        IopRemediationModal={RemediationModal}
+        ruleId={ruleId}
+        {...props}
+      />
+      <RhCloudScalprumComponent
+        scope={invScope}
+        module={invModule}
+        path={invPath}
+        manifestLocation={invManifestLocation}
         IopRemediationModal={RemediationModal}
         ruleId={ruleId}
         {...props}
