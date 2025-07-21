@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     end
     get 'insights_cloud', to: '/react#index' # Uses foreman's react controller
     get 'insights_vulnerability', to: '/react#index'
+    get 'insights_vulnerability/:cve_id', to: '/react#index'
   end
 
   scope :module => :'insights_cloud/api', :path => :redhat_access do

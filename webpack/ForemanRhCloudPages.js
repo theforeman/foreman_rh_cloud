@@ -5,6 +5,7 @@ import ForemanInventoryUpload from './ForemanInventoryUpload';
 import InsightsVulnerabilityListPage from './InsightsVulnerability/InsightsVulnerabilityListPage';
 import InsightsCloudSync from './InsightsCloudSync';
 import InsightsHostDetailsTab from './InsightsHostDetailsTab';
+import CveDetailsPage from './CveDetailsPage';
 
 const pages = [
   { name: 'ForemanInventoryUpload', type: ForemanInventoryUpload },
@@ -14,6 +15,7 @@ const pages = [
     name: 'InsightsVulnerabilityListPage',
     type: InsightsVulnerabilityListPage,
   },
+  { name: 'CveDetailsPage', type: CveDetailsPage },
 ];
 
 export const registerPages = () => {
@@ -35,6 +37,11 @@ export const routes = [
     path: '/foreman_rh_cloud/insights_vulnerability',
     exact: true,
     render: props => <InsightsVulnerabilityListPage {...props} />,
+  },
+  {
+    path: '/foreman_rh_cloud/insights_vulnerability/:cveId',
+    exact: true,
+    render: props => <CveDetailsPage {...props} />,
   },
 ];
 
