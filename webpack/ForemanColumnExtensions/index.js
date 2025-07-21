@@ -36,7 +36,6 @@ const IopRecommendationsCellWrapped = hostDetails => (
 );
 
 const RecommendationsCell = hostDetails => {
-  console.log(providerOptions);
   const insightsAttributes = propsToCamelCase(
     // eslint-disable-next-line camelcase
     hostDetails?.insights_attributes ?? {}
