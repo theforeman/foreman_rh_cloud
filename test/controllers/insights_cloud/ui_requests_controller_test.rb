@@ -64,6 +64,23 @@ module InsightsCloud
         assert_equal x_rh_insights_request_id, @response.headers['x_rh_insights_request_id']
       end
 
+      test "should extract path from original_fullpath when URL starts with insights_cloud" do
+        net_http_resp = Net::HTTPResponse.new(1.0, 200, "OK")
+        # Simulate a request with insights_cloud in the path
+        @request.stubs(:original_fullpath).returns('/insights_cloud/api/vulnerability/v1/cves?search=test')
+
+        res = RestClient::Response.create(@body, net_http_resp, @http_req)
+        ::ForemanRhCloud::InsightsApiForwarder
+          .any_instance
+          .expects(:forward_request)
+          .returns(res)
+          .with { |_, path_to_forward| _(path_to_forward).must_equal('api/vulnerability/v1/cves') }
+
+        get :forward_request, params: { "controller" => "vulnerabilities", "path" => "api/vulnerability/v1/cves" }, session: set_session
+
+        assert_equal @body, @response.body
+      end
+
       test "should set etag header to response from cloud" do
         etag = '12345'
         req = RestClient::Request.new(:method => 'GET', :url => 'http://test.theforeman.org', :headers => { "If-None-Match": etag })
