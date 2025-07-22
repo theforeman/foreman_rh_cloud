@@ -11,8 +11,8 @@ export const modulesConfig = {
   },
   inventory: {
     name: 'inventory',
-    manifestLocation: `${window.location.origin}/assets/apps/inventory/fed-mods.json`,
-    cdnPath: `${window.location.origin}/assets/apps/inventory/`,
+    manifestLocation: `${window.location.origin}/apps/inventory/fed-mods.json`,
+    cdnPath: `${window.location.origin}/apps/inventory/`,
   },
 };
 
