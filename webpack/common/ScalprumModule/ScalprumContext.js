@@ -6,13 +6,13 @@ export const modulesConfig = {
   },
   advisor: {
     name: 'advisor',
-    manifestLocation: `${window.location.origin}/apps/advisor/fed-mods.json`,
-    cdnPath: `${window.location.origin}/apps/advisor/`,
+    manifestLocation: `${window.location.origin}/assets/apps/advisor/fed-mods.json`,
+    cdnPath: `${window.location.origin}/assets/apps/advisor/`,
   },
   inventory: {
     name: 'inventory',
-    manifestLocation: `${window.location.origin}/apps/inventory/fed-mods.json`,
-    cdnPath: `${window.location.origin}/apps/inventory/`,
+    manifestLocation: `${window.location.origin}/assets/apps/inventory/fed-mods.json`,
+    cdnPath: `${window.location.origin}/assets/apps/inventory/`,
   },
 };
 
