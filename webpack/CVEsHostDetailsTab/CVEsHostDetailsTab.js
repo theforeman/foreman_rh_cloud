@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
 import { providerOptions } from '../common/ScalprumModule/ScalprumContext';
+import './CVEsHostDetailsTab.scss';
 
 const CVEsHostDetailsTab = ({ systemId }) => {
   const scope = 'vulnerability';
