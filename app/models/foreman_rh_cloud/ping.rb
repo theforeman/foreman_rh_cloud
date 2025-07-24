@@ -5,7 +5,14 @@ module ForemanRhCloud
 
     class << self
       def services
-        [:insights]
+        [:advisor, :vulnerabilities]
+      end
+
+      def status
+        {
+          version: ForemanRhCloud::VERSION,
+          timeUTC: Time.now.getutc,
+        }
       end
 
       def exception_watch(result, &blk)
@@ -33,7 +40,7 @@ module ForemanRhCloud
         result = {}
         services.each do |service|
           result[service] = {}
-          ping_service(result[service])
+          ping_service(service, result[service])
         end
 
         # set overall status result code
@@ -42,9 +49,22 @@ module ForemanRhCloud
         result
       end
 
-      def ping_service(service_result)
-        exception_watch(service_result) do
-          puts "hi"
+      def ping_url(url)
+        ca_file = Setting[:ssl_ca_file]
+        request_id = ::Logging.mdc['request']
+
+        options = {}
+        options[:ssl_ca_file] = ca_file unless ca_file.nil?
+        # options[:headers] = { 'Correlation-ID' => request_id } if request_id
+        client = RestClient::Resource.new(url, options)
+
+        response = client.get
+        response.empty? ? {} : JSON.parse(response).with_indifferent_access
+      end
+
+      def ping_service(service_name, service_result_hash)
+        exception_watch(service_result_hash) do
+          ping_url("https://ip-10-0-168-225.rhos-01.prod.psi.rdu2.redhat.com/insights_cloud/api/insights/v1/rule/?impacting=true")
         end
       end
     end
