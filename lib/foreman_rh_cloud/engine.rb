@@ -83,6 +83,12 @@ module ForemanRhCloud
         :description => N_('Configure Cloud Connector on given hosts'),
         :proxy_selector_override => ::RemoteExecutionProxySelector::INTERNAL_PROXY
       )
+
+      # API controller extensions
+      ::Api::V2::HostsController.include ::ForemanRhCloud::Concerns::Api::V2::HostsControllerExtensions
+
+      # Controller extensions
+      ::HostsController.include ::ForemanRhCloud::Concerns::Api::V2::HostsControllerExtensions
     end
 
     # Ideally this code belongs to an initializer. The problem is that Katello controllers are not initialized completely until after the end of the to_prepare blocks
