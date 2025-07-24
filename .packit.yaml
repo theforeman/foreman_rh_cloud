@@ -40,6 +40,8 @@ jobs:
   - <<: *copr
     trigger: commit
     branch: develop
+    owner: '@theforeman'
+    project: develop
 
 srpm_build_deps:
   - wget
