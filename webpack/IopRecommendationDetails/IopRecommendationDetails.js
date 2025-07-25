@@ -8,25 +8,15 @@ import { providerOptions } from '../common/ScalprumModule/ScalprumContext';
 const scope = 'advisor';
 const module = './RecommendationDetailsWrapped';
 
-const invScope = 'inventory';
-const invModule = './HybridInventoryTabs';
-
 const IopRecommendationDetails = props => {
   const urlParams = useRouteMatch('/foreman_rh_cloud/recommendations/:rule_id');
   // eslint-disable-next-line camelcase
   const ruleId = urlParams?.params?.rule_id;
   return (
-    <div className="rh-cloud-recommendation-details-cell">
+    <div className="iop-recommendation-details-scalprum">
       <ScalprumComponent
         scope={scope}
         module={module}
-        IopRemediationModal={RemediationModal}
-        ruleId={ruleId}
-        {...props}
-      />
-      <ScalprumComponent
-        scope={invScope}
-        module={invModule}
         IopRemediationModal={RemediationModal}
         ruleId={ruleId}
         {...props}

@@ -110,8 +110,7 @@ NewHostDetailsTab.defaultProps = {
 
 // Local Insights advisor
 const scope = 'advisor';
-// eslint-disable-next-line spellcheck/spell-checker
-const module = './HostDetailsLightspeedTabWrapped';
+const module = './SystemDetailsWrapped';
 
 const IopInsightsTab = props => (
   <ScalprumComponent
@@ -129,7 +128,7 @@ const IopInsightsTabWrapped = props => (
   </ScalprumProvider>
 );
 
-const LightspeedTab = props => {
+const InsightsTab = props => {
   const { response } = props;
   const isLocalAdvisorEngine =
     // eslint-disable-next-line camelcase
@@ -142,7 +141,7 @@ const LightspeedTab = props => {
   );
 };
 
-LightspeedTab.propTypes = {
+InsightsTab.propTypes = {
   response: PropTypes.shape({
     insights_attributes: {
       use_local_advisor_engine: PropTypes.bool,
@@ -150,8 +149,8 @@ LightspeedTab.propTypes = {
   }),
 };
 
-LightspeedTab.defaultProps = {
+InsightsTab.defaultProps = {
   response: {},
 };
 
-export default LightspeedTab;
+export default InsightsTab;
