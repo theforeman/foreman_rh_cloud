@@ -15,6 +15,8 @@ jest.mock('react-intl', () => {
     }),
   };
 });
+jest.mock('foremanReact/common/helpers', () => ({ getDocsURL: () => {} }));
+
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 

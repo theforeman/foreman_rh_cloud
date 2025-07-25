@@ -3,6 +3,7 @@ import { Text } from '@patternfly/react-core';
 import { useSelector } from 'react-redux';
 
 import { translate as __ } from 'foremanReact/common/I18n';
+import { getDocsURL } from 'foremanReact/common/helpers';
 import { FormattedMessage } from 'react-intl';
 import { selectSubscriptionConnectionEnabled } from '../../../InventorySettings/InventorySettingsSelectors';
 
@@ -53,6 +54,16 @@ export const PageDescription = () => {
           />
         </Text>
       )}
+      <Text ouiaId="text-minimal-data-collection">
+        {__('Learn more about ')}
+        <a
+          href={getDocsURL('Managing_Hosts', 'setting-minimal-data-collection')}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {__('Minimal data collection setting')}
+        </a>
+      </Text>
       <Text ouiaId="text-more-info-subscription">
         {__('For more information about the Subscriptions service, see:')}
         &nbsp;
