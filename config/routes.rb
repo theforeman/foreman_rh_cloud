@@ -61,6 +61,8 @@ Rails.application.routes.draw do
     match '/api/lightspeed/*path', to: 'machine_telemetries#forward_request', via: :all
   end
 
+  get '/insights_hosts/:uuid', to: 'insights_cloud/ui_requests#translate_insights_host'
+
   # API routes
 
   namespace :api, :defaults => { :format => 'json' } do

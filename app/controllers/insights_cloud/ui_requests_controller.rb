@@ -75,6 +75,18 @@ module InsightsCloud
       res.headers[new_header] = header_content
     end
 
+    def translate_insights_host
+      Rails.logger.info "translate_insights_host"
+      facet = InsightsFacet.find_by(uuid: params[:uuid])
+      if facet.present?
+        Rails.logger.info "Found InsightsFacet #{params[:uuid]}"
+        redirect_to host_details_page_path(facet&.host_id)
+      else
+        Rails.logger.error "Could not find InsightsFacet for #{params[:uuid]}"
+        redirect_to '/page-not-found'
+      end
+    end
+
     private
 
     def ensure_org
