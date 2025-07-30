@@ -10,7 +10,7 @@ module InsightsCloud
     end
 
     def generate_host_report
-      return unless ForemanRhCloud.with_local_advisor_engine?
+      return unless ForemanRhCloud.with_iop_smart_proxy?
 
       logger.debug("Generating host-specific report for host #{@host.name}")
 

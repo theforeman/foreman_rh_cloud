@@ -7,7 +7,7 @@ module Api
         api :GET, "/rh_cloud/advisor_engine_config", N_("Show if system is configured to use local iop-advisor-engine.")
         def show
           render json: {
-            use_local_advisor_engine: ForemanRhCloud.with_local_advisor_engine?,
+            use_iop_mode: ForemanRhCloud.with_iop_smart_proxy?,
           }, status: :ok
         end
       end
