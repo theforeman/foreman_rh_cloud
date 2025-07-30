@@ -121,8 +121,12 @@ module ForemanRhCloud
     end
   end
 
-  def self.with_local_advisor_engine?
-    SETTINGS.dig(:foreman_rh_cloud, :use_local_advisor_engine) || false
+  def self.with_iop_smart_proxy?
+    SmartProxy.with_features('iop').exists?
+  end
+
+  def self.iop_smart_proxy
+    SmartProxy.with_features('iop').first
   end
 
   def self.ca_cert

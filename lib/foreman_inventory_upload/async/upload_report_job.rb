@@ -60,7 +60,7 @@ module ForemanInventoryUpload
       end
 
       def certificate
-        ForemanRhCloud.with_local_advisor_engine? ? foreman_certificate : manifest_certificate
+        ForemanRhCloud.with_iop_smart_proxy? ? foreman_certificate : manifest_certificate
       end
 
       def manifest_certificate

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     get 'settings', to: 'uploads_settings#index'
     post 'setting', to: 'uploads_settings#set_advanced_setting'
 
-    unless ForemanRhCloud.with_local_advisor_engine?
+    unless ForemanRhCloud.with_iop_smart_proxy?
       post 'cloud_connector', to: 'uploads#enable_cloud_connector'
     end
 
@@ -35,10 +35,10 @@ Rails.application.routes.draw do
   end
 
   namespace :foreman_rh_cloud do
-    unless ForemanRhCloud.with_local_advisor_engine?
+    unless ForemanRhCloud.with_iop_smart_proxy?
       get 'inventory_upload', to: '/react#index'
     end
-    if ForemanRhCloud.with_local_advisor_engine?
+    if ForemanRhCloud.with_iop_smart_proxy?
       get 'recommendations', to: '/react#index'
       get 'recommendations/:rule_id', to: '/react#index'
     end

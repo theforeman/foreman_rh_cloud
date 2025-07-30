@@ -95,7 +95,7 @@ module ForemanRhCloud
             url: '/foreman_rh_cloud/insights_vulnerability',
             url_hash: { controller: :react, action: :index },
             parent: :insights_menu,
-            if: -> { ForemanRhCloud.with_local_advisor_engine? }
+            if: -> { ForemanRhCloud.with_iop_smart_proxy? }
         end
 
         register_facet InsightsFacet, :insights do

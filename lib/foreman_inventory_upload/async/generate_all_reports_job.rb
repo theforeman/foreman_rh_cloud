@@ -13,7 +13,7 @@ module ForemanInventoryUpload
           return
         end
 
-        if ForemanRhCloud.with_local_advisor_engine?
+        if ForemanRhCloud.with_iop_smart_proxy?
           plan_self # so that 'run' runs
         else
           after_delay do
@@ -34,7 +34,7 @@ module ForemanInventoryUpload
       end
 
       def run
-        output[:status] = _('The scheduled process is disabled because this Foreman is configured with the use_local_advisor_engine option.') if ForemanRhCloud.with_local_advisor_engine?
+        output[:status] = _('The scheduled process is disabled because this Foreman is configured with a local IoP Smart Proxy.') if ForemanRhCloud.with_iop_smart_proxy?
       end
 
       def rescue_strategy_for_self
