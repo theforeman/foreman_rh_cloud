@@ -14,13 +14,14 @@ module ForemanInventoryUpload
             hosts_filter: hosts_filter
           )
 
-          plan_action(
-            QueueForUploadJob,
-            base_folder,
-            ForemanInventoryUpload.facts_archive_name(organization_id, hosts_filter),
-            organization_id,
-            disconnected
-          )
+          unless content_disconnected?(disconnected)
+            plan_action(
+              QueueForUploadJob,
+              base_folder,
+              ForemanInventoryUpload.facts_archive_name(organization_id, hosts_filter),
+              organization_id
+            )
+          end
         end
       end
 
@@ -38,6 +39,10 @@ module ForemanInventoryUpload
           'organization_id' => organization_id,
           'hosts_filter' => hosts_filter
         )
+      end
+
+      def content_disconnected?(disconnected)
+        disconnected || !Setting[:subscription_connection_enabled]
       end
 
       def base_folder
