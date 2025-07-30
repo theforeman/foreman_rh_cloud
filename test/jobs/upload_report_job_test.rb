@@ -18,7 +18,8 @@ class UploadReportJobTest < ActiveSupport::TestCase
 
     label = ForemanInventoryUpload::Async::UploadReportJob.output_label(organization.id)
     progress_output = ForemanInventoryUpload::Async::ProgressOutput.get(label)
-    assert_match(/Upload canceled/, progress_output.full_output)
+    assert_match(/upload was canceled because connection to Insights is not enabled/, progress_output.full_output)
+    assert_match(/Report location:/, progress_output.full_output)
     assert_match(/exit 1/, progress_output.status)
   end
 
