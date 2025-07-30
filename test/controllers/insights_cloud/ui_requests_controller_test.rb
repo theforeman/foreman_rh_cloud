@@ -9,6 +9,29 @@ module InsightsCloud
       FactoryBot.create(:common_parameter, name: InsightsCloud.enable_client_param, key_type: 'boolean', value: true)
     end
 
+    context '#translate_insights_host' do
+      setup do
+        @org = FactoryBot.create(:organization)
+        @loc = FactoryBot.create(:location)
+        @host = FactoryBot.create(:host, :with_subscription, :organization => @org)
+        @facet = InsightsFacet.create(host: @host, uuid: @host.subscription_facet.uuid)
+      end
+
+      test "should redirect to host details page by id" do
+        get :translate_insights_host, params: { "uuid" => @host.subscription_facet.uuid }, session: set_session
+        assert_equal 302, @response.status
+        assert @response.redirect?
+        assert_equal "http://test.host/new/hosts/#{@host.id}", @response.redirect_url
+      end
+
+      test "should redirect to not-found page" do
+        get :translate_insights_host, params: { "uuid" => "foo" }, session: set_session
+        assert_equal 302, @response.status
+        assert @response.redirect?
+        assert_equal "http://test.host/page-not-found", @response.redirect_url
+      end
+    end
+
     context '#forward_request' do
       include MockCerts
 
