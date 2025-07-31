@@ -55,14 +55,26 @@ export const PageDescription = () => {
         </Text>
       )}
       <Text ouiaId="text-minimal-data-collection">
-        {__('Learn more about ')}
-        <a
-          href={getDocsURL('Managing_Hosts', 'setting-minimal-data-collection')}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {__('Minimal data collection setting')}
-        </a>
+        <FormattedMessage
+          id="minimal-data-collection-message"
+          defaultMessage={__(
+            'Learn more about {minimalDataCollectionSetting}.'
+          )}
+          values={{
+            minimalDataCollectionSetting: (
+              <a
+                href={getDocsURL(
+                  'Managing_Hosts',
+                  'setting-minimal-data-collection'
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {__('setting minimal data collection')}
+              </a>
+            ),
+          }}
+        />
       </Text>
       <Text ouiaId="text-more-info-subscription">
         {__('For more information about the Subscriptions service, see:')}
