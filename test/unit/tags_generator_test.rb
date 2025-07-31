@@ -26,7 +26,10 @@ class TagsGeneratorTest < ActiveSupport::TestCase
       organization: env.organization,
       location: @location2,
       hostgroup: @hostgroup2,
-      content_view_environments: [make_cve(lifecycle_environment: env), make_cve(lifecycle_environment: env2)]
+      content_facet: FactoryBot.build(
+        :content_facet,
+        content_view_environments: [make_cve(lifecycle_environment: env), make_cve(lifecycle_environment: env2)]
+      )
     )
 
     @host.organization.pools << FactoryBot.create(:katello_pool, account_number: '1234', cp_id: 1)

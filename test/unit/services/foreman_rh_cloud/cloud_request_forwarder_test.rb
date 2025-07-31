@@ -22,7 +22,10 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
       :with_content,
       :with_hostgroup,
       :with_parameter,
-      content_view_environments: [make_cve(lifecycle_environment: env), make_cve(lifecycle_environment: env2)],
+      content_facet: FactoryBot.build(
+        :content_facet,
+        content_view_environments: [make_cve(lifecycle_environment: env), make_cve(lifecycle_environment: env2)]
+      ),
       organization: env.organization
     )
 
