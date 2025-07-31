@@ -67,13 +67,15 @@ export const generateRuleUrl = ruleId =>
   foremanUrl(`/foreman_rh_cloud/recommendations/${ruleId}`);
 
 const IopRecommendationsPage = props => (
-  <ScalprumComponent
-    scope={scope}
-    module={module}
-    IopRemediationModal={RemediationModal}
-    generateRuleUrl={generateRuleUrl}
-    {...props}
-  />
+  <div className="advisor">
+    <ScalprumComponent
+      scope={scope}
+      module={module}
+      IopRemediationModal={RemediationModal}
+      generateRuleUrl={generateRuleUrl}
+      {...props}
+    />
+  </div>
 );
 
 const IopRecommendationsPageWrapped = props => (

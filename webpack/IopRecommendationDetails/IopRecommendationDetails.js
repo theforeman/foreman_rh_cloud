@@ -13,7 +13,7 @@ const IopRecommendationDetails = props => {
   // eslint-disable-next-line camelcase
   const ruleId = urlParams?.params?.rule_id;
   return (
-    <div className="iop-recommendation-details-scalprum">
+    <div className="iop-recommendation-details-scalprum advisor">
       <ScalprumComponent
         scope={scope}
         module={module}
