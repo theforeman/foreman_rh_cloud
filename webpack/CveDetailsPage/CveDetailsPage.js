@@ -10,7 +10,7 @@ const CveDetailsPage = () => {
 
   return (
     <ScalprumProvider {...providerOptions}>
-      <div className="rh-cloud-cve-details-page">
+      <div className="rh-cloud-cve-details-page vulnerability">
         <ScalprumComponent scope={scope} module={module} cveId={cveId} />
       </div>
     </ScalprumProvider>

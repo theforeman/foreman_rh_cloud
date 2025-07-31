@@ -113,13 +113,15 @@ const scope = 'advisor';
 const module = './SystemDetailWrapped';
 
 const IopInsightsTab = props => (
-  <ScalprumComponent
-    scope={scope}
-    module={module}
-    IopRemediationModal={RemediationModal}
-    generateRuleUrl={generateRuleUrl}
-    {...props}
-  />
+  <div className="advisor">
+    <ScalprumComponent
+      scope={scope}
+      module={module}
+      IopRemediationModal={RemediationModal}
+      generateRuleUrl={generateRuleUrl}
+      {...props}
+    />
+  </div>
 );
 
 const IopInsightsTabWrapped = props => (

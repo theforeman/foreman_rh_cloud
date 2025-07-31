@@ -8,7 +8,7 @@ const CVEsHostDetailsTab = ({ systemId }) => {
   const scope = 'vulnerability';
   const module = './SystemDetailTable';
   return (
-    <div className="rh-cloud-insights-vulnerability-host-details-component">
+    <div className="rh-cloud-insights-vulnerability-host-details-component vulnerability">
       <ScalprumComponent scope={scope} module={module} systemId={systemId} />
     </div>
   );
