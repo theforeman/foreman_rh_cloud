@@ -213,6 +213,8 @@ module ForemanInventoryUpload
               first = false
             end
           end
+
+          report_yum_repos(host)
         end
         @stream.simple_field('satellite_managed', true, :last)
       end
@@ -247,6 +249,28 @@ module ForemanInventoryUpload
 
       def os_release_value(name, version, codename)
         "#{name} #{version} (#{codename})"
+      end
+
+      def report_yum_repos(host)
+        return unless host&.content_facet&.bound_repositories&.any?
+        return unless ForemanRhCloud.with_local_advisor_engine?
+
+        @stream.array_field('yum_repos') do
+          host.content_facet.bound_repositories.each_with_index do |repo, index|
+            report_yum_repo(host.content_source.load_balancer_pulp_content_url, repo)
+            @stream.comma unless index == host.content_facet.bound_repositories.count - 1
+          end
+        end
+      end
+
+      def report_yum_repo(url_prefix, repo)
+        @stream.object do
+          @stream.simple_field('name', repo.content.name)
+          @stream.simple_field('id', repo.content.label)
+          @stream.simple_field('base_url', "#{url_prefix}/#{repo.generate_repo_path(repo.content.content_url)}")
+          @stream.simple_field('enabled', true)
+          @stream.simple_field('gpgcheck', true, :last)
+        end
       end
     end
   end

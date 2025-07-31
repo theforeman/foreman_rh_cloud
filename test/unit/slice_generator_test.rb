@@ -998,6 +998,39 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_not_nil actual_host['insights_id']
   end
 
+  test 'reports yum repos' do
+    ForemanRhCloud.stubs(:with_local_advisor_engine?).returns(true)
+    FactoryBot.create(:katello_content, cp_content_id: '1', organization: @host.organization, name: 'Test Content', label: 'test-content')
+    repo = FactoryBot.build(
+      :katello_repository,
+      :fedora_17_x86_64_dev,
+      :with_content_view,
+      product: FactoryBot.create(:katello_product, :redhat, :with_provider, organization: @host.organization)
+    )
+    # force-save the root repo to avoid validation errors
+    repo.root.save(validate: false)
+    repo.save(validate: false)
+    @host.content_facet.bound_repositories << repo
+    @host.content_facet.content_source = FactoryBot.create(:smart_proxy, :with_pulp3)
+    @host.save(validate: false)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(actual_system_profile = actual_host['system_profile'])
+    assert_not_nil(actual_yum_repos = actual_system_profile['yum_repos'])
+    assert_equal 1, actual_yum_repos.count
+    assert_not_nil(actual_yum_repo = actual_yum_repos.first)
+    assert_equal 'Test Content', actual_yum_repo['name']
+    assert_equal 'test-content', actual_yum_repo['id']
+    assert_match /fedora_17/, actual_yum_repo['base_url']
+    assert_equal true, actual_yum_repo['enabled']
+    assert_equal true, actual_yum_repo['gpgcheck']
+  end
+
   private
 
   def create_generator(batch, name = '00000000-0000-0000-0000-000000000000')
