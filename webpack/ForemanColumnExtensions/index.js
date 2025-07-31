@@ -1,9 +1,10 @@
 import React from 'react';
-import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
+import PropTypes from 'prop-types';
+import { useAPI } from 'foremanReact/common/hooks/API/APIHooks';
+import { Link } from 'react-router-dom';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { propsToCamelCase } from 'foremanReact/common/helpers';
 import { CVECountCell } from '../InsightsVulnerabilityHostIndexExtensions/CVECountCell';
-import { providerOptions } from '../common/ScalprumModule/ScalprumContext';
 
 const HostedRecommendationsCell = hostDetails => {
   const insightsAttributes = propsToCamelCase(
@@ -18,22 +19,26 @@ const HostedRecommendationsCell = hostDetails => {
   return <a href={hitsUrl}>{hitsCount}</a>;
 };
 
-const IopRecommendationsCell = hostDetails => {
-  const scope = 'advisor';
-  const module = './RecommendationsCellWrapped';
+const IopRecommendationsCell = ({ hostDetails }) => {
+  // eslint-disable-next-line camelcase
+  const uuid = hostDetails?.insights_attributes?.uuid;
+  const { response } = useAPI(
+    uuid ? 'get' : null,
+    `/insights_cloud/api/insights/v1/system/${uuid}`,
+    { key: `HOST_RECS_COUNT_${uuid}` }
+  );
 
-  return (
-    <span className="rh-cloud-insights-recommendations-cell">
-      <ScalprumComponent scope={scope} module={module} />
-    </span>
+  const hits = response?.hits;
+  return hits === undefined ? (
+    '—'
+  ) : (
+    <Link to={`hosts/${hostDetails.name}#/Insights`}>{hits}</Link>
   );
 };
 
-const IopRecommendationsCellWrapped = hostDetails => (
-  <ScalprumProvider {...providerOptions}>
-    <IopRecommendationsCell hostDetails={hostDetails} />
-  </ScalprumProvider>
-);
+IopRecommendationsCell.propTypes = {
+  hostDetails: PropTypes.object.isRequired,
+};
 
 const RecommendationsCell = hostDetails => {
   const insightsAttributes = propsToCamelCase(
@@ -42,7 +47,7 @@ const RecommendationsCell = hostDetails => {
   );
 
   return insightsAttributes.useLocalAdvisorEngine ? (
-    <IopRecommendationsCellWrapped hostDetails={hostDetails} />
+    <IopRecommendationsCell hostDetails={hostDetails} />
   ) : (
     <HostedRecommendationsCell hostDetails={hostDetails} />
   );
