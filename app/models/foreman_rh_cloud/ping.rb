@@ -4,8 +4,8 @@ module ForemanRhCloud
     FAIL_RETURN_CODE = 'FAIL'.freeze
 
     SERVICE_URLS = {
-      :advisor => "http://localhost:24443/api/insights/v1/status/live/",
-      :vulnerabilities => "http://localhost:24443/api/insights/v1/status/live/"
+      :advisor => "https://localhost:24443/api/insights/v1/status/live/",
+      :vulnerability => "https://localhost:24443/api/vulnerability/v1/apistatus"
     }
 
     class << self
@@ -60,11 +60,19 @@ module ForemanRhCloud
 
         options = {}
         options[:ssl_ca_file] = ca_file unless ca_file.nil?
-        # options[:headers] = { 'Correlation-ID' => request_id } if request_id
+        options[:ssl_client_cert] = OpenSSL::X509::Certificate.new(File.read(Setting[:ssl_certificate]))
+        options[:ssl_client_key] = OpenSSL::PKey.read(File.read(Setting[:ssl_priv_key])) 
+
         client = RestClient::Resource.new(url, options)
 
         response = client.get
-        response.empty? ? {} : JSON.parse(response).with_indifferent_access
+        return {} if response.empty?
+        begin 
+          result = JSON.parse(response).with_indifferent_access
+        rescue JSON::ParserError, NoMethodError
+          result = { :response => response.body&.strip }
+        end
+        result
       end
 
       def ping_service(service_name, service_result_hash)
