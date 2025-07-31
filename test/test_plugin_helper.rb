@@ -2,14 +2,14 @@
 require 'test_helper'
 
 # Add plugin to FactoryBot's paths
-# task engine is defined implicitly by Katello
-FactoryBot.definition_file_paths << "#{ForemanRemoteExecution::Engine.root}/test/factories"
-FactoryBot.definition_file_paths << "#{ForemanTasks::Engine.root}/test/factories"
-# skip foreman_task factories, since we already have those definitions in ForemanTasks
+katello_files = Dir.glob("#{Katello::Engine.root}/test/factories/**/*.rb")
 FactoryBot.definition_file_paths +=
-  Dir.glob("#{Katello::Engine.root}/test/factories/**/*.rb")
+  katello_files
+  # skip foreman_task factories, since we already have those definitions in ForemanTasks
   .reject { |f| f =~ /foreman_task|recurring_logic/ }
   .map { |f| f.gsub('.rb', '') } # .rb extension is will be appended by factorybot
+FactoryBot.definition_file_paths << "#{ForemanRemoteExecution::Engine.root}/test/factories"
+FactoryBot.definition_file_paths << "#{ForemanTasks::Engine.root}/test/factories"
 
 FactoryBot.definition_file_paths << File.join(File.dirname(__FILE__), 'factories')
 FactoryBot.reload

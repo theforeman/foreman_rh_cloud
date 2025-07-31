@@ -1026,7 +1026,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_not_nil(actual_yum_repo = actual_yum_repos.first)
     assert_equal 'Test Content', actual_yum_repo['name']
     assert_equal 'test-content', actual_yum_repo['id']
-    assert_match /fedora_17/, actual_yum_repo['base_url']
+    assert_match(/fedora_17/, actual_yum_repo['base_url'])
     assert_equal true, actual_yum_repo['enabled']
     assert_equal true, actual_yum_repo['gpgcheck']
   end
