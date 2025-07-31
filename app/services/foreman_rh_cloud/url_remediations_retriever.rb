@@ -28,7 +28,7 @@ module ForemanRhCloud
     end
 
     def payload
-      @payload.to_json
+      @payload.present? ? @payload.to_json : @payload # don't run .to_json if @payload is ''
     end
 
     def method
