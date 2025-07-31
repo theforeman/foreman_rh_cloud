@@ -3,9 +3,14 @@ module ForemanRhCloud
     OK_RETURN_CODE = 'ok'.freeze
     FAIL_RETURN_CODE = 'FAIL'.freeze
 
+    SERVICE_URLS = {
+      :advisor => "http://localhost:24443/api/insights/v1/status/live/",
+      :vulnerabilities => "http://localhost:24443/api/insights/v1/status/live/"
+    }
+
     class << self
       def services
-        [:advisor, :vulnerabilities]
+        SERVICE_URLS.keys
       end
 
       def status
@@ -64,7 +69,7 @@ module ForemanRhCloud
 
       def ping_service(service_name, service_result_hash)
         exception_watch(service_result_hash) do
-          ping_url("https://ip-10-0-168-225.rhos-01.prod.psi.rdu2.redhat.com/insights_cloud/api/insights/v1/rule/?impacting=true")
+          ping_url(SERVICE_URLS[service_name])
         end
       end
     end
