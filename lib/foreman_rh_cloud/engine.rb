@@ -137,6 +137,6 @@ module ForemanRhCloud
   end
 
   def self.on_prem_smart_proxy_features
-    ['Insights']
+    ['iop']
   end
 end
