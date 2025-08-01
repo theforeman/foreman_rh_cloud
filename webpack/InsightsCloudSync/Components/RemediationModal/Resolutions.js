@@ -40,17 +40,17 @@ const Resolutions = ({
   );
 };
 
-Resolutions.propTypes = {
-  setResolutions: PropTypes.func.isRequired,
-  resolutions: PropTypes.array,
-  hit_id: PropTypes.number,
-  selectedResolution: PropTypes.number,
-};
+// Resolutions.propTypes = {
+//   setResolutions: PropTypes.func.isRequired,
+//   resolutions: PropTypes.array,
+//   hit_id: PropTypes.number,
+//   selectedResolution: PropTypes.number,
+// };
 
-Resolutions.defaultProps = {
-  resolutions: [],
-  hit_id: null,
-  selectedResolution: null,
-};
+// Resolutions.defaultProps = {
+//   resolutions: [],
+//   hit_id: null,
+//   selectedResolution: null,
+// };
 
 export default Resolutions;
