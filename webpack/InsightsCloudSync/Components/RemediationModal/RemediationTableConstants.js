@@ -43,3 +43,11 @@ export const JOB_INVOCATION_PATH = foremanUrl('/job_invocations/new');
 export const REMEDIATIONS_API_KEY = 'INSIGHTS_REMEDIATIONS';
 
 export const SUBMIT_RESOLUTIONS = 'SUBMIT_INSIGHTS_RESOLUTIONS';
+
+export const IOP_MAKE_ME_A_PLAYBOOK_PATH = foremanUrl('/insights_cloud/api/remediations/v1/remediations');
+
+export const IOP_REMEDIATIONS_API_KEY = 'IOP_REMEDIATIONS';
+
+export const IOP_CLOUDLESS_REMEDIATION_PATH = foremanUrl('/api/v2/rh_cloud/cloud_request');
+
+export const IOP_PLAYBOOKS_API_KEY = 'IOP_PLAYBOOKS';
