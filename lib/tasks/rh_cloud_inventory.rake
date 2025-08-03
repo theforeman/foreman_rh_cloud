@@ -45,6 +45,24 @@ namespace :rh_cloud_inventory do
           archived_report_generator = ForemanInventoryUpload::Generators::ArchivedReport.new(target, Logger.new(STDOUT))
           archived_report_generator.render(organization: organization, filter: filter)
           puts "Successfully generated #{target} for organization id #{organization}"
+
+          next unless ForemanRhCloud.with_local_advisor_engine?
+
+          puts 'Creating missing insights facets'
+          hosts_without_facets = ForemanInventoryUpload::Generators::Queries.for_org(organization, hosts_query: 'null? insights_uuid')
+          hosts_without_facets.each do |batch|
+            facets = batch.pluck(:id, 'katello_subscription_facets.uuid').map do |host_id, uuid|
+              {
+                host_id: host_id,
+                uuid: uuid,
+              }
+            end
+            # We don't need to validate the facets here as we create the necessary fields.
+            # rubocop:disable Rails/SkipsModelValidations
+            InsightsFacet.upsert_all(facets, unique_by: :host_id) unless facets.empty?
+            # rubocop:enable Rails/SkipsModelValidations
+          end
+          puts 'Missing Insights facets created'
         end
       end
     end

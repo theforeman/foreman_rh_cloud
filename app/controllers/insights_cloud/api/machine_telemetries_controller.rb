@@ -12,6 +12,7 @@ module InsightsCloud::Api
     skip_after_action :log_response_body, :only => [:forward_request]
     skip_before_action :check_media_type, :only => [:forward_request]
     after_action :update_host_insights_status, only: [:forward_request]
+    after_action :update_host_facet, only: [:forward_request], if: -> { ForemanRhCloud.with_local_advisor_engine? }
 
     # The method that "proxies" requests over to Cloud
     def forward_request
@@ -117,14 +118,27 @@ module InsightsCloud::Api
     end
 
     def update_host_insights_status
-      return unless request.path == '/redhat_access/r/insights/platform/ingress/v1/upload' ||
-                    request.path.include?('/redhat_access/r/insights/uploads/')
-
-      return unless @cloud_response.code.to_s.start_with?('2')
-
+      return unless upload_success?
       # create insights status if it wasn't there in the first place and refresh its reporting date
       @host.get_status(InsightsClientReportStatus).refresh!
       @host.refresh_global_status!
+    end
+
+    def update_host_facet
+      return unless upload_success?
+
+      # in IoP case, the hosts are identified by the sub-man ID, and we can assume they already
+      # exist in the local inventory. This will also handle facet creation for new hosts.
+      return if @host.insights
+
+      insights_facet = @host.build_insights(uuid: @host.subscription_facet.uuid)
+      insights_facet.save
+    end
+
+    def upload_success?
+      @cloud_response&.code&.to_s&.start_with?('2') &&
+        (request.path == '/redhat_access/r/insights/platform/ingress/v1/upload' ||
+          request.path.include?('/redhat_access/r/insights/uploads/'))
     end
   end
 end

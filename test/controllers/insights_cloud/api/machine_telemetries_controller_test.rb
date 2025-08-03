@@ -17,8 +17,8 @@ module InsightsCloud::Api
         @http_req = RestClient::Request.new(:method => 'GET', :url => 'http://test.theforeman.org')
 
         org = FactoryBot.create(:organization)
-        host = FactoryBot.create(:host, :with_subscription, :organization => org)
-        User.current = ::Katello::CpConsumerUser.new(:uuid => host.subscription_facet.uuid, :login => host.subscription_facet.uuid)
+        @host = FactoryBot.create(:host, :with_subscription, :organization => org)
+        User.current = ::Katello::CpConsumerUser.new(:uuid => @host.subscription_facet.uuid, :login => @host.subscription_facet.uuid)
         InsightsCloud::Api::MachineTelemetriesController.any_instance.stubs(:upstream_owner).returns({ 'uuid' => 'abcdefg' })
 
         setup_certs_expectation do
@@ -150,6 +150,20 @@ module InsightsCloud::Api
         assert_equal 500, @response.status
         assert_equal 'Cloud request failed', JSON.parse(@response.body)['message']
         assert_match /#{@body}/, JSON.parse(@response.body)['response']
+      end
+
+      test "should create insights facet" do
+        assert_nil InsightsFacet.find_by(host_id: @host.id)
+        ForemanRhCloud.stubs(:with_local_advisor_engine?).returns(true)
+        req = RestClient::Request.new(:method => 'GET', :url => 'http://test.theforeman.org/')
+        net_http_resp = Net::HTTPResponse.new(1.0, 200, "OK")
+        net_http_resp[:content_type] = 'application/zip'
+        res = RestClient::Response.create(@body, net_http_resp, req)
+        ::ForemanRhCloud::CloudRequestForwarder.any_instance.stubs(:forward_request).returns(res)
+
+        get :forward_request, params: { "path" => "/redhat_access/r/insights/uploads/" }
+
+        assert_not_nil InsightsFacet.find_by(host_id: @host.id)
       end
     end
 
