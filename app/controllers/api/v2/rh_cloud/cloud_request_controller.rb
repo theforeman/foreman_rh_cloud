@@ -1,6 +1,9 @@
 module Api::V2::RhCloud
   class CloudRequestController < ::Api::V2::BaseController
+    include ForemanRhCloud::IopSmartProxyAccess
     layout false
+
+    before_action :require_no_iop_smart_proxy, only: [:update]
 
     KNOWN_DIRECTIVES = {
       'playbook-sat' => :handle_run_playbook_request,

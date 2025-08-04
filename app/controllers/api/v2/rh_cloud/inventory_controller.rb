@@ -5,6 +5,9 @@ module Api
         include ::Api::Version2
         include InventoryUpload::ReportActions
         include InventoryUpload::TaskActions
+        include ForemanRhCloud::IopSmartProxyAccess
+
+        before_action :require_no_iop_smart_proxy, only: [:enable_cloud_connector]
 
         api :GET, "/organizations/:organization_id/rh_cloud/report", N_("Download latest report")
         param :organization_id, Integer, required: true, desc: N_("Set the current organization context for the request")
