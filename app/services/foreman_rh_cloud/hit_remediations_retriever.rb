@@ -1,8 +1,9 @@
 module ForemanRhCloud
   class HitRemediationsRetriever < RemediationsRetriever
-    def initialize(hit_remediation_pairs, logger: Logger.new(IO::NULL))
+    def initialize(hit_remediation_pairs, host_insights_ids, logger: Logger.new(IO::NULL))
       super(logger: logger)
       @is_iop = ForemanRhCloud.with_local_advisor_engine?
+      @host_insights_ids = host_insights_ids
       @hit_remediation_pairs = (hit_remediation_pairs || {}).map(&:with_indifferent_access)
       logger.debug("Querying playbook for #{hit_remediation_pairs}")
     end
@@ -54,7 +55,7 @@ module ForemanRhCloud
     end
 
     def iop_system_ids
-      ['i dont know where to get this info']
+      @host_insights_ids.present? ? @host_insights_ids.split(',') : ''
     end
 
     def hosted_playbook_request

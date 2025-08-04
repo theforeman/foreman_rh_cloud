@@ -9,18 +9,32 @@ const ModalFooter = ({ toggleModal, resolutions, hostsIds, isIop }) => {
   let token = document.querySelector('meta[name="csrf-token"]');
   token = token?.content || '';
 
+  const [jobInProgress, setJobInProgress] = React.useState(false);
+  const formRef = React.useRef(null);
+
   const { fetchBulkParams } = useBulkSelect({
     initialArry: hostsIds,
     idColumn: 'subscription_uuid'
   })
-  console.log(fetchBulkParams());
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setJobInProgress(true);
+
+    setTimeout(() => {
+      formRef.current?.submit();
+    }, 500);
+  }
   return (
-    <form action={JOB_INVOCATION_PATH} method="post">
+    <form action={JOB_INVOCATION_PATH} method="post" ref={formRef}>
       <Button
         type="submit"
         ouiaId="button-confirm"
         key="confirm"
         variant="primary"
+        isDisabled={jobInProgress}
+        isLoading={jobInProgress}
+        onSubmit={handleSubmit}
       >
         {__('Remediate')}
       </Button>
@@ -43,7 +57,10 @@ const ModalFooter = ({ toggleModal, resolutions, hostsIds, isIop }) => {
         <input type="hidden" name="host_ids[]" key={id} value={id} />
       ))}
       {isIop &&
-        <input type="hidden" name="search" value={fetchBulkParams()} />
+        <>
+          <input type="hidden" name="inputs[host_insights_ids]" value={(hostsIds || []).join(',')} />
+          <input type="hidden" name="search" value={fetchBulkParams()} />
+        </>
       }
     </form>
   );
