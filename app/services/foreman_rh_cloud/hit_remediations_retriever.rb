@@ -1,16 +1,15 @@
 module ForemanRhCloud
   class HitRemediationsRetriever < RemediationsRetriever
-    def initialize(hit_remediation_pairs, host_insights_ids, logger: Logger.new(IO::NULL))
+    def initialize(hit_remediation_pairs, logger: Logger.new(IO::NULL))
       super(logger: logger)
       @is_iop = ForemanRhCloud.with_local_advisor_engine?
-      @host_insights_ids = host_insights_ids
       @hit_remediation_pairs = (hit_remediation_pairs || {}).map(&:with_indifferent_access)
       logger.debug("Querying playbook for #{hit_remediation_pairs}")
     end
 
     private
 
-    def hit_ids
+    def hit_ids # hit_ids are host ids
       @hit_remediation_pairs.map { |pair| pair["hit_id"] }
     end
 
@@ -19,9 +18,14 @@ module ForemanRhCloud
     end
 
     def hits
-      @hits ||= Hash[
-        InsightsHit.joins(:insights_facet).where(id: hit_ids).pluck(:id, 'insights_facets.uuid')
-      ]
+      if @is_iop
+        @hits = Hash[@hit_remediation_pairs.map { |pair| [pair[:hit_id], pair[:hit_id]] }] # with IoP, host ids are already translated
+      else
+        @hits ||= Hash[
+          InsightsHit.joins(:insights_facet).where(id: hit_ids).pluck(:id, 'insights_facets.uuid')
+        ]
+      end
+      @hits
     end
 
     def pairs_by_remediation_id
@@ -29,36 +33,39 @@ module ForemanRhCloud
     end
 
     def remediations
-      @remediations ||= Hash[
-        InsightsResolution.where(id: remediation_ids).pluck(:id, :resolution_type, :rule_id).map do |id, resolution_type, rule_id|
-          [id, { resolution_type: resolution_type, rule_id: rule_id }]
-        end
-      ]
+      if @is_iop
+        @remediations = Hash[
+          @hit_remediation_pairs.map { |pair| [pair['resolution_id'], { resolution_type: pair['resolution_type'], rule_id: pair['rule_id'] }] }
+        ]
+      else
+        @remediations ||= Hash[
+          InsightsResolution.where(id: remediation_ids).pluck(:id, :resolution_type, :rule_id).map do |id, resolution_type, rule_id|
+            [id, { resolution_type: resolution_type, rule_id: rule_id }]
+          end
+        ]
+      end
+      @remediations
     end
+
+    # def iop_playbook_request
+    #   {
+    #     issues: pairs_by_remediation_id.flat_map do |resolution_type, pairs|
+    #       pairs.map do |pair|
+    #         {
+    #           resolution: resolution_type,
+    #           id: "advisor:#{pair[:hit_id]}",
+    #           systems: iop_system_ids
+    #         }
+    #       end
+    #     end
+    #   }
+    # end
+
+    # def iop_system_ids
+    #   @host_insights_ids.present? ? @host_insights_ids.split(',') : ''
+    # end
 
     def playbook_request
-      @is_iop ? iop_playbook_request : hosted_playbook_request
-    end
-
-    def iop_playbook_request
-      {
-        issues: pairs_by_remediation_id.flat_map do |resolution_type, pairs|
-          pairs.map do |pair|
-            {
-              resolution: resolution_type,
-              id: "advisor:#{pair[:hit_id]}",
-              systems: iop_system_ids
-            }
-          end
-        end
-      }
-    end
-
-    def iop_system_ids
-      @host_insights_ids.present? ? @host_insights_ids.split(',') : ''
-    end
-
-    def hosted_playbook_request
       {
         issues: pairs_by_remediation_id.map do |remediation_id, pairs|
           {

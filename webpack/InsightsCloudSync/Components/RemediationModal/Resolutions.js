@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Radio } from '@patternfly/react-core';
+import { getResolutionId } from './RemediationHelpers';
 
 const Resolutions = ({
   resolutions,
@@ -23,15 +24,16 @@ const Resolutions = ({
           id={resolution_id}
           isChecked={resolution_id === checkedID}
           onChange={() =>
-            setResolutions(stateRes =>
-              stateRes.map(res => {
-                if (hit_id === res.hit_id) {
-                  setCheckedID(resolution_id);
-                  return { ...res, resolution_id };
-                }
-                return res;
-              })
-            )
+            setResolutions(stateRes => stateRes.map(res => {
+            // debugger
+            if (hit_id === res.hit_id) {
+              setCheckedID(resolution_id);
+              console.log({ ...res, resolution_id: getResolutionId(resolution_id, res.rule_id), resolution_type: resolution_id })
+              return { ...res, resolution_id: getResolutionId(resolution_id, res.rule_id), resolution_type: resolution_id };
+            }
+            return res;
+          })
+          )
           }
           label={description}
         />

@@ -91,12 +91,12 @@ const RemediationModal = ({
   useEffect(() => {
     let modifiedRows;
     if (isIop) {
-      modifiedRows = modifyRows(iopRows, setResolutions, setHostsIds);
+      modifiedRows = modifyRows(iopRows, setResolutions, setHostsIds, true);
     } else {
       modifiedRows =
         status === STATUS.PENDING
           ? []
-          : modifyRows(remediations, setResolutions, setHostsIds);
+          : modifyRows(remediations, setResolutions, setHostsIds, false);
     }
     setRows(modifiedRows);
   }, [remediations, status, iopData, isIop]);

@@ -3,7 +3,9 @@ import React from 'react';
 import { orderBy } from 'lodash';
 import Resolutions from './Resolutions';
 
-export const modifyRows = (remediations, setResolutions, setHostsIds) => {
+export const getResolutionId = (selectedResolution, id) => `${id}_${selectedResolution}`
+
+export const modifyRows = (remediations, setResolutions, setHostsIds, isIop) => {
   if (remediations.length === 0) return [];
 
   const resolutionToSubmit = [];
@@ -13,11 +15,14 @@ export const modifyRows = (remediations, setResolutions, setHostsIds) => {
     [r => r.resolutions?.length || 0],
     ['desc']
   ).map(({ id, host_id, hostname, title, resolutions, reboot }) => {
+    // debugger;
     hostsIdsToSubmit.add(host_id);
     const selectedResolution = resolutions[0]?.id;
     resolutionToSubmit.push({
-      hit_id: id,
-      resolution_id: selectedResolution /** defaults to the first resolution if many */,
+      hit_id: isIop ? host_id : id,
+      resolution_id: getResolutionId(selectedResolution, id),
+      rule_id: id,
+      resolution_type: selectedResolution  /** defaults to the first resolution if many */
     });
     return {
       cells: [
@@ -25,7 +30,7 @@ export const modifyRows = (remediations, setResolutions, setHostsIds) => {
         title,
         <div>
           <Resolutions
-            hit_id={id}
+            hit_id={isIop ? host_id : id}
             resolutions={resolutions}
             setResolutions={setResolutions}
             selectedResolution={selectedResolution}

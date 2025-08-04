@@ -9,10 +9,6 @@ template_inputs:
   description: Pairs of issues and selected remediation
   input_type: user
   required: true
-- name: host_insights_ids
-  description: Comma-separated list of Insights system IDs (insights facet IDs). Only required for non-cloud remediations.
-  input_type: user
-  required: false
 provider_type: Ansible
 %>
-<%= remediations_playbook(input('hit_remediation_pairs'), input('host_insights_ids')) %>
+<%= remediations_playbook(input('hit_remediation_pairs')) %>

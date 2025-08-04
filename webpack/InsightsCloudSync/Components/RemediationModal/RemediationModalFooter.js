@@ -58,7 +58,6 @@ const ModalFooter = ({ toggleModal, resolutions, hostsIds, isIop }) => {
       ))}
       {isIop &&
         <>
-          <input type="hidden" name="inputs[host_insights_ids]" value={(hostsIds || []).join(',')} />
           <input type="hidden" name="search" value={fetchBulkParams()} />
         </>
       }

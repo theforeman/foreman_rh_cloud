@@ -13,9 +13,9 @@ module ForemanRhCloud
       required :hit_remediation_pairs, String, desc: 'JSON-encoded array of hashes in the form of [{hit_id: 1, remediation_id: 2}, ...]'
       returns String, desc: 'Playbook generated for the specific recommendations and hosts'
     end
-    def remediations_playbook(hit_remediation_pairs, host_insights_ids)
+    def remediations_playbook(hit_remediation_pairs)
       hit_remediation_pairs = JSON.parse(hit_remediation_pairs)
-      retriever = ForemanRhCloud::HitRemediationsRetriever.new(hit_remediation_pairs, host_insights_ids, logger: template_logger)
+      retriever = ForemanRhCloud::HitRemediationsRetriever.new(hit_remediation_pairs, logger: template_logger)
       retriever.create_playbook
     end
 
