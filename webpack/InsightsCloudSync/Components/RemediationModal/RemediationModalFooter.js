@@ -2,11 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@patternfly/react-core';
 import { translate as __ } from 'foremanReact/common/I18n';
+import { useBulkSelect } from 'foremanReact/components/PF4/TableIndexPage/Table/TableHooks';
 import { JOB_INVOCATION_PATH } from './RemediationTableConstants';
 
-const ModalFooter = ({ toggleModal, resolutions, hostsIds }) => {
+const ModalFooter = ({ toggleModal, resolutions, hostsIds, isIop }) => {
   let token = document.querySelector('meta[name="csrf-token"]');
   token = token?.content || '';
+
+  const { fetchBulkParams } = useBulkSelect({
+    initialArry: hostsIds,
+    idColumn: 'subscription_uuid'
+  })
+  console.log(fetchBulkParams());
   return (
     <form action={JOB_INVOCATION_PATH} method="post">
       <Button
@@ -32,9 +39,12 @@ const ModalFooter = ({ toggleModal, resolutions, hostsIds }) => {
         name="inputs[hit_remediation_pairs]"
         value={JSON.stringify(resolutions)}
       />
-      {hostsIds.map(id => (
+      {!isIop && hostsIds.map(id => (
         <input type="hidden" name="host_ids[]" key={id} value={id} />
       ))}
+      {isIop &&
+        <input type="hidden" name="search" value={fetchBulkParams()} />
+      }
     </form>
   );
 };
