@@ -9,9 +9,7 @@ Rails.application.routes.draw do
     get 'settings', to: 'uploads_settings#index'
     post 'setting', to: 'uploads_settings#set_advanced_setting'
 
-    unless ForemanRhCloud.with_iop_smart_proxy?
-      post 'cloud_connector', to: 'uploads#enable_cloud_connector'
-    end
+    post 'cloud_connector', to: 'uploads#enable_cloud_connector'
 
     resources :tasks, only: [:create, :show]
 
@@ -35,13 +33,9 @@ Rails.application.routes.draw do
   end
 
   namespace :foreman_rh_cloud do
-    unless ForemanRhCloud.with_iop_smart_proxy?
-      get 'inventory_upload', to: '/react#index'
-    end
-    if ForemanRhCloud.with_iop_smart_proxy?
-      get 'recommendations', to: '/react#index'
-      get 'recommendations/:rule_id', to: '/react#index'
-    end
+    get 'inventory_upload', to: 'foreman_rh_cloud#inventory_upload'
+    get 'recommendations', to: 'foreman_rh_cloud#recommendations'
+    get 'recommendations/:rule_id', to: 'foreman_rh_cloud#recommendations'
     get 'insights_cloud', to: '/react#index' # Uses foreman's react controller
     get 'insights_vulnerability', to: '/react#index'
     get 'insights_vulnerability/:cve_id', to: '/react#index'
