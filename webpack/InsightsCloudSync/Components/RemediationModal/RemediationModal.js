@@ -126,7 +126,6 @@ const RemediationModal = ({
             toggleModal={toggleModal}
             resolutions={resolutions}
             hostsIds={hostsIds}
-            isIop={isIop}
           />
         }
       >
