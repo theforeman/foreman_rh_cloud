@@ -12,7 +12,7 @@ module InsightsCloud::Api
     skip_after_action :log_response_body, :only => [:forward_request]
     skip_before_action :check_media_type, :only => [:forward_request]
     after_action :update_host_insights_status, only: [:forward_request]
-    after_action :update_host_facet, only: [:forward_request], if: -> { ForemanRhCloud.with_local_advisor_engine? }
+    after_action :update_host_facet, only: [:forward_request], if: -> { ForemanRhCloud.with_iop_smart_proxy? }
 
     # The method that "proxies" requests over to Cloud
     def forward_request
