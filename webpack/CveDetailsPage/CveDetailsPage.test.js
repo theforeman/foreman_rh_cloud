@@ -18,9 +18,7 @@ jest.mock('@scalprum/react-core', () => ({
 describe('CveDetailsPage component', () => {
   it('renders the container with correct class', () => {
     const { container } = render(<CveDetailsPage />);
-    expect(
-      container.querySelector('.rh-cloud-cve-details-page')
-    ).toBeTruthy();
+    expect(container.querySelector('.rh-cloud-cve-details-page')).toBeTruthy();
   });
 
   it('passes cveId from URL params to ScalprumComponent', () => {

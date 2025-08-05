@@ -14,17 +14,17 @@ const ModalFooter = ({ toggleModal, resolutions, hostsIds, isIop }) => {
 
   const { fetchBulkParams } = useBulkSelect({
     initialArry: hostsIds,
-    idColumn: 'subscription_uuid'
-  })
+    idColumn: 'subscription_uuid',
+  });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     setJobInProgress(true);
 
     setTimeout(() => {
       formRef.current?.submit();
     }, 500);
-  }
+  };
   return (
     <form action={JOB_INVOCATION_PATH} method="post" ref={formRef}>
       <Button
@@ -53,14 +53,15 @@ const ModalFooter = ({ toggleModal, resolutions, hostsIds, isIop }) => {
         name="inputs[hit_remediation_pairs]"
         value={JSON.stringify(resolutions)}
       />
-      {!isIop && hostsIds.map(id => (
-        <input type="hidden" name="host_ids[]" key={id} value={id} />
-      ))}
-      {isIop &&
+      {!isIop &&
+        hostsIds.map(id => (
+          <input type="hidden" name="host_ids[]" key={id} value={id} />
+        ))}
+      {isIop && (
         <>
           <input type="hidden" name="search" value={fetchBulkParams()} />
         </>
-      }
+      )}
     </form>
   );
 };

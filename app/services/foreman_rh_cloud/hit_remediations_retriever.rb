@@ -14,13 +14,16 @@ module ForemanRhCloud
     end
 
     def remediation_ids
+      # In IoP, these are Insights rule IDs. For Hosted, they are Foreman database IDs
       @hit_remediation_pairs.map { |pair| pair["resolution_id"] }
     end
 
     def hits
       if @is_iop
-        @hits = Hash[@hit_remediation_pairs.map { |pair| [pair[:hit_id], pair[:hit_id]] }] # with IoP, host ids are already translated
+        # Return the hit_id unaltered. With IoP, host ids are already translated
+        @hits = Hash[@hit_remediation_pairs.map { |pair| [pair[:hit_id], pair[:hit_id]] }]
       else
+        # Return a hash which maps Foreman host ID to Insights-flavored ID
         @hits ||= Hash[
           InsightsHit.joins(:insights_facet).where(id: hit_ids).pluck(:id, 'insights_facets.uuid')
         ]

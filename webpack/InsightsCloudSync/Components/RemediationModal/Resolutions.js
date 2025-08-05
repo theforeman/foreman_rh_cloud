@@ -9,6 +9,7 @@ const Resolutions = ({
   setResolutions,
   selectedResolution,
   hit_id,
+  isIop,
 }) => {
   const [checkedID, setCheckedID] = React.useState(selectedResolution);
 
@@ -24,16 +25,29 @@ const Resolutions = ({
           id={resolution_id}
           isChecked={resolution_id === checkedID}
           onChange={() =>
-            setResolutions(stateRes => stateRes.map(res => {
-            // debugger
-            if (hit_id === res.hit_id) {
-              setCheckedID(resolution_id);
-              console.log({ ...res, resolution_id: getResolutionId(resolution_id, res.rule_id), resolution_type: resolution_id })
-              return { ...res, resolution_id: getResolutionId(resolution_id, res.rule_id), resolution_type: resolution_id };
-            }
-            return res;
-          })
-          )
+            setResolutions(stateRes =>
+              stateRes.map(res => {
+                if (hit_id === res.hit_id) {
+                  setCheckedID(resolution_id);
+                  console.log({
+                    ...res,
+                    resolution_id: getResolutionId(resolution_id, res.rule_id),
+                    resolution_type: resolution_id,
+                  });
+                  if (isIop)
+                    return {
+                      ...res,
+                      resolution_id: getResolutionId(
+                        resolution_id,
+                        res.rule_id
+                      ),
+                      resolution_type: resolution_id,
+                    };
+                  return { ...res, resolution_id };
+                }
+                return res;
+              })
+            )
           }
           label={description}
         />
@@ -42,17 +56,17 @@ const Resolutions = ({
   );
 };
 
-// Resolutions.propTypes = {
-//   setResolutions: PropTypes.func.isRequired,
-//   resolutions: PropTypes.array,
-//   hit_id: PropTypes.number,
-//   selectedResolution: PropTypes.number,
-// };
+Resolutions.propTypes = {
+  setResolutions: PropTypes.func.isRequired,
+  resolutions: PropTypes.array,
+  hit_id: PropTypes.number,
+  selectedResolution: PropTypes.number,
+};
 
-// Resolutions.defaultProps = {
-//   resolutions: [],
-//   hit_id: null,
-//   selectedResolution: null,
-// };
+Resolutions.defaultProps = {
+  resolutions: [],
+  hit_id: null,
+  selectedResolution: null,
+};
 
 export default Resolutions;
