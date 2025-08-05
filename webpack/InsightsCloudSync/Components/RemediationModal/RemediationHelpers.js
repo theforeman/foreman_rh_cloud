@@ -3,7 +3,15 @@ import React from 'react';
 import { orderBy } from 'lodash';
 import Resolutions from './Resolutions';
 
-export const modifyRows = (remediations, setResolutions, setHostsIds) => {
+export const getResolutionId = (selectedResolution, id) =>
+  `${id}_${selectedResolution}`;
+
+export const modifyRows = (
+  remediations,
+  setResolutions,
+  setHostsIds,
+  isIop
+) => {
   if (remediations.length === 0) return [];
 
   const resolutionToSubmit = [];
@@ -15,9 +23,22 @@ export const modifyRows = (remediations, setResolutions, setHostsIds) => {
   ).map(({ id, host_id, hostname, title, resolutions, reboot }) => {
     hostsIdsToSubmit.add(host_id);
     const selectedResolution = resolutions[0]?.id;
+    /* eslint-disable spellcheck/spell-checker */
+
+    // For IoP: {
+    //  hit_id: "c7c6727e-2966-4f7c-87f1-20ef14db7a2d",
+    //  rule_id: "hardening_ssh_client_alive|OPENSSH_HARDENING_CLIENT_ALIVE",
+    //  resolution_type: "less_secure",
+    //  resolution_id:"hardening_ssh_client_alive|OPENSSH_HARDENING_CLIENT_ALIVE_less_secure",
+    // }
+    // for Hosted, hit_id and rule_id will be Foreman database IDs
+
+    /* eslint-enable spellcheck/spell-checker */
     resolutionToSubmit.push({
-      hit_id: id,
-      resolution_id: selectedResolution /** defaults to the first resolution if many */,
+      hit_id: isIop ? host_id : id,
+      rule_id: id,
+      resolution_type: selectedResolution /** defaults to the first resolution if many */,
+      resolution_id: getResolutionId(selectedResolution, id),
     });
     return {
       cells: [
@@ -25,10 +46,11 @@ export const modifyRows = (remediations, setResolutions, setHostsIds) => {
         title,
         <div>
           <Resolutions
-            hit_id={id}
+            hit_id={isIop ? host_id : id}
             resolutions={resolutions}
             setResolutions={setResolutions}
             selectedResolution={selectedResolution}
+            isIop={isIop}
           />
         </div>,
         reboot,

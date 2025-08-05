@@ -79,10 +79,8 @@ Rails.application.routes.draw do
       end
 
       namespace 'rh_cloud' do
-        unless ForemanRhCloud.with_local_advisor_engine?
-          post 'enable_connector', to: 'inventory#enable_cloud_connector'
-          post 'cloud_request', to: 'cloud_request#update'
-        end
+        post 'enable_connector', to: 'inventory#enable_cloud_connector'
+        post 'cloud_request', to: 'cloud_request#update'
         get 'advisor_engine_config', to: 'advisor_engine_config#show'
       end
 

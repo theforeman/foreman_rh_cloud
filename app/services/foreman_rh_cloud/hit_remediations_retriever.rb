@@ -2,24 +2,34 @@ module ForemanRhCloud
   class HitRemediationsRetriever < RemediationsRetriever
     def initialize(hit_remediation_pairs, logger: Logger.new(IO::NULL))
       super(logger: logger)
-      @hit_remediation_pairs = hit_remediation_pairs
+      @is_iop = ForemanRhCloud.with_local_advisor_engine?
+      @hit_remediation_pairs = (hit_remediation_pairs || []).map(&:with_indifferent_access)
       logger.debug("Querying playbook for #{hit_remediation_pairs}")
     end
 
     private
 
     def hit_ids
+      # hit_ids are host ids
       @hit_remediation_pairs.map { |pair| pair["hit_id"] }
     end
 
     def remediation_ids
+      # In IoP, these are Insights rule IDs. For Hosted, they are Foreman database IDs
       @hit_remediation_pairs.map { |pair| pair["resolution_id"] }
     end
 
     def hits
-      @hits ||= Hash[
-        InsightsHit.joins(:insights_facet).where(id: hit_ids).pluck(:id, 'insights_facets.uuid')
-      ]
+      if @is_iop
+        # Return the hit_id unaltered. With IoP, host ids are already translated
+        @hits = Hash[@hit_remediation_pairs.map { |pair| [pair[:hit_id], pair[:hit_id]] }]
+      else
+        # Return a hash which maps Foreman host ID to Insights-flavored ID
+        @hits ||= Hash[
+          InsightsHit.joins(:insights_facet).where(id: hit_ids).pluck(:id, 'insights_facets.uuid')
+        ]
+      end
+      @hits
     end
 
     def pairs_by_remediation_id
@@ -27,11 +37,18 @@ module ForemanRhCloud
     end
 
     def remediations
-      @remediations ||= Hash[
-        InsightsResolution.where(id: remediation_ids).pluck(:id, :resolution_type, :rule_id).map do |id, resolution_type, rule_id|
-          [id, { resolution_type: resolution_type, rule_id: rule_id }]
-        end
-      ]
+      if @is_iop
+        @remediations = Hash[
+          @hit_remediation_pairs.map { |pair| [pair['resolution_id'], { resolution_type: pair['resolution_type'], rule_id: pair['rule_id'] }] }
+        ]
+      else
+        @remediations ||= Hash[
+          InsightsResolution.where(id: remediation_ids).pluck(:id, :resolution_type, :rule_id).map do |id, resolution_type, rule_id|
+            [id, { resolution_type: resolution_type, rule_id: rule_id }]
+          end
+        ]
+      end
+      @remediations
     end
 
     def playbook_request
@@ -65,7 +82,7 @@ module ForemanRhCloud
     end
 
     def organization
-      InsightsHit.find(@hit_remediation_pairs.first['hit_id']).host.organization
+      @is_iop ? Organization.current : InsightsHit.find(@hit_remediation_pairs.first['hit_id']).host.organization
     end
   end
 end

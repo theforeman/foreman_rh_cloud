@@ -2,12 +2,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Radio } from '@patternfly/react-core';
+import { getResolutionId } from './RemediationHelpers';
 
 const Resolutions = ({
   resolutions,
   setResolutions,
   selectedResolution,
   hit_id,
+  isIop,
 }) => {
   const [checkedID, setCheckedID] = React.useState(selectedResolution);
 
@@ -27,6 +29,15 @@ const Resolutions = ({
               stateRes.map(res => {
                 if (hit_id === res.hit_id) {
                   setCheckedID(resolution_id);
+                  if (isIop)
+                    return {
+                      ...res,
+                      resolution_id: getResolutionId(
+                        resolution_id,
+                        res.rule_id
+                      ),
+                      resolution_type: resolution_id,
+                    };
                   return { ...res, resolution_id };
                 }
                 return res;
@@ -45,12 +56,14 @@ Resolutions.propTypes = {
   resolutions: PropTypes.array,
   hit_id: PropTypes.number,
   selectedResolution: PropTypes.number,
+  isIop: PropTypes.bool,
 };
 
 Resolutions.defaultProps = {
   resolutions: [],
   hit_id: null,
   selectedResolution: null,
+  isIop: false,
 };
 
 export default Resolutions;

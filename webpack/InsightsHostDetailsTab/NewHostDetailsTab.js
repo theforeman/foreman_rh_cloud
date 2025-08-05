@@ -110,7 +110,7 @@ NewHostDetailsTab.defaultProps = {
 
 // Local Insights advisor
 const scope = 'advisor';
-const module = './SystemDetailsWrapped';
+const module = './SystemDetailWrapped';
 
 const IopInsightsTab = props => (
   <ScalprumComponent
