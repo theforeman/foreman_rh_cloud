@@ -2,7 +2,7 @@ module ForemanRhCloud
   class HitRemediationsRetriever < RemediationsRetriever
     def initialize(hit_remediation_pairs, logger: Logger.new(IO::NULL))
       super(logger: logger)
-      @is_iop = ForemanRhCloud.with_local_advisor_engine?
+      @is_iop = ForemanRhCloud.with_iop_smart_proxy?
       @hit_remediation_pairs = (hit_remediation_pairs || []).map(&:with_indifferent_access)
       logger.debug("Querying playbook for #{hit_remediation_pairs}")
     end
