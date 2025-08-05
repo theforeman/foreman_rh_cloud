@@ -26,7 +26,7 @@ const ModalFooter = ({ toggleModal, resolutions, hostsIds, isIop }) => {
     }, 500);
   };
   return (
-    <form action={JOB_INVOCATION_PATH} method="post" ref={formRef}>
+    <form action={JOB_INVOCATION_PATH} method="post" ref={formRef} onSubmit={handleSubmit}>
       <Button
         type="submit"
         ouiaId="button-confirm"
@@ -34,7 +34,6 @@ const ModalFooter = ({ toggleModal, resolutions, hostsIds, isIop }) => {
         variant="primary"
         isDisabled={jobInProgress}
         isLoading={jobInProgress}
-        onSubmit={handleSubmit}
       >
         {__('Remediate')}
       </Button>
