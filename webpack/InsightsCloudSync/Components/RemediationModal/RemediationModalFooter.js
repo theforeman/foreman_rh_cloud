@@ -22,11 +22,17 @@ const ModalFooter = ({ toggleModal, resolutions, hostsIds, isIop }) => {
     setJobInProgress(true);
 
     setTimeout(() => {
-      formRef.current?.submit();
-    }, 500);
+      // eslint-disable-next-line no-unused-expressions
+      formRef.current?.submit?.();
+    }, 100);
   };
   return (
-    <form action={JOB_INVOCATION_PATH} method="post" ref={formRef} onSubmit={handleSubmit}>
+    <form
+      action={JOB_INVOCATION_PATH}
+      method="post"
+      ref={formRef}
+      onSubmit={handleSubmit}
+    >
       <Button
         type="submit"
         ouiaId="button-confirm"
@@ -69,11 +75,13 @@ ModalFooter.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   resolutions: PropTypes.array,
   hostsIds: PropTypes.array,
+  isIop: PropTypes.bool,
 };
 
 ModalFooter.defaultProps = {
   resolutions: [],
   hostsIds: [],
+  isIop: false,
 };
 
 export default ModalFooter;

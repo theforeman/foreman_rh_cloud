@@ -21,9 +21,10 @@ export const modifyRows = (
     [r => r.resolutions?.length || 0],
     ['desc']
   ).map(({ id, host_id, hostname, title, resolutions, reboot }) => {
-    // debugger;
     hostsIdsToSubmit.add(host_id);
     const selectedResolution = resolutions[0]?.id;
+    /* eslint-disable spellcheck/spell-checker */
+
     // For IoP: {
     //  hit_id: "c7c6727e-2966-4f7c-87f1-20ef14db7a2d",
     //  rule_id: "hardening_ssh_client_alive|OPENSSH_HARDENING_CLIENT_ALIVE",
@@ -31,6 +32,8 @@ export const modifyRows = (
     //  resolution_id:"hardening_ssh_client_alive|OPENSSH_HARDENING_CLIENT_ALIVE_less_secure",
     // }
     // for Hosted, hit_id and rule_id will be Foreman database IDs
+
+    /* eslint-enable spellcheck/spell-checker */
     resolutionToSubmit.push({
       hit_id: isIop ? host_id : id,
       rule_id: id,

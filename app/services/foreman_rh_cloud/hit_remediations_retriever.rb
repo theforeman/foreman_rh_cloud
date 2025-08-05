@@ -9,7 +9,8 @@ module ForemanRhCloud
 
     private
 
-    def hit_ids # hit_ids are host ids
+    def hit_ids
+      # hit_ids are host ids
       @hit_remediation_pairs.map { |pair| pair["hit_id"] }
     end
 

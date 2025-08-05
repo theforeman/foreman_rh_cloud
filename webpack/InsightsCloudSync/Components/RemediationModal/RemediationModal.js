@@ -17,7 +17,8 @@ import ModalFooter from './RemediationModalFooter';
 import TableEmptyState from '../../../common/table/EmptyState';
 import './RemediationModal.scss';
 import { useAdvisorEngineConfig } from '../../../common/Hooks/ConfigHooks';
-import { fetchRemediations } from './RemediationActions';
+
+/* eslint-disable spellcheck/spell-checker */
 
 // Sample iopData:
 // const iopTestData = Immutable([
@@ -52,6 +53,8 @@ import { fetchRemediations } from './RemediationActions';
 //     description: 'Decreased security: auditd not running',
 //   },
 // ]);
+
+/* eslint-enable spellcheck/spell-checker */
 
 const RemediationModal = ({
   iopData,
@@ -157,7 +160,8 @@ RemediationModal.propTypes = {
       resolutions: PropTypes.array,
       rebootable: PropTypes.bool,
       description: PropTypes.string,
-    })),
+    })
+  ),
   selectedIds: PropTypes.shape({}),
   fetchRemediations: PropTypes.func,
   remediations: PropTypes.array,

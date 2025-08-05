@@ -56,12 +56,14 @@ Resolutions.propTypes = {
   resolutions: PropTypes.array,
   hit_id: PropTypes.number,
   selectedResolution: PropTypes.number,
+  isIop: PropTypes.bool,
 };
 
 Resolutions.defaultProps = {
   resolutions: [],
   hit_id: null,
   selectedResolution: null,
+  isIop: false,
 };
 
 export default Resolutions;
