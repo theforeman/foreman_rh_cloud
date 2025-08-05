@@ -46,7 +46,7 @@ namespace :rh_cloud_inventory do
           archived_report_generator.render(organization: organization, filter: filter)
           puts "Successfully generated #{target} for organization id #{organization}"
 
-          next unless ForemanRhCloud.with_local_advisor_engine?
+          next unless ForemanRhCloud.with_iop_smart_proxy?
 
           puts 'Creating missing insights facets'
           hosts_without_facets = ForemanInventoryUpload::Generators::Queries.for_org(organization, hosts_query: 'null? insights_uuid')
