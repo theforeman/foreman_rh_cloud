@@ -24,6 +24,7 @@ const RemediationModal = ({
   error,
   isAllSelected,
   query,
+  isDisabled,
 }) => {
   const [rows, setRows] = React.useState([]);
   const [open, setOpen] = React.useState(false);
@@ -48,7 +49,7 @@ const RemediationModal = ({
       <Button
         ouiaId="button-remediate"
         variant="primary"
-        isDisabled={isEmpty(selectedIds)}
+        isDisabled={isDisabled || isEmpty(selectedIds)}
         onClick={() => {
           toggleModal();
         }}
@@ -99,6 +100,7 @@ RemediationModal.propTypes = {
   error: PropTypes.string,
   isAllSelected: PropTypes.bool,
   query: PropTypes.string,
+  isDisabled: PropTypes.bool,
 };
 
 RemediationModal.defaultProps = {
@@ -108,6 +110,7 @@ RemediationModal.defaultProps = {
   error: null,
   isAllSelected: false,
   query: null,
+  isDisabled: false,
 };
 
 export default RemediationModal;
