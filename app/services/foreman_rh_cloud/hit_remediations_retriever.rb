@@ -3,7 +3,7 @@ module ForemanRhCloud
     def initialize(hit_remediation_pairs, logger: Logger.new(IO::NULL))
       super(logger: logger)
       @is_iop = ForemanRhCloud.with_local_advisor_engine?
-      @hit_remediation_pairs = (hit_remediation_pairs || {}).map(&:with_indifferent_access)
+      @hit_remediation_pairs = (hit_remediation_pairs || []).map(&:with_indifferent_access)
       logger.debug("Querying playbook for #{hit_remediation_pairs}")
     end
 
@@ -49,24 +49,6 @@ module ForemanRhCloud
       end
       @remediations
     end
-
-    # def iop_playbook_request
-    #   {
-    #     issues: pairs_by_remediation_id.flat_map do |resolution_type, pairs|
-    #       pairs.map do |pair|
-    #         {
-    #           resolution: resolution_type,
-    #           id: "advisor:#{pair[:hit_id]}",
-    #           systems: iop_system_ids
-    #         }
-    #       end
-    #     end
-    #   }
-    # end
-
-    # def iop_system_ids
-    #   @host_insights_ids.present? ? @host_insights_ids.split(',') : ''
-    # end
 
     def playbook_request
       {

@@ -14,7 +14,7 @@ const ModalFooter = ({ toggleModal, resolutions, hostsIds, isIop }) => {
 
   const { fetchBulkParams } = useBulkSelect({
     initialArry: hostsIds,
-    idColumn: 'subscription_uuid',
+    idColumn: 'insights_uuid',
   });
 
   const handleSubmit = e => {

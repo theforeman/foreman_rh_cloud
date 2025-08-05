@@ -19,38 +19,39 @@ import './RemediationModal.scss';
 import { useAdvisorEngineConfig } from '../../../common/Hooks/ConfigHooks';
 import { fetchRemediations } from './RemediationActions';
 
-const iopTestData = Immutable([
-  {
-    hostid: 'c7c6727e-2966-4f7c-87f1-20ef14db7a2d',
-    host_name: 'advisor-test.local',
-    rulename: 'hardening_cryptopol_krb5|NO_CPOL_KRB5',
-    resolutions: [
-      {
-        description: 'Remove manual crypto-policies',
-        id: 'fix',
-        needs_reboot: true,
-        resolution_risk: 1,
-      },
-    ],
-    rebootable: true,
-    description: 'Decreased security: krb5 crypto-policies overridden',
-  },
-  {
-    hostid: 'c7c6727e-2966-4f7c-87f1-20ef14db7a2d',
-    host_name: 'advisor-test.local',
-    rulename: 'hardening_logging_auditd|HARDENING_LOGGING_5_AUDITD',
-    resolutions: [
-      {
-        description: 'Install and enable auditd',
-        id: 'fix',
-        needs_reboot: false,
-        resolution_risk: 1,
-      },
-    ],
-    rebootable: false,
-    description: 'Decreased security: auditd not running',
-  },
-]);
+// Sample iopData:
+// const iopTestData = Immutable([
+//   {
+//     hostid: 'c7c6727e-2966-4f7c-87f1-20ef14db7a2d',
+//     host_name: 'advisor-test.local',
+//     rulename: 'hardening_cryptopol_krb5|NO_CPOL_KRB5',
+//     resolutions: [
+//       {
+//         description: 'Remove manual crypto-policies',
+//         id: 'fix',
+//         needs_reboot: true,
+//         resolution_risk: 1,
+//       },
+//     ],
+//     rebootable: true,
+//     description: 'Decreased security: krb5 crypto-policies overridden',
+//   },
+//   {
+//     hostid: 'c7c6727e-2966-4f7c-87f1-20ef14db7a2d',
+//     host_name: 'advisor-test.local',
+//     rulename: 'hardening_logging_auditd|HARDENING_LOGGING_5_AUDITD',
+//     resolutions: [
+//       {
+//         description: 'Install and enable auditd',
+//         id: 'fix',
+//         needs_reboot: false,
+//         resolution_risk: 1,
+//       },
+//     ],
+//     rebootable: false,
+//     description: 'Decreased security: auditd not running',
+//   },
+// ]);
 
 const RemediationModal = ({
   iopData,
@@ -63,14 +64,13 @@ const RemediationModal = ({
   query,
   isDisabled,
 }) => {
-  // const iopRows = iopTestData.map(recommendation => ({
   const iopRows = Immutable(iopData ?? []).map(recommendation => ({
     id: recommendation.rulename,
     host_id: recommendation.hostid,
     hostname: recommendation.host_name,
     title: recommendation.description,
     resolutions: recommendation.resolutions ?? [],
-    reboot: recommendation.rebotable,
+    reboot: recommendation.rebootable,
   }));
 
   const [open, setOpen] = React.useState(false);
@@ -151,13 +151,13 @@ const RemediationModal = ({
 RemediationModal.propTypes = {
   iopData: PropTypes.arrayOf(
     PropTypes.shape({
-      host_id: PropTypes.string,
+      hostid: PropTypes.string,
       host_name: PropTypes.string,
       rulename: PropTypes.string,
-      resolutions: PropTypes.string,
-      rebootable: PropTypes.string,
-    })
-  ),
+      resolutions: PropTypes.array,
+      rebootable: PropTypes.bool,
+      description: PropTypes.string,
+    })),
   selectedIds: PropTypes.shape({}),
   fetchRemediations: PropTypes.func,
   remediations: PropTypes.array,
@@ -169,6 +169,7 @@ RemediationModal.propTypes = {
 };
 
 RemediationModal.defaultProps = {
+  iopData: null,
   selectedIds: {},
   fetchRemediations: noop,
   remediations: [],

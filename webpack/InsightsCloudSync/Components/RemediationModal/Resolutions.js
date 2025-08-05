@@ -29,11 +29,6 @@ const Resolutions = ({
               stateRes.map(res => {
                 if (hit_id === res.hit_id) {
                   setCheckedID(resolution_id);
-                  console.log({
-                    ...res,
-                    resolution_id: getResolutionId(resolution_id, res.rule_id),
-                    resolution_type: resolution_id,
-                  });
                   if (isIop)
                     return {
                       ...res,
