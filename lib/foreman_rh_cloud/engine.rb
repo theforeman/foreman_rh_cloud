@@ -122,7 +122,8 @@ module ForemanRhCloud
   end
 
   def self.with_iop_smart_proxy?
-    SmartProxy.with_features('iop').exists?
+    return @is_iop unless @is_iop.nil?
+    @is_iop = SmartProxy.with_features('iop').exists?
   end
 
   def self.iop_smart_proxy
