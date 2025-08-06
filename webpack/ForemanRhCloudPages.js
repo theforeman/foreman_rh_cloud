@@ -8,6 +8,7 @@ import InsightsCloudSync from './InsightsCloudSync';
 import IopRecommendationDetails from './IopRecommendationDetails/IopRecommendationDetails';
 import InsightsHostDetailsTab from './InsightsHostDetailsTab';
 import CveDetailsPage from './CveDetailsPage';
+import './common/styles.scss';
 
 const pages = [
   { name: 'ForemanInventoryUpload', type: ForemanInventoryUpload },
