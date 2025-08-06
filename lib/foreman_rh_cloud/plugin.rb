@@ -88,7 +88,8 @@ module ForemanRhCloud
             caption: N_('Inventory Upload'),
             url: '/foreman_rh_cloud/inventory_upload',
             url_hash: { controller: :react, action: :index },
-            parent: :insights_menu
+            parent: :insights_menu,
+            if: -> { !ForemanRhCloud.with_iop_smart_proxy? }
           menu :top_menu, :insights_hits, caption: N_('Recommendations'), url: '/foreman_rh_cloud/insights_cloud', url_hash: { controller: :react, action: :index }, parent: :insights_menu
           menu :top_menu,
             :insights_vulnerability,
@@ -98,6 +99,16 @@ module ForemanRhCloud
             parent: :insights_menu,
             if: -> { ForemanRhCloud.with_iop_smart_proxy? }
         end
+
+        # In IoP case we want the page to be in the admin menu
+        menu :admin_menu,
+          :inventory_upload,
+          caption: N_('Inventory Upload'),
+          url: '/foreman_rh_cloud/inventory_upload',
+          url_hash: { controller: :react, action: :index },
+          parent: :administer_menu,
+          before: :upgrade,
+          if: -> { ForemanRhCloud.with_iop_smart_proxy? }
 
         register_facet InsightsFacet, :insights do
           configure_host do
