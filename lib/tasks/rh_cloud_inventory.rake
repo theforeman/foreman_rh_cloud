@@ -9,7 +9,7 @@ namespace :rh_cloud_inventory do
       else
         organizations = [Organization.where(:id => ENV['organization_id']).first]
       end
-      disconnected = ForemanRhCloud.with_local_advisor_engine?
+      disconnected = ForemanRhCloud.with_iop_smart_proxy?
       User.as_anonymous_admin do
         organizations.each do |organization|
           ForemanTasks.async_task(
@@ -46,7 +46,7 @@ namespace :rh_cloud_inventory do
           archived_report_generator.render(organization: organization, filter: filter)
           puts "Successfully generated #{target} for organization id #{organization}"
 
-          next unless ForemanRhCloud.with_local_advisor_engine?
+          next unless ForemanRhCloud.with_iop_smart_proxy?
 
           puts 'Creating missing insights facets'
           hosts_without_facets = ForemanInventoryUpload::Generators::Queries.for_org(organization, hosts_query: 'null? insights_uuid')
@@ -71,7 +71,7 @@ namespace :rh_cloud_inventory do
       base_folder = ENV['target'] || ForemanInventoryUpload.generated_reports_folder
       organization_id = ENV['organization_id']
       report_file = ForemanInventoryUpload.facts_archive_name(organization_id)
-      disconnected = ForemanRhCloud.with_local_advisor_engine?
+      disconnected = ForemanRhCloud.with_iop_smart_proxy?
       ForemanTasks.sync_task(ForemanInventoryUpload::Async::QueueForUploadJob, base_folder, report_file, organization_id, disconnected)
       puts "Uploaded #{report_file}"
     end

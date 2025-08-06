@@ -37,7 +37,7 @@ module ForemanRhCloud
       requested_url = original_request.original_fullpath.end_with?('/') ? original_request.path + '/' : original_request.path
       params = path_params(requested_url)
 
-      if ForemanRhCloud.with_local_advisor_engine?
+      if ForemanRhCloud.with_iop_smart_proxy?
         params[:ssl_ca_file] = ForemanRhCloud.ca_cert
       end
 

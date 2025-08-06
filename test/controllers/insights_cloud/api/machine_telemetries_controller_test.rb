@@ -154,7 +154,7 @@ module InsightsCloud::Api
 
       test "should create insights facet" do
         assert_nil InsightsFacet.find_by(host_id: @host.id)
-        ForemanRhCloud.stubs(:with_local_advisor_engine?).returns(true)
+        ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
         req = RestClient::Request.new(:method => 'GET', :url => 'http://test.theforeman.org/')
         net_http_resp = Net::HTTPResponse.new(1.0, 200, "OK")
         net_http_resp[:content_type] = 'application/zip'

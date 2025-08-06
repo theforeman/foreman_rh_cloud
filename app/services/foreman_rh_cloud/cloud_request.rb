@@ -8,7 +8,7 @@ module ForemanRhCloud
         proxy: ForemanRhCloud.transformed_http_proxy_string,
       }.deep_merge(params)
 
-      if ForemanRhCloud.with_local_advisor_engine?
+      if ForemanRhCloud.with_iop_smart_proxy?
         final_params[:ssl_ca_file] ||= ForemanRhCloud.ca_cert
       end
 

@@ -6,6 +6,6 @@ end
 node :insights_hits_count do |facet|
   facet.hits&.count
 end
-node :use_local_advisor_engine do |_facet|
-  ForemanRhCloud.with_local_advisor_engine?
+node :use_iop_mode do |_facet|
+  ForemanRhCloud.with_iop_smart_proxy?
 end

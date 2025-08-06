@@ -134,7 +134,7 @@ const InsightsTab = props => {
   const { response } = props;
   const isLocalAdvisorEngine =
     // eslint-disable-next-line camelcase
-    response?.insights_attributes?.use_local_advisor_engine;
+    response?.insights_attributes?.use_iop_mode;
 
   return isLocalAdvisorEngine ? (
     <IopInsightsTabWrapped {...props} />
@@ -146,7 +146,7 @@ const InsightsTab = props => {
 InsightsTab.propTypes = {
   response: PropTypes.shape({
     insights_attributes: {
-      use_local_advisor_engine: PropTypes.bool,
+      use_iop_mode: PropTypes.bool,
     },
   }),
 };

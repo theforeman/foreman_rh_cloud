@@ -4,13 +4,12 @@ require 'uri'
 
 module ForemanRhCloud
   def self.on_premise_url
-    return unless ForemanRhCloud.with_local_advisor_engine?
-    port = ENV['ADVISOR_ENGINE_PORT'] || "24443"
-    ENV['ADVISOR_ENGINE_URL'] || "https://localhost:#{port}"
+    return unless ForemanRhCloud.with_iop_smart_proxy?
+    ForemanRhCloud.iop_smart_proxy&.url
   end
 
   def self.env_or_on_premise_url(env_var_name)
-    ENV[env_var_name] || on_premise_url
+    on_premise_url || ENV[env_var_name]
   end
 
   def self.base_url
@@ -47,7 +46,7 @@ module ForemanRhCloud
   end
 
   def self.proxy_string
-    return '' if ForemanRhCloud.with_local_advisor_engine?
+    return '' if ForemanRhCloud.with_iop_smart_proxy?
 
     HttpProxy.default_global_content_proxy&.full_url ||
     ForemanRhCloud.global_foreman_proxy ||
@@ -106,7 +105,7 @@ module ForemanRhCloud
   end
 
   def self.legacy_insights_ca
-    "#{ForemanRhCloud::Engine.root}/config/rh_cert-api_chain.pem" unless ForemanRhCloud.with_local_advisor_engine?
+    "#{ForemanRhCloud::Engine.root}/config/rh_cert-api_chain.pem" unless ForemanRhCloud.with_iop_smart_proxy?
   end
 
   def self.cloud_url_validator

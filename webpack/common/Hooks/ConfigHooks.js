@@ -14,6 +14,5 @@ export const useAdvisorEngineConfig = () => {
   );
 
   // eslint-disable-next-line camelcase
-  const isLocalAdvisorEngine = advisorEngineConfig?.use_local_advisor_engine;
-  return isLocalAdvisorEngine;
+  return advisorEngineConfig?.use_iop_mode;
 };

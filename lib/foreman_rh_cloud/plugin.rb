@@ -48,6 +48,7 @@ module ForemanRhCloud
             'foreman_inventory_upload/uploads_settings': [:index],
             'foreman_inventory_upload/missing_hosts': [:index],
             'api/v2/rh_cloud/advisor_engine_config': [:show],
+            'foreman_rh_cloud/foreman_rh_cloud': [:inventory_upload, :recommendations],
             'react': [:index]
           )
           permission(
@@ -95,7 +96,7 @@ module ForemanRhCloud
             url: '/foreman_rh_cloud/insights_vulnerability',
             url_hash: { controller: :react, action: :index },
             parent: :insights_menu,
-            if: -> { ForemanRhCloud.with_local_advisor_engine? }
+            if: -> { ForemanRhCloud.with_iop_smart_proxy? }
         end
 
         register_facet InsightsFacet, :insights do
