@@ -4,7 +4,6 @@ module ForemanRhCloud
     layout 'layouts/react_application'
     skip_before_action :authorize, :only => :index
 
-    before_action :require_non_iop_smart_proxy, only: [:inventory_upload]
     before_action :require_iop_smart_proxy, only: [:recommendations]
 
     def index
