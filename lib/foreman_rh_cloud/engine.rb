@@ -122,11 +122,11 @@ module ForemanRhCloud
   end
 
   def self.with_iop_smart_proxy?
-    SmartProxy.with_features('iop').exists?
+    SmartProxy.unscoped.with_features('iop').exists?
   end
 
   def self.iop_smart_proxy
-    SmartProxy.with_features('iop').first
+    SmartProxy.unscoped.with_features('iop').first
   end
 
   def self.ca_cert
