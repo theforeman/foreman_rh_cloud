@@ -3,19 +3,28 @@ module ForemanRhCloud
     OK_RETURN_CODE = 'ok'.freeze
     FAIL_RETURN_CODE = 'FAIL'.freeze
 
-    SERVICE_URLS = {
-      :advisor => "https://localhost:24443/api/insights/v1/status/live/",
-      :vulnerability => "https://localhost:24443/api/vulnerability/v1/apistatus"
-    }
-
+    
     class << self
+      include ForemanRhCloud::CertAuth
+      
+      def iop_smart_proxy_url
+        @iop_smart_proxy_url ||= ForemanRhCloud.iop_smart_proxy.url
+      end
+
+      def service_urls
+        {
+          :advisor => "#{iop_smart_proxy_url}/api/insights/v1/status/live/",
+          :vulnerability => "#{iop_smart_proxy_url}/api/vulnerability/v1/apistatus"
+        }
+      end
+
       def services
-        SERVICE_URLS.keys
+        service_urls.keys
       end
 
       def status
         {
-          version: ForemanRhCloud::VERSION,
+          iop_smart_proxy_exists: ForemanRhCloud.with_iop_smart_proxy?,
           timeUTC: Time.now.getutc,
         }
       end
@@ -60,8 +69,8 @@ module ForemanRhCloud
 
         options = {}
         options[:ssl_ca_file] = ca_file unless ca_file.nil?
-        options[:ssl_client_cert] = OpenSSL::X509::Certificate.new(File.read(Setting[:ssl_certificate]))
-        options[:ssl_client_key] = OpenSSL::PKey.read(File.read(Setting[:ssl_priv_key])) 
+        options[:ssl_client_cert] = OpenSSL::X509::Certificate.new(foreman_certificate[:cert])
+        options[:ssl_client_key] = OpenSSL::PKey.read(foreman_certificate[:key]) 
 
         client = RestClient::Resource.new(url, options)
 
@@ -77,7 +86,7 @@ module ForemanRhCloud
 
       def ping_service(service_name, service_result_hash)
         exception_watch(service_result_hash) do
-          ping_url(SERVICE_URLS[service_name])
+          ping_url(service_urls[service_name])
         end
       end
     end
