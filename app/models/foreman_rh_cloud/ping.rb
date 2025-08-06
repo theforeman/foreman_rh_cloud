@@ -3,10 +3,9 @@ module ForemanRhCloud
     OK_RETURN_CODE = 'ok'.freeze
     FAIL_RETURN_CODE = 'FAIL'.freeze
 
-    
     class << self
       include ForemanRhCloud::CertAuth
-      
+
       def iop_smart_proxy_url
         @iop_smart_proxy_url ||= ForemanRhCloud.iop_smart_proxy.url
       end
@@ -14,7 +13,7 @@ module ForemanRhCloud
       def service_urls
         {
           :advisor => "#{iop_smart_proxy_url}/api/insights/v1/status/live/",
-          :vulnerability => "#{iop_smart_proxy_url}/api/vulnerability/v1/apistatus"
+          :vulnerability => "#{iop_smart_proxy_url}/api/vulnerability/v1/apistatus",
         }
       end
 
@@ -25,7 +24,7 @@ module ForemanRhCloud
       def status
         {
           iop_smart_proxy_exists: ForemanRhCloud.with_iop_smart_proxy?,
-          timeUTC: Time.now.getutc,
+          timeUTC: Time.zone.now.getutc,
         }
       end
 
@@ -41,10 +40,10 @@ module ForemanRhCloud
         result = ping_services
 
         if result[:status] != OK_RETURN_CODE
-          failed_names = result[:services].select do |_name, details|
-            details[:status] != OK_RETURN_CODE
+          failed_names = result[:services].reject do |_name, details|
+            details[:status] == OK_RETURN_CODE
           end
-          fail "The following services have not been started or are reporting errors: #{failed_names.keys.join(', ')}"
+          raise "The following services have not been started or are reporting errors: #{failed_names.keys.join(', ')}"
         end
 
         result
@@ -58,25 +57,24 @@ module ForemanRhCloud
         end
 
         # set overall status result code
-        result = {:services => result}
+        result = { :services => result }
         result[:status] = result[:services].each_value.any? { |v| v[:status] == FAIL_RETURN_CODE } ? FAIL_RETURN_CODE : OK_RETURN_CODE
         result
       end
 
       def ping_url(url)
         ca_file = Setting[:ssl_ca_file]
-        request_id = ::Logging.mdc['request']
 
         options = {}
         options[:ssl_ca_file] = ca_file unless ca_file.nil?
         options[:ssl_client_cert] = OpenSSL::X509::Certificate.new(foreman_certificate[:cert])
-        options[:ssl_client_key] = OpenSSL::PKey.read(foreman_certificate[:key]) 
+        options[:ssl_client_key] = OpenSSL::PKey.read(foreman_certificate[:key])
 
         client = RestClient::Resource.new(url, options)
 
         response = client.get
         return {} if response.empty?
-        begin 
+        begin
           result = JSON.parse(response).with_indifferent_access
         rescue JSON::ParserError, NoMethodError
           result = { :response => response.body&.strip }
