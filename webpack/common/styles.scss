@@ -1,0 +1,7 @@
+// overwrite bootstrap style which added unintended bottom margins to chips
+// and dropdowns in Advisor and Vulnerability
+.vulnerability, .advisor {
+  ul, ol {
+    margin-bottom: 0px;
+  }
+}
