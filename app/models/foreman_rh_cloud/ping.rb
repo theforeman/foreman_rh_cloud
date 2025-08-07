@@ -62,17 +62,15 @@ module ForemanRhCloud
         result
       end
 
+      def logger
+        Rails.logger
+      end
+
       def ping_url(url)
-        ca_file = Setting[:ssl_ca_file]
-
-        options = {}
-        options[:ssl_ca_file] = ca_file unless ca_file.nil?
-        options[:ssl_client_cert] = OpenSSL::X509::Certificate.new(foreman_certificate[:cert])
-        options[:ssl_client_key] = OpenSSL::PKey.read(foreman_certificate[:key])
-
-        client = RestClient::Resource.new(url, options)
-
-        response = client.get
+        response = execute_cloud_request(
+          method: :get,
+          url: url
+        )
         return {} if response.empty?
         begin
           result = JSON.parse(response).with_indifferent_access
