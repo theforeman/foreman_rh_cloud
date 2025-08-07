@@ -46,7 +46,7 @@ const RecommendationsCell = hostDetails => {
     hostDetails?.insights_attributes ?? {}
   );
 
-  return insightsAttributes.useLocalAdvisorEngine ? (
+  return insightsAttributes.useIopMode ? (
     <IopRecommendationsCell hostDetails={hostDetails} />
   ) : (
     <HostedRecommendationsCell hostDetails={hostDetails} />
