@@ -5,13 +5,13 @@ module ForemanRhCloud
     include ForemanRhCloud::GatewayRequest
 
     SCOPED_REQUESTS = [
-      %r{/api/vulnerability/v1/vulnerabilities/cves},
-      %r{/api/vulnerability/v1/dashbar},
-      %r{/api/vulnerability/v1/cves/[^/]+/affected_systems},
-      %r{/api/vulnerability/v1/systems/[^/]+/cves},
-      %r{/api/insights/.*},
-      %r{/api/inventory/.*},
-      %r{/api/tasks/.*},
+      { test: %r{api/vulnerability/v1/vulnerabilities/cves}, tag_name: :tags },
+      { test: %r{api/vulnerability/v1/dashbar}, tag_name: :tags },
+      { test: %r{api/vulnerability/v1/cves/[^/]+/affected_systems}, tag_name: :tags },
+      { test: %r{api/vulnerability/v1/systems/[^/]+/cves}, tag_name: :tags },
+      { test: %r{api/insights/.*}, tag_name: :tags },
+      { test: %r{api/inventory/.*}, tag_name: :tags },
+      { test: %r{api/tasks/.*}, tag_name: :tags },
     ].freeze
 
     def forward_request(original_request, path, controller_name, user, organization, location)
@@ -31,10 +31,10 @@ module ForemanRhCloud
       execute_cloud_request(request_opts)
     end
 
-    def prepare_tags(user, organization, location)
+    def prepare_tags(user, organization, location, tag_name)
       [
         TagsAuth.auth_tag_for(user, organization, location),
-      ].map { |tag_value| [:tag, tag_value] }
+      ].map { |tag_value| [tag_name, tag_value] }
     end
 
     def prepare_request_opts(original_request, path, forward_payload, forward_params)
@@ -70,7 +70,8 @@ module ForemanRhCloud
     def prepare_forward_params(original_request, path, user:, organization:, location:)
       forward_params = original_request.query_parameters.to_a
 
-      forward_params += prepare_tags(user, organization, location) if scope_request?(original_request, path)
+      tag_name = scope_request?(original_request, path)
+      forward_params += prepare_tags(user, organization, location, tag_name) if tag_name
 
       forward_params
     end
@@ -92,9 +93,10 @@ module ForemanRhCloud
     end
 
     def scope_request?(original_request, path)
-      return false unless original_request.get?
+      return nil unless original_request.get?
 
-      SCOPED_REQUESTS.any? { |request_pattern| request_pattern.match?(path) }
+      request_pattern = SCOPED_REQUESTS.find { |pattern| pattern[:test].match?(path) }
+      request_pattern[:tag_name] if request_pattern
     end
 
     def core_app_name

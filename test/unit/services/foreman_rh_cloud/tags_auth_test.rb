@@ -10,7 +10,7 @@ class TagsAuthTest < ActiveSupport::TestCase
     @auth = ::ForemanRhCloud::TagsAuth.new(@user, @org, @loc, @logger)
   end
 
-  test 'Generates tags update request' do
+  test 'Generates tags update request when hosts are present' do
     uuid1 = 'test_uuid1'
     uuid2 = 'test_uuid2'
 
@@ -23,6 +23,20 @@ class TagsAuthTest < ActiveSupport::TestCase
       assert_equal ForemanRhCloud::TagsAuth::TAG_NAMESPACE, actual['tags'].first['namespace']
       assert_equal "U:\"#{@user.login}\"O:\"#{@org.name}\"L:\"#{@loc.name}\"", actual['tags'].first['value']
     end
+
+    @auth.update_tag
+  end
+
+  test 'Should not execute cloud request when no hosts are present' do
+    @auth.expects(:allowed_hosts).returns([])
+    @auth.expects(:execute_cloud_request).never
+
+    @auth.update_tag
+  end
+
+  test 'Should not execute cloud request when allowed_hosts is nil' do
+    @auth.expects(:allowed_hosts).returns(nil)
+    @auth.expects(:execute_cloud_request).never
 
     @auth.update_tag
   end

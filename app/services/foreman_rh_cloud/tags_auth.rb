@@ -22,15 +22,16 @@ module ForemanRhCloud
     def update_tag
       logger.debug("Updating tags for user: #{@user}, org: #{@org.name}, loc: #{@loc.name}")
 
+      payload = tags_query_payload
       params = {
         method: :post,
         url: "#{InsightsCloud.gateway_url}/tags",
         headers: {
           content_type: :json,
         },
-        payload: tags_query_payload.to_json,
+        payload: payload.to_json,
       }
-      execute_cloud_request(params)
+      execute_cloud_request(params) unless payload[:host_id_list].empty?
     end
 
     def allowed_hosts

@@ -32,7 +32,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag)
     @forwarder.expects(:execute_cloud_request).with do |actual_params|
       actual = actual_params[:headers][:params]
-      assert_equal "U:\"#{@user.login}\"O:\"#{@organization.name}\"L:\"#{@location.name}\"", tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ /#{ForemanRhCloud::TagsAuth::TAG_NAME}/ }[1])
+      assert_equal "U:\"#{@user.login}\"O:\"#{@organization.name}\"L:\"#{@location.name}\"", tag_value(actual.find { |param| param[0] == :tags && tag_name(param[1]) =~ /#{ForemanRhCloud::TagsAuth::TAG_NAME}/ }[1])
       true
     end
 
@@ -82,7 +82,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag)
     @forwarder.expects(:execute_cloud_request).with do |actual_params|
       actual = actual_params[:headers][:params]
-      assert_equal "U:\"#{@user.login}\"O:\"#{@organization.name}\"L:\"#{@location.name}\"", tag_value(actual.find { |param| param[0] == :tag && tag_name(param[1]) =~ /#{ForemanRhCloud::TagsAuth::TAG_NAME}/ }[1])
+      assert_equal "U:\"#{@user.login}\"O:\"#{@organization.name}\"L:\"#{@location.name}\"", tag_value(actual.find { |param| param[0] == :tags && tag_name(param[1]) =~ /#{ForemanRhCloud::TagsAuth::TAG_NAME}/ }[1])
       assert_equal 5, actual.find { |param| param[0] == :page }[1]
       assert_equal 42, actual.find { |param| param[0] == :per_page }[1]
       true
@@ -158,6 +158,47 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
 
     # This test asserts the parameters that are sent to the execute_cloud_request method.
     # This is done by setting the expectation before the actual call.
+  end
+
+  test 'scope_request? should return tag_name for scoped requests' do
+    get_req = ActionDispatch::Request.new(
+      'REQUEST_URI' => '/api/vulnerability/v1/vulnerabilities/cves',
+      'REQUEST_METHOD' => 'GET',
+      'rack.input' => ::Puma::NullIO.new
+    )
+
+    result = @forwarder.send(:scope_request?, get_req, 'api/vulnerability/v1/vulnerabilities/cves')
+    assert_equal :tags, result
+  end
+
+  test 'scope_request? should return nil for non-GET requests' do
+    post_req = ActionDispatch::Request.new(
+      'REQUEST_URI' => '/api/vulnerability/v1/cves',
+      'REQUEST_METHOD' => 'POST',
+      'rack.input' => ::Puma::NullIO.new
+    )
+
+    result = @forwarder.send(:scope_request?, post_req, '/api/vulnerability/v1/cves')
+    assert_nil result
+  end
+
+  test 'scope_request? should return nil for unmatched paths' do
+    get_req = ActionDispatch::Request.new(
+      'REQUEST_URI' => '/api/unmatched/path',
+      'REQUEST_METHOD' => 'GET',
+      'rack.input' => ::Puma::NullIO.new
+    )
+
+    result = @forwarder.send(:scope_request?, get_req, '/api/unmatched/path')
+    assert_nil result
+  end
+
+  test 'prepare_tags should use provided tag_name' do
+    result = @forwarder.send(:prepare_tags, @user, @organization, @location, :custom_tag)
+
+    assert_equal 1, result.length
+    assert_equal :custom_tag, result[0][0]
+    assert_equal "U:\"#{@user.login}\"O:\"#{@organization.name}\"L:\"#{@location.name}\"", tag_value(result[0][1])
   end
 
   def tag_value(param_value)
