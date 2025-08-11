@@ -121,6 +121,10 @@ module ForemanRhCloud
 
         register_custom_status InventorySync::InventoryStatus
         register_custom_status InsightsClientReportStatus
+        if ForemanRhCloud.with_iop_smart_proxy?
+          register_ping_extension { ForemanRhCloud::Ping.ping }
+          register_status_extension { ForemanRhCloud::Ping.status }
+        end
 
         describe_host do
           overview_buttons_provider :insights_host_overview_buttons
