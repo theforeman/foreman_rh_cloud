@@ -21,7 +21,7 @@ const fills = [
     weight: 400,
     metadata: {
       hideTab: isNotRhelHost,
-      title: __('Insights'),
+      title: __('Recommendations'),
     },
   },
   {
