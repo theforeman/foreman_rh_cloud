@@ -22,7 +22,7 @@ const Resolutions = ({
           key={resolution_id}
           ouiaId={`resolution-radio-${resolution_id}`}
           className="resolution-radio"
-          id={resolution_id}
+          id={`${hit_id}_${resolution_id}`}
           isChecked={resolution_id === checkedID}
           onChange={() =>
             setResolutions(stateRes =>
