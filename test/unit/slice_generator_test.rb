@@ -999,7 +999,6 @@ class SliceGeneratorTest < ActiveSupport::TestCase
   end
 
   test 'reports yum repos' do
-    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
     FactoryBot.create(:katello_content, cp_content_id: '1', organization: @host.organization, name: 'Test Content', label: 'test-content')
     repo = FactoryBot.build(
       :katello_repository,

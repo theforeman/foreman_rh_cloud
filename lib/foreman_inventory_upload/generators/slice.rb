@@ -253,7 +253,6 @@ module ForemanInventoryUpload
 
       def report_yum_repos(host)
         return unless host&.content_facet&.bound_repositories&.any?
-        return unless ForemanRhCloud.with_iop_smart_proxy?
 
         @stream.array_field('yum_repos') do
           host.content_facet.bound_repositories.each_with_index do |repo, index|
