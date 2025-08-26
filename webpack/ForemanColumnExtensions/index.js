@@ -6,7 +6,7 @@ import { translate as __ } from 'foremanReact/common/I18n';
 import { propsToCamelCase } from 'foremanReact/common/helpers';
 import { CVECountCell } from '../InsightsVulnerabilityHostIndexExtensions/CVECountCell';
 
-const HostedRecommendationsCell = hostDetails => {
+const HostedRecommendationsCell = ({ hostDetails }) => {
   const insightsAttributes = propsToCamelCase(
     // eslint-disable-next-line camelcase
     hostDetails?.insights_attributes ?? {}
@@ -17,6 +17,10 @@ const HostedRecommendationsCell = hostDetails => {
   const encodedHostname = encodeURIComponent(hostname);
   const hitsUrl = `/foreman_rh_cloud/insights_cloud?search=hostname+%3D+${encodedHostname}`;
   return <a href={hitsUrl}>{hitsCount}</a>;
+};
+
+HostedRecommendationsCell.propTypes = {
+  hostDetails: PropTypes.object.isRequired,
 };
 
 const IopRecommendationsCell = ({ hostDetails }) => {
