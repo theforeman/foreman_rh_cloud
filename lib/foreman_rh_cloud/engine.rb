@@ -83,6 +83,27 @@ module ForemanRhCloud
         :description => N_('Configure Cloud Connector on given hosts'),
         :proxy_selector_override => ::RemoteExecutionProxySelector::INTERNAL_PROXY
       )
+
+      ScopedSearch::AutoCompleteBuilder.class_eval do
+        # Insights rule IDs always contain a pipe character.
+        # example: hardening_ssh_config_perms|OPENSSH_HARDENING_CONFIG_PERMS
+        # We need to override this method of scoped_search so that autocomplete
+        # will correctly put the value in quotes (otherwise the "|" will be
+        # interpreted as an OR.)
+        # The only change from scoped_search code is adding the | to the regex in the final map.
+        def complete_value_from_db(field, special_values, val)
+          count = 20 - special_values.count
+          completer_scope(field)
+            .where(@options[:value_filter])
+            .where(value_conditions(field.quoted_field, val))
+            .select(field.quoted_field)
+            .limit(count)
+            .distinct
+            .map(&field.field)
+            .compact
+            .map { |v| v.to_s =~ /\s|\|/ ? "\"#{v.gsub('"', '\"')}\"" : v }
+        end
+      end
     end
 
     # Ideally this code belongs to an initializer. The problem is that Katello controllers are not initialized completely until after the end of the to_prepare blocks
