@@ -1,6 +1,6 @@
 class InsightsHit < ApplicationRecord
   include ::Authorizable
-  belongs_to :host
+  belongs_to :host, class_name: 'Host::Base'
   # since the facet is one-to-one association with a host, we can connect
   # through host_id column on both this model and facet.
   belongs_to :insights_facet, foreign_key: 'host_id', primary_key: 'host_id', counter_cache: :hits_count
