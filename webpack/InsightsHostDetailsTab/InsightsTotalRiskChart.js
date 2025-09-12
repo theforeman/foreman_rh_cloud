@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { useHistory } from 'react-router-dom';
-import { Bullseye, Title } from '@patternfly/react-core';
-import { DropdownItem } from '@patternfly/react-core/deprecated';
+import { Bullseye, DropdownItem, Title } from '@patternfly/react-core';
 import {
   ChartDonut,
   ChartLegend,
@@ -127,6 +126,7 @@ const InsightsTotalRiskCard = ({ hostDetails: { id } }) => {
   return (
     <CardTemplate
       header={__('Total risks')}
+      overrideDropdownProps={{ id: 'total-risks-dropdown-container' }}
       dropdownItems={[
         <DropdownItem
           key="insights-tab"
