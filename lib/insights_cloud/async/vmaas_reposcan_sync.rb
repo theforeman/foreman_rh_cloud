@@ -23,13 +23,16 @@ module InsightsCloud
           return
         end
 
-        plan_self
+        organization_id = Katello::Repository.find(repo_id).organization_id
+
+        plan_self(organization_id: organization_id)
       end
 
       def run
         url = ::InsightsCloud.vmaas_reposcan_sync_url
 
         response = execute_cloud_request(
+          organization: organization,
           method: :put,
           url: url,
           headers: { 'Content-Type' => 'application/json' }
@@ -59,6 +62,10 @@ module InsightsCloud
 
       def rescue_strategy_for_self
         Dynflow::Action::Rescue::Skip
+      end
+
+      def organization
+        @organization ||= Organization.find(input[:organization_id])
       end
 
       private
