@@ -2,7 +2,7 @@ require 'rest-client'
 
 module ForemanRhCloud
   class InsightsApiForwarder
-    include ForemanRhCloud::GatewayRequest
+    include ForemanRhCloud::CertAuth
 
     SCOPED_REQUESTS = [
       { test: %r{api/vulnerability/v1/vulnerabilities/cves}, tag_name: :tags },
@@ -25,6 +25,8 @@ module ForemanRhCloud
       logger.debug("User agent for UI is: #{http_user_agent(original_request)}")
 
       request_opts = prepare_request_opts(original_request, path, forward_payload, forward_params)
+
+      request_opts[:organization] = organization
 
       logger.debug("Sending request to: #{request_opts[:url]}")
 
