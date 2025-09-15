@@ -48,7 +48,8 @@ module ForemanInventoryUpload
       def env
         env_vars = super.merge(
           'FILES' => filename,
-          'CER_PATH' => @cer_path
+          'CER_PATH' => @cer_path,
+          'ORG_ID' => organization.label
         )
 
         http_proxy_string = ForemanRhCloud.http_proxy_string

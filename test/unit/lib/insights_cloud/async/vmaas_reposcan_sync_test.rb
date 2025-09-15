@@ -5,7 +5,16 @@ class VmaasReposcanSyncTest < ActiveSupport::TestCase
   include ForemanTasks::TestHelpers::WithInThreadExecutor
 
   setup do
-    @repo_payload = { id: 123 }
+    @root = FactoryBot.build(:katello_root_repository, :fedora_17_x86_64_dev_root)
+    @root.save(validate: false)
+    @repo = FactoryBot.create(
+      :katello_repository,
+      :with_product,
+      distribution_family: 'Red Hat',
+      distribution_version: '7.5',
+      root: @root
+    )
+    @repo_payload = { id: @repo.id }
     @expected_url = 'https://example.com/api/v1/vmaas/reposcan/sync'
     InsightsCloud.stubs(:vmaas_reposcan_sync_url).returns(@expected_url)
     ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
@@ -68,7 +77,8 @@ class VmaasReposcanSyncTest < ActiveSupport::TestCase
       params[:method] == :put &&
         params[:url] == @expected_url &&
         params[:headers].is_a?(Hash) &&
-        params[:headers]['Content-Type'] == 'application/json'
+        params[:headers]['Content-Type'] == 'application/json' &&
+        params[:organization] == @repo.organization
     end
                                            .returns(mock_response)
 

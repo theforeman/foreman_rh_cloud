@@ -27,6 +27,12 @@ else
         AUTH_VAL="\"$RH_USERNAME\":\"$RH_PASSWORD\""
 fi
 
+ORG_HEADER=()
+if [ -n "$ORG_ID" ]
+then
++        ORG_HEADER=("-H" "X-Org-Id: $ORG_ID")
+fi
+
 # /tmp/a b/x.pem
 # curl --cert /tmp/a\ b/x.pem
 
@@ -36,7 +42,7 @@ mkdir -p $DONE_DIR
 
 for f in $FILES
 do
-  curl -k -vvv -# --fail -F "file=@$f;type=application/vnd.redhat.qpc.tar+tgz" $DEST "$AUTH_KEY" "$AUTH_VAL"
+  curl -k -vvv -# --fail -F "file=@$f;type=application/vnd.redhat.qpc.tar+tgz" $DEST "$AUTH_KEY" "$AUTH_VAL" "${ORG_HEADER[@]}"
   status=$?
   if [ $status -eq 0 ]; then
     mv $f $DONE_DIR
