@@ -46,6 +46,6 @@ module InsightsCloud
   end
 
   def self.vmaas_reposcan_sync_url
-    ForemanRhCloud.iop_smart_proxy.url + '/api/vmaas-reposcan/sync'
+    ForemanRhCloud.iop_smart_proxy.url + '/api/vmaas-reposcan/v1/sync'
   end
 end
