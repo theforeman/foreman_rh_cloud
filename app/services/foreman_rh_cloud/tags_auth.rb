@@ -1,6 +1,6 @@
 module ForemanRhCloud
   class TagsAuth
-    include GatewayRequest
+    include CertAuth
 
     TAG_NAMESPACE = 'sat_iam'.freeze
     TAG_SHORT_NAME = 'scope'.freeze
@@ -24,6 +24,7 @@ module ForemanRhCloud
 
       payload = tags_query_payload
       params = {
+        organization: @org,
         method: :post,
         url: "#{InsightsCloud.gateway_url}/tags",
         headers: {
