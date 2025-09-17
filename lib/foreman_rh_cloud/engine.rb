@@ -115,23 +115,20 @@ module ForemanRhCloud
       if defined?(Katello) && !Foreman.in_setup_db_rake?
         Katello::Api::V2::OrganizationsController.include Foreman::Controller::SmartProxyAuth
         # patch the callbacks order for :download_debug_certificate, since local_find_taxonomy has to run after the user is already initialized
-        Katello::Api::V2::OrganizationsController.skip_before_action(:local_find_taxonomy, only: :download_debug_certificate)
-        Katello::Api::V2::OrganizationsController.add_smart_proxy_filters(
-          [:index, :download_debug_certificate],
-          features: ForemanRhCloud.on_prem_smart_proxy_features
-        )
-        Katello::Api::V2::OrganizationsController.before_action(:local_find_taxonomy, only: :download_debug_certificate)
-
+        Katello::Api::V2::OrganizationsController.before_find_taxonomy_actions do
+          Katello::Api::V2::OrganizationsController.add_smart_proxy_filters(
+            [:index, :download_debug_certificate],
+            features: ForemanRhCloud.on_prem_smart_proxy_features
+          )
+        end
         Katello::Api::V2::RepositoriesController.include Foreman::Controller::SmartProxyAuth
         # patch the callbacks order for :index, since find_product has to run after the user is already initialized
-        Katello::Api::V2::RepositoriesController.skip_before_action(:find_product, only: :index)
-        Katello::Api::V2::RepositoriesController.skip_before_action(:find_optional_organization, only: :index)
-        Katello::Api::V2::RepositoriesController.add_smart_proxy_filters(
-          :index,
-          features: ForemanRhCloud.on_prem_smart_proxy_features
-        )
-        Katello::Api::V2::RepositoriesController.before_action(:find_product, only: :index)
-        Katello::Api::V2::RepositoriesController.before_action(:find_optional_organization, only: :index)
+        Katello::Api::V2::RepositoriesController.before_index_actions do
+          Katello::Api::V2::RepositoriesController.add_smart_proxy_filters(
+            :index,
+            features: ForemanRhCloud.on_prem_smart_proxy_features
+          )
+        end
       end
     end
 
