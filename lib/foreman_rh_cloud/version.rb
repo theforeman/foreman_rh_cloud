@@ -1,3 +1,3 @@
 module ForemanRhCloud
-  VERSION = '12.2.7'.freeze
+  VERSION = '12.2.8'.freeze
 end
