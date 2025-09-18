@@ -14,3 +14,7 @@ export const isNotRhelHost = ({ hostDetails }) =>
 
 export const vulnerabilityDisabled = ({ hostDetails }) =>
   isNotRhelHost({ hostDetails }) || !hostDetails?.vulnerability?.enabled;
+
+export const hasNoInsightsFacet = ({ response, hostDetails }) =>
+  // eslint-disable-next-line camelcase
+  !(response?.insights_attributes || hostDetails?.insights_attributes);
