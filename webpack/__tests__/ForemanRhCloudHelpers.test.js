@@ -1,5 +1,5 @@
 import { testSelectorsSnapshotWithFixtures } from '@theforeman/test';
-import { foremanUrl, vulnerabilityDisabled } from '../ForemanRhCloudHelpers';
+import { foremanUrl, vulnerabilityDisabled, hasNoInsightsFacet } from '../ForemanRhCloudHelpers';
 
 global.URL_PREFIX = 'MY_TEST_URL_PREFIX.example.com';
 
@@ -34,6 +34,21 @@ const fixtures = {
     }),
   'vulnerabilityDisabled returns true for missing hostDetails': () =>
     vulnerabilityDisabled({}),
+  'hasNoInsightsFacet returns false when insights_attributes is present': () =>
+    hasNoInsightsFacet({
+      response: {
+        insights_attributes: {
+          uuid: 'test-uuid',
+          insights_hits_count: 5,
+        },
+      },
+    }),
+  'hasNoInsightsFacet returns true when insights_attributes is missing': () =>
+    hasNoInsightsFacet({
+      response: {},
+    }),
+  'hasNoInsightsFacet returns true when response is missing': () =>
+    hasNoInsightsFacet({}),
 };
 
 describe('ForemanRhCloud helpers', () =>

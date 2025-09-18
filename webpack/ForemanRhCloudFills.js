@@ -4,7 +4,11 @@ import { translate as __ } from 'foremanReact/common/I18n';
 import InventoryAutoUploadSwitcher from './ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload';
 import NewHostDetailsTab from './InsightsHostDetailsTab/NewHostDetailsTab';
 import { InsightsTotalRiskChartWrapper } from './InsightsHostDetailsTab/InsightsTotalRiskChartWrapper';
-import { isNotRhelHost, vulnerabilityDisabled } from './ForemanRhCloudHelpers';
+import {
+  isNotRhelHost,
+  vulnerabilityDisabled,
+  hasNoInsightsFacet,
+} from './ForemanRhCloudHelpers';
 import CVEsHostDetailsTabWrapper from './CVEsHostDetailsTab/CVEsHostDetailsTab';
 
 const fills = [
@@ -20,7 +24,7 @@ const fills = [
     component: props => <NewHostDetailsTab {...props} />,
     weight: 400,
     metadata: {
-      hideTab: isNotRhelHost,
+      hideTab: props => isNotRhelHost(props) || hasNoInsightsFacet(props),
       title: __('Recommendations'),
     },
   },
