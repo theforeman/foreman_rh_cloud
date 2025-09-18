@@ -131,28 +131,15 @@ const IopInsightsTabWrapped = props => (
 );
 
 const InsightsTab = props => {
-  const { response } = props;
-  const isLocalAdvisorEngine =
-    // eslint-disable-next-line camelcase
-    response?.insights_attributes?.use_iop_mode;
+  const isLocalIop = useAdvisorEngineConfig();
 
-  return isLocalAdvisorEngine ? (
+  return isLocalIop ? (
     <IopInsightsTabWrapped {...props} />
   ) : (
     <NewHostDetailsTab {...props} />
   );
 };
 
-InsightsTab.propTypes = {
-  response: PropTypes.shape({
-    insights_attributes: {
-      use_iop_mode: PropTypes.bool,
-    },
-  }),
-};
-
-InsightsTab.defaultProps = {
-  response: {},
-};
+InsightsTab.defaultProps = {};
 
 export default InsightsTab;
