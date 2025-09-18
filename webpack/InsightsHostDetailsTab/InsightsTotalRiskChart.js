@@ -18,36 +18,67 @@ import SkeletonLoader from 'foremanReact/components/common/SkeletonLoader';
 import { insightsCloudUrl } from '../InsightsCloudSync/InsightsCloudSyncHelpers';
 import { getInitialRisks, theme } from './InsightsTabConstants';
 
-const InsightsTotalRiskCard = ({ hostDetails: { id } }) => {
+const InsightsTotalRiskCard = ({ hostDetails }) => {
+  const { id, insights_attributes: insightsFacet } = hostDetails;
+  const uuid = insightsFacet?.uuid;
+  // eslint-disable-next-line camelcase
+  const isIop = insightsFacet?.use_iop_mode;
   const [totalRisks, setTotalRisks] = useState(getInitialRisks());
   const hashHistory = useHistory();
   const dispatch = useDispatch();
   const API_KEY = `HOST_${id}_RECOMMENDATIONS`;
   const API_OPTIONS = useMemo(() => ({ key: API_KEY }), [API_KEY]);
-  const url = id && insightsCloudUrl(`hits/${id}`); // This will keep the API call from being triggered if there's no host id.
-  const {
-    status = STATUS.PENDING,
-    response: { hits = [] },
-  } = useAPI('get', url, API_OPTIONS);
 
-  useEffect(() => {
-    if (status === STATUS.RESOLVED) {
-      const risks = getInitialRisks();
+  // This will keep the API call from being triggered if there's no host id.
+  const url = isIop
+    ? uuid && insightsCloudUrl(`api/insights/v1/system/${uuid}`)
+    : id && insightsCloudUrl(`hits/${id}`);
+  const { status = STATUS.PENDING, response } = useAPI('get', url, API_OPTIONS);
+
+  const checkRisks = useMemo(() => {
+    if (!response || status !== STATUS.RESOLVED) {
+      return getInitialRisks();
+    }
+
+    const risks = getInitialRisks();
+    if (isIop) {
+      const {
+        low_hits: lowHits = 0,
+        moderate_hits: moderateHits = 0,
+        important_hits: importantHits = 0,
+        critical_hits: criticalHits = 0,
+        hits = 0,
+      } = response;
+
+      risks[1].value += lowHits;
+      risks[2].value += moderateHits;
+      risks[3].value += importantHits;
+      risks[4].value += criticalHits;
+      risks.total = hits;
+    } else {
+      const { hits = [] } = response;
       hits.forEach(({ total_risk: risk }) => {
         risks[risk].value += 1;
       });
       risks.total = hits.length;
-      setTotalRisks(risks);
     }
-  }, [hits, status]);
+    return risks;
+  }, [response, status, isIop]);
+
+  useEffect(() => {
+    setTotalRisks(checkRisks);
+  }, [checkRisks]);
+
+  if (!insightsFacet) return null;
 
   const onChartClick = (evt, { index }) => {
     hashHistory.push(`/Insights`);
-    dispatch(
-      push({
-        search: `search=total_risk+%3D+${index + 1}`,
-      })
-    );
+    !isIop &&
+      dispatch(
+        push({
+          search: `search=total_risk+%3D+${index + 1}`,
+        })
+      );
   };
 
   const onChartHover = (evt, { index }) => [
@@ -61,11 +92,16 @@ const InsightsTotalRiskCard = ({ hostDetails: { id } }) => {
   const { 1: low, 2: moderate, 3: important, 4: critical, total } = totalRisks;
 
   // eslint-disable-next-line react/prop-types
-  const LegendLabel = ({ index, ...rest }) => (
-    <a key={index} onClick={() => onChartClick(null, { index })}>
-      <ChartLabel {...rest} />
-    </a>
-  );
+  const LegendLabel = ({ index, ...rest }) => {
+    if (isIop) {
+      return <ChartLabel {...rest} />;
+    }
+    return (
+      <a key={index} onClick={() => onChartClick(null, { index })}>
+        <ChartLabel {...rest} />
+      </a>
+    );
+  };
 
   const legend = (
     <ChartLegend
