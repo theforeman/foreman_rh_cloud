@@ -45,6 +45,7 @@ namespace :rh_cloud_inventory do
           archived_report_generator = ForemanInventoryUpload::Generators::ArchivedReport.new(target, Logger.new(STDOUT))
           archived_report_generator.render(organization: organization, filter: filter)
           puts "Successfully generated #{target} for organization id #{organization}"
+          puts "Check the Uploading tab for report uploading status." if Setting[:subscription_connection_enabled]
 
           next unless ForemanRhCloud.with_iop_smart_proxy?
 
