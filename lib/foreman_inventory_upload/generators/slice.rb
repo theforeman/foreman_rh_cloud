@@ -256,7 +256,7 @@ module ForemanInventoryUpload
 
         @stream.array_field('yum_repos') do
           host.content_facet.bound_repositories.each_with_index do |repo, index|
-            report_yum_repo(host.content_source.load_balancer_pulp_content_url, repo)
+            report_yum_repo(host.content_source&.load_balancer_pulp_content_url || ::SmartProxy.pulp_primary.pulp_content_url, repo)
             @stream.comma unless index == host.content_facet.bound_repositories.count - 1
           end
         end
