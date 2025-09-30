@@ -59,7 +59,7 @@ module ForemanInventoryUpload
       def obfuscate_hostname?(host)
         # Returns true if hostname obfuscation should be applied for a given host, based on hierarchy:
         # 1. Global setting for hostname obfuscation.
-        return true if Setting[:obfuscate_inventory_hostnames]
+        return true if Setting[:obfuscate_inventory_hostnames] && !ForemanRhCloud.with_iop_smart_proxy?
 
         insights_client_setting = fact_value(host, 'insights_client::obfuscate_hostname_enabled')
         insights_client_setting = ActiveModel::Type::Boolean.new.cast(insights_client_setting)
@@ -99,7 +99,7 @@ module ForemanInventoryUpload
       def obfuscate_ips?(host)
         # Returns true if IP obfuscation should be applied for a given host, based on hierarchy:
         # 1. Global setting for IP obfuscation.
-        return true if Setting[:obfuscate_inventory_ips]
+        return true if Setting[:obfuscate_inventory_ips] && !ForemanRhCloud.with_iop_smart_proxy?
 
         insights_client_ipv4_setting = fact_value(host, 'insights_client::obfuscate_ipv4_enabled')
         insights_client_ipv6_setting = fact_value(host, 'insights_client::obfuscate_ipv6_enabled')

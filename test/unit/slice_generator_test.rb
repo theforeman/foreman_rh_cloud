@@ -107,6 +107,36 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_equal 'test_nic1', actual_nic['name']
   end
 
+  test 'does not generate a report with minimal data collection when iop is present' do
+    Setting[:insights_minimal_data_collection] = true
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_nil actual_host['ip_addresses']
+    assert_nil actual_host['mac_addresses']
+    assert_equal @host.fqdn, actual_host['fqdn']
+    assert_equal '1234', actual_host['account']
+    assert_equal 1, generator.hosts_count
+    assert_not_nil(actual_system_profile = actual_host['system_profile'])
+    assert_nil actual_system_profile['number_of_cpus']
+    assert_nil actual_system_profile['number_of_sockets']
+    assert_nil actual_system_profile['cores_per_socket']
+    assert_nil actual_system_profile['system_memory_bytes']
+    assert_nil actual_system_profile['os_release']
+    assert_not_nil(actual_network_interfaces = actual_system_profile['network_interfaces'])
+    assert_not_nil(actual_nic = actual_network_interfaces.first)
+    refute actual_nic.key?('mtu')
+    refute actual_nic.key?('mac_address')
+    assert_equal 'test_nic1', actual_nic['name']
+  end
+
   test 'generates a report with minimal data collection' do
     Setting[:insights_minimal_data_collection] = true
     create_fact_values(@host,
@@ -928,6 +958,33 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_not_nil(actual_host = actual['hosts'].first)
     assert_not_nil(actual_profile = actual_host['system_profile'])
     assert_equal 'alibaba', actual_profile['cloud_provider']
+  end
+
+  test 'do not exclude packages when iop is present' do
+    Setting[:exclude_installed_packages] = true
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+    installed_package = ::Katello::InstalledPackage.create(name: 'test-package', nvrea: 'test-package-1.0.x86_64', nvra: 'test-package-1.0.x86_64')
+
+    another_host = FactoryBot.create(
+      :host,
+      :with_subscription,
+      :with_content,
+      content_view: @host.content_views.first,
+      lifecycle_environment: @host.lifecycle_environments.first,
+      organization: @host.organization,
+      installed_packages: [installed_package]
+    )
+
+    batch = Host.where(id: another_host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(actual_profile = actual_host['system_profile'])
+    assert_not_nil(actual_profile['installed_packages'])
   end
 
   test 'include packages installed in the report' do

@@ -313,4 +313,51 @@ class FactHelpersTest < ActiveSupport::TestCase
       assert_equal '10.230.230.3', ip3
     end
   end
+
+  describe 'IoP smart proxy checks' do
+    test 'obfuscate_hostname? returns false when global setting is enabled but IoP is present' do
+      Setting.expects(:[]).with(:obfuscate_inventory_hostnames).returns(true)
+      ForemanRhCloud.expects(:with_iop_smart_proxy?).returns(true)
+      host = mock('host')
+      # When IoP is present, it falls back to checking host-specific facts
+      @instance.expects(:fact_value).with(host, 'insights_client::obfuscate_hostname_enabled').returns(nil)
+
+      result = @instance.obfuscate_hostname?(host)
+
+      refute result
+    end
+
+    test 'obfuscate_hostname? returns true when global setting is enabled and IoP is not present' do
+      Setting.expects(:[]).with(:obfuscate_inventory_hostnames).returns(true)
+      ForemanRhCloud.expects(:with_iop_smart_proxy?).returns(false)
+      host = mock('host')
+
+      result = @instance.obfuscate_hostname?(host)
+
+      assert result
+    end
+
+    test 'obfuscate_ips? returns false when global setting is enabled but IoP is present' do
+      Setting.expects(:[]).with(:obfuscate_inventory_ips).returns(true)
+      ForemanRhCloud.expects(:with_iop_smart_proxy?).returns(true)
+      host = mock('host')
+      # When IoP is present, it falls back to checking host-specific facts
+      @instance.expects(:fact_value).with(host, 'insights_client::obfuscate_ipv4_enabled').returns(nil)
+      @instance.expects(:fact_value).with(host, 'insights_client::obfuscate_ipv6_enabled').returns(nil)
+
+      result = @instance.obfuscate_ips?(host)
+
+      refute result
+    end
+
+    test 'obfuscate_ips? returns true when global setting is enabled and IoP is not present' do
+      Setting.expects(:[]).with(:obfuscate_inventory_ips).returns(true)
+      ForemanRhCloud.expects(:with_iop_smart_proxy?).returns(false)
+      host = mock('host')
+
+      result = @instance.obfuscate_ips?(host)
+
+      assert result
+    end
+  end
 end
