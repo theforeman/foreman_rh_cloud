@@ -15,11 +15,10 @@ module InsightsCloud
       logger.debug("Generating host-specific report for host #{@host.name}")
 
       ForemanTasks.async_task(
-        ForemanInventoryUpload::Async::GenerateReportJob,
+        ForemanInventoryUpload::Async::SingleHostReportJob,
         ForemanInventoryUpload.generated_reports_folder,
         @host.organization_id,
-        false,
-        "id=#{@host.id}"
+        @host.id
       )
 
       # in IoP case, the hosts are identified by the sub-man ID, and we can assume they already

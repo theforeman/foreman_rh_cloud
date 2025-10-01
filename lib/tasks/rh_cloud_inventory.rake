@@ -9,22 +9,20 @@ namespace :rh_cloud_inventory do
       else
         organizations = [Organization.where(:id => ENV['organization_id']).first]
       end
-      disconnected = ForemanRhCloud.with_iop_smart_proxy?
       User.as_anonymous_admin do
         organizations.each do |organization|
           ForemanTasks.async_task(
             ForemanInventoryUpload::Async::GenerateReportJob,
             ForemanInventoryUpload.generated_reports_folder,
-            organization.id,
-            disconnected
+            organization.id
           )
           puts "Generated and uploaded inventory report for organization '#{organization.name}'"
         end
       end
     end
     desc 'Generate inventory report to be sent to Red Hat cloud'
-    task generate: :environment do
-      organizations = [ENV['organization_id']]
+    task generate: [:environment, 'dynflow:client'] do
+      organization_ids = [ENV['organization_id']]
       base_folder = ENV['target'] || Dir.pwd
       filter = ENV['hosts_filter']
 
@@ -34,37 +32,22 @@ namespace :rh_cloud_inventory do
         puts "Using #{base_folder} for the output"
       end
 
-      if organizations.empty?
+      if organization_ids.empty?
         puts "Must specify organization_id"
         return
       end
 
       User.as_anonymous_admin do
-        organizations.each do |organization|
-          target = File.join(base_folder, ForemanInventoryUpload.facts_archive_name(organization, filter))
-          archived_report_generator = ForemanInventoryUpload::Generators::ArchivedReport.new(target, Logger.new(STDOUT))
-          archived_report_generator.render(organization: organization, filter: filter)
-          puts "Successfully generated #{target} for organization id #{organization}"
-          puts "Check the Uploading tab for report uploading status." if Setting[:subscription_connection_enabled]
-
-          next unless ForemanRhCloud.with_iop_smart_proxy?
-
-          puts 'Creating missing insights facets'
-          hosts_without_facets = ForemanInventoryUpload::Generators::Queries.for_org(organization, hosts_query: 'null? insights_uuid')
-          hosts_without_facets.each do |batch|
-            facets = batch.pluck(:id, 'katello_subscription_facets.uuid').map do |host_id, uuid|
-              {
-                host_id: host_id,
-                uuid: uuid,
-              }
-            end
-            # We don't need to validate the facets here as we create the necessary fields.
-            # rubocop:disable Rails/SkipsModelValidations
-            InsightsFacet.upsert_all(facets, unique_by: :host_id) unless facets.empty?
-            # rubocop:enable Rails/SkipsModelValidations
-          end
-          puts 'Missing Insights facets created'
+        organization_ids.each do |organization_id|
+          ForemanTasks.sync_task(
+            ForemanInventoryUpload::Async::HostInventoryReportJob,
+            base_folder,
+            organization_id,
+            filter,
+            false # don't upload; the user ran report:generate and not report:generate_upload
+          )
         end
+        puts "Check the Uploading tab for report uploading status." if Setting[:subscription_connection_enabled]
       end
     end
     desc 'Upload generated inventory report to Red Hat cloud'
@@ -72,8 +55,7 @@ namespace :rh_cloud_inventory do
       base_folder = ENV['target'] || ForemanInventoryUpload.generated_reports_folder
       organization_id = ENV['organization_id']
       report_file = ForemanInventoryUpload.facts_archive_name(organization_id)
-      disconnected = ForemanRhCloud.with_iop_smart_proxy?
-      ForemanTasks.sync_task(ForemanInventoryUpload::Async::QueueForUploadJob, base_folder, report_file, organization_id, disconnected)
+      ForemanTasks.sync_task(ForemanInventoryUpload::Async::QueueForUploadJob, base_folder, report_file, organization_id)
       puts "Uploaded #{report_file}"
     end
   end
