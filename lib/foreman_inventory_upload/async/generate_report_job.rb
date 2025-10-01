@@ -5,7 +5,7 @@ module ForemanInventoryUpload
         "report_for_#{label}"
       end
 
-      def plan(base_folder, organization_id, disconnected, hosts_filter = nil)
+      def plan(base_folder, organization_id, disconnected = false, hosts_filter = nil)
         sequence do
           super(
             GenerateReportJob.output_label("#{organization_id}#{hosts_filter.empty? ? nil : "[#{hosts_filter.to_s.parameterize}]"}"),
