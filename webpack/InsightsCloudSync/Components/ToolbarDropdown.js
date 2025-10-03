@@ -8,12 +8,12 @@ import {
 } from '@patternfly/react-core/deprecated';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import { redHatAdvisorSystems } from '../InsightsCloudSyncHelpers';
-import { useAdvisorEngineConfig } from '../../common/Hooks/ConfigHooks';
+import { useIopConfig } from '../../common/Hooks/ConfigHooks';
 
 const ToolbarDropdown = ({ onRecommendationSync }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const isLocalAdvisorEngine = useAdvisorEngineConfig();
-  if (isLocalAdvisorEngine) {
+  const isIop = useIopConfig();
+  if (isIop) {
     return null;
   }
   const dropdownItems = [

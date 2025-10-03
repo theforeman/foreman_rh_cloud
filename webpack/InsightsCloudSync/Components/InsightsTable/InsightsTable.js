@@ -16,7 +16,7 @@ import TableEmptyState from '../../../common/table/EmptyState';
 import { modifySelectedRows, getSortColumnIndex } from './InsightsTableHelpers';
 import Pagination from './Pagination';
 import './table.scss';
-import { useAdvisorEngineConfig } from '../../../common/Hooks/ConfigHooks';
+import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 
 const InsightsTable = ({
   page,
@@ -48,7 +48,7 @@ const InsightsTable = ({
     fetchInsights({ page, perPage, query, sortBy, sortOrder });
   }, [hostname]);
 
-  const isLocalAdvisorEngine = useAdvisorEngineConfig();
+  const isIop = useIopConfig();
 
   useEffect(() => {
     setRows(
@@ -57,7 +57,7 @@ const InsightsTable = ({
         selectedIds,
         showSelectAllAlert,
         hideHost,
-        isLocalAdvisorEngine
+        isIop
       )
     );
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PageLayout from 'foremanReact/routes/common/PageLayout/PageLayout';
 import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
 import InsightsTable from './Components/InsightsTable';
-import { useAdvisorEngineConfig } from '../common/Hooks/ConfigHooks';
+import { useIopConfig } from '../common/Hooks/ConfigHooks';
 import { foremanUrl } from '../ForemanRhCloudHelpers';
 import RemediationModal from './Components/RemediationModal';
 import {
@@ -85,9 +85,9 @@ const IopRecommendationsPageWrapped = props => (
 );
 
 const RecommendationsPage = props => {
-  const isLocalAdvisorEngine = useAdvisorEngineConfig();
+  const isIop = useIopConfig();
 
-  return isLocalAdvisorEngine ? (
+  return isIop ? (
     <IopRecommendationsPageWrapped {...props} />
   ) : (
     <InsightsCloudSync {...props} />
