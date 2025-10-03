@@ -146,6 +146,10 @@ module ForemanRhCloud
           end
         end
 
+        ::Foreman::Plugin.app_metadata_registry.register(:foreman_rh_cloud, {
+          iop: ForemanRhCloud.with_iop_smart_proxy?,
+        })
+
         extend_template_helpers ForemanRhCloud::TemplateRendererHelper
         allowed_template_helpers :remediations_playbook, :download_rh_playbook
       end
