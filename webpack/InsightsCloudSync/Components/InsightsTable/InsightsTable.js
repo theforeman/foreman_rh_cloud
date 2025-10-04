@@ -52,13 +52,7 @@ const InsightsTable = ({
 
   useEffect(() => {
     setRows(
-      modifySelectedRows(
-        hits,
-        selectedIds,
-        showSelectAllAlert,
-        hideHost,
-        isIop
-      )
+      modifySelectedRows(hits, selectedIds, showSelectAllAlert, hideHost, isIop)
     );
 
     if (hideHost) setColumns(getColumnsWithoutHostname());

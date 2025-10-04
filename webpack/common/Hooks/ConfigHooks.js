@@ -1,11 +1,12 @@
 import { useAPI } from 'foremanReact/common/hooks/API/APIHooks';
+import { useForemanContext } from 'foremanReact/Root/Context/ForemanContext';
 import {
   ADVISOR_ENGINE_CONFIG_KEY,
   ADVISOR_ENGINE_CONFIG_PATH,
 } from '../../InsightsCloudSync/Components/InsightsTable/InsightsTableConstants';
-import { useForemanContext } from 'foremanReact/Root/Context/ForemanContext';
 
 export const useIopConfig = () => {
+  // eslint-disable-next-line camelcase
   const result = useForemanContext().metadata?.foreman_rh_cloud?.iop;
   const skipApiRequest = result !== undefined;
   const { response: advisorEngineConfig } = useAPI(
