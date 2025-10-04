@@ -73,6 +73,7 @@ const hostsIndexColumnExtensions = [
   {
     columnName: 'cves_count',
     title: __('Total CVEs'),
+    isRelevant: context => context?.metadata?.foreman_rh_cloud.iop ?? true,
     wrapper: hostDetails => <CVECountCell hostDetails={hostDetails} />,
     weight: 2600,
     tableName: 'hosts',
