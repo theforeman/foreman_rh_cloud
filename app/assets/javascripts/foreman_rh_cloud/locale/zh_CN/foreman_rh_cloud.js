@@ -3,10 +3,10 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 11.1.0",
+        "Project-Id-Version": "foreman_rh_cloud 13.0.5",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
-        "Last-Translator": "Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025",
+        "Last-Translator": "Ondřej Gajdušek, 2025",
         "Language-Team": "Chinese (China) (https://app.transifex.com/foreman/teams/114/zh_CN/)",
         "MIME-Version": "1.0",
         "Content-Type": "text/plain; charset=UTF-8",
@@ -36,7 +36,7 @@
         "现在选择了所有建议。"
       ],
       "Analytics data collection": [
-        ""
+        "数据收集分析"
       ],
       "Any Organization": [
         "任意机构"
@@ -119,11 +119,17 @@
       "Enable automatic deletion of mismatched host records from the Red Hat cloud": [
         "启用自动删除来自红帽云的主机记录"
       ],
+      "Enable automatic deletion of mismatched host records from the Red Hat cloud. Ignored when using local Insights.": [
+        ""
+      ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud": [
         "启用来自红帽云的 Insights 建议自动同步"
       ],
-      "Enable automatic upload of your host inventory to the Red Hat cloud": [
-        "启用自动将主机清单上传到红帽云"
+      "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights.": [
+        ""
+      ],
+      "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights.": [
+        ""
       ],
       "Enable automatic upload of your hosts inventory to the Red Hat cloud": [
         "启用自动将主机清单上传到红帽云"
@@ -138,12 +144,12 @@
         "在尝试访问服务器时遇到错误："
       ],
       "Exclude installed packages": [
-        ""
+        "排除安装的软件包"
       ],
       "Exclude installed packages from being uploaded to the Red Hat cloud": [
         "将安装的软件包上传到红帽云"
       ],
-      "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.)": [
+      "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights.": [
         ""
       ],
       "Exit Code: %s": [
@@ -180,7 +186,7 @@
         "生成并上传报告"
       ],
       "Generate report": [
-        ""
+        "生成报告"
       ],
       "Generate the report, but do not upload": [
         "生成报告，但不上传"
@@ -208,6 +214,9 @@
       ],
       "Host Insights recommendations": [
         "主机 Insights 建议"
+      ],
+      "Host inventory report job": [
+        ""
       ],
       "Host was not uploaded to your RH cloud inventory": [
         "主机没有上传到您的 RH 云清单"
@@ -252,7 +261,7 @@
         "知识库文章"
       ],
       "Learn more about {minimalDataCollectionSetting}.": [
-        ""
+        "了解有关 {minimalDataCollectionSetting} 的更多信息。"
       ],
       "List of host UUIDs": [
         "主机 UUID 列表"
@@ -270,6 +279,9 @@
         "手册"
       ],
       "Minimal data collection": [
+        "最小数据收集"
+      ],
+      "Missing Insights facets created: %s": [
         ""
       ],
       "Moderate": [
@@ -306,7 +318,7 @@
         "模糊的主机 ipv4 地址"
       ],
       "Obfuscate host ipv4 addresses.": [
-        ""
+        "对主机 ipv4 地址进行模糊化处理"
       ],
       "Obfuscate host names": [
         "模糊主机名"
@@ -314,20 +326,20 @@
       "Obfuscate host names sent to the Red Hat cloud": [
         "发送到红帽云的模糊主机名"
       ],
-      "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.)": [
+      "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights.": [
         ""
       ],
       "Obfuscate ipv4 addresses sent to the Red Hat cloud": [
         "发送到红帽云的模糊 ipv4 地址"
       ],
-      "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.)": [
+      "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.) Ignored when using local Insights.": [
         ""
       ],
-      "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings.": [
+      "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights.": [
         ""
       ],
       "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled": [
-        ""
+        "仅将最低所需的数据发送到红帽云，禁用模糊设置"
       ],
       "Oops! Couldn't find organization that matches your query": [
         "未找到与您的查询匹配的机构"
@@ -344,8 +356,8 @@
       "RH Cloud": [
         "RH Cloud"
       ],
-      "RHC daemon id": [
-        "RHC 守护进程 ID"
+      "RHC daemon id. Ignored when using local Insights.": [
+        ""
       ],
       "Read more about it in RH cloud insights": [
         "在 RH Cloud insights 中了解更多有关它的信息"
@@ -405,7 +417,7 @@
         "运行 RH Cloud playbook"
       ],
       "Run playbook generated by Red Hat remediations app": [
-        ""
+        "运行由红帽补救应用生成的 playbook"
       ],
       "Run remediation playbook generated by Insights": [
         "运行 Insights 生成的补救 playbook"
@@ -420,7 +432,7 @@
         "在所有页面中选择建议"
       ],
       "Send additional data to enhance Insights services, as per the settings": [
-        ""
+        "根据设置，发送额外数据以增强 Insights 服务"
       ],
       "Set the current organization context for the request": [
         "设置请求的当前机构上下文"
@@ -428,14 +440,20 @@
       "Settings": [
         "设置"
       ],
-      "Should import include parameter tags from Foreman?": [
-        "应从 Foreman 导入包含参数标签？"
+      "Should import include parameter tags from Foreman? Ignored when using local Insights.": [
+        ""
       ],
       "Show Advanced Settings": [
         "显示高级设置"
       ],
       "Show if system is configured to use local iop-advisor-engine.": [
         "显示系统是否被配置为使用本地 iop-advisor-engine。"
+      ],
+      "Single-host report job": [
+        ""
+      ],
+      "Single-host report job for host %s": [
+        ""
       ],
       "Start inventory synchronization": [
         "启动清单同步"
@@ -468,7 +486,7 @@
         "报告文件 %{filename} 不存在"
       ],
       "The scheduled process is disabled because this Foreman is configured with a local IoP Smart Proxy.": [
-        ""
+        "调度的进程被禁用，因为此 Foreman 配置了一个本地 IoP Smart Proxy。"
       ],
       "The server returned the following error: %s": [
         "服务器返回以下错误：%s"
@@ -478,6 +496,9 @@
       ],
       "There are no recommendations for your hosts": [
         "没有适用于您的主机的建议"
+      ],
+      "There were no missing Insights facets": [
+        ""
       ],
       "This action will also enable automatic reports upload": [
         "此操作还会启用自动报告上传"
@@ -489,7 +510,7 @@
         "要手动上传特定机构的数据，请选择机构并点 {restartButtonName}。"
       ],
       "Total CVEs": [
-        ""
+        "CVE 总数"
       ],
       "Total risk": [
         "总风险"
@@ -519,10 +540,10 @@
         "禁用 Red Hat Insights"
       ],
       "Vulnerabilities": [
-        ""
+        "安全漏洞"
       ],
       "Vulnerability": [
-        ""
+        "安全漏洞"
       ],
       "Wait and %s": [
         "等待和 %s"
@@ -591,7 +612,7 @@
         "rule 标题"
       ],
       "setting minimal data collection": [
-        ""
+        "设置最小数据收集"
       ],
       "solution url": [
         "solution url"
