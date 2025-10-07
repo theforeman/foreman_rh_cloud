@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: foreman_rh_cloud 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-12 13:20+0200\n"
-"PO-Revision-Date: 2025-09-12 13:20+0200\n"
+"POT-Creation-Date: 2025-10-07 11:44-0400\n"
+"PO-Revision-Date: 2025-10-07 11:44-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -189,7 +189,7 @@ msgstr ""
 #: ../app/helpers/foreman_insights_host_helper.rb:7
 #: ../lib/foreman_rh_cloud/plugin.rb:93 ../lib/foreman_rh_cloud/plugin.rb:143
 #: ../webpack/ForemanColumnExtensions/index.js:65
-#: ../webpack/ForemanRhCloudFills.js:24
+#: ../webpack/ForemanRhCloudFills.js:28
 #: ../webpack/InsightsHostDetailsTab/InsightsTab.js:46
 msgid "Recommendations"
 msgstr ""
@@ -234,6 +234,14 @@ msgstr ""
 msgid "Satellite server has %{hits_count} recommendations by Red Hat"
 msgstr ""
 
+#: ../lib/foreman_inventory_upload/async/create_missing_insights_facets.rb:24
+msgid "There were no missing Insights facets"
+msgstr ""
+
+#: ../lib/foreman_inventory_upload/async/create_missing_insights_facets.rb:24
+msgid "Missing Insights facets created: %s"
+msgstr ""
+
 #: ../lib/foreman_inventory_upload/async/delayed_start.rb:22
 msgid "Wait and %s"
 msgstr ""
@@ -244,6 +252,18 @@ msgstr ""
 msgid ""
 "The scheduled process is disabled because this Foreman is configured with a lo"
 "cal IoP Smart Proxy."
+msgstr ""
+
+#: ../lib/foreman_inventory_upload/async/host_inventory_report_job.rb:31
+msgid "Host inventory report job"
+msgstr ""
+
+#: ../lib/foreman_inventory_upload/async/single_host_report_job.rb:16
+msgid "Single-host report job for host %s"
+msgstr ""
+
+#: ../lib/foreman_inventory_upload/async/single_host_report_job.rb:16
+msgid "Single-host report job"
 msgstr ""
 
 #: ../lib/foreman_inventory_upload/generators/fact_helpers.rb:188
@@ -276,7 +296,9 @@ msgid "Configure Cloud Connector on given hosts"
 msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:16
-msgid "Enable automatic upload of your host inventory to the Red Hat cloud"
+msgid ""
+"Enable automatic upload of your host inventory to the Red Hat cloud. Ignored w"
+"hen using local Insights."
 msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:16
@@ -286,10 +308,9 @@ msgid "Automatic inventory upload"
 msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:17
-#: ../webpack/InsightsCloudSync/Components/InsightsSettings/InsightsSettings.js:25
 msgid ""
 "Enable automatic synchronization of Insights recommendations from the Red Hat "
-"cloud"
+"cloud. Ignored when using local Insights."
 msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:17
@@ -297,8 +318,9 @@ msgid "Synchronize recommendations Automatically"
 msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:18
-#: ../webpack/ForemanInventoryUpload/Components/InventorySettings/AdvancedSetting/AdvancedSettingsConstants.js:14
-msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
+msgid ""
+"Enable automatic deletion of mismatched host records from the Red Hat cloud. I"
+"gnored when using local Insights."
 msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:18
@@ -310,7 +332,7 @@ msgstr ""
 msgid ""
 "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_coll"
 "ection is set to true, this setting is ignored because host names are not incl"
-"uded in the report.)"
+"uded in the report.) Ignored when using local Insights."
 msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:19
@@ -322,7 +344,7 @@ msgstr ""
 msgid ""
 "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data"
 "_collection is set to true, this setting is ignored because host IPv4 addresse"
-"s are not included in the report.)"
+"s are not included in the report.) Ignored when using local Insights."
 msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:20
@@ -333,7 +355,7 @@ msgstr ""
 msgid ""
 "Exclude installed packages from being uploaded to the Red Hat cloud. (If insig"
 "hts_minimal_data_collection is set to true, this setting is ignored and instal"
-"led packages are always excluded.)"
+"led packages are always excluded.) Ignored when using local Insights."
 msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:21
@@ -342,7 +364,9 @@ msgid "Exclude installed packages"
 msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:22
-msgid "Should import include parameter tags from Foreman?"
+msgid ""
+"Should import include parameter tags from Foreman? Ignored when using local In"
+"sights."
 msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:22
@@ -350,7 +374,7 @@ msgid "Include parameters in insights-client reports"
 msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:23
-msgid "RHC daemon id"
+msgid "RHC daemon id. Ignored when using local Insights."
 msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:23
@@ -368,7 +392,8 @@ msgid ""
 "Only include the minimum required data in inventory reports for uploading to R"
 "ed Hat cloud. When this is true, installed packages are excluded from the repo"
 "rt regardless of the exclude_installed_packages setting, and host names and IP"
-"v4 addresses are excluded from the report regardless of obfuscation settings."
+"v4 addresses are excluded from the report regardless of obfuscation settings. "
+"Ignored when using local Insights."
 msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:88 ../lib/foreman_rh_cloud/plugin.rb:106
@@ -457,6 +482,11 @@ msgstr ""
 #: ../webpack/ForemanInventoryUpload/Components/InventorySettings/AdvancedSetting/AdvancedSettingsConstants.js:7
 #: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:34
 msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
+msgstr ""
+
+#:
+#: ../webpack/ForemanInventoryUpload/Components/InventorySettings/AdvancedSetting/AdvancedSettingsConstants.js:14
+msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
 msgstr ""
 
 #:
@@ -753,13 +783,20 @@ msgstr ""
 msgid "Configure"
 msgstr ""
 
-#: ../webpack/ForemanRhCloudFills.js:40
+#: ../webpack/ForemanRhCloudFills.js:44
 msgid "Vulnerabilities"
 msgstr ""
 
 #:
 #: ../webpack/InsightsCloudSync/Components/InsightsSettings/InsightsSettings.js:24
 msgid "Sync automatically"
+msgstr ""
+
+#:
+#: ../webpack/InsightsCloudSync/Components/InsightsSettings/InsightsSettings.js:25
+msgid ""
+"Enable automatic synchronization of Insights recommendations from the Red Hat "
+"cloud"
 msgstr ""
 
 #:
@@ -951,15 +988,15 @@ msgstr ""
 msgid "Critical"
 msgstr ""
 
-#: ../webpack/InsightsHostDetailsTab/InsightsTotalRiskChart.js:129
+#: ../webpack/InsightsHostDetailsTab/InsightsTotalRiskChart.js:164
 msgid "Total risks"
 msgstr ""
 
-#: ../webpack/InsightsHostDetailsTab/InsightsTotalRiskChart.js:136
+#: ../webpack/InsightsHostDetailsTab/InsightsTotalRiskChart.js:172
 msgid "View all recommendations"
 msgstr ""
 
-#: ../webpack/InsightsHostDetailsTab/InsightsTotalRiskChart.js:145
+#: ../webpack/InsightsHostDetailsTab/InsightsTotalRiskChart.js:181
 msgid "No results found"
 msgstr ""
 

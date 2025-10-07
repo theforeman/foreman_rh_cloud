@@ -3,10 +3,10 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 11.1.0",
+        "Project-Id-Version": "foreman_rh_cloud 13.0.5",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
-        "Last-Translator": "Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025",
+        "Last-Translator": "Ondřej Gajdušek, 2025",
         "Language-Team": "French (https://app.transifex.com/foreman/teams/114/fr/)",
         "MIME-Version": "1.0",
         "Content-Type": "text/plain; charset=UTF-8",
@@ -36,7 +36,7 @@
         "Toutes les recommandations sont maintenant sélectionnées."
       ],
       "Analytics data collection": [
-        ""
+        "Collecte de données analytiques"
       ],
       "Any Organization": [
         "Toute Organisation"
@@ -119,11 +119,17 @@
       "Enable automatic deletion of mismatched host records from the Red Hat cloud": [
         "Activer la suppression automatique des enregistrements d'hôtes incompatibles du cloud Red Hat"
       ],
+      "Enable automatic deletion of mismatched host records from the Red Hat cloud. Ignored when using local Insights.": [
+        ""
+      ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud": [
         "Activer la synchronisation automatique des recommandations Insights à partir de Red Hat Cloud"
       ],
-      "Enable automatic upload of your host inventory to the Red Hat cloud": [
-        "Activer le téléchargement automatique de votre inventaire d'hôtes dans Red Hat Cloud"
+      "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights.": [
+        ""
+      ],
+      "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights.": [
+        ""
       ],
       "Enable automatic upload of your hosts inventory to the Red Hat cloud": [
         "Activer le téléchargement automatique de l'inventaire de vos hôtes dans Red Hat Cloud"
@@ -138,12 +144,12 @@
         "Une erreur s'est produite lors de l'accès au serveur :"
       ],
       "Exclude installed packages": [
-        ""
+        "Exclure les paquets installés"
       ],
       "Exclude installed packages from being uploaded to the Red Hat cloud": [
         "Exclure les paquets installés du téléchargement dans Red Hat Cloud"
       ],
-      "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.)": [
+      "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights.": [
         ""
       ],
       "Exit Code: %s": [
@@ -180,7 +186,7 @@
         "Générer et télécharger un rapport"
       ],
       "Generate report": [
-        ""
+        "Générer un rapport"
       ],
       "Generate the report, but do not upload": [
         "Générer le rapport, mais ne pas le télécharger"
@@ -208,6 +214,9 @@
       ],
       "Host Insights recommendations": [
         "Recommandations de Host Insights"
+      ],
+      "Host inventory report job": [
+        ""
       ],
       "Host was not uploaded to your RH cloud inventory": [
         "L'hôte n'a pas été téléchargé dans votre inventaire RH Cloud."
@@ -252,7 +261,7 @@
         "Article de base de connaissances"
       ],
       "Learn more about {minimalDataCollectionSetting}.": [
-        ""
+        "En savoir plus sur{minimalDataCollectionSetting} ."
       ],
       "List of host UUIDs": [
         "Liste des UUID d'hôtes"
@@ -270,6 +279,9 @@
         "Manuelle"
       ],
       "Minimal data collection": [
+        "Collecte minimale de données"
+      ],
+      "Missing Insights facets created: %s": [
         ""
       ],
       "Moderate": [
@@ -306,28 +318,28 @@
         "Obfusquer les adresses ipv4 des hôtes"
       ],
       "Obfuscate host ipv4 addresses.": [
-        ""
+        "Masquer les adresses IPv4 des hôtes."
       ],
       "Obfuscate host names": [
-        "Obfusquer les noms d'hôtes"
+        "Masquer les noms d'hôtes"
       ],
       "Obfuscate host names sent to the Red Hat cloud": [
         "Obfusquer les noms d'hôtes envoyés à Red Hat Cloud"
       ],
-      "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.)": [
+      "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights.": [
         ""
       ],
       "Obfuscate ipv4 addresses sent to the Red Hat cloud": [
         "Obfusquer les adresses ipv4 envoyées à Red Hat Cloud"
       ],
-      "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.)": [
+      "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.) Ignored when using local Insights.": [
         ""
       ],
-      "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings.": [
+      "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights.": [
         ""
       ],
       "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled": [
-        ""
+        "Envoyez uniquement les données minimales requises au cloud Red Hat, les paramètres d'obfuscation (masquage) sont désactivés"
       ],
       "Oops! Couldn't find organization that matches your query": [
         "Oups ! Nous n'avons pas trouvé d'organisation correspondant à votre demande."
@@ -344,8 +356,8 @@
       "RH Cloud": [
         "RH Cloud"
       ],
-      "RHC daemon id": [
-        "Id du démon RHC"
+      "RHC daemon id. Ignored when using local Insights.": [
+        ""
       ],
       "Read more about it in RH cloud insights": [
         "Plus d'informations dans RH cloud insights"
@@ -405,7 +417,7 @@
         "Exécuter le playbook RH Cloud"
       ],
       "Run playbook generated by Red Hat remediations app": [
-        ""
+        "Exécuter le playbook généré par l'app de remédiations de Red Hat"
       ],
       "Run remediation playbook generated by Insights": [
         "Exécuter le playbook de remédiation généré par Insights"
@@ -420,7 +432,7 @@
         "Sélectionner des recommandations sur toutes les pages"
       ],
       "Send additional data to enhance Insights services, as per the settings": [
-        ""
+        "Envoyer des données supplémentaires pour améliorer les services Insights, conformément aux paramètres"
       ],
       "Set the current organization context for the request": [
         "Définir le contexte organisationnel actuel de la demande"
@@ -428,14 +440,20 @@
       "Settings": [
         "Paramètres de configuration"
       ],
-      "Should import include parameter tags from Foreman?": [
-        "L'importation doit-elle inclure les balises de paramètres de Foreman ?"
+      "Should import include parameter tags from Foreman? Ignored when using local Insights.": [
+        ""
       ],
       "Show Advanced Settings": [
         "Afficher les paramètres avancés"
       ],
       "Show if system is configured to use local iop-advisor-engine.": [
         "Indique si le système est configuré pour utiliser le moteur iop-advisor local."
+      ],
+      "Single-host report job": [
+        ""
+      ],
+      "Single-host report job for host %s": [
+        ""
       ],
       "Start inventory synchronization": [
         "Démarrer la synchronisation de l'inventaire"
@@ -468,7 +486,7 @@
         "Le fichier de rapport %{filename} n'existe pas"
       ],
       "The scheduled process is disabled because this Foreman is configured with a local IoP Smart Proxy.": [
-        ""
+        "Le processus planifié est désactivé car ce Foreman est configuré avec un proxy intelligent IoP local."
       ],
       "The server returned the following error: %s": [
         "Le serveur a renvoyé l'erreur suivante : %s"
@@ -478,6 +496,9 @@
       ],
       "There are no recommendations for your hosts": [
         "Il n'y a aucune recommandation pour vos hôtes"
+      ],
+      "There were no missing Insights facets": [
+        ""
       ],
       "This action will also enable automatic reports upload": [
         "Cette action permettra également le téléchargement automatique des rapports"
@@ -489,7 +510,7 @@
         "Pour télécharger manuellement les données d'une organisation spécifique, sélectionnez une organisation et cliquez sur{restartButtonName} ."
       ],
       "Total CVEs": [
-        ""
+        "Total des CVE"
       ],
       "Total risk": [
         "Risque total"
@@ -519,10 +540,10 @@
         "Afficher Red Hat Insights."
       ],
       "Vulnerabilities": [
-        ""
+        "Vulnérabilités"
       ],
       "Vulnerability": [
-        ""
+        "Vulnérabilité"
       ],
       "Wait and %s": [
         "Attendez et %s"
@@ -591,7 +612,7 @@
         "titre de la règle"
       ],
       "setting minimal data collection": [
-        ""
+        "définir une collecte minimale de données"
       ],
       "solution url": [
         "URL de la solution"

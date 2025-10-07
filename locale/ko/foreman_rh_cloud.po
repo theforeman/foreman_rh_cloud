@@ -8,14 +8,14 @@
 # Bryan Kearney <bryan.kearney@gmail.com>, 2023
 # 0868a4d1af5275b3f70b0a6dac4c99a4, 2023
 # Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025
+# Ondřej Gajdušek, 2025
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: foreman_rh_cloud 11.1.0\n"
+"Project-Id-Version: foreman_rh_cloud 13.0.5\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
-"Last-Translator: Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarde"
-"n.nl>, 2025\n"
+"Last-Translator: Ondřej Gajdušek, 2025\n"
 "Language-Team: Korean (https://app.transifex.com/foreman/teams/114/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,7 +42,7 @@ msgid "All recommendations are now selected."
 msgstr "모든 권장 사항이 선택되었습니다."
 
 msgid "Analytics data collection"
-msgstr ""
+msgstr "분석 데이터 수집"
 
 msgid "Any Organization"
 msgstr "모든 조직 "
@@ -125,11 +125,17 @@ msgstr "최신 보고서 다운로드"
 msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
 msgstr "Red Hat 클라우드에서 일치하지 않는 호스트 기록의 자동 삭제를 활성화하십시오."
 
+msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud. Ignored when using local Insights."
+msgstr ""
+
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud"
 msgstr "Red Hat 클라우드에서 Insights 권장 사항의 자동 동기화를 활성화합니다."
 
-msgid "Enable automatic upload of your host inventory to the Red Hat cloud"
-msgstr "호스트 인벤토리를 Red Hat 클라우드에 자동으로 업로드하도록 설정"
+msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights."
+msgstr ""
+
+msgid "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights."
+msgstr ""
 
 msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
 msgstr "호스트 인벤토리를 Red Hat 클라우드에 자동으로 업로드하도록 설정"
@@ -144,12 +150,12 @@ msgid "Encountered an error while trying to access the server:"
 msgstr "서버에 접근하는 동안 오류가 발생했습니다:"
 
 msgid "Exclude installed packages"
-msgstr ""
+msgstr "설치된 패키지 제외"
 
 msgid "Exclude installed packages from being uploaded to the Red Hat cloud"
 msgstr "설치된 패키지가 Red Hat 클라우드에 업로드되는 것을 제외합니다."
 
-msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.)"
+msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights."
 msgstr ""
 
 msgid "Exit Code: %s"
@@ -186,7 +192,7 @@ msgid "Generate and upload report"
 msgstr "보고서 생성 및 업로드"
 
 msgid "Generate report"
-msgstr ""
+msgstr "보고서 생성"
 
 msgid "Generate the report, but do not upload"
 msgstr "보고서를 생성하되 업로드하지 마십시오."
@@ -214,6 +220,9 @@ msgstr "RH Cloud에 없는 호스트를 가져오십시오."
 
 msgid "Host Insights recommendations"
 msgstr "호스트 Insights 추천"
+
+msgid "Host inventory report job"
+msgstr ""
 
 msgid "Host was not uploaded to your RH cloud inventory"
 msgstr "호스트가 RH 클라우드 인벤토리에 업로드되지 않았습니다."
@@ -258,7 +267,7 @@ msgid "Knowledgebase article"
 msgstr "지식베이스 문서"
 
 msgid "Learn more about {minimalDataCollectionSetting}."
-msgstr ""
+msgstr "{minimalDataCollectionSetting}에 대해 자세히 알아보세요."
 
 msgid "List of host UUIDs"
 msgstr "호스트 UUID 목록"
@@ -276,6 +285,9 @@ msgid "Manual"
 msgstr "수동"
 
 msgid "Minimal data collection"
+msgstr "최소한의 데이터 수집"
+
+msgid "Missing Insights facets created: %s"
 msgstr ""
 
 msgid "Moderate"
@@ -312,7 +324,7 @@ msgid "Obfuscate host ipv4 addresses"
 msgstr "호스트 ipv4 주소 난독화"
 
 msgid "Obfuscate host ipv4 addresses."
-msgstr ""
+msgstr "호스트 ipv4 주소 난독화"
 
 msgid "Obfuscate host names"
 msgstr "호스트 이름 난독화"
@@ -320,20 +332,20 @@ msgstr "호스트 이름 난독화"
 msgid "Obfuscate host names sent to the Red Hat cloud"
 msgstr "Red Hat 클라우드로 전송된 호스트 이름을 난독화합니다."
 
-msgid "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.)"
+msgid "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights."
 msgstr ""
 
 msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud"
 msgstr "Red Hat 클라우드로 전송된 ipv4 주소 난독화"
 
-msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.)"
+msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.) Ignored when using local Insights."
 msgstr ""
 
-msgid "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings."
+msgid "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights."
 msgstr ""
 
 msgid "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled"
-msgstr ""
+msgstr "Red Hat 클라우드에 필요한 최소한의 데이터만 전송하고 난독화 설정은 비활성화됩니다."
 
 msgid "Oops! Couldn't find organization that matches your query"
 msgstr "죄송합니다! 귀하의 쿼리와 일치하는 조직을 찾을 수 없습니다."
@@ -350,8 +362,8 @@ msgstr "Playbook"
 msgid "RH Cloud"
 msgstr "RH 클라우드"
 
-msgid "RHC daemon id"
-msgstr "RHC 데몬 ID"
+msgid "RHC daemon id. Ignored when using local Insights."
+msgstr ""
 
 msgid "Read more about it in RH cloud insights"
 msgstr "RH 클라우드 Insights에서 이에 대해 자세히 알아보세요."
@@ -411,7 +423,7 @@ msgid "Run RH Cloud playbook"
 msgstr "RH Cloud playbook 실행"
 
 msgid "Run playbook generated by Red Hat remediations app"
-msgstr ""
+msgstr "Red Hat Remediations 앱에서 생성된 playbook 실행"
 
 msgid "Run remediation playbook generated by Insights"
 msgstr "Insights에서 생성된 수정 playbook 실행"
@@ -426,7 +438,7 @@ msgid "Select recommendations from all pages"
 msgstr "모든 페이지에서 추천을 선택하세요"
 
 msgid "Send additional data to enhance Insights services, as per the settings"
-msgstr ""
+msgstr "설정에 따라 Insights 서비스를 향상시키기 위해 추가 데이터를 보냅니다."
 
 msgid "Set the current organization context for the request"
 msgstr "요청에 대한 현재 조직 컨텍스트 설정"
@@ -434,14 +446,20 @@ msgstr "요청에 대한 현재 조직 컨텍스트 설정"
 msgid "Settings"
 msgstr "설정 "
 
-msgid "Should import include parameter tags from Foreman?"
-msgstr "Foreman의 매개변수 태그를 가져와야 합니까?"
+msgid "Should import include parameter tags from Foreman? Ignored when using local Insights."
+msgstr ""
 
 msgid "Show Advanced Settings"
 msgstr "고급 설정 표시"
 
 msgid "Show if system is configured to use local iop-advisor-engine."
 msgstr "시스템이 로컬 iop-advisor-engine을 사용하도록 구성되어 있는지 표시하십시오."
+
+msgid "Single-host report job"
+msgstr ""
+
+msgid "Single-host report job for host %s"
+msgstr ""
 
 msgid "Start inventory synchronization"
 msgstr "인벤토리 동기화 시작"
@@ -474,7 +492,7 @@ msgid "The report file %{filename} doesn't exist"
 msgstr "보고서 파일%{filename}이/가 존재하지 않습니다"
 
 msgid "The scheduled process is disabled because this Foreman is configured with a local IoP Smart Proxy."
-msgstr ""
+msgstr "이 Foreman이 로컬 IoP Smart Proxy로 구성되어 있어 예정된 프로세스가 비활성화되었습니다."
 
 msgid "The server returned the following error: %s"
 msgstr "서버에서 다음 오류가 반환되었습니다. %s"
@@ -484,6 +502,9 @@ msgstr "다음 오류로 인해 작업이 실패했습니다."
 
 msgid "There are no recommendations for your hosts"
 msgstr "호스트에 대한 권장 사항이 없음"
+
+msgid "There were no missing Insights facets"
+msgstr ""
 
 msgid "This action will also enable automatic reports upload"
 msgstr "이 작업을 수행하면 자동 보고서 업로드도 활성화됩니다."
@@ -495,7 +516,7 @@ msgid "To manually upload the data for a specific organization, select an organi
 msgstr "특정 조직에 대한 데이터를 수동으로 업로드하려면 조직을 선택하고 {restartButtonName}를 클릭하십시오."
 
 msgid "Total CVEs"
-msgstr ""
+msgstr "총 CVE"
 
 msgid "Total risk"
 msgstr "총 위험"
@@ -525,10 +546,10 @@ msgid "View in Red Hat Insights"
 msgstr "Red Hat Insights에서 보기"
 
 msgid "Vulnerabilities"
-msgstr ""
+msgstr "취약점"
 
 msgid "Vulnerability"
-msgstr ""
+msgstr "취약성"
 
 msgid "Wait and %s"
 msgstr "대기 및 %s"
@@ -597,7 +618,7 @@ msgid "rule title"
 msgstr "규칙 제목"
 
 msgid "setting minimal data collection"
-msgstr ""
+msgstr "최소 데이터 수집 설정"
 
 msgid "solution url"
 msgstr "솔루션 URL"

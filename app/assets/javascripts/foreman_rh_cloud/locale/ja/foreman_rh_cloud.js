@@ -3,10 +3,10 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 11.1.0",
+        "Project-Id-Version": "foreman_rh_cloud 13.0.5",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
-        "Last-Translator": "Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025",
+        "Last-Translator": "Ondřej Gajdušek, 2025",
         "Language-Team": "Japanese (https://app.transifex.com/foreman/teams/114/ja/)",
         "MIME-Version": "1.0",
         "Content-Type": "text/plain; charset=UTF-8",
@@ -36,7 +36,7 @@
         "すべての推奨事項が選択されました。"
       ],
       "Analytics data collection": [
-        ""
+        "分析データの収集"
       ],
       "Any Organization": [
         "任意の組織"
@@ -119,11 +119,17 @@
       "Enable automatic deletion of mismatched host records from the Red Hat cloud": [
         "不一致のホストレコードを Red Hat クラウドから自動的に削除できるようにする"
       ],
+      "Enable automatic deletion of mismatched host records from the Red Hat cloud. Ignored when using local Insights.": [
+        ""
+      ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud": [
         "Red Hat クラウドから Insights の推奨事項の自動同期を有効にする"
       ],
-      "Enable automatic upload of your host inventory to the Red Hat cloud": [
-        "ホストインベントリーの Red Hat クラウドに対して自動アップロードを有効にする"
+      "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights.": [
+        ""
+      ],
+      "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights.": [
+        ""
       ],
       "Enable automatic upload of your hosts inventory to the Red Hat cloud": [
         "ホストインベントリーの Red Hat クラウドに対して自動アップロードを有効にする"
@@ -138,12 +144,12 @@
         "サーバーへのアクセス時にエラーが発生しました:"
       ],
       "Exclude installed packages": [
-        ""
+        "インストール済みパッケージの除外"
       ],
       "Exclude installed packages from being uploaded to the Red Hat cloud": [
         "Red Hat クラウドにアップロードされないようにインストール済みパッケージを除外する"
       ],
-      "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.)": [
+      "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights.": [
         ""
       ],
       "Exit Code: %s": [
@@ -180,7 +186,7 @@
         "レポートの生成およびアップロード"
       ],
       "Generate report": [
-        ""
+        "レポートを生成します。"
       ],
       "Generate the report, but do not upload": [
         "レポートを生成するがアップロードしない"
@@ -208,6 +214,9 @@
       ],
       "Host Insights recommendations": [
         "ホストに関する Insights の推奨事項"
+      ],
+      "Host inventory report job": [
+        ""
       ],
       "Host was not uploaded to your RH cloud inventory": [
         "ホストが RH クラウドインベントリーにアップロードされませんでした"
@@ -252,7 +261,7 @@
         "ナレッジベースアーティクル"
       ],
       "Learn more about {minimalDataCollectionSetting}.": [
-        ""
+        "{minimalDataCollectionSetting} の詳細を確認してください。"
       ],
       "List of host UUIDs": [
         "ホスト UUID のリスト"
@@ -270,6 +279,9 @@
         "手動"
       ],
       "Minimal data collection": [
+        "最小限のデータ収集"
+      ],
+      "Missing Insights facets created: %s": [
         ""
       ],
       "Moderate": [
@@ -306,7 +318,7 @@
         "ホストの ipv4 アドレスの難読化"
       ],
       "Obfuscate host ipv4 addresses.": [
-        ""
+        "ホストの IPv4 アドレスを難読化します。"
       ],
       "Obfuscate host names": [
         "ホスト名の難読化"
@@ -314,20 +326,20 @@
       "Obfuscate host names sent to the Red Hat cloud": [
         "Red Hat クラウドに送信するホスト名を難読化する"
       ],
-      "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.)": [
+      "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights.": [
         ""
       ],
       "Obfuscate ipv4 addresses sent to the Red Hat cloud": [
         "Red Hat クラウドに送信する ipv4 アドレスを難読化する"
       ],
-      "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.)": [
+      "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.) Ignored when using local Insights.": [
         ""
       ],
-      "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings.": [
+      "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights.": [
         ""
       ],
       "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled": [
-        ""
+        "必要最小限のデータのみを Red Hat クラウドに送信します。難読化設定は無効化されます"
       ],
       "Oops! Couldn't find organization that matches your query": [
         "クエリーに合致する組織が見つかりませんでした"
@@ -344,8 +356,8 @@
       "RH Cloud": [
         "RH Cloud"
       ],
-      "RHC daemon id": [
-        "RHC デーモン ID"
+      "RHC daemon id. Ignored when using local Insights.": [
+        ""
       ],
       "Read more about it in RH cloud insights": [
         "詳細は、RH cloud insights を参照してください。"
@@ -405,7 +417,7 @@
         "RH Cloud Playbook の実行"
       ],
       "Run playbook generated by Red Hat remediations app": [
-        ""
+        "Red Hat 修復アプリケーションによって生成された Playbook の実行"
       ],
       "Run remediation playbook generated by Insights": [
         "Insights で生成された修復 Playbook の実行"
@@ -420,7 +432,7 @@
         "すべてのページから推奨事項を選択する"
       ],
       "Send additional data to enhance Insights services, as per the settings": [
-        ""
+        "Insights サービスの強化のために、設定に従って追加データを送信する"
       ],
       "Set the current organization context for the request": [
         "要求に現在の組織コンテキストを設定します"
@@ -428,14 +440,20 @@
       "Settings": [
         "設定"
       ],
-      "Should import include parameter tags from Foreman?": [
-        "インポートには Foreman からのパラメータータグを含める必要がありますか?"
+      "Should import include parameter tags from Foreman? Ignored when using local Insights.": [
+        ""
       ],
       "Show Advanced Settings": [
         "詳細設定の表示"
       ],
       "Show if system is configured to use local iop-advisor-engine.": [
         "システムがローカル iop-advisor-engine を使用するように設定されているかどうかを表示します。"
+      ],
+      "Single-host report job": [
+        ""
+      ],
+      "Single-host report job for host %s": [
+        ""
       ],
       "Start inventory synchronization": [
         "インベントリー同期の開始"
@@ -468,7 +486,7 @@
         "%{filename} レポートファイルがありません"
       ],
       "The scheduled process is disabled because this Foreman is configured with a local IoP Smart Proxy.": [
-        ""
+        "この Foreman はローカルの IoP Smart Proxy で設定されているため、スケジュールされたプロセスが無効になっています。"
       ],
       "The server returned the following error: %s": [
         "サーバーは以下のエラーを返しました: %s"
@@ -478,6 +496,9 @@
       ],
       "There are no recommendations for your hosts": [
         "ホストに関する推奨事項はありません"
+      ],
+      "There were no missing Insights facets": [
+        ""
       ],
       "This action will also enable automatic reports upload": [
         "このアクションを実行すると、自動レポートのアップロードも有効になります。"
@@ -489,7 +510,7 @@
         "特定の組織のデータを手動でアップロードするには、組織を選択して {restartButtonName} をクリックします。"
       ],
       "Total CVEs": [
-        ""
+        "CVE の総数"
       ],
       "Total risk": [
         "リスクの総数"
@@ -519,10 +540,10 @@
         "Red Hat Insights での表示"
       ],
       "Vulnerabilities": [
-        ""
+        "脆弱性"
       ],
       "Vulnerability": [
-        ""
+        "脆弱性"
       ],
       "Wait and %s": [
         "待機して %s"
@@ -591,7 +612,7 @@
         "ルールタイトル"
       ],
       "setting minimal data collection": [
-        ""
+        "最小限のデータ収集の設定"
       ],
       "solution url": [
         "ソリューション URL"
