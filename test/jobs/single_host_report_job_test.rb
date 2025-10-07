@@ -5,6 +5,7 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
   include ForemanTasks::TestHelpers::WithInThreadExecutor
   include FolderIsolation
   include KatelloCVEHelper
+  include JobActionStubbing
 
   let(:base_folder) { @tmpdir }
 
@@ -23,10 +24,7 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
     )
 
     # Stub the sub-actions to isolate the orchestration logic
-    ForemanInventoryUpload::Async::GenerateHostReport.any_instance.stubs(:run)
-    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.stubs(:run)
-    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.stubs(:plan_upload_report)
-    ForemanInventoryUpload::Async::CreateMissingInsightsFacets.any_instance.stubs(:run)
+    stub_inventory_report_job_actions
   end
 
   test 'plan sets host_id in input' do

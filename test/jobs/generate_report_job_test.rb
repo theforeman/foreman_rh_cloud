@@ -125,7 +125,22 @@ class GenerateReportJobTest < ActiveSupport::TestCase
       'name~production'
     )
 
-    # The output label should include organization and parameterized filter
-    assert task.label.present?
+    # The output label should include organization id and parameterized filter
+    expected_label = "report_for_#{organization.id}[name-production]"
+    assert_equal expected_label, task.input[:instance_label]
+  end
+
+  test 'output_label without filter includes only organization id' do
+    task = ForemanTasks.sync_task(
+      ForemanInventoryUpload::Async::GenerateReportJob,
+      base_folder,
+      organization.id,
+      false,
+      ''
+    )
+
+    # The output label should include only organization id when filter is empty
+    expected_label = "report_for_#{organization.id}"
+    assert_equal expected_label, task.input[:instance_label]
   end
 end

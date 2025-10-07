@@ -79,4 +79,20 @@ class GenerateHostReportTest < ActiveSupport::TestCase
     assert_equal filter_value, task.input[:filter]
     assert_equal base_folder, task.input[:base_folder]
   end
+
+  test 'handles ArchivedReport generator failure' do
+    expected_target = File.join(base_folder, ForemanInventoryUpload.facts_archive_name(organization.id, filter))
+
+    ForemanInventoryUpload::Generators::ArchivedReport.expects(:new).with(expected_target).returns(@mock_generator)
+    @mock_generator.expects(:render).with(organization: organization.id, filter: filter).raises(StandardError.new('Report generation failed'))
+
+    assert_raises(StandardError) do
+      ForemanTasks.sync_task(
+        ForemanInventoryUpload::Async::GenerateHostReport,
+        base_folder,
+        organization.id,
+        filter
+      )
+    end
+  end
 end

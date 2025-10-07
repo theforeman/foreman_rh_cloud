@@ -4,6 +4,7 @@ require 'foreman_tasks/test_helpers'
 class HostInventoryReportJobTest < ActiveSupport::TestCase
   include ForemanTasks::TestHelpers::WithInThreadExecutor
   include FolderIsolation
+  include JobActionStubbing
 
   let(:organization) { FactoryBot.create(:organization) }
   let(:base_folder) { @tmpdir }
@@ -12,10 +13,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
 
   setup do
     # Stub the sub-actions to isolate the orchestration logic
-    ForemanInventoryUpload::Async::GenerateHostReport.any_instance.stubs(:run)
-    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.stubs(:run)
-    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.stubs(:plan_upload_report)
-    ForemanInventoryUpload::Async::CreateMissingInsightsFacets.any_instance.stubs(:run)
+    stub_inventory_report_job_actions
   end
 
   test 'plan schedules GenerateHostReport action' do
@@ -190,5 +188,89 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       custom_filter,
       upload
     )
+  end
+
+  test 'handles invalid hosts_filter parameter' do
+    invalid_filter = 'name~~'
+    expected_archive_name = ForemanInventoryUpload.facts_archive_name(organization.id, invalid_filter)
+
+    ForemanInventoryUpload::Async::GenerateHostReport.any_instance.expects(:plan).with(
+      base_folder,
+      organization.id,
+      invalid_filter
+    )
+
+    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.expects(:plan).with(
+      base_folder,
+      expected_archive_name,
+      organization.id
+    )
+
+    # Job should still run even with invalid filter syntax
+    task = ForemanTasks.sync_task(
+      ForemanInventoryUpload::Async::HostInventoryReportJob,
+      base_folder,
+      organization.id,
+      invalid_filter,
+      upload
+    )
+
+    assert_equal 'success', task.result
+  end
+
+  test 'handles potentially malicious hosts_filter parameter' do
+    malicious_filter = "'; DROP TABLE hosts; --"
+    expected_archive_name = ForemanInventoryUpload.facts_archive_name(organization.id, malicious_filter)
+
+    ForemanInventoryUpload::Async::GenerateHostReport.any_instance.expects(:plan).with(
+      base_folder,
+      organization.id,
+      malicious_filter
+    )
+
+    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.expects(:plan).with(
+      base_folder,
+      expected_archive_name,
+      organization.id
+    )
+
+    # Job should handle malicious input safely (filter is parameterized)
+    task = ForemanTasks.sync_task(
+      ForemanInventoryUpload::Async::HostInventoryReportJob,
+      base_folder,
+      organization.id,
+      malicious_filter,
+      upload
+    )
+
+    assert_equal 'success', task.result
+  end
+
+  test 'handles non-matching hosts_filter parameter' do
+    non_matching_filter = 'name~doesnotexist'
+    expected_archive_name = ForemanInventoryUpload.facts_archive_name(organization.id, non_matching_filter)
+
+    ForemanInventoryUpload::Async::GenerateHostReport.any_instance.expects(:plan).with(
+      base_folder,
+      organization.id,
+      non_matching_filter
+    )
+
+    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.expects(:plan).with(
+      base_folder,
+      expected_archive_name,
+      organization.id
+    )
+
+    # Job should succeed even if filter matches no hosts
+    task = ForemanTasks.sync_task(
+      ForemanInventoryUpload::Async::HostInventoryReportJob,
+      base_folder,
+      organization.id,
+      non_matching_filter,
+      upload
+    )
+
+    assert_equal 'success', task.result
   end
 end

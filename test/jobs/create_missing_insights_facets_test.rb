@@ -108,4 +108,41 @@ class CreateMissingInsightsFacetsTest < ActiveSupport::TestCase
       @organization.id
     )
   end
+
+  test 'correctly counts facets across multiple batches' do
+    # Remove existing insights facet
+    @host_with_facet.insights.destroy
+    @host_with_facet.reload
+
+    # Stub the batch size to force multiple batches with just 2 hosts
+    ForemanInventoryUpload.stubs(:slice_size).returns(1)
+
+    assert_nil @host_without_facet.insights
+    assert_nil @host_with_facet.insights
+
+    task = ForemanTasks.sync_task(
+      ForemanInventoryUpload::Async::CreateMissingInsightsFacets,
+      @organization.id
+    )
+
+    assert_equal 'success', task.result
+    @host_without_facet.reload
+    @host_with_facet.reload
+    assert_not_nil @host_without_facet.insights
+    assert_not_nil @host_with_facet.insights
+    # Count should be 2 even though processed in 2 separate batches
+    assert_match(/Missing Insights facets created: 2/, task.output[:result])
+  end
+
+  test 'handles error when InsightsFacet.upsert_all fails' do
+    # Stub upsert_all to raise an exception
+    InsightsFacet.stubs(:upsert_all).raises(StandardError.new('upsert failed'))
+
+    assert_raises(StandardError) do
+      ForemanTasks.sync_task(
+        ForemanInventoryUpload::Async::CreateMissingInsightsFacets,
+        @organization.id
+      )
+    end
+  end
 end

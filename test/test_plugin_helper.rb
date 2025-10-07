@@ -145,3 +145,16 @@ module UpstreamOnlySettingsTestHelper
     skip "Setting #{setting_name} is not available in Foreman"
   end
 end
+
+module JobActionStubbing
+  extend ActiveSupport::Concern
+
+  included do
+    def stub_inventory_report_job_actions
+      ForemanInventoryUpload::Async::GenerateHostReport.any_instance.stubs(:run)
+      ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.stubs(:run)
+      ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.stubs(:plan_upload_report)
+      ForemanInventoryUpload::Async::CreateMissingInsightsFacets.any_instance.stubs(:run)
+    end
+  end
+end
