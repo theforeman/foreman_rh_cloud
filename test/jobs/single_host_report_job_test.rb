@@ -81,7 +81,7 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
   end
 
   test 'humanized_name handles missing host' do
-    non_existent_host_id = 999999
+    non_existent_host_id = 999_999
 
     task = ForemanTasks.sync_task(
       ForemanInventoryUpload::Async::SingleHostReportJob,
@@ -115,7 +115,7 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
     )
 
     action = task.main_action
-    assert_nil action.hostname(999999)
+    assert_nil action.hostname(999_999)
   end
 
   test 'generates report with correct archive name for single host' do
