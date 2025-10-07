@@ -3,7 +3,7 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 11.1.0",
+        "Project-Id-Version": "foreman_rh_cloud 13.0.5",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
         "Last-Translator": "Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2023",
@@ -119,11 +119,17 @@
       "Enable automatic deletion of mismatched host records from the Red Hat cloud": [
         ""
       ],
+      "Enable automatic deletion of mismatched host records from the Red Hat cloud. Ignored when using local Insights.": [
+        ""
+      ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud": [
         "Red Hat Cloud-დან Insight-ის რეკომენდაციების ავტომატური სინქრონიზაციების ჩართვა"
       ],
-      "Enable automatic upload of your host inventory to the Red Hat cloud": [
-        "თქვენი ჰოსტების ინვენტარის Red Hat Cloud-ში ავტომატური ატვირთვის ჩართვა"
+      "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights.": [
+        ""
+      ],
+      "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights.": [
+        ""
       ],
       "Enable automatic upload of your hosts inventory to the Red Hat cloud": [
         "თქვენი ჰოსტების ინვენტარის Red Hat Cloud-ში ავტომატური ატვირთვის ჩართვა"
@@ -143,7 +149,7 @@
       "Exclude installed packages from being uploaded to the Red Hat cloud": [
         "Red Hat cloud-ში ატვირთული პაკეტების სიიდან დაყენებული პაკეტების ამოღება"
       ],
-      "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.)": [
+      "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights.": [
         ""
       ],
       "Exit Code: %s": [
@@ -209,6 +215,9 @@
       "Host Insights recommendations": [
         "ჰოსტის Insights-ის რეკომენდაციები"
       ],
+      "Host inventory report job": [
+        ""
+      ],
       "Host was not uploaded to your RH cloud inventory": [
         "ჰოსტის თქვენი RH-ის ღრუბლოვან ინვენტარში არ ატვირთულა"
       ],
@@ -272,6 +281,9 @@
       "Minimal data collection": [
         ""
       ],
+      "Missing Insights facets created: %s": [
+        ""
+      ],
       "Moderate": [
         "საშუალო"
       ],
@@ -314,16 +326,16 @@
       "Obfuscate host names sent to the Red Hat cloud": [
         "Red Hat cloud-ში გაგზავნილი ჰოსტის სახელების დამახინჯება"
       ],
-      "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.)": [
+      "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights.": [
         ""
       ],
       "Obfuscate ipv4 addresses sent to the Red Hat cloud": [
         "Red Hat cloud-ში გაგზავნილი IPv4 მისამართების დამახინჯება"
       ],
-      "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.)": [
+      "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.) Ignored when using local Insights.": [
         ""
       ],
-      "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings.": [
+      "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights.": [
         ""
       ],
       "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled": [
@@ -344,8 +356,8 @@
       "RH Cloud": [
         "RH Cloud"
       ],
-      "RHC daemon id": [
-        "RHC დემონის ID"
+      "RHC daemon id. Ignored when using local Insights.": [
+        ""
       ],
       "Read more about it in RH cloud insights": [
         "გაიგეთ მეტი RH Cloud insights-ის შესახებ"
@@ -428,13 +440,19 @@
       "Settings": [
         "მორგება"
       ],
-      "Should import include parameter tags from Foreman?": [
-        "უნდა შეიცავდეს შემოტანა პარამეტრის ჭდეებს Foreman-დან?"
+      "Should import include parameter tags from Foreman? Ignored when using local Insights.": [
+        ""
       ],
       "Show Advanced Settings": [
         "დამატებითი პარამეტრების ცვენება"
       ],
       "Show if system is configured to use local iop-advisor-engine.": [
+        ""
+      ],
+      "Single-host report job": [
+        ""
+      ],
+      "Single-host report job for host %s": [
         ""
       ],
       "Start inventory synchronization": [
@@ -477,6 +495,9 @@
         "დავალება შემდეგი შეცდომით დასრულდა:"
       ],
       "There are no recommendations for your hosts": [
+        ""
+      ],
+      "There were no missing Insights facets": [
         ""
       ],
       "This action will also enable automatic reports upload": [
