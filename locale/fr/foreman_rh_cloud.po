@@ -10,14 +10,14 @@
 # Claer <transiblu@claer.hammock.fr>, 2023
 # Amit Upadhye <aupadhye@redhat.com>, 2023
 # Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025
+# Ondřej Gajdušek, 2025
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: foreman_rh_cloud 11.1.0\n"
+"Project-Id-Version: foreman_rh_cloud 13.0.5\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
-"Last-Translator: Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarde"
-"n.nl>, 2025\n"
+"Last-Translator: Ondřej Gajdušek, 2025\n"
 "Language-Team: French (https://app.transifex.com/foreman/teams/114/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,7 +45,7 @@ msgid "All recommendations are now selected."
 msgstr "Toutes les recommandations sont maintenant sélectionnées."
 
 msgid "Analytics data collection"
-msgstr ""
+msgstr "Collecte de données analytiques"
 
 msgid "Any Organization"
 msgstr "Toute Organisation"
@@ -128,11 +128,17 @@ msgstr "Télécharger le dernier rapport"
 msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
 msgstr "Activer la suppression automatique des enregistrements d'hôtes incompatibles du cloud Red Hat"
 
+msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud. Ignored when using local Insights."
+msgstr ""
+
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud"
 msgstr "Activer la synchronisation automatique des recommandations Insights à partir de Red Hat Cloud"
 
-msgid "Enable automatic upload of your host inventory to the Red Hat cloud"
-msgstr "Activer le téléchargement automatique de votre inventaire d'hôtes dans Red Hat Cloud"
+msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights."
+msgstr ""
+
+msgid "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights."
+msgstr ""
 
 msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
 msgstr "Activer le téléchargement automatique de l'inventaire de vos hôtes dans Red Hat Cloud"
@@ -147,12 +153,12 @@ msgid "Encountered an error while trying to access the server:"
 msgstr "Une erreur s'est produite lors de l'accès au serveur :"
 
 msgid "Exclude installed packages"
-msgstr ""
+msgstr "Exclure les paquets installés"
 
 msgid "Exclude installed packages from being uploaded to the Red Hat cloud"
 msgstr "Exclure les paquets installés du téléchargement dans Red Hat Cloud"
 
-msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.)"
+msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights."
 msgstr ""
 
 msgid "Exit Code: %s"
@@ -189,7 +195,7 @@ msgid "Generate and upload report"
 msgstr "Générer et télécharger un rapport"
 
 msgid "Generate report"
-msgstr ""
+msgstr "Générer un rapport"
 
 msgid "Generate the report, but do not upload"
 msgstr "Générer le rapport, mais ne pas le télécharger"
@@ -217,6 +223,9 @@ msgstr "Récupérer les hôtes manquants dans RH Cloud"
 
 msgid "Host Insights recommendations"
 msgstr "Recommandations de Host Insights"
+
+msgid "Host inventory report job"
+msgstr ""
 
 msgid "Host was not uploaded to your RH cloud inventory"
 msgstr "L'hôte n'a pas été téléchargé dans votre inventaire RH Cloud."
@@ -261,7 +270,7 @@ msgid "Knowledgebase article"
 msgstr "Article de base de connaissances"
 
 msgid "Learn more about {minimalDataCollectionSetting}."
-msgstr ""
+msgstr "En savoir plus sur{minimalDataCollectionSetting} ."
 
 msgid "List of host UUIDs"
 msgstr "Liste des UUID d'hôtes"
@@ -279,6 +288,9 @@ msgid "Manual"
 msgstr "Manuelle"
 
 msgid "Minimal data collection"
+msgstr "Collecte minimale de données"
+
+msgid "Missing Insights facets created: %s"
 msgstr ""
 
 msgid "Moderate"
@@ -315,28 +327,28 @@ msgid "Obfuscate host ipv4 addresses"
 msgstr "Obfusquer les adresses ipv4 des hôtes"
 
 msgid "Obfuscate host ipv4 addresses."
-msgstr ""
+msgstr "Masquer les adresses IPv4 des hôtes."
 
 msgid "Obfuscate host names"
-msgstr "Obfusquer les noms d'hôtes"
+msgstr "Masquer les noms d'hôtes"
 
 msgid "Obfuscate host names sent to the Red Hat cloud"
 msgstr "Obfusquer les noms d'hôtes envoyés à Red Hat Cloud"
 
-msgid "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.)"
+msgid "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights."
 msgstr ""
 
 msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud"
 msgstr "Obfusquer les adresses ipv4 envoyées à Red Hat Cloud"
 
-msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.)"
+msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.) Ignored when using local Insights."
 msgstr ""
 
-msgid "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings."
+msgid "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights."
 msgstr ""
 
 msgid "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled"
-msgstr ""
+msgstr "Envoyez uniquement les données minimales requises au cloud Red Hat, les paramètres d'obfuscation (masquage) sont désactivés"
 
 msgid "Oops! Couldn't find organization that matches your query"
 msgstr "Oups ! Nous n'avons pas trouvé d'organisation correspondant à votre demande."
@@ -353,8 +365,8 @@ msgstr "Playbook"
 msgid "RH Cloud"
 msgstr "RH Cloud"
 
-msgid "RHC daemon id"
-msgstr "Id du démon RHC"
+msgid "RHC daemon id. Ignored when using local Insights."
+msgstr ""
 
 msgid "Read more about it in RH cloud insights"
 msgstr "Plus d'informations dans RH cloud insights"
@@ -414,7 +426,7 @@ msgid "Run RH Cloud playbook"
 msgstr "Exécuter le playbook RH Cloud"
 
 msgid "Run playbook generated by Red Hat remediations app"
-msgstr ""
+msgstr "Exécuter le playbook généré par l'app de remédiations de Red Hat"
 
 msgid "Run remediation playbook generated by Insights"
 msgstr "Exécuter le playbook de remédiation généré par Insights"
@@ -429,7 +441,7 @@ msgid "Select recommendations from all pages"
 msgstr "Sélectionner des recommandations sur toutes les pages"
 
 msgid "Send additional data to enhance Insights services, as per the settings"
-msgstr ""
+msgstr "Envoyer des données supplémentaires pour améliorer les services Insights, conformément aux paramètres"
 
 msgid "Set the current organization context for the request"
 msgstr "Définir le contexte organisationnel actuel de la demande"
@@ -437,14 +449,20 @@ msgstr "Définir le contexte organisationnel actuel de la demande"
 msgid "Settings"
 msgstr "Paramètres de configuration"
 
-msgid "Should import include parameter tags from Foreman?"
-msgstr "L'importation doit-elle inclure les balises de paramètres de Foreman ?"
+msgid "Should import include parameter tags from Foreman? Ignored when using local Insights."
+msgstr ""
 
 msgid "Show Advanced Settings"
 msgstr "Afficher les paramètres avancés"
 
 msgid "Show if system is configured to use local iop-advisor-engine."
 msgstr "Indique si le système est configuré pour utiliser le moteur iop-advisor local."
+
+msgid "Single-host report job"
+msgstr ""
+
+msgid "Single-host report job for host %s"
+msgstr ""
 
 msgid "Start inventory synchronization"
 msgstr "Démarrer la synchronisation de l'inventaire"
@@ -477,7 +495,7 @@ msgid "The report file %{filename} doesn't exist"
 msgstr "Le fichier de rapport %{filename} n'existe pas"
 
 msgid "The scheduled process is disabled because this Foreman is configured with a local IoP Smart Proxy."
-msgstr ""
+msgstr "Le processus planifié est désactivé car ce Foreman est configuré avec un proxy intelligent IoP local."
 
 msgid "The server returned the following error: %s"
 msgstr "Le serveur a renvoyé l'erreur suivante : %s"
@@ -487,6 +505,9 @@ msgstr "La tâche a échoué avec l'erreur suivante :"
 
 msgid "There are no recommendations for your hosts"
 msgstr "Il n'y a aucune recommandation pour vos hôtes"
+
+msgid "There were no missing Insights facets"
+msgstr ""
 
 msgid "This action will also enable automatic reports upload"
 msgstr "Cette action permettra également le téléchargement automatique des rapports"
@@ -498,7 +519,7 @@ msgid "To manually upload the data for a specific organization, select an organi
 msgstr "Pour télécharger manuellement les données d'une organisation spécifique, sélectionnez une organisation et cliquez sur{restartButtonName} ."
 
 msgid "Total CVEs"
-msgstr ""
+msgstr "Total des CVE"
 
 msgid "Total risk"
 msgstr "Risque total"
@@ -528,10 +549,10 @@ msgid "View in Red Hat Insights"
 msgstr "Afficher Red Hat Insights."
 
 msgid "Vulnerabilities"
-msgstr ""
+msgstr "Vulnérabilités"
 
 msgid "Vulnerability"
-msgstr ""
+msgstr "Vulnérabilité"
 
 msgid "Wait and %s"
 msgstr "Attendez et %s"
@@ -600,7 +621,7 @@ msgid "rule title"
 msgstr "titre de la règle"
 
 msgid "setting minimal data collection"
-msgstr ""
+msgstr "définir une collecte minimale de données"
 
 msgid "solution url"
 msgstr "URL de la solution"

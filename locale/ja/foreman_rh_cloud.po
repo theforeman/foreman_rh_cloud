@@ -5,14 +5,14 @@
 #
 # Translators:
 # Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025
+# Ondřej Gajdušek, 2025
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: foreman_rh_cloud 11.1.0\n"
+"Project-Id-Version: foreman_rh_cloud 13.0.5\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
-"Last-Translator: Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarde"
-"n.nl>, 2025\n"
+"Last-Translator: Ondřej Gajdušek, 2025\n"
 "Language-Team: Japanese (https://app.transifex.com/foreman/teams/114/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,7 +39,7 @@ msgid "All recommendations are now selected."
 msgstr "すべての推奨事項が選択されました。"
 
 msgid "Analytics data collection"
-msgstr ""
+msgstr "分析データの収集"
 
 msgid "Any Organization"
 msgstr "任意の組織"
@@ -122,11 +122,17 @@ msgstr "最新レポートのダウンロード"
 msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
 msgstr "不一致のホストレコードを Red Hat クラウドから自動的に削除できるようにする"
 
+msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud. Ignored when using local Insights."
+msgstr ""
+
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud"
 msgstr "Red Hat クラウドから Insights の推奨事項の自動同期を有効にする"
 
-msgid "Enable automatic upload of your host inventory to the Red Hat cloud"
-msgstr "ホストインベントリーの Red Hat クラウドに対して自動アップロードを有効にする"
+msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights."
+msgstr ""
+
+msgid "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights."
+msgstr ""
 
 msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
 msgstr "ホストインベントリーの Red Hat クラウドに対して自動アップロードを有効にする"
@@ -141,12 +147,12 @@ msgid "Encountered an error while trying to access the server:"
 msgstr "サーバーへのアクセス時にエラーが発生しました:"
 
 msgid "Exclude installed packages"
-msgstr ""
+msgstr "インストール済みパッケージの除外"
 
 msgid "Exclude installed packages from being uploaded to the Red Hat cloud"
 msgstr "Red Hat クラウドにアップロードされないようにインストール済みパッケージを除外する"
 
-msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.)"
+msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights."
 msgstr ""
 
 msgid "Exit Code: %s"
@@ -183,7 +189,7 @@ msgid "Generate and upload report"
 msgstr "レポートの生成およびアップロード"
 
 msgid "Generate report"
-msgstr ""
+msgstr "レポートを生成します。"
 
 msgid "Generate the report, but do not upload"
 msgstr "レポートを生成するがアップロードしない"
@@ -211,6 +217,9 @@ msgstr "RH Cloud にないホストを取得する"
 
 msgid "Host Insights recommendations"
 msgstr "ホストに関する Insights の推奨事項"
+
+msgid "Host inventory report job"
+msgstr ""
 
 msgid "Host was not uploaded to your RH cloud inventory"
 msgstr "ホストが RH クラウドインベントリーにアップロードされませんでした"
@@ -255,7 +264,7 @@ msgid "Knowledgebase article"
 msgstr "ナレッジベースアーティクル"
 
 msgid "Learn more about {minimalDataCollectionSetting}."
-msgstr ""
+msgstr "{minimalDataCollectionSetting} の詳細を確認してください。"
 
 msgid "List of host UUIDs"
 msgstr "ホスト UUID のリスト"
@@ -273,6 +282,9 @@ msgid "Manual"
 msgstr "手動"
 
 msgid "Minimal data collection"
+msgstr "最小限のデータ収集"
+
+msgid "Missing Insights facets created: %s"
 msgstr ""
 
 msgid "Moderate"
@@ -309,7 +321,7 @@ msgid "Obfuscate host ipv4 addresses"
 msgstr "ホストの ipv4 アドレスの難読化"
 
 msgid "Obfuscate host ipv4 addresses."
-msgstr ""
+msgstr "ホストの IPv4 アドレスを難読化します。"
 
 msgid "Obfuscate host names"
 msgstr "ホスト名の難読化"
@@ -317,20 +329,20 @@ msgstr "ホスト名の難読化"
 msgid "Obfuscate host names sent to the Red Hat cloud"
 msgstr "Red Hat クラウドに送信するホスト名を難読化する"
 
-msgid "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.)"
+msgid "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights."
 msgstr ""
 
 msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud"
 msgstr "Red Hat クラウドに送信する ipv4 アドレスを難読化する"
 
-msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.)"
+msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.) Ignored when using local Insights."
 msgstr ""
 
-msgid "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings."
+msgid "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights."
 msgstr ""
 
 msgid "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled"
-msgstr ""
+msgstr "必要最小限のデータのみを Red Hat クラウドに送信します。難読化設定は無効化されます"
 
 msgid "Oops! Couldn't find organization that matches your query"
 msgstr "クエリーに合致する組織が見つかりませんでした"
@@ -347,8 +359,8 @@ msgstr "Playbook"
 msgid "RH Cloud"
 msgstr "RH Cloud"
 
-msgid "RHC daemon id"
-msgstr "RHC デーモン ID"
+msgid "RHC daemon id. Ignored when using local Insights."
+msgstr ""
 
 msgid "Read more about it in RH cloud insights"
 msgstr "詳細は、RH cloud insights を参照してください。"
@@ -408,7 +420,7 @@ msgid "Run RH Cloud playbook"
 msgstr "RH Cloud Playbook の実行"
 
 msgid "Run playbook generated by Red Hat remediations app"
-msgstr ""
+msgstr "Red Hat 修復アプリケーションによって生成された Playbook の実行"
 
 msgid "Run remediation playbook generated by Insights"
 msgstr "Insights で生成された修復 Playbook の実行"
@@ -423,7 +435,7 @@ msgid "Select recommendations from all pages"
 msgstr "すべてのページから推奨事項を選択する"
 
 msgid "Send additional data to enhance Insights services, as per the settings"
-msgstr ""
+msgstr "Insights サービスの強化のために、設定に従って追加データを送信する"
 
 msgid "Set the current organization context for the request"
 msgstr "要求に現在の組織コンテキストを設定します"
@@ -431,14 +443,20 @@ msgstr "要求に現在の組織コンテキストを設定します"
 msgid "Settings"
 msgstr "設定"
 
-msgid "Should import include parameter tags from Foreman?"
-msgstr "インポートには Foreman からのパラメータータグを含める必要がありますか?"
+msgid "Should import include parameter tags from Foreman? Ignored when using local Insights."
+msgstr ""
 
 msgid "Show Advanced Settings"
 msgstr "詳細設定の表示"
 
 msgid "Show if system is configured to use local iop-advisor-engine."
 msgstr "システムがローカル iop-advisor-engine を使用するように設定されているかどうかを表示します。"
+
+msgid "Single-host report job"
+msgstr ""
+
+msgid "Single-host report job for host %s"
+msgstr ""
 
 msgid "Start inventory synchronization"
 msgstr "インベントリー同期の開始"
@@ -471,7 +489,7 @@ msgid "The report file %{filename} doesn't exist"
 msgstr "%{filename} レポートファイルがありません"
 
 msgid "The scheduled process is disabled because this Foreman is configured with a local IoP Smart Proxy."
-msgstr ""
+msgstr "この Foreman はローカルの IoP Smart Proxy で設定されているため、スケジュールされたプロセスが無効になっています。"
 
 msgid "The server returned the following error: %s"
 msgstr "サーバーは以下のエラーを返しました: %s"
@@ -481,6 +499,9 @@ msgstr "タスクは以下のエラーで失敗しました: "
 
 msgid "There are no recommendations for your hosts"
 msgstr "ホストに関する推奨事項はありません"
+
+msgid "There were no missing Insights facets"
+msgstr ""
 
 msgid "This action will also enable automatic reports upload"
 msgstr "このアクションを実行すると、自動レポートのアップロードも有効になります。"
@@ -492,7 +513,7 @@ msgid "To manually upload the data for a specific organization, select an organi
 msgstr "特定の組織のデータを手動でアップロードするには、組織を選択して {restartButtonName} をクリックします。"
 
 msgid "Total CVEs"
-msgstr ""
+msgstr "CVE の総数"
 
 msgid "Total risk"
 msgstr "リスクの総数"
@@ -522,10 +543,10 @@ msgid "View in Red Hat Insights"
 msgstr "Red Hat Insights での表示"
 
 msgid "Vulnerabilities"
-msgstr ""
+msgstr "脆弱性"
 
 msgid "Vulnerability"
-msgstr ""
+msgstr "脆弱性"
 
 msgid "Wait and %s"
 msgstr "待機して %s"
@@ -594,7 +615,7 @@ msgid "rule title"
 msgstr "ルールタイトル"
 
 msgid "setting minimal data collection"
-msgstr ""
+msgstr "最小限のデータ収集の設定"
 
 msgid "solution url"
 msgstr "ソリューション URL"
