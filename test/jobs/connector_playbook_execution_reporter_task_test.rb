@@ -36,11 +36,12 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
     TestConnectorPlaybookExecutionReporterTask.any_instance.stubs(:job_finished?).returns(true)
 
     action = create_and_plan_action(TestConnectorPlaybookExecutionReporterTask, @job_invocation)
-    run_action(action)
+    action = run_action(action)
 
-    actual_report = action.output[:saved_reports].first.to_s
+    saved_reports = action.output[:saved_reports]
+    actual_report = saved_reports.first.to_s
 
-    assert_equal 1, action.output[:saved_reports].size
+    assert_equal 1, saved_reports.size
     assert_not_nil actual_report
     actual_jsonl = read_jsonl(actual_report)
 
@@ -79,12 +80,18 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
     ArrangeTestHost.any_instance.stubs(:job_finished?).returns(false, true)
 
     action = create_and_plan_action(ArrangeTestHost, @job_invocation)
-    run_action(action)
+    action = run_action(action)
 
-    actual_report1 = action.output[:saved_reports].first.to_s
-    actual_report2 = action.output[:saved_reports].second.to_s
+    # Process polling cycles - manually trigger Poll events until done
+    while !action.done?
+      action.world.executor.execute(action, Dynflow::Action::Polling::Poll)
+    end
 
-    assert_equal 2, action.output[:saved_reports].size
+    saved_reports = action.output[:saved_reports]
+    actual_report1 = saved_reports.first.to_s
+    actual_report2 = saved_reports.second.to_s
+
+    assert_equal 2, saved_reports.size
     assert_not_nil actual_report1
     assert_not_nil actual_report2
 
@@ -144,13 +151,19 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
     ArrangeTestHostTwo.any_instance.stubs(:job_finished?).returns(false, false, true)
 
     action = create_and_plan_action(ArrangeTestHostTwo, @job_invocation)
-    run_action(action)
+    action = run_action(action)
 
-    actual_report1 = action.output[:saved_reports].first.to_s
-    actual_report2 = action.output[:saved_reports].second.to_s
-    actual_report3 = action.output[:saved_reports].third.to_s
+    # Process polling cycles - manually trigger Poll events until done
+    while !action.done?
+      action.world.executor.execute(action, Dynflow::Action::Polling::Poll)
+    end
 
-    assert_equal 3, action.output[:saved_reports].size
+    saved_reports = action.output[:saved_reports]
+    actual_report1 = saved_reports.first.to_s
+    actual_report2 = saved_reports.second.to_s
+    actual_report3 = saved_reports.third.to_s
+
+    assert_equal 3, saved_reports.size
     assert_not_nil actual_report1
     assert_not_nil actual_report2
     assert_not_nil actual_report3
