@@ -2,7 +2,7 @@ require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
 
 class InventoryScheduledSyncTest < ActiveSupport::TestCase
-  include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include Dynflow::Testing::Factories
 
   test 'Schedules an execution if auto upload is enabled' do
     Setting[:allow_auto_inventory_upload] = true
@@ -11,7 +11,8 @@ class InventoryScheduledSyncTest < ActiveSupport::TestCase
     InventorySync::Async::InventoryScheduledSync.any_instance.expects(:plan_org_sync).times(Organization.unscoped.count)
     InventorySync::Async::InventoryScheduledSync.any_instance.expects(:plan_remove_insights_hosts).times(Organization.unscoped.count)
 
-    ForemanTasks.sync_task(InventorySync::Async::InventoryScheduledSync)
+    action = create_and_plan_action(InventorySync::Async::InventoryScheduledSync)
+    run_action(action)
   end
 
   test 'Skips execution if with_iop_smart_proxy? is true' do
@@ -19,8 +20,9 @@ class InventoryScheduledSyncTest < ActiveSupport::TestCase
 
     InventorySync::Async::InventoryScheduledSync.any_instance.expects(:plan_org_sync).never
 
-    task = ForemanTasks.sync_task(InventorySync::Async::InventoryScheduledSync)
-    status = task.output[:status].to_s
+    action = create_and_plan_action(InventorySync::Async::InventoryScheduledSync)
+    action = run_action(action)
+    status = action.output[:status].to_s
     assert_match(/Foreman is configured with a local IoP Smart Proxy/, status)
   end
 
@@ -29,7 +31,8 @@ class InventoryScheduledSyncTest < ActiveSupport::TestCase
 
     InventorySync::Async::InventoryScheduledSync.any_instance.expects(:plan_org_sync).never
 
-    ForemanTasks.sync_task(InventorySync::Async::InventoryScheduledSync)
+    action = create_and_plan_action(InventorySync::Async::InventoryScheduledSync)
+    run_action(action)
   end
 
   test 'Skips mismatch deletion if the setting is disabled' do
@@ -39,6 +42,7 @@ class InventoryScheduledSyncTest < ActiveSupport::TestCase
     InventorySync::Async::InventoryScheduledSync.any_instance.expects(:plan_org_sync).times(Organization.unscoped.count)
     InventorySync::Async::InventoryScheduledSync.any_instance.expects(:plan_remove_insights_hosts).never
 
-    ForemanTasks.sync_task(InventorySync::Async::InventoryScheduledSync)
+    action = create_and_plan_action(InventorySync::Async::InventoryScheduledSync)
+    run_action(action)
   end
 end
