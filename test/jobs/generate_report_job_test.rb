@@ -29,7 +29,7 @@ class GenerateReportJobTest < ActiveSupport::TestCase
       organization.id
     )
 
-    assert_action_planed(action, ForemanInventoryUpload::Async::QueueForUploadJob)
+    assert_action_planned(action, ForemanInventoryUpload::Async::QueueForUploadJob)
   end
 
   test 'disconnected parameter can be set to true explicitly' do
@@ -41,7 +41,7 @@ class GenerateReportJobTest < ActiveSupport::TestCase
       true
     )
 
-    refute_action_planed(action, ForemanInventoryUpload::Async::QueueForUploadJob)
+    refute_action_planned(action, ForemanInventoryUpload::Async::QueueForUploadJob)
   end
 
   test 'disconnected parameter can be set to false explicitly' do
@@ -54,7 +54,7 @@ class GenerateReportJobTest < ActiveSupport::TestCase
       false
     )
 
-    assert_action_planed(action, ForemanInventoryUpload::Async::QueueForUploadJob)
+    assert_action_planned(action, ForemanInventoryUpload::Async::QueueForUploadJob)
   end
 
   test 'skips upload when subscription_connection_enabled is false' do
@@ -67,7 +67,7 @@ class GenerateReportJobTest < ActiveSupport::TestCase
       false
     )
 
-    refute_action_planed(action, ForemanInventoryUpload::Async::QueueForUploadJob)
+    refute_action_planned(action, ForemanInventoryUpload::Async::QueueForUploadJob)
   end
 
   test 'schedules upload when disconnected is false and subscription_connection is enabled' do
@@ -81,7 +81,7 @@ class GenerateReportJobTest < ActiveSupport::TestCase
       false
     )
 
-    assert_action_planed_with(
+    assert_action_planned_with(
       action,
       ForemanInventoryUpload::Async::QueueForUploadJob,
       base_folder,
@@ -102,7 +102,7 @@ class GenerateReportJobTest < ActiveSupport::TestCase
       hosts_filter
     )
 
-    assert_action_planed_with(
+    assert_action_planned_with(
       action,
       ForemanInventoryUpload::Async::QueueForUploadJob,
       base_folder,

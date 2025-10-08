@@ -48,7 +48,7 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
       @host.id
     )
 
-    assert_action_planed_with(
+    assert_action_planned_with(
       action,
       ForemanInventoryUpload::Async::GenerateHostReport,
       base_folder,
@@ -66,8 +66,8 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
     )
 
     # Should schedule all parent actions
-    assert_action_planed(action, ForemanInventoryUpload::Async::GenerateHostReport)
-    assert_action_planed(action, ForemanInventoryUpload::Async::QueueForUploadJob)
+    assert_action_planned(action, ForemanInventoryUpload::Async::GenerateHostReport)
+    assert_action_planned(action, ForemanInventoryUpload::Async::QueueForUploadJob)
   end
 
   test 'humanized_name includes hostname' do
@@ -127,7 +127,7 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
       @host.id
     )
 
-    assert_action_planed_with(
+    assert_action_planned_with(
       action,
       ForemanInventoryUpload::Async::QueueForUploadJob,
       base_folder,
@@ -146,7 +146,7 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
       @host.id
     )
 
-    assert_action_planed_with(
+    assert_action_planned_with(
       action,
       ForemanInventoryUpload::Async::CreateMissingInsightsFacets,
       @host.organization_id

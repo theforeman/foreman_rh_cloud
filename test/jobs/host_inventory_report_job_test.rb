@@ -23,7 +23,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       upload
     )
 
-    assert_action_planed_with(
+    assert_action_planned_with(
       action,
       ForemanInventoryUpload::Async::GenerateHostReport,
       base_folder,
@@ -43,7 +43,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       true
     )
 
-    assert_action_planed_with(
+    assert_action_planned_with(
       action,
       ForemanInventoryUpload::Async::QueueForUploadJob,
       base_folder,
@@ -61,7 +61,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       false
     )
 
-    refute_action_planed(action, ForemanInventoryUpload::Async::QueueForUploadJob)
+    refute_action_planned(action, ForemanInventoryUpload::Async::QueueForUploadJob)
   end
 
   test 'plan defaults upload to true when not specified' do
@@ -72,7 +72,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       hosts_filter
     )
 
-    assert_action_planed(action, ForemanInventoryUpload::Async::QueueForUploadJob)
+    assert_action_planned(action, ForemanInventoryUpload::Async::QueueForUploadJob)
   end
 
   test 'plan schedules CreateMissingInsightsFacets when IoP is enabled' do
@@ -86,7 +86,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       upload
     )
 
-    assert_action_planed_with(
+    assert_action_planned_with(
       action,
       ForemanInventoryUpload::Async::CreateMissingInsightsFacets,
       organization.id
@@ -104,7 +104,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       upload
     )
 
-    refute_action_planed(action, ForemanInventoryUpload::Async::CreateMissingInsightsFacets)
+    refute_action_planned(action, ForemanInventoryUpload::Async::CreateMissingInsightsFacets)
   end
 
   test 'plan schedules all three actions with IoP enabled and upload true' do
@@ -118,9 +118,9 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       true
     )
 
-    assert_action_planed(action, ForemanInventoryUpload::Async::GenerateHostReport)
-    assert_action_planed(action, ForemanInventoryUpload::Async::QueueForUploadJob)
-    assert_action_planed(action, ForemanInventoryUpload::Async::CreateMissingInsightsFacets)
+    assert_action_planned(action, ForemanInventoryUpload::Async::GenerateHostReport)
+    assert_action_planned(action, ForemanInventoryUpload::Async::QueueForUploadJob)
+    assert_action_planned(action, ForemanInventoryUpload::Async::CreateMissingInsightsFacets)
   end
 
   test 'plan schedules only generation and facets with IoP enabled and upload false' do
@@ -134,9 +134,9 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       false
     )
 
-    assert_action_planed(action, ForemanInventoryUpload::Async::GenerateHostReport)
-    refute_action_planed(action, ForemanInventoryUpload::Async::QueueForUploadJob)
-    assert_action_planed(action, ForemanInventoryUpload::Async::CreateMissingInsightsFacets)
+    assert_action_planned(action, ForemanInventoryUpload::Async::GenerateHostReport)
+    refute_action_planned(action, ForemanInventoryUpload::Async::QueueForUploadJob)
+    assert_action_planned(action, ForemanInventoryUpload::Async::CreateMissingInsightsFacets)
   end
 
   test 'humanized_name returns correct string' do
@@ -160,7 +160,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       upload
     )
 
-    assert_action_planed_with(
+    assert_action_planned_with(
       action,
       ForemanInventoryUpload::Async::GenerateHostReport,
       base_folder,
@@ -181,14 +181,14 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       upload
     )
 
-    assert_action_planed_with(
+    assert_action_planned_with(
       action,
       ForemanInventoryUpload::Async::GenerateHostReport,
       base_folder,
       organization.id,
       custom_filter
     )
-    assert_action_planed_with(
+    assert_action_planned_with(
       action,
       ForemanInventoryUpload::Async::QueueForUploadJob,
       base_folder,
@@ -209,7 +209,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
     )
 
     # Job should still plan even with invalid filter syntax
-    assert_action_planed(action, ForemanInventoryUpload::Async::GenerateHostReport)
+    assert_action_planned(action, ForemanInventoryUpload::Async::GenerateHostReport)
   end
 
   test 'handles potentially malicious hosts_filter parameter' do
@@ -224,7 +224,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
     )
 
     # Job should handle malicious input safely (filter is parameterized)
-    assert_action_planed(action, ForemanInventoryUpload::Async::GenerateHostReport)
+    assert_action_planned(action, ForemanInventoryUpload::Async::GenerateHostReport)
   end
 
   test 'handles non-matching hosts_filter parameter' do
@@ -239,6 +239,6 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
     )
 
     # Job should plan successfully even if filter matches no hosts
-    assert_action_planed(action, ForemanInventoryUpload::Async::GenerateHostReport)
+    assert_action_planned(action, ForemanInventoryUpload::Async::GenerateHostReport)
   end
 end
