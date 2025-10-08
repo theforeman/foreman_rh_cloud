@@ -4,7 +4,7 @@ require 'foreman_tasks/test_helpers'
 require "#{ForemanTasks::Engine.root}/test/support/dummy_dynflow_action"
 
 class CloudConnectorAnnounceTaskTest < ActiveSupport::TestCase
-  include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include Dynflow::Testing::Factories
 
   setup do
     RemoteExecutionFeature.register(
@@ -23,7 +23,9 @@ class CloudConnectorAnnounceTaskTest < ActiveSupport::TestCase
   test 'It executes cloud presence announcer' do
     ForemanRhCloud::CloudPresence.any_instance.expects(:announce_to_sources).times(Organization.unscoped.count)
 
-    ForemanTasks.sync_task(InsightsCloud::Async::CloudConnectorAnnounceTask, @job_invocation)
+    action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask, @job_invocation)
+    run_action(action) if action.respond_to?(:run)
+    finalize_action(action)
   end
 
   private

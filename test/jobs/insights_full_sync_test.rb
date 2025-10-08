@@ -2,7 +2,7 @@ require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
 
 class InsightsFullSyncTest < ActiveSupport::TestCase
-  include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include Dynflow::Testing::Factories
   include MockCerts
 
   setup do
@@ -72,7 +72,8 @@ class InsightsFullSyncTest < ActiveSupport::TestCase
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_hosts_sync)
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_rules_sync)
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_notifications)
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync, [@host1.organization, @host2.organization])
+    action = create_and_plan_action(InsightsCloud::Async::InsightsFullSync, [@host1.organization, @host2.organization])
+    run_action(action)
 
     @host1.reload
     @host2.reload
@@ -89,7 +90,8 @@ class InsightsFullSyncTest < ActiveSupport::TestCase
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_hosts_sync).never
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_self).never
 
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync, [@host1.organization])
+    action = create_and_plan_action(InsightsCloud::Async::InsightsFullSync, [@host1.organization])
+    run_action(action)
   end
 
   test 'Manifest is deleted do not run task steps' do
@@ -100,7 +102,8 @@ class InsightsFullSyncTest < ActiveSupport::TestCase
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_hosts_sync).never
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:plan_self).never
 
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync, [@host1.organization])
+    action = create_and_plan_action(InsightsCloud::Async::InsightsFullSync, [@host1.organization])
+    run_action(action)
   end
 
   test 'Hits counters are reset correctly' do
@@ -110,9 +113,11 @@ class InsightsFullSyncTest < ActiveSupport::TestCase
 
     InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_hosts_sync)
 
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync, [@host1.organization, @host2.organization])
+    action = create_and_plan_action(InsightsCloud::Async::InsightsFullSync, [@host1.organization, @host2.organization])
+    run_action(action)
     # Invoke again
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync, [@host1.organization, @host2.organization])
+    action = create_and_plan_action(InsightsCloud::Async::InsightsFullSync, [@host1.organization, @host2.organization])
+    run_action(action)
 
     @host1.reload
     @host2.reload
@@ -146,7 +151,8 @@ class InsightsFullSyncTest < ActiveSupport::TestCase
     InsightsCloud::Async::InsightsFullSync.any_instance.stubs(:plan_hosts_sync)
     InsightsCloud::Async::InsightsFullSync.any_instance.expects(:query_insights_hits).returns(hits)
 
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsFullSync, [@host1.organization, @host2.organization])
+    action = create_and_plan_action(InsightsCloud::Async::InsightsFullSync, [@host1.organization, @host2.organization])
+    run_action(action)
 
     @host1.reload
     @host2.reload

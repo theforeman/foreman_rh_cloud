@@ -2,7 +2,7 @@ require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
 
 class InsightsRulesSyncTest < ActiveSupport::TestCase
-  include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include Dynflow::Testing::Factories
 
   setup do
     rules_json = <<-'RULES_JSON'
@@ -119,7 +119,8 @@ class InsightsRulesSyncTest < ActiveSupport::TestCase
     # do not cleanup unused rules for tests
     InsightsCloud::Async::InsightsRulesSync.any_instance.stubs(:cleanup_rules)
 
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsRulesSync, Organization.all)
+    action = create_and_plan_action(InsightsCloud::Async::InsightsRulesSync, Organization.all)
+    run_action(action)
     @hit.reload
 
     assert_equal 2, InsightsRule.all.count
@@ -201,7 +202,8 @@ class InsightsRulesSyncTest < ActiveSupport::TestCase
     # do not cleanup unused rules for tests
     InsightsCloud::Async::InsightsRulesSync.any_instance.stubs(:cleanup_rules)
 
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsRulesSync, Organization.all)
+    action = create_and_plan_action(InsightsCloud::Async::InsightsRulesSync, Organization.all)
+    run_action(action)
 
     assert_equal 3, InsightsRule.all.count
   end
