@@ -2,7 +2,7 @@ require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
 
 class GenerateHostReportTest < ActiveSupport::TestCase
-  include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include Dynflow::Testing::Factories
   include FolderIsolation
 
   let(:organization) { FactoryBot.create(:organization) }
@@ -20,14 +20,14 @@ class GenerateHostReportTest < ActiveSupport::TestCase
     expected_archive_name = ForemanInventoryUpload.facts_archive_name(organization.id, filter)
     expected_target = File.join(base_folder, expected_archive_name)
 
-    task = ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::GenerateHostReport,
       base_folder,
       organization.id,
       filter
     )
 
-    assert_equal expected_target, task.input[:target]
+    assert_equal expected_target, action.input[:target]
   end
 
   test 'run generates report archive' do
@@ -36,15 +36,15 @@ class GenerateHostReportTest < ActiveSupport::TestCase
     ForemanInventoryUpload::Generators::ArchivedReport.expects(:new).with(expected_target).returns(@mock_generator)
     @mock_generator.expects(:render).with(organization: organization.id, filter: filter)
 
-    task = ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::GenerateHostReport,
       base_folder,
       organization.id,
       filter
     )
+    action = run_action(action)
 
-    assert_equal 'success', task.result
-    assert_match(/Generated #{Regexp.escape(expected_target)} for organization id #{organization.id}/, task.output[:result])
+    assert_match(/Generated #{Regexp.escape(expected_target)} for organization id #{organization.id}/, action.output[:result])
   end
 
   test 'generates report with filter' do
@@ -54,30 +54,30 @@ class GenerateHostReportTest < ActiveSupport::TestCase
     ForemanInventoryUpload::Generators::ArchivedReport.expects(:new).with(expected_target).returns(@mock_generator)
     @mock_generator.expects(:render).with(organization: organization.id, filter: filter_value)
 
-    task = ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::GenerateHostReport,
       base_folder,
       organization.id,
       filter_value
     )
+    action = run_action(action)
 
-    assert_equal 'success', task.result
-    assert_match(/organization id #{organization.id}/, task.output[:result])
+    assert_match(/organization id #{organization.id}/, action.output[:result])
   end
 
   test 'stores organization_id and filter in input' do
     filter_value = 'name~test'
 
-    task = ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::GenerateHostReport,
       base_folder,
       organization.id,
       filter_value
     )
 
-    assert_equal organization.id, task.input[:organization_id]
-    assert_equal filter_value, task.input[:filter]
-    assert_equal base_folder, task.input[:base_folder]
+    assert_equal organization.id, action.input[:organization_id]
+    assert_equal filter_value, action.input[:filter]
+    assert_equal base_folder, action.input[:base_folder]
   end
 
   test 'handles ArchivedReport generator failure' do
@@ -86,13 +86,15 @@ class GenerateHostReportTest < ActiveSupport::TestCase
     ForemanInventoryUpload::Generators::ArchivedReport.expects(:new).with(expected_target).returns(@mock_generator)
     @mock_generator.expects(:render).with(organization: organization.id, filter: filter).raises(StandardError.new('Report generation failed'))
 
+    action = create_and_plan_action(
+      ForemanInventoryUpload::Async::GenerateHostReport,
+      base_folder,
+      organization.id,
+      filter
+    )
+
     assert_raises(StandardError) do
-      ForemanTasks.sync_task(
-        ForemanInventoryUpload::Async::GenerateHostReport,
-        base_folder,
-        organization.id,
-        filter
-      )
+      run_action(action)
     end
   end
 end

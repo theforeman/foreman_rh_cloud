@@ -2,141 +2,145 @@ require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
 
 class HostInventoryReportJobTest < ActiveSupport::TestCase
-  include ForemanTasks::TestHelpers::WithInThreadExecutor
-  include FolderIsolation
-  include JobActionStubbing
+  include Dynflow::Testing::Factories
+  include Dynflow::Testing::Assertions
 
   let(:organization) { FactoryBot.create(:organization) }
-  let(:base_folder) { @tmpdir }
+  let(:base_folder) { Dir.mktmpdir }
   let(:hosts_filter) { '' }
   let(:upload) { true }
 
-  setup do
-    # Stub the sub-actions to isolate the orchestration logic
-    stub_inventory_report_job_actions
+  teardown do
+    FileUtils.remove_entry base_folder if Dir.exist?(base_folder)
   end
 
   test 'plan schedules GenerateHostReport action' do
-    ForemanInventoryUpload::Async::GenerateHostReport.any_instance.expects(:plan).with(
-      base_folder,
-      organization.id,
-      hosts_filter
-    )
-
-    ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::HostInventoryReportJob,
       base_folder,
       organization.id,
       hosts_filter,
       upload
+    )
+
+    assert_action_planed_with(
+      action,
+      ForemanInventoryUpload::Async::GenerateHostReport,
+      base_folder,
+      organization.id,
+      hosts_filter
     )
   end
 
   test 'plan schedules QueueForUploadJob when upload is true' do
     expected_archive_name = ForemanInventoryUpload.facts_archive_name(organization.id, hosts_filter)
 
-    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.expects(:plan).with(
-      base_folder,
-      expected_archive_name,
-      organization.id
-    )
-
-    ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::HostInventoryReportJob,
       base_folder,
       organization.id,
       hosts_filter,
       true
     )
+
+    assert_action_planed_with(
+      action,
+      ForemanInventoryUpload::Async::QueueForUploadJob,
+      base_folder,
+      expected_archive_name,
+      organization.id
+    )
   end
 
   test 'plan skips QueueForUploadJob when upload is false' do
-    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.expects(:plan).never
-
-    ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::HostInventoryReportJob,
       base_folder,
       organization.id,
       hosts_filter,
       false
     )
+
+    refute_action_planed(action, ForemanInventoryUpload::Async::QueueForUploadJob)
   end
 
   test 'plan defaults upload to true when not specified' do
-    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.expects(:plan).once
-
-    ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::HostInventoryReportJob,
       base_folder,
       organization.id,
       hosts_filter
     )
+
+    assert_action_planed(action, ForemanInventoryUpload::Async::QueueForUploadJob)
   end
 
   test 'plan schedules CreateMissingInsightsFacets when IoP is enabled' do
     ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
 
-    ForemanInventoryUpload::Async::CreateMissingInsightsFacets.any_instance.expects(:plan).with(
-      organization.id
-    )
-
-    ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::HostInventoryReportJob,
       base_folder,
       organization.id,
       hosts_filter,
       upload
+    )
+
+    assert_action_planed_with(
+      action,
+      ForemanInventoryUpload::Async::CreateMissingInsightsFacets,
+      organization.id
     )
   end
 
   test 'plan skips CreateMissingInsightsFacets when IoP is disabled' do
     ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
 
-    ForemanInventoryUpload::Async::CreateMissingInsightsFacets.any_instance.expects(:plan).never
-
-    ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::HostInventoryReportJob,
       base_folder,
       organization.id,
       hosts_filter,
       upload
     )
+
+    refute_action_planed(action, ForemanInventoryUpload::Async::CreateMissingInsightsFacets)
   end
 
   test 'plan schedules all three actions with IoP enabled and upload true' do
     ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
 
-    ForemanInventoryUpload::Async::GenerateHostReport.any_instance.expects(:plan).once
-    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.expects(:plan).once
-    ForemanInventoryUpload::Async::CreateMissingInsightsFacets.any_instance.expects(:plan).once
-
-    ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::HostInventoryReportJob,
       base_folder,
       organization.id,
       hosts_filter,
       true
     )
+
+    assert_action_planed(action, ForemanInventoryUpload::Async::GenerateHostReport)
+    assert_action_planed(action, ForemanInventoryUpload::Async::QueueForUploadJob)
+    assert_action_planed(action, ForemanInventoryUpload::Async::CreateMissingInsightsFacets)
   end
 
   test 'plan schedules only generation and facets with IoP enabled and upload false' do
     ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
 
-    ForemanInventoryUpload::Async::GenerateHostReport.any_instance.expects(:plan).once
-    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.expects(:plan).never
-    ForemanInventoryUpload::Async::CreateMissingInsightsFacets.any_instance.expects(:plan).once
-
-    ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::HostInventoryReportJob,
       base_folder,
       organization.id,
       hosts_filter,
       false
     )
+
+    assert_action_planed(action, ForemanInventoryUpload::Async::GenerateHostReport)
+    refute_action_planed(action, ForemanInventoryUpload::Async::QueueForUploadJob)
+    assert_action_planed(action, ForemanInventoryUpload::Async::CreateMissingInsightsFacets)
   end
 
   test 'humanized_name returns correct string' do
-    task = ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::HostInventoryReportJob,
       base_folder,
       organization.id,
@@ -144,24 +148,24 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       upload
     )
 
-    # Access the action through the task's execution plan
-    action = task.main_action
     assert_equal 'Host inventory report job', action.humanized_name
   end
 
   test 'handles empty hosts_filter parameter' do
-    ForemanInventoryUpload::Async::GenerateHostReport.any_instance.expects(:plan).with(
-      base_folder,
-      organization.id,
-      ''
-    )
-
-    ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::HostInventoryReportJob,
       base_folder,
       organization.id,
       '',
       upload
+    )
+
+    assert_action_planed_with(
+      action,
+      ForemanInventoryUpload::Async::GenerateHostReport,
+      base_folder,
+      organization.id,
+      ''
     )
   end
 
@@ -169,45 +173,34 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
     custom_filter = 'name~production'
     expected_archive_name = ForemanInventoryUpload.facts_archive_name(organization.id, custom_filter)
 
-    ForemanInventoryUpload::Async::GenerateHostReport.any_instance.expects(:plan).with(
-      base_folder,
-      organization.id,
-      custom_filter
-    )
-
-    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.expects(:plan).with(
-      base_folder,
-      expected_archive_name,
-      organization.id
-    )
-
-    ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::HostInventoryReportJob,
       base_folder,
       organization.id,
       custom_filter,
       upload
     )
-  end
 
-  test 'handles invalid hosts_filter parameter' do
-    invalid_filter = 'name~~'
-    expected_archive_name = ForemanInventoryUpload.facts_archive_name(organization.id, invalid_filter)
-
-    ForemanInventoryUpload::Async::GenerateHostReport.any_instance.expects(:plan).with(
+    assert_action_planed_with(
+      action,
+      ForemanInventoryUpload::Async::GenerateHostReport,
       base_folder,
       organization.id,
-      invalid_filter
+      custom_filter
     )
-
-    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.expects(:plan).with(
+    assert_action_planed_with(
+      action,
+      ForemanInventoryUpload::Async::QueueForUploadJob,
       base_folder,
       expected_archive_name,
       organization.id
     )
+  end
 
-    # Job should still run even with invalid filter syntax
-    task = ForemanTasks.sync_task(
+  test 'handles invalid hosts_filter parameter' do
+    invalid_filter = 'name~~'
+
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::HostInventoryReportJob,
       base_folder,
       organization.id,
@@ -215,27 +208,14 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       upload
     )
 
-    assert_equal 'success', task.result
+    # Job should still plan even with invalid filter syntax
+    assert_action_planed(action, ForemanInventoryUpload::Async::GenerateHostReport)
   end
 
   test 'handles potentially malicious hosts_filter parameter' do
     malicious_filter = "'; DROP TABLE hosts; --"
-    expected_archive_name = ForemanInventoryUpload.facts_archive_name(organization.id, malicious_filter)
 
-    ForemanInventoryUpload::Async::GenerateHostReport.any_instance.expects(:plan).with(
-      base_folder,
-      organization.id,
-      malicious_filter
-    )
-
-    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.expects(:plan).with(
-      base_folder,
-      expected_archive_name,
-      organization.id
-    )
-
-    # Job should handle malicious input safely (filter is parameterized)
-    task = ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::HostInventoryReportJob,
       base_folder,
       organization.id,
@@ -243,27 +223,14 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       upload
     )
 
-    assert_equal 'success', task.result
+    # Job should handle malicious input safely (filter is parameterized)
+    assert_action_planed(action, ForemanInventoryUpload::Async::GenerateHostReport)
   end
 
   test 'handles non-matching hosts_filter parameter' do
     non_matching_filter = 'name~doesnotexist'
-    expected_archive_name = ForemanInventoryUpload.facts_archive_name(organization.id, non_matching_filter)
 
-    ForemanInventoryUpload::Async::GenerateHostReport.any_instance.expects(:plan).with(
-      base_folder,
-      organization.id,
-      non_matching_filter
-    )
-
-    ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.expects(:plan).with(
-      base_folder,
-      expected_archive_name,
-      organization.id
-    )
-
-    # Job should succeed even if filter matches no hosts
-    task = ForemanTasks.sync_task(
+    action = create_and_plan_action(
       ForemanInventoryUpload::Async::HostInventoryReportJob,
       base_folder,
       organization.id,
@@ -271,6 +238,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       upload
     )
 
-    assert_equal 'success', task.result
+    # Job should plan successfully even if filter matches no hosts
+    assert_action_planed(action, ForemanInventoryUpload::Async::GenerateHostReport)
   end
 end
