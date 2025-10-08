@@ -27,7 +27,7 @@ class ExponentialBackoffTest < ActiveSupport::TestCase
     TestAction.any_instance.expects(:action_callback).returns(
       lambda do |instance|
         instance.done!
-        raise StandardError, 'Foo'
+        raise StandardError.new('Foo')
       end
     )
 
