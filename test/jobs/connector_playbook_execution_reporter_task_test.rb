@@ -83,7 +83,7 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
     action = run_action(action)
 
     # Process polling cycles - manually trigger Poll events until done
-    action.world.executor.execute(action, Dynflow::Action::Polling::Poll) until action.done?
+    run_action(action, Dynflow::Action::Polling::Poll) until action.done?
 
     saved_reports = action.output[:saved_reports]
     actual_report1 = saved_reports.first.to_s
