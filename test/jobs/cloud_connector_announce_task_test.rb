@@ -24,7 +24,6 @@ class CloudConnectorAnnounceTaskTest < ActiveSupport::TestCase
     ForemanRhCloud::CloudPresence.any_instance.expects(:announce_to_sources).times(Organization.unscoped.count)
 
     action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask, @job_invocation)
-    run_action(action) if action.respond_to?(:run)
     finalize_action(action)
   end
 
