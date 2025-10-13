@@ -2,7 +2,7 @@ require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
 
 class InventoryHostsSyncTest < ActiveSupport::TestCase
-  include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include Dynflow::Testing::Factories
   include MockCerts
   include KatelloCVEHelper
 
@@ -302,7 +302,8 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
 
     @host2.build_insights.save
 
-    ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync, [@host1.organization, @host2.organization])
+    action = create_and_plan_action(InventorySync::Async::InventoryHostsSync, [@host1.organization, @host2.organization])
+    run_action(action)
 
     @host2.reload
 
@@ -317,7 +318,8 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
       InventorySync::Async::InventoryHostsSync.any_instance.stubs(:candlepin_id_cert)
     end
 
-    ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync, [@host1.organization, @host2.organization])
+    action = create_and_plan_action(InventorySync::Async::InventoryHostsSync, [@host1.organization, @host2.organization])
+    run_action(action)
 
     @host2.reload
 
@@ -336,7 +338,8 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
 
     assert_nil @host2.insights
 
-    ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync, [@host1.organization, @host2.organization])
+    action = create_and_plan_action(InventorySync::Async::InventoryHostsSync, [@host1.organization, @host2.organization])
+    run_action(action)
 
     @host2.reload
 
@@ -353,7 +356,8 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
       InventorySync::Async::InventoryHostsSync.any_instance.stubs(:candlepin_id_cert)
     end
 
-    ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync, [org])
+    action = create_and_plan_action(InventorySync::Async::InventoryHostsSync, [org])
+    run_action(action)
 
     assert_equal 3, InsightsMissingHost.count
   end
@@ -370,7 +374,8 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
       InventorySync::Async::InventoryHostsSync.any_instance.stubs(:candlepin_id_cert)
     end
 
-    ForemanTasks.sync_task(InventorySync::Async::InventoryHostsSync, [org])
+    action = create_and_plan_action(InventorySync::Async::InventoryHostsSync, [org])
+    run_action(action)
 
     assert_equal 3, InsightsMissingHost.count
   end
