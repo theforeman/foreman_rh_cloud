@@ -2,7 +2,7 @@ require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
 
 class InventoryFullSyncTest < ActiveSupport::TestCase
-  include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include Dynflow::Testing::Factories
   include MockCerts
   include KatelloCVEHelper
 
@@ -265,7 +265,8 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
 
     InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
 
-    ForemanTasks.sync_task(InventorySync::Async::InventoryFullSync, @host2.organization)
+    action = create_and_plan_action(InventorySync::Async::InventoryFullSync, @host2.organization)
+    run_action(action)
 
     @host2.reload
 
@@ -280,7 +281,8 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
     InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
     FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
 
-    ForemanTasks.sync_task(InventorySync::Async::InventoryFullSync, @host1.organization)
+    action = create_and_plan_action(InventorySync::Async::InventoryFullSync, @host1.organization)
+    run_action(action)
     @host2.reload
 
     assert_equal InventorySync::InventoryStatus::DISCONNECT, InventorySync::InventoryStatus.where(host_id: @host1.id).first.status
@@ -291,7 +293,8 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
 
     InventorySync::Async::InventoryFullSync.any_instance.expects(:plan_self).never
 
-    ForemanTasks.sync_task(InventorySync::Async::InventoryFullSync, @host1.organization)
+    action = create_and_plan_action(InventorySync::Async::InventoryFullSync, @host1.organization)
+    run_action(action)
   end
 
   test 'Should skip hosts that are not returned in query' do
@@ -304,7 +307,8 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
     InventorySync::Async::InventoryFullSync.any_instance.expects(:affected_host_ids).returns([@host1.id, @host2.id])
     FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
 
-    ForemanTasks.sync_task(InventorySync::Async::InventoryFullSync, @host1.organization)
+    action = create_and_plan_action(InventorySync::Async::InventoryFullSync, @host1.organization)
+    run_action(action)
     @host2.reload
 
     assert_nil InventorySync::InventoryStatus.where(host_id: @host3.id).first

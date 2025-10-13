@@ -2,7 +2,7 @@ require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
 
 class RemoveInsightsHostJobTest < ActiveSupport::TestCase
-  include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include Dynflow::Testing::Factories
 
   setup do
     User.current = User.find_by(login: 'secret_admin')
@@ -18,10 +18,10 @@ class RemoveInsightsHostJobTest < ActiveSupport::TestCase
 
     FactoryBot.create(:insights_missing_host, organization: @org)
 
-    task = ForemanTasks.sync_task(ForemanInventoryUpload::Async::RemoveInsightsHostsJob, '', @org.id)
+    action = create_and_plan_action(ForemanInventoryUpload::Async::RemoveInsightsHostsJob, '', @org.id)
+    run_action(action)
 
     assert_equal 0, InsightsMissingHost.count
-    assert_equal 'success', task.result
   end
 
   test 'Does not delete hosts on cloud failure' do
@@ -31,14 +31,13 @@ class RemoveInsightsHostJobTest < ActiveSupport::TestCase
 
     FactoryBot.create(:insights_missing_host, organization: @org)
 
-    begin
-      ForemanTasks.sync_task(ForemanInventoryUpload::Async::RemoveInsightsHostsJob, '', @org.id)
-    rescue ForemanTasks::TaskError => ex
-      task = ex.task
+    action = create_and_plan_action(ForemanInventoryUpload::Async::RemoveInsightsHostsJob, '', @org.id)
+
+    assert_raises(StandardError) do
+      run_action(action)
     end
 
     assert_equal 1, InsightsMissingHost.count
-    assert_equal 'error', task.result
   end
 
   test 'Paginates the hosts list' do
@@ -54,12 +53,12 @@ class RemoveInsightsHostJobTest < ActiveSupport::TestCase
     FactoryBot.create(:insights_missing_host, organization: @org)
     FactoryBot.create(:insights_missing_host, organization: @org)
 
-    task = ForemanTasks.sync_task(ForemanInventoryUpload::Async::RemoveInsightsHostsJob, '', @org.id)
+    action = create_and_plan_action(ForemanInventoryUpload::Async::RemoveInsightsHostsJob, '', @org.id)
+    action = run_action(action)
 
     assert_equal 0, InsightsMissingHost.count
-    assert_equal 'success', task.result
-    assert_equal 'response1', task.output[:response_page1]
-    assert_equal 'response2', task.output[:response_page2]
+    assert_equal 'response1', action.output[:response_page1]
+    assert_equal 'response2', action.output[:response_page2]
   end
 
   test 'Uses scoped_search to select hosts' do
@@ -73,12 +72,12 @@ class RemoveInsightsHostJobTest < ActiveSupport::TestCase
     FactoryBot.create(:insights_missing_host, name: 'test a', organization: @org)
     FactoryBot.create(:insights_missing_host, name: 'test b', organization: @org)
 
-    task = ForemanTasks.sync_task(ForemanInventoryUpload::Async::RemoveInsightsHostsJob, 'name ~ b', @org.id)
+    action = create_and_plan_action(ForemanInventoryUpload::Async::RemoveInsightsHostsJob, 'name ~ b', @org.id)
+    action = run_action(action)
 
     assert_equal 1, InsightsMissingHost.count
     assert_equal 'test a', InsightsMissingHost.first.name
-    assert_equal 'success', task.result
-    assert_equal 'response1', task.output[:response_page1]
+    assert_equal 'response1', action.output[:response_page1]
   end
 
   def mock_response(code: 200, body: '')

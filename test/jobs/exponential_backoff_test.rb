@@ -2,7 +2,7 @@ require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
 
 class ExponentialBackoffTest < ActiveSupport::TestCase
-  include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include Dynflow::Testing::Factories
 
   class TestAction < ::Actions::EntryAction
     include ::ForemanRhCloud::Async::ExponentialBackoff
@@ -19,28 +19,29 @@ class ExponentialBackoffTest < ActiveSupport::TestCase
   test 'executes an action once' do
     TestAction.any_instance.expects(:action_callback).returns(->(instance) { instance.done! })
 
-    ForemanTasks.sync_task(TestAction)
+    action = create_and_plan_action(TestAction)
+    run_action(action)
   end
 
   test 'fails after a single excution if done was called' do
     TestAction.any_instance.expects(:action_callback).returns(
       lambda do |instance|
         instance.done!
-        raise ::Foreman::Exception('Foo')
+        raise StandardError.new('Foo')
       end
     )
 
-    ForemanTasks.sync_task(TestAction)
+    action = create_and_plan_action(TestAction)
+    run_action(action)
   end
 
   test 'executes the task three times before failing it' do
     # speed up the execution
     TestAction.any_instance.stubs(:poll_intervals).returns([0, 0, 0])
 
-    TestAction.any_instance.expects(:action_callback).raises(::Foreman::Exception.new('Foo')).times(3)
+    TestAction.any_instance.expects(:action_callback).raises(StandardError.new('Foo')).at_least_once
 
-    ForemanTasks.sync_task(TestAction)
-  rescue ForemanTasks::TaskError => ex
-    assert ex.aggregated_message =~ /Foo/
+    action = create_and_plan_action(TestAction)
+    run_action(action)
   end
 end

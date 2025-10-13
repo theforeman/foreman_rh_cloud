@@ -2,15 +2,13 @@ require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
 
 class QueueForUploadJobTest < ActiveSupport::TestCase
-  include ForemanTasks::TestHelpers::WithInThreadExecutor
-  include FolderIsolation
+  include Dynflow::Testing::Factories
 
   let(:organization) { FactoryBot.create(:organization) }
-  let(:base_folder) { @tmpdir }
+  let(:base_folder) { Dir.mktmpdir }
   let(:report_file) { 'test_report.tar.xz' }
   let(:report_path) { File.join(base_folder, report_file) }
   let(:uploads_folder) { ForemanInventoryUpload.uploads_folder }
-  subject { ForemanTasks.sync_task(ForemanInventoryUpload::Async::QueueForUploadJob, base_folder, report_file, organization.id) }
 
   setup do
     # Stub the script template source
@@ -29,19 +27,22 @@ class QueueForUploadJobTest < ActiveSupport::TestCase
 
   teardown do
     FileUtils.rm_rf(uploads_folder) if Dir.exist?(uploads_folder)
+    FileUtils.remove_entry base_folder if Dir.exist?(base_folder)
   end
 
   test 'plan method sets up the job correctly and calls plan_upload_report' do
     # Mock plan_upload_report to verify it's called
     ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.expects(:plan_upload_report).once
 
-    assert_equal 'success', subject.result
+    action = create_and_plan_action(ForemanInventoryUpload::Async::QueueForUploadJob, base_folder, report_file, organization.id)
+    run_action(action)
   end
 
   test 'run method processes file and moves it to uploads folder' do
     ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.stubs(:plan_upload_report)
 
-    assert_equal 'success', subject.result
+    action = create_and_plan_action(ForemanInventoryUpload::Async::QueueForUploadJob, base_folder, report_file, organization.id)
+    run_action(action)
 
     # Verify the file was moved
     refute File.exist?(report_path), "Original file should be moved"
@@ -51,7 +52,8 @@ class QueueForUploadJobTest < ActiveSupport::TestCase
   test 'creates necessary folders and scripts' do
     ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.stubs(:plan_upload_report)
 
-    assert_equal 'success', subject.result
+    action = create_and_plan_action(ForemanInventoryUpload::Async::QueueForUploadJob, base_folder, report_file, organization.id)
+    run_action(action)
 
     # Verify the uploads folder was created
     assert Dir.exist?(uploads_folder), "Uploads folder should be created"

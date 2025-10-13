@@ -2,7 +2,7 @@ require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
 
 class InventorySelfHostSyncTest < ActiveSupport::TestCase
-  include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include Dynflow::Testing::Factories
   include MockCerts
 
   setup do

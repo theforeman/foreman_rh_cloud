@@ -2,7 +2,7 @@ require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
 
 class InsightsResolutionsSyncTest < ActiveSupport::TestCase
-  include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include Dynflow::Testing::Factories
   include MockCerts
 
   setup do
@@ -76,7 +76,8 @@ class InsightsResolutionsSyncTest < ActiveSupport::TestCase
     Katello::UpstreamConnectionChecker.any_instance.stubs(:can_connect?).returns(true)
     InsightsCloud::Async::InsightsResolutionsSync.any_instance.stubs(:query_insights_resolutions).returns(@resolutions)
 
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsResolutionsSync)
+    action = create_and_plan_action(InsightsCloud::Async::InsightsResolutionsSync)
+    run_action(action)
     @rule.reload
 
     assert_equal 5, InsightsResolution.all.count
@@ -88,7 +89,8 @@ class InsightsResolutionsSyncTest < ActiveSupport::TestCase
     Katello::UpstreamConnectionChecker.any_instance.stubs(:can_connect?).returns(false)
     InsightsCloud::Async::InsightsResolutionsSync.any_instance.expects(:query_insights_resolutions).never
 
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsResolutionsSync)
+    action = create_and_plan_action(InsightsCloud::Async::InsightsResolutionsSync)
+    run_action(action)
 
     assert_equal 0, InsightsResolution.all.count
   end
@@ -98,7 +100,8 @@ class InsightsResolutionsSyncTest < ActiveSupport::TestCase
     Katello::UpstreamConnectionChecker.any_instance.stubs(:can_connect?).returns(true)
     InsightsCloud::Async::InsightsResolutionsSync.any_instance.expects(:query_insights_resolutions).never
 
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsResolutionsSync)
+    action = create_and_plan_action(InsightsCloud::Async::InsightsResolutionsSync)
+    run_action(action)
 
     assert_equal 0, InsightsResolution.all.count
   end
@@ -108,7 +111,8 @@ class InsightsResolutionsSyncTest < ActiveSupport::TestCase
     InsightsCloud::Async::InsightsResolutionsSync.any_instance.expects(:query_insights_resolutions).never
     InsightsRule.all.delete_all
 
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsResolutionsSync)
+    action = create_and_plan_action(InsightsCloud::Async::InsightsResolutionsSync)
+    run_action(action)
 
     assert_equal 0, InsightsResolution.all.count
   end

@@ -2,7 +2,7 @@ require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
 
 class InsightsClientStatusAgingTest < ActiveSupport::TestCase
-  include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include Dynflow::Testing::Factories
 
   setup do
     User.current = User.find_by(login: 'secret_admin')
@@ -21,7 +21,8 @@ class InsightsClientStatusAgingTest < ActiveSupport::TestCase
     InsightsClientReportStatus.find_or_initialize_by(host_id: @host3.id).update(status: InsightsClientReportStatus::REPORTING, reported_at: Time.now - InsightsClientReportStatus::REPORT_INTERVAL - 1.day)
     InsightsClientReportStatus.find_or_initialize_by(host_id: @host4.id).update(status: InsightsClientReportStatus::NO_REPORT, reported_at: Time.now - InsightsClientReportStatus::REPORT_INTERVAL - 1.day)
 
-    ForemanTasks.sync_task(InsightsCloud::Async::InsightsClientStatusAging)
+    action = create_and_plan_action(InsightsCloud::Async::InsightsClientStatusAging)
+    run_action(action)
 
     @hosts.each(&:reload)
 

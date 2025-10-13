@@ -4,7 +4,7 @@ require 'foreman_tasks/test_helpers'
 require "#{ForemanTasks::Engine.root}/test/support/dummy_dynflow_action"
 
 class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
-  include ForemanTasks::TestHelpers::WithInThreadExecutor
+  include Dynflow::Testing::Factories
 
   # override default send behavior for the test
   class TestConnectorPlaybookExecutionReporterTask < InsightsCloud::Async::ConnectorPlaybookExecutionReporterTask
@@ -35,17 +35,19 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
 
     TestConnectorPlaybookExecutionReporterTask.any_instance.stubs(:job_finished?).returns(true)
 
-    actual = ForemanTasks.sync_task(TestConnectorPlaybookExecutionReporterTask, @job_invocation)
+    action = create_and_plan_action(TestConnectorPlaybookExecutionReporterTask, @job_invocation)
+    action = run_action(action)
 
-    actual_report = actual.output[:saved_reports].first.to_s
+    saved_reports = action.output[:saved_reports]
+    actual_report = saved_reports.first.to_s
 
-    assert_equal 1, actual.output[:saved_reports].size
+    assert_equal 1, saved_reports.size
     assert_not_nil actual_report
     actual_jsonl = read_jsonl(actual_report)
 
-    assert_equal true, actual.output['task']['invocation_status']['task_state']['task_done_reported']
-    assert_equal 0, actual.output['task']['invocation_status']['hosts_state']['TEST_UUID1']['exit_status']
-    assert_equal 0, actual.output['task']['invocation_status']['hosts_state']['TEST_UUID2']['exit_status']
+    assert_equal true, action.output['task']['invocation_status']['task_state']['task_done_reported']
+    assert_equal 0, action.output['task']['invocation_status']['hosts_state']['TEST_UUID1']['exit_status']
+    assert_equal 0, action.output['task']['invocation_status']['hosts_state']['TEST_UUID2']['exit_status']
 
     assert_equal true, @job_invocation.finished?
     assert_equal 'stopped', @job_invocation.sub_task_for_host(Host.where(name: 'host1').first)['state']
@@ -77,20 +79,25 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
 
     ArrangeTestHost.any_instance.stubs(:job_finished?).returns(false, true)
 
-    actual = ForemanTasks.sync_task(ArrangeTestHost, @job_invocation)
+    action = create_and_plan_action(ArrangeTestHost, @job_invocation)
+    action = run_action(action)
 
-    actual_report1 = actual.output[:saved_reports].first.to_s
-    actual_report2 = actual.output[:saved_reports].second.to_s
+    # Process polling cycles - manually trigger Poll events until done
+    action = run_action(action, Dynflow::Action::Polling::Poll) until action.done?
 
-    assert_equal 2, actual.output[:saved_reports].size
+    saved_reports = action.output[:saved_reports]
+    actual_report1 = saved_reports.first.to_s
+    actual_report2 = saved_reports.second.to_s
+
+    assert_equal 2, saved_reports.size
     assert_not_nil actual_report1
     assert_not_nil actual_report2
 
     actual_json1 = read_jsonl(actual_report1)
     actual_json2 = read_jsonl(actual_report2)
 
-    assert_equal true, actual.output['task']['invocation_status']['task_state']['task_done_reported']
-    assert_equal 0, actual.output['task']['invocation_status']['hosts_state']['TEST_UUID1']['exit_status']
+    assert_equal true, action.output['task']['invocation_status']['task_state']['task_done_reported']
+    assert_equal 0, action.output['task']['invocation_status']['hosts_state']['TEST_UUID1']['exit_status']
 
     assert_equal 'stopped', @job_invocation.sub_task_for_host(Host.where(name: 'host1').first)['state']
 
@@ -141,13 +148,18 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
 
     ArrangeTestHostTwo.any_instance.stubs(:job_finished?).returns(false, false, true)
 
-    actual = ForemanTasks.sync_task(ArrangeTestHostTwo, @job_invocation)
+    action = create_and_plan_action(ArrangeTestHostTwo, @job_invocation)
+    action = run_action(action)
 
-    actual_report1 = actual.output[:saved_reports].first.to_s
-    actual_report2 = actual.output[:saved_reports].second.to_s
-    actual_report3 = actual.output[:saved_reports].third.to_s
+    # Process polling cycles - manually trigger Poll events until done
+    action = run_action(action, Dynflow::Action::Polling::Poll) until action.done?
 
-    assert_equal 3, actual.output[:saved_reports].size
+    saved_reports = action.output[:saved_reports]
+    actual_report1 = saved_reports.first.to_s
+    actual_report2 = saved_reports.second.to_s
+    actual_report3 = saved_reports.third.to_s
+
+    assert_equal 3, saved_reports.size
     assert_not_nil actual_report1
     assert_not_nil actual_report2
     assert_not_nil actual_report3
@@ -156,8 +168,8 @@ class ConnectorPlaybookExecutionReporterTaskTest < ActiveSupport::TestCase
     actual_json2 = read_jsonl(actual_report2)
     actual_json3 = read_jsonl(actual_report3)
 
-    assert_equal true, actual.output['task']['invocation_status']['task_state']['task_done_reported']
-    assert_equal 0, actual.output['task']['invocation_status']['hosts_state']['TEST_UUID1']['exit_status']
+    assert_equal true, action.output['task']['invocation_status']['task_state']['task_done_reported']
+    assert_equal 0, action.output['task']['invocation_status']['hosts_state']['TEST_UUID1']['exit_status']
 
     assert_not_nil actual_report_updated = actual_json1.find { |l| l['type'] == 'playbook_run_update' && l['host'] == 'TEST_UUID1' }
     assert_equal 'TEST_CORRELATION', actual_report_updated['correlation_id']
