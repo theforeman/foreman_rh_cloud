@@ -8,7 +8,7 @@ module ForemanInventoryUpload
       def run
         organization = ::Organization.find(input[:organization_id])
         hosts_without_facets = ::ForemanInventoryUpload::Generators::Queries.for_org(organization, hosts_query: 'null? insights_uuid')
-        facet_count = hosts_without_facets.count
+        facet_count = 0
         hosts_without_facets.each do |batch|
           facets = batch.pluck(:id, 'katello_subscription_facets.uuid').map do |host_id, uuid|
             {
@@ -20,6 +20,7 @@ module ForemanInventoryUpload
           # rubocop:disable Rails/SkipsModelValidations
           InsightsFacet.upsert_all(facets, unique_by: :host_id) unless facets.empty?
           # rubocop:enable Rails/SkipsModelValidations
+          facet_count += facets.size
         end
         output[:result] = facet_count.zero? ? _("There were no missing Insights facets") : format(_("Missing Insights facets created: %s"), facet_count)
         Rails.logger.info output[:result]
