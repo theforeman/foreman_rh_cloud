@@ -39,13 +39,23 @@ namespace :rh_cloud_inventory do
 
       User.as_anonymous_admin do
         organization_ids.each do |organization_id|
-          ForemanTasks.sync_task(
+          task = ForemanTasks.sync_task(
             ForemanInventoryUpload::Async::HostInventoryReportJob,
             base_folder,
             organization_id,
             filter,
             false # don't upload; the user ran report:generate and not report:generate_upload
           )
+
+          if task.result == 'success'
+            unless Setting[:subscription_connection_enabled]
+              target_file = File.join(base_folder, ForemanInventoryUpload.facts_archive_name(organization_id, filter))
+              puts "Generated #{target_file} for organization id #{organization_id}"
+            end
+          else
+            puts "Failed to generate report for organization id #{organization_id}. Task result: #{task.result}"
+            puts "Check task #{task.id} in the Tasks dashboard for error details."
+          end
         end
         puts "Check the Uploading tab for report uploading status." if Setting[:subscription_connection_enabled]
       end
