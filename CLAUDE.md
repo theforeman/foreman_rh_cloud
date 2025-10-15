@@ -342,6 +342,82 @@ Required plugins:
 - `foreman_ansible` - Remote execution with Ansible
 - `foreman_tasks` - Dynflow task framework
 
+## Katello Overrides & Extensions
+
+**IMPORTANT**: This plugin patches and extends Katello classes. Changes to these Katello components may cause regressions in foreman_rh_cloud.
+
+### Classes Extended/Patched
+
+The plugin modifies Katello behavior in the following locations (defined in `lib/foreman_rh_cloud/engine.rb:38-42,95-111`):
+
+#### 1. **Host Model Extensions** (`::Host::Managed`)
+- **File**: `app/models/concerns/rh_cloud_host.rb`
+- **Module**: `RhCloudHost`
+- **Purpose**: Adds Red Hat Cloud-specific associations to all hosts
+- **Changes**:
+  - Adds `inventory_upload_facts` association
+  - Adds `insights_hits` association through insights facet
+  - Adds `insights_client_report_status_object` association
+  - Adds `inventory_sync_status_object` association
+  - Adds scoped searches for insights recommendations, client report status, inventory sync status, and insights UUID
+  - Provides `insights_facet` helper method
+
+#### 2. **Manifest Import Notification** (`Katello::UINotifications::Subscriptions::ManifestImportSuccess`)
+- **File**: `lib/foreman_inventory_upload/notifications/manifest_import_success_notification_override.rb`
+- **Module**: `ForemanInventoryUpload::Notifications::ManifestImportSuccessNotificationOverride`
+- **Purpose**: Adds custom action link to manifest import success notifications
+- **Overridden Methods**:
+  - `actions` - Overrides parent class method (from `Katello::UINotifications::AbstractNotification:20-22`) to add "Enable inventory upload" link
+- **Original Katello File**: `/home/vagrant/katello/app/services/katello/ui_notifications/subscriptions/manifest_import_success.rb`
+
+#### 3. **Package Profile Upload Controller** (`Katello::Api::Rhsm::CandlepinDynflowProxyController`)
+- **File**: `app/controllers/concerns/insights_cloud/package_profile_upload_extensions.rb`
+- **Module**: `InsightsCloud::PackageProfileUploadExtensions`
+- **Purpose**: Triggers inventory report generation when hosts upload package profiles (IoP mode only)
+- **Hooks Added**:
+  - `after_action :generate_host_report` on `:upload_package_profile` and `:upload_profiles` actions
+- **Behavior**: In IoP mode, generates single-host inventory report and creates insights facet if missing
+- **Original Katello File**: `/home/vagrant/katello/app/controllers/katello/api/rhsm/candlepin_dynflow_proxy_controller.rb:16-40`
+- **Original Actions**: These actions handle client package profile uploads via subscription-manager
+
+#### 4. **Organizations API Controller** (`Katello::Api::V2::OrganizationsController`)
+- **File**: `lib/foreman_rh_cloud/engine.rb:95-102`
+- **Purpose**: Allows IoP Smart Proxy to access organization APIs for debugging
+- **Changes**:
+  - Includes `Foreman::Controller::SmartProxyAuth` concern
+  - Adds smart proxy authentication filters for `:index` and `:download_debug_certificate` actions
+  - Filters allow IoP Smart Proxy feature authentication
+- **Original Katello File**: `/home/vagrant/katello/app/controllers/katello/api/v2/organizations_controller.rb`
+- **Note**: Callback order patched to ensure `local_find_taxonomy` runs after user initialization
+
+#### 5. **Repositories API Controller** (`Katello::Api::V2::RepositoriesController`)
+- **File**: `lib/foreman_rh_cloud/engine.rb:103-110`
+- **Purpose**: Allows IoP Smart Proxy to access repository index API
+- **Changes**:
+  - Includes `Foreman::Controller::SmartProxyAuth` concern
+  - Adds smart proxy authentication filter for `:index` action
+  - Filters allow IoP Smart Proxy feature authentication
+- **Original Katello File**: `/home/vagrant/katello/app/controllers/katello/api/v2/repositories_controller.rb`
+- **Note**: Callback order patched to ensure `find_product` runs after user initialization
+
+### Testing Katello Integration
+
+When testing changes that affect Katello integration:
+- Verify both patched and original behavior work correctly
+- Test with and without IoP mode enabled
+- Check that smart proxy authentication works for IoP endpoints
+- Ensure manifest import notifications show correct actions
+- Verify package profile uploads trigger inventory reports in IoP mode
+
+### Monitoring Katello Changes
+
+**Watch these Katello files for changes that might affect foreman_rh_cloud:**
+- `app/services/katello/ui_notifications/abstract_notification.rb` - Parent class for notifications
+- `app/services/katello/ui_notifications/subscriptions/manifest_import_success.rb` - Notification class we override
+- `app/controllers/katello/api/rhsm/candlepin_dynflow_proxy_controller.rb` - Controller with upload actions we hook into
+- `app/controllers/katello/api/v2/organizations_controller.rb` - Controller we patch for smart proxy auth
+- `app/controllers/katello/api/v2/repositories_controller.rb` - Controller we patch for smart proxy auth
+
 ## Contributing & Pull Requests
 
 **IMPORTANT**: When creating pull requests, target your personal fork, NOT the upstream repository.
