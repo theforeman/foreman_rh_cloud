@@ -97,7 +97,8 @@ module ForemanRhCloud
         Katello::Api::V2::OrganizationsController.before_find_taxonomy_actions do
           Katello::Api::V2::OrganizationsController.add_smart_proxy_filters(
             [:index, :download_debug_certificate],
-            features: ForemanRhCloud.on_prem_smart_proxy_features
+            features: ForemanRhCloud.on_prem_smart_proxy_features,
+            ensure_session_expiry: true
           )
         end
         Katello::Api::V2::RepositoriesController.include Foreman::Controller::SmartProxyAuth
@@ -105,7 +106,8 @@ module ForemanRhCloud
         Katello::Api::V2::RepositoriesController.before_index_actions do
           Katello::Api::V2::RepositoriesController.add_smart_proxy_filters(
             :index,
-            features: ForemanRhCloud.on_prem_smart_proxy_features
+            features: ForemanRhCloud.on_prem_smart_proxy_features,
+            ensure_session_expiry: true
           )
         end
       end
