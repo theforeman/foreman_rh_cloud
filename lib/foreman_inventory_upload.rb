@@ -88,8 +88,12 @@ module ForemanInventoryUpload
     inventory_base_url + "?hostname_or_id=#{ForemanRhCloud.foreman_host.fqdn}"
   end
 
-  def self.hosts_by_ids_url(host_ids)
-    host_ids_string = host_ids.join(',')
+  def self.host_by_id_url(host_uuid)
+    "#{inventory_base_url}/#{host_uuid}"
+  end
+
+  def self.hosts_by_ids_url(host_uuids)
+    host_ids_string = host_uuids.join(',')
     "#{inventory_base_url}/#{host_ids_string}"
   end
 end
