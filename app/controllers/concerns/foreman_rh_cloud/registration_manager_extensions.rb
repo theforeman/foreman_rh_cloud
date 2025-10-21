@@ -13,7 +13,7 @@ module ForemanRhCloud
       host.reload
 
       # Only delete from HBI in IoP mode (hosted mode uses async job for cleanup)
-      hbi_host_destroy(host) if ForemanRhCloud.with_iop_smart_proxy? && !organization_destroy && host.insights_facet.try(:uuid)
+      hbi_host_destroy(host) if ForemanRhCloud.with_iop_smart_proxy? && !organization_destroy && host.insights_facet&.uuid&.presence
       host.insights&.destroy!
       super(host, options)
     end
@@ -33,7 +33,7 @@ module ForemanRhCloud
       Rails.logger.warn(_("Attempted to destroy HBI host %s, but host does not exist in HBI") % uuid)
     rescue StandardError => e
       # TODO: Improve error handling - don't break registration if HBI delete fails
-      Rails.logger.error(_("Failed to destroy HBI host %s: %s") % [uuid, e.message])
+      Rails.logger.error(format(_("Failed to destroy HBI host %s: %s"), uuid, e.message))
     end
   end
 end

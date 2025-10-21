@@ -56,6 +56,20 @@ module ForemanRhCloud
         end
       end
 
+      test 'should NOT call HBI delete when host has insights_facet with empty UUID' do
+        host_with_empty_uuid_facet = FactoryBot.create(:host, :managed, organization: @org)
+        empty_uuid_facet = InsightsFacet.create!(host: host_with_empty_uuid_facet, uuid: '')
+        ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+
+        Katello::RegistrationManager.expects(:execute_cloud_request).never
+
+        assert_nothing_raised do
+          Katello::RegistrationManager.unregister_host(host_with_empty_uuid_facet, unregistering: true)
+        end
+
+        assert_nil InsightsFacet.find_by(id: empty_uuid_facet.id)
+      end
+
       test 'should NOT call HBI delete when insights_facet has no UUID' do
         facet_id = @insights_facet.id
         @insights_facet.update(uuid: nil)
@@ -153,7 +167,7 @@ module ForemanRhCloud
     context 'integration' do
       test 'should be properly prepended to RegistrationManager' do
         assert_includes Katello::RegistrationManager.singleton_class.ancestors,
-                        ForemanRhCloud::RegistrationManagerExtensions
+          ForemanRhCloud::RegistrationManagerExtensions
       end
 
       test 'should preserve original unregister_host behavior' do
