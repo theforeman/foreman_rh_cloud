@@ -23,7 +23,7 @@ module ForemanInventoryUpload
           facet_count += facets.size
         end
         output[:result] = facet_count.zero? ? _("There were no missing Insights facets") : format(_("Missing Insights facets created: %s"), facet_count)
-        Rails.logger.info output[:result]
+        Rails.logger.debug output[:result]
       end
     end
   end

@@ -101,7 +101,7 @@ class CreateMissingInsightsFacetsTest < ActiveSupport::TestCase
   end
 
   test 'logs result message' do
-    Rails.logger.expects(:info).with(regexp_matches(/Missing Insights facets created/))
+    Rails.logger.expects(:debug).with(regexp_matches(/Missing Insights facets created/))
 
     action = create_and_plan_action(
       ForemanInventoryUpload::Async::CreateMissingInsightsFacets,
