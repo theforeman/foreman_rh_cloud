@@ -16,7 +16,7 @@ import { modifyRows } from './RemediationHelpers';
 import ModalFooter from './RemediationModalFooter';
 import TableEmptyState from '../../../common/table/EmptyState';
 import './RemediationModal.scss';
-import { useAdvisorEngineConfig } from '../../../common/Hooks/ConfigHooks';
+import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 
 /* eslint-disable spellcheck/spell-checker */
 
@@ -82,7 +82,7 @@ const RemediationModal = ({
   const [rows, setRows] = React.useState([]);
   const toggleModal = () => setOpen(prevValue => !prevValue);
 
-  const isIop = useAdvisorEngineConfig();
+  const isIop = useIopConfig();
   useEffect(() => {
     // only fetch for Hosted. IoP provides via props.
     if (!isIop && open)

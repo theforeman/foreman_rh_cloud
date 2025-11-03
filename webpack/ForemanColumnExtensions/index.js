@@ -79,6 +79,8 @@ const hostsIndexColumnExtensions = [
     categoryName: insightsCategoryName,
     categoryKey: 'insights',
     isSorted: false,
+    // eslint-disable-next-line camelcase
+    isRelevant: contextData => contextData?.metadata?.foreman_rh_cloud?.iop,
   },
 ];
 

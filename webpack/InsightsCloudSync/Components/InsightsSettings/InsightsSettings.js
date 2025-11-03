@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 import { translate as __ } from 'foremanReact/common/I18n';
 import SwitcherPF4 from '../../../common/Switcher/SwitcherPF4';
 import './insightsSettings.scss';
-import { useAdvisorEngineConfig } from '../../../common/Hooks/ConfigHooks';
+import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 
 const InsightsSettings = ({
   insightsSyncEnabled,
   getInsightsSyncSettings,
   setInsightsSyncEnabled,
 }) => {
-  const isLocalAdvisorEngine = useAdvisorEngineConfig();
+  const isIop = useIopConfig();
   useEffect(() => {
     getInsightsSyncSettings();
   }, [getInsightsSyncSettings]);
 
-  if (isLocalAdvisorEngine) return null;
+  if (isIop) return null;
 
   return (
     <div className="insights_settings">
