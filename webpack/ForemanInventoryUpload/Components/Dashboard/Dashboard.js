@@ -49,7 +49,8 @@ class Dashboard extends React.Component {
       showFullScreen,
       activeTab,
     } = this.props;
-    const downloadButtonDisabled = () => account.report_file_paths.length === 0;
+    const downloadButtonDisabled = () =>
+      !account.report_file_paths || account.report_file_paths.length === 0;
     return (
       <NavContainer
         items={[
@@ -120,6 +121,7 @@ Dashboard.propTypes = {
     generate_report_status: PropTypes.string,
     upload_report_status: PropTypes.string,
     report_file_paths: PropTypes.arrayOf(PropTypes.string),
+    id: PropTypes.number,
   }),
   showFullScreen: PropTypes.bool,
   toggleFullScreen: PropTypes.func,
@@ -140,6 +142,7 @@ Dashboard.defaultProps = {
     generate_report_status: 'unknown',
     upload_report_status: 'unknown',
     report_file_paths: [],
+    id: 0,
   },
   showFullScreen: false,
   toggleFullScreen: noop,

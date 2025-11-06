@@ -10,8 +10,10 @@ import PropTypes from 'prop-types';
 import ListItemStatus from '../ListItemStatus';
 import Dashboard from '../../../Dashboard';
 
-const ListItem = ({ label, account }) => {
+const ListItem = ({ label, account = {} }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const accountId = account?.id ?? 0;
+
   return (
     <AccordionItem>
       <AccordionToggle
@@ -30,7 +32,7 @@ const ListItem = ({ label, account }) => {
         <ListItemStatus key={`${label}_status`} account={account} />
       </AccordionToggle>
       <AccordionContent isHidden={!isExpanded}>
-        <Dashboard accountID={account.id} account={account} />
+        <Dashboard accountID={accountId} account={account} />
       </AccordionContent>
     </AccordionItem>
   );

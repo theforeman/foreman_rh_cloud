@@ -40,7 +40,7 @@ class AccountList extends Component {
     }
 
     const items = Object.keys(filteredAccount).map((label, index) => {
-      const account = accounts[label];
+      const account = filteredAccount[label];
       return <ListItem key={index} label={label} account={account} />;
     });
     return <Accordion className="account-list">{items}</Accordion>;
