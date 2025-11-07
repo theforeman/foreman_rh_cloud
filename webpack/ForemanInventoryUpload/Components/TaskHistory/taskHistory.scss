@@ -1,0 +1,40 @@
+.task-history-container {
+  margin-top: 2rem;
+
+  .task-history-list {
+    margin-top: 1rem;
+  }
+
+  .task-history-icon-cell {
+    width: 40px;
+  }
+
+  .task-history-time-cell {
+    flex: 2;
+  }
+
+  .task-history-result-cell {
+    flex: 1;
+  }
+
+  .task-history-duration-cell {
+    flex: 1;
+  }
+
+  .task-history-link-cell {
+    flex: 1;
+    text-align: right;
+  }
+
+  .task-history-icon-success {
+    color: var(--pf-global--success-color--100);
+  }
+
+  .task-history-icon-error {
+    color: var(--pf-global--danger-color--100);
+  }
+
+  .task-history-icon-warning {
+    color: var(--pf-global--warning-color--100);
+  }
+}
