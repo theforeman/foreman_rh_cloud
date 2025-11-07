@@ -1,57 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { noop } from 'foremanReact/common/helpers';
 import { translate as __ } from 'foremanReact/common/I18n';
 import TaskProgress from '../TaskProgress';
 import NavContainer from '../NavContainer';
 import './dashboard.scss';
 
-class Dashboard extends React.Component {
-  handleTabChange = tabName => {
-    const { setActiveTab, accountID } = this.props;
-    setActiveTab(accountID, tabName);
-  };
+const Dashboard = ({ account }) => {
+  const [activeTab, setActiveTab] = useState('generating');
 
-  render() {
-    const { account, activeTab } = this.props;
-
-    return (
-      <NavContainer
-        items={[
-          {
-            icon: 'database',
-            name: __('Report Generation'),
-            component: TaskProgress,
-            props: {
-              task: account.generate_task,
-              title: __('Report Generation'),
-              emptyMessage: __('No report generation tasks have been run yet.'),
-            },
-            onClick: () => this.handleTabChange('generating'),
+  return (
+    <NavContainer
+      items={[
+        {
+          icon: 'database',
+          name: __('Report Generation'),
+          component: TaskProgress,
+          props: {
+            task: account.generate_task,
+            title: __('Report Generation'),
+            emptyMessage: __('No report generation tasks have been run yet.'),
           },
-          {
-            icon: 'cloud-upload',
-            name: __('Upload'),
-            component: TaskProgress,
-            props: {
-              task: account.upload_task,
-              title: __('Upload'),
-              emptyMessage: __('No upload tasks have been run yet.'),
-            },
-            onClick: () => this.handleTabChange('uploading'),
+          onClick: () => setActiveTab('generating'),
+        },
+        {
+          icon: 'cloud-upload',
+          name: __('Upload'),
+          component: TaskProgress,
+          props: {
+            task: account.upload_task,
+            title: __('Upload'),
+            emptyMessage: __('No upload tasks have been run yet.'),
           },
-        ]}
-        showFullScreen={false}
-        terminalProps={null}
-      />
-    );
-  }
-}
+          onClick: () => setActiveTab('uploading'),
+        },
+      ]}
+    />
+  );
+};
 
 Dashboard.propTypes = {
-  accountID: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-    .isRequired,
-  setActiveTab: PropTypes.func,
   account: PropTypes.shape({
     generate_task: PropTypes.shape({
       id: PropTypes.string,
@@ -72,16 +59,13 @@ Dashboard.propTypes = {
       duration: PropTypes.number,
     }),
   }),
-  activeTab: PropTypes.string,
 };
 
 Dashboard.defaultProps = {
-  setActiveTab: noop,
   account: {
     generate_task: null,
     upload_task: null,
   },
-  activeTab: 'generating',
 };
 
 export default Dashboard;
