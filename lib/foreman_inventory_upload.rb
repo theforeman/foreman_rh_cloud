@@ -48,10 +48,6 @@ module ForemanInventoryUpload
     @outputs_folder ||= ensure_folder(File.join(ForemanInventoryUpload.base_folder, 'outputs/'))
   end
 
-  def self.upload_script_file
-    'uploader.sh'
-  end
-
   def self.facts_archive_name(organization, filter = nil)
     "report_for_#{organization}#{filter.empty? ? nil : "[#{filter.to_s.parameterize}]"}.tar.xz"
   end

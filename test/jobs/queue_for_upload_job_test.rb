@@ -11,13 +11,6 @@ class QueueForUploadJobTest < ActiveSupport::TestCase
   let(:uploads_folder) { ForemanInventoryUpload.uploads_folder }
 
   setup do
-    # Stub the script template source
-    script_source = File.join(ForemanRhCloud::Engine.root, 'lib/foreman_inventory_upload/scripts/uploader.sh.erb')
-    File.stubs(:read).with(script_source).returns('#!/bin/bash\necho "Test script"')
-
-    # Stub template rendering
-    Foreman::Renderer.stubs(:render).returns('#!/bin/bash\necho "Rendered script"')
-
     # Stub additional settings that are accessed
     Setting.stubs(:[]).with(:content_default_http_proxy).returns(nil)
     Setting.stubs(:[]).with(:http_proxy).returns(nil)
@@ -49,7 +42,7 @@ class QueueForUploadJobTest < ActiveSupport::TestCase
     assert File.exist?(File.join(uploads_folder, report_file)), "File should exist in uploads folder"
   end
 
-  test 'creates necessary folders and scripts' do
+  test 'creates necessary folders' do
     ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.stubs(:plan_upload_report)
 
     action = create_and_plan_action(ForemanInventoryUpload::Async::QueueForUploadJob, base_folder, report_file, organization.id)
@@ -57,9 +50,5 @@ class QueueForUploadJobTest < ActiveSupport::TestCase
 
     # Verify the uploads folder was created
     assert Dir.exist?(uploads_folder), "Uploads folder should be created"
-
-    # Verify the script file was created
-    script_path = File.join(uploads_folder, ForemanInventoryUpload.upload_script_file)
-    assert File.exist?(script_path), "Upload script should be created"
   end
 end

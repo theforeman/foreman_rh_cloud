@@ -6,7 +6,7 @@ module ForemanInventoryUpload
     before_action :require_non_iop_smart_proxy, only: [:enable_cloud_connector]
 
     def last
-      label = ForemanInventoryUpload::Async::UploadReportJob.output_label(params[:organization_id])
+      label = ForemanInventoryUpload::Async::UploadReportDirectJob.output_label(params[:organization_id])
       output = ForemanInventoryUpload::Async::ProgressOutput.get(label)&.full_output
 
       render json: {
