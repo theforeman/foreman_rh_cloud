@@ -184,7 +184,7 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     TaskOutputLine.create!(label: old_label, line: 'old line')
     TaskOutputStatus.create!(label: old_label, status: 'old status')
 
-    action = create_and_plan_action(
+    create_and_plan_action(
       ForemanInventoryUpload::Async::UploadReportDirectJob,
       @filename,
       @organization.id

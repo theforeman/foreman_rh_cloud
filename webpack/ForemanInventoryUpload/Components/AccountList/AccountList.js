@@ -41,7 +41,14 @@ class AccountList extends Component {
 
     const items = Object.keys(filteredAccount).map((label, index) => {
       const account = accounts[label];
-      return <ListItem key={index} label={label} account={account} />;
+      return (
+        <ListItem
+          key={index}
+          label={label}
+          account={account}
+          defaultExpanded={index === 0}
+        />
+      );
     });
     return <Accordion className="account-list">{items}</Accordion>;
   }
@@ -53,8 +60,8 @@ AccountList.propTypes = {
   stopAccountStatusPolling: PropTypes.func,
   pollingProcessID: PropTypes.number,
   account: PropTypes.shape({
-    generate_report_status: PropTypes.string,
-    upload_report_status: PropTypes.string,
+    generated_status: PropTypes.string,
+    uploaded_status: PropTypes.string,
   }),
   accounts: PropTypes.object,
   error: PropTypes.string,
@@ -67,8 +74,8 @@ AccountList.defaultProps = {
   stopAccountStatusPolling: noop,
   pollingProcessID: 0,
   account: {
-    generate_report_status: 'unknown',
-    upload_report_status: 'unknown',
+    generated_status: 'unknown',
+    uploaded_status: 'unknown',
   },
   accounts: {},
   error: '',

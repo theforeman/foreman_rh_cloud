@@ -5,21 +5,17 @@ import { translate as __ } from 'foremanReact/common/I18n';
 import { getStatusIconByRegex } from './ListItemStatusHelper';
 
 const ListItemStatus = ({ account }) => {
-  const generatingStatusIcon = getStatusIconByRegex(
-    account.generate_report_status
-  );
-  const uploadingStatusIcon = getStatusIconByRegex(
-    account.upload_report_status
-  );
+  const generatedStatusIcon = getStatusIconByRegex(account.generated_status);
+  const uploadedStatusIcon = getStatusIconByRegex(account.uploaded_status);
   return (
     <Grid hasGutter className="status">
       <GridItem span={6} className="item">
-        <p>{__('Generating')}</p>
-        {generatingStatusIcon}
+        <p>{__('Generated')}</p>
+        {generatedStatusIcon}
       </GridItem>
       <GridItem span={6} className="item">
-        <p>{__('Uploading')}</p>
-        {uploadingStatusIcon}
+        <p>{__('Uploaded')}</p>
+        {uploadedStatusIcon}
       </GridItem>
     </Grid>
   );
@@ -27,15 +23,15 @@ const ListItemStatus = ({ account }) => {
 
 ListItemStatus.propTypes = {
   account: PropTypes.shape({
-    generate_report_status: PropTypes.string,
-    upload_report_status: PropTypes.string,
+    generated_status: PropTypes.string,
+    uploaded_status: PropTypes.string,
   }),
 };
 
 ListItemStatus.defaultProps = {
   account: {
-    generate_report_status: 'unknown',
-    uploupload_report_statusading: 'unknown',
+    generated_status: 'unknown',
+    uploaded_status: 'unknown',
   },
 };
 

@@ -8,10 +8,13 @@ module ForemanInventoryUpload
       organization_id = params[:organization_id]
       disconnected = params[:disconnected]
 
-      start_report_generation(organization_id, disconnected)
+      task = start_report_generation(organization_id, disconnected)
 
       render json: {
-        action_status: 'success',
+        id: task.id,
+        humanized: {
+          action: task.action,
+        },
       }, status: :ok
     end
   end

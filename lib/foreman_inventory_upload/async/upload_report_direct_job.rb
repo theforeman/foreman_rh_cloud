@@ -43,6 +43,9 @@ module ForemanInventoryUpload
       end
 
       def plan(filename, organization_id)
+        organization = Organization.find(organization_id)
+        action_subject(organization)
+
         plan_self(
           filename: filename,
           organization_id: organization_id

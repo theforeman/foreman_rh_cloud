@@ -18,7 +18,7 @@ import {
   Flex,
   FlexItem,
 } from '@patternfly/react-core';
-import { ClockIcon } from '@patternfly/react-icons';
+import { ClockIcon, DownloadIcon } from '@patternfly/react-icons';
 import { translate as __ } from 'foremanReact/common/I18n';
 import RelativeDateTime from 'foremanReact/components/common/dates/RelativeDateTime';
 import { API } from 'foremanReact/redux/API';
@@ -36,21 +36,37 @@ const TaskProgress = ({
 }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const [lastTaskId, setLastTaskId] = useState(task?.id);
+
+  // Track when a new task starts so we can show optimistic UI
+  const isStartingNewTask = isLoading && task?.id === lastTaskId;
 
   const handleGenerateReport = async disconnected => {
     setIsLoading(true);
     try {
-      await API.post(inventoryUrl(`${organizationId}/reports`), {
-        disconnected,
-      });
-      dispatch(
-        addToast({
-          type: 'success',
-          message: disconnected
-            ? __('Report generation started')
-            : __('Report generation and upload started'),
-        })
+      const { data } = await API.post(
+        inventoryUrl(`${organizationId}/reports`),
+        {
+          disconnected,
+        }
       );
+
+      // Update last task ID to the new task
+      setLastTaskId(data.id);
+
+      // Use Katello's toast notification pattern with task link
+      const message = disconnected
+        ? __('Report generation started')
+        : __('Report generation and upload started');
+
+      window.tfm.toastNotifications.notify({
+        message,
+        type: 'info',
+        link: {
+          children: __('Go to task page'),
+          href: `/foreman_tasks/tasks/${data.id}`,
+        },
+      });
     } catch (error) {
       dispatch(
         addToast({
@@ -62,6 +78,10 @@ const TaskProgress = ({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleDownloadReport = () => {
+    window.location.href = `/api/v2/organizations/${organizationId}/rh_cloud/report`;
   };
 
   if (!task) {
@@ -81,8 +101,9 @@ const TaskProgress = ({
                 variant="primary"
                 onClick={() => handleGenerateReport(false)}
                 isLoading={isLoading}
+                isDisabled={isLoading}
               >
-                {__('Generate and Upload Report')}
+                {__('Generate and upload report')}
               </Button>
             </FlexItem>
             <FlexItem>
@@ -90,8 +111,9 @@ const TaskProgress = ({
                 variant="secondary"
                 onClick={() => handleGenerateReport(true)}
                 isLoading={isLoading}
+                isDisabled={isLoading}
               >
-                {__('Generate Report')}
+                {__('Generate report')}
               </Button>
             </FlexItem>
           </Flex>
@@ -112,7 +134,7 @@ const TaskProgress = ({
     if (task.state === 'running') return __('Running');
     if (task.state === 'paused') return __('Paused');
     if (task.state === 'stopped') {
-      if (task.result === 'success') return __('Completed successfully');
+      if (task.result === 'success') return __('Completed');
       if (task.result === 'error') return __('Failed');
       if (task.result === 'warning') return __('Completed with warnings');
       return __('Stopped');
@@ -132,14 +154,31 @@ const TaskProgress = ({
 
   const isTaskRunning = task.state === 'running' || task.state === 'paused';
 
+  // Show 100% for completed tasks, otherwise use reported progress
+  // If starting a new task, show 0% to give immediate feedback
+  let progressValue = 0;
+  if (isStartingNewTask) {
+    progressValue = 0;
+  } else if (task.state === 'stopped') {
+    progressValue = 100;
+  } else {
+    progressValue = task.progress || 0;
+  }
+
+  // Override state label and variant when starting new task
+  const displayStateLabel = isStartingNewTask ? __('Running') : getStateLabel();
+  const displayVariant = isStartingNewTask
+    ? ProgressVariant.info
+    : getProgressVariant();
+
   return (
     <Card className="task-progress-card">
       {title && <CardTitle>{title}</CardTitle>}
       <CardBody>
         <Progress
-          value={task.progress || 0}
-          title={getStateLabel()}
-          variant={getProgressVariant()}
+          value={progressValue}
+          title={displayStateLabel}
+          variant={displayVariant}
           measureLocation="outside"
           aria-label="task-progress"
         />
@@ -147,14 +186,24 @@ const TaskProgress = ({
           <DescriptionListGroup>
             <DescriptionListTerm>{__('Started')}</DescriptionListTerm>
             <DescriptionListDescription>
-              <RelativeDateTime date={task.started_at} />
+              {!isStartingNewTask && (
+                <RelativeDateTime date={task.started_at} />
+              )}
             </DescriptionListDescription>
           </DescriptionListGroup>
-          {task.ended_at && (
+          {(task.ended_at || isStartingNewTask) && (
             <DescriptionListGroup>
               <DescriptionListTerm>{__('Duration')}</DescriptionListTerm>
               <DescriptionListDescription>
-                {formatDuration(task.duration)}
+                {!isStartingNewTask && formatDuration(task.duration)}
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+          )}
+          {(task.report_file_path || isStartingNewTask) && (
+            <DescriptionListGroup>
+              <DescriptionListTerm>{__('Report saved to')}</DescriptionListTerm>
+              <DescriptionListDescription>
+                {!isStartingNewTask && task.report_file_path}
               </DescriptionListDescription>
             </DescriptionListGroup>
           )}
@@ -167,9 +216,20 @@ const TaskProgress = ({
               variant="link"
               isInline
             >
-              {__('View Task Details')} →
+              {__('View task details')}
             </Button>
           </FlexItem>
+          {task.report_file_path && (
+            <FlexItem>
+              <Button
+                variant="secondary"
+                onClick={handleDownloadReport}
+                icon={<DownloadIcon />}
+              >
+                {__('Download report')}
+              </Button>
+            </FlexItem>
+          )}
           {taskType === 'generate' && organizationId && !isTaskRunning && (
             <>
               <FlexItem>
@@ -177,8 +237,9 @@ const TaskProgress = ({
                   variant="primary"
                   onClick={() => handleGenerateReport(false)}
                   isLoading={isLoading}
+                  isDisabled={isLoading}
                 >
-                  {__('Generate and Upload Report')}
+                  {__('Generate and upload report')}
                 </Button>
               </FlexItem>
               <FlexItem>
@@ -186,8 +247,9 @@ const TaskProgress = ({
                   variant="secondary"
                   onClick={() => handleGenerateReport(true)}
                   isLoading={isLoading}
+                  isDisabled={isLoading}
                 >
-                  {__('Generate Report')}
+                  {__('Generate report')}
                 </Button>
               </FlexItem>
             </>
@@ -207,6 +269,7 @@ TaskProgress.propTypes = {
     started_at: PropTypes.string,
     ended_at: PropTypes.string,
     duration: PropTypes.number,
+    report_file_path: PropTypes.string,
   }),
   title: PropTypes.string,
   emptyMessage: PropTypes.string,

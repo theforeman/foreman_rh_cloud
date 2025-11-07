@@ -10,8 +10,8 @@ import PropTypes from 'prop-types';
 import ListItemStatus from '../ListItemStatus';
 import Dashboard from '../../../Dashboard';
 
-const ListItem = ({ label, account }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+const ListItem = ({ label, account, defaultExpanded }) => {
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   return (
     <AccordionItem>
       <AccordionToggle
@@ -39,18 +39,20 @@ const ListItem = ({ label, account }) => {
 ListItem.propTypes = {
   label: PropTypes.string.isRequired,
   account: PropTypes.shape({
-    generate_report_status: PropTypes.string,
-    upload_report_status: PropTypes.string,
+    generated_status: PropTypes.string,
+    uploaded_status: PropTypes.string,
     id: PropTypes.number,
   }),
+  defaultExpanded: PropTypes.bool,
 };
 
 ListItem.defaultProps = {
   account: {
-    generate_report_status: 'unknown',
-    upload_report_status: 'unknown',
+    generated_status: 'unknown',
+    uploaded_status: 'unknown',
     id: 0,
   },
+  defaultExpanded: false,
 };
 
 export default ListItem;
