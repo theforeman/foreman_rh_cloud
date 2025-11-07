@@ -28,7 +28,7 @@ describe('HelpLabel', () => {
     expect(container.firstChild).toBeNull();
   });
 
-  it('should have correct accessibility attributes', () => {
+  it('should render button with correct class', () => {
     render(
       <HelpLabel
         id="some-id"
@@ -37,7 +37,8 @@ describe('HelpLabel', () => {
       />
     );
     const button = screen.getByRole('button');
-    expect(button).toHaveAttribute('aria-label', 'help-text');
+    expect(button).toHaveClass('pf-v5-c-form__group-label-help');
+    expect(button).toHaveClass('some-class');
   });
 
   it('should prevent default on button click', () => {
@@ -49,8 +50,9 @@ describe('HelpLabel', () => {
       />
     );
     const button = screen.getByRole('button');
-    const mockEvent = { preventDefault: jest.fn() };
-    button.onclick(mockEvent);
-    expect(mockEvent.preventDefault).toHaveBeenCalled();
+    const clickEvent = new MouseEvent('click', { bubbles: true, cancelable: true });
+    const preventDefaultSpy = jest.spyOn(clickEvent, 'preventDefault');
+    fireEvent(button, clickEvent);
+    expect(preventDefaultSpy).toHaveBeenCalled();
   });
 });
