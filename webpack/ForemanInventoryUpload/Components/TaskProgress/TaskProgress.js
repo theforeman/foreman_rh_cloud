@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Progress,
@@ -15,13 +15,55 @@ import {
   EmptyStateIcon,
   EmptyStateBody,
   Title,
+  Flex,
+  FlexItem,
 } from '@patternfly/react-core';
 import { ClockIcon } from '@patternfly/react-icons';
 import { translate as __ } from 'foremanReact/common/I18n';
 import RelativeDateTime from 'foremanReact/components/common/dates/RelativeDateTime';
+import { API } from 'foremanReact/redux/API';
+import { addToast } from 'foremanReact/components/ToastsList';
+import { useDispatch } from 'react-redux';
+import { inventoryUrl } from '../../ForemanInventoryHelpers';
 import './taskProgress.scss';
 
-const TaskProgress = ({ task, title, emptyMessage }) => {
+const TaskProgress = ({
+  task,
+  title,
+  emptyMessage,
+  organizationId,
+  taskType,
+}) => {
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleGenerateReport = async disconnected => {
+    setIsLoading(true);
+    try {
+      await API.post(inventoryUrl(`${organizationId}/reports`), {
+        disconnected,
+      });
+      dispatch(
+        addToast({
+          type: 'success',
+          message: disconnected
+            ? __('Report generation started')
+            : __('Report generation and upload started'),
+        })
+      );
+    } catch (error) {
+      dispatch(
+        addToast({
+          sticky: true,
+          type: 'error',
+          message: error.message,
+        })
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   if (!task) {
     return (
       <EmptyState>
@@ -29,7 +71,31 @@ const TaskProgress = ({ task, title, emptyMessage }) => {
         <Title headingLevel="h4" size="lg">
           {__('No recent tasks')}
         </Title>
-        <EmptyStateBody>{emptyMessage || __('No tasks have been run yet.')}</EmptyStateBody>
+        <EmptyStateBody>
+          {emptyMessage || __('No tasks have been run yet.')}
+        </EmptyStateBody>
+        {taskType === 'generate' && organizationId && (
+          <Flex className="task-progress-actions">
+            <FlexItem>
+              <Button
+                variant="primary"
+                onClick={() => handleGenerateReport(false)}
+                isLoading={isLoading}
+              >
+                {__('Generate and Upload Report')}
+              </Button>
+            </FlexItem>
+            <FlexItem>
+              <Button
+                variant="secondary"
+                onClick={() => handleGenerateReport(true)}
+                isLoading={isLoading}
+              >
+                {__('Generate Report')}
+              </Button>
+            </FlexItem>
+          </Flex>
+        )}
       </EmptyState>
     );
   }
@@ -54,7 +120,7 @@ const TaskProgress = ({ task, title, emptyMessage }) => {
     return task.state;
   };
 
-  const formatDuration = (seconds) => {
+  const formatDuration = seconds => {
     if (!seconds) return '';
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
@@ -63,6 +129,8 @@ const TaskProgress = ({ task, title, emptyMessage }) => {
     }
     return `${secs}s`;
   };
+
+  const isTaskRunning = task.state === 'running' || task.state === 'paused';
 
   return (
     <Card className="task-progress-card">
@@ -91,14 +159,40 @@ const TaskProgress = ({ task, title, emptyMessage }) => {
             </DescriptionListGroup>
           )}
         </DescriptionList>
-        <Button
-          component="a"
-          href={`/foreman_tasks/tasks/${task.id}`}
-          variant="link"
-          isInline
-        >
-          {__('View Task Details')} →
-        </Button>
+        <Flex className="task-progress-actions">
+          <FlexItem>
+            <Button
+              component="a"
+              href={`/foreman_tasks/tasks/${task.id}`}
+              variant="link"
+              isInline
+            >
+              {__('View Task Details')} →
+            </Button>
+          </FlexItem>
+          {taskType === 'generate' && organizationId && !isTaskRunning && (
+            <>
+              <FlexItem>
+                <Button
+                  variant="primary"
+                  onClick={() => handleGenerateReport(false)}
+                  isLoading={isLoading}
+                >
+                  {__('Generate and Upload Report')}
+                </Button>
+              </FlexItem>
+              <FlexItem>
+                <Button
+                  variant="secondary"
+                  onClick={() => handleGenerateReport(true)}
+                  isLoading={isLoading}
+                >
+                  {__('Generate Report')}
+                </Button>
+              </FlexItem>
+            </>
+          )}
+        </Flex>
       </CardBody>
     </Card>
   );
@@ -116,12 +210,16 @@ TaskProgress.propTypes = {
   }),
   title: PropTypes.string,
   emptyMessage: PropTypes.string,
+  organizationId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  taskType: PropTypes.oneOf(['generate', 'upload']),
 };
 
 TaskProgress.defaultProps = {
   task: null,
   title: null,
   emptyMessage: null,
+  organizationId: null,
+  taskType: null,
 };
 
 export default TaskProgress;

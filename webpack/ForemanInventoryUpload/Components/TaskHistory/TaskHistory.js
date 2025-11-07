@@ -35,7 +35,7 @@ const TaskHistory = ({ tasks, title }) => {
     );
   }
 
-  const getResultIcon = (result) => {
+  const getResultIcon = result => {
     if (result === 'success') {
       return <CheckCircleIcon className="task-history-icon-success" />;
     }
@@ -48,7 +48,7 @@ const TaskHistory = ({ tasks, title }) => {
     return null;
   };
 
-  const formatDuration = (seconds) => {
+  const formatDuration = seconds => {
     if (!seconds) return __('N/A');
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
@@ -58,7 +58,7 @@ const TaskHistory = ({ tasks, title }) => {
     return `${secs}s`;
   };
 
-  const getResultLabel = (result) => {
+  const getResultLabel = result => {
     if (result === 'success') return __('Success');
     if (result === 'error') return __('Failed');
     if (result === 'warning') return __('Warning');
@@ -67,7 +67,11 @@ const TaskHistory = ({ tasks, title }) => {
 
   return (
     <div className="task-history-container">
-      {title && <Title headingLevel="h3" size="md">{title}</Title>}
+      {title && (
+        <Title headingLevel="h3" size="md">
+          {title}
+        </Title>
+      )}
       <DataList aria-label="task history" className="task-history-list">
         {tasks.map(task => (
           <DataListItem key={task.id} aria-labelledby={`task-${task.id}`}>
@@ -80,10 +84,16 @@ const TaskHistory = ({ tasks, title }) => {
                   <DataListCell key="time" className="task-history-time-cell">
                     <RelativeDateTime date={task.started_at} />
                   </DataListCell>,
-                  <DataListCell key="result" className="task-history-result-cell">
+                  <DataListCell
+                    key="result"
+                    className="task-history-result-cell"
+                  >
                     {getResultLabel(task.result)}
                   </DataListCell>,
-                  <DataListCell key="duration" className="task-history-duration-cell">
+                  <DataListCell
+                    key="duration"
+                    className="task-history-duration-cell"
+                  >
                     {formatDuration(task.duration)}
                   </DataListCell>,
                   <DataListCell key="link" className="task-history-link-cell">

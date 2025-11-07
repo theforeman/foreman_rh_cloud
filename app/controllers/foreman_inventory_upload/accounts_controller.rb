@@ -6,7 +6,7 @@ module ForemanInventoryUpload
 
       accounts = Hash[
         labels.map do |id, label|
-          generate_task = latest_task_for(id, ForemanInventoryUpload::Async::GenerateReportJob)
+          generate_task = latest_task_for(id, ForemanInventoryUpload::Async::HostInventoryReportJob)
           upload_task = latest_task_for(id, ForemanInventoryUpload::Async::UploadReportDirectJob)
 
           # Backward compatibility: provide status strings
@@ -43,7 +43,7 @@ module ForemanInventoryUpload
         .joins(:links)
         .where(foreman_tasks_links: {
           resource_type: 'Organization',
-          resource_id: org_id
+          resource_id: org_id,
         })
         .with_duration
         .order('started_at DESC')
@@ -73,7 +73,7 @@ module ForemanInventoryUpload
         progress: task.progress,
         started_at: task.started_at,
         ended_at: task.ended_at,
-        duration: task.try(:duration)
+        duration: task.try(:duration),
       }
     end
   end
