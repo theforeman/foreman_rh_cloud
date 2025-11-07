@@ -4,6 +4,9 @@ import '@testing-library/jest-dom';
 import { noop } from 'foremanReact/common/helpers';
 import InsightsCloudSync from './InsightsCloudSync';
 
+// Mock webpack share scopes for module federation
+global.__webpack_share_scopes__ = { default: {} };
+
 jest.mock('foremanReact/Root/Context/ForemanContext', () => ({
   useForemanContext: () => ({
     metadata: {

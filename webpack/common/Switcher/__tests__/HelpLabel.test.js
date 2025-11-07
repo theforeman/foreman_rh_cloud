@@ -41,7 +41,7 @@ describe('HelpLabel', () => {
     expect(button).toHaveClass('some-class');
   });
 
-  it('should prevent default on button click', () => {
+  it('should have onClick handler that prevents default', () => {
     render(
       <HelpLabel
         id="some-id"
@@ -50,9 +50,11 @@ describe('HelpLabel', () => {
       />
     );
     const button = screen.getByRole('button');
-    const clickEvent = new MouseEvent('click', { bubbles: true, cancelable: true });
-    const preventDefaultSpy = jest.spyOn(clickEvent, 'preventDefault');
-    fireEvent(button, clickEvent);
-    expect(preventDefaultSpy).toHaveBeenCalled();
+    expect(button.onclick).toBeDefined();
+
+    // Test that onClick prevents default
+    const mockEvent = { preventDefault: jest.fn() };
+    button.onclick(mockEvent);
+    expect(mockEvent.preventDefault).toHaveBeenCalled();
   });
 });
