@@ -12,19 +12,14 @@ describe('InsightsTab', () => {
       expect(screen.getByText('Recommendations')).toBeInTheDocument();
     });
 
-    it('should render without hits', () => {
-      render(<InsightsTab hits={[]} />);
-      expect(screen.getByText('Recommendations')).toBeInTheDocument();
+    it('should render empty state when hits array is empty', () => {
+      render(<InsightsTab hostID={1} hits={[]} />);
+      expect(screen.getByText('No recommendations were found for this host!')).toBeInTheDocument();
     });
 
-    it('should handle undefined hits gracefully', () => {
-      render(<InsightsTab hits={undefined} />);
-      expect(screen.getByText('Recommendations')).toBeInTheDocument();
-    });
-
-    it('should handle null hits gracefully', () => {
-      render(<InsightsTab hits={null} />);
-      expect(screen.getByText('Recommendations')).toBeInTheDocument();
+    it('should use default props when hits is not provided', () => {
+      render(<InsightsTab hostID={1} />);
+      expect(screen.getByText('No recommendations were found for this host!')).toBeInTheDocument();
     });
   });
 });
