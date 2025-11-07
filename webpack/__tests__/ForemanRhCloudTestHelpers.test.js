@@ -1,20 +1,26 @@
-import { testSelectorsSnapshotWithFixtures } from '@theforeman/test';
 import {
   rhCloudStateWrapper,
   inventoryStateWrapper,
   insightsStateWrapper,
 } from '../ForemanRhCloudTestHelpers';
 
-const fixtures = {
-  'should return rhCloud wrapper': () =>
-    rhCloudStateWrapper({ inventoryChild: {} }, { insightsChild: {} }),
+describe('ForemanRhCloud helpers', () => {
+  it('should return rhCloud wrapper', () => {
+    const result = rhCloudStateWrapper({ inventoryChild: {} }, { insightsChild: {} });
+    expect(result).toHaveProperty('ForemanRhCloud');
+    expect(result.ForemanRhCloud).toHaveProperty('inventoryUpload');
+    expect(result.ForemanRhCloud).toHaveProperty('InsightsCloudSync');
+  });
 
-  'should return inventory wrapper': () =>
-    inventoryStateWrapper({ inventoryChild: {} }),
+  it('should return inventory wrapper', () => {
+    const result = inventoryStateWrapper({ inventoryChild: {} });
+    expect(result).toHaveProperty('ForemanRhCloud');
+    expect(result.ForemanRhCloud).toHaveProperty('inventoryUpload');
+  });
 
-  'should return insights wrapper': () =>
-    insightsStateWrapper({ insightsChild: {} }),
-};
-
-describe('ForemanRhCloud helpers', () =>
-  testSelectorsSnapshotWithFixtures(fixtures));
+  it('should return insights wrapper', () => {
+    const result = insightsStateWrapper({ insightsChild: {} });
+    expect(result).toHaveProperty('ForemanRhCloud');
+    expect(result.ForemanRhCloud).toHaveProperty('InsightsCloudSync');
+  });
+});

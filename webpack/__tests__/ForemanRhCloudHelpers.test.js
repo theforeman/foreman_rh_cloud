@@ -1,55 +1,69 @@
-import { testSelectorsSnapshotWithFixtures } from '@theforeman/test';
 import { foremanUrl, vulnerabilityDisabled, hasNoInsightsFacet } from '../ForemanRhCloudHelpers';
 
 global.URL_PREFIX = 'MY_TEST_URL_PREFIX.example.com';
 
-const fixtures = {
-  'should return foreman Url': () => foremanUrl('/test_path'),
-  'vulnerabilityDisabled returns false for RHEL host with vulnerability enabled': () =>
-    vulnerabilityDisabled({
+describe('ForemanRhCloud helpers', () => {
+  it('should return foreman Url', () => {
+    expect(foremanUrl('/test_path')).toBe('MY_TEST_URL_PREFIX.example.com/test_path');
+  });
+
+  it('vulnerabilityDisabled returns false for RHEL host with vulnerability enabled', () => {
+    expect(vulnerabilityDisabled({
       hostDetails: {
         operatingsystem_name: 'Red Hat Enterprise Linux',
         vulnerability: { enabled: true },
       },
-    }),
-  'vulnerabilityDisabled returns true for non-RHEL host': () =>
-    vulnerabilityDisabled({
+    })).toBe(false);
+  });
+
+  it('vulnerabilityDisabled returns true for non-RHEL host', () => {
+    expect(vulnerabilityDisabled({
       hostDetails: {
         operatingsystem_name: 'Ubuntu',
         vulnerability: { enabled: true },
       },
-    }),
-  'vulnerabilityDisabled returns true for RHEL host with vulnerability disabled': () =>
-    vulnerabilityDisabled({
+    })).toBe(true);
+  });
+
+  it('vulnerabilityDisabled returns true for RHEL host with vulnerability disabled', () => {
+    expect(vulnerabilityDisabled({
       hostDetails: {
         operatingsystem_name: 'Red Hat Enterprise Linux',
         vulnerability: { enabled: false },
       },
-    }),
-  'vulnerabilityDisabled returns true for missing vulnerability object': () =>
-    vulnerabilityDisabled({
+    })).toBe(true);
+  });
+
+  it('vulnerabilityDisabled returns true for missing vulnerability object', () => {
+    expect(vulnerabilityDisabled({
       hostDetails: {
         operatingsystem_name: 'Red Hat Enterprise Linux',
       },
-    }),
-  'vulnerabilityDisabled returns true for missing hostDetails': () =>
-    vulnerabilityDisabled({}),
-  'hasNoInsightsFacet returns false when insights_attributes is present': () =>
-    hasNoInsightsFacet({
+    })).toBe(true);
+  });
+
+  it('vulnerabilityDisabled returns true for missing hostDetails', () => {
+    expect(vulnerabilityDisabled({})).toBe(true);
+  });
+
+  it('hasNoInsightsFacet returns false when insights_attributes is present', () => {
+    expect(hasNoInsightsFacet({
       response: {
         insights_attributes: {
           uuid: 'test-uuid',
           insights_hits_count: 5,
         },
       },
-    }),
-  'hasNoInsightsFacet returns true when insights_attributes is missing': () =>
-    hasNoInsightsFacet({
-      response: {},
-    }),
-  'hasNoInsightsFacet returns true when response is missing': () =>
-    hasNoInsightsFacet({}),
-};
+    })).toBe(false);
+  });
 
-describe('ForemanRhCloud helpers', () =>
-  testSelectorsSnapshotWithFixtures(fixtures));
+  it('hasNoInsightsFacet returns true when insights_attributes is missing', () => {
+    expect(hasNoInsightsFacet({
+      response: {},
+    })).toBe(true);
+  });
+
+  it('hasNoInsightsFacet returns true when response is missing', () => {
+    expect(hasNoInsightsFacet({})).toBe(true);
+  });
+});

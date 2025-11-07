@@ -1,13 +1,19 @@
-import { testComponentSnapshotsWithFixtures } from '@theforeman/test';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { HelpLabel } from '../HelpLabel';
 
-const fixtures = {
-  'should return insights cloud Url': {
-    id: 'some-id',
-    text: 'some-text',
-    className: 'some-class',
-  },
-};
-
-describe('InsightsCloudSync helpers', () =>
-  testComponentSnapshotsWithFixtures(HelpLabel, fixtures));
+describe('InsightsCloudSync helpers', () => {
+  it('should render with props', () => {
+    render(
+      <HelpLabel
+        id="some-id"
+        text="some-text"
+        className="some-class"
+      />
+    );
+    const button = screen.getByRole('button');
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveClass('some-class');
+  });
+});

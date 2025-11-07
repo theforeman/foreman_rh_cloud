@@ -1,4 +1,3 @@
-import { testSelectorsSnapshotWithFixtures } from '@theforeman/test';
 import { rhCloudStateWrapper } from '../ForemanRhCloudTestHelpers';
 import {
   selectForemanRhCloud,
@@ -11,12 +10,20 @@ const state = rhCloudStateWrapper(
   { insightsChild: {} }
 );
 
-const fixtures = {
-  'should return ForemanRhCloud': () => selectForemanRhCloud(state),
-  'should return ForemanInventoryUpload': () =>
-    selectForemanInventoryUpload(state),
-  'should return InsightsCloudSync': () => selectInsightsCloudSync(state),
-};
+describe('ForemanRhCloud selectors', () => {
+  it('should return ForemanRhCloud', () => {
+    const result = selectForemanRhCloud(state);
+    expect(result).toHaveProperty('inventoryUpload');
+    expect(result).toHaveProperty('InsightsCloudSync');
+  });
 
-describe('ForemanRhCloud selectors', () =>
-  testSelectorsSnapshotWithFixtures(fixtures));
+  it('should return ForemanInventoryUpload', () => {
+    const result = selectForemanInventoryUpload(state);
+    expect(result).toHaveProperty('inventoryChild');
+  });
+
+  it('should return InsightsCloudSync', () => {
+    const result = selectInsightsCloudSync(state);
+    expect(result).toHaveProperty('insightsChild');
+  });
+});
