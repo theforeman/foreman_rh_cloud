@@ -17,9 +17,9 @@ jest.mock('foremanReact/Root/Context/ForemanContext', () => ({
 jest.mock('foremanReact/components/PF4/TableIndexPage/Table/TableHooks', () => ({
   useBulkSelect: () => ({
     selectedCount: 0,
-    selectAll: noop,
-    selectNone: noop,
-    selectOne: noop,
+    selectAll: () => {},
+    selectNone: () => {},
+    selectOne: () => {},
     isSelected: () => false,
     selectedResults: [],
   }),
