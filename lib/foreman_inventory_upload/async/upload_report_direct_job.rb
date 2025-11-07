@@ -6,12 +6,48 @@ module ForemanInventoryUpload
     class UploadReportDirectJob < ::Actions::EntryAction
       include AsyncHelpers
       include ::ForemanRhCloud::Async::ExponentialBackoff
+      include ::ForemanRhCloud::CloudRequest
+
+      # Wrapper class to avoid monkey-patching File for multipart uploads
+      class FileUpload
+        attr_reader :file, :content_type
+
+        def initialize(file, content_type:)
+          @file = file
+          @content_type = content_type
+        end
+
+        def read(*args)
+          @file.read(*args)
+        end
+
+        def path
+          @file.path
+        end
+
+        def respond_to_missing?(method_name, include_private = false)
+          @file.respond_to?(method_name, include_private) || super
+        end
+
+        def method_missing(method_name, *args, &block)
+          if @file.respond_to?(method_name)
+            @file.send(method_name, *args, &block)
+          else
+            super
+          end
+        end
+      end
 
       def self.output_label(label)
         "upload_for_#{label}"
       end
 
       def plan(filename, organization_id)
+        # NOTE: This implementation assumes a single organization will not trigger multiple
+        # concurrent uploads. The instance_label is derived from organization_id alone, which
+        # means concurrent uploads for the same org would share ProgressOutput storage.
+        # This matches the pattern in GenerateReportJob. A full fix for thread-safety
+        # requires UI changes to display multiple concurrent tasks per org (tracked for PR #2).
         label = UploadReportDirectJob.output_label(organization_id)
         clear_task_output(label)
         plan_self(
@@ -31,7 +67,7 @@ module ForemanInventoryUpload
           return
         end
 
-        unless organization.owner_details&.fetch('upstreamConsumer')&.fetch('idCert')
+        unless organization.owner_details&.dig('upstreamConsumer', 'idCert')
           logger.info("Skipping organization '#{organization}', no candlepin certificate defined.")
           progress_output do |progress_output|
             progress_output.write_line("Skipping organization #{organization}, no candlepin certificate defined.")
@@ -74,11 +110,11 @@ module ForemanInventoryUpload
         cert_content = File.read(cer_path)
 
         File.open(filename, 'rb') do |file|
-          # Wrap file to add content_type method for RestClient multipart handling
+          # Wrap file with FileUpload class for RestClient multipart handling
           # RestClient requires objects with :read, :path, and :content_type methods
-          wrapped_file = wrap_file_for_upload(file)
+          wrapped_file = FileUpload.new(file, content_type: 'application/vnd.redhat.qpc.tar+tgz')
 
-          response = RestClient::Request.execute(
+          response = execute_cloud_request(
             method: :post,
             url: ForemanInventoryUpload.upload_url,
             payload: {
@@ -90,25 +126,12 @@ module ForemanInventoryUpload
             },
             ssl_client_cert: OpenSSL::X509::Certificate.new(cert_content),
             ssl_client_key: OpenSSL::PKey::RSA.new(cert_content),
-            verify_ssl: ForemanRhCloud.verify_ssl_method,
-            proxy: ForemanRhCloud.transformed_http_proxy_string,
             timeout: 600,
             open_timeout: 60
           )
 
           logger.debug("Upload response code: #{response.code}")
         end
-      end
-
-      # RestClient requires an object that responds to :read, :path and :content_type methods
-      # to properly generate a multipart message.
-      # see: https://github.com/rest-client/rest-client/blob/2c72a2e77e2e87d25ff38feba0cf048d51bd5eca/lib/restclient/payload.rb#L161
-      def wrap_file_for_upload(file)
-        def file.content_type
-          'application/vnd.redhat.qpc.tar+tgz'
-        end
-
-        file
       end
 
       def move_to_done_folder
