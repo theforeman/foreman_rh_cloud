@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -17,14 +18,17 @@ import {
   Title,
   Flex,
   FlexItem,
+  Tooltip,
 } from '@patternfly/react-core';
 import { ClockIcon, DownloadIcon } from '@patternfly/react-icons';
 import { translate as __ } from 'foremanReact/common/I18n';
 import RelativeDateTime from 'foremanReact/components/common/dates/RelativeDateTime';
 import { API } from 'foremanReact/redux/API';
 import { addToast } from 'foremanReact/components/ToastsList';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { inventoryUrl } from '../../ForemanInventoryHelpers';
+import { selectSubscriptionConnectionEnabled } from '../InventorySettings/InventorySettingsSelectors';
+import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 import './taskProgress.scss';
 
 const TaskProgress = ({
@@ -40,6 +44,16 @@ const TaskProgress = ({
 
   // Track when a new task starts so we can show optimistic UI
   const isStartingNewTask = isLoading && task?.id === lastTaskId;
+
+  // Check IoP mode and subscription connection settings
+  const subscriptionConnectionEnabled = useSelector(
+    selectSubscriptionConnectionEnabled
+  );
+  const isIop = Boolean(useIopConfig());
+  const isUploadDisabled = !isIop && !subscriptionConnectionEnabled;
+  const uploadDisabledTooltip = __(
+    'Upload is disabled because subscription connection is not enabled. Enable it in Administer > Settings > Content.'
+  );
 
   const handleGenerateReport = async disconnected => {
     setIsLoading(true);
@@ -97,14 +111,31 @@ const TaskProgress = ({
         {taskType === 'generate' && organizationId && (
           <Flex className="task-progress-actions">
             <FlexItem>
-              <Button
-                variant="primary"
-                onClick={() => handleGenerateReport(false)}
-                isLoading={isLoading}
-                isDisabled={isLoading}
-              >
-                {__('Generate and upload report')}
-              </Button>
+              {isUploadDisabled ? (
+                <Tooltip content={uploadDisabledTooltip}>
+                  <span>
+                    <Button
+                      ouiaId="generate-and-upload-disabled-button"
+                      variant="primary"
+                      onClick={() => handleGenerateReport(false)}
+                      isLoading={isLoading}
+                      isDisabled
+                    >
+                      {__('Generate and upload report')}
+                    </Button>
+                  </span>
+                </Tooltip>
+              ) : (
+                <Button
+                  ouiaId="generate-and-upload-button"
+                  variant="primary"
+                  onClick={() => handleGenerateReport(false)}
+                  isLoading={isLoading}
+                  isDisabled={isLoading}
+                >
+                  {__('Generate and upload report')}
+                </Button>
+              )}
             </FlexItem>
             <FlexItem>
               <Button
@@ -233,14 +264,31 @@ const TaskProgress = ({
           {taskType === 'generate' && organizationId && !isTaskRunning && (
             <>
               <FlexItem>
-                <Button
-                  variant="primary"
-                  onClick={() => handleGenerateReport(false)}
-                  isLoading={isLoading}
-                  isDisabled={isLoading}
-                >
-                  {__('Generate and upload report')}
-                </Button>
+                {isUploadDisabled ? (
+                  <Tooltip content={uploadDisabledTooltip}>
+                    <span>
+                      <Button
+                        ouiaId="generate-and-upload-disabled-button-task-view"
+                        variant="primary"
+                        onClick={() => handleGenerateReport(false)}
+                        isLoading={isLoading}
+                        isDisabled
+                      >
+                        {__('Generate and upload report')}
+                      </Button>
+                    </span>
+                  </Tooltip>
+                ) : (
+                  <Button
+                    ouiaId="generate-and-upload-button-task-view"
+                    variant="primary"
+                    onClick={() => handleGenerateReport(false)}
+                    isLoading={isLoading}
+                    isDisabled={isLoading}
+                  >
+                    {__('Generate and upload report')}
+                  </Button>
+                )}
               </FlexItem>
               <FlexItem>
                 <Button

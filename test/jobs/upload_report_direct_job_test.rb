@@ -168,6 +168,19 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     refute action.send(:content_disconnected?)
   end
 
+  test 'content_disconnected? returns false when IoP mode is enabled even if subscription_connection_enabled is false' do
+    Setting.stubs(:[]).with(:subscription_connection_enabled).returns(false)
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+
+    action = create_and_plan_action(
+      ForemanInventoryUpload::Async::UploadReportDirectJob,
+      @filename,
+      @organization.id
+    )
+
+    refute action.send(:content_disconnected?)
+  end
+
   test 'instance_label returns label from input' do
     action = create_and_plan_action(
       ForemanInventoryUpload::Async::UploadReportDirectJob,

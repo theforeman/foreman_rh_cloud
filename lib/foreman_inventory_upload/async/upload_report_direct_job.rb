@@ -137,6 +137,7 @@ module ForemanInventoryUpload
       end
 
       def content_disconnected?
+        return false if ForemanRhCloud.with_iop_smart_proxy?
         !Setting[:subscription_connection_enabled]
       end
 
