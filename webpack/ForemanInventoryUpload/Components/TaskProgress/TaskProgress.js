@@ -188,7 +188,15 @@ const TaskProgress = ({
   };
 
   const formatDuration = seconds => {
-    if (!seconds) return '';
+    if (
+      seconds === null ||
+      seconds === undefined ||
+      typeof seconds !== 'number' ||
+      isNaN(seconds) ||
+      seconds < 0
+    ) {
+      return '';
+    }
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     if (mins > 0) {

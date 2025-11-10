@@ -109,6 +109,8 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
 
   test 'certificate method returns foreman cert in IoP mode' do
     ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+    File.stubs(:readable?).with('/fake/cert.pem').returns(true)
+    File.stubs(:readable?).with('/fake/key.pem').returns(true)
     File.stubs(:read).with('/fake/cert.pem').returns('FOREMAN CERTIFICATE')
     File.stubs(:read).with('/fake/key.pem').returns('FOREMAN KEY')
 
@@ -121,6 +123,43 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     cert = action.send(:certificate)
     assert_equal 'FOREMAN CERTIFICATE', cert[:cert]
     assert_equal 'FOREMAN KEY', cert[:key]
+  end
+
+  test 'foreman_certificate raises error when certificate file is missing' do
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+    Setting.stubs(:[]).with(:ssl_certificate).returns('/nonexistent/cert.pem')
+    Setting.stubs(:[]).with(:ssl_priv_key).returns('/fake/key.pem')
+    File.stubs(:readable?).with('/nonexistent/cert.pem').returns(false)
+
+    action = create_and_plan_action(
+      ForemanInventoryUpload::Async::UploadReportDirectJob,
+      @filename,
+      @organization.id
+    )
+
+    error = assert_raises(RuntimeError) do
+      action.send(:foreman_certificate)
+    end
+    assert_match(/SSL certificate file not found or not readable/, error.message)
+  end
+
+  test 'foreman_certificate raises error when private key file is missing' do
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+    Setting.stubs(:[]).with(:ssl_certificate).returns('/fake/cert.pem')
+    Setting.stubs(:[]).with(:ssl_priv_key).returns('/nonexistent/key.pem')
+    File.stubs(:readable?).with('/fake/cert.pem').returns(true)
+    File.stubs(:readable?).with('/nonexistent/key.pem').returns(false)
+
+    action = create_and_plan_action(
+      ForemanInventoryUpload::Async::UploadReportDirectJob,
+      @filename,
+      @organization.id
+    )
+
+    error = assert_raises(RuntimeError) do
+      action.send(:foreman_certificate)
+    end
+    assert_match(/SSL private key file not found or not readable/, error.message)
   end
 
   test 'filename returns input filename' do

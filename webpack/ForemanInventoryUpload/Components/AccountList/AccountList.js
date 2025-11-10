@@ -51,7 +51,7 @@ const AccountList = ({
     const account = accounts[label];
     return (
       <ListItem
-        key={index}
+        key={label}
         label={label}
         account={account}
         defaultExpanded={index === 0}

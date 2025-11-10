@@ -49,7 +49,15 @@ const TaskHistory = ({ tasks, title }) => {
   };
 
   const formatDuration = seconds => {
-    if (!seconds) return __('N/A');
+    if (
+      seconds === null ||
+      seconds === undefined ||
+      typeof seconds !== 'number' ||
+      isNaN(seconds) ||
+      seconds < 0
+    ) {
+      return __('N/A');
+    }
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     if (mins > 0) {
