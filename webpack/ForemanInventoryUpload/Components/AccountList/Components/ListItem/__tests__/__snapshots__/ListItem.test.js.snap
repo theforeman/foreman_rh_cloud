@@ -19,9 +19,9 @@ exports[`ListItem rendering render with Props 1`] = `
       account={
         Object {
           "test": Object {
-            "generate_report_status": "unknown",
+            "generated_status": "unknown",
             "id": 1,
-            "upload_report_status": "unknown",
+            "uploaded_status": "unknown",
           },
         }
       }
@@ -31,16 +31,17 @@ exports[`ListItem rendering render with Props 1`] = `
   <AccordionContent
     isHidden={true}
   >
-    <Connect(Dashboard)
+    <Dashboard
       account={
         Object {
           "test": Object {
-            "generate_report_status": "unknown",
+            "generated_status": "unknown",
             "id": 1,
-            "upload_report_status": "unknown",
+            "uploaded_status": "unknown",
           },
         }
       }
+      onTaskStart={null}
     />
   </AccordionContent>
 </AccordionItem>

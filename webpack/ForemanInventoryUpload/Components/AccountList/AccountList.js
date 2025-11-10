@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { isEmpty } from 'lodash';
 import { noop } from 'foremanReact/common/helpers';
 import { Accordion } from '@patternfly/react-core';
@@ -10,49 +10,57 @@ import EmptyResults from './Components/EmptyResults';
 import { filterAccounts } from './AccountListHelper';
 import './accountList.scss';
 
-class AccountList extends Component {
-  componentDidMount() {
-    const { fetchAccountsStatus, startAccountStatusPolling } = this.props;
+const AccountList = ({
+  accounts,
+  error,
+  filterTerm,
+  fetchAccountsStatus,
+  startAccountStatusPolling,
+  stopAccountStatusPolling,
+  pollingProcessID,
+}) => {
+  useEffect(() => {
     fetchAccountsStatus();
-    const pollingProcessID = setInterval(fetchAccountsStatus, 5000);
-    startAccountStatusPolling(pollingProcessID);
+    const pollingID = setInterval(fetchAccountsStatus, 2000);
+    startAccountStatusPolling(pollingID);
+
+    return () => {
+      stopAccountStatusPolling(pollingID);
+    };
+  }, [
+    fetchAccountsStatus,
+    startAccountStatusPolling,
+    stopAccountStatusPolling,
+  ]);
+
+  const filteredAccount = filterAccounts(accounts, filterTerm);
+
+  if (error) {
+    return <ErrorState error={error} />;
   }
 
-  componentWillUnmount() {
-    const { stopAccountStatusPolling, pollingProcessID } = this.props;
-    stopAccountStatusPolling(pollingProcessID);
+  if (isEmpty(accounts)) {
+    return <EmptyState />;
   }
 
-  render() {
-    const { accounts, error, filterTerm } = this.props;
-    const filteredAccount = filterAccounts(accounts, filterTerm);
-
-    if (error) {
-      return <ErrorState error={error} />;
-    }
-
-    if (isEmpty(accounts)) {
-      return <EmptyState />;
-    }
-
-    if (isEmpty(filteredAccount)) {
-      return <EmptyResults />;
-    }
-
-    const items = Object.keys(filteredAccount).map((label, index) => {
-      const account = accounts[label];
-      return (
-        <ListItem
-          key={index}
-          label={label}
-          account={account}
-          defaultExpanded={index === 0}
-        />
-      );
-    });
-    return <Accordion className="account-list">{items}</Accordion>;
+  if (isEmpty(filteredAccount)) {
+    return <EmptyResults />;
   }
-}
+
+  const items = Object.keys(filteredAccount).map((label, index) => {
+    const account = accounts[label];
+    return (
+      <ListItem
+        key={index}
+        label={label}
+        account={account}
+        defaultExpanded={index === 0}
+        onTaskStart={fetchAccountsStatus}
+      />
+    );
+  });
+  return <Accordion className="account-list">{items}</Accordion>;
+};
 
 AccountList.propTypes = {
   fetchAccountsStatus: PropTypes.func,

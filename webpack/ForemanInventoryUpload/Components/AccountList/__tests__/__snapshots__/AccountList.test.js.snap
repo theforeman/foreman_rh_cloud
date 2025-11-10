@@ -7,35 +7,41 @@ exports[`AccountList rendering render with props 1`] = `
   <ListItem
     account={
       Object {
-        "generate_report_status": "running",
+        "generated_status": "running",
         "id": 1,
-        "upload_report_status": "running",
+        "uploaded_status": "running",
       }
     }
+    defaultExpanded={true}
     key="0"
     label="Account1"
+    onTaskStart={[Function]}
   />
   <ListItem
     account={
       Object {
-        "generate_report_status": "failure",
+        "generated_status": "failure",
         "id": 2,
-        "upload_report_status": "unknown",
+        "uploaded_status": "unknown",
       }
     }
+    defaultExpanded={false}
     key="1"
     label="Account2"
+    onTaskStart={[Function]}
   />
   <ListItem
     account={
       Object {
-        "generate_report_status": "running",
+        "generated_status": "running",
         "id": 3,
-        "upload_report_status": "success",
+        "uploaded_status": "success",
       }
     }
+    defaultExpanded={false}
     key="2"
     label="Account3"
+    onTaskStart={[Function]}
   />
 </Accordion>
 `;

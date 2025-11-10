@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Progress,
@@ -37,13 +37,23 @@ const TaskProgress = ({
   emptyMessage,
   organizationId,
   taskType,
+  onTaskStart,
 }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const [lastTaskId, setLastTaskId] = useState(task?.id);
+  const [lastTaskId, setLastTaskId] = useState(null);
+
+  // Clear lastTaskId when the task data updates to match it
+  useEffect(() => {
+    if (lastTaskId && task?.id === lastTaskId) {
+      setLastTaskId(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [task?.id, lastTaskId]);
 
   // Track when a new task starts so we can show optimistic UI
-  const isStartingNewTask = isLoading && task?.id === lastTaskId;
+  // Show optimistic UI if we've started a new task but haven't received the updated task data yet
+  const isStartingNewTask = lastTaskId && task?.id !== lastTaskId;
 
   // Check IoP mode and subscription connection settings
   const subscriptionConnectionEnabled = useSelector(
@@ -65,8 +75,15 @@ const TaskProgress = ({
         }
       );
 
-      // Update last task ID to the new task
-      setLastTaskId(data.id);
+      // Update last task ID only if it's a new task
+      if (data.id !== task?.id) {
+        setLastTaskId(data.id);
+      }
+
+      // Trigger immediate poll to update UI faster
+      if (onTaskStart) {
+        onTaskStart();
+      }
 
       // Use Katello's toast notification pattern with task link
       const message = disconnected
@@ -118,7 +135,6 @@ const TaskProgress = ({
                       ouiaId="generate-and-upload-disabled-button"
                       variant="primary"
                       onClick={() => handleGenerateReport(false)}
-                      isLoading={isLoading}
                       isDisabled
                     >
                       {__('Generate and upload report')}
@@ -130,7 +146,6 @@ const TaskProgress = ({
                   ouiaId="generate-and-upload-button"
                   variant="primary"
                   onClick={() => handleGenerateReport(false)}
-                  isLoading={isLoading}
                   isDisabled={isLoading}
                 >
                   {__('Generate and upload report')}
@@ -141,7 +156,6 @@ const TaskProgress = ({
               <Button
                 variant="secondary"
                 onClick={() => handleGenerateReport(true)}
-                isLoading={isLoading}
                 isDisabled={isLoading}
               >
                 {__('Generate report')}
@@ -185,6 +199,9 @@ const TaskProgress = ({
 
   const isTaskRunning = task.state === 'running' || task.state === 'paused';
 
+  // Buttons should be disabled if loading, task is running, or we're waiting for new task data
+  const areButtonsDisabled = isLoading || isTaskRunning || isStartingNewTask;
+
   // Show 100% for completed tasks, otherwise use reported progress
   // If starting a new task, show 0% to give immediate feedback
   let progressValue = 0;
@@ -222,22 +239,18 @@ const TaskProgress = ({
               )}
             </DescriptionListDescription>
           </DescriptionListGroup>
-          {(task.ended_at || isStartingNewTask) && (
-            <DescriptionListGroup>
-              <DescriptionListTerm>{__('Duration')}</DescriptionListTerm>
-              <DescriptionListDescription>
-                {!isStartingNewTask && formatDuration(task.duration)}
-              </DescriptionListDescription>
-            </DescriptionListGroup>
-          )}
-          {(task.report_file_path || isStartingNewTask) && (
-            <DescriptionListGroup>
-              <DescriptionListTerm>{__('Report saved to')}</DescriptionListTerm>
-              <DescriptionListDescription>
-                {!isStartingNewTask && task.report_file_path}
-              </DescriptionListDescription>
-            </DescriptionListGroup>
-          )}
+          <DescriptionListGroup>
+            <DescriptionListTerm>{__('Duration')}</DescriptionListTerm>
+            <DescriptionListDescription>
+              {!isStartingNewTask && formatDuration(task.duration)}
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+          <DescriptionListGroup>
+            <DescriptionListTerm>{__('Report saved to')}</DescriptionListTerm>
+            <DescriptionListDescription>
+              {!isStartingNewTask && task.report_file_path}
+            </DescriptionListDescription>
+          </DescriptionListGroup>
         </DescriptionList>
         <Flex className="task-progress-actions">
           <FlexItem>
@@ -250,18 +263,17 @@ const TaskProgress = ({
               {__('View task details')}
             </Button>
           </FlexItem>
-          {task.report_file_path && (
-            <FlexItem>
-              <Button
-                variant="secondary"
-                onClick={handleDownloadReport}
-                icon={<DownloadIcon />}
-              >
-                {__('Download report')}
-              </Button>
-            </FlexItem>
-          )}
-          {taskType === 'generate' && organizationId && !isTaskRunning && (
+          <FlexItem>
+            <Button
+              variant="secondary"
+              onClick={handleDownloadReport}
+              icon={<DownloadIcon />}
+              isDisabled={!task.report_file_path || areButtonsDisabled}
+            >
+              {__('Download report')}
+            </Button>
+          </FlexItem>
+          {taskType === 'generate' && organizationId && (
             <>
               <FlexItem>
                 {isUploadDisabled ? (
@@ -271,7 +283,6 @@ const TaskProgress = ({
                         ouiaId="generate-and-upload-disabled-button-task-view"
                         variant="primary"
                         onClick={() => handleGenerateReport(false)}
-                        isLoading={isLoading}
                         isDisabled
                       >
                         {__('Generate and upload report')}
@@ -283,8 +294,7 @@ const TaskProgress = ({
                     ouiaId="generate-and-upload-button-task-view"
                     variant="primary"
                     onClick={() => handleGenerateReport(false)}
-                    isLoading={isLoading}
-                    isDisabled={isLoading}
+                    isDisabled={areButtonsDisabled}
                   >
                     {__('Generate and upload report')}
                   </Button>
@@ -294,8 +304,7 @@ const TaskProgress = ({
                 <Button
                   variant="secondary"
                   onClick={() => handleGenerateReport(true)}
-                  isLoading={isLoading}
-                  isDisabled={isLoading}
+                  isDisabled={areButtonsDisabled}
                 >
                   {__('Generate report')}
                 </Button>
@@ -323,6 +332,7 @@ TaskProgress.propTypes = {
   emptyMessage: PropTypes.string,
   organizationId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   taskType: PropTypes.oneOf(['generate', 'upload']),
+  onTaskStart: PropTypes.func,
 };
 
 TaskProgress.defaultProps = {
@@ -331,6 +341,7 @@ TaskProgress.defaultProps = {
   emptyMessage: null,
   organizationId: null,
   taskType: null,
+  onTaskStart: null,
 };
 
 export default TaskProgress;
