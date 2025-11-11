@@ -28,12 +28,10 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
   end
 
   test 'plan sets host_id in input' do
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::SingleHostReportJob,
-      base_folder,
-      @host.organization_id,
-      @host.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::SingleHostReportJob)
+    organization = Organization.find(@host.organization_id)
+    action.expects(:action_subject).with(organization)
+    plan_action(action, base_folder, @host.organization_id, @host.id)
 
     assert_equal @host.id, action.input[:host_id]
   end
@@ -41,12 +39,10 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
   test 'plan calls super with id filter' do
     expected_filter = "id=#{@host.id}"
 
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::SingleHostReportJob,
-      base_folder,
-      @host.organization_id,
-      @host.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::SingleHostReportJob)
+    organization = Organization.find(@host.organization_id)
+    action.expects(:action_subject).with(organization)
+    plan_action(action, base_folder, @host.organization_id, @host.id)
 
     assert_action_planned_with(
       action,
@@ -58,12 +54,10 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
   end
 
   test 'inherits behavior from HostInventoryReportJob' do
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::SingleHostReportJob,
-      base_folder,
-      @host.organization_id,
-      @host.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::SingleHostReportJob)
+    organization = Organization.find(@host.organization_id)
+    action.expects(:action_subject).with(organization)
+    plan_action(action, base_folder, @host.organization_id, @host.id)
 
     # Should schedule all parent actions
     assert_action_planned(action, ForemanInventoryUpload::Async::GenerateHostReport)
@@ -71,12 +65,10 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
   end
 
   test 'humanized_name includes hostname' do
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::SingleHostReportJob,
-      base_folder,
-      @host.organization_id,
-      @host.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::SingleHostReportJob)
+    organization = Organization.find(@host.organization_id)
+    action.expects(:action_subject).with(organization)
+    plan_action(action, base_folder, @host.organization_id, @host.id)
 
     assert_equal "Single-host report job for host #{@host.name}", action.humanized_name
   end
@@ -84,34 +76,28 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
   test 'humanized_name handles missing host' do
     non_existent_host_id = 999_999
 
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::SingleHostReportJob,
-      base_folder,
-      @host.organization_id,
-      non_existent_host_id
-    )
+    action = create_action(ForemanInventoryUpload::Async::SingleHostReportJob)
+    organization = Organization.find(@host.organization_id)
+    action.expects(:action_subject).with(organization)
+    plan_action(action, base_folder, @host.organization_id, non_existent_host_id)
 
     assert_equal 'Single-host report job', action.humanized_name
   end
 
   test 'hostname method returns correct name' do
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::SingleHostReportJob,
-      base_folder,
-      @host.organization_id,
-      @host.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::SingleHostReportJob)
+    organization = Organization.find(@host.organization_id)
+    action.expects(:action_subject).with(organization)
+    plan_action(action, base_folder, @host.organization_id, @host.id)
 
     assert_equal @host.name, action.hostname(@host.id)
   end
 
   test 'hostname method handles nil gracefully' do
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::SingleHostReportJob,
-      base_folder,
-      @host.organization_id,
-      @host.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::SingleHostReportJob)
+    organization = Organization.find(@host.organization_id)
+    action.expects(:action_subject).with(organization)
+    plan_action(action, base_folder, @host.organization_id, @host.id)
 
     assert_nil action.hostname(999_999)
   end
@@ -120,12 +106,10 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
     expected_filter = "id=#{@host.id}"
     expected_archive_name = ForemanInventoryUpload.facts_archive_name(@host.organization_id, expected_filter)
 
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::SingleHostReportJob,
-      base_folder,
-      @host.organization_id,
-      @host.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::SingleHostReportJob)
+    organization = Organization.find(@host.organization_id)
+    action.expects(:action_subject).with(organization)
+    plan_action(action, base_folder, @host.organization_id, @host.id)
 
     assert_action_planned_with(
       action,
@@ -139,12 +123,10 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
   test 'respects IoP mode for facet creation' do
     ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
 
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::SingleHostReportJob,
-      base_folder,
-      @host.organization_id,
-      @host.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::SingleHostReportJob)
+    organization = Organization.find(@host.organization_id)
+    action.expects(:action_subject).with(organization)
+    plan_action(action, base_folder, @host.organization_id, @host.id)
 
     assert_action_planned_with(
       action,
