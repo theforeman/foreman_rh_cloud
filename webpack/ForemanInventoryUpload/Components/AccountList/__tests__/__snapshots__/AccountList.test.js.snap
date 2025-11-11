@@ -13,7 +13,7 @@ exports[`AccountList rendering render with props 1`] = `
       }
     }
     defaultExpanded={true}
-    key="0"
+    key="Account1"
     label="Account1"
     onTaskStart={[Function]}
   />
@@ -26,7 +26,7 @@ exports[`AccountList rendering render with props 1`] = `
       }
     }
     defaultExpanded={false}
-    key="1"
+    key="Account2"
     label="Account2"
     onTaskStart={[Function]}
   />
@@ -39,7 +39,7 @@ exports[`AccountList rendering render with props 1`] = `
       }
     }
     defaultExpanded={false}
-    key="2"
+    key="Account3"
     label="Account3"
     onTaskStart={[Function]}
   />

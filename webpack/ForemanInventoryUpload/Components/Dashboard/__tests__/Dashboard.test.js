@@ -1,24 +1,24 @@
 import React from 'react';
-import { shallow, testComponentSnapshotsWithFixtures } from '@theforeman/test';
+import { shallow } from '@theforeman/test';
 import Dashboard from '../Dashboard';
-import { props } from '../Dashboard.fixtures';
-
-const fixtures = {
-  'with props': props,
-};
 
 describe('Dashboard', () => {
-  describe('rendering', () =>
-    testComponentSnapshotsWithFixtures(Dashboard, fixtures));
-
-  it('componentWillUnmount should call "stopPolling"', () => {
-    const stopPolling = jest.fn();
-    const modifiedProps = {
-      ...props,
-      stopPolling,
+  it('should render TaskProgress component', () => {
+    const account = {
+      id: 1,
+      generate_task: {
+        id: 'task-1',
+        state: 'running',
+        result: null,
+        progress: 50,
+      },
     };
-    const wrapper = shallow(<Dashboard {...modifiedProps} />);
-    wrapper.unmount();
-    expect(stopPolling).toBeCalled();
+    const onTaskStart = jest.fn();
+
+    const wrapper = shallow(
+      <Dashboard account={account} onTaskStart={onTaskStart} />
+    );
+
+    expect(wrapper.find('TaskProgress')).toHaveLength(1);
   });
 });
