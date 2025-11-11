@@ -1,4 +1,3 @@
-/* eslint-disable spellcheck/spell-checker */
 import React from 'react';
 import componentRegistry from 'foremanReact/components/componentRegistry';
 import { registerRoutes as foremanRegisterRoutes } from 'foremanReact/routes/RoutingService';

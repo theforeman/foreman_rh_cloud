@@ -25,7 +25,7 @@ const TaskHistory = ({ tasks, title }) => {
     return (
       <EmptyState>
         <EmptyStateIcon icon={CheckCircleIcon} />
-        <Title headingLevel="h4" size="lg">
+        <Title headingLevel="h4" size="lg" ouiaId="task-history-empty-title">
           {__('No task history')}
         </Title>
         <EmptyStateBody>
@@ -53,7 +53,7 @@ const TaskHistory = ({ tasks, title }) => {
       seconds === null ||
       seconds === undefined ||
       typeof seconds !== 'number' ||
-      isNaN(seconds) ||
+      Number.isNaN(seconds) ||
       seconds < 0
     ) {
       return __('N/A');
@@ -76,7 +76,7 @@ const TaskHistory = ({ tasks, title }) => {
   return (
     <div className="task-history-container">
       {title && (
-        <Title headingLevel="h3" size="md">
+        <Title headingLevel="h3" size="md" ouiaId="task-history-title">
           {title}
         </Title>
       )}

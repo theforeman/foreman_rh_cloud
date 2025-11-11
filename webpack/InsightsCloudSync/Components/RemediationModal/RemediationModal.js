@@ -18,8 +18,6 @@ import TableEmptyState from '../../../common/table/EmptyState';
 import './RemediationModal.scss';
 import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 
-/* eslint-disable spellcheck/spell-checker */
-
 // Sample iopData:
 // const iopTestData = Immutable([
 //   {
@@ -53,8 +51,6 @@ import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 //     description: 'Decreased security: auditd not running',
 //   },
 // ]);
-
-/* eslint-enable spellcheck/spell-checker */
 
 const RemediationModal = ({
   iopData,

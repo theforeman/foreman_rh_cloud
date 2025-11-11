@@ -119,7 +119,7 @@ const TaskProgress = ({
     return (
       <EmptyState>
         <EmptyStateIcon icon={ClockIcon} />
-        <Title headingLevel="h4" size="lg">
+        <Title headingLevel="h4" size="lg" ouiaId="task-progress-empty-title">
           {__('No recent tasks')}
         </Title>
         <EmptyStateBody>
@@ -154,6 +154,7 @@ const TaskProgress = ({
             </FlexItem>
             <FlexItem>
               <Button
+                ouiaId="generate-report-button"
                 variant="secondary"
                 onClick={() => handleGenerateReport(true)}
                 isDisabled={isLoading}
@@ -192,7 +193,7 @@ const TaskProgress = ({
       seconds === null ||
       seconds === undefined ||
       typeof seconds !== 'number' ||
-      isNaN(seconds) ||
+      Number.isNaN(seconds) ||
       seconds < 0
     ) {
       return '';
@@ -228,7 +229,7 @@ const TaskProgress = ({
     : getProgressVariant();
 
   return (
-    <Card className="task-progress-card">
+    <Card className="task-progress-card" ouiaId="task-progress-card">
       {title && <CardTitle>{title}</CardTitle>}
       <CardBody>
         <Progress
@@ -263,6 +264,7 @@ const TaskProgress = ({
         <Flex className="task-progress-actions">
           <FlexItem>
             <Button
+              ouiaId="view-task-details-button"
               component="a"
               href={`/foreman_tasks/tasks/${task.id}`}
               variant="link"
@@ -273,6 +275,7 @@ const TaskProgress = ({
           </FlexItem>
           <FlexItem>
             <Button
+              ouiaId="download-report-button"
               variant="secondary"
               onClick={handleDownloadReport}
               icon={<DownloadIcon />}
@@ -310,6 +313,7 @@ const TaskProgress = ({
               </FlexItem>
               <FlexItem>
                 <Button
+                  ouiaId="generate-report-button-task-view"
                   variant="secondary"
                   onClick={() => handleGenerateReport(true)}
                   isDisabled={areButtonsDisabled}
