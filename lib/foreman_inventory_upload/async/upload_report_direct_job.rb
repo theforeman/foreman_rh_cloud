@@ -42,6 +42,10 @@ module ForemanInventoryUpload
         "upload_for_#{label}"
       end
 
+      def resource_locks
+        :link
+      end
+
       def plan(filename, organization_id)
         organization = Organization.find(organization_id)
         action_subject(organization)

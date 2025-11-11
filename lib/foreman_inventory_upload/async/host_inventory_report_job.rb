@@ -1,6 +1,10 @@
 module ForemanInventoryUpload
   module Async
     class HostInventoryReportJob < ::Actions::EntryAction
+      def resource_locks
+        :link
+      end
+
       def plan(base_folder, organization_id, hosts_filter = "", upload = true)
         organization = Organization.find(organization_id)
         action_subject(organization)
