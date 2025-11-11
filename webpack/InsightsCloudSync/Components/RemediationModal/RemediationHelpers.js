@@ -28,12 +28,14 @@ export const modifyRows = (
 
     // For IoP:
     // All of the values will be plain strings
+    /* eslint-disable spellcheck/spell-checker */
     // {
     //  hit_id: "c7c6727e-2966-4f7c-87f1-20ef14db7a2d", <-- this refers to a host by insights ID
     //  rule_id: "hardening_ssh_client_alive|OPENSSH_HARDENING_CLIENT_ALIVE",
     //  resolution_type: "less_secure",
     //  resolution_id:"hardening_ssh_client_alive|OPENSSH_HARDENING_CLIENT_ALIVE_less_secure", <-- joined rule id and resolution type
     // }
+    /* eslint-enable spellcheck/spell-checker */
     // For non-IoP:
     // All of the values will be numeric Foreman database IDs
     // hit_id refers to an InsightsHit

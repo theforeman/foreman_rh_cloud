@@ -19,6 +19,7 @@ import './RemediationModal.scss';
 import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 
 // Sample iopData:
+/* eslint-disable spellcheck/spell-checker */
 // const iopTestData = Immutable([
 //   {
 //     hostid: 'c7c6727e-2966-4f7c-87f1-20ef14db7a2d',
@@ -51,6 +52,7 @@ import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 //     description: 'Decreased security: auditd not running',
 //   },
 // ]);
+/* eslint-enable spellcheck/spell-checker */
 
 const RemediationModal = ({
   iopData,
