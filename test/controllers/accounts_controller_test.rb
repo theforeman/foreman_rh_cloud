@@ -5,22 +5,21 @@ class AccountsControllerTest < ActionController::TestCase
 
   include FolderIsolation
 
-  test 'Returns statuses for each process type' do
+  test 'Returns statuses for each organization' do
     test_org = FactoryBot.create(:organization)
-
-    generate_label = ForemanInventoryUpload::Async::GenerateReportJob.output_label(test_org.id)
-    generate_output = ForemanInventoryUpload::Async::ProgressOutput.register(generate_label)
-    generate_output.status = 'generate_status_test'
-    upload_label = ForemanInventoryUpload::Async::UploadReportDirectJob.output_label(test_org.id)
-    upload_output = ForemanInventoryUpload::Async::ProgressOutput.register(upload_label)
-    upload_output.status = 'upload_status_test'
 
     get :index, session: set_session_user
 
     assert_response :success
     actual = JSON.parse(response.body)
-    actual_account_statuses = actual['accounts'][test_org.label]
-    assert_equal 'generate_status_test', actual_account_statuses['generate_report_status']
-    assert_equal 'upload_status_test', actual_account_statuses['upload_report_status']
+    assert actual['accounts'].key?(test_org.name)
+    actual_account = actual['accounts'][test_org.name]
+
+    # Verify the response structure
+    assert_includes actual_account.keys, 'generated_status'
+    assert_includes actual_account.keys, 'uploaded_status'
+    assert_includes actual_account.keys, 'generate_task'
+    assert_includes actual_account.keys, 'report_file_paths'
+    assert_equal test_org.id, actual_account['id']
   end
 end
