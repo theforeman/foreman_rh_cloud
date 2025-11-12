@@ -41,7 +41,7 @@ module ForemanInventoryUpload
         Dynflow::Action::Rescue::Fail
       end
 
-      def plan_generate_report(folder, organization, disconnected)
+      def plan_generate_report(folder, organization, _disconnected)
         plan_action(ForemanInventoryUpload::Async::HostInventoryReportJob, folder, organization.id, '', true)
       end
 
