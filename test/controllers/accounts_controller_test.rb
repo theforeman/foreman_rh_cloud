@@ -11,7 +11,7 @@ class AccountsControllerTest < ActionController::TestCase
     generate_label = ForemanInventoryUpload::Async::GenerateReportJob.output_label(test_org.id)
     generate_output = ForemanInventoryUpload::Async::ProgressOutput.register(generate_label)
     generate_output.status = 'generate_status_test'
-    upload_label = ForemanInventoryUpload::Async::UploadReportJob.output_label(test_org.id)
+    upload_label = ForemanInventoryUpload::Async::UploadReportDirectJob.output_label(test_org.id)
     upload_output = ForemanInventoryUpload::Async::ProgressOutput.register(upload_label)
     upload_output.status = 'upload_status_test'
 
