@@ -8,7 +8,7 @@ class UploadsControllerTest < ActionController::TestCase
     test_org = FactoryBot.create(:organization)
     ForemanInventoryUpload::Async::ProgressOutput
       .expects(:get)
-      .with(ForemanInventoryUpload::Async::UploadReportJob.output_label(test_org.id))
+      .with(ForemanInventoryUpload::Async::UploadReportDirectJob.output_label(test_org.id))
       .returns(progress_output)
     progress_output.expects(:full_output).returns('test output')
 
