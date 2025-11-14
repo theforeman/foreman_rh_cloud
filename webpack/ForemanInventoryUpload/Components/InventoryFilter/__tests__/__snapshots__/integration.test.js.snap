@@ -33,7 +33,6 @@ Object {
           "error": null,
           "pollingProcessID": 0,
         },
-        "dashboard": Object {},
         "inventoryFilter": Object {
           "filterTerm": "some-org",
         },

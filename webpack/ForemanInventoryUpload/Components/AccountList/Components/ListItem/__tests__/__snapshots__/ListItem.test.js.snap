@@ -30,7 +30,7 @@ exports[`ListItem rendering render with Props 1`] = `
   <AccordionContent
     isHidden={true}
   >
-    <Connect(Dashboard)
+    <Dashboard
       account={
         Object {
           "generate_report_status": "unknown",
@@ -40,6 +40,7 @@ exports[`ListItem rendering render with Props 1`] = `
         }
       }
       accountID={1}
+      onTaskStart={null}
     />
   </AccordionContent>
 </AccordionItem>
