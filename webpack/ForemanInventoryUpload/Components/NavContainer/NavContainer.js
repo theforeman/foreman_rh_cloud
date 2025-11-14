@@ -8,19 +8,12 @@ import {
   TabContent,
   TabPane,
   Icon,
-  noop,
 } from 'patternfly-react';
 import { translate as __ } from 'foremanReact/common/I18n';
 import './navContainer.scss';
-import FullScreenModal from '../FullScreenModal';
 import { selectSubscriptionConnectionEnabled } from '../InventorySettings/InventorySettingsSelectors';
 
-const NavContainer = ({
-  items,
-  showFullScreen,
-  toggleFullScreen,
-  terminalProps,
-}) => {
+const NavContainer = ({ items }) => {
   const subscriptionConnectionEnabled = useSelector(
     selectSubscriptionConnectionEnabled
   );
@@ -50,11 +43,6 @@ const NavContainer = ({
       <div className="dashboard">
         <Nav bsClass="nav nav-tabs nav-tabs-pf">{navItems}</Nav>
         <TabContent animation>{tabComponents}</TabContent>
-        <FullScreenModal
-          showFullScreen={showFullScreen}
-          toggleFullScreen={toggleFullScreen}
-          terminalProps={terminalProps}
-        />
       </div>
     </TabContainer>
   );
@@ -69,23 +57,10 @@ NavContainer.propTypes = {
       onClick: PropTypes.func,
     })
   ),
-  showFullScreen: PropTypes.bool,
-  toggleFullScreen: PropTypes.func,
-  terminalProps: PropTypes.shape({
-    exitCode: PropTypes.string,
-    logs: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.string,
-    ]),
-    error: PropTypes.string,
-  }),
 };
 
 NavContainer.defaultProps = {
   items: [],
-  showFullScreen: false,
-  toggleFullScreen: noop,
-  terminalProps: {},
 };
 
 export default NavContainer;

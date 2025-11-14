@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { isEmpty } from 'lodash';
 import { noop } from 'foremanReact/common/helpers';
 import { Accordion } from '@patternfly/react-core';
@@ -10,42 +10,57 @@ import EmptyResults from './Components/EmptyResults';
 import { filterAccounts } from './AccountListHelper';
 import './accountList.scss';
 
-class AccountList extends Component {
-  componentDidMount() {
-    const { fetchAccountsStatus, startAccountStatusPolling } = this.props;
+const AccountList = ({
+  accounts,
+  error,
+  filterTerm,
+  fetchAccountsStatus,
+  startAccountStatusPolling,
+  stopAccountStatusPolling,
+  pollingProcessID,
+}) => {
+  useEffect(() => {
     fetchAccountsStatus();
-    const pollingProcessID = setInterval(fetchAccountsStatus, 5000);
-    startAccountStatusPolling(pollingProcessID);
+    const pollingID = setInterval(fetchAccountsStatus, 2000);
+    startAccountStatusPolling(pollingID);
+
+    return () => {
+      stopAccountStatusPolling(pollingID);
+    };
+  }, [
+    fetchAccountsStatus,
+    startAccountStatusPolling,
+    stopAccountStatusPolling,
+  ]);
+
+  const filteredAccount = filterAccounts(accounts, filterTerm);
+
+  if (error) {
+    return <ErrorState error={error} />;
   }
 
-  componentWillUnmount() {
-    const { stopAccountStatusPolling, pollingProcessID } = this.props;
-    stopAccountStatusPolling(pollingProcessID);
+  if (isEmpty(accounts)) {
+    return <EmptyState />;
   }
 
-  render() {
-    const { accounts, error, filterTerm } = this.props;
-    const filteredAccount = filterAccounts(accounts, filterTerm);
-
-    if (error) {
-      return <ErrorState error={error} />;
-    }
-
-    if (isEmpty(accounts)) {
-      return <EmptyState />;
-    }
-
-    if (isEmpty(filteredAccount)) {
-      return <EmptyResults />;
-    }
-
-    const items = Object.keys(filteredAccount).map((label, index) => {
-      const account = filteredAccount[label];
-      return <ListItem key={index} label={label} account={account} />;
-    });
-    return <Accordion className="account-list">{items}</Accordion>;
+  if (isEmpty(filteredAccount)) {
+    return <EmptyResults />;
   }
-}
+
+  const items = Object.keys(filteredAccount).map((label, index) => {
+    const account = accounts[label];
+    return (
+      <ListItem
+        key={label}
+        label={label}
+        account={account}
+        defaultExpanded={index === 0}
+        onTaskStart={fetchAccountsStatus}
+      />
+    );
+  });
+  return <Accordion className="account-list">{items}</Accordion>;
+};
 
 AccountList.propTypes = {
   fetchAccountsStatus: PropTypes.func,
@@ -53,8 +68,8 @@ AccountList.propTypes = {
   stopAccountStatusPolling: PropTypes.func,
   pollingProcessID: PropTypes.number,
   account: PropTypes.shape({
-    generate_report_status: PropTypes.string,
-    upload_report_status: PropTypes.string,
+    generated_status: PropTypes.string,
+    uploaded_status: PropTypes.string,
   }),
   accounts: PropTypes.object,
   error: PropTypes.string,
@@ -67,8 +82,8 @@ AccountList.defaultProps = {
   stopAccountStatusPolling: noop,
   pollingProcessID: 0,
   account: {
-    generate_report_status: 'unknown',
-    upload_report_status: 'unknown',
+    generated_status: 'unknown',
+    uploaded_status: 'unknown',
   },
   accounts: {},
   error: '',

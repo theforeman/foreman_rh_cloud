@@ -1,5 +1,9 @@
 import { testSelectorsSnapshotWithFixtures } from '@theforeman/test';
-import { foremanUrl, vulnerabilityDisabled, hasNoInsightsFacet } from '../ForemanRhCloudHelpers';
+import {
+  foremanUrl,
+  vulnerabilityDisabled,
+  hasNoInsightsFacet,
+} from '../ForemanRhCloudHelpers';
 
 global.URL_PREFIX = 'MY_TEST_URL_PREFIX.example.com';
 
