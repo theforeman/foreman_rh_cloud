@@ -42,7 +42,7 @@ module ForemanInventoryUpload
       end
 
       def plan_generate_report(folder, organization, disconnected)
-        plan_action(ForemanInventoryUpload::Async::GenerateReportJob, folder, organization.id, disconnected)
+        plan_action(ForemanInventoryUpload::Async::HostInventoryReportJob, folder, organization.id, '', !disconnected)
       end
 
       def logger
