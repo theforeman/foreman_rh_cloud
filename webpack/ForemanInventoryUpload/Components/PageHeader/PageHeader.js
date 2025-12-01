@@ -6,26 +6,33 @@ import InventoryFilter from '../InventoryFilter';
 import ToolbarButtons from './components/ToolbarButtons';
 import SettingsWarning from './components/SettingsWarning';
 import PageTitle from './PageTitle';
+import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 import './PageHeader.scss';
 
-const PageHeader = () => (
-  <div className="inventory-upload-header">
-    <SettingsWarning />
-    <PageTitle />
-    <div className="inventory-upload-header-description">
-      <InventorySettings />
-      <PageDescription />
+const PageHeader = () => {
+  const isIop = useIopConfig();
+
+  return (
+    <div className="inventory-upload-header">
+      <SettingsWarning />
+      <PageTitle />
+      {!isIop && (
+        <div className="inventory-upload-header-description">
+          <InventorySettings />
+          <PageDescription />
+        </div>
+      )}
+      <Grid.Row>
+        <Grid.Col xs={4}>
+          <InventoryFilter />
+        </Grid.Col>
+        <Grid.Col xs={7} xsOffset={1}>
+          <ToolbarButtons />
+        </Grid.Col>
+      </Grid.Row>
     </div>
-    <Grid.Row>
-      <Grid.Col xs={4}>
-        <InventoryFilter />
-      </Grid.Col>
-      <Grid.Col xs={7} xsOffset={1}>
-        <ToolbarButtons />
-      </Grid.Col>
-    </Grid.Row>
-  </div>
-);
+  );
+};
 
 PageHeader.propTypes = {};
 
