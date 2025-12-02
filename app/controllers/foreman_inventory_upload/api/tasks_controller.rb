@@ -1,27 +1,27 @@
 module ForemanInventoryUpload
   module Api
     class TasksController < ::Api::V2::BaseController
+      ACTION_TYPES = [
+        'ForemanInventoryUpload::Async::HostInventoryReportJob',
+        'ForemanInventoryUpload::Async::UploadReportDirectJob',
+      ].freeze
+
       # GET /foreman_inventory_upload/api/tasks/current
       # Returns current running/active tasks for inventory operations
       def current
         organization_id = validate_organization_id if params[:organization_id].present?
         return if performed?
 
-        action_types = [
-          'ForemanInventoryUpload::Async::HostInventoryReportJob',
-          'ForemanInventoryUpload::Async::UploadReportDirectJob',
-        ]
-
         tasks = ForemanTasks::Task
                 .active
-                .for_action_types(action_types)
+                .for_action_types(ACTION_TYPES)
                 .with_duration
 
         if organization_id.present?
           tasks = tasks.joins(:links)
                        .where(foreman_tasks_links: {
                          resource_type: 'Organization',
-              resource_id: organization_id,
+                         resource_id: organization_id,
                        })
         end
 
@@ -37,13 +37,9 @@ module ForemanInventoryUpload
         return if performed?
 
         limit = validated_limit
-        action_types = [
-          'ForemanInventoryUpload::Async::HostInventoryReportJob',
-          'ForemanInventoryUpload::Async::UploadReportDirectJob',
-        ]
 
         tasks = ForemanTasks::Task
-                .for_action_types(action_types)
+                .for_action_types(ACTION_TYPES)
                 .with_duration
                 .order('started_at DESC')
                 .limit(limit)
@@ -52,7 +48,7 @@ module ForemanInventoryUpload
           tasks = tasks.joins(:links)
                        .where(foreman_tasks_links: {
                          resource_type: 'Organization',
-              resource_id: organization_id,
+                         resource_id: organization_id,
                        })
         end
 
@@ -73,7 +69,7 @@ module ForemanInventoryUpload
           progress: task.progress,
           started_at: task.started_at,
           ended_at: task.ended_at,
-          duration: task.try(:duration)&.to_f,
+          duration: task.duration&.to_f,
           humanized: task.humanized,
           report_file_path: task_report_file_path(task),
         }

@@ -4,16 +4,32 @@ import { translate as __ } from 'foremanReact/common/I18n';
 import TaskProgress from '../TaskProgress';
 import './dashboard.scss';
 
-const Dashboard = ({ account, onTaskStart }) => (
-  <TaskProgress
-    task={account.generate_task}
-    title={__('Report Generation')}
-    emptyMessage={__('No report generation tasks have been run yet.')}
-    organizationId={account.id}
-    taskType="generate"
-    onTaskStart={onTaskStart}
-  />
-);
+const Dashboard = ({ account, onTaskStart }) => {
+  // Defensive handling for missing or malformed account data
+  if (!account) {
+    return (
+      <TaskProgress
+        task={null}
+        title={__('Report Generation')}
+        emptyMessage={__('No account data available.')}
+        organizationId={null}
+        taskType="generate"
+        onTaskStart={onTaskStart}
+      />
+    );
+  }
+
+  return (
+    <TaskProgress
+      task={account.generate_task || null}
+      title={__('Report Generation')}
+      emptyMessage={__('No report generation tasks have been run yet.')}
+      organizationId={account.id || null}
+      taskType="generate"
+      onTaskStart={onTaskStart}
+    />
+  );
+};
 
 Dashboard.propTypes = {
   account: PropTypes.shape({
@@ -33,9 +49,7 @@ Dashboard.propTypes = {
 };
 
 Dashboard.defaultProps = {
-  account: {
-    generate_task: null,
-  },
+  account: null,
   onTaskStart: null,
 };
 
