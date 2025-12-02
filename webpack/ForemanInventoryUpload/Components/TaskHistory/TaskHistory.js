@@ -115,9 +115,16 @@ TaskHistory.propTypes = {
   tasks: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
+      label: PropTypes.string,
+      action: PropTypes.string,
+      state: PropTypes.string,
       result: PropTypes.string,
+      progress: PropTypes.number,
       started_at: PropTypes.string,
+      ended_at: PropTypes.string,
       duration: PropTypes.number,
+      humanized: PropTypes.object,
+      report_file_path: PropTypes.string,
     })
   ),
   title: PropTypes.string,

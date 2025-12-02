@@ -65,6 +65,51 @@ const TaskProgress = ({
     'Upload is disabled because subscription connection is not enabled. Enable it in Administer > Settings > Content.'
   );
 
+  // Helper to render action buttons for generate tasks
+  const renderGenerateButtons = (buttonsDisabled, ouiaIdSuffix = '') => {
+    if (taskType !== 'generate' || !organizationId) return null;
+
+    return (
+      <>
+        <FlexItem>
+          {isUploadDisabled ? (
+            <Tooltip content={uploadDisabledTooltip}>
+              <span>
+                <Button
+                  ouiaId={`generate-and-upload-disabled-button${ouiaIdSuffix}`}
+                  variant="primary"
+                  onClick={() => handleGenerateReport(false)}
+                  isDisabled
+                >
+                  {__('Generate and upload report')}
+                </Button>
+              </span>
+            </Tooltip>
+          ) : (
+            <Button
+              ouiaId={`generate-and-upload-button${ouiaIdSuffix}`}
+              variant="primary"
+              onClick={() => handleGenerateReport(false)}
+              isDisabled={buttonsDisabled}
+            >
+              {__('Generate and upload report')}
+            </Button>
+          )}
+        </FlexItem>
+        <FlexItem>
+          <Button
+            ouiaId={`generate-report-button${ouiaIdSuffix}`}
+            variant="secondary"
+            onClick={() => handleGenerateReport(true)}
+            isDisabled={buttonsDisabled}
+          >
+            {__('Generate report')}
+          </Button>
+        </FlexItem>
+      </>
+    );
+  };
+
   const handleGenerateReport = async disconnected => {
     setIsLoading(true);
     try {
@@ -74,6 +119,11 @@ const TaskProgress = ({
           disconnected,
         }
       );
+
+      // Validate API response
+      if (!data || !data.id) {
+        throw new Error(__('Invalid response from server'));
+      }
 
       // Update last task ID only if it's a new task
       if (data.id !== task?.id) {
@@ -85,19 +135,20 @@ const TaskProgress = ({
         onTaskStart();
       }
 
-      // Use Katello's toast notification pattern with task link
+      // Use Foreman's toast notification with task link
       const message = disconnected
         ? __('Report generation started')
         : __('Report generation and upload started');
 
-      window.tfm.toastNotifications.notify({
-        message,
-        type: 'info',
-        link: {
-          children: __('Go to task page'),
-          href: `/foreman_tasks/tasks/${data.id}`,
-        },
-      });
+      dispatch(
+        addToast({
+          type: 'success',
+          message,
+          link: (
+            <a href={`/foreman_tasks/tasks/${data.id}`}>{__('View task')}</a>
+          ),
+        })
+      );
     } catch (error) {
       dispatch(
         addToast({
@@ -125,45 +176,9 @@ const TaskProgress = ({
         <EmptyStateBody>
           {emptyMessage || __('No tasks have been run yet.')}
         </EmptyStateBody>
-        {taskType === 'generate' && organizationId && (
-          <Flex className="task-progress-actions">
-            <FlexItem>
-              {isUploadDisabled ? (
-                <Tooltip content={uploadDisabledTooltip}>
-                  <span>
-                    <Button
-                      ouiaId="generate-and-upload-disabled-button"
-                      variant="primary"
-                      onClick={() => handleGenerateReport(false)}
-                      isDisabled
-                    >
-                      {__('Generate and upload report')}
-                    </Button>
-                  </span>
-                </Tooltip>
-              ) : (
-                <Button
-                  ouiaId="generate-and-upload-button"
-                  variant="primary"
-                  onClick={() => handleGenerateReport(false)}
-                  isDisabled={isLoading}
-                >
-                  {__('Generate and upload report')}
-                </Button>
-              )}
-            </FlexItem>
-            <FlexItem>
-              <Button
-                ouiaId="generate-report-button"
-                variant="secondary"
-                onClick={() => handleGenerateReport(true)}
-                isDisabled={isLoading}
-              >
-                {__('Generate report')}
-              </Button>
-            </FlexItem>
-          </Flex>
-        )}
+        <Flex className="task-progress-actions">
+          {renderGenerateButtons(isLoading)}
+        </Flex>
       </EmptyState>
     );
   }
@@ -238,12 +253,13 @@ const TaskProgress = ({
           variant={displayVariant}
           measureLocation="outside"
           aria-label="task-progress"
+          ouiaId="task-progress-bar"
         />
         <DescriptionList isHorizontal className="task-progress-details">
           <DescriptionListGroup>
             <DescriptionListTerm>{__('Started')}</DescriptionListTerm>
             <DescriptionListDescription>
-              {!isStartingNewTask && (
+              {!isStartingNewTask && task.started_at && (
                 <RelativeDateTime date={task.started_at} />
               )}
             </DescriptionListDescription>
@@ -284,45 +300,7 @@ const TaskProgress = ({
               {__('Download report')}
             </Button>
           </FlexItem>
-          {taskType === 'generate' && organizationId && (
-            <>
-              <FlexItem>
-                {isUploadDisabled ? (
-                  <Tooltip content={uploadDisabledTooltip}>
-                    <span>
-                      <Button
-                        ouiaId="generate-and-upload-disabled-button-task-view"
-                        variant="primary"
-                        onClick={() => handleGenerateReport(false)}
-                        isDisabled
-                      >
-                        {__('Generate and upload report')}
-                      </Button>
-                    </span>
-                  </Tooltip>
-                ) : (
-                  <Button
-                    ouiaId="generate-and-upload-button-task-view"
-                    variant="primary"
-                    onClick={() => handleGenerateReport(false)}
-                    isDisabled={areButtonsDisabled}
-                  >
-                    {__('Generate and upload report')}
-                  </Button>
-                )}
-              </FlexItem>
-              <FlexItem>
-                <Button
-                  ouiaId="generate-report-button-task-view"
-                  variant="secondary"
-                  onClick={() => handleGenerateReport(true)}
-                  isDisabled={areButtonsDisabled}
-                >
-                  {__('Generate report')}
-                </Button>
-              </FlexItem>
-            </>
-          )}
+          {renderGenerateButtons(areButtonsDisabled, '-task-view')}
         </Flex>
       </CardBody>
     </Card>
