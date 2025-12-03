@@ -22,6 +22,19 @@ module ForemanInventoryUpload
 
     private
 
+    def controller_permission
+      'foreman_rh_cloud'
+    end
+
+    def action_permission
+      case params[:action]
+      when 'generate'
+        'generate'
+      else
+        super
+      end
+    end
+
     def validate_organization_id
       org_id = params[:organization_id].to_i
       if org_id.zero?
