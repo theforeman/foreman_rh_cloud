@@ -324,7 +324,7 @@ TaskProgress.propTypes = {
   }),
   title: PropTypes.string,
   emptyMessage: PropTypes.string,
-  organizationId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  organizationId: PropTypes.number,
   taskType: PropTypes.oneOf(['generate', 'upload']),
   onTaskStart: PropTypes.func,
 };
