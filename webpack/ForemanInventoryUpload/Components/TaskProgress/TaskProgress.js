@@ -253,7 +253,6 @@ const TaskProgress = ({
           variant={displayVariant}
           measureLocation="outside"
           aria-label="task-progress"
-          ouiaId="task-progress-bar"
         />
         <DescriptionList
           isHorizontal
