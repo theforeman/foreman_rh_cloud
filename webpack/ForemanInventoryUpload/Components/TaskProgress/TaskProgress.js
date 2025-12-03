@@ -255,7 +255,11 @@ const TaskProgress = ({
           aria-label="task-progress"
           ouiaId="task-progress-bar"
         />
-        <DescriptionList isHorizontal className="task-progress-details">
+        <DescriptionList
+          isHorizontal
+          className="task-progress-details"
+          ouiaId="task-progress-details"
+        >
           <DescriptionListGroup>
             <DescriptionListTerm>{__('Started')}</DescriptionListTerm>
             <DescriptionListDescription>
