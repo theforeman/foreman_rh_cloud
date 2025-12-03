@@ -35,6 +35,10 @@ module ForemanInventoryUpload
 
     private
 
+    def controller_permission
+      'foreman_rh_cloud'
+    end
+
     def latest_task_for(org_id, job_class)
       ForemanTasks::Task
         .for_action_types([job_class.name])
