@@ -59,6 +59,10 @@ module ForemanInventoryUpload
 
       private
 
+      def controller_permission
+        'foreman_rh_cloud'
+      end
+
       def task_json(task)
         {
           id: task.id,
