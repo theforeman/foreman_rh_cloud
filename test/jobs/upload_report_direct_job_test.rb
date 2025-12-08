@@ -43,12 +43,6 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
 
     assert_equal @filename, action.input[:filename]
     assert_equal @organization.id, action.input[:organization_id]
-    assert_equal "upload_for_#{@organization.id}", action.input[:instance_label]
-  end
-
-  test 'output_label generates correct label' do
-    label = ForemanInventoryUpload::Async::UploadReportDirectJob.output_label(@organization.id)
-    assert_equal "upload_for_#{@organization.id}", label
   end
 
   test 'uses manifest certificate in regular mode' do
@@ -168,33 +162,6 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     refute action.send(:content_disconnected?)
   end
 
-  test 'instance_label returns label from input' do
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
-
-    assert_equal "upload_for_#{@organization.id}", action.send(:instance_label)
-  end
-
-  test 'clears previous task output on plan' do
-    # Create some old output
-    old_label = ForemanInventoryUpload::Async::UploadReportDirectJob.output_label(@organization.id)
-    TaskOutputLine.create!(label: old_label, line: 'old line')
-    TaskOutputStatus.create!(label: old_label, status: 'old status')
-
-    create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
-
-    # Verify old output was cleared
-    assert_equal 0, TaskOutputLine.where(label: old_label).count
-    assert_equal 0, TaskOutputStatus.where(label: old_label).count
-  end
-
   test 'rescue_strategy_for_self returns Fail strategy' do
     action = create_and_plan_action(
       ForemanInventoryUpload::Async::UploadReportDirectJob,
@@ -225,11 +192,6 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     assert_raises(RestClient::InternalServerError) do
       action.send(:try_execute)
     end
-
-    # Verify progress output shows error
-    label = ForemanInventoryUpload::Async::UploadReportDirectJob.output_label(@organization.id)
-    output = ForemanInventoryUpload::Async::ProgressOutput.get(label).full_output
-    assert_match(/Upload failed/, output)
   end
 
   test 'handles RestClient timeout gracefully' do
@@ -247,11 +209,6 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     assert_raises(RestClient::Exceptions::Timeout) do
       action.send(:try_execute)
     end
-
-    # Verify progress output shows error
-    label = ForemanInventoryUpload::Async::UploadReportDirectJob.output_label(@organization.id)
-    output = ForemanInventoryUpload::Async::ProgressOutput.get(label).full_output
-    assert_match(/Upload failed/, output)
   end
 
   test 'uses proxy configuration from ForemanRhCloud' do
@@ -294,8 +251,8 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     Organization.any_instance.stubs(:owner_details).returns({})
 
     # Create a real test file to verify it's not moved
-    FileUtils.mkdir_p(@uploads_folder)
     test_file = File.join(@uploads_folder, 'test_file_for_cleanup.tar.xz')
+    FileUtils.mkdir_p(@uploads_folder)
     FileUtils.touch(test_file)
 
     begin
@@ -310,15 +267,6 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
 
       # Verify file still exists (not moved or deleted)
       assert File.exist?(test_file), "File should remain when upload is aborted"
-
-      # Verify progress output mentions missing certificate
-      label = ForemanInventoryUpload::Async::UploadReportDirectJob.output_label(@organization.id)
-      output = ForemanInventoryUpload::Async::ProgressOutput.get(label).full_output
-      assert_match(/Skipping organization.*no candlepin certificate/, output)
-
-      # Verify status indicates abortion
-      status = ForemanInventoryUpload::Async::ProgressOutput.get(label).status
-      assert_match(/exit 1/, status)
     ensure
       FileUtils.rm_f(test_file) if File.exist?(test_file)
     end
@@ -328,8 +276,8 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     Setting.stubs(:[]).with(:subscription_connection_enabled).returns(false)
 
     # Create a real test file
-    FileUtils.mkdir_p(@uploads_folder)
     test_file = File.join(@uploads_folder, 'test_file_disconnected.tar.xz')
+    FileUtils.mkdir_p(@uploads_folder)
     FileUtils.touch(test_file)
 
     begin
@@ -344,11 +292,6 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
 
       # Verify file still exists
       assert File.exist?(test_file), "File should remain when connection is disabled"
-
-      # Verify progress output
-      label = ForemanInventoryUpload::Async::UploadReportDirectJob.output_label(@organization.id)
-      output = ForemanInventoryUpload::Async::ProgressOutput.get(label).full_output
-      assert_match(/connection to Insights is not enabled/, output)
     ensure
       FileUtils.rm_f(test_file) if File.exist?(test_file)
     end

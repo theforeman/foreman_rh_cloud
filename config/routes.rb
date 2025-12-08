@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   namespace :foreman_inventory_upload do
-    get ':organization_id/reports/last', to: 'reports#last', constraints: { organization_id: %r{[^\/]+} }
     post ':organization_id/reports', to: 'reports#generate', constraints: { organization_id: %r{[^\/]+} }
-    get ':organization_id/uploads/last', to: 'uploads#last', constraints: { organization_id: %r{[^\/]+} }
     get ':organization_id/uploads/file', to: 'uploads#download_file', constraints: { organization_id: %r{[^\/]+} }
     get 'missing_hosts', to: 'missing_hosts#index'
     get 'accounts', to: 'accounts#index'
@@ -76,6 +74,10 @@ Rails.application.routes.draw do
         post 'enable_connector', to: 'inventory#enable_cloud_connector'
         post 'cloud_request', to: 'cloud_request#update'
         get 'advisor_engine_config', to: 'advisor_engine_config#show'
+
+        # Inventory upload task endpoints
+        get 'inventory_upload/tasks/current', to: 'foreman_inventory_upload/api/tasks#current'
+        get 'inventory_upload/tasks/history', to: 'foreman_inventory_upload/api/tasks#history'
       end
 
       namespace 'advisor_engine' do

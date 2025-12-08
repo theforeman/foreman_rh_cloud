@@ -43,15 +43,7 @@ module ForemanInventoryUpload
       end
 
       def plan(filename, organization_id)
-        # NOTE: This implementation assumes a single organization will not trigger multiple
-        # concurrent uploads. The instance_label is derived from organization_id alone, which
-        # means concurrent uploads for the same org would share ProgressOutput storage.
-        # This matches the pattern in GenerateReportJob. A full fix for thread-safety
-        # requires UI changes to display multiple concurrent tasks per org (tracked for PR #2).
-        label = UploadReportDirectJob.output_label(organization_id)
-        clear_task_output(label)
         plan_self(
-          instance_label: label,
           filename: filename,
           organization_id: organization_id
         )
@@ -59,21 +51,12 @@ module ForemanInventoryUpload
 
       def try_execute
         if content_disconnected?
-          progress_output do |progress_output|
-            progress_output.write_line("Report was not moved and upload was canceled because connection to Insights is not enabled. Report location: #{filename}.")
-            progress_output.status = "Task aborted, exit 1"
-            done!
-          end
+          logger.info("Upload canceled: connection to Insights is not enabled. Report location: #{filename}")
           return
         end
 
         unless organization.owner_details&.dig('upstreamConsumer', 'idCert')
           logger.info("Skipping organization '#{organization}', no candlepin certificate defined.")
-          progress_output do |progress_output|
-            progress_output.write_line("Skipping organization #{organization}, no candlepin certificate defined.")
-            progress_output.status = "Task aborted, exit 1"
-            done!
-          end
           return
         end
 
@@ -81,29 +64,11 @@ module ForemanInventoryUpload
           cer_file.write(certificate[:cert])
           cer_file.write(certificate[:key])
           cer_file.flush
-          upload_report(cer_file.path)
+          upload_file(cer_file.path)
         end
 
+        move_to_done_folder
         done!
-      end
-
-      def upload_report(cer_path)
-        progress_output do |progress_output|
-          progress_output.write_line("Uploading report for organization #{organization.label}...")
-          progress_output.status = "Running upload"
-
-          begin
-            upload_file(cer_path)
-            progress_output.write_line("Upload completed successfully")
-            move_to_done_folder
-            progress_output.write_line("Uploaded file moved to done/ folder")
-            progress_output.status = "pid #{Process.pid} exit 0"
-          rescue StandardError => e
-            progress_output.write_line("Upload failed: #{e.message}")
-            progress_output.status = "pid #{Process.pid} exit 1"
-            raise
-          end
-        end
       end
 
       def upload_file(cer_path)
@@ -172,28 +137,12 @@ module ForemanInventoryUpload
         !Setting[:subscription_connection_enabled]
       end
 
-      def progress_output
-        progress_output = ProgressOutput.register(instance_label)
-        yield(progress_output)
-      ensure
-        progress_output.close
-      end
-
-      def instance_label
-        input[:instance_label]
-      end
-
       def logger
         Foreman::Logging.logger('background')
       end
 
       def rescue_strategy_for_self
         Dynflow::Action::Rescue::Fail
-      end
-
-      def clear_task_output(label)
-        TaskOutputLine.where(label: label).delete_all
-        TaskOutputStatus.where(label: label).delete_all
       end
     end
   end

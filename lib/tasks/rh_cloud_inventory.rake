@@ -12,9 +12,11 @@ namespace :rh_cloud_inventory do
       User.as_anonymous_admin do
         organizations.each do |organization|
           ForemanTasks.async_task(
-            ForemanInventoryUpload::Async::GenerateReportJob,
+            ForemanInventoryUpload::Async::HostInventoryReportJob,
             ForemanInventoryUpload.generated_reports_folder,
-            organization.id
+            organization.id,
+            '', # hosts_filter
+            true # upload
           )
           puts "Generated and uploaded inventory report for organization '#{organization.name}'"
         end

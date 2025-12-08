@@ -44,6 +44,7 @@ module ForemanRhCloud
             'foreman_inventory_upload/reports': [:last],
             'foreman_inventory_upload/uploads': [:auto_upload, :show_auto_upload, :download_file, :last],
             'foreman_inventory_upload/tasks': [:show],
+            'foreman_inventory_upload/api/tasks': [:current, :history],
             'foreman_inventory_upload/cloud_status': [:index],
             'foreman_inventory_upload/uploads_settings': [:index],
             'foreman_inventory_upload/missing_hosts': [:index],
