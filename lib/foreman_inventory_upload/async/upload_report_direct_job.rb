@@ -42,7 +42,14 @@ module ForemanInventoryUpload
         "upload_for_#{label}"
       end
 
+      def resource_locks
+        :link
+      end
+
       def plan(filename, organization_id)
+        organization = Organization.find(organization_id)
+        action_subject(organization)
+
         plan_self(
           filename: filename,
           organization_id: organization_id
@@ -102,7 +109,10 @@ module ForemanInventoryUpload
       def move_to_done_folder
         FileUtils.mkdir_p(ForemanInventoryUpload.done_folder)
         done_file = ForemanInventoryUpload.done_file_path(File.basename(filename))
-        FileUtils.mv(filename, done_file)
+        if File.exist?(done_file)
+          logger.warn("Destination file #{done_file} already exists. Overwriting with new report.")
+        end
+        FileUtils.mv(filename, done_file, force: true)
         logger.debug("Moved #{filename} to #{done_file}")
       end
 
@@ -119,9 +129,20 @@ module ForemanInventoryUpload
       end
 
       def foreman_certificate
+        cert_path = Setting[:ssl_certificate]
+        key_path = Setting[:ssl_priv_key]
+
+        unless cert_path && File.readable?(cert_path)
+          raise "SSL certificate file not found or not readable: #{cert_path}"
+        end
+
+        unless key_path && File.readable?(key_path)
+          raise "SSL private key file not found or not readable: #{key_path}"
+        end
+
         {
-          cert: File.read(Setting[:ssl_certificate]),
-          key: File.read(Setting[:ssl_priv_key]),
+          cert: File.read(cert_path),
+          key: File.read(key_path),
         }
       end
 
@@ -134,6 +155,7 @@ module ForemanInventoryUpload
       end
 
       def content_disconnected?
+        return false if ForemanRhCloud.with_iop_smart_proxy?
         !Setting[:subscription_connection_enabled]
       end
 

@@ -5,7 +5,7 @@ class AccountsControllerTest < ActionController::TestCase
 
   include FolderIsolation
 
-  test 'Returns statuses for each process type' do
+  test 'Returns statuses for each organization' do
     test_org = FactoryBot.create(:organization)
 
     get :index, session: set_session_user

@@ -14,17 +14,22 @@ export const getStatusIconByRegex = status => {
     return STATUS_ICONS.unknown;
   }
 
-  const statusCopy = status.toLowerCase();
-  if (statusCopy.indexOf('exit 0') !== -1) {
+  const statusLower = status.toLowerCase();
+
+  // Success states
+  if (statusLower === 'success') {
     return STATUS_ICONS.success;
   }
 
+  // Running states
   if (
-    statusCopy.indexOf('running') !== -1 ||
-    statusCopy.indexOf('restarting') !== -1
+    statusLower === 'running' ||
+    statusLower === 'pending' ||
+    statusLower === 'scheduled'
   ) {
     return STATUS_ICONS.running;
   }
 
+  // Failure states (error, warning, or anything else)
   return STATUS_ICONS.failure;
 };

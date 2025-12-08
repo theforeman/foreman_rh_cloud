@@ -18,11 +18,10 @@ import TableEmptyState from '../../../common/table/EmptyState';
 import './RemediationModal.scss';
 import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 
-/* eslint-disable spellcheck/spell-checker */
-
 // Sample iopData:
 // const iopTestData = Immutable([
 //   {
+//     eslint-disable-next-line spellcheck/spell-checker
 //     hostid: 'c7c6727e-2966-4f7c-87f1-20ef14db7a2d',
 //     host_name: 'advisor-test.local',
 //     rulename: 'hardening_cryptopol_krb5|NO_CPOL_KRB5',
@@ -38,6 +37,7 @@ import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 //     description: 'Decreased security: krb5 crypto-policies overridden',
 //   },
 //   {
+//     eslint-disable-next-line spellcheck/spell-checker
 //     hostid: 'c7c6727e-2966-4f7c-87f1-20ef14db7a2d',
 //     host_name: 'advisor-test.local',
 //     rulename: 'hardening_logging_auditd|HARDENING_LOGGING_5_AUDITD',
@@ -53,8 +53,6 @@ import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 //     description: 'Decreased security: auditd not running',
 //   },
 // ]);
-
-/* eslint-enable spellcheck/spell-checker */
 
 const RemediationModal = ({
   iopData,

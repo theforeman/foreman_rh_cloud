@@ -18,10 +18,10 @@ exports[`ListItem rendering render with Props 1`] = `
     <ListItemStatus
       account={
         Object {
-          "generate_report_status": "unknown",
+          "generated_status": "unknown",
           "id": 1,
           "report_file_paths": Array [],
-          "upload_report_status": "unknown",
+          "uploaded_status": "unknown",
         }
       }
       key="test_status"
@@ -33,10 +33,10 @@ exports[`ListItem rendering render with Props 1`] = `
     <Dashboard
       account={
         Object {
-          "generate_report_status": "unknown",
+          "generated_status": "unknown",
           "id": 1,
           "report_file_paths": Array [],
-          "upload_report_status": "unknown",
+          "uploaded_status": "unknown",
         }
       }
       accountID={1}

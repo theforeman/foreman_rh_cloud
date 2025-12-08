@@ -1,8 +1,8 @@
 export const props = {
   label: 'test',
   account: {
-    generate_report_status: 'unknown',
-    upload_report_status: 'unknown',
+    generated_status: 'unknown',
+    uploaded_status: 'unknown',
     id: 1,
     report_file_paths: [],
   },
