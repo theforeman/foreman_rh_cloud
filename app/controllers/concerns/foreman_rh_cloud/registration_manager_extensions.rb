@@ -19,7 +19,7 @@ module ForemanRhCloud
     end
 
     def hbi_host_destroy(host)
-      uuid = host.insights_facet.uuid
+      uuid = host.insights_uuid
       logger.debug "Unregistering host #{uuid} from HBI"
       execute_cloud_request(
         organization: host.organization,

@@ -13,7 +13,7 @@ module InsightsCloud
       end
 
       test 'shows hosts with uuids' do
-        uuids = [@host1.insights.uuid, @host2.insights.uuid]
+        uuids = [@host1.insights_uuid, @host2.insights_uuid]
         get :host_details, params: { organization_id: @test_org.id, host_uuids: uuids }
         assert_response :success
         assert_template 'api/v2/advisor_engine/host_details'

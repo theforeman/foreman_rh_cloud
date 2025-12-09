@@ -4,8 +4,8 @@ module ForemanRhCloud
   class RegistrationManagerExtensionsTest < ActiveSupport::TestCase
     setup do
       @org = FactoryBot.create(:organization)
-      @host = FactoryBot.create(:host, :managed, organization: @org)
-      @insights_facet = ::InsightsFacet.create!(host: @host, uuid: 'test-uuid-123')
+      @host = FactoryBot.create(:host, :managed, :with_subscription, organization: @org)
+      @insights_facet = ::InsightsFacet.create!(host: @host, uuid: @host.subscription_facet.uuid)
 
       # Stub Candlepin interaction (from Katello)
       ::Katello::Resources::Candlepin::Consumer.stubs(:destroy)
@@ -17,7 +17,7 @@ module ForemanRhCloud
     context 'unregister_host' do
       test 'should call HBI delete in IoP mode when host has insights facet with UUID' do
         ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
-        expected_url = ForemanInventoryUpload.host_by_id_url('test-uuid-123')
+        expected_url = ForemanInventoryUpload.host_by_id_url(@host.subscription_facet.uuid)
 
         # Expect the cloud request to be made
         Katello::RegistrationManager.expects(:execute_cloud_request).with do |params|
