@@ -36,7 +36,7 @@ module InsightsCloud
         # Query using the stale insights UUID
         get :host_details, params: {
           organization_id: @test_org.id,
-          host_uuids: [stale_insights_uuid]
+          host_uuids: [stale_insights_uuid],
         }
 
         assert_response :success
