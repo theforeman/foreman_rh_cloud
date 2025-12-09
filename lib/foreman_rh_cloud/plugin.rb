@@ -118,6 +118,11 @@ module ForemanRhCloud
           end
         end
 
+        # Preload insights facet to avoid N+1 queries when rendering host list with facets
+        add_controller_action_scope('Api::V2::HostsController', :index) do |base_scope|
+          base_scope.preload(:insights)
+        end
+
         register_global_js_file 'global'
 
         register_custom_status InventorySync::InventoryStatus
