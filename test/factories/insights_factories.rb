@@ -63,6 +63,8 @@ FactoryBot.modify do
       # Simulates host previously registered to cloud with stale UUID
       # Requires :with_subscription trait to be used together
       after(:create) do |host, _evaluator|
+        raise "subscription_facet required for :with_mismatched_insights_uuid trait" unless host.subscription_facet&.uuid
+
         host.insights = FactoryBot.create(
           :insights_facet,
           host_id: host.id,
@@ -75,7 +77,9 @@ FactoryBot.modify do
       # Ideal state: insights_facet UUID matches subscription_facet UUID
       # Requires :with_subscription trait to be used together
       after(:create) do |host, _evaluator|
-        subscription_uuid = host.subscription_facet&.uuid
+        raise "subscription_facet required for :with_synced_insights_uuid trait" unless host.subscription_facet&.uuid
+
+        subscription_uuid = host.subscription_facet.uuid
         host.insights = FactoryBot.create(
           :insights_facet,
           host_id: host.id,
