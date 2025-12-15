@@ -7,7 +7,7 @@ export const inventoryUrl = path =>
 export const getInventoryDocsUrl = () =>
   foremanUrl(
     `/links/manual/?root_url=${URI.encode(
-      'https://access.redhat.com/documentation/en-us/red_hat_insights/2023/html/red_hat_insights_remediations_guide/host-communication-with-insights_red-hat-insights-remediation-guide#uploading-satellite-host-inventory-to-insights_configuring-satellite-cloud-connector'
+      'https://docs.redhat.com/en/documentation/red_hat_lightspeed/1-latest/html-single/red_hat_lightspeed_remediations_guide/index'
     )}`
   );
 

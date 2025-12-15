@@ -32,7 +32,7 @@ exports[`PageTitle rendering render without Props 1`] = `
             Actions history
           </DropdownItem>,
           <DropdownItem
-            href="/links/manual/?root_url=https%3A%2F%2Faccess.redhat.com%2Fdocumentation%2Fen-us%2Fred_hat_insights%2F2023%2Fhtml%2Fred_hat_insights_remediations_guide%2Fhost-communication-with-insights_red-hat-insights-remediation-guide%23uploading-satellite-host-inventory-to-insights_configuring-satellite-cloud-connector"
+            href="/links/manual/?root_url=https%3A%2F%2Fdocs.redhat.com%2Fen%2Fdocumentation%2Fred_hat_lightspeed%2F1-latest%2Fhtml-single%2Fred_hat_lightspeed_remediations_guide%2Findex"
             ouiaId="inventory-documentation-button"
             rel="noopener noreferrer"
             target="_blank"
