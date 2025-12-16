@@ -28,31 +28,28 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
       },
     }
     Organization.any_instance.stubs(:owner_details).returns(@cert_data)
-
-    # Clear task output
-    TaskOutputLine.delete_all
-    TaskOutputStatus.delete_all
   end
 
   test 'plan sets input correctly' do
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
 
     assert_equal @filename, action.input[:filename]
     assert_equal @organization.id, action.input[:organization_id]
   end
 
+  test 'output_label generates correct label' do
+    label = ForemanInventoryUpload::Async::UploadReportDirectJob.output_label(@organization.id)
+    assert_equal "upload_for_#{@organization.id}", label
+  end
+
   test 'uses manifest certificate in regular mode' do
     ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
 
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
 
     cert = action.send(:certificate)
     assert_equal 'FAKE CERTIFICATE', cert[:cert]
@@ -60,11 +57,9 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
   end
 
   test 'manifest_certificate extracts from organization owner_details' do
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
 
     cert = action.send(:manifest_certificate)
     assert_equal 'FAKE CERTIFICATE', cert[:cert]
@@ -73,14 +68,14 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
 
   test 'uses foreman certificate in IoP mode' do
     ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+    File.stubs(:readable?).with('/fake/cert.pem').returns(true)
+    File.stubs(:readable?).with('/fake/key.pem').returns(true)
     File.stubs(:read).with('/fake/cert.pem').returns('FOREMAN CERTIFICATE')
     File.stubs(:read).with('/fake/key.pem').returns('FOREMAN KEY')
 
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
 
     cert = action.send(:foreman_certificate)
     assert_equal 'FOREMAN CERTIFICATE', cert[:cert]
@@ -90,11 +85,9 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
   test 'certificate method returns manifest cert in regular mode' do
     ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
 
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
 
     cert = action.send(:certificate)
     assert_equal 'FAKE CERTIFICATE', cert[:cert]
@@ -103,36 +96,67 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
 
   test 'certificate method returns foreman cert in IoP mode' do
     ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+    Setting.stubs(:[]).with(:ssl_certificate).returns('/fake/cert.pem')
+    Setting.stubs(:[]).with(:ssl_priv_key).returns('/fake/key.pem')
+    File.stubs(:readable?).with('/fake/cert.pem').returns(true)
+    File.stubs(:readable?).with('/fake/key.pem').returns(true)
     File.stubs(:read).with('/fake/cert.pem').returns('FOREMAN CERTIFICATE')
     File.stubs(:read).with('/fake/key.pem').returns('FOREMAN KEY')
 
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
 
     cert = action.send(:certificate)
     assert_equal 'FOREMAN CERTIFICATE', cert[:cert]
     assert_equal 'FOREMAN KEY', cert[:key]
   end
 
+  test 'foreman_certificate raises error when certificate file is missing' do
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+    Setting.stubs(:[]).with(:ssl_certificate).returns('/nonexistent/cert.pem')
+    Setting.stubs(:[]).with(:ssl_priv_key).returns('/fake/key.pem')
+    File.stubs(:readable?).with('/nonexistent/cert.pem').returns(false)
+
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
+
+    error = assert_raises(RuntimeError) do
+      action.send(:foreman_certificate)
+    end
+    assert_match(/SSL certificate file not found or not readable/, error.message)
+  end
+
+  test 'foreman_certificate raises error when private key file is missing' do
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+    Setting.stubs(:[]).with(:ssl_certificate).returns('/fake/cert.pem')
+    Setting.stubs(:[]).with(:ssl_priv_key).returns('/nonexistent/key.pem')
+    File.stubs(:readable?).with('/fake/cert.pem').returns(true)
+    File.stubs(:readable?).with('/nonexistent/key.pem').returns(false)
+
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
+
+    error = assert_raises(RuntimeError) do
+      action.send(:foreman_certificate)
+    end
+    assert_match(/SSL private key file not found or not readable/, error.message)
+  end
+
   test 'filename returns input filename' do
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
 
     assert_equal @filename, action.send(:filename)
   end
 
   test 'organization returns Organization from input organization_id' do
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
 
     org = action.send(:organization)
     assert_equal @organization.id, org.id
@@ -141,11 +165,9 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
   test 'content_disconnected? returns true when subscription_connection_enabled is false' do
     Setting.stubs(:[]).with(:subscription_connection_enabled).returns(false)
 
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
 
     assert action.send(:content_disconnected?)
   end
@@ -153,21 +175,28 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
   test 'content_disconnected? returns false when subscription_connection_enabled is true' do
     Setting.stubs(:[]).with(:subscription_connection_enabled).returns(true)
 
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
+
+    refute action.send(:content_disconnected?)
+  end
+
+  test 'content_disconnected? returns false when IoP mode is enabled even if subscription_connection_enabled is false' do
+    Setting.stubs(:[]).with(:subscription_connection_enabled).returns(false)
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
 
     refute action.send(:content_disconnected?)
   end
 
   test 'rescue_strategy_for_self returns Fail strategy' do
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
 
     assert_equal Dynflow::Action::Rescue::Fail, action.send(:rescue_strategy_for_self)
   end
@@ -182,11 +211,9 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     ForemanInventoryUpload::Async::UploadReportDirectJob.any_instance.stubs(:upload_file)
                                                         .raises(RestClient::InternalServerError.new(response))
 
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
 
     # Should raise the error (handled by Dynflow retry mechanism)
     assert_raises(RestClient::InternalServerError) do
@@ -199,11 +226,9 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     ForemanInventoryUpload::Async::UploadReportDirectJob.any_instance.stubs(:upload_file)
                                                         .raises(RestClient::Exceptions::Timeout.new)
 
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
 
     # Should raise the error (handled by Dynflow retry mechanism via ExponentialBackoff)
     assert_raises(RestClient::Exceptions::Timeout) do
@@ -219,11 +244,9 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     FileUtils.mkdir_p(File.dirname(@filename))
     FileUtils.touch(@filename)
 
-    action = create_and_plan_action(
-      ForemanInventoryUpload::Async::UploadReportDirectJob,
-      @filename,
-      @organization.id
-    )
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
 
     # Mock response
     response = mock('response')
@@ -251,16 +274,15 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     Organization.any_instance.stubs(:owner_details).returns({})
 
     # Create a real test file to verify it's not moved
+    FileUtils.mkdir_p(@uploads_folder)
     test_file = File.join(@uploads_folder, 'test_file_for_cleanup.tar.xz')
     FileUtils.mkdir_p(@uploads_folder)
     FileUtils.touch(test_file)
 
     begin
-      action = create_and_plan_action(
-        ForemanInventoryUpload::Async::UploadReportDirectJob,
-        test_file,
-        @organization.id
-      )
+      action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+      action.expects(:action_subject).with(@organization)
+      plan_action(action, test_file, @organization.id)
 
       # Execute the action
       action.send(:try_execute)
@@ -276,16 +298,15 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     Setting.stubs(:[]).with(:subscription_connection_enabled).returns(false)
 
     # Create a real test file
+    FileUtils.mkdir_p(@uploads_folder)
     test_file = File.join(@uploads_folder, 'test_file_disconnected.tar.xz')
     FileUtils.mkdir_p(@uploads_folder)
     FileUtils.touch(test_file)
 
     begin
-      action = create_and_plan_action(
-        ForemanInventoryUpload::Async::UploadReportDirectJob,
-        test_file,
-        @organization.id
-      )
+      action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+      action.expects(:action_subject).with(@organization)
+      plan_action(action, test_file, @organization.id)
 
       # Execute the action
       action.send(:try_execute)
@@ -295,6 +316,42 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     ensure
       FileUtils.rm_f(test_file) if File.exist?(test_file)
     end
+  end
+
+  test 'overwrites existing done file and logs warning' do
+    # Prepare new report file in uploads folder
+    FileUtils.mkdir_p(@uploads_folder)
+    source_file = File.join(@uploads_folder, 'overwrite_done_file.tar.xz')
+    new_report_content = 'new report content'
+    File.write(source_file, new_report_content)
+
+    # Pre-create done file with old content
+    done_file_path = ForemanInventoryUpload.done_file_path(File.basename(source_file))
+    FileUtils.mkdir_p(File.dirname(done_file_path))
+    old_report_content = 'old report content'
+    File.write(done_file_path, old_report_content)
+
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+
+    # Stub upload_file to avoid actual HTTP upload
+    action.stubs(:upload_file).returns(nil)
+
+    # Expect a warning when overwriting the existing done file
+    action.expects(:logger).at_least_once.returns(mock_logger = mock('logger'))
+    mock_logger.expects(:warn).with(regexp_matches(/already exists.*overwriting/i))
+    mock_logger.stubs(:debug)
+
+    plan_action(action, source_file, @organization.id)
+
+    # Execute the action (which will call move_to_done_folder)
+    action.send(:try_execute)
+
+    # Done file should now contain the new report content
+    assert_equal new_report_content, File.read(done_file_path)
+  ensure
+    FileUtils.rm_f(source_file) if defined?(source_file) && source_file
+    FileUtils.rm_f(done_file_path) if defined?(done_file_path) && done_file_path
   end
 
   test 'FileUpload wrapper delegates to file object' do

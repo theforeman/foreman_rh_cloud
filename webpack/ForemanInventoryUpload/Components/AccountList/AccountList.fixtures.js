@@ -3,18 +3,18 @@ import { noop } from 'foremanReact/common/helpers';
 export const accounts = {
   Account1: {
     id: 1,
-    upload_report_status: 'running',
-    generate_report_status: 'running',
+    uploaded_status: 'running',
+    generated_status: 'running',
   },
   Account2: {
     id: 2,
-    upload_report_status: 'unknown',
-    generate_report_status: 'failure',
+    uploaded_status: 'unknown',
+    generated_status: 'failure',
   },
   Account3: {
     id: 3,
-    upload_report_status: 'success',
-    generate_report_status: 'running',
+    uploaded_status: 'success',
+    generated_status: 'running',
   },
 };
 

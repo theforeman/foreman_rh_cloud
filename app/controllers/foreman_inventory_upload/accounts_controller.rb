@@ -52,18 +52,6 @@ module ForemanInventoryUpload
         .first
     end
 
-    def task_status_string(task)
-      return nil unless task
-
-      if task.state == 'stopped'
-        # Mimic old ProgressOutput format: "pid 12345 exit 0"
-        exit_code = task.result == 'success' ? 0 : 1
-        "pid #{Process.pid} exit #{exit_code}"
-      else
-        task.state
-      end
-    end
-
     def sub_action_status(task, action_class_name)
       return nil unless task
 
@@ -72,8 +60,7 @@ module ForemanInventoryUpload
 
       # For GenerateHostReport: always show status if task completed (generation always runs)
       if action_class_name == 'GenerateHostReport'
-        exit_code = task.result == 'success' ? 0 : 1
-        return "pid #{Process.pid} exit #{exit_code}"
+        return task.result
       end
 
       # For UploadReportDirectJob: only show status if task had upload enabled
@@ -84,9 +71,8 @@ module ForemanInventoryUpload
         # Check if upload was enabled for this task
         return nil unless main_action.input[:upload]
 
-        # Show same status as overall task (upload runs as part of the task)
-        exit_code = task.result == 'success' ? 0 : 1
-        return "pid #{Process.pid} exit #{exit_code}"
+        # Return the task result
+        return task.result
       end
 
       nil

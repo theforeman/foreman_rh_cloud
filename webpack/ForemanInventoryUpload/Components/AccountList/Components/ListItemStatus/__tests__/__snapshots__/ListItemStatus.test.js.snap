@@ -10,7 +10,7 @@ exports[`ListItemStatus rendering render with Props 1`] = `
     span={6}
   >
     <p>
-      Generating
+      Generated
     </p>
     <CheckIcon />
   </GridItem>
@@ -19,7 +19,7 @@ exports[`ListItemStatus rendering render with Props 1`] = `
     span={6}
   >
     <p>
-      Uploading
+      Uploaded
     </p>
     <Spinner
       size="sm"
@@ -38,7 +38,7 @@ exports[`ListItemStatus rendering render without Props 1`] = `
     span={6}
   >
     <p>
-      Generating
+      Generated
     </p>
     <span>
       --
@@ -49,7 +49,7 @@ exports[`ListItemStatus rendering render without Props 1`] = `
     span={6}
   >
     <p>
-      Uploading
+      Uploaded
     </p>
     <span>
       --

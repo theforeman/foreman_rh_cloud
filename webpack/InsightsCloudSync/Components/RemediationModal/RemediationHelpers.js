@@ -25,11 +25,11 @@ export const modifyRows = (
   ).map(({ id, host_id, hostname, title, resolutions, reboot }) => {
     hostsIdsToSubmit.add(host_id);
     const selectedResolution = resolutions[0]?.id;
-    /* eslint-disable spellcheck/spell-checker */
 
     // For IoP:
     // All of the values will be plain strings
     // {
+    // eslint-disable-next-line spellcheck/spell-checker
     //  hit_id: "c7c6727e-2966-4f7c-87f1-20ef14db7a2d", <-- this refers to a host by insights ID
     //  rule_id: "hardening_ssh_client_alive|OPENSSH_HARDENING_CLIENT_ALIVE",
     //  resolution_type: "less_secure",
@@ -41,7 +41,6 @@ export const modifyRows = (
     // rule_id refers to an InsightsRule
     // resolution_type and resolution_id both refer to an InsightsResolution (InsightsHit.find(xx).rule.resolutions)
 
-    /* eslint-enable spellcheck/spell-checker */
     resolutionToSubmit.push({
       hit_id: isIop ? host_id : id,
       rule_id: id,

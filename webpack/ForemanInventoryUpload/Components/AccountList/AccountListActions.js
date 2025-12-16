@@ -46,10 +46,10 @@ export const restartProcess = (accountID, activeTab) => async dispatch => {
 
   if (activeTab === 'uploading') {
     processController = 'uploads';
-    processStatusName = 'upload_report_status';
+    processStatusName = 'uploaded_status';
   } else {
     processController = 'reports';
-    processStatusName = 'generate_report_status';
+    processStatusName = 'generated_status';
   }
 
   try {
