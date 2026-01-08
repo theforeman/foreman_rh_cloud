@@ -7,7 +7,7 @@ module ForemanRhCloud
       include ForemanRhCloud::CertAuth
 
       def iop_smart_proxy_url
-        @iop_smart_proxy_url ||= ForemanRhCloud.iop_smart_proxy.url
+        @iop_smart_proxy_url ||= ForemanRhCloud.iop_smart_proxy&.url
       end
 
       def service_urls
@@ -33,6 +33,7 @@ module ForemanRhCloud
       end
 
       def ping
+        return {} unless ForemanRhCloud.with_iop_smart_proxy?
         ping_services
       end
 

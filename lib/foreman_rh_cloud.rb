@@ -14,15 +14,15 @@ module ForemanRhCloud
 
   def self.base_url
     # for testing set ENV to 'https://ci.cloud.redhat.com'
-    @base_url ||= env_or_on_premise_url('SATELLITE_RH_CLOUD_URL') || 'https://cloud.redhat.com'
+    env_or_on_premise_url('SATELLITE_RH_CLOUD_URL') || 'https://cloud.redhat.com'
   end
 
   def self.cert_base_url
-    @cert_base_url ||= env_or_on_premise_url('SATELLITE_CERT_RH_CLOUD_URL') || 'https://cert.cloud.redhat.com'
+    env_or_on_premise_url('SATELLITE_CERT_RH_CLOUD_URL') || 'https://cert.cloud.redhat.com'
   end
 
   def self.legacy_insights_url
-    @legacy_insights_url ||= env_or_on_premise_url('SATELLITE_LEGACY_INSIGHTS_URL') || 'https://cert-api.access.redhat.com'
+    env_or_on_premise_url('SATELLITE_LEGACY_INSIGHTS_URL') || 'https://cert-api.access.redhat.com'
   end
 
   def self.verify_ssl_method
