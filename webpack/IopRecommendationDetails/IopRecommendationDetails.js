@@ -3,7 +3,8 @@ import { useRouteMatch } from 'react-router-dom';
 import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
 
 import RemediationModal from '../InsightsCloudSync/Components/RemediationModal';
-import { providerOptions } from '../common/ScalprumModule/ScalprumContext';
+import { createProviderOptions } from '../common/ScalprumModule/ScalprumContext';
+import { useInsightsPermissions } from '../common/Hooks/PermissionsHooks';
 
 const scope = 'advisor';
 const module = './RecommendationDetailsWrapped';
@@ -25,10 +26,13 @@ const IopRecommendationDetails = props => {
   );
 };
 
-const IopRecommendationDetailsWrapped = props => (
-  <ScalprumProvider {...providerOptions}>
-    <IopRecommendationDetails {...props} />
-  </ScalprumProvider>
-);
+const IopRecommendationDetailsWrapped = props => {
+  const permissions = useInsightsPermissions();
+  return (
+    <ScalprumProvider {...createProviderOptions(permissions)}>
+      <IopRecommendationDetails {...props} />
+    </ScalprumProvider>
+  );
+};
 
 export default IopRecommendationDetailsWrapped;

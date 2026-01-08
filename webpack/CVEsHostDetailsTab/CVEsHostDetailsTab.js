@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
-import { providerOptions } from '../common/ScalprumModule/ScalprumContext';
+import { createProviderOptions } from '../common/ScalprumModule/ScalprumContext';
+import { useInsightsPermissions } from '../common/Hooks/PermissionsHooks';
 import './CVEsHostDetailsTab.scss';
 
 const CVEsHostDetailsTab = ({ systemId }) => {
@@ -18,14 +19,17 @@ CVEsHostDetailsTab.propTypes = {
   systemId: PropTypes.string.isRequired,
 };
 
-const CVEsHostDetailsTabWrapper = ({ response }) => (
-  <ScalprumProvider {...providerOptions}>
-    <CVEsHostDetailsTab
-      // eslint-disable-next-line camelcase
-      systemId={response?.subscription_facet_attributes?.uuid}
-    />
-  </ScalprumProvider>
-);
+const CVEsHostDetailsTabWrapper = ({ response }) => {
+  const permissions = useInsightsPermissions();
+  return (
+    <ScalprumProvider {...createProviderOptions(permissions)}>
+      <CVEsHostDetailsTab
+        // eslint-disable-next-line camelcase
+        systemId={response?.subscription_facet_attributes?.uuid}
+      />
+    </ScalprumProvider>
+  );
+};
 
 CVEsHostDetailsTabWrapper.propTypes = {
   response: PropTypes.shape({

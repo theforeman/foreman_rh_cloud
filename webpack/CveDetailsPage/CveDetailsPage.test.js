@@ -8,6 +8,14 @@ jest.mock('react-router-dom', () => ({
   useParams: jest.fn(() => ({ cveId: 'CVE-2021-1234' })),
 }));
 
+jest.mock('foremanReact/Root/Context/ForemanContext', () => ({
+  useForemanContext: () => ({
+    metadata: {
+      permissions: new Set(['view_vulnerability']),
+    },
+  }),
+}));
+
 jest.mock('@scalprum/react-core', () => ({
   ScalprumComponent: jest.fn(props => (
     <div data-testid="mock-scalprum-component">{JSON.stringify(props)}</div>
