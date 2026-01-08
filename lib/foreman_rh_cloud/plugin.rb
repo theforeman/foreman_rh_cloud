@@ -71,12 +71,46 @@ module ForemanRhCloud
             :control_organization_insights,
             'insights_cloud/settings': [:set_org_parameter]
           )
+          # Insights Vulnerability permissions
+          permission(
+            :view_vulnerability,
+            {},
+            :resource_type => 'ForemanRhCloud'
+          )
+          permission(
+            :edit_vulnerability,
+            {},
+            :resource_type => 'ForemanRhCloud'
+          )
+          # Insights Advisor permissions
+          permission(
+            :view_advisor,
+            {},
+            :resource_type => 'ForemanRhCloud'
+          )
+          permission(
+            :edit_advisor,
+            {},
+            :resource_type => 'ForemanRhCloud'
+          )
         end
 
-        plugin_permissions = [:view_foreman_rh_cloud, :generate_foreman_rh_cloud, :view_insights_hits, :dispatch_cloud_requests, :control_organization_insights]
+        # Core RH Cloud permissions for inventory upload and sync
+        rh_cloud_permissions = [:view_foreman_rh_cloud, :generate_foreman_rh_cloud, :view_insights_hits, :dispatch_cloud_requests, :control_organization_insights]
+
+        # Insights application permissions (Vulnerability, Advisor)
+        insights_permissions = [:view_vulnerability, :edit_vulnerability, :view_advisor, :edit_advisor]
+
+        plugin_permissions = rh_cloud_permissions + insights_permissions
+
+        read_only_permissions = [:view_foreman_rh_cloud, :view_insights_hits, :view_vulnerability, :view_advisor]
 
         role 'ForemanRhCloud', plugin_permissions, 'Role granting permissions to view the hosts inventory,
-                                                    generate a report, upload it to the cloud and download it locally'
+                                                    generate a report, upload it to the cloud, download it locally,
+                                                    and manage Insights Vulnerability and Advisor features'
+
+        role 'ForemanRhCloud Read Only', read_only_permissions, 'Role granting read-only permissions to view
+                                                                 Insights Vulnerability, Advisor, and host inventory'
 
         add_permissions_to_default_roles Role::ORG_ADMIN => plugin_permissions,
           Role::MANAGER => plugin_permissions,
