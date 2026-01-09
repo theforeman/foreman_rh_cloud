@@ -115,6 +115,22 @@ class ForemanRhCloudIopMetadataTest < ActiveSupport::TestCase
       ENV.delete('SATELLITE_RH_CLOUD_URL')
     end
 
+    test 'cert_base_url returns ENV var when set' do
+      ENV['SATELLITE_CERT_RH_CLOUD_URL'] = 'https://env-cert.cloud.test'
+
+      assert_equal 'https://env-cert.cloud.test', ForemanRhCloud.cert_base_url
+    ensure
+      ENV.delete('SATELLITE_CERT_RH_CLOUD_URL')
+    end
+
+    test 'legacy_insights_url returns ENV var when set' do
+      ENV['SATELLITE_LEGACY_INSIGHTS_URL'] = 'https://env-legacy.insights.test'
+
+      assert_equal 'https://env-legacy.insights.test', ForemanRhCloud.legacy_insights_url
+    ensure
+      ENV.delete('SATELLITE_LEGACY_INSIGHTS_URL')
+    end
+
     test 'base_url prefers IoP URL over ENV var' do
       ENV['SATELLITE_RH_CLOUD_URL'] = 'https://custom.example.com'
 
@@ -126,28 +142,59 @@ class ForemanRhCloudIopMetadataTest < ActiveSupport::TestCase
       ENV.delete('SATELLITE_RH_CLOUD_URL')
     end
 
+    test 'cert_base_url prefers IoP URL over ENV var' do
+      ENV['SATELLITE_CERT_RH_CLOUD_URL'] = 'https://env-cert.cloud.test'
+
+      create_iop_proxy
+
+      # IoP URL should take precedence
+      assert_equal 'https://iop.example.com', ForemanRhCloud.cert_base_url
+    ensure
+      ENV.delete('SATELLITE_CERT_RH_CLOUD_URL')
+    end
+
+    test 'legacy_insights_url prefers IoP URL over ENV var' do
+      ENV['SATELLITE_LEGACY_INSIGHTS_URL'] = 'https://env-legacy.insights.test'
+
+      create_iop_proxy
+
+      # IoP URL should take precedence
+      assert_equal 'https://iop.example.com', ForemanRhCloud.legacy_insights_url
+    ensure
+      ENV.delete('SATELLITE_LEGACY_INSIGHTS_URL')
+    end
+
     test 'URL methods update when IoP smart proxy is created' do
-      # Initially returns cloud URL
+      # Initially returns cloud URLs
       assert_equal 'https://cloud.redhat.com', ForemanRhCloud.base_url
+      assert_equal 'https://cert.cloud.redhat.com', ForemanRhCloud.cert_base_url
+      assert_equal 'https://cert-api.access.redhat.com', ForemanRhCloud.legacy_insights_url
 
       # Create an IoP smart proxy
       create_iop_proxy
 
-      # Should now return IoP URL
+      # Should now return IoP URL for all helpers
       assert_equal 'https://iop.example.com', ForemanRhCloud.base_url
+      assert_equal 'https://iop.example.com', ForemanRhCloud.cert_base_url
+      assert_equal 'https://iop.example.com', ForemanRhCloud.legacy_insights_url
     end
 
     test 'URL methods update when IoP smart proxy is destroyed' do
       # Create an IoP smart proxy
       proxy = create_iop_proxy
 
+      # Initially returns IoP URL for all helpers
       assert_equal 'https://iop.example.com', ForemanRhCloud.base_url
+      assert_equal 'https://iop.example.com', ForemanRhCloud.cert_base_url
+      assert_equal 'https://iop.example.com', ForemanRhCloud.legacy_insights_url
 
       # Destroy the proxy
       proxy.destroy
 
-      # Should now return cloud URL
+      # Should now return cloud URLs again
       assert_equal 'https://cloud.redhat.com', ForemanRhCloud.base_url
+      assert_equal 'https://cert.cloud.redhat.com', ForemanRhCloud.cert_base_url
+      assert_equal 'https://cert-api.access.redhat.com', ForemanRhCloud.legacy_insights_url
     end
   end
 end

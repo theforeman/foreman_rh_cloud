@@ -7,7 +7,7 @@ module ForemanRhCloud
       include ForemanRhCloud::CertAuth
 
       def iop_smart_proxy_url
-        @iop_smart_proxy_url ||= ForemanRhCloud.iop_smart_proxy&.url
+        ForemanRhCloud.iop_smart_proxy&.url
       end
 
       def service_urls
