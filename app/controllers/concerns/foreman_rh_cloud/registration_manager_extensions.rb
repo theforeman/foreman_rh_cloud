@@ -13,7 +13,7 @@ module ForemanRhCloud
       host.reload
 
       # Only delete from HBI in IoP mode (hosted mode uses async job for cleanup)
-      hbi_host_destroy(host) if ForemanRhCloud.with_iop_smart_proxy? && !organization_destroy && host.insights_facet&.uuid&.presence
+      hbi_host_destroy(host) if ForemanRhCloud.with_iop_smart_proxy? && !organization_destroy && host.insights_uuid.presence
       host.insights&.destroy!
       super(host, options)
     end
