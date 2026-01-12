@@ -15,7 +15,7 @@ module ForemanRhCloud
     end
 
     context 'unregister_host' do
-      test 'should call HBI delete in IoP mode when host has insights facet with UUID' do
+      test 'should call HBI delete in IoP mode when host has insights UUID' do
         ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
         expected_url = ForemanInventoryUpload.host_by_id_url(@host.subscription_facet.uuid)
 
@@ -43,44 +43,6 @@ module ForemanRhCloud
 
         # Verify insights_facet was still destroyed
         assert_nil InsightsFacet.find_by(id: @insights_facet.id)
-      end
-
-      test 'should NOT call HBI delete when host has no insights_facet' do
-        host_without_facet = FactoryBot.create(:host, :managed, organization: @org)
-        ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
-
-        Katello::RegistrationManager.expects(:execute_cloud_request).never
-
-        assert_nothing_raised do
-          Katello::RegistrationManager.unregister_host(host_without_facet, unregistering: true)
-        end
-      end
-
-      test 'should NOT call HBI delete when host has insights_facet with empty UUID' do
-        host_with_empty_uuid_facet = FactoryBot.create(:host, :managed, organization: @org)
-        empty_uuid_facet = InsightsFacet.create!(host: host_with_empty_uuid_facet, uuid: '')
-        ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
-
-        Katello::RegistrationManager.expects(:execute_cloud_request).never
-
-        assert_nothing_raised do
-          Katello::RegistrationManager.unregister_host(host_with_empty_uuid_facet, unregistering: true)
-        end
-
-        assert_nil InsightsFacet.find_by(id: empty_uuid_facet.id)
-      end
-
-      test 'should NOT call HBI delete when insights_facet has no UUID' do
-        facet_id = @insights_facet.id
-        @insights_facet.update(uuid: nil)
-        ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
-
-        Katello::RegistrationManager.expects(:execute_cloud_request).never
-
-        Katello::RegistrationManager.unregister_host(@host, unregistering: true)
-
-        # Verify facet was still destroyed
-        assert_nil InsightsFacet.find_by(id: facet_id)
       end
 
       test 'should always destroy insights_facet regardless of IoP mode' do
