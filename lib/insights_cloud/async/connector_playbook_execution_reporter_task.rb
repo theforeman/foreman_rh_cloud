@@ -126,10 +126,10 @@ module InsightsCloud
 
       def invocation_status
         hosts_state = Hash[job_invocation.targeting.hosts.map do |host|
-          next unless host.insights&.uuid
+          next unless host.insights_uuid
           [
-            host.insights.uuid,
-            task_status(job_invocation.sub_task_for_host(host), host.insights.uuid),
+            host.insights_uuid,
+            task_status(job_invocation.sub_task_for_host(host), host.insights_uuid),
           ]
         end.compact]
 

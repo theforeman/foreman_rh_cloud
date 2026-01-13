@@ -13,12 +13,39 @@ module InsightsCloud
       end
 
       test 'shows hosts with uuids' do
-        uuids = [@host1.insights.uuid, @host2.insights.uuid]
+        uuids = [@host1.insights_uuid, @host2.insights_uuid]
         get :host_details, params: { organization_id: @test_org.id, host_uuids: uuids }
         assert_response :success
         assert_template 'api/v2/advisor_engine/host_details'
         assert_equal @test_org.hosts.joins(:insights).where(:insights => { :uuid => uuids }).count, assigns(:hosts).count
         refute_equal @test_org.hosts.count, assigns(:hosts).count
+      end
+
+      test 'in IoP mode host_details uses subscription uuid when insights uuid is stale' do
+        ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+
+        stale_insights_uuid = 'stale-insights-uuid-123'
+        subscription_uuid   = 'subscription-uuid-456'
+
+        # Create host with diverging facet UUIDs
+        host = FactoryBot.create(:host, :with_subscription, organization: @test_org)
+        host.subscription_facet.update!(uuid: subscription_uuid)
+        host.insights = FactoryBot.create(:insights_facet, host_id: host.id, uuid: stale_insights_uuid)
+        host.save!
+
+        # Query using the stale insights UUID
+        get :host_details, params: {
+          organization_id: @test_org.id,
+          host_uuids: [stale_insights_uuid],
+        }
+
+        assert_response :success
+        body = JSON.parse(response.body)
+
+        # Should return the subscription UUID, not the stale insights UUID
+        insights_uuids = body.map { |h| h['insights_uuid'] }
+        assert_includes insights_uuids, subscription_uuid, "Should use subscription UUID in IoP mode"
+        refute_includes insights_uuids, stale_insights_uuid, "Should not use stale insights UUID"
       end
 
       test 'shows error when no hosts found' do
