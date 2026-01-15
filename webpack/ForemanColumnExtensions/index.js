@@ -74,7 +74,7 @@ const hostsIndexColumnExtensions = [
     columnName: 'cves_count',
     title: __('Total CVEs'),
     wrapper: hostDetails => <CVECountCell hostDetails={hostDetails} />,
-    weight: 2600,
+    weight: 1600,
     tableName: 'hosts',
     categoryName: insightsCategoryName,
     categoryKey: 'insights',
