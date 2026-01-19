@@ -12,6 +12,8 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
 
   teardown do
     FileUtils.remove_entry base_folder if Dir.exist?(base_folder)
+    # Ensure stubs are cleaned up to avoid leakage into other tests
+    ForemanRhCloud.unstub(:with_iop_smart_proxy?)
   end
 
   test 'plan schedules GenerateHostReport action' do

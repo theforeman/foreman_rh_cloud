@@ -4,6 +4,11 @@ require 'foreman_tasks/test_helpers'
 class InventoryScheduledSyncTest < ActiveSupport::TestCase
   include Dynflow::Testing::Factories
 
+  teardown do
+    # Ensure stubs are cleaned up to avoid leakage into other tests
+    ForemanRhCloud.unstub(:with_iop_smart_proxy?)
+  end
+
   test 'Schedules an execution if auto upload is enabled' do
     Setting[:allow_auto_inventory_upload] = true
     Setting[:allow_auto_insights_mismatch_delete] = true

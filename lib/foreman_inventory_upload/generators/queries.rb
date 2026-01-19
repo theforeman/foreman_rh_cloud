@@ -50,7 +50,7 @@ module ForemanInventoryUpload
         query = base
 
         # In IoP mode, skip the parameter check - include all hosts regardless of opt-out setting
-        unless ForemanRhCloud.with_iop_smart_proxy?
+        unless skip_inventory_parameter_filter?
           query = query.search_for("not params.#{InsightsCloud.enable_client_param_inventory} = f")
         end
 
@@ -64,6 +64,10 @@ module ForemanInventoryUpload
             :inventory_upload_facts,
             subscription_facet: [:pools, :installed_products, :hypervisor_host]
           )
+      end
+
+      def self.skip_inventory_parameter_filter?
+        ForemanRhCloud.with_iop_smart_proxy?
       end
 
       def self.for_org(organization_id, use_batches: true, hosts_query: '')

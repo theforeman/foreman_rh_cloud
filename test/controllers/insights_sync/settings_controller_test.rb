@@ -6,6 +6,11 @@ class SettingsControllerTest < ActionController::TestCase
     ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
   end
 
+  def teardown
+    # Ensure stubs are cleaned up to avoid leakage into other tests
+    ForemanRhCloud.unstub(:with_iop_smart_proxy?)
+  end
+
   test 'should return allow_auto_insights_sync setting' do
     Setting[:allow_auto_insights_sync] = false
 

@@ -35,6 +35,11 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     ForemanInventoryUpload::Generators::Queries.instance_variable_set(:@fact_names, nil)
   end
 
+  teardown do
+    # Ensure stubs are cleaned up to avoid leakage into other tests
+    ForemanRhCloud.unstub(:with_iop_smart_proxy?)
+  end
+
   def create_fact_values(host, facts)
     facts.each do |fact_name, value|
       FactoryBot.create(:fact_value, fact_name: fact_names[fact_name], value: value, host: host)
