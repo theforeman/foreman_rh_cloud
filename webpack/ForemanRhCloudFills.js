@@ -10,6 +10,7 @@ import {
   hasNoInsightsFacet,
 } from './ForemanRhCloudHelpers';
 import CVEsHostDetailsTabWrapper from './CVEsHostDetailsTab/CVEsHostDetailsTab';
+import InsightsVulnerabilityActionsBar from './InsightsVulnerabilityActionsBar';
 
 const fills = [
   {
@@ -17,6 +18,12 @@ const fills = [
     name: 'InventoryAutoUpload',
     component: () => <InventoryAutoUploadSwitcher />,
     weight: 50,
+  },
+  {
+    slot: 'hosts-index-kebab',
+    name: 'InsightsVulnerabilityActionsBar',
+    component: () => <InsightsVulnerabilityActionsBar />,
+    weight: 150,
   },
   {
     slot: 'host-details-page-tabs',
