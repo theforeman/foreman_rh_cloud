@@ -749,7 +749,9 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_equal 1, generator.hosts_count
   end
 
-  test 'excludes hosts with host_registration_insights_inventory set to false' do
+  test 'excludes hosts with host_registration_insights_inventory set to false in cloud mode' do
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
+
     @host.host_parameters << HostParameter.create(
       name: 'host_registration_insights_inventory',
       value: "false",
@@ -759,6 +761,39 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     count = ForemanInventoryUpload::Generators::Queries.for_org(@host.organization_id).count
 
     assert_equal 0, count
+  end
+
+  test 'includes hosts with host_registration_insights_inventory set to false in IoP mode' do
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+
+    @host.host_parameters << HostParameter.create(
+      name: 'host_registration_insights_inventory',
+      value: "false",
+      parameter_type: 'boolean'
+    )
+
+    count = ForemanInventoryUpload::Generators::Queries.for_org(@host.organization_id).count
+
+    assert_equal 1, count, 'IoP mode should include all hosts regardless of parameter value'
+  end
+
+  test 'parameter filter applies correctly when switching modes' do
+    @host.host_parameters << HostParameter.create(
+      name: 'host_registration_insights_inventory',
+      value: "false",
+      parameter_type: 'boolean'
+    )
+
+    # Cloud mode - should exclude
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
+    cloud_count = ForemanInventoryUpload::Generators::Queries.for_org(@host.organization_id).count
+    assert_equal 0, cloud_count, 'Cloud mode should exclude opted-out hosts'
+
+    # IoP mode - should include
+    ForemanRhCloud.unstub(:with_iop_smart_proxy?)
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+    iop_count = ForemanInventoryUpload::Generators::Queries.for_org(@host.organization_id).count
+    assert_equal 1, iop_count, 'IoP mode should include all hosts'
   end
 
   test 'includes hosts with host_registration_insights set to true' do

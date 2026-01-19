@@ -47,8 +47,14 @@ module ForemanInventoryUpload
       end
 
       def self.for_slice(base)
-        base
-          .search_for("not params.#{InsightsCloud.enable_client_param_inventory} = f")
+        query = base
+
+        # In IoP mode, skip the parameter check - include all hosts regardless of opt-out setting
+        unless ForemanRhCloud.with_iop_smart_proxy?
+          query = query.search_for("not params.#{InsightsCloud.enable_client_param_inventory} = f")
+        end
+
+        query
           .joins(:subscription_facet)
           .preload(
             :interfaces,
