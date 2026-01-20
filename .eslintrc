@@ -25,6 +25,7 @@
           "db",
           "donut",
           "dropdown",
+          "flyout",
           "hardening",
           "hostid",
           "hostnames",
@@ -52,7 +53,8 @@
           "scalprum",
           "theforeman",
           "tooltip",
-          "unmount"
+          "unmount",
+          "vnd"
         ],
         "minLength": 3
       }
