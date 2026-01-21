@@ -80,7 +80,8 @@ const hostsIndexColumnExtensions = [
     categoryKey: 'insights',
     isSorted: false,
     // eslint-disable-next-line camelcase
-    isRelevant: contextData => contextData?.metadata?.foreman_rh_cloud?.iop,
+    // Show column unless IoP is explicitly disabled (handles undefined during loading)
+    isRelevant: contextData => contextData?.metadata?.foreman_rh_cloud?.iop !== false,
   },
 ];
 
