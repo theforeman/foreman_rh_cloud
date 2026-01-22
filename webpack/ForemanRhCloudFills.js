@@ -10,7 +10,7 @@ import {
   hasNoInsightsFacet,
 } from './ForemanRhCloudHelpers';
 import CVEsHostDetailsTabWrapper from './CVEsHostDetailsTab/CVEsHostDetailsTab';
-import InsightsVulnerabilityActionBar from './InsightsVulnerabilityActionBar';
+import InsightsVulnerabilityActionsBar from './InsightsVulnerabilityActionsBar';
 
 const fills = [
   {
@@ -21,8 +21,8 @@ const fills = [
   },
   {
     slot: 'hosts-index-kebab',
-    name: 'InsightsVulnerabilityActionBar',
-    component: () => <InsightsVulnerabilityActionBar />,
+    name: 'InsightsVulnerabilityActionsBar',
+    component: () => <InsightsVulnerabilityActionsBar />,
     weight: 150,
   },
   {
