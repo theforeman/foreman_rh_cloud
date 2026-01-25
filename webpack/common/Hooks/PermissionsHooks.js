@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useForemanContext } from 'foremanReact/Root/Context/ForemanContext';
+import { useForemanPermissions } from 'foremanReact/Root/Context/ForemanContext';
 
 /**
  * Mapping from Foreman permissions to Insights Chrome API permissions.
@@ -39,8 +39,7 @@ const PERMISSION_MAPPING = {
  * @returns {Array<{permission: string, resourceDefinitions: Array}>} User's Insights permissions
  */
 export const useInsightsPermissions = () => {
-  const context = useForemanContext();
-  const userPermissions = context?.metadata?.permissions || new Set();
+  const userPermissions = useForemanPermissions() || new Set();
 
   return useMemo(
     () =>

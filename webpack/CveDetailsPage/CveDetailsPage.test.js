@@ -14,6 +14,7 @@ jest.mock('foremanReact/Root/Context/ForemanContext', () => ({
       permissions: new Set(['view_vulnerability']),
     },
   }),
+  useForemanPermissions: () => new Set(['view_vulnerability']),
 }));
 
 jest.mock('@scalprum/react-core', () => ({
