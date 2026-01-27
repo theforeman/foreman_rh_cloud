@@ -54,7 +54,8 @@
           "theforeman",
           "tooltip",
           "unmount",
-          "vnd"
+          "vnd",
+          "vuln"
         ],
         "minLength": 3
       }
