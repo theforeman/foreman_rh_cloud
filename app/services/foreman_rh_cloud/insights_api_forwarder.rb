@@ -32,47 +32,62 @@ module ForemanRhCloud
           'GET' => :view_vulnerability,
         },
       },
-      # Vulnerability CVEs list - POST requires view_vulnerability (for filtering)
+      # Vulnerability CVEs list - POST requires view_vulnerability (no tags support per OpenAPI spec)
       {
         test: %r{api/vulnerability/v1/vulnerabilities/cves},
-        tag_name: :tags,
         permissions: {
           'POST' => :view_vulnerability,
         },
       },
       # Vulnerability status - PATCH requires edit_vulnerability
+      # Note: GET /status does not support tags parameter per OpenAPI spec
       {
         test: %r{api/vulnerability/v1/status},
-        tag_name: :tags,
         permissions: {
           'PATCH' => :edit_vulnerability,
         },
       },
-      # CVE status - PATCH requires edit_vulnerability
+      # CVE status - PATCH requires edit_vulnerability (no GET endpoint)
       {
         test: %r{api/vulnerability/v1/cves/status},
-        tag_name: :tags,
         permissions: {
           'PATCH' => :edit_vulnerability,
         },
       },
-      # CVE business risk - PATCH requires edit_vulnerability
+      # CVE business risk - PATCH requires edit_vulnerability (no GET endpoint)
       {
         test: %r{api/vulnerability/v1/cves/business_risk},
-        tag_name: :tags,
         permissions: {
           'PATCH' => :edit_vulnerability,
         },
       },
-      # Systems opt out - PATCH requires edit_vulnerability
+      # Systems opt out - PATCH requires edit_vulnerability (no GET endpoint)
       {
         test: %r{api/vulnerability/v1/systems/opt_out},
-        tag_name: :tags,
         permissions: {
           'PATCH' => :edit_vulnerability,
         },
       },
-      # Other vulnerability endpoints - GET requires view_vulnerability
+      # Endpoints without tags support (per OpenAPI spec) - still require view_vulnerability for GET
+      {
+        test: %r{api/vulnerability/v1/(apistatus|version|business_risk|announcement)$},
+        permissions: {
+          'GET' => :view_vulnerability,
+        },
+      },
+      {
+        test: %r{api/vulnerability/v1/cves/[^/]+$},
+        permissions: {
+          'GET' => :view_vulnerability,
+        },
+      },
+      {
+        test: %r{api/vulnerability/v1/(playbooks|report)/},
+        permissions: {
+          'GET' => :view_vulnerability,
+        },
+      },
+      # Other vulnerability endpoints - GET requires view_vulnerability (with tags support)
       {
         test: %r{api/vulnerability/v1/.*},
         tag_name: :tags,
@@ -229,38 +244,26 @@ module ForemanRhCloud
       Foreman::Logging.logger('app')
     end
 
-    # Returns the required permission for the given path and HTTP method.
-    #
-    # == Pattern Resolution
-    #
-    # When multiple patterns in SCOPED_REQUESTS match the path, this method selects
-    # the most specific pattern using regex source length as a proxy for specificity.
-    # Longer regex sources generally indicate more specific patterns (e.g.,
-    # `api/vulnerability/v1/cves/status` is more specific than `api/vulnerability/v1/.*`).
-    #
-    # Only patterns that define `:permissions` participate in resolution. Patterns
-    # without `:permissions` (tagging-only entries like `api/inventory/.*`) are excluded
-    # to prevent them from overriding permission-enforcing patterns for the same path.
-    #
-    # If you add new patterns with similar specificity, consider using more explicit
-    # path segments or a priority field to ensure deterministic resolution.
-    #
+    # Returns the required permission for the given path and HTTP method
+    # Resolves overlapping patterns by choosing the most specific matcher,
+    # defined as the one with the longest regex source that matches the path.
+    # This avoids permission changes caused by reordering SCOPED_REQUESTS.
     # @param path [String] The request path
     # @param http_method [String] The HTTP method (GET, POST, etc.)
     # @return [Symbol, nil] The required permission symbol or nil if no permission required
     def required_permission_for(path, http_method)
-      # Only consider patterns that define permissions - this ensures tagging-only
-      # patterns cannot override permission-enforcing patterns for the same path
-      matching_patterns = SCOPED_REQUESTS.select do |pattern|
-        pattern[:permissions] && pattern[:test].match?(path)
-      end
+      # Collect all matching patterns
+      matching_patterns = SCOPED_REQUESTS.select { |pattern| pattern[:test].match?(path) }
       return nil if matching_patterns.empty?
 
       # Choose the most specific pattern: longest regex source wins.
       # This makes overlapping patterns deterministic and independent of array order.
       request_pattern = matching_patterns.max_by { |pattern| pattern[:test].source.length }
 
-      request_pattern[:permissions][http_method]
+      permissions = request_pattern[:permissions]
+      return nil unless permissions
+
+      permissions[http_method]
     end
   end
 end
