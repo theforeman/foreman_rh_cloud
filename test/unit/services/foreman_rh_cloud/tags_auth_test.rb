@@ -40,4 +40,18 @@ class TagsAuthTest < ActiveSupport::TestCase
 
     @auth.update_tag
   end
+
+  test 'Generates tags with wildcard location when location is nil' do
+    auth_with_nil_loc = ::ForemanRhCloud::TagsAuth.new(@user, @org, nil, @logger)
+    uuid1 = 'test_uuid1'
+
+    auth_with_nil_loc.expects(:allowed_hosts).returns([uuid1])
+    auth_with_nil_loc.expects(:execute_cloud_request).with do |actual_params|
+      actual = JSON.parse(actual_params[:payload])
+      assert_includes actual['host_id_list'], uuid1
+      assert_equal "U:\"#{@user.login}\"O:\"#{@org.name}\"L:\"*\"", actual['tags'].first['value']
+    end
+
+    auth_with_nil_loc.update_tag
+  end
 end
