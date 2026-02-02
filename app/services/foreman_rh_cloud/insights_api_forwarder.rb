@@ -224,8 +224,15 @@ module ForemanRhCloud
     def scope_request?(original_request, path)
       return nil unless original_request.get?
 
-      request_pattern = SCOPED_REQUESTS.find { |pattern| pattern[:test].match?(path) }
-      request_pattern[:tag_name] if request_pattern
+      # Only consider patterns that define tag_name - this ensures patterns without
+      # tag_name (permission-only entries) cannot override tag-supporting patterns
+      matching_patterns = SCOPED_REQUESTS.select { |pattern| pattern[:tag_name] && pattern[:test].match?(path) }
+      return nil if matching_patterns.empty?
+
+      # Choose the most specific pattern by regex source length for consistency
+      # with required_permission_for behavior
+      request_pattern = matching_patterns.max_by { |pattern| pattern[:test].source.length }
+      request_pattern[:tag_name]
     end
 
     def core_app_name
