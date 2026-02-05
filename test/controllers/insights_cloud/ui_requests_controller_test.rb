@@ -180,6 +180,32 @@ module InsightsCloud
         assert_equal 'Cloud request failed', JSON.parse(@response.body)['message']
         assert_match(/#{@body}/, JSON.parse(@response.body)['response'])
       end
+
+      test "should allow forward_request with nil location (Any location)" do
+        net_http_resp = Net::HTTPResponse.new(1.0, 200, "OK")
+        res = RestClient::Response.create(@body, net_http_resp, @http_req)
+        ::ForemanRhCloud::InsightsApiForwarder.any_instance.stubs(:forward_request).returns(res)
+
+        # Set session with nil location_id to simulate "Any location"
+        session_with_nil_location = set_session_user.merge(
+          organization_id: @org.id,
+          location_id: nil
+        )
+
+        get :forward_request, params: { "controller" => "vulnerabilities", "path" => "api/vulnerability/v1/cves" }, session: session_with_nil_location
+        assert_equal 200, @response.status
+        assert_equal @body, @response.body
+      end
+
+      test "should allow forward_request with location set" do
+        net_http_resp = Net::HTTPResponse.new(1.0, 200, "OK")
+        res = RestClient::Response.create(@body, net_http_resp, @http_req)
+        ::ForemanRhCloud::InsightsApiForwarder.any_instance.stubs(:forward_request).returns(res)
+
+        get :forward_request, params: { "controller" => "vulnerabilities", "path" => "api/vulnerability/v1/cves" }, session: set_session
+        assert_equal 200, @response.status
+        assert_equal @body, @response.body
+      end
     end
 
     def set_session
