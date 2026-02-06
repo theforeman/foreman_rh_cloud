@@ -2,6 +2,15 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import CVEsHostDetailsTabWrapper from '../CVEsHostDetailsTab';
 
+jest.mock('foremanReact/Root/Context/ForemanContext', () => ({
+  useForemanContext: () => ({
+    metadata: {
+      permissions: new Set(['view_vulnerability']),
+    },
+  }),
+  useForemanPermissions: () => new Set(['view_vulnerability']),
+}));
+
 jest.mock('@scalprum/react-core', () => ({
   ScalprumComponent: jest.fn(props => (
     <div data-testid="mock-scalprum-component">{JSON.stringify(props)}</div>

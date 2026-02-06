@@ -23,7 +23,8 @@ import {
 import { redHatAdvisorSystems } from '../InsightsCloudSync/InsightsCloudSyncHelpers';
 import { useIopConfig } from '../common/Hooks/ConfigHooks';
 import { generateRuleUrl } from '../InsightsCloudSync/InsightsCloudSync';
-import { providerOptions } from '../common/ScalprumModule/ScalprumContext';
+import { createProviderOptions } from '../common/ScalprumModule/ScalprumContext';
+import { useInsightsPermissions } from '../common/Hooks/PermissionsHooks';
 
 // Hosted Insights advisor
 const NewHostDetailsTab = ({ hostName, router }) => {
@@ -124,11 +125,14 @@ const IopInsightsTab = props => (
   </div>
 );
 
-const IopInsightsTabWrapped = props => (
-  <ScalprumProvider {...providerOptions}>
-    <IopInsightsTab {...props} />
-  </ScalprumProvider>
-);
+const IopInsightsTabWrapped = props => {
+  const permissions = useInsightsPermissions();
+  return (
+    <ScalprumProvider {...createProviderOptions(permissions)}>
+      <IopInsightsTab {...props} />
+    </ScalprumProvider>
+  );
+};
 
 const InsightsTab = props => {
   const isIop = useIopConfig();

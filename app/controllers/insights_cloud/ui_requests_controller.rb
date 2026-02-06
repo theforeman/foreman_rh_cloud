@@ -18,6 +18,10 @@ module InsightsCloud
           @organization,
           @location
         )
+      rescue ::Foreman::PermissionMissingException => e
+        logger.warn("Permission denied for forwarding request: #{e}")
+        message = e.message
+        return render json: { message: message, error: message }, status: :forbidden
       rescue RestClient::Exceptions::Timeout => e
         response_obj = e.response.presence || e.exception
         return render json: { message: response_obj.to_s, error: response_obj.to_s }, status: :gateway_timeout

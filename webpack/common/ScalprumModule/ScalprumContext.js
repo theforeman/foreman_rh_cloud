@@ -39,7 +39,25 @@ export const mockUser = {
   },
 };
 
-export const providerOptions = {
+/**
+ * Creates getUserPermissions function for Chrome API.
+ * @param {Array} permissions - Permissions array from ForemanContext
+ * @returns {Function} getUserPermissions function
+ */
+const createGetUserPermissions = permissions => async (app, _bypassCache) =>
+  app
+    ? permissions.filter(p => p.permission?.startsWith(`${app}:`))
+    : permissions;
+
+/**
+ * Creates provider options with the given permissions.
+ * Call this from wrapper components with permissions from useInsightsPermissions().
+ *
+ * @see https://github.com/theforeman/foreman/blob/develop/developer_docs/foreman-context.asciidoc
+ * @param {Array} permissions - Permissions from useInsightsPermissions()
+ * @returns {Object} Provider options for ScalprumProvider
+ */
+export const createProviderOptions = (permissions = []) => ({
   pluginSDKOptions: {
     pluginLoaderOptions: {
       transformPluginManifest: manifest => {
@@ -66,8 +84,9 @@ export const providerOptions = {
       on: () => {},
       auth: {
         getUser: () => Promise.resolve(mockUser),
+        getUserPermissions: createGetUserPermissions(permissions),
       },
     },
   },
   config: modulesConfig,
-};
+});
