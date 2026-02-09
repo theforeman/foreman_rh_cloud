@@ -60,9 +60,9 @@ tx-pull: $(EDITFILES)
 
 tx-update: tx-pull
 	@echo
-	@echo Run rake plugin:gettext[$(DOMAIN)] from the Foreman installation
-	@echo then run rake plugin:po_to_json[$(DOMAIN)] from the Foreman installation
-	@echo then run make -C locale mo-files to finish
+	@echo Run bundle exec rake plugin:gettext[$(DOMAIN)] from the Foreman installation git directory
+	@echo then run bundle exec rake plugin:po_to_json[$(DOMAIN)] from the Foreman installation git directory
+	@echo then run make -C locale mo-files from the foreman_rh_cloud directory to finish
 	@echo
 
 mo-files: $(MOFILES)
