@@ -3,7 +3,7 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 13.0.5",
+        "Project-Id-Version": "foreman_rh_cloud 13.2.0",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
         "Last-Translator": "Ondřej Gajdušek, 2025",
@@ -23,6 +23,9 @@
       "%s organizations": [
         "%s organisations"
       ],
+      "A specific organization must be selected from the organization context.": [
+        ""
+      ],
       "About subscription watch": [
         "Informations sur la vérification des abonnements"
       ],
@@ -35,6 +38,9 @@
       "All recommendations are now selected.": [
         "Toutes les recommandations sont maintenant sélectionnées."
       ],
+      "Analysis disabled": [
+        ""
+      ],
       "Analytics data collection": [
         "Collecte de données analytiques"
       ],
@@ -43,6 +49,9 @@
       ],
       "Apply Insights recommendations": [
         "Appliquer les recommandations d'Insights"
+      ],
+      "Attempted to destroy HBI host %s, but host does not exist in HBI": [
+        ""
       ],
       "Automatic inventory upload": [
         "Chargement automatique de l'inventaire"
@@ -83,6 +92,9 @@
       "Completed": [
         "Terminé"
       ],
+      "Completed with warnings": [
+        ""
+      ],
       "Configure": [
         "Configurer"
       ],
@@ -101,6 +113,15 @@
       "Current page": [
         "Page actuelle"
       ],
+      "Details": [
+        ""
+      ],
+      "Disable": [
+        ""
+      ],
+      "Disable vulnerability analysis": [
+        ""
+      ],
       "Disconnected hosts: ": [
         "Hôtes déconnectés : "
       ],
@@ -115,6 +136,15 @@
       ],
       "Download latest report": [
         "Télécharger le dernier rapport"
+      ],
+      "Download report": [
+        ""
+      ],
+      "Duration": [
+        ""
+      ],
+      "Enable": [
+        ""
       ],
       "Enable automatic deletion of mismatched host records from the Red Hat cloud": [
         "Activer la suppression automatique des enregistrements d'hôtes incompatibles du cloud Red Hat"
@@ -140,6 +170,9 @@
       "Enable inventory upload": [
         "Activer le téléchargement de l'inventaire"
       ],
+      "Enable vulnerability analysis": [
+        ""
+      ],
       "Encountered an error while trying to access the server:": [
         "Une erreur s'est produite lors de l'accès au serveur :"
       ],
@@ -154,6 +187,18 @@
       ],
       "Exit Code: %s": [
         "Code de sortie : %s"
+      ],
+      "Failed": [
+        ""
+      ],
+      "Failed to destroy HBI host %s: %s": [
+        ""
+      ],
+      "Failed to fetch hosts": [
+        ""
+      ],
+      "Failed to update vulnerability analysis status": [
+        ""
       ],
       "Fetch Insights-related host details": [
         "Récupérer les détails de l'hôte liés à Insights"
@@ -190,6 +235,9 @@
       ],
       "Generate the report, but do not upload": [
         "Générer le rapport, mais ne pas le télécharger"
+      ],
+      "Generated": [
+        ""
       ],
       "Generating": [
         "En cours de génération"
@@ -239,6 +287,9 @@
       "Insights": [
         "Insights"
       ],
+      "Invalid response from server": [
+        ""
+      ],
       "Inventory": [
         "Inventaire"
       ],
@@ -275,6 +326,9 @@
       "Low": [
         "Faible"
       ],
+      "Manage vulnerability analysis": [
+        ""
+      ],
       "Manual": [
         "Manuelle"
       ],
@@ -290,20 +344,41 @@
       "More details can be found in": [
         "Pour plus de détails, voir"
       ],
+      "N/A": [
+        ""
+      ],
       "Next run: ": [
         "Exécution suivante :"
       ],
       "No": [
         "Non"
       ],
+      "No account data available.": [
+        ""
+      ],
+      "No recent tasks": [
+        ""
+      ],
       "No recommendations were found for this host!": [
         "Aucune recommandation n'a été trouvée pour cet hôte !"
+      ],
+      "No report generation tasks have been run yet.": [
+        ""
       ],
       "No results found": [
         "Aucun résultat"
       ],
+      "No task history": [
+        ""
+      ],
       "No task was found": [
         "Aucune tâche n'a été trouvée"
+      ],
+      "No tasks have been run yet.": [
+        ""
+      ],
+      "None of the selected hosts are registered": [
+        ""
       ],
       "Not reporting": [
         "Non rapporté"
@@ -350,8 +425,14 @@
       "Pagination": [
         "Pagination"
       ],
+      "Paused": [
+        ""
+      ],
       "Playbook": [
         "Playbook"
+      ],
+      "Previous tasks will appear here.": [
+        ""
       ],
       "RH Cloud": [
         "RH Cloud"
@@ -407,6 +488,18 @@
       "Remediation summary": [
         "Résumé de remédiation"
       ],
+      "Report Generation": [
+        ""
+      ],
+      "Report generation and upload started": [
+        ""
+      ],
+      "Report generation started": [
+        ""
+      ],
+      "Report saved to": [
+        ""
+      ],
       "Reporting": [
         "Rapports"
       ],
@@ -421,6 +514,9 @@
       ],
       "Run remediation playbook generated by Insights": [
         "Exécuter le playbook de remédiation généré par Insights"
+      ],
+      "Running": [
+        ""
       ],
       "Satellite server has %{hits_count} recommendations by Red Hat": [
         "Le serveur satellite a %{hits_count} recommandations de Red Hat"
@@ -460,6 +556,15 @@
       ],
       "Start report generation": [
         "Lancer la génération du rapport"
+      ],
+      "Started": [
+        ""
+      ],
+      "Stopped": [
+        ""
+      ],
+      "Success": [
+        ""
       ],
       "Successfully synced hosts: ": [
         "Synchronisation des hôtes réussie : "
@@ -518,14 +623,23 @@
       "Total risks": [
         "Risques totaux"
       ],
+      "Unknown": [
+        ""
+      ],
       "Upload hits from iop-advisor-engine": [
         "Télécharger les hits depuis iop-advisor-engine"
       ],
       "Upload hits information": [
         "Télécharger les informations sur les hits"
       ],
+      "Upload is disabled because subscription connection is not enabled. Enable it in Administer > Settings > Content.": [
+        ""
+      ],
       "Upload rules related to the hits": [
         "Règles de téléchargement liées aux hits"
+      ],
+      "Uploaded": [
+        ""
       ],
       "Uploading": [
         "Téléchargement"
@@ -539,17 +653,35 @@
       "View in Red Hat Insights": [
         "Afficher Red Hat Insights."
       ],
+      "View task": [
+        ""
+      ],
+      "View task details": [
+        ""
+      ],
       "Vulnerabilities": [
         "Vulnérabilités"
       ],
       "Vulnerability": [
         "Vulnérabilité"
       ],
+      "Vulnerability analysis disabled": [
+        ""
+      ],
+      "Vulnerability analysis enabled": [
+        ""
+      ],
       "Wait and %s": [
         "Attendez et %s"
       ],
+      "Warning": [
+        ""
+      ],
       "Whether the resolution requires reboot": [
         "Si la résolution nécessite un redémarrage"
+      ],
+      "You do not have permission to perform this action": [
+        ""
       ],
       "category name": [
         "nom de la catégorie"
