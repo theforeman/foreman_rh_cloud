@@ -14,7 +14,8 @@ import './InsightsCloudSync.scss';
 import Pagination from './Components/InsightsTable/Pagination';
 import ToolbarDropdown from './Components/ToolbarDropdown';
 import InsightsSettings from './Components/InsightsSettings';
-import { providerOptions } from '../common/ScalprumModule/ScalprumContext';
+import { createProviderOptions } from '../common/ScalprumModule/ScalprumContext';
+import { useInsightsPermissions } from '../common/Hooks/PermissionsHooks';
 
 // Hosted Insights advisor
 const InsightsCloudSync = ({ syncInsights, query, fetchInsights }) => {
@@ -78,11 +79,14 @@ const IopRecommendationsPage = props => (
   </div>
 );
 
-const IopRecommendationsPageWrapped = props => (
-  <ScalprumProvider {...providerOptions}>
-    <IopRecommendationsPage {...props} />
-  </ScalprumProvider>
-);
+const IopRecommendationsPageWrapped = props => {
+  const permissions = useInsightsPermissions();
+  return (
+    <ScalprumProvider {...createProviderOptions(permissions)}>
+      <IopRecommendationsPage {...props} />
+    </ScalprumProvider>
+  );
+};
 
 const RecommendationsPage = props => {
   const isIop = useIopConfig();

@@ -20,7 +20,8 @@ module ForemanRhCloud
     end
 
     def update_tag
-      logger.debug("Updating tags for user: #{@user}, org: #{@org.name}, loc: #{@loc.name}")
+      loc_name = location_name_for_tag
+      logger.debug("Updating tags for user: #{@user}, org: #{@org.name}, loc: #{loc_name}")
 
       payload = tags_query_payload
       params = {
@@ -36,7 +37,9 @@ module ForemanRhCloud
     end
 
     def allowed_hosts
-      Host.authorized_as(@user, nil, nil).where(organization: @org, location: @loc).joins(:subscription_facet).pluck('katello_subscription_facets.uuid')
+      query = Host.authorized_as(@user, nil, nil).where(organization: @org)
+      query = query.where(location: @loc) if @loc
+      query.joins(:subscription_facet).pluck('katello_subscription_facets.uuid')
     end
 
     def tags_query_payload
@@ -47,11 +50,18 @@ module ForemanRhCloud
     end
 
     def tag_value
-      "U:\"#{@user.login}\"O:\"#{@org.name}\"L:\"#{@loc.name}\""
+      location_part = "L:\"#{location_name_for_tag}\""
+      "U:\"#{@user.login}\"O:\"#{@org.name}\"#{location_part}"
     end
 
     def auth_tag
       "#{TAG_NAME}=#{tag_value}"
+    end
+
+    private
+
+    def location_name_for_tag
+      @loc ? @loc.name : '*'
     end
   end
 end

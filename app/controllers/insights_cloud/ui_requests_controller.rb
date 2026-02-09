@@ -2,7 +2,7 @@ module InsightsCloud
   class UIRequestsController < ::ApplicationController
     layout false
 
-    before_action :ensure_org, :ensure_loc, :only => [:forward_request]
+    before_action :ensure_org, :find_location, :only => [:forward_request]
 
     # The method that "proxies" requests over to Cloud
     def forward_request
@@ -18,6 +18,10 @@ module InsightsCloud
           @organization,
           @location
         )
+      rescue ::Foreman::PermissionMissingException => e
+        logger.warn("Permission denied for forwarding request: #{e}")
+        message = e.message
+        return render json: { message: message, error: message }, status: :forbidden
       rescue RestClient::Exceptions::Timeout => e
         response_obj = e.response.presence || e.exception
         return render json: { message: response_obj.to_s, error: response_obj.to_s }, status: :gateway_timeout
@@ -93,9 +97,8 @@ module InsightsCloud
       return render_message 'Organization not found or invalid', :status => 400 unless @organization
     end
 
-    def ensure_loc
+    def find_location
       @location = Location.current
-      return render_message 'Location not found or invalid', :status => 400 unless @location
     end
 
     def base_url
