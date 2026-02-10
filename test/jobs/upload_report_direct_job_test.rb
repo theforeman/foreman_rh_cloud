@@ -30,6 +30,11 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     Organization.any_instance.stubs(:owner_details).returns(@cert_data)
   end
 
+  teardown do
+    # Ensure stubs are cleaned up to avoid leakage into other tests
+    ForemanRhCloud.unstub(:with_iop_smart_proxy?)
+  end
+
   test 'plan sets input correctly' do
     action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
     action.expects(:action_subject).with(@organization)

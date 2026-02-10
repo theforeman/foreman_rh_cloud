@@ -12,6 +12,11 @@ module InsightsCloud
         @host3 = FactoryBot.create(:host, organization: @test_org)
       end
 
+      teardown do
+        # Ensure stubs are cleaned up to avoid leakage into other tests
+        ForemanRhCloud.unstub(:with_iop_smart_proxy?)
+      end
+
       test 'shows hosts with uuids' do
         uuids = [@host1.insights_uuid, @host2.insights_uuid]
         get :host_details, params: { organization_id: @test_org.id, host_uuids: uuids }

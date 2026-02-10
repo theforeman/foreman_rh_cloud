@@ -20,6 +20,11 @@ class VmaasReposcanSyncTest < ActiveSupport::TestCase
     ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
   end
 
+  teardown do
+    # Ensure stubs are cleaned up to avoid leakage into other tests
+    ForemanRhCloud.unstub(:with_iop_smart_proxy?)
+  end
+
   # Planning behavior
   test 'plan plans_self when repo payload has id and IoP is available' do
     InsightsCloud::Async::VmaasReposcanSync.any_instance.expects(:plan_self).once

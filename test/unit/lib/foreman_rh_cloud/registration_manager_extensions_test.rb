@@ -14,6 +14,11 @@ module ForemanRhCloud
       Katello::RegistrationManager.stubs(:execute_cloud_request).returns(true)
     end
 
+    teardown do
+      # Ensure stubs are cleaned up to avoid leakage into other tests
+      ForemanRhCloud.unstub(:with_iop_smart_proxy?)
+    end
+
     context 'unregister_host' do
       test 'should call HBI delete in IoP mode when host has insights UUID' do
         ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)

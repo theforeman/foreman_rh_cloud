@@ -9,6 +9,11 @@ module InsightsCloud::Api
       FactoryBot.create(:common_parameter, name: InsightsCloud.enable_client_param, key_type: 'boolean', value: true)
     end
 
+    teardown do
+      # Ensure stubs are cleaned up to avoid leakage into other tests
+      ForemanRhCloud.unstub(:with_iop_smart_proxy?)
+    end
+
     context '#forward_request' do
       include MockCerts
 
