@@ -192,7 +192,7 @@ module InsightsCloud::Api
           organization: env.organization
         )
 
-        @host.subscription_facet.pools << FactoryBot.create(:katello_pool, account_number: '5678', cp_id: 1)
+        @host.organization.pools << FactoryBot.create(:katello_pool, account_number: '5678', cp_id: 1)
 
         uuid = @host.subscription_facet.uuid
 

@@ -23,7 +23,7 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
 
     pool = FactoryBot.create(:katello_pool, account_number: '1234', cp_id: 1)
 
-    @host1.subscription_facet.pools << pool
+    @host1.organization.pools << pool
 
     # this host would pass our plugin queries, so it could be uploaded to the cloud.
     @host2 = FactoryBot.create(
@@ -34,8 +34,6 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
       lifecycle_environment: env,
       organization: env.organization
     )
-
-    @host2.subscription_facet.pools << pool
     @host2_inventory_id = '4536bf5c-ff03-4154-a8c9-32ff4b40e40c'
 
     ForemanInventoryUpload::Generators::Queries.instance_variable_set(:@fact_names, nil)
