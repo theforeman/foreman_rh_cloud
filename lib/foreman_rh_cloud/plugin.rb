@@ -121,10 +121,8 @@ module ForemanRhCloud
 
         register_custom_status InventorySync::InventoryStatus
         register_custom_status InsightsClientReportStatus
-        if ForemanRhCloud.with_iop_smart_proxy?
-          register_ping_extension { ForemanRhCloud::Ping.ping }
-          register_status_extension { ForemanRhCloud::Ping.status }
-        end
+        register_ping_extension { ForemanRhCloud::Ping.ping }
+        register_status_extension { ForemanRhCloud::Ping.status }
 
         describe_host do
           overview_buttons_provider :insights_host_overview_buttons
@@ -145,6 +143,10 @@ module ForemanRhCloud
             add_pagelet :hosts_table_column_content, key: :insights_recommendations_count, callback: ->(host) { hits_counts_cell(host) }, class: 'hidden-xs ellipsis text-center', priority: 100
           end
         end
+
+        ::Foreman::Plugin.app_metadata_registry.register(:foreman_rh_cloud, {
+          iop: -> { ForemanRhCloud.with_iop_smart_proxy? },
+        })
 
         extend_template_helpers ForemanRhCloud::TemplateRendererHelper
         allowed_template_helpers :remediations_playbook, :download_rh_playbook
