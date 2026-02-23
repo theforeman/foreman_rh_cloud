@@ -18,7 +18,7 @@ class ArchivedReportGeneratorTest < ActiveSupport::TestCase
       organization: env.organization
     )
 
-    @host.subscription_facet.pools << FactoryBot.create(:katello_pool, account_number: '1234', cp_id: 1)
+    @host.organization.pools << FactoryBot.create(:katello_pool, account_number: '1234', cp_id: 1)
   end
 
   def interesting_facts
