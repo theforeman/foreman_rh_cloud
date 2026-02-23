@@ -1,10 +1,10 @@
 module ForemanInventoryUpload
   def self.base_folder
     # in production setup, where selinux is enabled, we only have rights to
-    # create folders under /ver/lib/foreman. If the folder does not exist, it's
-    # a dev setup, where we can use our current root
+    # create folders under /var/lib/foreman. If the folder does not exist, it's
+    # a dev setup, where we can use the parent of the current working directory
     @base_folder ||= File.join(
-      Dir.glob('/var/lib/foreman').first || Dir.getwd,
+      Dir.glob('/var/lib/foreman').first || File.dirname(Dir.getwd),
       'red_hat_inventory/'
     )
   end
@@ -30,11 +30,6 @@ module ForemanInventoryUpload
     File.join(ForemanInventoryUpload.done_folder, filename)
   end
 
-  def self.report_file_paths(organization_id)
-    filename = facts_archive_name(organization_id)
-    Dir[ForemanInventoryUpload.uploads_file_path(filename), ForemanInventoryUpload.done_file_path(filename)]
-  end
-
   def self.generated_reports_folder
     @generated_reports_folder ||= ensure_folder(
       File.join(
@@ -42,6 +37,19 @@ module ForemanInventoryUpload
         'generated_reports/'
       )
     )
+  end
+
+  def self.generated_reports_file_path(filename)
+    File.join(ForemanInventoryUpload.generated_reports_folder, filename)
+  end
+
+  def self.report_file_paths(organization_id)
+    filename = facts_archive_name(organization_id)
+    Dir[
+      ForemanInventoryUpload.done_file_path(filename),
+      ForemanInventoryUpload.uploads_file_path(filename),
+      ForemanInventoryUpload.generated_reports_file_path(filename)
+    ]
   end
 
   def self.outputs_folder
