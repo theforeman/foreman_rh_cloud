@@ -21,7 +21,7 @@ import {
   selectHits,
 } from '../InsightsCloudSync/Components/InsightsTable/InsightsTableSelectors';
 import { redHatAdvisorSystems } from '../InsightsCloudSync/InsightsCloudSyncHelpers';
-import { useAdvisorEngineConfig } from '../common/Hooks/ConfigHooks';
+import { useIopConfig } from '../common/Hooks/ConfigHooks';
 import { generateRuleUrl } from '../InsightsCloudSync/InsightsCloudSync';
 import { providerOptions } from '../common/ScalprumModule/ScalprumContext';
 
@@ -30,7 +30,7 @@ const NewHostDetailsTab = ({ hostName, router }) => {
   const dispatch = useDispatch();
   const query = useSelector(selectSearch);
   const hits = useSelector(selectHits);
-  const isLocalAdvisorEngine = useAdvisorEngineConfig();
+  const isIop = useIopConfig();
 
   useEffect(() => () => router.replace({ search: null }), [router]);
 
@@ -46,7 +46,7 @@ const NewHostDetailsTab = ({ hostName, router }) => {
     </DropdownItem>,
   ];
 
-  if (hits.length && !isLocalAdvisorEngine) {
+  if (hits.length && !isIop) {
     const { host_uuid: uuid } = hits[0];
     dropdownItems.push(
       <DropdownItem key="insights-advisor-link" ouiaId="insights-advisor-link">
@@ -131,9 +131,9 @@ const IopInsightsTabWrapped = props => (
 );
 
 const InsightsTab = props => {
-  const isLocalIop = useAdvisorEngineConfig();
+  const isIop = useIopConfig();
 
-  return isLocalIop ? (
+  return isIop ? (
     <IopInsightsTabWrapped {...props} />
   ) : (
     <NewHostDetailsTab {...props} />

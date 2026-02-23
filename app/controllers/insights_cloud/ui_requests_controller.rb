@@ -2,7 +2,7 @@ module InsightsCloud
   class UIRequestsController < ::ApplicationController
     layout false
 
-    before_action :ensure_org, :ensure_loc, :only => [:forward_request]
+    before_action :ensure_org, :find_location, :only => [:forward_request]
 
     # The method that "proxies" requests over to Cloud
     def forward_request
@@ -93,9 +93,8 @@ module InsightsCloud
       return render_message 'Organization not found or invalid', :status => 400 unless @organization
     end
 
-    def ensure_loc
+    def find_location
       @location = Location.current
-      return render_message 'Location not found or invalid', :status => 400 unless @location
     end
 
     def base_url

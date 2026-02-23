@@ -2,6 +2,16 @@ import { testComponentSnapshotsWithFixtures } from '@theforeman/test';
 import { noop } from 'foremanReact/common/helpers';
 import InsightsCloudSync from './InsightsCloudSync';
 
+jest.mock('foremanReact/Root/Context/ForemanContext', () => ({
+  useForemanContext: () => ({
+    metadata: {
+      foreman_rh_cloud: {
+        iop: true,
+      },
+    },
+  }),
+}));
+
 const fixtures = {
   render: {
     status: 'RESOLVED',

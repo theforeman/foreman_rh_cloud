@@ -26,5 +26,19 @@ module RhCloudHost
     def insights_facet
       insights
     end
+
+    # In IoP, read directly from the subscription facet to avoid stale data (see comment on ensure_iop_insights_uuid)
+    def insights_uuid
+      ForemanRhCloud.with_iop_smart_proxy? ? subscription_facet&.uuid : insights_facet&.uuid
+    end
+
+    # In non-IoP, insights_facet uuids are assigned by Hosted.
+    # In IoP, insights_facet uuids must match Katello subscription_facet uuids.
+    # If the host was previously registered to hosted Insights,
+    # we need to correct its uuid.
+    def ensure_iop_insights_uuid
+      return unless insights_facet.present? && subscription_facet.present? && insights_facet.uuid != subscription_facet.uuid
+      insights_facet.update!(uuid: subscription_facet.uuid)
+    end
   end
 end

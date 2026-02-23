@@ -21,6 +21,9 @@ module InsightsCloud
         @host.id
       )
 
+      # Ensure insights UUID matches subscription UUID (only runs in IoP mode per method guard above)
+      @host.ensure_iop_insights_uuid
+
       # in IoP case, the hosts are identified by the sub-man ID, and we can assume they already
       # exist in the local inventory. This will also handle facet creation for new hosts.
       return if @host.insights
