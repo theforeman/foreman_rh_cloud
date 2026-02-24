@@ -45,10 +45,17 @@ module ForemanInventoryUpload
 
   def self.report_file_paths(organization_id)
     filename = facts_archive_name(organization_id)
+    # Report files start in generated
+    # They are then MOVED (not copied) to uploads, then done.
+    # When they are moved to the new folder, they overwrite any file with the same name.
+    # If it's a generate-only, it will be in generated
+    # Failed or incomplete uploads will be in uploads
+    # Completed uploads will be in done
+    # The ordering here ensures we get the correct file path every time.
     Dir[
-      ForemanInventoryUpload.done_file_path(filename),
+      ForemanInventoryUpload.generated_reports_file_path(filename),
       ForemanInventoryUpload.uploads_file_path(filename),
-      ForemanInventoryUpload.generated_reports_file_path(filename)
+      ForemanInventoryUpload.done_file_path(filename),
     ]
   end
 
