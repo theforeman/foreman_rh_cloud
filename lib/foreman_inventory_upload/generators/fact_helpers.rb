@@ -28,14 +28,6 @@ module ForemanInventoryUpload
         @organization_accounts[organization.id] ||= organization.pools.where.not(account_number: nil).pluck(:account_number).first
       end
 
-      def golden_ticket?(organization)
-        result = organization.try(:golden_ticket?)
-        result = organization.content_access_mode == 'org_environment' if result.nil?
-
-        @organization_golden_tickets ||= {}
-        @organization_golden_tickets[organization.id] ||= result
-      end
-
       def cloud_provider(host)
         bios_version = fact_value(host, 'dmi::bios::version')
 

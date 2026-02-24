@@ -69,7 +69,7 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
               "facts": {
                 "virtual_host_name": "virt-who-nobody.home-1",
                 "satellite_instance_id": "fc4d0cb0-a0b0-421e-b096-b028319b8e47",
-                "is_simple_content_access": false,
+                "is_simple_content_access": true,
                 "distribution_version": "7.3",
                 "satellite_version": "6.8.4",
                 "organization_id": 1,
@@ -120,7 +120,7 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
               "facts": {
                 "virtual_host_name": "virt-who-nobody.home-1",
                 "satellite_instance_id": "fc4d0cb0-a0b0-421e-b096-b028319b8e47",
-                "is_simple_content_access": false,
+                "is_simple_content_access": true,
                 "distribution_version": "7.3",
                 "satellite_version": "6.8.4",
                 "organization_id": 1,
@@ -171,7 +171,7 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
               "facts": {
                 "virtual_host_name": "virt-who-nobody.home-1",
                 "satellite_instance_id": "fc4d0cb0-a0b0-421e-b096-b028319b8e47",
-                "is_simple_content_access": false,
+                "is_simple_content_access": true,
                 "distribution_version": "8.3",
                 "satellite_version": "6.8.4",
                 "organization_id": 1,
@@ -224,7 +224,7 @@ class InventoryHostsSyncTest < ActiveSupport::TestCase
               "facts": {
                 "satellite_instance_id": "fb3643d8-9030-487b-b95c-684783806ffd",
                 "system_purpose_sla": "",
-                "is_simple_content_access": false,
+                "is_simple_content_access": true,
                 "distribution_version": "8.3",
                 "satellite_version": "6.8.1",
                 "organization_id": 1,
