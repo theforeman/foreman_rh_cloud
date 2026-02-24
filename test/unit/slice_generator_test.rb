@@ -641,6 +641,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_tag('1', actual_host, 'int_param', 'satellite_parameter')
 
     assert_equal false, satellite_facts['is_hostname_obfuscated']
+    assert_equal true, satellite_facts['is_simple_content_access']
 
     version = satellite_facts['satellite_version']
     if defined?(ForemanThemeSatellite)
