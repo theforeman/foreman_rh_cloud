@@ -12,22 +12,6 @@ class FactHelpersTest < ActiveSupport::TestCase
     @org = FactoryBot.create(:organization)
   end
 
-  test 'golden_ticket uses golden_ticket method when defined' do
-    @org.expects(:golden_ticket?).returns(true)
-
-    actual = @instance.golden_ticket?(@org)
-
-    assert actual
-  end
-
-  test 'golden_ticket uses content_access_mode method when golden_ticket not defined' do
-    @org.expects(:content_access_mode).returns('org_environment')
-
-    actual = @instance.golden_ticket?(@org)
-
-    assert actual
-  end
-
   test 'obfuscates ips with insights-client data' do
     host = mock('host')
     @instance.expects(:fact_value).with(host, 'insights_client::obfuscated_ipv4').returns(

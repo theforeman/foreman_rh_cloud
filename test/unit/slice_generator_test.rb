@@ -702,22 +702,6 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_equal 'test_sla', fact_values['system_purpose_sla']
   end
 
-  test 'generates a report for a golden ticket' do
-    batch = Host.where(id: @host.id).in_batches.first
-    generator = create_generator(batch) do |generator|
-      generator.stubs(:golden_ticket?).returns(true)
-    end
-
-    json_str = generator.render
-    actual = JSON.parse(json_str.join("\n"))
-
-    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
-    assert_not_nil(actual_host = actual['hosts'].first)
-    assert_equal @host.fqdn, actual_host['fqdn']
-    assert_equal '1234', actual_host['account']
-    assert_equal 1, generator.hosts_count
-  end
-
   test 'skips hosts without subscription' do
     a_host = FactoryBot.create(
       :host,
@@ -1131,11 +1115,7 @@ class SliceGeneratorTest < ActiveSupport::TestCase
 
   def create_generator(batch, name = '00000000-0000-0000-0000-000000000000')
     generator = ForemanInventoryUpload::Generators::Slice.new(batch, [], name)
-    if block_given?
-      yield(generator)
-    else
-      generator.stubs(:golden_ticket?).returns(false)
-    end
+    yield(generator) if block_given?
     generator
   end
 
