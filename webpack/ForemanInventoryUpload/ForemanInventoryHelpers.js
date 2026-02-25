@@ -11,6 +11,13 @@ export const getInventoryDocsUrl = () =>
     )}`
   );
 
+export const getSubscriptionServiceDocsUrl = () =>
+  foremanUrl(
+    `/links/manual/?root_url=${URI.encode(
+      'https://docs.redhat.com/en/documentation/subscription_central/1-latest/html-single/getting_started_with_the_subscriptions_service/index'
+    )}`
+  );
+
 export const getActionsHistoryUrl = () =>
   foremanUrl(
     '/foreman_tasks/tasks?search=label+%3D+ForemanInventoryUpload%3A%3AAsync%3A%3AHostInventoryReportJob+or+label+%3D+ForemanInventoryUpload%3A%3AAsync%3A%3AGenerateAllReportsJob&page=1'

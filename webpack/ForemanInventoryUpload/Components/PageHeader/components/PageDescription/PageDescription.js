@@ -7,6 +7,8 @@ import { getDocsURL } from 'foremanReact/common/helpers';
 import { FormattedMessage } from 'react-intl';
 import { selectSubscriptionConnectionEnabled } from '../../../InventorySettings/InventorySettingsSelectors';
 
+import { getSubscriptionServiceDocsUrl } from '../../../../ForemanInventoryHelpers';
+
 export const PageDescription = () => {
   const subscriptionConnectionEnabled = useSelector(
     selectSubscriptionConnectionEnabled
@@ -80,7 +82,7 @@ export const PageDescription = () => {
         {__('For more information about the Subscriptions service, see:')}
         &nbsp;
         <a
-          href="https://docs.redhat.com/en/documentation/subscription_central/1-latest/html/getting_started_with_the_subscriptions_service/index"
+          href={getSubscriptionServiceDocsUrl()}
           target="_blank"
           rel="noopener noreferrer"
         >
