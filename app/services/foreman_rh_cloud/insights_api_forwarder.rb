@@ -224,14 +224,21 @@ module ForemanRhCloud
     def scope_request?(original_request, path)
       return nil unless original_request.get?
 
-      # Only consider patterns that define tag_name - this ensures patterns without
-      # tag_name (permission-only entries) cannot override tag-supporting patterns
-      matching_patterns = SCOPED_REQUESTS.select { |pattern| pattern[:tag_name] && pattern[:test].match?(path) }
+      # Find patterns that match this path AND are relevant for GET requests.
+      # A pattern is relevant if it either:
+      # - Has tag_name defined (supports scoping)
+      # - Has GET permissions defined (explicitly handles GET, even without tags)
+      # This ensures patterns like api/vulnerability/v1/cves/[^/]+$ (GET without tags)
+      # take precedence over general patterns, while POST-only patterns are ignored.
+      matching_patterns = SCOPED_REQUESTS.select do |pattern|
+        pattern[:test].match?(path) && (pattern[:tag_name] || pattern.dig(:permissions, 'GET'))
+      end
       return nil if matching_patterns.empty?
 
-      # Choose the most specific pattern by regex source length for consistency
-      # with required_permission_for behavior
+      # Choose the most specific pattern by regex source length
       request_pattern = matching_patterns.max_by { |pattern| pattern[:test].source.length }
+
+      # Return the tag_name (may be nil if the most specific pattern doesn't support tags)
       request_pattern[:tag_name]
     end
 
