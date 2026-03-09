@@ -3,10 +3,10 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 13.2.0",
+        "Project-Id-Version": "foreman_rh_cloud 14.0.2",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
-        "Last-Translator": "Ondřej Gajdušek, 2025",
+        "Last-Translator": "Ondřej Gajdušek, 2026",
         "Language-Team": "French (https://app.transifex.com/foreman/teams/114/fr/)",
         "MIME-Version": "1.0",
         "Content-Type": "text/plain; charset=UTF-8",
@@ -24,7 +24,7 @@
         "%s organisations"
       ],
       "A specific organization must be selected from the organization context.": [
-        ""
+        "Une organisation spécifique doit être sélectionnée dans le contexte de l'organisation."
       ],
       "About subscription watch": [
         "Informations sur la vérification des abonnements"
@@ -39,7 +39,7 @@
         "Toutes les recommandations sont maintenant sélectionnées."
       ],
       "Analysis disabled": [
-        ""
+        "Analyse désactivée"
       ],
       "Analytics data collection": [
         "Collecte de données analytiques"
@@ -51,7 +51,7 @@
         "Appliquer les recommandations d'Insights"
       ],
       "Attempted to destroy HBI host %s, but host does not exist in HBI": [
-        ""
+        "A tenté de détruire l’hôte HBI %s, mais l’hôte n’existe pas dans HBI"
       ],
       "Automatic inventory upload": [
         "Chargement automatique de l'inventaire"
@@ -93,7 +93,7 @@
         "Terminé"
       ],
       "Completed with warnings": [
-        ""
+        "Complété avec des avertissements"
       ],
       "Configure": [
         "Configurer"
@@ -114,13 +114,13 @@
         "Page actuelle"
       ],
       "Details": [
-        ""
+        "Détails"
       ],
       "Disable": [
-        ""
+        "Désactiver"
       ],
       "Disable vulnerability analysis": [
-        ""
+        "Désactiver l’analyse des vulnérabilités"
       ],
       "Disconnected hosts: ": [
         "Hôtes déconnectés : "
@@ -138,28 +138,28 @@
         "Télécharger le dernier rapport"
       ],
       "Download report": [
-        ""
+        "Télécharger le rapport"
       ],
       "Duration": [
-        ""
+        "Durée"
       ],
       "Enable": [
-        ""
+        "Activer"
       ],
       "Enable automatic deletion of mismatched host records from the Red Hat cloud": [
         "Activer la suppression automatique des enregistrements d'hôtes incompatibles du cloud Red Hat"
       ],
       "Enable automatic deletion of mismatched host records from the Red Hat cloud. Ignored when using local Insights.": [
-        ""
+        "Activez la synchronisation automatique des recommandations Insights depuis le cloud Red Hat. Ignoré lors de l'utilisation d'Insights local."
       ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud": [
         "Activer la synchronisation automatique des recommandations Insights à partir de Red Hat Cloud"
       ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights.": [
-        ""
+        "Activer la synchronisation automatique des recommandations Insights à partir de Red Hat Cloud"
       ],
       "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights.": [
-        ""
+        "Activer le téléchargement automatique de votre inventaire d'hôtes dans Red Hat Cloud. Ignoré lors de l'utilisation d'Insights local."
       ],
       "Enable automatic upload of your hosts inventory to the Red Hat cloud": [
         "Activer le téléchargement automatique de l'inventaire de vos hôtes dans Red Hat Cloud"
@@ -171,7 +171,7 @@
         "Activer le téléchargement de l'inventaire"
       ],
       "Enable vulnerability analysis": [
-        ""
+        "L’analyse des vulnérabilités est activée"
       ],
       "Encountered an error while trying to access the server:": [
         "Une erreur s'est produite lors de l'accès au serveur :"
@@ -183,22 +183,22 @@
         "Exclure les paquets installés du téléchargement dans Red Hat Cloud"
       ],
       "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights.": [
-        ""
+        "Exclure les paquets installés du téléchargement vers le cloud Red Hat. (Si insights_minimal_data_collection est défini sur « true », ce paramètre est ignoré et les paquets installés sont toujours exclus.) Ignoré lors de l'utilisation d'Insights local."
       ],
       "Exit Code: %s": [
         "Code de sortie : %s"
       ],
       "Failed": [
-        ""
+        "Échec"
       ],
       "Failed to destroy HBI host %s: %s": [
-        ""
+        "N’a pas pu détruire l’hôte HBI %s: %s"
       ],
       "Failed to fetch hosts": [
-        ""
+        "Erreur de récupération des hôtes"
       ],
       "Failed to update vulnerability analysis status": [
-        ""
+        "Échec de la mise à jour du statut de l'analyse des vulnérabilités"
       ],
       "Fetch Insights-related host details": [
         "Récupérer les détails de l'hôte liés à Insights"
@@ -237,7 +237,7 @@
         "Générer le rapport, mais ne pas le télécharger"
       ],
       "Generated": [
-        ""
+        "Généré"
       ],
       "Generating": [
         "En cours de génération"
@@ -264,7 +264,7 @@
         "Recommandations de Host Insights"
       ],
       "Host inventory report job": [
-        ""
+        "Tâche de rapport d'inventaire des hôtes"
       ],
       "Host was not uploaded to your RH cloud inventory": [
         "L'hôte n'a pas été téléchargé dans votre inventaire RH Cloud."
@@ -288,13 +288,13 @@
         "Insights"
       ],
       "Invalid response from server": [
-        ""
+        "Réponse serveur non valide"
       ],
       "Inventory": [
         "Inventaire"
       ],
       "Inventory Auto Upload": [
-        "Chargement automatique des iinventaires"
+        "Chargement automatique des inventaires"
       ],
       "Inventory Upload": [
         "Téléchargement de l'inventaire"
@@ -327,7 +327,7 @@
         "Faible"
       ],
       "Manage vulnerability analysis": [
-        ""
+        "Gère l’analyse des vulnérabilités"
       ],
       "Manual": [
         "Manuelle"
@@ -336,7 +336,7 @@
         "Collecte minimale de données"
       ],
       "Missing Insights facets created: %s": [
-        ""
+        "Facette Insights manquantes créées : %s"
       ],
       "Moderate": [
         "Modéré"
@@ -345,7 +345,7 @@
         "Pour plus de détails, voir"
       ],
       "N/A": [
-        ""
+        "Sans objet"
       ],
       "Next run: ": [
         "Exécution suivante :"
@@ -354,31 +354,31 @@
         "Non"
       ],
       "No account data available.": [
-        ""
+        "Aucune donnée associée à ce compte n’est disponible."
       ],
       "No recent tasks": [
-        ""
+        "Aucun tâche récente"
       ],
       "No recommendations were found for this host!": [
         "Aucune recommandation n'a été trouvée pour cet hôte !"
       ],
       "No report generation tasks have been run yet.": [
-        ""
+        "Aucune tâche de génération de rapport exécutée pour l’instant."
       ],
       "No results found": [
         "Aucun résultat"
       ],
       "No task history": [
-        ""
+        "Aucun historique de tâche"
       ],
       "No task was found": [
         "Aucune tâche n'a été trouvée"
       ],
       "No tasks have been run yet.": [
-        ""
+        "Aucun tâche exécutée pour l’instant"
       ],
       "None of the selected hosts are registered": [
-        ""
+        "Aucun de ces hôtes n’est enregistré"
       ],
       "Not reporting": [
         "Non rapporté"
@@ -402,16 +402,16 @@
         "Obfusquer les noms d'hôtes envoyés à Red Hat Cloud"
       ],
       "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights.": [
-        ""
+        "Masquer les noms d'hôtes envoyés au cloud Red Hat. (Si insights_minimal_data_collection est défini sur « true », ce paramètre sera ignoré, car les noms d'hôtes ne sont pas inclus dans le rapport.) Ignoré lors de l'utilisation d'Insights local."
       ],
       "Obfuscate ipv4 addresses sent to the Red Hat cloud": [
         "Obfusquer les adresses ipv4 envoyées à Red Hat Cloud"
       ],
       "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.) Ignored when using local Insights.": [
-        ""
+        "Masquer les adresses IPv4 envoyées au cloud Red Hat. (Si insights_minimal_data_collection est défini sur « true », ce paramètre est ignoré, car les adresses IPv4 des hôtes ne sont pas incluses dans le rapport.) Ignoré lors de l'utilisation d'Insights local."
       ],
       "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights.": [
-        ""
+        "N'incluez que les données minimales requises dans les rapports d'inventaire pour le téléchargement vers le cloud Red Hat. Dans ce cas, les packages installés sont exclus du rapport, quel que soit le paramètre exclude_installed_packages, et les noms d'hôtes et adresses IPv4 sont exclus du rapport, quels que soient les paramètres de masquage. Ignoré lors de l'utilisation d'Insights local."
       ],
       "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled": [
         "Envoyez uniquement les données minimales requises au cloud Red Hat, les paramètres d'obfuscation (masquage) sont désactivés"
@@ -426,19 +426,19 @@
         "Pagination"
       ],
       "Paused": [
-        ""
+        "Suspendue"
       ],
       "Playbook": [
         "Playbook"
       ],
       "Previous tasks will appear here.": [
-        ""
+        "Les tâches précédentes apparaissent ici."
       ],
       "RH Cloud": [
         "RH Cloud"
       ],
       "RHC daemon id. Ignored when using local Insights.": [
-        ""
+        "Identifiant du démon RHC. Ignoré lors de l'utilisation d'Insights local."
       ],
       "Read more about it in RH cloud insights": [
         "Plus d'informations dans RH cloud insights"
@@ -489,16 +489,16 @@
         "Résumé de remédiation"
       ],
       "Report Generation": [
-        ""
+        "Lancer la génération du rapport"
       ],
       "Report generation and upload started": [
-        ""
+        "La génération du rapport et son téléchargement ont débuté"
       ],
       "Report generation started": [
-        ""
+        "La génération du rapport a débuté"
       ],
       "Report saved to": [
-        ""
+        "Rapport sauvegardé dans "
       ],
       "Reporting": [
         "Rapports"
@@ -516,7 +516,7 @@
         "Exécuter le playbook de remédiation généré par Insights"
       ],
       "Running": [
-        ""
+        "Exécution en cours"
       ],
       "Satellite server has %{hits_count} recommendations by Red Hat": [
         "Le serveur satellite a %{hits_count} recommandations de Red Hat"
@@ -537,7 +537,7 @@
         "Paramètres de configuration"
       ],
       "Should import include parameter tags from Foreman? Ignored when using local Insights.": [
-        ""
+        "L'importation doit-elle inclure les balises de paramètres de Foreman ? Ignoré lors de l'utilisation d'Insights local."
       ],
       "Show Advanced Settings": [
         "Afficher les paramètres avancés"
@@ -546,10 +546,10 @@
         "Indique si le système est configuré pour utiliser le moteur iop-advisor local."
       ],
       "Single-host report job": [
-        ""
+        "Tâche de rapport à hôte unique"
       ],
       "Single-host report job for host %s": [
-        ""
+        "Tâche de rapport à hôte unique pour l'hôte  %s"
       ],
       "Start inventory synchronization": [
         "Démarrer la synchronisation de l'inventaire"
@@ -558,13 +558,13 @@
         "Lancer la génération du rapport"
       ],
       "Started": [
-        ""
+        "Démarré"
       ],
       "Stopped": [
-        ""
+        "Arrêté"
       ],
       "Success": [
-        ""
+        "Réussite"
       ],
       "Successfully synced hosts: ": [
         "Synchronisation des hôtes réussie : "
@@ -603,7 +603,7 @@
         "Il n'y a aucune recommandation pour vos hôtes"
       ],
       "There were no missing Insights facets": [
-        ""
+        "Il n'y avait aucune facette Insights manquante."
       ],
       "This action will also enable automatic reports upload": [
         "Cette action permettra également le téléchargement automatique des rapports"
@@ -624,7 +624,7 @@
         "Risques totaux"
       ],
       "Unknown": [
-        ""
+        "Inconnu"
       ],
       "Upload hits from iop-advisor-engine": [
         "Télécharger les hits depuis iop-advisor-engine"
@@ -633,13 +633,13 @@
         "Télécharger les informations sur les hits"
       ],
       "Upload is disabled because subscription connection is not enabled. Enable it in Administer > Settings > Content.": [
-        ""
+        "Le téléchargement est désactivé car la connexion par abonnement n'est pas activée. Activez-la dans Administrer > Paramètres > Contenu."
       ],
       "Upload rules related to the hits": [
         "Règles de téléchargement liées aux hits"
       ],
       "Uploaded": [
-        ""
+        "Téléchargé"
       ],
       "Uploading": [
         "Téléchargement"
@@ -654,10 +654,10 @@
         "Afficher Red Hat Insights."
       ],
       "View task": [
-        ""
+        "Voir les tâches "
       ],
       "View task details": [
-        ""
+        "Afficher les détails de la tâche"
       ],
       "Vulnerabilities": [
         "Vulnérabilités"
@@ -666,22 +666,22 @@
         "Vulnérabilité"
       ],
       "Vulnerability analysis disabled": [
-        ""
+        "L’analyse des vulnérabilités est désactivée"
       ],
       "Vulnerability analysis enabled": [
-        ""
+        "L’analyse des vulnérabilités est activée"
       ],
       "Wait and %s": [
         "Attendez et %s"
       ],
       "Warning": [
-        ""
+        "Avertissement"
       ],
       "Whether the resolution requires reboot": [
         "Si la résolution nécessite un redémarrage"
       ],
       "You do not have permission to perform this action": [
-        ""
+        "Vous n'êtes pas autorisé à entreprendre cette action"
       ],
       "category name": [
         "nom de la catégorie"
