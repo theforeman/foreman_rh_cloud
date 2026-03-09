@@ -178,6 +178,61 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     assert_nil result
   end
 
+  test 'scope_request? should return tag_name for compliance systems endpoint' do
+    get_req = ActionDispatch::Request.new(
+      'REQUEST_URI' => '/api/compliance/v2/systems',
+      'REQUEST_METHOD' => 'GET',
+      'rack.input' => ::Puma::NullIO.new
+    )
+
+    result = @forwarder.send(:scope_request?, get_req, 'api/compliance/v2/systems')
+    assert_equal :tags, result
+  end
+
+  test 'scope_request? should return tag_name for compliance report systems endpoint' do
+    get_req = ActionDispatch::Request.new(
+      'REQUEST_URI' => '/api/compliance/v2/reports/report-123/systems',
+      'REQUEST_METHOD' => 'GET',
+      'rack.input' => ::Puma::NullIO.new
+    )
+
+    result = @forwarder.send(:scope_request?, get_req, 'api/compliance/v2/reports/report-123/systems')
+    assert_equal :tags, result
+  end
+
+  test 'scope_request? should return tag_name for individual compliance system endpoint' do
+    get_req = ActionDispatch::Request.new(
+      'REQUEST_URI' => '/api/compliance/v2/systems/system-456',
+      'REQUEST_METHOD' => 'GET',
+      'rack.input' => ::Puma::NullIO.new
+    )
+
+    result = @forwarder.send(:scope_request?, get_req, 'api/compliance/v2/systems/system-456')
+    assert_equal :tags, result
+  end
+
+  test 'scope_request? should return tag_name for system policies endpoint' do
+    get_req = ActionDispatch::Request.new(
+      'REQUEST_URI' => '/api/compliance/v2/systems/system-456/policies',
+      'REQUEST_METHOD' => 'GET',
+      'rack.input' => ::Puma::NullIO.new
+    )
+
+    result = @forwarder.send(:scope_request?, get_req, 'api/compliance/v2/systems/system-456/policies')
+    assert_equal :tags, result
+  end
+
+  test 'scope_request? should return tag_name for system reports endpoint' do
+    get_req = ActionDispatch::Request.new(
+      'REQUEST_URI' => '/api/compliance/v2/systems/system-456/reports',
+      'REQUEST_METHOD' => 'GET',
+      'rack.input' => ::Puma::NullIO.new
+    )
+
+    result = @forwarder.send(:scope_request?, get_req, 'api/compliance/v2/systems/system-456/reports')
+    assert_equal :tags, result
+  end
+
   test 'prepare_tags should use provided tag_name' do
     result = @forwarder.send(:prepare_tags, @user, @organization, @location, :custom_tag)
 
@@ -307,6 +362,41 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
 
   # Data-driven tests for required_permission_for
   PERMISSION_MAPPINGS = [
+    # Compliance endpoints
+    { path: 'api/inventory/v1/hosts', method: 'GET', expected: :view_compliance },
+    { path: 'api/inventory/v1/hosts/abc-123', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/policies', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/policies', method: 'POST', expected: :edit_compliance },
+    { path: 'api/compliance/v2/policies/policy-123', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/policies/policy-123', method: 'DELETE', expected: :edit_compliance },
+    { path: 'api/compliance/v2/policies/policy-123', method: 'PATCH', expected: :edit_compliance },
+    { path: 'api/compliance/v2/policies/policy-123/systems', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/policies/policy-123/systems', method: 'POST', expected: :edit_compliance },
+    { path: 'api/compliance/v2/policies/policy-123/systems/system-456', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/policies/policy-123/systems/system-456', method: 'DELETE', expected: :edit_compliance },
+    { path: 'api/compliance/v2/policies/policy-123/systems/system-456', method: 'PATCH', expected: :edit_compliance },
+    { path: 'api/compliance/v2/policies/policy-123/tailorings', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/policies/policy-123/tailorings', method: 'POST', expected: :edit_compliance },
+    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789', method: 'PATCH', expected: :edit_compliance },
+    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules', method: 'POST', expected: :edit_compliance },
+    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999', method: 'DELETE', expected: :edit_compliance },
+    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999', method: 'PATCH', expected: :edit_compliance },
+    { path: 'api/compliance/v2/reports', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/reports/report-123', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/reports/report-123', method: 'DELETE', expected: :edit_compliance },
+    { path: 'api/compliance/v2/reports/report-123/systems', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/reports/report-123/systems/system-456', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/reports/report-123/systems/os_versions', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/policies/policy-123/systems/os_versions', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/systems', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/systems/system-456', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/systems/os_versions', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/systems/system-456/policies', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/systems/system-456/reports', method: 'GET', expected: :view_compliance },
+    { path: 'api/compliance/v2/profiles', method: 'GET', expected: :view_compliance },
     # Vulnerability endpoints
     { path: 'api/inventory/v1/hosts', method: 'GET', expected: :view_vulnerability },
     { path: 'api/inventory/v1/hosts/abc-123', method: 'GET', expected: :view_vulnerability },
@@ -380,6 +470,140 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
 
     assert_raises(::Foreman::PermissionMissingException) do
       @forwarder.forward_request(req, 'api/insights/v1/ack/', 'test_controller', @user, @organization, @location)
+    end
+  end
+
+  # Compliance permission integration tests
+  test 'should allow GET request to compliance policies when user has view_compliance permission' do
+    req = build_request(method: 'GET', uri: '/api/compliance/v2/policies')
+
+    @user.stubs(:can?).with(:view_compliance).returns(true)
+    @forwarder.expects(:execute_cloud_request).returns(true)
+
+    @forwarder.forward_request(req, 'api/compliance/v2/policies', 'test_controller', @user, @organization, @location)
+  end
+
+  test 'should deny GET request to compliance policies when user lacks view_compliance permission' do
+    req = build_request(method: 'GET', uri: '/api/compliance/v2/policies')
+
+    @user.stubs(:can?).with(:view_compliance).returns(false)
+
+    assert_raises(::Foreman::PermissionMissingException) do
+      @forwarder.forward_request(req, 'api/compliance/v2/policies', 'test_controller', @user, @organization, @location)
+    end
+  end
+
+  test 'should allow POST request to compliance policies when user has edit_compliance permission' do
+    req = build_request(method: 'POST', uri: '/api/compliance/v2/policies', data: '{"name": "test-policy"}')
+
+    @user.stubs(:can?).with(:edit_compliance).returns(true)
+    @forwarder.expects(:execute_cloud_request).returns(true)
+
+    @forwarder.forward_request(req, 'api/compliance/v2/policies', 'test_controller', @user, @organization, @location)
+  end
+
+  test 'should deny POST request to compliance policies when user lacks edit_compliance permission' do
+    req = build_request(method: 'POST', uri: '/api/compliance/v2/policies', data: '{"name": "test-policy"}')
+
+    @user.stubs(:can?).with(:edit_compliance).returns(false)
+
+    assert_raises(::Foreman::PermissionMissingException) do
+      @forwarder.forward_request(req, 'api/compliance/v2/policies', 'test_controller', @user, @organization, @location)
+    end
+  end
+
+  test 'should allow PATCH request to compliance policy when user has edit_compliance permission' do
+    req = build_request(method: 'PATCH', uri: '/api/compliance/v2/policies/policy-123', data: '{"name": "updated-policy"}')
+
+    @user.stubs(:can?).with(:edit_compliance).returns(true)
+    @forwarder.expects(:execute_cloud_request).returns(true)
+
+    @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123', 'test_controller', @user, @organization, @location)
+  end
+
+  test 'should deny PATCH request to compliance policy when user lacks edit_compliance permission' do
+    req = build_request(method: 'PATCH', uri: '/api/compliance/v2/policies/policy-123', data: '{"name": "updated-policy"}')
+
+    @user.stubs(:can?).with(:edit_compliance).returns(false)
+
+    assert_raises(::Foreman::PermissionMissingException) do
+      @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123', 'test_controller', @user, @organization, @location)
+    end
+  end
+
+  test 'should allow DELETE request to compliance policy when user has edit_compliance permission' do
+    req = build_request(method: 'DELETE', uri: '/api/compliance/v2/policies/policy-123')
+
+    @user.stubs(:can?).with(:edit_compliance).returns(true)
+    @forwarder.expects(:execute_cloud_request).returns(true)
+
+    @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123', 'test_controller', @user, @organization, @location)
+  end
+
+  test 'should deny DELETE request to compliance policy when user lacks edit_compliance permission' do
+    req = build_request(method: 'DELETE', uri: '/api/compliance/v2/policies/policy-123')
+
+    @user.stubs(:can?).with(:edit_compliance).returns(false)
+
+    assert_raises(::Foreman::PermissionMissingException) do
+      @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123', 'test_controller', @user, @organization, @location)
+    end
+  end
+
+  test 'should allow POST request to compliance policy systems when user has edit_compliance permission' do
+    req = build_request(method: 'POST', uri: '/api/compliance/v2/policies/policy-123/systems', data: '{"id": "system-456"}')
+
+    @user.stubs(:can?).with(:edit_compliance).returns(true)
+    @forwarder.expects(:execute_cloud_request).returns(true)
+
+    @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123/systems', 'test_controller', @user, @organization, @location)
+  end
+
+  test 'should deny POST request to compliance policy systems when user lacks edit_compliance permission' do
+    req = build_request(method: 'POST', uri: '/api/compliance/v2/policies/policy-123/systems', data: '{"id": "system-456"}')
+
+    @user.stubs(:can?).with(:edit_compliance).returns(false)
+
+    assert_raises(::Foreman::PermissionMissingException) do
+      @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123/systems', 'test_controller', @user, @organization, @location)
+    end
+  end
+
+  test 'should allow DELETE request to compliance report when user has edit_compliance permission' do
+    req = build_request(method: 'DELETE', uri: '/api/compliance/v2/reports/report-123')
+
+    @user.stubs(:can?).with(:edit_compliance).returns(true)
+    @forwarder.expects(:execute_cloud_request).returns(true)
+
+    @forwarder.forward_request(req, 'api/compliance/v2/reports/report-123', 'test_controller', @user, @organization, @location)
+  end
+
+  test 'should deny DELETE request to compliance report when user lacks edit_compliance permission' do
+    req = build_request(method: 'DELETE', uri: '/api/compliance/v2/reports/report-123')
+
+    @user.stubs(:can?).with(:edit_compliance).returns(false)
+
+    assert_raises(::Foreman::PermissionMissingException) do
+      @forwarder.forward_request(req, 'api/compliance/v2/reports/report-123', 'test_controller', @user, @organization, @location)
+    end
+  end
+
+  test 'should allow DELETE request to compliance tailoring rule when user has edit_compliance permission' do
+    req = build_request(method: 'DELETE', uri: '/api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999')
+
+    @user.stubs(:can?).with(:edit_compliance).returns(true)
+    @forwarder.expects(:execute_cloud_request).returns(true)
+
+    @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999', 'test_controller', @user, @organization, @location)
+  end
+
+  test 'should deny DELETE request to compliance tailoring rule when user lacks edit_compliance permission' do
+    req = build_request(method: 'DELETE', uri: '/api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999')
+
+    @user.stubs(:can?).with(:edit_compliance).returns(false)
+
+    assert_raises(::Foreman::PermissionMissingException) do
+      @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999', 'test_controller', @user, @organization, @location)
     end
   end
 
