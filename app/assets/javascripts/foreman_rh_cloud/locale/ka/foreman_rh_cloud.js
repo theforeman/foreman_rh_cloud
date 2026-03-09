@@ -3,10 +3,10 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 13.2.0",
+        "Project-Id-Version": "foreman_rh_cloud 14.0.2",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
-        "Last-Translator": "Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2023",
+        "Last-Translator": "Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2026",
         "Language-Team": "Georgian (https://app.transifex.com/foreman/teams/114/ka/)",
         "MIME-Version": "1.0",
         "Content-Type": "text/plain; charset=UTF-8",
@@ -117,7 +117,7 @@
         ""
       ],
       "Disable": [
-        ""
+        "გამორთვა"
       ],
       "Disable vulnerability analysis": [
         ""
@@ -141,10 +141,10 @@
         ""
       ],
       "Duration": [
-        ""
+        "ხანგრძლოვობა"
       ],
       "Enable": [
-        ""
+        "ჩართვა"
       ],
       "Enable automatic deletion of mismatched host records from the Red Hat cloud": [
         ""
@@ -237,7 +237,7 @@
         ""
       ],
       "Generated": [
-        ""
+        "გენერირებული"
       ],
       "Generating": [
         "გენერაცია"
@@ -345,7 +345,7 @@
         "მეტი დეტალი შეგიძლიათ იპოვოთ"
       ],
       "N/A": [
-        ""
+        "არარსებული"
       ],
       "Next run: ": [
         "შემდეგი გაშვება: "
@@ -624,7 +624,7 @@
         "სულ რისკები"
       ],
       "Unknown": [
-        ""
+        "უცნობი"
       ],
       "Upload hits from iop-advisor-engine": [
         ""
@@ -675,7 +675,7 @@
         "დაელოდეთ და %s"
       ],
       "Warning": [
-        ""
+        "შეტყობინება"
       ],
       "Whether the resolution requires reboot": [
         ""

@@ -4,15 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025
-# Ondřej Gajdušek, 2025
+# Amit Upadhye <aupadhye@redhat.com>, 2026
+# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2026
+# Ondřej Gajdušek, 2026
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: foreman_rh_cloud 13.2.0\n"
+"Project-Id-Version: foreman_rh_cloud 14.0.2\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
-"Last-Translator: Ondřej Gajdušek, 2025\n"
+"Last-Translator: Ondřej Gajdušek, 2026\n"
 "Language-Team: Japanese (https://app.transifex.com/foreman/teams/114/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,7 +29,7 @@ msgid "%s organizations"
 msgstr "組織 %s 件"
 
 msgid "A specific organization must be selected from the organization context."
-msgstr ""
+msgstr "組織コンテキストから、特定の組織を選択する必要があります。"
 
 msgid "About subscription watch"
 msgstr "Subscription Watch の概要"
@@ -42,7 +44,7 @@ msgid "All recommendations are now selected."
 msgstr "すべての推奨事項が選択されました。"
 
 msgid "Analysis disabled"
-msgstr ""
+msgstr "分析の無効化"
 
 msgid "Analytics data collection"
 msgstr "分析データの収集"
@@ -54,7 +56,7 @@ msgid "Apply Insights recommendations"
 msgstr "Insights の推奨事項の適用"
 
 msgid "Attempted to destroy HBI host %s, but host does not exist in HBI"
-msgstr ""
+msgstr "HBI ホスト %s の破棄を試みますが、ホストは HBI に存在しません"
 
 msgid "Automatic inventory upload"
 msgstr "自動インベントリーアップロード"
@@ -84,19 +86,19 @@ msgid "Cloud connector job link"
 msgstr "Cloud Connector のジョブリンク"
 
 msgid "Cloud connector setup has failed: "
-msgstr "Cloud Connector の設定に失敗しました:"
+msgstr "Cloud Connector の設定に失敗しました: "
 
 msgid "Cloud connector setup has started: "
-msgstr "Cloud Connector の設定が開始しました:"
+msgstr "Cloud Connector の設定が開始しました: "
 
 msgid "Cloud connector setup is in progress now: "
-msgstr "Cloud Connector の設定が進行中です:"
+msgstr "Cloud Connector の設定が進行中です: "
 
 msgid "Completed"
 msgstr "完了"
 
 msgid "Completed with warnings"
-msgstr ""
+msgstr "警告で完了"
 
 msgid "Configure"
 msgstr "設定"
@@ -117,13 +119,13 @@ msgid "Current page"
 msgstr "現在のページ"
 
 msgid "Details"
-msgstr ""
+msgstr "詳細"
 
 msgid "Disable"
-msgstr ""
+msgstr "無効化"
 
 msgid "Disable vulnerability analysis"
-msgstr ""
+msgstr "脆弱性分析の無効化"
 
 msgid "Disconnected hosts: "
 msgstr "非接続ホスト: "
@@ -141,28 +143,28 @@ msgid "Download latest report"
 msgstr "最新レポートのダウンロード"
 
 msgid "Download report"
-msgstr ""
+msgstr "レポートのダウンロード"
 
 msgid "Duration"
-msgstr ""
+msgstr "期間"
 
 msgid "Enable"
-msgstr ""
+msgstr "有効化"
 
 msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
 msgstr "不一致のホストレコードを Red Hat クラウドから自動的に削除できるようにする"
 
 msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud. Ignored when using local Insights."
-msgstr ""
+msgstr "Red Hat クラウドからの一致しないホストレコードの自動削除を有効にします。ローカルの Insights を使用している場合は無視されます。"
 
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud"
 msgstr "Red Hat クラウドから Insights の推奨事項の自動同期を有効にする"
 
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights."
-msgstr ""
+msgstr "Red Hat クラウドの Insights 推奨事項の自動同期を有効にします。ローカルの Insights を使用している場合は無視されます。"
 
 msgid "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights."
-msgstr ""
+msgstr "ホストインベントリーの Red Hat クラウドへの自動アップロードを有効にします。ローカルの Insights を使用している場合は無視されます。"
 
 msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
 msgstr "ホストインベントリーの Red Hat クラウドに対して自動アップロードを有効にする"
@@ -174,7 +176,7 @@ msgid "Enable inventory upload"
 msgstr "インベントリーアップロードの有効化"
 
 msgid "Enable vulnerability analysis"
-msgstr ""
+msgstr "脆弱性分析の有効化"
 
 msgid "Encountered an error while trying to access the server:"
 msgstr "サーバーへのアクセス時にエラーが発生しました:"
@@ -186,22 +188,22 @@ msgid "Exclude installed packages from being uploaded to the Red Hat cloud"
 msgstr "Red Hat クラウドにアップロードされないようにインストール済みパッケージを除外する"
 
 msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights."
-msgstr ""
+msgstr "インストール済みパッケージをRed Hatクラウドへのアップロード対象から除外します。(insights_minimal_data_collection が true に設定されている場合、インストール済みパッケージは常に除外されるため、この設定は無視されます。) ローカルの Insights を使用している場合は無視されます。"
 
 msgid "Exit Code: %s"
 msgstr "終了コード: %s"
 
 msgid "Failed"
-msgstr ""
+msgstr "失敗"
 
 msgid "Failed to destroy HBI host %s: %s"
-msgstr ""
+msgstr "HBI ホスト %s を破棄できませんでした: %s"
 
 msgid "Failed to fetch hosts"
-msgstr ""
+msgstr "ホストを取得できませんでした"
 
 msgid "Failed to update vulnerability analysis status"
-msgstr ""
+msgstr "脆弱性分析ステータスの更新に失敗しました"
 
 msgid "Fetch Insights-related host details"
 msgstr "Insights 関連のホスト詳細を取得する"
@@ -216,7 +218,7 @@ msgid "Fix host"
 msgstr "ホストの修正"
 
 msgid "For more info, please visit the"
-msgstr "詳細は、以下を参照してください。"
+msgstr "詳細は、以下を参照してください"
 
 msgid "For more information about Insights and Cloud Connector, see:"
 msgstr "Insights と Cloud Connector の詳細は、以下を参照してください。"
@@ -234,13 +236,13 @@ msgid "Generate and upload report"
 msgstr "レポートの生成およびアップロード"
 
 msgid "Generate report"
-msgstr "レポートを生成します。"
+msgstr "レポートの生成"
 
 msgid "Generate the report, but do not upload"
 msgstr "レポートを生成するがアップロードしない"
 
 msgid "Generated"
-msgstr ""
+msgstr "生成済み"
 
 msgid "Generating"
 msgstr "生成中"
@@ -267,7 +269,7 @@ msgid "Host Insights recommendations"
 msgstr "ホストに関する Insights の推奨事項"
 
 msgid "Host inventory report job"
-msgstr ""
+msgstr "ホストインベントリーレポートジョブ"
 
 msgid "Host was not uploaded to your RH cloud inventory"
 msgstr "ホストが RH クラウドインベントリーにアップロードされませんでした"
@@ -276,7 +278,7 @@ msgid "Hostname"
 msgstr "ホスト名"
 
 msgid "Hosts with subscription in organization: "
-msgstr "組織のサブスクリプションが割り当てられたホスト:"
+msgstr "組織のサブスクリプションが割り当てられたホスト: "
 
 msgid "ID of the RHC(Yggdrasil) daemon"
 msgstr "RHC (Yggdrasil) デーモンの ID"
@@ -291,7 +293,7 @@ msgid "Insights"
 msgstr "Insights"
 
 msgid "Invalid response from server"
-msgstr ""
+msgstr "サーバーからの無効な応答"
 
 msgid "Inventory"
 msgstr "インベントリー"
@@ -303,7 +305,7 @@ msgid "Inventory Upload"
 msgstr "インベントリーのアップロード"
 
 msgid "Inventory sync has failed: "
-msgstr "インベントリーの同期に失敗しました:"
+msgstr "インベントリーの同期に失敗しました: "
 
 msgid "Inventory sync has started:"
 msgstr "インベントリーの同期が開始されました:"
@@ -330,7 +332,7 @@ msgid "Low"
 msgstr "低"
 
 msgid "Manage vulnerability analysis"
-msgstr ""
+msgstr "脆弱性分析の管理"
 
 msgid "Manual"
 msgstr "手動"
@@ -339,7 +341,7 @@ msgid "Minimal data collection"
 msgstr "最小限のデータ収集"
 
 msgid "Missing Insights facets created: %s"
-msgstr ""
+msgstr "作成された Insights ファセットがありません: %s"
 
 msgid "Moderate"
 msgstr "中"
@@ -348,7 +350,7 @@ msgid "More details can be found in"
 msgstr "詳細は、以下を参照してください: "
 
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 msgid "Next run: "
 msgstr "次の実行: "
@@ -357,31 +359,31 @@ msgid "No"
 msgstr "いいえ"
 
 msgid "No account data available."
-msgstr ""
+msgstr "利用可能なアカウントデータがありません。"
 
 msgid "No recent tasks"
-msgstr ""
+msgstr "最近のタスクなし"
 
 msgid "No recommendations were found for this host!"
 msgstr "このホストに関する推奨事項は見つかりませんでした。"
 
 msgid "No report generation tasks have been run yet."
-msgstr ""
+msgstr "レポート生成タスクはまだ実行されていません。"
 
 msgid "No results found"
 msgstr "結果は見つかりませんでした"
 
 msgid "No task history"
-msgstr ""
+msgstr "タスク履歴なし"
 
 msgid "No task was found"
 msgstr "タスクが見つかりませんでした"
 
 msgid "No tasks have been run yet."
-msgstr ""
+msgstr "実行されたタスクはまだありません。"
 
 msgid "None of the selected hosts are registered"
-msgstr ""
+msgstr "選択したホストが登録されていません"
 
 msgid "Not reporting"
 msgstr "報告なし"
@@ -405,16 +407,16 @@ msgid "Obfuscate host names sent to the Red Hat cloud"
 msgstr "Red Hat クラウドに送信するホスト名を難読化する"
 
 msgid "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights."
-msgstr ""
+msgstr "Red Hat クラウドに送信されるホスト名を難読化します。(insights_minimal_data_collection が true に設定されている場合、レポートにホスト名が含まれないため、この設定は無視されます。) ローカルの Insights を使用している場合は無視されます。"
 
 msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud"
 msgstr "Red Hat クラウドに送信する ipv4 アドレスを難読化する"
 
 msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.) Ignored when using local Insights."
-msgstr ""
+msgstr "Red Hat クラウドに送信される ipv4 アドレスを難読化します。(insights_minimal_data_collection が true に設定されている場合、レポートにホスト IPv4 アドレスが含まれないため、この設定は無視されます。) ローカルの Insights を使用している場合は無視されます。"
 
 msgid "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights."
-msgstr ""
+msgstr "Red Hat クラウドにアップロードするインベントリレポートに、必要最小限のデータのみを含めます。これが true の場合、exclude_installed_packages の設定に関わらずインストール済みパッケージはレポートから除外され、難読化の設定に関わらずホスト名と IPv4 アドレスもレポートから除外されます。ローカルの Insights を使用している場合は無視されます。"
 
 msgid "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled"
 msgstr "必要最小限のデータのみを Red Hat クラウドに送信します。難読化設定は無効化されます"
@@ -429,19 +431,19 @@ msgid "Pagination"
 msgstr "ページ付け"
 
 msgid "Paused"
-msgstr ""
+msgstr "一時停止中"
 
 msgid "Playbook"
 msgstr "Playbook"
 
 msgid "Previous tasks will appear here."
-msgstr ""
+msgstr "以前のタスクがここに表示されます。"
 
 msgid "RH Cloud"
 msgstr "RH Cloud"
 
 msgid "RHC daemon id. Ignored when using local Insights."
-msgstr ""
+msgstr "RHC デーモン ID。ローカルの Insights を使用している場合は無視されます。"
 
 msgid "Read more about it in RH cloud insights"
 msgstr "詳細は、RH cloud insights を参照してください。"
@@ -492,16 +494,16 @@ msgid "Remediation summary"
 msgstr "修復の概要"
 
 msgid "Report Generation"
-msgstr ""
+msgstr "レポート生成"
 
 msgid "Report generation and upload started"
-msgstr ""
+msgstr "レポート生成とアップロードが開始される"
 
 msgid "Report generation started"
-msgstr ""
+msgstr "レポート生成が開始される"
 
 msgid "Report saved to"
-msgstr ""
+msgstr "レポートの保存先: "
 
 msgid "Reporting"
 msgstr "レポート"
@@ -519,7 +521,7 @@ msgid "Run remediation playbook generated by Insights"
 msgstr "Insights で生成された修復 Playbook の実行"
 
 msgid "Running"
-msgstr ""
+msgstr "実行中"
 
 msgid "Satellite server has %{hits_count} recommendations by Red Hat"
 msgstr "Satellite Server には、Red Hat からの推奨事項が %{hits_count} 件あります。"
@@ -540,7 +542,7 @@ msgid "Settings"
 msgstr "設定"
 
 msgid "Should import include parameter tags from Foreman? Ignored when using local Insights."
-msgstr ""
+msgstr "インポートには Foreman からのパラメータータグを含める必要がありますか? ローカルの Insights を使用している場合は無視されます。"
 
 msgid "Show Advanced Settings"
 msgstr "詳細設定の表示"
@@ -549,10 +551,10 @@ msgid "Show if system is configured to use local iop-advisor-engine."
 msgstr "システムがローカル iop-advisor-engine を使用するように設定されているかどうかを表示します。"
 
 msgid "Single-host report job"
-msgstr ""
+msgstr "単一ホストレポートジョブ"
 
 msgid "Single-host report job for host %s"
-msgstr ""
+msgstr "ホスト %s の単一ホストレポートジョブ"
 
 msgid "Start inventory synchronization"
 msgstr "インベントリー同期の開始"
@@ -561,16 +563,16 @@ msgid "Start report generation"
 msgstr "レポート生成の開始"
 
 msgid "Started"
-msgstr ""
+msgstr "開始済み"
 
 msgid "Stopped"
-msgstr ""
+msgstr "停止"
 
 msgid "Success"
-msgstr ""
+msgstr "成功"
 
 msgid "Successfully synced hosts: "
-msgstr "ホストが正常に同期されました:"
+msgstr "ホストが正常に同期されました: "
 
 msgid "Successfully uploaded to your RH cloud inventory"
 msgstr "RH クラウドインベントリーへのアップロードに成功しました"
@@ -606,7 +608,7 @@ msgid "There are no recommendations for your hosts"
 msgstr "ホストに関する推奨事項はありません"
 
 msgid "There were no missing Insights facets"
-msgstr ""
+msgstr "不足している Insights のファセットはありませんでした。"
 
 msgid "This action will also enable automatic reports upload"
 msgstr "このアクションを実行すると、自動レポートのアップロードも有効になります。"
@@ -627,7 +629,7 @@ msgid "Total risks"
 msgstr "リスクの総数"
 
 msgid "Unknown"
-msgstr ""
+msgstr "不明"
 
 msgid "Upload hits from iop-advisor-engine"
 msgstr "iop-advisor-engine からの検索結果をアップロードする"
@@ -636,13 +638,13 @@ msgid "Upload hits information"
 msgstr "検索結果の情報をアップロードする"
 
 msgid "Upload is disabled because subscription connection is not enabled. Enable it in Administer > Settings > Content."
-msgstr ""
+msgstr "サブスクリプション接続が有効になっていないため、アップロードは無効になっています。管理 > 設定 > コンテンツ で有効にします。"
 
 msgid "Upload rules related to the hits"
 msgstr "検索結果に関するアップロードルール"
 
 msgid "Uploaded"
-msgstr ""
+msgstr "アップロード済み"
 
 msgid "Uploading"
 msgstr "アップロード中..."
@@ -657,10 +659,10 @@ msgid "View in Red Hat Insights"
 msgstr "Red Hat Insights での表示"
 
 msgid "View task"
-msgstr ""
+msgstr "タスクの表示"
 
 msgid "View task details"
-msgstr ""
+msgstr "タスクの詳細を表示する"
 
 msgid "Vulnerabilities"
 msgstr "脆弱性"
@@ -669,22 +671,22 @@ msgid "Vulnerability"
 msgstr "脆弱性"
 
 msgid "Vulnerability analysis disabled"
-msgstr ""
+msgstr "脆弱性分析の無効化"
 
 msgid "Vulnerability analysis enabled"
-msgstr ""
+msgstr "脆弱性分析の有効化"
 
 msgid "Wait and %s"
 msgstr "待機して %s"
 
 msgid "Warning"
-msgstr ""
+msgstr "警告"
 
 msgid "Whether the resolution requires reboot"
 msgstr "解決策には再起動が必要かどうか"
 
 msgid "You do not have permission to perform this action"
-msgstr ""
+msgstr "このアクションを実行するパーミッションがありません"
 
 msgid "category name"
 msgstr "カテゴリー名"

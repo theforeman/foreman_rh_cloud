@@ -6,18 +6,19 @@
 # Translators:
 # Romain Vrignaud <rvrignaud@gmail.com>, 2023
 # 21966816214bc546c1fc8a185e75ca1c, 2023
-# Bryan Kearney <bryan.kearney@gmail.com>, 2023
 # Claer <transiblu@claer.hammock.fr>, 2023
-# Amit Upadhye <aupadhye@redhat.com>, 2023
-# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025
-# Ondřej Gajdušek, 2025
+# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2026
+# Amit Upadhye <aupadhye@redhat.com>, 2026
+# Bryan Kearney <bryan.kearney@gmail.com>, 2026
+# Ondřej Gajdušek, 2026
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: foreman_rh_cloud 13.2.0\n"
+"Project-Id-Version: foreman_rh_cloud 14.0.2\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
-"Last-Translator: Ondřej Gajdušek, 2025\n"
+"Last-Translator: Ondřej Gajdušek, 2026\n"
 "Language-Team: French (https://app.transifex.com/foreman/teams/114/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +34,7 @@ msgid "%s organizations"
 msgstr "%s organisations"
 
 msgid "A specific organization must be selected from the organization context."
-msgstr ""
+msgstr "Une organisation spécifique doit être sélectionnée dans le contexte de l'organisation."
 
 msgid "About subscription watch"
 msgstr "Informations sur la vérification des abonnements"
@@ -48,7 +49,7 @@ msgid "All recommendations are now selected."
 msgstr "Toutes les recommandations sont maintenant sélectionnées."
 
 msgid "Analysis disabled"
-msgstr ""
+msgstr "Analyse désactivée"
 
 msgid "Analytics data collection"
 msgstr "Collecte de données analytiques"
@@ -60,7 +61,7 @@ msgid "Apply Insights recommendations"
 msgstr "Appliquer les recommandations d'Insights"
 
 msgid "Attempted to destroy HBI host %s, but host does not exist in HBI"
-msgstr ""
+msgstr "A tenté de détruire l’hôte HBI %s, mais l’hôte n’existe pas dans HBI"
 
 msgid "Automatic inventory upload"
 msgstr "Chargement automatique de l'inventaire"
@@ -102,7 +103,7 @@ msgid "Completed"
 msgstr "Terminé"
 
 msgid "Completed with warnings"
-msgstr ""
+msgstr "Complété avec des avertissements"
 
 msgid "Configure"
 msgstr "Configurer"
@@ -123,13 +124,13 @@ msgid "Current page"
 msgstr "Page actuelle"
 
 msgid "Details"
-msgstr ""
+msgstr "Détails"
 
 msgid "Disable"
-msgstr ""
+msgstr "Désactiver"
 
 msgid "Disable vulnerability analysis"
-msgstr ""
+msgstr "Désactiver l’analyse des vulnérabilités"
 
 msgid "Disconnected hosts: "
 msgstr "Hôtes déconnectés : "
@@ -147,28 +148,28 @@ msgid "Download latest report"
 msgstr "Télécharger le dernier rapport"
 
 msgid "Download report"
-msgstr ""
+msgstr "Télécharger le rapport"
 
 msgid "Duration"
-msgstr ""
+msgstr "Durée"
 
 msgid "Enable"
-msgstr ""
+msgstr "Activer"
 
 msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
 msgstr "Activer la suppression automatique des enregistrements d'hôtes incompatibles du cloud Red Hat"
 
 msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud. Ignored when using local Insights."
-msgstr ""
+msgstr "Activez la synchronisation automatique des recommandations Insights depuis le cloud Red Hat. Ignoré lors de l'utilisation d'Insights local."
 
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud"
 msgstr "Activer la synchronisation automatique des recommandations Insights à partir de Red Hat Cloud"
 
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights."
-msgstr ""
+msgstr "Activer la synchronisation automatique des recommandations Insights à partir de Red Hat Cloud"
 
 msgid "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights."
-msgstr ""
+msgstr "Activer le téléchargement automatique de votre inventaire d'hôtes dans Red Hat Cloud. Ignoré lors de l'utilisation d'Insights local."
 
 msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
 msgstr "Activer le téléchargement automatique de l'inventaire de vos hôtes dans Red Hat Cloud"
@@ -180,7 +181,7 @@ msgid "Enable inventory upload"
 msgstr "Activer le téléchargement de l'inventaire"
 
 msgid "Enable vulnerability analysis"
-msgstr ""
+msgstr "L’analyse des vulnérabilités est activée"
 
 msgid "Encountered an error while trying to access the server:"
 msgstr "Une erreur s'est produite lors de l'accès au serveur :"
@@ -192,22 +193,22 @@ msgid "Exclude installed packages from being uploaded to the Red Hat cloud"
 msgstr "Exclure les paquets installés du téléchargement dans Red Hat Cloud"
 
 msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights."
-msgstr ""
+msgstr "Exclure les paquets installés du téléchargement vers le cloud Red Hat. (Si insights_minimal_data_collection est défini sur « true », ce paramètre est ignoré et les paquets installés sont toujours exclus.) Ignoré lors de l'utilisation d'Insights local."
 
 msgid "Exit Code: %s"
 msgstr "Code de sortie : %s"
 
 msgid "Failed"
-msgstr ""
+msgstr "Échec"
 
 msgid "Failed to destroy HBI host %s: %s"
-msgstr ""
+msgstr "N’a pas pu détruire l’hôte HBI %s: %s"
 
 msgid "Failed to fetch hosts"
-msgstr ""
+msgstr "Erreur de récupération des hôtes"
 
 msgid "Failed to update vulnerability analysis status"
-msgstr ""
+msgstr "Échec de la mise à jour du statut de l'analyse des vulnérabilités"
 
 msgid "Fetch Insights-related host details"
 msgstr "Récupérer les détails de l'hôte liés à Insights"
@@ -246,7 +247,7 @@ msgid "Generate the report, but do not upload"
 msgstr "Générer le rapport, mais ne pas le télécharger"
 
 msgid "Generated"
-msgstr ""
+msgstr "Généré"
 
 msgid "Generating"
 msgstr "En cours de génération"
@@ -273,7 +274,7 @@ msgid "Host Insights recommendations"
 msgstr "Recommandations de Host Insights"
 
 msgid "Host inventory report job"
-msgstr ""
+msgstr "Tâche de rapport d'inventaire des hôtes"
 
 msgid "Host was not uploaded to your RH cloud inventory"
 msgstr "L'hôte n'a pas été téléchargé dans votre inventaire RH Cloud."
@@ -297,13 +298,13 @@ msgid "Insights"
 msgstr "Insights"
 
 msgid "Invalid response from server"
-msgstr ""
+msgstr "Réponse serveur non valide"
 
 msgid "Inventory"
 msgstr "Inventaire"
 
 msgid "Inventory Auto Upload"
-msgstr "Chargement automatique des iinventaires"
+msgstr "Chargement automatique des inventaires"
 
 msgid "Inventory Upload"
 msgstr "Téléchargement de l'inventaire"
@@ -336,7 +337,7 @@ msgid "Low"
 msgstr "Faible"
 
 msgid "Manage vulnerability analysis"
-msgstr ""
+msgstr "Gère l’analyse des vulnérabilités"
 
 msgid "Manual"
 msgstr "Manuelle"
@@ -345,7 +346,7 @@ msgid "Minimal data collection"
 msgstr "Collecte minimale de données"
 
 msgid "Missing Insights facets created: %s"
-msgstr ""
+msgstr "Facette Insights manquantes créées : %s"
 
 msgid "Moderate"
 msgstr "Modéré"
@@ -354,7 +355,7 @@ msgid "More details can be found in"
 msgstr "Pour plus de détails, voir"
 
 msgid "N/A"
-msgstr ""
+msgstr "Sans objet"
 
 msgid "Next run: "
 msgstr "Exécution suivante :"
@@ -363,31 +364,31 @@ msgid "No"
 msgstr "Non"
 
 msgid "No account data available."
-msgstr ""
+msgstr "Aucune donnée associée à ce compte n’est disponible."
 
 msgid "No recent tasks"
-msgstr ""
+msgstr "Aucun tâche récente"
 
 msgid "No recommendations were found for this host!"
 msgstr "Aucune recommandation n'a été trouvée pour cet hôte !"
 
 msgid "No report generation tasks have been run yet."
-msgstr ""
+msgstr "Aucune tâche de génération de rapport exécutée pour l’instant."
 
 msgid "No results found"
 msgstr "Aucun résultat"
 
 msgid "No task history"
-msgstr ""
+msgstr "Aucun historique de tâche"
 
 msgid "No task was found"
 msgstr "Aucune tâche n'a été trouvée"
 
 msgid "No tasks have been run yet."
-msgstr ""
+msgstr "Aucun tâche exécutée pour l’instant"
 
 msgid "None of the selected hosts are registered"
-msgstr ""
+msgstr "Aucun de ces hôtes n’est enregistré"
 
 msgid "Not reporting"
 msgstr "Non rapporté"
@@ -411,16 +412,16 @@ msgid "Obfuscate host names sent to the Red Hat cloud"
 msgstr "Obfusquer les noms d'hôtes envoyés à Red Hat Cloud"
 
 msgid "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights."
-msgstr ""
+msgstr "Masquer les noms d'hôtes envoyés au cloud Red Hat. (Si insights_minimal_data_collection est défini sur « true », ce paramètre sera ignoré, car les noms d'hôtes ne sont pas inclus dans le rapport.) Ignoré lors de l'utilisation d'Insights local."
 
 msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud"
 msgstr "Obfusquer les adresses ipv4 envoyées à Red Hat Cloud"
 
 msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.) Ignored when using local Insights."
-msgstr ""
+msgstr "Masquer les adresses IPv4 envoyées au cloud Red Hat. (Si insights_minimal_data_collection est défini sur « true », ce paramètre est ignoré, car les adresses IPv4 des hôtes ne sont pas incluses dans le rapport.) Ignoré lors de l'utilisation d'Insights local."
 
 msgid "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights."
-msgstr ""
+msgstr "N'incluez que les données minimales requises dans les rapports d'inventaire pour le téléchargement vers le cloud Red Hat. Dans ce cas, les packages installés sont exclus du rapport, quel que soit le paramètre exclude_installed_packages, et les noms d'hôtes et adresses IPv4 sont exclus du rapport, quels que soient les paramètres de masquage. Ignoré lors de l'utilisation d'Insights local."
 
 msgid "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled"
 msgstr "Envoyez uniquement les données minimales requises au cloud Red Hat, les paramètres d'obfuscation (masquage) sont désactivés"
@@ -435,19 +436,19 @@ msgid "Pagination"
 msgstr "Pagination"
 
 msgid "Paused"
-msgstr ""
+msgstr "Suspendue"
 
 msgid "Playbook"
 msgstr "Playbook"
 
 msgid "Previous tasks will appear here."
-msgstr ""
+msgstr "Les tâches précédentes apparaissent ici."
 
 msgid "RH Cloud"
 msgstr "RH Cloud"
 
 msgid "RHC daemon id. Ignored when using local Insights."
-msgstr ""
+msgstr "Identifiant du démon RHC. Ignoré lors de l'utilisation d'Insights local."
 
 msgid "Read more about it in RH cloud insights"
 msgstr "Plus d'informations dans RH cloud insights"
@@ -498,16 +499,16 @@ msgid "Remediation summary"
 msgstr "Résumé de remédiation"
 
 msgid "Report Generation"
-msgstr ""
+msgstr "Lancer la génération du rapport"
 
 msgid "Report generation and upload started"
-msgstr ""
+msgstr "La génération du rapport et son téléchargement ont débuté"
 
 msgid "Report generation started"
-msgstr ""
+msgstr "La génération du rapport a débuté"
 
 msgid "Report saved to"
-msgstr ""
+msgstr "Rapport sauvegardé dans "
 
 msgid "Reporting"
 msgstr "Rapports"
@@ -525,7 +526,7 @@ msgid "Run remediation playbook generated by Insights"
 msgstr "Exécuter le playbook de remédiation généré par Insights"
 
 msgid "Running"
-msgstr ""
+msgstr "Exécution en cours"
 
 msgid "Satellite server has %{hits_count} recommendations by Red Hat"
 msgstr "Le serveur satellite a %{hits_count} recommandations de Red Hat"
@@ -546,7 +547,7 @@ msgid "Settings"
 msgstr "Paramètres de configuration"
 
 msgid "Should import include parameter tags from Foreman? Ignored when using local Insights."
-msgstr ""
+msgstr "L'importation doit-elle inclure les balises de paramètres de Foreman ? Ignoré lors de l'utilisation d'Insights local."
 
 msgid "Show Advanced Settings"
 msgstr "Afficher les paramètres avancés"
@@ -555,10 +556,10 @@ msgid "Show if system is configured to use local iop-advisor-engine."
 msgstr "Indique si le système est configuré pour utiliser le moteur iop-advisor local."
 
 msgid "Single-host report job"
-msgstr ""
+msgstr "Tâche de rapport à hôte unique"
 
 msgid "Single-host report job for host %s"
-msgstr ""
+msgstr "Tâche de rapport à hôte unique pour l'hôte  %s"
 
 msgid "Start inventory synchronization"
 msgstr "Démarrer la synchronisation de l'inventaire"
@@ -567,13 +568,13 @@ msgid "Start report generation"
 msgstr "Lancer la génération du rapport"
 
 msgid "Started"
-msgstr ""
+msgstr "Démarré"
 
 msgid "Stopped"
-msgstr ""
+msgstr "Arrêté"
 
 msgid "Success"
-msgstr ""
+msgstr "Réussite"
 
 msgid "Successfully synced hosts: "
 msgstr "Synchronisation des hôtes réussie : "
@@ -612,7 +613,7 @@ msgid "There are no recommendations for your hosts"
 msgstr "Il n'y a aucune recommandation pour vos hôtes"
 
 msgid "There were no missing Insights facets"
-msgstr ""
+msgstr "Il n'y avait aucune facette Insights manquante."
 
 msgid "This action will also enable automatic reports upload"
 msgstr "Cette action permettra également le téléchargement automatique des rapports"
@@ -633,7 +634,7 @@ msgid "Total risks"
 msgstr "Risques totaux"
 
 msgid "Unknown"
-msgstr ""
+msgstr "Inconnu"
 
 msgid "Upload hits from iop-advisor-engine"
 msgstr "Télécharger les hits depuis iop-advisor-engine"
@@ -642,13 +643,13 @@ msgid "Upload hits information"
 msgstr "Télécharger les informations sur les hits"
 
 msgid "Upload is disabled because subscription connection is not enabled. Enable it in Administer > Settings > Content."
-msgstr ""
+msgstr "Le téléchargement est désactivé car la connexion par abonnement n'est pas activée. Activez-la dans Administrer > Paramètres > Contenu."
 
 msgid "Upload rules related to the hits"
 msgstr "Règles de téléchargement liées aux hits"
 
 msgid "Uploaded"
-msgstr ""
+msgstr "Téléchargé"
 
 msgid "Uploading"
 msgstr "Téléchargement"
@@ -663,10 +664,10 @@ msgid "View in Red Hat Insights"
 msgstr "Afficher Red Hat Insights."
 
 msgid "View task"
-msgstr ""
+msgstr "Voir les tâches "
 
 msgid "View task details"
-msgstr ""
+msgstr "Afficher les détails de la tâche"
 
 msgid "Vulnerabilities"
 msgstr "Vulnérabilités"
@@ -675,22 +676,22 @@ msgid "Vulnerability"
 msgstr "Vulnérabilité"
 
 msgid "Vulnerability analysis disabled"
-msgstr ""
+msgstr "L’analyse des vulnérabilités est désactivée"
 
 msgid "Vulnerability analysis enabled"
-msgstr ""
+msgstr "L’analyse des vulnérabilités est activée"
 
 msgid "Wait and %s"
 msgstr "Attendez et %s"
 
 msgid "Warning"
-msgstr ""
+msgstr "Avertissement"
 
 msgid "Whether the resolution requires reboot"
 msgstr "Si la résolution nécessite un redémarrage"
 
 msgid "You do not have permission to perform this action"
-msgstr ""
+msgstr "Vous n'êtes pas autorisé à entreprendre cette action"
 
 msgid "category name"
 msgstr "nom de la catégorie"

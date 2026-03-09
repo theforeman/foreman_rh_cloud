@@ -5,17 +5,18 @@
 #
 # Translators:
 # 진선재, 2023
-# Bryan Kearney <bryan.kearney@gmail.com>, 2023
 # 0868a4d1af5275b3f70b0a6dac4c99a4, 2023
-# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025
-# Ondřej Gajdušek, 2025
+# Bryan Kearney <bryan.kearney@gmail.com>, 2026
+# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2026
+# Ondřej Gajdušek, 2026
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: foreman_rh_cloud 13.2.0\n"
+"Project-Id-Version: foreman_rh_cloud 14.0.2\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
-"Last-Translator: Ondřej Gajdušek, 2025\n"
+"Last-Translator: Ondřej Gajdušek, 2026\n"
 "Language-Team: Korean (https://app.transifex.com/foreman/teams/114/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,7 +31,7 @@ msgid "%s organizations"
 msgstr "%s 조직"
 
 msgid "A specific organization must be selected from the organization context."
-msgstr ""
+msgstr "조직 컨텍스트에서 특정 조직을 선택해야 합니다."
 
 msgid "About subscription watch"
 msgstr "서브스크립션 감시 정보"
@@ -45,7 +46,7 @@ msgid "All recommendations are now selected."
 msgstr "모든 권장 사항이 선택되었습니다."
 
 msgid "Analysis disabled"
-msgstr ""
+msgstr "분석이 비활성화됨"
 
 msgid "Analytics data collection"
 msgstr "분석 데이터 수집"
@@ -57,7 +58,7 @@ msgid "Apply Insights recommendations"
 msgstr "Insights 권장 사항 적용"
 
 msgid "Attempted to destroy HBI host %s, but host does not exist in HBI"
-msgstr ""
+msgstr "HBI 호스트 %s를 삭제하려 했으나, 호스트가 HBI에 존재하지 않습니다."
 
 msgid "Automatic inventory upload"
 msgstr "자동 인벤토리 업로드"
@@ -99,7 +100,7 @@ msgid "Completed"
 msgstr "완료"
 
 msgid "Completed with warnings"
-msgstr ""
+msgstr "경고와 함께 완료됨"
 
 msgid "Configure"
 msgstr "설정"
@@ -120,13 +121,13 @@ msgid "Current page"
 msgstr "현재 페이지"
 
 msgid "Details"
-msgstr ""
+msgstr "상세 정보"
 
 msgid "Disable"
-msgstr ""
+msgstr "비활성화 "
 
 msgid "Disable vulnerability analysis"
-msgstr ""
+msgstr "취약점 분석이 비활성화되었습니다"
 
 msgid "Disconnected hosts: "
 msgstr "연결이 끊긴 호스트: "
@@ -144,28 +145,28 @@ msgid "Download latest report"
 msgstr "최신 보고서 다운로드"
 
 msgid "Download report"
-msgstr ""
+msgstr "보고서 다운로드"
 
 msgid "Duration"
-msgstr ""
+msgstr "기간 "
 
 msgid "Enable"
-msgstr ""
+msgstr "활성화 "
 
 msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
 msgstr "Red Hat 클라우드에서 일치하지 않는 호스트 기록의 자동 삭제를 활성화하십시오."
 
 msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud. Ignored when using local Insights."
-msgstr ""
+msgstr "Red Hat 클라우드에서 일치하지 않는 호스트 레코드의 자동 삭제를 활성화합니다. 로컬 Insights를 사용하는 경우에는 무시됩니다."
 
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud"
 msgstr "Red Hat 클라우드에서 Insights 권장 사항의 자동 동기화를 활성화합니다."
 
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights."
-msgstr ""
+msgstr "Red Hat 클라우드에서 Insights 권장 사항의 자동 동기화를 활성화합니다. 로컬 Insights를 사용하는 경우에는 이 옵션이 무시됩니다."
 
 msgid "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights."
-msgstr ""
+msgstr "호스트 인벤토리를 Red Hat 클라우드에 자동 업로드하도록 설정합니다. 로컬 Insights를 사용하는 경우에는 이 설정이 무시됩니다."
 
 msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
 msgstr "호스트 인벤토리를 Red Hat 클라우드에 자동으로 업로드하도록 설정"
@@ -177,7 +178,7 @@ msgid "Enable inventory upload"
 msgstr "인벤토리 업로드 활성화"
 
 msgid "Enable vulnerability analysis"
-msgstr ""
+msgstr "취약점 분석이 활성화되었습니다"
 
 msgid "Encountered an error while trying to access the server:"
 msgstr "서버에 접근하는 동안 오류가 발생했습니다:"
@@ -189,22 +190,22 @@ msgid "Exclude installed packages from being uploaded to the Red Hat cloud"
 msgstr "설치된 패키지가 Red Hat 클라우드에 업로드되는 것을 제외합니다."
 
 msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights."
-msgstr ""
+msgstr "설치된 패키지가 Red Hat 클라우드에 업로드되지 않도록 제외합니다. (insights_minimal_data_collection이 true로 설정된 경우 이 설정은 무시되고 설치된 패키지는 항상 제외됩니다.) 로컬 Insights를 사용하는 경우에는 이 설정이 무시됩니다."
 
 msgid "Exit Code: %s"
 msgstr "종료 코드: %s"
 
 msgid "Failed"
-msgstr ""
+msgstr "실패 "
 
 msgid "Failed to destroy HBI host %s: %s"
-msgstr ""
+msgstr "HBI 호스트 %s 삭제 실패: %s"
 
 msgid "Failed to fetch hosts"
-msgstr ""
+msgstr "호스트를 가져오는 데 실패했습니다"
 
 msgid "Failed to update vulnerability analysis status"
-msgstr ""
+msgstr "취약점 분석 상태 업데이트에 실패했습니다"
 
 msgid "Fetch Insights-related host details"
 msgstr "Insights 관련 호스트 세부 정보 가져오기"
@@ -243,7 +244,7 @@ msgid "Generate the report, but do not upload"
 msgstr "보고서를 생성하되 업로드하지 마십시오."
 
 msgid "Generated"
-msgstr ""
+msgstr "생성됨"
 
 msgid "Generating"
 msgstr "생성 중"
@@ -270,7 +271,7 @@ msgid "Host Insights recommendations"
 msgstr "호스트 Insights 추천"
 
 msgid "Host inventory report job"
-msgstr ""
+msgstr "호스트 인벤토리 보고서 작업"
 
 msgid "Host was not uploaded to your RH cloud inventory"
 msgstr "호스트가 RH 클라우드 인벤토리에 업로드되지 않았습니다."
@@ -294,7 +295,7 @@ msgid "Insights"
 msgstr "Insights"
 
 msgid "Invalid response from server"
-msgstr ""
+msgstr "서버에서 잘못된 응답이 전송되었습니다"
 
 msgid "Inventory"
 msgstr "인벤토리"
@@ -333,7 +334,7 @@ msgid "Low"
 msgstr "낮음"
 
 msgid "Manage vulnerability analysis"
-msgstr ""
+msgstr "취약점 분석 관리"
 
 msgid "Manual"
 msgstr "수동"
@@ -342,7 +343,7 @@ msgid "Minimal data collection"
 msgstr "최소한의 데이터 수집"
 
 msgid "Missing Insights facets created: %s"
-msgstr ""
+msgstr "누락된 Insights 항목 생성됨: %s"
 
 msgid "Moderate"
 msgstr "중간 수준"
@@ -351,7 +352,7 @@ msgid "More details can be found in"
 msgstr "자세한 내용은 다음에서 확인할 수 있습니다."
 
 msgid "N/A"
-msgstr ""
+msgstr "해당 없음"
 
 msgid "Next run: "
 msgstr "다음 실행: "
@@ -360,31 +361,31 @@ msgid "No"
 msgstr "아니오  "
 
 msgid "No account data available."
-msgstr ""
+msgstr "계정 정보가 없습니다."
 
 msgid "No recent tasks"
-msgstr ""
+msgstr "최근 작업 없음"
 
 msgid "No recommendations were found for this host!"
 msgstr "이 호스트에 대한 추천을 찾을 수 없습니다!"
 
 msgid "No report generation tasks have been run yet."
-msgstr ""
+msgstr "아직 보고서 생성 작업이 실행되지 않았습니다."
 
 msgid "No results found"
 msgstr "검색 결과가 없습니다"
 
 msgid "No task history"
-msgstr ""
+msgstr "작업 기록 없음"
 
 msgid "No task was found"
 msgstr "작업을 찾을 수 없습니다"
 
 msgid "No tasks have been run yet."
-msgstr ""
+msgstr "아직 실행된 작업이 없습니다."
 
 msgid "None of the selected hosts are registered"
-msgstr ""
+msgstr "선택된 호스트 중 등록된 호스트는 없습니다."
 
 msgid "Not reporting"
 msgstr "보고하지 않음"
@@ -408,16 +409,16 @@ msgid "Obfuscate host names sent to the Red Hat cloud"
 msgstr "Red Hat 클라우드로 전송된 호스트 이름을 난독화합니다."
 
 msgid "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights."
-msgstr ""
+msgstr "Red Hat 클라우드로 전송되는 호스트 이름을 난독화합니다. (insights_minimal_data_collection이 true로 설정된 경우, 보고서에 호스트 이름이 포함되지 않으므로 이 설정은 무시됩니다.) 로컬 Insights를 사용하는 경우에는 무시됩니다."
 
 msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud"
 msgstr "Red Hat 클라우드로 전송된 ipv4 주소 난독화"
 
 msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.) Ignored when using local Insights."
-msgstr ""
+msgstr "Red Hat 클라우드로 전송되는 IPv4 주소를 난독화합니다. (insights_minimal_data_collection이 true로 설정된 경우 호스트 IPv4 주소가 보고서에 포함되지 않으므로 이 설정은 무시됩니다.) 로컬 Insights를 사용하는 경우에는 무시됩니다."
 
 msgid "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights."
-msgstr ""
+msgstr "Red Hat 클라우드에 업로드할 인벤토리 보고서에는 최소한의 필수 데이터만 포함합니다. 이 옵션을 선택하면 exclude_installed_packages 설정과 관계없이 설치된 패키지가 보고서에서 제외되고, 난독화 설정과 관계없이 호스트 이름과 IPv4 주소가 보고서에서 제외됩니다. 로컬 Insights를 사용하는 경우에는 이 설정이 무시됩니다."
 
 msgid "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled"
 msgstr "Red Hat 클라우드에 필요한 최소한의 데이터만 전송하고 난독화 설정은 비활성화됩니다."
@@ -432,19 +433,19 @@ msgid "Pagination"
 msgstr "페이지 지정"
 
 msgid "Paused"
-msgstr ""
+msgstr "일시정지"
 
 msgid "Playbook"
 msgstr "Playbook"
 
 msgid "Previous tasks will appear here."
-msgstr ""
+msgstr "이전 작업 내용이 여기에 표시됩니다."
 
 msgid "RH Cloud"
 msgstr "RH 클라우드"
 
 msgid "RHC daemon id. Ignored when using local Insights."
-msgstr ""
+msgstr "RHC 데몬 ID입니다. 로컬 Insights를 사용할 때는 무시됩니다."
 
 msgid "Read more about it in RH cloud insights"
 msgstr "RH 클라우드 Insights에서 이에 대해 자세히 알아보세요."
@@ -495,16 +496,16 @@ msgid "Remediation summary"
 msgstr "개선 요약"
 
 msgid "Report Generation"
-msgstr ""
+msgstr "보고서 생성"
 
 msgid "Report generation and upload started"
-msgstr ""
+msgstr "보고서 생성 및 업로드 시작됨"
 
 msgid "Report generation started"
-msgstr ""
+msgstr "보고서 생성 시작"
 
 msgid "Report saved to"
-msgstr ""
+msgstr "보고서 저장 위치"
 
 msgid "Reporting"
 msgstr "보고 중 "
@@ -522,7 +523,7 @@ msgid "Run remediation playbook generated by Insights"
 msgstr "Insights에서 생성된 수정 playbook 실행"
 
 msgid "Running"
-msgstr ""
+msgstr "실행 중"
 
 msgid "Satellite server has %{hits_count} recommendations by Red Hat"
 msgstr "Satellite 서버에는 Red Hat의 권장 사항이 %{hits_count} 개 있습니다"
@@ -543,7 +544,7 @@ msgid "Settings"
 msgstr "설정 "
 
 msgid "Should import include parameter tags from Foreman? Ignored when using local Insights."
-msgstr ""
+msgstr "Foreman에서 매개변수 태그를 가져와야 할까요? 로컬 Insights를 사용할 때는 무시됩니다."
 
 msgid "Show Advanced Settings"
 msgstr "고급 설정 표시"
@@ -552,10 +553,10 @@ msgid "Show if system is configured to use local iop-advisor-engine."
 msgstr "시스템이 로컬 iop-advisor-engine을 사용하도록 구성되어 있는지 표시하십시오."
 
 msgid "Single-host report job"
-msgstr ""
+msgstr "단일 호스트 보고서 작업"
 
 msgid "Single-host report job for host %s"
-msgstr ""
+msgstr "호스트 %s에 대한 단일 호스트 보고서 작업"
 
 msgid "Start inventory synchronization"
 msgstr "인벤토리 동기화 시작"
@@ -564,13 +565,13 @@ msgid "Start report generation"
 msgstr "보고서 생성 시작"
 
 msgid "Started"
-msgstr ""
+msgstr "시작됨"
 
 msgid "Stopped"
-msgstr ""
+msgstr "중단됨"
 
 msgid "Success"
-msgstr ""
+msgstr "성공 "
 
 msgid "Successfully synced hosts: "
 msgstr "성공적으로 호스트를 동기화했습니다: "
@@ -609,7 +610,7 @@ msgid "There are no recommendations for your hosts"
 msgstr "호스트에 대한 권장 사항이 없음"
 
 msgid "There were no missing Insights facets"
-msgstr ""
+msgstr "누락된 Insights 항목이 없습니다."
 
 msgid "This action will also enable automatic reports upload"
 msgstr "이 작업을 수행하면 자동 보고서 업로드도 활성화됩니다."
@@ -630,7 +631,7 @@ msgid "Total risks"
 msgstr "총 위험"
 
 msgid "Unknown"
-msgstr ""
+msgstr "알 수 없음"
 
 msgid "Upload hits from iop-advisor-engine"
 msgstr "iop-advisor-engine에서 히트 업로드"
@@ -639,13 +640,13 @@ msgid "Upload hits information"
 msgstr "히트 정보 업로드"
 
 msgid "Upload is disabled because subscription connection is not enabled. Enable it in Administer > Settings > Content."
-msgstr ""
+msgstr "서브스크립션 연결이 활성화되지 않아 업로드가 비활성화되었습니다. Administer > Settings > Content에서 활성화하세요."
 
 msgid "Upload rules related to the hits"
 msgstr "히트와 관련된 규칙 업로드"
 
 msgid "Uploaded"
-msgstr ""
+msgstr "업로드됨"
 
 msgid "Uploading"
 msgstr "업로드 중"
@@ -660,10 +661,10 @@ msgid "View in Red Hat Insights"
 msgstr "Red Hat Insights에서 보기"
 
 msgid "View task"
-msgstr ""
+msgstr "작업 보기"
 
 msgid "View task details"
-msgstr ""
+msgstr "작업 세부 정보 보기"
 
 msgid "Vulnerabilities"
 msgstr "취약점"
@@ -672,22 +673,22 @@ msgid "Vulnerability"
 msgstr "취약성"
 
 msgid "Vulnerability analysis disabled"
-msgstr ""
+msgstr "취약점 분석이 비활성화되었습니다"
 
 msgid "Vulnerability analysis enabled"
-msgstr ""
+msgstr "취약점 분석이 활성화되었습니다"
 
 msgid "Wait and %s"
 msgstr "대기 및 %s"
 
 msgid "Warning"
-msgstr ""
+msgstr "경고"
 
 msgid "Whether the resolution requires reboot"
 msgstr "해결을 위해 재부팅이 필요한지 여부"
 
 msgid "You do not have permission to perform this action"
-msgstr ""
+msgstr "이 작업을 수행할 권한이 없습니다."
 
 msgid "category name"
 msgstr "카테고리 이름"

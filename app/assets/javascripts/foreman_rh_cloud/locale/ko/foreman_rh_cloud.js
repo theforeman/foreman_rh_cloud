@@ -3,10 +3,10 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 13.2.0",
+        "Project-Id-Version": "foreman_rh_cloud 14.0.2",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
-        "Last-Translator": "Ondřej Gajdušek, 2025",
+        "Last-Translator": "Ondřej Gajdušek, 2026",
         "Language-Team": "Korean (https://app.transifex.com/foreman/teams/114/ko/)",
         "MIME-Version": "1.0",
         "Content-Type": "text/plain; charset=UTF-8",
@@ -24,7 +24,7 @@
         "%s 조직"
       ],
       "A specific organization must be selected from the organization context.": [
-        ""
+        "조직 컨텍스트에서 특정 조직을 선택해야 합니다."
       ],
       "About subscription watch": [
         "서브스크립션 감시 정보"
@@ -39,7 +39,7 @@
         "모든 권장 사항이 선택되었습니다."
       ],
       "Analysis disabled": [
-        ""
+        "분석이 비활성화됨"
       ],
       "Analytics data collection": [
         "분석 데이터 수집"
@@ -51,7 +51,7 @@
         "Insights 권장 사항 적용"
       ],
       "Attempted to destroy HBI host %s, but host does not exist in HBI": [
-        ""
+        "HBI 호스트 %s를 삭제하려 했으나, 호스트가 HBI에 존재하지 않습니다."
       ],
       "Automatic inventory upload": [
         "자동 인벤토리 업로드"
@@ -93,7 +93,7 @@
         "완료"
       ],
       "Completed with warnings": [
-        ""
+        "경고와 함께 완료됨"
       ],
       "Configure": [
         "설정"
@@ -114,13 +114,13 @@
         "현재 페이지"
       ],
       "Details": [
-        ""
+        "상세 정보"
       ],
       "Disable": [
-        ""
+        "비활성화 "
       ],
       "Disable vulnerability analysis": [
-        ""
+        "취약점 분석이 비활성화되었습니다"
       ],
       "Disconnected hosts: ": [
         "연결이 끊긴 호스트: "
@@ -138,28 +138,28 @@
         "최신 보고서 다운로드"
       ],
       "Download report": [
-        ""
+        "보고서 다운로드"
       ],
       "Duration": [
-        ""
+        "기간 "
       ],
       "Enable": [
-        ""
+        "활성화 "
       ],
       "Enable automatic deletion of mismatched host records from the Red Hat cloud": [
         "Red Hat 클라우드에서 일치하지 않는 호스트 기록의 자동 삭제를 활성화하십시오."
       ],
       "Enable automatic deletion of mismatched host records from the Red Hat cloud. Ignored when using local Insights.": [
-        ""
+        "Red Hat 클라우드에서 일치하지 않는 호스트 레코드의 자동 삭제를 활성화합니다. 로컬 Insights를 사용하는 경우에는 무시됩니다."
       ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud": [
         "Red Hat 클라우드에서 Insights 권장 사항의 자동 동기화를 활성화합니다."
       ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights.": [
-        ""
+        "Red Hat 클라우드에서 Insights 권장 사항의 자동 동기화를 활성화합니다. 로컬 Insights를 사용하는 경우에는 이 옵션이 무시됩니다."
       ],
       "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights.": [
-        ""
+        "호스트 인벤토리를 Red Hat 클라우드에 자동 업로드하도록 설정합니다. 로컬 Insights를 사용하는 경우에는 이 설정이 무시됩니다."
       ],
       "Enable automatic upload of your hosts inventory to the Red Hat cloud": [
         "호스트 인벤토리를 Red Hat 클라우드에 자동으로 업로드하도록 설정"
@@ -171,7 +171,7 @@
         "인벤토리 업로드 활성화"
       ],
       "Enable vulnerability analysis": [
-        ""
+        "취약점 분석이 활성화되었습니다"
       ],
       "Encountered an error while trying to access the server:": [
         "서버에 접근하는 동안 오류가 발생했습니다:"
@@ -183,22 +183,22 @@
         "설치된 패키지가 Red Hat 클라우드에 업로드되는 것을 제외합니다."
       ],
       "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights.": [
-        ""
+        "설치된 패키지가 Red Hat 클라우드에 업로드되지 않도록 제외합니다. (insights_minimal_data_collection이 true로 설정된 경우 이 설정은 무시되고 설치된 패키지는 항상 제외됩니다.) 로컬 Insights를 사용하는 경우에는 이 설정이 무시됩니다."
       ],
       "Exit Code: %s": [
         "종료 코드: %s"
       ],
       "Failed": [
-        ""
+        "실패 "
       ],
       "Failed to destroy HBI host %s: %s": [
-        ""
+        "HBI 호스트 %s 삭제 실패: %s"
       ],
       "Failed to fetch hosts": [
-        ""
+        "호스트를 가져오는 데 실패했습니다"
       ],
       "Failed to update vulnerability analysis status": [
-        ""
+        "취약점 분석 상태 업데이트에 실패했습니다"
       ],
       "Fetch Insights-related host details": [
         "Insights 관련 호스트 세부 정보 가져오기"
@@ -237,7 +237,7 @@
         "보고서를 생성하되 업로드하지 마십시오."
       ],
       "Generated": [
-        ""
+        "생성됨"
       ],
       "Generating": [
         "생성 중"
@@ -264,7 +264,7 @@
         "호스트 Insights 추천"
       ],
       "Host inventory report job": [
-        ""
+        "호스트 인벤토리 보고서 작업"
       ],
       "Host was not uploaded to your RH cloud inventory": [
         "호스트가 RH 클라우드 인벤토리에 업로드되지 않았습니다."
@@ -288,7 +288,7 @@
         "Insights"
       ],
       "Invalid response from server": [
-        ""
+        "서버에서 잘못된 응답이 전송되었습니다"
       ],
       "Inventory": [
         "인벤토리"
@@ -327,7 +327,7 @@
         "낮음"
       ],
       "Manage vulnerability analysis": [
-        ""
+        "취약점 분석 관리"
       ],
       "Manual": [
         "수동"
@@ -336,7 +336,7 @@
         "최소한의 데이터 수집"
       ],
       "Missing Insights facets created: %s": [
-        ""
+        "누락된 Insights 항목 생성됨: %s"
       ],
       "Moderate": [
         "중간 수준"
@@ -345,7 +345,7 @@
         "자세한 내용은 다음에서 확인할 수 있습니다."
       ],
       "N/A": [
-        ""
+        "해당 없음"
       ],
       "Next run: ": [
         "다음 실행: "
@@ -354,31 +354,31 @@
         "아니오  "
       ],
       "No account data available.": [
-        ""
+        "계정 정보가 없습니다."
       ],
       "No recent tasks": [
-        ""
+        "최근 작업 없음"
       ],
       "No recommendations were found for this host!": [
         "이 호스트에 대한 추천을 찾을 수 없습니다!"
       ],
       "No report generation tasks have been run yet.": [
-        ""
+        "아직 보고서 생성 작업이 실행되지 않았습니다."
       ],
       "No results found": [
         "검색 결과가 없습니다"
       ],
       "No task history": [
-        ""
+        "작업 기록 없음"
       ],
       "No task was found": [
         "작업을 찾을 수 없습니다"
       ],
       "No tasks have been run yet.": [
-        ""
+        "아직 실행된 작업이 없습니다."
       ],
       "None of the selected hosts are registered": [
-        ""
+        "선택된 호스트 중 등록된 호스트는 없습니다."
       ],
       "Not reporting": [
         "보고하지 않음"
@@ -402,16 +402,16 @@
         "Red Hat 클라우드로 전송된 호스트 이름을 난독화합니다."
       ],
       "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights.": [
-        ""
+        "Red Hat 클라우드로 전송되는 호스트 이름을 난독화합니다. (insights_minimal_data_collection이 true로 설정된 경우, 보고서에 호스트 이름이 포함되지 않으므로 이 설정은 무시됩니다.) 로컬 Insights를 사용하는 경우에는 무시됩니다."
       ],
       "Obfuscate ipv4 addresses sent to the Red Hat cloud": [
         "Red Hat 클라우드로 전송된 ipv4 주소 난독화"
       ],
       "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.) Ignored when using local Insights.": [
-        ""
+        "Red Hat 클라우드로 전송되는 IPv4 주소를 난독화합니다. (insights_minimal_data_collection이 true로 설정된 경우 호스트 IPv4 주소가 보고서에 포함되지 않으므로 이 설정은 무시됩니다.) 로컬 Insights를 사용하는 경우에는 무시됩니다."
       ],
       "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights.": [
-        ""
+        "Red Hat 클라우드에 업로드할 인벤토리 보고서에는 최소한의 필수 데이터만 포함합니다. 이 옵션을 선택하면 exclude_installed_packages 설정과 관계없이 설치된 패키지가 보고서에서 제외되고, 난독화 설정과 관계없이 호스트 이름과 IPv4 주소가 보고서에서 제외됩니다. 로컬 Insights를 사용하는 경우에는 이 설정이 무시됩니다."
       ],
       "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled": [
         "Red Hat 클라우드에 필요한 최소한의 데이터만 전송하고 난독화 설정은 비활성화됩니다."
@@ -426,19 +426,19 @@
         "페이지 지정"
       ],
       "Paused": [
-        ""
+        "일시정지"
       ],
       "Playbook": [
         "Playbook"
       ],
       "Previous tasks will appear here.": [
-        ""
+        "이전 작업 내용이 여기에 표시됩니다."
       ],
       "RH Cloud": [
         "RH 클라우드"
       ],
       "RHC daemon id. Ignored when using local Insights.": [
-        ""
+        "RHC 데몬 ID입니다. 로컬 Insights를 사용할 때는 무시됩니다."
       ],
       "Read more about it in RH cloud insights": [
         "RH 클라우드 Insights에서 이에 대해 자세히 알아보세요."
@@ -489,16 +489,16 @@
         "개선 요약"
       ],
       "Report Generation": [
-        ""
+        "보고서 생성"
       ],
       "Report generation and upload started": [
-        ""
+        "보고서 생성 및 업로드 시작됨"
       ],
       "Report generation started": [
-        ""
+        "보고서 생성 시작"
       ],
       "Report saved to": [
-        ""
+        "보고서 저장 위치"
       ],
       "Reporting": [
         "보고 중 "
@@ -516,7 +516,7 @@
         "Insights에서 생성된 수정 playbook 실행"
       ],
       "Running": [
-        ""
+        "실행 중"
       ],
       "Satellite server has %{hits_count} recommendations by Red Hat": [
         "Satellite 서버에는 Red Hat의 권장 사항이 %{hits_count} 개 있습니다"
@@ -537,7 +537,7 @@
         "설정 "
       ],
       "Should import include parameter tags from Foreman? Ignored when using local Insights.": [
-        ""
+        "Foreman에서 매개변수 태그를 가져와야 할까요? 로컬 Insights를 사용할 때는 무시됩니다."
       ],
       "Show Advanced Settings": [
         "고급 설정 표시"
@@ -546,10 +546,10 @@
         "시스템이 로컬 iop-advisor-engine을 사용하도록 구성되어 있는지 표시하십시오."
       ],
       "Single-host report job": [
-        ""
+        "단일 호스트 보고서 작업"
       ],
       "Single-host report job for host %s": [
-        ""
+        "호스트 %s에 대한 단일 호스트 보고서 작업"
       ],
       "Start inventory synchronization": [
         "인벤토리 동기화 시작"
@@ -558,13 +558,13 @@
         "보고서 생성 시작"
       ],
       "Started": [
-        ""
+        "시작됨"
       ],
       "Stopped": [
-        ""
+        "중단됨"
       ],
       "Success": [
-        ""
+        "성공 "
       ],
       "Successfully synced hosts: ": [
         "성공적으로 호스트를 동기화했습니다: "
@@ -603,7 +603,7 @@
         "호스트에 대한 권장 사항이 없음"
       ],
       "There were no missing Insights facets": [
-        ""
+        "누락된 Insights 항목이 없습니다."
       ],
       "This action will also enable automatic reports upload": [
         "이 작업을 수행하면 자동 보고서 업로드도 활성화됩니다."
@@ -624,7 +624,7 @@
         "총 위험"
       ],
       "Unknown": [
-        ""
+        "알 수 없음"
       ],
       "Upload hits from iop-advisor-engine": [
         "iop-advisor-engine에서 히트 업로드"
@@ -633,13 +633,13 @@
         "히트 정보 업로드"
       ],
       "Upload is disabled because subscription connection is not enabled. Enable it in Administer > Settings > Content.": [
-        ""
+        "서브스크립션 연결이 활성화되지 않아 업로드가 비활성화되었습니다. Administer > Settings > Content에서 활성화하세요."
       ],
       "Upload rules related to the hits": [
         "히트와 관련된 규칙 업로드"
       ],
       "Uploaded": [
-        ""
+        "업로드됨"
       ],
       "Uploading": [
         "업로드 중"
@@ -654,10 +654,10 @@
         "Red Hat Insights에서 보기"
       ],
       "View task": [
-        ""
+        "작업 보기"
       ],
       "View task details": [
-        ""
+        "작업 세부 정보 보기"
       ],
       "Vulnerabilities": [
         "취약점"
@@ -666,22 +666,22 @@
         "취약성"
       ],
       "Vulnerability analysis disabled": [
-        ""
+        "취약점 분석이 비활성화되었습니다"
       ],
       "Vulnerability analysis enabled": [
-        ""
+        "취약점 분석이 활성화되었습니다"
       ],
       "Wait and %s": [
         "대기 및 %s"
       ],
       "Warning": [
-        ""
+        "경고"
       ],
       "Whether the resolution requires reboot": [
         "해결을 위해 재부팅이 필요한지 여부"
       ],
       "You do not have permission to perform this action": [
-        ""
+        "이 작업을 수행할 권한이 없습니다."
       ],
       "category name": [
         "카테고리 이름"
