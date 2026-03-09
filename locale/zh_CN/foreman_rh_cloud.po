@@ -4,19 +4,20 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Bryan Kearney <bryan.kearney@gmail.com>, 2023
 # tim123, 2023
 # 0868a4d1af5275b3f70b0a6dac4c99a4, 2023
-# Amit Upadhye <aupadhye@redhat.com>, 2023
-# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2025
-# Ondřej Gajdušek, 2025
+# Amit Upadhye <aupadhye@redhat.com>, 2026
+# Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2026
+# Bryan Kearney <bryan.kearney@gmail.com>, 2026
+# Ondřej Gajdušek, 2026
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: foreman_rh_cloud 13.2.0\n"
+"Project-Id-Version: foreman_rh_cloud 14.0.2\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
-"Last-Translator: Ondřej Gajdušek, 2025\n"
+"Last-Translator: Ondřej Gajdušek, 2026\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/foreman/teams/114/zh"
 "_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +33,7 @@ msgid "%s organizations"
 msgstr "%s 机构"
 
 msgid "A specific organization must be selected from the organization context."
-msgstr ""
+msgstr "必须从机构上下文中选择一个特定的机构。"
 
 msgid "About subscription watch"
 msgstr "订阅查看"
@@ -47,7 +48,7 @@ msgid "All recommendations are now selected."
 msgstr "现在选择了所有建议。"
 
 msgid "Analysis disabled"
-msgstr ""
+msgstr "禁用分析"
 
 msgid "Analytics data collection"
 msgstr "数据收集分析"
@@ -59,7 +60,7 @@ msgid "Apply Insights recommendations"
 msgstr "应用 Insights 建议"
 
 msgid "Attempted to destroy HBI host %s, but host does not exist in HBI"
-msgstr ""
+msgstr "尝试销毁 HBI 主机 %s，但主机在 HBI 中不存在"
 
 msgid "Automatic inventory upload"
 msgstr "自动清单上传"
@@ -101,7 +102,7 @@ msgid "Completed"
 msgstr "完成"
 
 msgid "Completed with warnings"
-msgstr ""
+msgstr "完成，带有警告"
 
 msgid "Configure"
 msgstr "配置"
@@ -122,13 +123,13 @@ msgid "Current page"
 msgstr "当前页"
 
 msgid "Details"
-msgstr ""
+msgstr "详情"
 
 msgid "Disable"
-msgstr ""
+msgstr "禁用"
 
 msgid "Disable vulnerability analysis"
-msgstr ""
+msgstr "禁用漏洞分析"
 
 msgid "Disconnected hosts: "
 msgstr "断开连接的主机："
@@ -146,28 +147,28 @@ msgid "Download latest report"
 msgstr "下载最新的报告"
 
 msgid "Download report"
-msgstr ""
+msgstr "下载报告"
 
 msgid "Duration"
-msgstr ""
+msgstr "持续时间"
 
 msgid "Enable"
-msgstr ""
+msgstr "启用"
 
 msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud"
 msgstr "启用自动删除来自红帽云的主机记录"
 
 msgid "Enable automatic deletion of mismatched host records from the Red Hat cloud. Ignored when using local Insights."
-msgstr ""
+msgstr "启用自动删除来自红帽云的主机记录。在使用本地 Insights 时忽略。"
 
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud"
 msgstr "启用来自红帽云的 Insights 建议自动同步"
 
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights."
-msgstr ""
+msgstr "启用自动同步来自 Red Hat cloud 的 Insights 建议。在使用本地 Insights 时忽略。"
 
 msgid "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights."
-msgstr ""
+msgstr "启用自动将主机清单上传到红帽云。在使用本地 Insights 时会忽略。"
 
 msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
 msgstr "启用自动将主机清单上传到红帽云"
@@ -179,7 +180,7 @@ msgid "Enable inventory upload"
 msgstr "启用清单上传"
 
 msgid "Enable vulnerability analysis"
-msgstr ""
+msgstr "启用漏洞分析"
 
 msgid "Encountered an error while trying to access the server:"
 msgstr "在尝试访问服务器时遇到错误："
@@ -191,22 +192,22 @@ msgid "Exclude installed packages from being uploaded to the Red Hat cloud"
 msgstr "将安装的软件包上传到红帽云"
 
 msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights."
-msgstr ""
+msgstr "在上传到红帽云时排除安装的软件包。（如果 insights_minimal_data_collection 设置为 true，则忽略此设置，且安装的软件包始终被排除。）在使用本地 Insights 时忽略。"
 
 msgid "Exit Code: %s"
 msgstr "退出代码：%s"
 
 msgid "Failed"
-msgstr ""
+msgstr "失败"
 
 msgid "Failed to destroy HBI host %s: %s"
-msgstr ""
+msgstr "销毁 HBI 主机 %s 失败：%s"
 
 msgid "Failed to fetch hosts"
-msgstr ""
+msgstr "获取主机失败"
 
 msgid "Failed to update vulnerability analysis status"
-msgstr ""
+msgstr "更新漏洞分析状态失败"
 
 msgid "Fetch Insights-related host details"
 msgstr "获取与 Insights 相关的主机详情"
@@ -245,7 +246,7 @@ msgid "Generate the report, but do not upload"
 msgstr "生成报告，但不上传"
 
 msgid "Generated"
-msgstr ""
+msgstr "生成"
 
 msgid "Generating"
 msgstr "生成中"
@@ -272,7 +273,7 @@ msgid "Host Insights recommendations"
 msgstr "主机 Insights 建议"
 
 msgid "Host inventory report job"
-msgstr ""
+msgstr "主机清单报告作业"
 
 msgid "Host was not uploaded to your RH cloud inventory"
 msgstr "主机没有上传到您的 RH 云清单"
@@ -296,7 +297,7 @@ msgid "Insights"
 msgstr "Insights"
 
 msgid "Invalid response from server"
-msgstr ""
+msgstr "来自服务器的无效响应"
 
 msgid "Inventory"
 msgstr "清单"
@@ -335,7 +336,7 @@ msgid "Low"
 msgstr "低"
 
 msgid "Manage vulnerability analysis"
-msgstr ""
+msgstr "管理漏洞分析"
 
 msgid "Manual"
 msgstr "手册"
@@ -344,7 +345,7 @@ msgid "Minimal data collection"
 msgstr "最小数据收集"
 
 msgid "Missing Insights facets created: %s"
-msgstr ""
+msgstr "缺失创建的 Insights 情况：%s"
 
 msgid "Moderate"
 msgstr "中等"
@@ -353,7 +354,7 @@ msgid "More details can be found in"
 msgstr "如需更多详细信息，请参阅"
 
 msgid "N/A"
-msgstr ""
+msgstr "不适用"
 
 msgid "Next run: "
 msgstr "下一次运行 ："
@@ -362,31 +363,31 @@ msgid "No"
 msgstr "否"
 
 msgid "No account data available."
-msgstr ""
+msgstr "没有可用的帐户数据。"
 
 msgid "No recent tasks"
-msgstr ""
+msgstr "没有最近的任务"
 
 msgid "No recommendations were found for this host!"
 msgstr "没有找到此主机的建议！"
 
 msgid "No report generation tasks have been run yet."
-msgstr ""
+msgstr "还没有运行报告生成任务。"
 
 msgid "No results found"
 msgstr "没有找到结果"
 
 msgid "No task history"
-msgstr ""
+msgstr "没有任务历史记录"
 
 msgid "No task was found"
 msgstr "没有找到任务"
 
 msgid "No tasks have been run yet."
-msgstr ""
+msgstr "还没有运行任何任务。"
 
 msgid "None of the selected hosts are registered"
-msgstr ""
+msgstr "所选主机都没有注册"
 
 msgid "Not reporting"
 msgstr "未报告"
@@ -410,16 +411,16 @@ msgid "Obfuscate host names sent to the Red Hat cloud"
 msgstr "发送到红帽云的模糊主机名"
 
 msgid "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights."
-msgstr ""
+msgstr "将发送到红帽云的主机名进行模糊化处理。（如果 insights_minimal_data_collection 设置为 true，则忽略此设置，因为报告中不包含主机名。）在使用本地 Insights 时忽略。"
 
 msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud"
 msgstr "发送到红帽云的模糊 ipv4 地址"
 
 msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.) Ignored when using local Insights."
-msgstr ""
+msgstr "将发送到红帽云的 ipv4 地址进行模糊化处理。（如果 insights_minimal_data_collection 设置为 true，则忽略此设置，因为报告中不包含 ipv4 地址。）在使用本地 Insights 时忽略。"
 
 msgid "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights."
-msgstr ""
+msgstr "在将数据上传到红帽云时在清单报告中包括最少需要的数据。当这是 true 时，无论 exclude_installed_packages 设置是什么，安装的软件包都排除在报告中，无论模糊化设置是什么，主机名和 IPv4 地址都不包括在报告中。在使用本地 Insights 时忽略。"
 
 msgid "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled"
 msgstr "仅将最低所需的数据发送到红帽云，禁用模糊设置"
@@ -434,19 +435,19 @@ msgid "Pagination"
 msgstr "分页"
 
 msgid "Paused"
-msgstr ""
+msgstr "暂停"
 
 msgid "Playbook"
 msgstr "运行 playbook"
 
 msgid "Previous tasks will appear here."
-msgstr ""
+msgstr "此处将显示前面的任务。"
 
 msgid "RH Cloud"
 msgstr "RH Cloud"
 
 msgid "RHC daemon id. Ignored when using local Insights."
-msgstr ""
+msgstr "RHC 守护进程 ID。在使用本地 Insights 时忽略。"
 
 msgid "Read more about it in RH cloud insights"
 msgstr "在 RH Cloud insights 中了解更多有关它的信息"
@@ -497,16 +498,16 @@ msgid "Remediation summary"
 msgstr "补救概述"
 
 msgid "Report Generation"
-msgstr ""
+msgstr "报告生成"
 
 msgid "Report generation and upload started"
-msgstr ""
+msgstr "报告生成和上传已开始"
 
 msgid "Report generation started"
-msgstr ""
+msgstr "报告生成开始"
 
 msgid "Report saved to"
-msgstr ""
+msgstr "报告保持到"
 
 msgid "Reporting"
 msgstr "报告"
@@ -524,7 +525,7 @@ msgid "Run remediation playbook generated by Insights"
 msgstr "运行 Insights 生成的补救 playbook"
 
 msgid "Running"
-msgstr ""
+msgstr "執行中"
 
 msgid "Satellite server has %{hits_count} recommendations by Red Hat"
 msgstr "Satellite 服务器有 %{hits_count} 个红帽提供的建议"
@@ -545,7 +546,7 @@ msgid "Settings"
 msgstr "设置"
 
 msgid "Should import include parameter tags from Foreman? Ignored when using local Insights."
-msgstr ""
+msgstr "是否应该导入 Foreman 中的 include 参数标签？在使用本地 Insights 时忽略。"
 
 msgid "Show Advanced Settings"
 msgstr "显示高级设置"
@@ -554,10 +555,10 @@ msgid "Show if system is configured to use local iop-advisor-engine."
 msgstr "显示系统是否被配置为使用本地 iop-advisor-engine。"
 
 msgid "Single-host report job"
-msgstr ""
+msgstr "单主机报告作业"
 
 msgid "Single-host report job for host %s"
-msgstr ""
+msgstr "主机 %s 的单主机报告作业"
 
 msgid "Start inventory synchronization"
 msgstr "启动清单同步"
@@ -566,13 +567,13 @@ msgid "Start report generation"
 msgstr "开始报告生成"
 
 msgid "Started"
-msgstr ""
+msgstr "已启动"
 
 msgid "Stopped"
-msgstr ""
+msgstr "停止"
 
 msgid "Success"
-msgstr ""
+msgstr "成功"
 
 msgid "Successfully synced hosts: "
 msgstr "成功同步的主机："
@@ -611,7 +612,7 @@ msgid "There are no recommendations for your hosts"
 msgstr "没有适用于您的主机的建议"
 
 msgid "There were no missing Insights facets"
-msgstr ""
+msgstr "没有缺失的 Insights 情况"
 
 msgid "This action will also enable automatic reports upload"
 msgstr "此操作还会启用自动报告上传"
@@ -632,7 +633,7 @@ msgid "Total risks"
 msgstr "总风险"
 
 msgid "Unknown"
-msgstr ""
+msgstr "未知"
 
 msgid "Upload hits from iop-advisor-engine"
 msgstr "从 iop-advisor-engine 上传 hits"
@@ -641,13 +642,13 @@ msgid "Upload hits information"
 msgstr "上传 hits 信息"
 
 msgid "Upload is disabled because subscription connection is not enabled. Enable it in Administer > Settings > Content."
-msgstr ""
+msgstr "上传被禁用，因为订阅连接没有启用。通过 Administer > Settings > Content 启用。"
 
 msgid "Upload rules related to the hits"
 msgstr "上传与 hits 相关的 rule"
 
 msgid "Uploaded"
-msgstr ""
+msgstr "已上传"
 
 msgid "Uploading"
 msgstr "上载中"
@@ -662,10 +663,10 @@ msgid "View in Red Hat Insights"
 msgstr "禁用 Red Hat Insights"
 
 msgid "View task"
-msgstr ""
+msgstr "查看任务"
 
 msgid "View task details"
-msgstr ""
+msgstr "查看任务详情"
 
 msgid "Vulnerabilities"
 msgstr "安全漏洞"
@@ -674,22 +675,22 @@ msgid "Vulnerability"
 msgstr "安全漏洞"
 
 msgid "Vulnerability analysis disabled"
-msgstr ""
+msgstr "禁用漏洞分析"
 
 msgid "Vulnerability analysis enabled"
-msgstr ""
+msgstr "启用漏洞分析"
 
 msgid "Wait and %s"
 msgstr "等待和 %s"
 
 msgid "Warning"
-msgstr ""
+msgstr "警告"
 
 msgid "Whether the resolution requires reboot"
 msgstr "resolution 是否需要重启"
 
 msgid "You do not have permission to perform this action"
-msgstr ""
+msgstr "您没有执行此操作的权限"
 
 msgid "category name"
 msgstr "类别名称"

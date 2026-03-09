@@ -3,10 +3,10 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 13.2.0",
+        "Project-Id-Version": "foreman_rh_cloud 14.0.2",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
-        "Last-Translator": "Ondřej Gajdušek, 2025",
+        "Last-Translator": "Ondřej Gajdušek, 2026",
         "Language-Team": "Chinese (China) (https://app.transifex.com/foreman/teams/114/zh_CN/)",
         "MIME-Version": "1.0",
         "Content-Type": "text/plain; charset=UTF-8",
@@ -24,7 +24,7 @@
         "%s 机构"
       ],
       "A specific organization must be selected from the organization context.": [
-        ""
+        "必须从机构上下文中选择一个特定的机构。"
       ],
       "About subscription watch": [
         "订阅查看"
@@ -39,7 +39,7 @@
         "现在选择了所有建议。"
       ],
       "Analysis disabled": [
-        ""
+        "禁用分析"
       ],
       "Analytics data collection": [
         "数据收集分析"
@@ -51,7 +51,7 @@
         "应用 Insights 建议"
       ],
       "Attempted to destroy HBI host %s, but host does not exist in HBI": [
-        ""
+        "尝试销毁 HBI 主机 %s，但主机在 HBI 中不存在"
       ],
       "Automatic inventory upload": [
         "自动清单上传"
@@ -93,7 +93,7 @@
         "完成"
       ],
       "Completed with warnings": [
-        ""
+        "完成，带有警告"
       ],
       "Configure": [
         "配置"
@@ -114,13 +114,13 @@
         "当前页"
       ],
       "Details": [
-        ""
+        "详情"
       ],
       "Disable": [
-        ""
+        "禁用"
       ],
       "Disable vulnerability analysis": [
-        ""
+        "禁用漏洞分析"
       ],
       "Disconnected hosts: ": [
         "断开连接的主机："
@@ -138,28 +138,28 @@
         "下载最新的报告"
       ],
       "Download report": [
-        ""
+        "下载报告"
       ],
       "Duration": [
-        ""
+        "持续时间"
       ],
       "Enable": [
-        ""
+        "启用"
       ],
       "Enable automatic deletion of mismatched host records from the Red Hat cloud": [
         "启用自动删除来自红帽云的主机记录"
       ],
       "Enable automatic deletion of mismatched host records from the Red Hat cloud. Ignored when using local Insights.": [
-        ""
+        "启用自动删除来自红帽云的主机记录。在使用本地 Insights 时忽略。"
       ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud": [
         "启用来自红帽云的 Insights 建议自动同步"
       ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights.": [
-        ""
+        "启用自动同步来自 Red Hat cloud 的 Insights 建议。在使用本地 Insights 时忽略。"
       ],
       "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights.": [
-        ""
+        "启用自动将主机清单上传到红帽云。在使用本地 Insights 时会忽略。"
       ],
       "Enable automatic upload of your hosts inventory to the Red Hat cloud": [
         "启用自动将主机清单上传到红帽云"
@@ -171,7 +171,7 @@
         "启用清单上传"
       ],
       "Enable vulnerability analysis": [
-        ""
+        "启用漏洞分析"
       ],
       "Encountered an error while trying to access the server:": [
         "在尝试访问服务器时遇到错误："
@@ -183,22 +183,22 @@
         "将安装的软件包上传到红帽云"
       ],
       "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights.": [
-        ""
+        "在上传到红帽云时排除安装的软件包。（如果 insights_minimal_data_collection 设置为 true，则忽略此设置，且安装的软件包始终被排除。）在使用本地 Insights 时忽略。"
       ],
       "Exit Code: %s": [
         "退出代码：%s"
       ],
       "Failed": [
-        ""
+        "失败"
       ],
       "Failed to destroy HBI host %s: %s": [
-        ""
+        "销毁 HBI 主机 %s 失败：%s"
       ],
       "Failed to fetch hosts": [
-        ""
+        "获取主机失败"
       ],
       "Failed to update vulnerability analysis status": [
-        ""
+        "更新漏洞分析状态失败"
       ],
       "Fetch Insights-related host details": [
         "获取与 Insights 相关的主机详情"
@@ -237,7 +237,7 @@
         "生成报告，但不上传"
       ],
       "Generated": [
-        ""
+        "生成"
       ],
       "Generating": [
         "生成中"
@@ -264,7 +264,7 @@
         "主机 Insights 建议"
       ],
       "Host inventory report job": [
-        ""
+        "主机清单报告作业"
       ],
       "Host was not uploaded to your RH cloud inventory": [
         "主机没有上传到您的 RH 云清单"
@@ -288,7 +288,7 @@
         "Insights"
       ],
       "Invalid response from server": [
-        ""
+        "来自服务器的无效响应"
       ],
       "Inventory": [
         "清单"
@@ -327,7 +327,7 @@
         "低"
       ],
       "Manage vulnerability analysis": [
-        ""
+        "管理漏洞分析"
       ],
       "Manual": [
         "手册"
@@ -336,7 +336,7 @@
         "最小数据收集"
       ],
       "Missing Insights facets created: %s": [
-        ""
+        "缺失创建的 Insights 情况：%s"
       ],
       "Moderate": [
         "中等"
@@ -345,7 +345,7 @@
         "如需更多详细信息，请参阅"
       ],
       "N/A": [
-        ""
+        "不适用"
       ],
       "Next run: ": [
         "下一次运行 ："
@@ -354,31 +354,31 @@
         "否"
       ],
       "No account data available.": [
-        ""
+        "没有可用的帐户数据。"
       ],
       "No recent tasks": [
-        ""
+        "没有最近的任务"
       ],
       "No recommendations were found for this host!": [
         "没有找到此主机的建议！"
       ],
       "No report generation tasks have been run yet.": [
-        ""
+        "还没有运行报告生成任务。"
       ],
       "No results found": [
         "没有找到结果"
       ],
       "No task history": [
-        ""
+        "没有任务历史记录"
       ],
       "No task was found": [
         "没有找到任务"
       ],
       "No tasks have been run yet.": [
-        ""
+        "还没有运行任何任务。"
       ],
       "None of the selected hosts are registered": [
-        ""
+        "所选主机都没有注册"
       ],
       "Not reporting": [
         "未报告"
@@ -402,16 +402,16 @@
         "发送到红帽云的模糊主机名"
       ],
       "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights.": [
-        ""
+        "将发送到红帽云的主机名进行模糊化处理。（如果 insights_minimal_data_collection 设置为 true，则忽略此设置，因为报告中不包含主机名。）在使用本地 Insights 时忽略。"
       ],
       "Obfuscate ipv4 addresses sent to the Red Hat cloud": [
         "发送到红帽云的模糊 ipv4 地址"
       ],
       "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.) Ignored when using local Insights.": [
-        ""
+        "将发送到红帽云的 ipv4 地址进行模糊化处理。（如果 insights_minimal_data_collection 设置为 true，则忽略此设置，因为报告中不包含 ipv4 地址。）在使用本地 Insights 时忽略。"
       ],
       "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights.": [
-        ""
+        "在将数据上传到红帽云时在清单报告中包括最少需要的数据。当这是 true 时，无论 exclude_installed_packages 设置是什么，安装的软件包都排除在报告中，无论模糊化设置是什么，主机名和 IPv4 地址都不包括在报告中。在使用本地 Insights 时忽略。"
       ],
       "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled": [
         "仅将最低所需的数据发送到红帽云，禁用模糊设置"
@@ -426,19 +426,19 @@
         "分页"
       ],
       "Paused": [
-        ""
+        "暂停"
       ],
       "Playbook": [
         "运行 playbook"
       ],
       "Previous tasks will appear here.": [
-        ""
+        "此处将显示前面的任务。"
       ],
       "RH Cloud": [
         "RH Cloud"
       ],
       "RHC daemon id. Ignored when using local Insights.": [
-        ""
+        "RHC 守护进程 ID。在使用本地 Insights 时忽略。"
       ],
       "Read more about it in RH cloud insights": [
         "在 RH Cloud insights 中了解更多有关它的信息"
@@ -489,16 +489,16 @@
         "补救概述"
       ],
       "Report Generation": [
-        ""
+        "报告生成"
       ],
       "Report generation and upload started": [
-        ""
+        "报告生成和上传已开始"
       ],
       "Report generation started": [
-        ""
+        "报告生成开始"
       ],
       "Report saved to": [
-        ""
+        "报告保持到"
       ],
       "Reporting": [
         "报告"
@@ -516,7 +516,7 @@
         "运行 Insights 生成的补救 playbook"
       ],
       "Running": [
-        ""
+        "執行中"
       ],
       "Satellite server has %{hits_count} recommendations by Red Hat": [
         "Satellite 服务器有 %{hits_count} 个红帽提供的建议"
@@ -537,7 +537,7 @@
         "设置"
       ],
       "Should import include parameter tags from Foreman? Ignored when using local Insights.": [
-        ""
+        "是否应该导入 Foreman 中的 include 参数标签？在使用本地 Insights 时忽略。"
       ],
       "Show Advanced Settings": [
         "显示高级设置"
@@ -546,10 +546,10 @@
         "显示系统是否被配置为使用本地 iop-advisor-engine。"
       ],
       "Single-host report job": [
-        ""
+        "单主机报告作业"
       ],
       "Single-host report job for host %s": [
-        ""
+        "主机 %s 的单主机报告作业"
       ],
       "Start inventory synchronization": [
         "启动清单同步"
@@ -558,13 +558,13 @@
         "开始报告生成"
       ],
       "Started": [
-        ""
+        "已启动"
       ],
       "Stopped": [
-        ""
+        "停止"
       ],
       "Success": [
-        ""
+        "成功"
       ],
       "Successfully synced hosts: ": [
         "成功同步的主机："
@@ -603,7 +603,7 @@
         "没有适用于您的主机的建议"
       ],
       "There were no missing Insights facets": [
-        ""
+        "没有缺失的 Insights 情况"
       ],
       "This action will also enable automatic reports upload": [
         "此操作还会启用自动报告上传"
@@ -624,7 +624,7 @@
         "总风险"
       ],
       "Unknown": [
-        ""
+        "未知"
       ],
       "Upload hits from iop-advisor-engine": [
         "从 iop-advisor-engine 上传 hits"
@@ -633,13 +633,13 @@
         "上传 hits 信息"
       ],
       "Upload is disabled because subscription connection is not enabled. Enable it in Administer > Settings > Content.": [
-        ""
+        "上传被禁用，因为订阅连接没有启用。通过 Administer > Settings > Content 启用。"
       ],
       "Upload rules related to the hits": [
         "上传与 hits 相关的 rule"
       ],
       "Uploaded": [
-        ""
+        "已上传"
       ],
       "Uploading": [
         "上载中"
@@ -654,10 +654,10 @@
         "禁用 Red Hat Insights"
       ],
       "View task": [
-        ""
+        "查看任务"
       ],
       "View task details": [
-        ""
+        "查看任务详情"
       ],
       "Vulnerabilities": [
         "安全漏洞"
@@ -666,22 +666,22 @@
         "安全漏洞"
       ],
       "Vulnerability analysis disabled": [
-        ""
+        "禁用漏洞分析"
       ],
       "Vulnerability analysis enabled": [
-        ""
+        "启用漏洞分析"
       ],
       "Wait and %s": [
         "等待和 %s"
       ],
       "Warning": [
-        ""
+        "警告"
       ],
       "Whether the resolution requires reboot": [
         "resolution 是否需要重启"
       ],
       "You do not have permission to perform this action": [
-        ""
+        "您没有执行此操作的权限"
       ],
       "category name": [
         "类别名称"

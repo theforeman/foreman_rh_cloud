@@ -3,10 +3,10 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 13.2.0",
+        "Project-Id-Version": "foreman_rh_cloud 14.0.2",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
-        "Last-Translator": "Ondřej Gajdušek, 2025",
+        "Last-Translator": "Ondřej Gajdušek, 2026",
         "Language-Team": "Japanese (https://app.transifex.com/foreman/teams/114/ja/)",
         "MIME-Version": "1.0",
         "Content-Type": "text/plain; charset=UTF-8",
@@ -24,7 +24,7 @@
         "組織 %s 件"
       ],
       "A specific organization must be selected from the organization context.": [
-        ""
+        "組織コンテキストから、特定の組織を選択する必要があります。"
       ],
       "About subscription watch": [
         "Subscription Watch の概要"
@@ -39,7 +39,7 @@
         "すべての推奨事項が選択されました。"
       ],
       "Analysis disabled": [
-        ""
+        "分析の無効化"
       ],
       "Analytics data collection": [
         "分析データの収集"
@@ -51,7 +51,7 @@
         "Insights の推奨事項の適用"
       ],
       "Attempted to destroy HBI host %s, but host does not exist in HBI": [
-        ""
+        "HBI ホスト %s の破棄を試みますが、ホストは HBI に存在しません"
       ],
       "Automatic inventory upload": [
         "自動インベントリーアップロード"
@@ -81,19 +81,19 @@
         "Cloud Connector のジョブリンク"
       ],
       "Cloud connector setup has failed: ": [
-        "Cloud Connector の設定に失敗しました:"
+        "Cloud Connector の設定に失敗しました: "
       ],
       "Cloud connector setup has started: ": [
-        "Cloud Connector の設定が開始しました:"
+        "Cloud Connector の設定が開始しました: "
       ],
       "Cloud connector setup is in progress now: ": [
-        "Cloud Connector の設定が進行中です:"
+        "Cloud Connector の設定が進行中です: "
       ],
       "Completed": [
         "完了"
       ],
       "Completed with warnings": [
-        ""
+        "警告で完了"
       ],
       "Configure": [
         "設定"
@@ -114,13 +114,13 @@
         "現在のページ"
       ],
       "Details": [
-        ""
+        "詳細"
       ],
       "Disable": [
-        ""
+        "無効化"
       ],
       "Disable vulnerability analysis": [
-        ""
+        "脆弱性分析の無効化"
       ],
       "Disconnected hosts: ": [
         "非接続ホスト: "
@@ -138,28 +138,28 @@
         "最新レポートのダウンロード"
       ],
       "Download report": [
-        ""
+        "レポートのダウンロード"
       ],
       "Duration": [
-        ""
+        "期間"
       ],
       "Enable": [
-        ""
+        "有効化"
       ],
       "Enable automatic deletion of mismatched host records from the Red Hat cloud": [
         "不一致のホストレコードを Red Hat クラウドから自動的に削除できるようにする"
       ],
       "Enable automatic deletion of mismatched host records from the Red Hat cloud. Ignored when using local Insights.": [
-        ""
+        "Red Hat クラウドからの一致しないホストレコードの自動削除を有効にします。ローカルの Insights を使用している場合は無視されます。"
       ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud": [
         "Red Hat クラウドから Insights の推奨事項の自動同期を有効にする"
       ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights.": [
-        ""
+        "Red Hat クラウドの Insights 推奨事項の自動同期を有効にします。ローカルの Insights を使用している場合は無視されます。"
       ],
       "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights.": [
-        ""
+        "ホストインベントリーの Red Hat クラウドへの自動アップロードを有効にします。ローカルの Insights を使用している場合は無視されます。"
       ],
       "Enable automatic upload of your hosts inventory to the Red Hat cloud": [
         "ホストインベントリーの Red Hat クラウドに対して自動アップロードを有効にする"
@@ -171,7 +171,7 @@
         "インベントリーアップロードの有効化"
       ],
       "Enable vulnerability analysis": [
-        ""
+        "脆弱性分析の有効化"
       ],
       "Encountered an error while trying to access the server:": [
         "サーバーへのアクセス時にエラーが発生しました:"
@@ -183,22 +183,22 @@
         "Red Hat クラウドにアップロードされないようにインストール済みパッケージを除外する"
       ],
       "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights.": [
-        ""
+        "インストール済みパッケージをRed Hatクラウドへのアップロード対象から除外します。(insights_minimal_data_collection が true に設定されている場合、インストール済みパッケージは常に除外されるため、この設定は無視されます。) ローカルの Insights を使用している場合は無視されます。"
       ],
       "Exit Code: %s": [
         "終了コード: %s"
       ],
       "Failed": [
-        ""
+        "失敗"
       ],
       "Failed to destroy HBI host %s: %s": [
-        ""
+        "HBI ホスト %s を破棄できませんでした: %s"
       ],
       "Failed to fetch hosts": [
-        ""
+        "ホストを取得できませんでした"
       ],
       "Failed to update vulnerability analysis status": [
-        ""
+        "脆弱性分析ステータスの更新に失敗しました"
       ],
       "Fetch Insights-related host details": [
         "Insights 関連のホスト詳細を取得する"
@@ -213,7 +213,7 @@
         "ホストの修正"
       ],
       "For more info, please visit the": [
-        "詳細は、以下を参照してください。"
+        "詳細は、以下を参照してください"
       ],
       "For more information about Insights and Cloud Connector, see:": [
         "Insights と Cloud Connector の詳細は、以下を参照してください。"
@@ -231,13 +231,13 @@
         "レポートの生成およびアップロード"
       ],
       "Generate report": [
-        "レポートを生成します。"
+        "レポートの生成"
       ],
       "Generate the report, but do not upload": [
         "レポートを生成するがアップロードしない"
       ],
       "Generated": [
-        ""
+        "生成済み"
       ],
       "Generating": [
         "生成中"
@@ -264,7 +264,7 @@
         "ホストに関する Insights の推奨事項"
       ],
       "Host inventory report job": [
-        ""
+        "ホストインベントリーレポートジョブ"
       ],
       "Host was not uploaded to your RH cloud inventory": [
         "ホストが RH クラウドインベントリーにアップロードされませんでした"
@@ -273,7 +273,7 @@
         "ホスト名"
       ],
       "Hosts with subscription in organization: ": [
-        "組織のサブスクリプションが割り当てられたホスト:"
+        "組織のサブスクリプションが割り当てられたホスト: "
       ],
       "ID of the RHC(Yggdrasil) daemon": [
         "RHC (Yggdrasil) デーモンの ID"
@@ -288,7 +288,7 @@
         "Insights"
       ],
       "Invalid response from server": [
-        ""
+        "サーバーからの無効な応答"
       ],
       "Inventory": [
         "インベントリー"
@@ -300,7 +300,7 @@
         "インベントリーのアップロード"
       ],
       "Inventory sync has failed: ": [
-        "インベントリーの同期に失敗しました:"
+        "インベントリーの同期に失敗しました: "
       ],
       "Inventory sync has started:": [
         "インベントリーの同期が開始されました:"
@@ -327,7 +327,7 @@
         "低"
       ],
       "Manage vulnerability analysis": [
-        ""
+        "脆弱性分析の管理"
       ],
       "Manual": [
         "手動"
@@ -336,7 +336,7 @@
         "最小限のデータ収集"
       ],
       "Missing Insights facets created: %s": [
-        ""
+        "作成された Insights ファセットがありません: %s"
       ],
       "Moderate": [
         "中"
@@ -345,7 +345,7 @@
         "詳細は、以下を参照してください: "
       ],
       "N/A": [
-        ""
+        "N/A"
       ],
       "Next run: ": [
         "次の実行: "
@@ -354,31 +354,31 @@
         "いいえ"
       ],
       "No account data available.": [
-        ""
+        "利用可能なアカウントデータがありません。"
       ],
       "No recent tasks": [
-        ""
+        "最近のタスクなし"
       ],
       "No recommendations were found for this host!": [
         "このホストに関する推奨事項は見つかりませんでした。"
       ],
       "No report generation tasks have been run yet.": [
-        ""
+        "レポート生成タスクはまだ実行されていません。"
       ],
       "No results found": [
         "結果は見つかりませんでした"
       ],
       "No task history": [
-        ""
+        "タスク履歴なし"
       ],
       "No task was found": [
         "タスクが見つかりませんでした"
       ],
       "No tasks have been run yet.": [
-        ""
+        "実行されたタスクはまだありません。"
       ],
       "None of the selected hosts are registered": [
-        ""
+        "選択したホストが登録されていません"
       ],
       "Not reporting": [
         "報告なし"
@@ -402,16 +402,16 @@
         "Red Hat クラウドに送信するホスト名を難読化する"
       ],
       "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights.": [
-        ""
+        "Red Hat クラウドに送信されるホスト名を難読化します。(insights_minimal_data_collection が true に設定されている場合、レポートにホスト名が含まれないため、この設定は無視されます。) ローカルの Insights を使用している場合は無視されます。"
       ],
       "Obfuscate ipv4 addresses sent to the Red Hat cloud": [
         "Red Hat クラウドに送信する ipv4 アドレスを難読化する"
       ],
       "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal_data_collection is set to true, this setting is ignored because host IPv4 addresses are not included in the report.) Ignored when using local Insights.": [
-        ""
+        "Red Hat クラウドに送信される ipv4 アドレスを難読化します。(insights_minimal_data_collection が true に設定されている場合、レポートにホスト IPv4 アドレスが含まれないため、この設定は無視されます。) ローカルの Insights を使用している場合は無視されます。"
       ],
       "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights.": [
-        ""
+        "Red Hat クラウドにアップロードするインベントリレポートに、必要最小限のデータのみを含めます。これが true の場合、exclude_installed_packages の設定に関わらずインストール済みパッケージはレポートから除外され、難読化の設定に関わらずホスト名と IPv4 アドレスもレポートから除外されます。ローカルの Insights を使用している場合は無視されます。"
       ],
       "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled": [
         "必要最小限のデータのみを Red Hat クラウドに送信します。難読化設定は無効化されます"
@@ -426,19 +426,19 @@
         "ページ付け"
       ],
       "Paused": [
-        ""
+        "一時停止中"
       ],
       "Playbook": [
         "Playbook"
       ],
       "Previous tasks will appear here.": [
-        ""
+        "以前のタスクがここに表示されます。"
       ],
       "RH Cloud": [
         "RH Cloud"
       ],
       "RHC daemon id. Ignored when using local Insights.": [
-        ""
+        "RHC デーモン ID。ローカルの Insights を使用している場合は無視されます。"
       ],
       "Read more about it in RH cloud insights": [
         "詳細は、RH cloud insights を参照してください。"
@@ -489,16 +489,16 @@
         "修復の概要"
       ],
       "Report Generation": [
-        ""
+        "レポート生成"
       ],
       "Report generation and upload started": [
-        ""
+        "レポート生成とアップロードが開始される"
       ],
       "Report generation started": [
-        ""
+        "レポート生成が開始される"
       ],
       "Report saved to": [
-        ""
+        "レポートの保存先: "
       ],
       "Reporting": [
         "レポート"
@@ -516,7 +516,7 @@
         "Insights で生成された修復 Playbook の実行"
       ],
       "Running": [
-        ""
+        "実行中"
       ],
       "Satellite server has %{hits_count} recommendations by Red Hat": [
         "Satellite Server には、Red Hat からの推奨事項が %{hits_count} 件あります。"
@@ -537,7 +537,7 @@
         "設定"
       ],
       "Should import include parameter tags from Foreman? Ignored when using local Insights.": [
-        ""
+        "インポートには Foreman からのパラメータータグを含める必要がありますか? ローカルの Insights を使用している場合は無視されます。"
       ],
       "Show Advanced Settings": [
         "詳細設定の表示"
@@ -546,10 +546,10 @@
         "システムがローカル iop-advisor-engine を使用するように設定されているかどうかを表示します。"
       ],
       "Single-host report job": [
-        ""
+        "単一ホストレポートジョブ"
       ],
       "Single-host report job for host %s": [
-        ""
+        "ホスト %s の単一ホストレポートジョブ"
       ],
       "Start inventory synchronization": [
         "インベントリー同期の開始"
@@ -558,16 +558,16 @@
         "レポート生成の開始"
       ],
       "Started": [
-        ""
+        "開始済み"
       ],
       "Stopped": [
-        ""
+        "停止"
       ],
       "Success": [
-        ""
+        "成功"
       ],
       "Successfully synced hosts: ": [
-        "ホストが正常に同期されました:"
+        "ホストが正常に同期されました: "
       ],
       "Successfully uploaded to your RH cloud inventory": [
         "RH クラウドインベントリーへのアップロードに成功しました"
@@ -603,7 +603,7 @@
         "ホストに関する推奨事項はありません"
       ],
       "There were no missing Insights facets": [
-        ""
+        "不足している Insights のファセットはありませんでした。"
       ],
       "This action will also enable automatic reports upload": [
         "このアクションを実行すると、自動レポートのアップロードも有効になります。"
@@ -624,7 +624,7 @@
         "リスクの総数"
       ],
       "Unknown": [
-        ""
+        "不明"
       ],
       "Upload hits from iop-advisor-engine": [
         "iop-advisor-engine からの検索結果をアップロードする"
@@ -633,13 +633,13 @@
         "検索結果の情報をアップロードする"
       ],
       "Upload is disabled because subscription connection is not enabled. Enable it in Administer > Settings > Content.": [
-        ""
+        "サブスクリプション接続が有効になっていないため、アップロードは無効になっています。管理 > 設定 > コンテンツ で有効にします。"
       ],
       "Upload rules related to the hits": [
         "検索結果に関するアップロードルール"
       ],
       "Uploaded": [
-        ""
+        "アップロード済み"
       ],
       "Uploading": [
         "アップロード中..."
@@ -654,10 +654,10 @@
         "Red Hat Insights での表示"
       ],
       "View task": [
-        ""
+        "タスクの表示"
       ],
       "View task details": [
-        ""
+        "タスクの詳細を表示する"
       ],
       "Vulnerabilities": [
         "脆弱性"
@@ -666,22 +666,22 @@
         "脆弱性"
       ],
       "Vulnerability analysis disabled": [
-        ""
+        "脆弱性分析の無効化"
       ],
       "Vulnerability analysis enabled": [
-        ""
+        "脆弱性分析の有効化"
       ],
       "Wait and %s": [
         "待機して %s"
       ],
       "Warning": [
-        ""
+        "警告"
       ],
       "Whether the resolution requires reboot": [
         "解決策には再起動が必要かどうか"
       ],
       "You do not have permission to perform this action": [
-        ""
+        "このアクションを実行するパーミッションがありません"
       ],
       "category name": [
         "カテゴリー名"
