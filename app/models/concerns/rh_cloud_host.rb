@@ -46,21 +46,19 @@ module RhCloudHost
   module ClassMethods
     def search_by_insights_uuid(_key, operator, value)
       # Determine which facet table to search based on IoP mode
-      facet_table = ForemanRhCloud.with_iop_smart_proxy? ? 'katello_subscription_facets' : 'insights_facets'
+      facet_table = ForemanRhCloud.with_iop_smart_proxy? ? Katello::Host::SubscriptionFacet.table_name : InsightsFacet.table_name
 
       # Build SQL condition
       if ['IN', 'NOT IN'].include?(operator)
-        # For IN/NOT IN, value_to_sql returns a string - we need to parse it into array
-        sql_value = value_to_sql(operator, value)
-        # Parse comma-separated values and create proper IN clause
-        # Example: "katello_subscription_facets.uuid IN (?,?,?)" with values ['uuid-1', 'uuid-2', 'uuid-3']
-        values = sql_value.to_s.split(',').map(&:strip)
-        placeholders = values.map { '?' }.join(',')
+        # For IN/NOT IN, value may be an array or comma-separated string
+        # Convert to array and build placeholders for each value
+        values = value.is_a?(Array) ? value : value.to_s.split(',').map(&:strip)
+        placeholders = (['?'] * values.size).join(',')
         condition = sanitize_sql_for_conditions(
           ["#{facet_table}.uuid #{operator} (#{placeholders})", *values]
         )
       else
-        # For other operators (=, LIKE, etc.), value_to_sql handles it correctly
+        # For other operators (=, !=, LIKE, etc.), use value_to_sql for proper SQL formatting
         condition = sanitize_sql_for_conditions(
           ["#{facet_table}.uuid #{operator} ?", value_to_sql(operator, value)]
         )
@@ -68,7 +66,7 @@ module RhCloudHost
 
       # Return search parameters with LEFT JOIN to include hosts without facets
       {
-        joins: "LEFT JOIN #{facet_table} ON #{facet_table}.host_id = hosts.id",
+        joins: "LEFT JOIN #{facet_table} ON #{facet_table}.host_id = #{Host::Managed.table_name}.id",
         conditions: condition,
       }
     end
