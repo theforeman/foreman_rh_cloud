@@ -33,7 +33,17 @@ const NewHostDetailsTab = ({ hostName, router }) => {
   const hits = useSelector(selectHits);
   const isIop = useIopConfig();
 
-  useEffect(() => () => router.replace({ search: null }), [router]);
+  useEffect(
+    () => () => {
+      // Preserve hash when clearing search params to prevent tab navigation bugs
+      const replaceOptions = { search: null };
+      if (router.location?.hash) {
+        replaceOptions.hash = router.location.hash;
+      }
+      router.replace(replaceOptions);
+    },
+    [router]
+  );
 
   const onSearch = q => dispatch(fetchInsights({ query: q, page: 1 }));
 
