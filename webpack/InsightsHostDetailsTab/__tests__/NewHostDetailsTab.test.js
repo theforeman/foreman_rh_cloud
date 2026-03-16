@@ -109,5 +109,27 @@ describe('NewHostDetailsTab', () => {
         search: null,
       });
     });
+
+    it('should use the latest hash value at unmount time, not a stale captured value', () => {
+      const { unmount } = render(
+        <Provider store={store}>
+          <NewHostDetailsTab
+            hostName="test-host.example.com"
+            router={mockRouter}
+          />
+        </Provider>
+      );
+
+      // Change the hash after mount, before unmount
+      mockRouter.location.hash = '#/Overview';
+
+      unmount();
+
+      // Verify router.replace was called with the UPDATED hash, not the initial '#/Insights'
+      expect(mockRouter.replace).toHaveBeenCalledWith({
+        search: null,
+        hash: '#/Overview',
+      });
+    });
   });
 });
