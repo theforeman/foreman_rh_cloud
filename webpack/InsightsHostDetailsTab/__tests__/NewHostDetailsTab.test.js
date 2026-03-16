@@ -21,15 +21,6 @@ describe('NewHostDetailsTab', () => {
   let mockRouter;
 
   beforeEach(() => {
-    store = mockStore({
-      insightsHostDetailsTab: {
-        query: '',
-        hits: [],
-        selectedIds: {},
-        error: null,
-      },
-    });
-
     mockRouter = {
       push: jest.fn(),
       replace: jest.fn(),
@@ -37,8 +28,36 @@ describe('NewHostDetailsTab', () => {
         pathname: '/new/hosts/test-host.example.com',
         search: '?page=1&per_page=20',
         hash: '#/Insights',
+        query: { page: '1', per_page: '20' },
       },
     };
+
+    store = mockStore({
+      API: {},
+      ForemanRhCloud: {
+        InsightsCloudSync: {
+          table: {
+            selectedIds: {},
+            isAllSelected: false,
+            showSelectAllAlert: false,
+          },
+        },
+      },
+      insightsHostDetailsTab: {
+        query: '',
+        hits: [],
+        selectedIds: {},
+        error: null,
+      },
+      router: {
+        location: {
+          pathname: '/new/hosts/test-host.example.com',
+          search: '?page=1&per_page=20',
+          hash: '#/Insights',
+          query: { page: '1', per_page: '20' },
+        },
+      },
+    });
   });
 
   afterEach(() => {
