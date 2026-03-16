@@ -33,13 +33,28 @@ const NewHostDetailsTab = ({ hostName, router }) => {
   const hits = useSelector(selectHits);
   const isIop = useIopConfig();
 
-  useEffect(() => () => router.replace({ search: null }), [router]);
+  useEffect(
+    () => () => {
+      // Preserve hash when clearing search params to prevent tab navigation bugs
+      if (router && typeof router.replace === 'function') {
+        const replaceOptions = { search: null };
+        if (router.location && router.location.hash) {
+          replaceOptions.hash = router.location.hash;
+        }
+        router.replace(replaceOptions);
+      }
+    },
+    [router]
+  );
 
   const onSearch = q => dispatch(fetchInsights({ query: q, page: 1 }));
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const onSatInsightsClick = () =>
-    router.push({ pathname: '/foreman_rh_cloud/insights_cloud' });
+  const onSatInsightsClick = () => {
+    if (router && typeof router.push === 'function') {
+      router.push({ pathname: '/foreman_rh_cloud/insights_cloud' });
+    }
+  };
 
   const dropdownItems = [
     <DropdownItem key="insights-link" ouiaId="insights-link">
