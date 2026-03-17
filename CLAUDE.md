@@ -420,14 +420,15 @@ When testing changes that affect Katello integration:
 
 ## Contributing & Pull Requests
 
-**IMPORTANT**: When creating pull requests, target your personal fork, NOT the upstream repository.
+**IMPORTANT**: Follow the standard open source workflow. Create PRs from your fork to upstream.
 
 ### GitHub Workflow:
 1. Fork `theforeman/foreman_rh_cloud` to your account (e.g., `yourname/foreman_rh_cloud`)
 2. Create feature branch in your fork
 3. Make changes and commit
-4. **Create PR against your fork** (e.g., `yourname/foreman_rh_cloud`)
-5. Do NOT create PRs directly against `theforeman/foreman_rh_cloud`
+4. Push branch to your fork
+5. **Create PR from your fork branch to upstream** (e.g., `yourname/foreman_rh_cloud:feature-branch` → `theforeman/foreman_rh_cloud:develop`)
+6. Do NOT push branches directly to `theforeman/foreman_rh_cloud` and create PRs between branches there
 
 ### Before Submitting PR:
 ```bash
