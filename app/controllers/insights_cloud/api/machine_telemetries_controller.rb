@@ -118,10 +118,13 @@ module InsightsCloud::Api
     end
 
     def update_host_insights_status
+      logger.info("update_host_insights_status called - @host: #{@host&.name}, upload_success?: #{upload_success?}, request.path: #{request.path}, @cloud_response.code: #{@cloud_response&.code}")
       return unless upload_success?
+      logger.info("Updating insights status for host #{@host.name}")
       # create insights status if it wasn't there in the first place and refresh its reporting date
       @host.get_status(InsightsClientReportStatus).refresh!
       @host.refresh_global_status!
+      logger.info("Insights status updated for host #{@host.name}")
     end
 
     def update_host_facet
@@ -136,9 +139,11 @@ module InsightsCloud::Api
     end
 
     def upload_success?
-      @cloud_response&.code&.to_s&.start_with?('2') &&
+      result = @cloud_response&.code&.to_s&.start_with?('2') &&
         (request.path == '/redhat_access/r/insights/platform/ingress/v1/upload' ||
           request.path.include?('/redhat_access/r/insights/uploads/'))
+      logger.info("upload_success? result: #{result}, @cloud_response present: #{@cloud_response.present?}, code: #{@cloud_response&.code}, path: #{request.path}")
+      result
     end
   end
 end
