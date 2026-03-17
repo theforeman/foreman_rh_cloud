@@ -128,17 +128,32 @@ NewHostDetailsTab.defaultProps = {
 const scope = 'advisor';
 const module = './SystemDetailWrapped';
 
-const IopInsightsTab = props => (
-  <div className="advisor">
-    <ScalprumComponent
-      scope={scope}
-      module={module}
-      IopRemediationModal={RemediationModal}
-      generateRuleUrl={generateRuleUrl}
-      {...props}
-    />
-  </div>
-);
+const IopInsightsTab = props => {
+  // eslint-disable-next-line camelcase
+  const systemId = props.response?.subscription_facet_attributes?.uuid;
+  return (
+    <div className="advisor">
+      <ScalprumComponent
+        key={systemId || props.hostName}
+        scope={scope}
+        module={module}
+        IopRemediationModal={RemediationModal}
+        generateRuleUrl={generateRuleUrl}
+        {...props}
+      />
+    </div>
+  );
+};
+
+IopInsightsTab.propTypes = {
+  hostName: PropTypes.string,
+  response: PropTypes.object,
+};
+
+IopInsightsTab.defaultProps = {
+  hostName: '',
+  response: {},
+};
 
 const IopInsightsTabWrapped = props => {
   const permissions = useInsightsPermissions();
