@@ -161,7 +161,7 @@ class VmaasReposcanSyncTest < ActiveSupport::TestCase
     task = ForemanTasks.sync_task(InsightsCloud::Async::VmaasReposcanSync, @repo_payload)
 
     assert_equal 'VMaaS reposcan sync skipped: another sync already in progress (429)',
-                 task.output[:message]
+      task.output[:message]
   end
 
   test 'run handles non-429 errors with error log level' do
@@ -181,6 +181,6 @@ class VmaasReposcanSyncTest < ActiveSupport::TestCase
     task = ForemanTasks.sync_task(InsightsCloud::Async::VmaasReposcanSync, @repo_payload)
 
     assert_equal 'VMaaS reposcan sync failed: 500 - Internal Server Error',
-                 task.output[:message]
+      task.output[:message]
   end
 end
