@@ -120,6 +120,10 @@ class VmaasReposcanSyncTest < ActiveSupport::TestCase
   end
 
   test 'run sets error message in task output for StandardError exception' do
+    mock_logger = mock('logger')
+    mock_logger.expects(:error).with('Error triggering VMaaS reposcan sync: Network timeout')
+    InsightsCloud::Async::VmaasReposcanSync.any_instance.stubs(:logger).returns(mock_logger)
+
     InsightsCloud::Async::VmaasReposcanSync.any_instance
                                            .stubs(:execute_cloud_request)
                                            .raises(StandardError.new('Network timeout'))
@@ -182,5 +186,22 @@ class VmaasReposcanSyncTest < ActiveSupport::TestCase
 
     assert_equal 'VMaaS reposcan sync failed: 500 - Internal Server Error',
       task.output[:message]
+  end
+
+  test 'run handles RestClient::ExceptionWithResponse with nil response' do
+    exception = RestClient::ExceptionWithResponse.new(nil)
+
+    mock_logger = mock('logger')
+    mock_logger.expects(:error).with('VMaaS reposcan sync failed:  - ')
+    InsightsCloud::Async::VmaasReposcanSync.any_instance.stubs(:logger).returns(mock_logger)
+
+    InsightsCloud::Async::VmaasReposcanSync.any_instance
+                                           .stubs(:execute_cloud_request)
+                                           .raises(exception)
+
+    task = ForemanTasks.sync_task(InsightsCloud::Async::VmaasReposcanSync, @repo_payload)
+
+    refute_nil task.output[:message]
+    assert_equal 'VMaaS reposcan sync failed:  - ', task.output[:message]
   end
 end

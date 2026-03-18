@@ -6,6 +6,8 @@ module InsightsCloud
     class VmaasReposcanSync < ::Actions::EntryAction
       include ::ForemanRhCloud::CertAuth
 
+      HTTP_TOO_MANY_REQUESTS = 429
+
       # Subscribe to Katello repository sync hook action, if available
       def self.subscribe
         'Actions::Katello::Repository::SyncHook'.constantize
@@ -49,20 +51,9 @@ module InsightsCloud
 
         response
       rescue RestClient::ExceptionWithResponse => e
-        if e.response&.code == 429
-          message = "VMaaS reposcan sync skipped: another sync already in progress (429)"
-          logger.warn(message)
-        else
-          message = "VMaaS reposcan sync failed: #{e.response&.code} - #{e.response&.body}"
-          logger.error(message)
-        end
-        output[:message] = message
-        # Do NOT raise - let rescue_strategy_for_self Skip handle this
+        handle_rest_client_error(e)
       rescue StandardError => e
-        message = "Error triggering VMaaS reposcan sync: #{e.message}"
-        logger.error(message)
-        output[:message] = message
-        # Do NOT raise - let rescue_strategy_for_self Skip handle this
+        handle_standard_error(e)
       end
 
       def rescue_strategy_for_self
@@ -74,6 +65,25 @@ module InsightsCloud
       end
 
       private
+
+      def handle_rest_client_error(exception)
+        if exception.response&.code == HTTP_TOO_MANY_REQUESTS
+          message = "VMaaS reposcan sync skipped: another sync already in progress (#{HTTP_TOO_MANY_REQUESTS})"
+          logger.warn(message)
+        else
+          message = "VMaaS reposcan sync failed: #{exception.response&.code} - #{exception.response&.body}"
+          logger.error(message)
+        end
+        output[:message] = message
+        # Do NOT raise - let rescue_strategy_for_self Skip handle this
+      end
+
+      def handle_standard_error(exception)
+        message = "Error triggering VMaaS reposcan sync: #{exception.message}"
+        logger.error(message)
+        output[:message] = message
+        # Do NOT raise - let rescue_strategy_for_self Skip handle this
+      end
 
       def logger
         action_logger
