@@ -49,15 +49,20 @@ module InsightsCloud
 
         response
       rescue RestClient::ExceptionWithResponse => e
-        message = "VMaaS reposcan sync failed: #{e.response&.code} - #{e.response&.body}"
-        logger.error(message)
+        if e.response&.code == 429
+          message = "VMaaS reposcan sync skipped: another sync already in progress (429)"
+          logger.warn(message)
+        else
+          message = "VMaaS reposcan sync failed: #{e.response&.code} - #{e.response&.body}"
+          logger.error(message)
+        end
         output[:message] = message
-        raise
+        # Do NOT raise - let rescue_strategy_for_self Skip handle this
       rescue StandardError => e
-        message = "Error triggering VMaaS reposcan sync: #{e.message}, response: #{e.respond_to?(:response) ? e.response : nil}"
+        message = "Error triggering VMaaS reposcan sync: #{e.message}"
         logger.error(message)
         output[:message] = message
-        raise
+        # Do NOT raise - let rescue_strategy_for_self Skip handle this
       end
 
       def rescue_strategy_for_self
