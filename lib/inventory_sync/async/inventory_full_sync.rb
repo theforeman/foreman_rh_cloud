@@ -15,16 +15,22 @@ module InventorySync
 
       def setup_statuses
         @subscribed_hosts_ids = Set.new(affected_host_ids)
+        @omitted_ids = Set.new(user_omitted_host_ids)
 
         InventorySync::InventoryStatus.transaction do
           InventorySync::InventoryStatus.where(host_id: @subscribed_hosts_ids).delete_all
           yield
-          add_missing_hosts_statuses(@subscribed_hosts_ids)
+          add_missing_hosts_statuses(@subscribed_hosts_ids) # any remaining hosts after yield are disconnected
+          add_user_omitted_host_statuses(@omitted_ids)
           host_statuses[:disconnect] += @subscribed_hosts_ids.size
+          logger.debug("Disconnected hosts: #{@subscribed_hosts_ids.map { |id| Host.find(id).name }}")
+          host_statuses[:user_omitted] += @omitted_ids.size
+          logger.debug("User-omitted hosts: #{@omitted_ids.map { |id| Host.find(id).name }}")
         end
 
-        logger.debug("Synced hosts amount: #{host_statuses[:sync]}")
-        logger.debug("Disconnected hosts amount: #{host_statuses[:disconnect]}")
+        logger.debug("Synced hosts count: #{host_statuses[:sync]}")
+        logger.debug("Disconnected hosts count: #{host_statuses[:disconnect]}")
+        logger.debug("User-omitted hosts count: #{host_statuses[:user_omitted]}")
         output[:host_statuses] = host_statuses
       end
 
@@ -61,16 +67,37 @@ module InventorySync
         )
       end
 
+      def add_user_omitted_host_statuses(host_ids)
+        InventorySync::InventoryStatus.create(
+          host_ids.map do |host_id|
+            {
+              host_id: host_id,
+              status: InventorySync::InventoryStatus::USER_OMITTED,
+              reported_at: DateTime.current,
+            }
+          end
+        )
+      end
+
       def host_statuses
         @host_statuses ||= {
           sync: 0,
           disconnect: 0,
+          user_omitted: 0,
         }
       end
 
       def affected_host_ids
         ForemanInventoryUpload::Generators::Queries.for_slice(
           Host.unscoped.where(organization: organizations)
+        ).pluck(:id)
+      end
+
+      def user_omitted_host_ids
+        Host.unscoped.where(
+          organization: organizations
+        ).search_for(
+          "params.#{InsightsCloud.enable_client_param_inventory} = f"
         ).pluck(:id)
       end
     end

@@ -39,14 +39,14 @@ export const setupInventorySyncTaskPolling = (id, dispatch) =>
     key: INVENTORY_SYNC_TASK_UPDATE,
     onTaskSuccess: ({
       output: {
-        host_statuses: { sync, disconnect },
+        host_statuses: { sync, disconnect, user_omitted },
       },
     }) =>
       dispatch(
         addToast({
           sticky: true,
           type: 'success',
-          message: <Toast syncHosts={sync} disconnectHosts={disconnect} />,
+          message: <Toast syncHosts={sync} disconnectHosts={disconnect} userOmittedHosts={user_omitted} />,
         })
       ),
     dispatch,
