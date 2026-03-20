@@ -5,19 +5,17 @@ class VmaasReposcanSyncTest < ActiveSupport::TestCase
   include ForemanTasks::TestHelpers::WithInThreadExecutor
 
   setup do
-    @root = FactoryBot.build(:katello_root_repository, :fedora_17_x86_64_dev_root)
-    @root.save(validate: false)
-    @repo = FactoryBot.create(
-      :katello_repository,
-      :with_product,
-      distribution_family: 'Red Hat',
-      distribution_version: '7.5',
-      root: @root
-    )
+    @organization = FactoryBot.create(:organization)
+    # Create a simple repository - we only need id and organization_id for the action
+    @repo = ::Katello::Repository.new(id: 1)
+    @repo.stubs(:organization_id).returns(@organization.id)
+    ::Katello::Repository.stubs(:find).with(1).returns(@repo)
+
     @repo_payload = { id: @repo.id }
     @expected_url = 'https://example.com/api/v1/vmaas/reposcan/sync'
     InsightsCloud.stubs(:vmaas_reposcan_sync_url).returns(@expected_url)
     ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+    Organization.stubs(:find).with(@organization.id).returns(@organization)
   end
 
   # Planning behavior
@@ -78,7 +76,7 @@ class VmaasReposcanSyncTest < ActiveSupport::TestCase
         params[:url] == @expected_url &&
         params[:headers].is_a?(Hash) &&
         params[:headers]['Content-Type'] == 'application/json' &&
-        params[:organization] == @repo.organization
+        params[:organization] == @organization
     end
                                            .returns(mock_response)
 
@@ -111,37 +109,94 @@ class VmaasReposcanSyncTest < ActiveSupport::TestCase
                                            .stubs(:execute_cloud_request)
                                            .raises(exception)
 
-    error = assert_raises(ForemanTasks::TaskError) do
-      ForemanTasks.sync_task(InsightsCloud::Async::VmaasReposcanSync, @repo_payload)
-    end
+    task = ForemanTasks.sync_task(InsightsCloud::Async::VmaasReposcanSync, @repo_payload)
 
-    assert_equal 'VMaaS reposcan sync failed: 500 - Server Error', error.task.output[:message]
+    assert_equal 'VMaaS reposcan sync failed: 500 - Server Error', task.output[:message]
   end
 
   test 'run sets error message in task output for StandardError exception' do
+    mock_logger = mock('logger')
+    mock_logger.expects(:error).with('Error triggering VMaaS reposcan sync: Network timeout')
+    InsightsCloud::Async::VmaasReposcanSync.any_instance.stubs(:logger).returns(mock_logger)
+
     InsightsCloud::Async::VmaasReposcanSync.any_instance
                                            .stubs(:execute_cloud_request)
                                            .raises(StandardError.new('Network timeout'))
 
-    error = assert_raises(ForemanTasks::TaskError) do
-      ForemanTasks.sync_task(InsightsCloud::Async::VmaasReposcanSync, @repo_payload)
-    end
+    task = ForemanTasks.sync_task(InsightsCloud::Async::VmaasReposcanSync, @repo_payload)
 
-    # The task is available via main_action
-    assert_match(/Error triggering VMaaS reposcan sync: Network timeout, response: /,
-      error.task.main_action.output[:message])
+    assert_equal 'Error triggering VMaaS reposcan sync: Network timeout', task.output[:message]
   end
 
-  test 'run logs and re-raises when cloud request returns error response' do
-    error_response = mock('error_response', code: 500, body: 'error')
+  test 'run logs and handles error response without raising' do
+    error_response = mock('error_response')
+    error_response.stubs(:code).returns(500)
+    error_response.stubs(:body).returns('error')
     exception = RestClient::ExceptionWithResponse.new(error_response)
 
     InsightsCloud::Async::VmaasReposcanSync.any_instance
                                            .stubs(:execute_cloud_request)
                                            .raises(exception)
 
-    assert_raises(ForemanTasks::TaskError) do
-      ForemanTasks.sync_task(InsightsCloud::Async::VmaasReposcanSync, @repo_payload)
-    end
+    task = ForemanTasks.sync_task(InsightsCloud::Async::VmaasReposcanSync, @repo_payload)
+
+    assert_equal 'VMaaS reposcan sync failed: 500 - error', task.output[:message]
+  end
+
+  test 'run handles 429 error with warning log level' do
+    error_response = mock('error_response')
+    error_response.stubs(:code).returns(429)
+    error_response.stubs(:body).returns('{"msg": "Another task already in progress"}')
+    exception = RestClient::ExceptionWithResponse.new(error_response)
+
+    mock_logger = mock('logger')
+    mock_logger.expects(:warn).with('VMaaS reposcan sync skipped: another sync already in progress (429)')
+    InsightsCloud::Async::VmaasReposcanSync.any_instance.stubs(:logger).returns(mock_logger)
+
+    InsightsCloud::Async::VmaasReposcanSync.any_instance
+                                           .stubs(:execute_cloud_request)
+                                           .raises(exception)
+
+    task = ForemanTasks.sync_task(InsightsCloud::Async::VmaasReposcanSync, @repo_payload)
+
+    assert_equal 'VMaaS reposcan sync skipped: another sync already in progress (429)',
+      task.output[:message]
+  end
+
+  test 'run handles non-429 errors with error log level' do
+    error_response = mock('error_response')
+    error_response.stubs(:code).returns(500)
+    error_response.stubs(:body).returns('Internal Server Error')
+    exception = RestClient::ExceptionWithResponse.new(error_response)
+
+    mock_logger = mock('logger')
+    mock_logger.expects(:error).with('VMaaS reposcan sync failed: 500 - Internal Server Error')
+    InsightsCloud::Async::VmaasReposcanSync.any_instance.stubs(:logger).returns(mock_logger)
+
+    InsightsCloud::Async::VmaasReposcanSync.any_instance
+                                           .stubs(:execute_cloud_request)
+                                           .raises(exception)
+
+    task = ForemanTasks.sync_task(InsightsCloud::Async::VmaasReposcanSync, @repo_payload)
+
+    assert_equal 'VMaaS reposcan sync failed: 500 - Internal Server Error',
+      task.output[:message]
+  end
+
+  test 'run handles RestClient::ExceptionWithResponse with nil response' do
+    exception = RestClient::ExceptionWithResponse.new(nil)
+
+    mock_logger = mock('logger')
+    mock_logger.expects(:error).with('VMaaS reposcan sync failed:  - ')
+    InsightsCloud::Async::VmaasReposcanSync.any_instance.stubs(:logger).returns(mock_logger)
+
+    InsightsCloud::Async::VmaasReposcanSync.any_instance
+                                           .stubs(:execute_cloud_request)
+                                           .raises(exception)
+
+    task = ForemanTasks.sync_task(InsightsCloud::Async::VmaasReposcanSync, @repo_payload)
+
+    refute_nil task.output[:message]
+    assert_equal 'VMaaS reposcan sync failed:  - ', task.output[:message]
   end
 end
