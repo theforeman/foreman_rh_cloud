@@ -23,9 +23,7 @@ module InventorySync
           add_missing_hosts_statuses(@subscribed_hosts_ids) # any remaining hosts after yield are disconnected
           add_user_omitted_host_statuses(@omitted_ids)
           host_statuses[:disconnect] += @subscribed_hosts_ids.size
-          logger.debug("Disconnected hosts: #{@subscribed_hosts_ids.map { |id| Host.find(id).name }}")
           host_statuses[:user_omitted] += @omitted_ids.size
-          logger.debug("User-omitted hosts: #{@omitted_ids.map { |id| Host.find(id).name }}")
         end
 
         logger.debug("Synced hosts count: #{host_statuses[:sync]}")
@@ -57,7 +55,7 @@ module InventorySync
         # also refresh the InsightsClientReportStatus so hosts that are user-omitted will not show as irrelevant
         updated_ids.each do |host_id|
           host = ::Host.find_by(id: host_id)
-          next unless host.present?
+          next if host.blank?
           insights_client_report_status = host.get_status(::InsightsClientReportStatus)
           insights_client_report_status.refresh!
         end
