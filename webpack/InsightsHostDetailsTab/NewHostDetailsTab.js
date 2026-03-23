@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import SearchBar from 'foremanReact/components/SearchBar';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
@@ -25,6 +26,7 @@ import { useIopConfig } from '../common/Hooks/ConfigHooks';
 import { generateRuleUrl } from '../InsightsCloudSync/InsightsCloudSync';
 import { createProviderOptions } from '../common/ScalprumModule/ScalprumContext';
 import { useInsightsPermissions } from '../common/Hooks/PermissionsHooks';
+import { isNotRhelHost, hasNoInsightsFacet } from '../ForemanRhCloudHelpers';
 
 // Hosted Insights advisor
 const NewHostDetailsTab = ({ hostName, router }) => {
@@ -165,7 +167,24 @@ const IopInsightsTabWrapped = props => {
 };
 
 const InsightsTab = props => {
+  const { response } = props;
+  const history = useHistory();
   const isIop = useIopConfig();
+  const isHostDataLoaded = Boolean(response?.id);
+  const shouldHideTab =
+    isHostDataLoaded &&
+    (isNotRhelHost({ hostDetails: response }) ||
+      hasNoInsightsFacet({ response, hostDetails: response }));
+
+  useEffect(() => {
+    if (shouldHideTab && history) {
+      history.replace('/Overview');
+    }
+  }, [shouldHideTab, history]);
+
+  if (shouldHideTab) {
+    return null;
+  }
 
   return isIop ? (
     <IopInsightsTabWrapped {...props} />
@@ -174,6 +193,12 @@ const InsightsTab = props => {
   );
 };
 
-InsightsTab.defaultProps = {};
+InsightsTab.propTypes = {
+  response: PropTypes.object,
+};
+
+InsightsTab.defaultProps = {
+  response: {},
+};
 
 export default InsightsTab;
