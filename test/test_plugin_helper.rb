@@ -31,6 +31,7 @@ module FolderIsolation
       ForemanInventoryUpload.stubs(:base_folder).returns(@tmpdir)
       ForemanInventoryUpload.instance_variable_set(:@outputs_folder, nil)
       ForemanInventoryUpload.instance_variable_set(:@uploads_folders, nil)
+      ForemanInventoryUpload.instance_variable_set(:@generated_reports_folder, nil)
     end
 
     teardown do

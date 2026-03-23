@@ -95,8 +95,8 @@ module ForemanInventoryUpload
           begin
             upload_file(cer_path)
             progress_output.write_line("Upload completed successfully")
-            move_to_done_folder
-            progress_output.write_line("Uploaded file moved to done/ folder")
+            done_path = move_to_done_folder
+            progress_output.write_line("Uploaded report moved to #{done_path}")
             progress_output.status = "pid #{Process.pid} exit 0"
           rescue StandardError => e
             progress_output.write_line("Upload failed: #{e.message}")
@@ -139,6 +139,7 @@ module ForemanInventoryUpload
         done_file = ForemanInventoryUpload.done_file_path(File.basename(filename))
         FileUtils.mv(filename, done_file)
         logger.debug("Moved #{filename} to #{done_file}")
+        done_file
       end
 
       def certificate

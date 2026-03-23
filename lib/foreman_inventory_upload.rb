@@ -32,7 +32,11 @@ module ForemanInventoryUpload
 
   def self.report_file_paths(organization_id)
     filename = facts_archive_name(organization_id)
-    Dir[ForemanInventoryUpload.uploads_file_path(filename), ForemanInventoryUpload.done_file_path(filename)]
+    Dir[
+      ForemanInventoryUpload.generated_reports_file_path(filename),
+      ForemanInventoryUpload.uploads_file_path(filename),
+      ForemanInventoryUpload.done_file_path(filename)
+    ]
   end
 
   def self.generated_reports_folder
@@ -42,6 +46,10 @@ module ForemanInventoryUpload
         'generated_reports/'
       )
     )
+  end
+
+  def self.generated_reports_file_path(filename)
+    File.join(ForemanInventoryUpload.generated_reports_folder, filename)
   end
 
   def self.outputs_folder
