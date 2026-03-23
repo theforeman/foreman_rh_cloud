@@ -38,5 +38,11 @@ module InventorySync
       # Calculation is done externally in InventorySync::Async::InventoryFullSync, so we simply return the previously calculated status.
       status
     end
+
+    def relevant?(_options = {})
+      # Inventory status is not relevant in IoP mode since we use single-host reports
+      # that don't sync with the cloud inventory service
+      !ForemanRhCloud.with_iop_smart_proxy?
+    end
   end
 end

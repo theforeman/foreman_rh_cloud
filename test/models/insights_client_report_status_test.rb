@@ -72,4 +72,86 @@ class InsightsClientReportStatusTest < ActiveSupport::TestCase
 
     assert_equal HostStatus::Global::ERROR, @host.global_status
   end
+
+  test 'host with host_registration_insights parameter set to false gets USER_OMITTED status' do
+    @host.host_parameters << HostParameter.create(
+      name: 'host_registration_insights',
+      value: 'false',
+      parameter_type: 'boolean'
+    )
+    @host.save!
+
+    insights_status = @host.get_status(InsightsClientReportStatus)
+    insights_status.refresh!
+
+    assert_equal InsightsClientReportStatus::USER_OMITTED, insights_status.status
+    assert_equal HostStatus::Global::OK, insights_status.to_global
+  end
+
+  test 'USER_OMITTED status has correct label' do
+    insights_status = @host.get_status(InsightsClientReportStatus)
+    insights_status.status = InsightsClientReportStatus::USER_OMITTED
+    insights_status.save!
+
+    label = insights_status.to_label
+    assert_match(/host_registration_insights/, label)
+    assert_match(/false/, label)
+  end
+
+  test 'stale scope excludes USER_OMITTED hosts' do
+    host1 = FactoryBot.create(:host, :managed)
+    host2 = FactoryBot.create(:host, :managed)
+    host3 = FactoryBot.create(:host, :managed)
+
+    # Host 1: USER_OMITTED with old reported_at (should NOT be in stale scope)
+    status1 = host1.get_status(InsightsClientReportStatus)
+    status1.status = InsightsClientReportStatus::USER_OMITTED
+    status1.reported_at = Time.zone.now - InsightsClientReportStatus::REPORT_INTERVAL - 1.day
+    status1.save!
+
+    # Host 2: REPORTING with old reported_at (should be in stale scope)
+    status2 = host2.get_status(InsightsClientReportStatus)
+    status2.status = InsightsClientReportStatus::REPORTING
+    status2.reported_at = Time.zone.now - InsightsClientReportStatus::REPORT_INTERVAL - 1.day
+    status2.save!
+
+    # Host 3: NO_REPORT with old reported_at (should be in stale scope)
+    status3 = host3.get_status(InsightsClientReportStatus)
+    status3.status = InsightsClientReportStatus::NO_REPORT
+    status3.reported_at = Time.zone.now - InsightsClientReportStatus::REPORT_INTERVAL - 1.day
+    status3.save!
+
+    stale_statuses = InsightsClientReportStatus.stale
+    stale_host_ids = stale_statuses.pluck(:host_id)
+
+    assert_not_includes stale_host_ids, host1.id, 'USER_OMITTED host should not be in stale scope'
+    assert_includes stale_host_ids, host2.id, 'REPORTING host with old report should be in stale scope'
+    assert_includes stale_host_ids, host3.id, 'NO_REPORT host with old report should be in stale scope'
+  end
+
+  test 'status transitions from USER_OMITTED when parameter changes' do
+    # Set up host with parameter = false (USER_OMITTED)
+    @host.host_parameters << HostParameter.create(
+      name: 'host_registration_insights',
+      value: 'false',
+      parameter_type: 'boolean'
+    )
+    @host.save!
+
+    insights_status = @host.get_status(InsightsClientReportStatus)
+    insights_status.refresh!
+    assert_equal InsightsClientReportStatus::USER_OMITTED, insights_status.status
+
+    # Change parameter to true
+    param = @host.parameters.find_by(name: 'host_registration_insights')
+    param.value = 'true'
+    param.save!
+
+    # Refresh status
+    insights_status.refresh!
+
+    # Status should change to REPORTING or NO_REPORT based on reported_at
+    assert_not_equal InsightsClientReportStatus::USER_OMITTED, insights_status.status
+    assert_includes [InsightsClientReportStatus::REPORTING, InsightsClientReportStatus::NO_REPORT], insights_status.status
+  end
 end
