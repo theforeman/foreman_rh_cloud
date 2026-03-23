@@ -375,4 +375,31 @@ class RhCloudHostTest < ActiveSupport::TestCase
     assert_not_includes result_ids, host1.id, 'Host with SYNC status should not be in search results'
     assert_not_includes result_ids, host2.id, 'Host with DISCONNECT status should not be in search results'
   end
+
+  test 'scoped search for user_omitted insights client report status works' do
+    host1 = FactoryBot.create(:host, :managed)
+    host2 = FactoryBot.create(:host, :managed)
+    host3 = FactoryBot.create(:host, :managed)
+
+    # Create different insights client report statuses
+    status1 = host1.get_status(InsightsClientReportStatus)
+    status1.status = InsightsClientReportStatus::REPORTING
+    status1.save!
+
+    status2 = host2.get_status(InsightsClientReportStatus)
+    status2.status = InsightsClientReportStatus::NO_REPORT
+    status2.save!
+
+    status3 = host3.get_status(InsightsClientReportStatus)
+    status3.status = InsightsClientReportStatus::USER_OMITTED
+    status3.save!
+
+    # Search for user_omitted status
+    results = Host.search_for('insights_client_report_status = user_omitted')
+    result_ids = results.pluck(:id)
+
+    assert_includes result_ids, host3.id, 'Host with USER_OMITTED status should be in search results'
+    assert_not_includes result_ids, host1.id, 'Host with REPORTING status should not be in search results'
+    assert_not_includes result_ids, host2.id, 'Host with NO_REPORT status should not be in search results'
+  end
 end
