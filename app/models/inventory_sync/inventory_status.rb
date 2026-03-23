@@ -24,11 +24,11 @@ module InventorySync
     def to_label
       case status
       when DISCONNECT
-        N_('Host was not uploaded to your RH cloud inventory')
+        N_('Host is not present on console.redhat.com Inventory service')
       when SYNC
-        N_('Included in RH cloud inventory uploads')
+        N_('Host is uploaded and present on console.redhat.com Inventory service')
       when USER_OMITTED
-        N_('Not included in RH cloud inventory due to host parameter')
+        N_('Host is excluded from upload to console.redhat.com Inventory service due to host parameter')
       end
     end
 

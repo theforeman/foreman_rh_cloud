@@ -3,8 +3,9 @@ class InsightsClientReportStatus < HostStatus::Status
 
   REPORTING             = 0
   NO_REPORT             = 1
+  USER_OMITTED          = 2
 
-  scope :stale, -> { where.not(reported_at: (Time.now - REPORT_INTERVAL)..Time.now) }
+  scope :stale, -> { where.not(status: USER_OMITTED).where.not(reported_at: (Time.now - REPORT_INTERVAL)..Time.now) }
   scope :reporting, -> { where(status: REPORTING) }
 
   def self.status_name
@@ -17,6 +18,8 @@ class InsightsClientReportStatus < HostStatus::Status
       N_('Reporting')
     when NO_REPORT
       N_('Not reporting')
+    when USER_OMITTED
+      N_('Not reporting because host_registration_insights parameter value is false')
     end
   end
 
@@ -26,10 +29,15 @@ class InsightsClientReportStatus < HostStatus::Status
       ::HostStatus::Global::OK
     when NO_REPORT
       ::HostStatus::Global::ERROR
+    when USER_OMITTED
+      ::HostStatus::Global::OK
     end
   end
 
   def to_status
+    excluded_by_host_param = 
+      ::Foreman::Cast.to_bool(self.host.parameters.find_by(name: 'host_registration_insights')&.value) == false
+    return USER_OMITTED if excluded_by_host_param
     in_interval? ? REPORTING : NO_REPORT
   end
 

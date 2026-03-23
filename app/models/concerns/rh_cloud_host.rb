@@ -20,7 +20,8 @@ module RhCloudHost
     has_one :inventory_sync_status_object, :class_name => '::InventorySync::InventoryStatus', :foreign_key => 'host_id'
     scoped_search :relation => :inventory_sync_status_object, :on => :status, :rename => :insights_inventory_sync_status,
       :complete_value => { :disconnect => ::InventorySync::InventoryStatus::DISCONNECT,
-                           :sync => ::InventorySync::InventoryStatus::SYNC }
+                           :sync => ::InventorySync::InventoryStatus::SYNC,
+                           :user_omitted => ::InventorySync::InventoryStatus::USER_OMITTED }
     scoped_search :on => :id, :rename => :insights_uuid, :only_explicit => true,
       :ext_method => :search_by_insights_uuid, :complete_value => false
 
