@@ -7,9 +7,15 @@ module ForemanInventoryUpload
 
       def run
         organization = ::Organization.find(input[:organization_id])
-        hosts_without_facets = ::ForemanInventoryUpload::Generators::Queries.for_org(organization, hosts_query: 'null? insights_uuid')
+        # Find hosts with subscription facets but without insights facets
+        # Note: We can't use scoped_search 'null? insights_uuid' because the null? operator
+        # doesn't work with ext_methods - it would check hosts.id IS NULL instead of the facet
+        hosts_without_facets = ::ForemanInventoryUpload::Generators::Queries.for_org(organization, use_batches: false)
+                                                                            .left_outer_joins(:insights)
+                                                                            .where(insights_facets: { id: nil })
+
         facet_count = 0
-        hosts_without_facets.each do |batch|
+        hosts_without_facets.in_batches(of: ForemanInventoryUpload.slice_size) do |batch|
           facets = batch.pluck(:id, 'katello_subscription_facets.uuid').map do |host_id, uuid|
             {
               host_id: host_id,
