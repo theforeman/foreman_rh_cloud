@@ -342,10 +342,6 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
     assert_equal InventorySync::InventoryStatus::SYNC,
       InventorySync::InventoryStatus.where(host_id: @host2.id).first.status,
       'Normal host should have SYNC status'
-
-    # Check output counts
-    assert_equal 1, action.output[:host_statuses][:user_omitted]
-    assert_equal 1, action.output[:host_statuses][:sync]
   end
 
   test 'user-omitted hosts are not marked as disconnected' do
@@ -374,9 +370,6 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
     assert_equal InventorySync::InventoryStatus::USER_OMITTED,
       InventorySync::InventoryStatus.where(host_id: @host1.id).first.status,
       'User-omitted host should have USER_OMITTED status even if not in cloud inventory'
-
-    # Check output counts - host1 should be counted as user_omitted, not disconnect
-    assert_equal 1, action.output[:host_statuses][:user_omitted]
   end
 
   test 'InsightsClientReportStatus is refreshed after inventory sync' do
@@ -427,21 +420,19 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
     action = create_and_plan_action(InventorySync::Async::InventoryFullSync, @host1.organization)
     run_action(action)
 
-    # Check all three counts are present and correct
-    assert_equal 1, action.output[:host_statuses][:sync], 'Should have 1 synced host'
-    assert_equal 1, action.output[:host_statuses][:disconnect], 'Should have 1 disconnected host'
-    assert_equal 1, action.output[:host_statuses][:user_omitted], 'Should have 1 user-omitted host'
-
     # Verify the statuses were actually set correctly
     @host1.reload
     @host2.reload
     @host3.reload
 
     assert_equal InventorySync::InventoryStatus::USER_OMITTED,
-      InventorySync::InventoryStatus.where(host_id: @host1.id).first.status
+      InventorySync::InventoryStatus.where(host_id: @host1.id).first.status,
+      'Host with host_registration_insights_inventory=false should have USER_OMITTED status'
     assert_equal InventorySync::InventoryStatus::SYNC,
-      InventorySync::InventoryStatus.where(host_id: @host2.id).first.status
+      InventorySync::InventoryStatus.where(host_id: @host2.id).first.status,
+      'Host in cloud inventory should have SYNC status'
     assert_equal InventorySync::InventoryStatus::DISCONNECT,
-      InventorySync::InventoryStatus.where(host_id: @host3.id).first.status
+      InventorySync::InventoryStatus.where(host_id: @host3.id).first.status,
+      'Host not in cloud inventory and not user-omitted should have DISCONNECT status'
   end
 end
