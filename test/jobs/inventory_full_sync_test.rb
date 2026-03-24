@@ -5,6 +5,7 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
   include Dynflow::Testing::Factories
   include MockCerts
   include KatelloCVEHelper
+  include CandlepinIsolation
 
   setup do
     User.current = User.find_by(login: 'secret_admin')
