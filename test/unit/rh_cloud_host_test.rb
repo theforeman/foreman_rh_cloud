@@ -188,4 +188,158 @@ class RhCloudHostTest < ActiveSupport::TestCase
       assert_equal local_uuid, @host.insights_uuid
     end
   end
+
+  context 'scoped search on insights_uuid' do
+    setup do
+      @org = FactoryBot.create(:organization)
+    end
+
+    teardown do
+      ForemanRhCloud.unstub(:with_iop_smart_proxy?)
+    end
+
+    test 'searches insights_facet.uuid in non-IoP mode with = operator' do
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
+      host1 = FactoryBot.create(:host, :managed, organization: @org)
+      host1.insights = FactoryBot.create(:insights_facet, host_id: host1.id, uuid: 'insights-uuid-123')
+      host2 = FactoryBot.create(:host, :managed, organization: @org)
+      host2.insights = FactoryBot.create(:insights_facet, host_id: host2.id, uuid: 'insights-uuid-456')
+
+      results = Host::Managed.search_for('insights_uuid = insights-uuid-123')
+
+      assert_includes results, host1
+      assert_not_includes results, host2
+    end
+
+    test 'searches subscription_facet.uuid in IoP mode with = operator' do
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+      host1 = FactoryBot.create(:host, :managed, :with_subscription, organization: @org)
+      host2 = FactoryBot.create(:host, :managed, :with_subscription, organization: @org)
+
+      # Even if insights_facet has different UUID, should use subscription_facet UUID
+      host1.insights = FactoryBot.create(:insights_facet, host_id: host1.id, uuid: 'stale-123')
+
+      results = Host::Managed.search_for("insights_uuid = #{host1.subscription_facet.uuid}")
+
+      assert_includes results, host1
+      assert_not_includes results, host2
+    end
+
+    test 'searches with ^ operator (IN) in non-IoP mode' do
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
+      host1 = FactoryBot.create(:host, :managed, organization: @org)
+      host1.insights = FactoryBot.create(:insights_facet, host_id: host1.id, uuid: 'uuid-1')
+      host2 = FactoryBot.create(:host, :managed, organization: @org)
+      host2.insights = FactoryBot.create(:insights_facet, host_id: host2.id, uuid: 'uuid-2')
+      host3 = FactoryBot.create(:host, :managed, organization: @org)
+      host3.insights = FactoryBot.create(:insights_facet, host_id: host3.id, uuid: 'uuid-3')
+
+      results = Host::Managed.search_for('insights_uuid ^ (uuid-1,uuid-2)')
+
+      assert_includes results, host1
+      assert_includes results, host2
+      assert_not_includes results, host3
+    end
+
+    test 'searches with ^ operator (IN) in IoP mode - THE BUG FIX' do
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+      host1 = FactoryBot.create(:host, :managed, :with_subscription, organization: @org)
+      host2 = FactoryBot.create(:host, :managed, :with_subscription, organization: @org)
+      host3 = FactoryBot.create(:host, :managed, :with_subscription, organization: @org)
+
+      # Create insights facets with stale UUIDs to verify we're using subscription_facet
+      host1.insights = FactoryBot.create(:insights_facet, host_id: host1.id, uuid: 'stale-1')
+      host2.insights = FactoryBot.create(:insights_facet, host_id: host2.id, uuid: 'stale-2')
+      host3.insights = FactoryBot.create(:insights_facet, host_id: host3.id, uuid: 'stale-3')
+
+      uuid1 = host1.subscription_facet.uuid
+      uuid2 = host2.subscription_facet.uuid
+
+      # This is the search query that remediation modal creates
+      results = Host::Managed.search_for("insights_uuid ^ (#{uuid1},#{uuid2})")
+
+      # Should find hosts by subscription_facet UUID, not insights_facet UUID
+      assert_includes results, host1
+      assert_includes results, host2
+      assert_not_includes results, host3
+    end
+
+    test 'searches with !^ operator (NOT IN) in non-IoP mode' do
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
+      host1 = FactoryBot.create(:host, :managed, organization: @org)
+      host1.insights = FactoryBot.create(:insights_facet, host_id: host1.id, uuid: 'uuid-1')
+      host2 = FactoryBot.create(:host, :managed, organization: @org)
+      host2.insights = FactoryBot.create(:insights_facet, host_id: host2.id, uuid: 'uuid-2')
+      host3 = FactoryBot.create(:host, :managed, organization: @org)
+      host3.insights = FactoryBot.create(:insights_facet, host_id: host3.id, uuid: 'uuid-3')
+
+      results = Host::Managed.search_for('insights_uuid !^ (uuid-1,uuid-2)')
+
+      assert_not_includes results, host1
+      assert_not_includes results, host2
+      assert_includes results, host3
+    end
+
+    test 'searches with !^ operator (NOT IN) in IoP mode' do
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+      host1 = FactoryBot.create(:host, :managed, :with_subscription, organization: @org)
+      host2 = FactoryBot.create(:host, :managed, :with_subscription, organization: @org)
+      host3 = FactoryBot.create(:host, :managed, :with_subscription, organization: @org)
+
+      uuid1 = host1.subscription_facet.uuid
+      uuid2 = host2.subscription_facet.uuid
+
+      results = Host::Managed.search_for("insights_uuid !^ (#{uuid1},#{uuid2})")
+
+      assert_not_includes results, host1
+      assert_not_includes results, host2
+      assert_includes results, host3
+    end
+
+    test 'handles hosts without facets in non-IoP mode' do
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
+      host_without_facet = FactoryBot.create(:host, :managed, organization: @org)
+      host_with_facet = FactoryBot.create(:host, :managed, organization: @org)
+      host_with_facet.insights = FactoryBot.create(:insights_facet, host_id: host_with_facet.id, uuid: 'uuid-1')
+
+      results = Host::Managed.search_for('insights_uuid = uuid-1')
+
+      assert_includes results, host_with_facet
+      assert_not_includes results, host_without_facet
+    end
+
+    test 'handles hosts without subscription_facet in IoP mode' do
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+      host_without_sub = FactoryBot.create(:host, :managed, organization: @org)
+      host_with_sub = FactoryBot.create(:host, :managed, :with_subscription, organization: @org)
+
+      uuid = host_with_sub.subscription_facet.uuid
+
+      results = Host::Managed.search_for("insights_uuid = #{uuid}")
+
+      assert_includes results, host_with_sub
+      assert_not_includes results, host_without_sub
+    end
+
+    test 'mode changes are reflected in searches' do
+      host1 = FactoryBot.create(:host, :managed, :with_subscription, organization: @org)
+      host1.insights = FactoryBot.create(:insights_facet, host_id: host1.id, uuid: 'insights-uuid-abc')
+      insights_uuid = 'insights-uuid-abc'
+      subscription_uuid = host1.subscription_facet.uuid
+
+      # Non-IoP mode: should find by insights_facet UUID
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
+      results = Host::Managed.search_for("insights_uuid = #{insights_uuid}")
+      assert_includes results, host1
+
+      # IoP mode: should find by subscription_facet UUID
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+      results = Host::Managed.search_for("insights_uuid = #{subscription_uuid}")
+      assert_includes results, host1
+
+      # Should NOT find by old insights_facet UUID in IoP mode
+      results = Host::Managed.search_for("insights_uuid = #{insights_uuid}")
+      assert_not_includes results, host1
+    end
+  end
 end

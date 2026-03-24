@@ -21,7 +21,8 @@ module RhCloudHost
     scoped_search :relation => :inventory_sync_status_object, :on => :status, :rename => :insights_inventory_sync_status,
       :complete_value => { :disconnect => ::InventorySync::InventoryStatus::DISCONNECT,
                            :sync => ::InventorySync::InventoryStatus::SYNC }
-    scoped_search :relation => :insights, :on => :uuid, :only_explicit => true, :rename => :insights_uuid
+    scoped_search :on => :id, :rename => :insights_uuid, :only_explicit => true,
+      :ext_method => :search_by_insights_uuid, :complete_value => false
 
     def insights_facet
       insights
@@ -39,6 +40,35 @@ module RhCloudHost
     def ensure_iop_insights_uuid
       return unless insights_facet.present? && subscription_facet.present? && insights_facet.uuid != subscription_facet.uuid
       insights_facet.update!(uuid: subscription_facet.uuid)
+    end
+  end
+
+  module ClassMethods
+    def search_by_insights_uuid(_key, operator, value)
+      # Determine which facet table to search based on IoP mode
+      facet_table = ForemanRhCloud.with_iop_smart_proxy? ? Katello::Host::SubscriptionFacet.table_name : InsightsFacet.table_name
+
+      # Build SQL condition
+      if ['IN', 'NOT IN'].include?(operator)
+        # For IN/NOT IN, value may be an array or comma-separated string
+        # Convert to array and build placeholders for each value
+        values = value.is_a?(Array) ? value : value.to_s.split(',').map(&:strip)
+        placeholders = (['?'] * values.size).join(',')
+        condition = sanitize_sql_for_conditions(
+          ["#{facet_table}.uuid #{operator} (#{placeholders})", *values]
+        )
+      else
+        # For other operators (=, !=, LIKE, etc.), use value_to_sql for proper SQL formatting
+        condition = sanitize_sql_for_conditions(
+          ["#{facet_table}.uuid #{operator} ?", value_to_sql(operator, value)]
+        )
+      end
+
+      # Return search parameters with LEFT JOIN to include hosts without facets
+      {
+        joins: "LEFT JOIN #{facet_table} ON #{facet_table}.host_id = #{Host::Managed.table_name}.id",
+        conditions: condition,
+      }
     end
   end
 end
