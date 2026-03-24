@@ -100,11 +100,14 @@ module InventorySync
       end
 
       def user_omitted_host_ids
-        Host.unscoped.where(
-          organization: organizations
-        ).search_for(
-          "params.#{InsightsCloud.enable_client_param_inventory} = f"
-        ).pluck(:id)
+        param_name = InsightsCloud.enable_client_param_inventory
+
+        # Load parameters (not hosts) and filter using Foreman::Cast.to_bool
+        Parameter.where(
+          name: param_name,
+          reference_id: Host.unscoped.where(organization: organizations).select(:id),
+          type: 'HostParameter'
+        ).select { |param| ::Foreman::Cast.to_bool(param.value) == false }.map(&:reference_id)
       end
     end
   end
