@@ -17,6 +17,11 @@ module InventorySync
         @subscribed_hosts_ids = Set.new(affected_host_ids)
         @omitted_ids = Set.new(user_omitted_host_ids)
 
+        # Remove user-omitted hosts from subscribed set. In normal operation, affected_host_ids
+        # already excludes user-omitted hosts via for_slice, but this handles edge cases like
+        # a host transitioning from uploaded to user-omitted between syncs.
+        @subscribed_hosts_ids.subtract(@omitted_ids)
+
         InventorySync::InventoryStatus.transaction do
           InventorySync::InventoryStatus.where(host_id: @subscribed_hosts_ids).delete_all
           yield

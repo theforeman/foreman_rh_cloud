@@ -407,13 +407,19 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
     )
     @host1.save!
 
-    # Host2: will be synced (already in @inventory)
-    # Host3: will be disconnected (not in @inventory, no parameter)
+    # Host2: will be synced (in cloud inventory)
+    # Host3: will be disconnected (not in cloud inventory)
+
+    # Create inventory response with only host2 (exclude host1 and host3)
+    inventory_with_host2_only = @inventory.dup
+    inventory_with_host2_only['results'] = [@inventory['results'][0]] # Only host2
+    inventory_with_host2_only['total'] = 1
+    inventory_with_host2_only['count'] = 1
 
     setup_certs_expectation do
       InventorySync::Async::InventoryFullSync.any_instance.stubs(:candlepin_id_cert)
     end
-    InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(inventory_with_host2_only)
     InventorySync::Async::InventoryFullSync.any_instance.expects(:affected_host_ids).returns([@host1.id, @host2.id, @host3.id])
     FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
 
