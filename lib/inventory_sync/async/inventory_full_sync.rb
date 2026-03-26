@@ -57,14 +57,6 @@ module InventorySync
         InventorySync::InventoryStatus.create(status_hashes)
         updated_ids = status_hashes.map { |hash| hash[:host_id] }
         @subscribed_hosts_ids.subtract(updated_ids)
-        # also refresh the InsightsClientReportStatus so hosts that are user-omitted will not show as irrelevant
-        # Eager load associations to avoid N+1 queries: parameters used in to_status, host_statuses used by get_status
-        ::Host.where(id: updated_ids)
-              .includes(:parameters, :host_statuses)
-              .each do |host|
-          insights_client_report_status = host.get_status(::InsightsClientReportStatus)
-          insights_client_report_status.refresh!
-        end
       end
 
       def add_missing_hosts_statuses(hosts_ids)

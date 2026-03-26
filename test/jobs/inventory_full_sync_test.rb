@@ -372,31 +372,6 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
       'User-omitted host should have USER_OMITTED status even if not in cloud inventory'
   end
 
-  test 'InsightsClientReportStatus is refreshed after inventory sync' do
-    # Set up host2 with a stale InsightsClientReportStatus
-    insights_status = @host2.get_status(InsightsClientReportStatus)
-    insights_status.status = InsightsClientReportStatus::NO_REPORT
-    insights_status.reported_at = Time.zone.now - 10.days
-    insights_status.save!
-
-    setup_certs_expectation do
-      InventorySync::Async::InventoryFullSync.any_instance.stubs(:candlepin_id_cert)
-    end
-    InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
-    FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
-
-    action = create_and_plan_action(InventorySync::Async::InventoryFullSync, @host1.organization)
-    run_action(action)
-
-    @host2.reload
-    insights_status_after = @host2.get_status(InsightsClientReportStatus)
-
-    # The status should have been refreshed (calculated based on current state)
-    # Since we don't have reported_at in the recent interval, it should be NO_REPORT or REPORTING
-    # depending on whether the host has the parameter set
-    assert_not_nil insights_status_after, 'InsightsClientReportStatus should exist'
-  end
-
   test 'host_statuses output includes all three counts' do
     # Create a mix of hosts with different statuses
     # Host1: will be user-omitted
