@@ -47,8 +47,8 @@ namespace :rh_cloud_inventory do
             false # don't upload; the user ran report:generate and not report:generate_upload
           )
           unless Setting[:subscription_connection_enabled]
-            report_path = File.join(base_folder, ForemanInventoryUpload.facts_archive_name(organization_id, filter))
-            puts "Generated report at #{report_path}" if File.exist?(report_path)
+            report_paths = ForemanInventoryUpload.report_file_paths(organization_id)
+            puts "Report saved to #{report_paths.first}" if report_paths.any?
           end
         end
         puts "Check the Uploading tab for report uploading status." if Setting[:subscription_connection_enabled]
