@@ -416,4 +416,52 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
       InventorySync::InventoryStatus.where(host_id: @host3.id).first.status,
       'Host not in cloud inventory and not user-omitted should have DISCONNECT status'
   end
+
+  test 'user-omitted status respects parameter inheritance from hostgroup' do
+    # Create a hostgroup and assign it to host1
+    hostgroup = FactoryBot.create(:hostgroup)
+    hostgroup.organizations << @host1.organization
+    @host1.hostgroup = hostgroup
+    @host1.save!
+
+    # Set parameter at hostgroup level, not directly on host
+    # This verifies the fix that uses search_for instead of querying HostParameter directly
+    hostgroup.group_parameters << GroupParameter.create(
+      name: 'host_registration_insights_inventory',
+      value: 'false',
+      key_type: 'boolean'
+    )
+    hostgroup.save!
+
+    # Verify parameter is inherited (not set directly on host)
+    assert_nil @host1.parameters.find_by(name: 'host_registration_insights_inventory'),
+      'Test setup: parameter should not be set directly on host'
+    refute ::Foreman::Cast.to_bool(@host1.host_param('host_registration_insights_inventory')),
+      'Test setup: parameter should be inherited from hostgroup'
+
+    # Host2 remains normal (no parameter)
+    setup_certs_expectation do
+      InventorySync::Async::InventoryFullSync.any_instance.stubs(:candlepin_id_cert)
+    end
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:affected_host_ids).returns([@host1.id, @host2.id])
+    FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
+
+    action = create_and_plan_action(InventorySync::Async::InventoryFullSync, @host1.organization)
+    run_action(action)
+
+    @host1.reload
+    @host2.reload
+
+    # Host1 should be USER_OMITTED (inherited parameter from hostgroup)
+    host1_status = InventorySync::InventoryStatus.where(host_id: @host1.id).first
+    assert_not_nil host1_status, 'Host1 should have an inventory status'
+    assert_equal InventorySync::InventoryStatus::USER_OMITTED, host1_status.status,
+      'Host with inherited host_registration_insights_inventory=false should have USER_OMITTED status'
+
+    # Host2 should be SYNC
+    assert_equal InventorySync::InventoryStatus::SYNC,
+      InventorySync::InventoryStatus.where(host_id: @host2.id).first.status,
+      'Normal host should have SYNC status'
+  end
 end

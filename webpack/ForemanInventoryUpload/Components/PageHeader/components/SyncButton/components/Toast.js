@@ -36,7 +36,7 @@ const Toast = ({ syncHosts, disconnectHosts, userOmittedHosts }) => {
           {disconnectHosts}
         </HostsWithStatusLink>
       </p>
-      {userOmittedHosts && (
+      {!!userOmittedHosts && (
         <p>
           {__(
             'Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: '
