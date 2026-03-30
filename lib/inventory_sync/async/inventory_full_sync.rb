@@ -24,6 +24,7 @@ module InventorySync
 
         InventorySync::InventoryStatus.transaction do
           InventorySync::InventoryStatus.where(host_id: @subscribed_hosts_ids).delete_all
+          InventorySync::InventoryStatus.where(host_id: @omitted_ids).delete_all
           yield
           add_missing_hosts_statuses(@subscribed_hosts_ids) # any remaining hosts after yield are disconnected
           add_user_omitted_host_statuses(@omitted_ids)

@@ -36,7 +36,7 @@ class InsightsClientReportStatus < HostStatus::Status
 
   def to_status
     excluded_by_host_param =
-      ::Foreman::Cast.to_bool(host.parameters.find_by(name: 'host_registration_insights')&.value) == false
+      ::Foreman::Cast.to_bool(host.host_param('host_registration_insights')) == false
     return USER_OMITTED if excluded_by_host_param
     in_interval? ? REPORTING : NO_REPORT
   end

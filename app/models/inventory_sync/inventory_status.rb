@@ -33,7 +33,7 @@ module InventorySync
     end
 
     def to_status(options = {})
-      # Normally this method used to calculate status.
+      # Normally, this method is used to calculate status.
       # In foreman_rh_cloud 'we do things a bit differently around here.'
       # Calculation is done externally in InventorySync::Async::InventoryFullSync, so we simply return the previously calculated status.
       status
