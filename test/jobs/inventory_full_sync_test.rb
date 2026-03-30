@@ -464,4 +464,62 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
       InventorySync::InventoryStatus.where(host_id: @host2.id).first.status,
       'Normal host should have SYNC status'
   end
+
+  test 'user-omitted statuses are cleared before re-creating them to avoid silent create failures' do
+    # First sync: host1 is user-omitted
+    @host1.host_parameters << HostParameter.create(
+      name: 'host_registration_insights_inventory',
+      value: 'false',
+      parameter_type: 'boolean'
+    )
+    @host1.save!
+
+    setup_certs_expectation do
+      InventorySync::Async::InventoryFullSync.any_instance.stubs(:candlepin_id_cert)
+    end
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory).twice
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:affected_host_ids).returns([@host1.id, @host2.id]).twice
+    FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
+
+    # Run first sync
+    action = create_and_plan_action(InventorySync::Async::InventoryFullSync, @host1.organization)
+    run_action(action)
+
+    @host1.reload
+    initial_status = InventorySync::InventoryStatus.where(host_id: @host1.id).first
+    assert_equal InventorySync::InventoryStatus::USER_OMITTED, initial_status.status,
+      'Initial sync: host should be USER_OMITTED'
+    initial_status_id = initial_status.id
+
+    # Verify there's only one status record for host1
+    assert_equal 1, InventorySync::InventoryStatus.where(host_id: @host1.id).count,
+      'Should have exactly one status record after first sync'
+
+    # Run second sync (parameter still false)
+    # Without clearing old user_omitted statuses, the .create would silently fail
+    # with 'Host has already been taken' due to uniqueness constraint
+    setup_certs_expectation do
+      InventorySync::Async::InventoryFullSync.any_instance.stubs(:candlepin_id_cert)
+    end
+
+    action2 = create_and_plan_action(InventorySync::Async::InventoryFullSync, @host1.organization)
+    run_action(action2)
+
+    @host1.reload
+    final_status = InventorySync::InventoryStatus.where(host_id: @host1.id).first
+
+    # Verify status is still USER_OMITTED (not stale from first sync)
+    assert_equal InventorySync::InventoryStatus::USER_OMITTED, final_status.status,
+      'Status should be USER_OMITTED after second sync'
+
+    # Verify there's still only one status record (old one was deleted before creating new one)
+    assert_equal 1, InventorySync::InventoryStatus.where(host_id: @host1.id).count,
+      'Should have exactly one status record (old cleared before new created)'
+
+    # Verify the old status record was actually deleted and replaced with a new one
+    refute InventorySync::InventoryStatus.exists?(initial_status_id),
+      'Old status record should have been deleted before creating new one'
+    assert_not_equal initial_status_id, final_status.id,
+      'New status record should have different ID, proving old was deleted'
+  end
 end

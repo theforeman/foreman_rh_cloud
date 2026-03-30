@@ -129,29 +129,56 @@ class InsightsClientReportStatusTest < ActiveSupport::TestCase
     assert_includes stale_host_ids, host3.id, 'NO_REPORT host with old report should be in stale scope'
   end
 
-  test 'status transitions from USER_OMITTED when parameter changes' do
-    # Set up host with parameter = false (USER_OMITTED)
-    @host.host_parameters << HostParameter.create(
+  test 'USER_OMITTED status respects parameter inheritance from hostgroup' do
+    # Create a hostgroup with parameter = false
+    hostgroup = FactoryBot.create(:hostgroup)
+    hostgroup.group_parameters << GroupParameter.create(
       name: 'host_registration_insights',
       value: 'false',
+      key_type: 'boolean'
+    )
+    hostgroup.save!
+
+    @host.hostgroup = hostgroup
+    @host.save!
+
+    # Verify parameter is inherited (not set directly on host)
+    assert_nil @host.parameters.find_by(name: 'host_registration_insights'),
+      'Test setup: parameter should not be set directly on host'
+
+    insights_status = @host.get_status(InsightsClientReportStatus)
+    insights_status.refresh!
+
+    assert_equal InsightsClientReportStatus::USER_OMITTED, insights_status.status,
+      'Status should be USER_OMITTED when host_registration_insights=false is inherited from hostgroup'
+    assert_equal HostStatus::Global::OK, insights_status.to_global,
+      'USER_OMITTED status should not affect global status'
+  end
+
+  test 'host parameter overrides inherited parameter from hostgroup' do
+    # Create a hostgroup with parameter = false
+    hostgroup = FactoryBot.create(:hostgroup)
+    hostgroup.group_parameters << GroupParameter.create(
+      name: 'host_registration_insights',
+      value: 'false',
+      key_type: 'boolean'
+    )
+    hostgroup.save!
+
+    @host.hostgroup = hostgroup
+
+    # Override with host parameter = true
+    @host.host_parameters << HostParameter.create(
+      name: 'host_registration_insights',
+      value: 'true',
       parameter_type: 'boolean'
     )
     @host.save!
 
     insights_status = @host.get_status(InsightsClientReportStatus)
     insights_status.refresh!
-    assert_equal InsightsClientReportStatus::USER_OMITTED, insights_status.status
 
-    # Change parameter to true
-    param = @host.parameters.find_by(name: 'host_registration_insights')
-    param.value = 'true'
-    param.save!
-
-    # Refresh status
-    insights_status.refresh!
-
-    # Status should change to REPORTING or NO_REPORT based on reported_at
-    assert_not_equal InsightsClientReportStatus::USER_OMITTED, insights_status.status
-    assert_includes [InsightsClientReportStatus::REPORTING, InsightsClientReportStatus::NO_REPORT], insights_status.status
+    assert_not_equal InsightsClientReportStatus::USER_OMITTED, insights_status.status,
+      'Status should not be USER_OMITTED when host parameter overrides hostgroup parameter with true'
   end
 end
