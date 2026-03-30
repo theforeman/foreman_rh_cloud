@@ -5,6 +5,15 @@
     }
   }
 
+  tbody .pf-v5-c-table__check {
+    vertical-align: middle;
+  }
+
+  thead .pf-v5-c-table__check label {
+    position: relative;
+    top: 2px;
+  }
+
   .td-insights-remediate-playbook {
     svg {
       margin-right: 5px;

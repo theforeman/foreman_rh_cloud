@@ -58,6 +58,8 @@ const InsightsTable = ({
     if (hideHost) setColumns(getColumnsWithoutHostname());
   }, [hits, selectedIds, hideHost]);
 
+  const hasSelectableRows = rows.some(row => !row.disableCheckbox);
+
   return (
     <React.Fragment>
       <SelectAllAlert
@@ -71,10 +73,11 @@ const InsightsTable = ({
         className="rh-cloud-recommendations-table"
         ouiaId="rh-cloud-recommendations-table"
         aria-label="Recommendations Table"
-        onSelect={(_event, isSelected, rowId) =>
-          onTableSelect(isSelected, rowId, rows, selectedIds)
-        }
-        canSelectAll={rows.length > 0}
+        {...(hasSelectableRows && {
+          onSelect: (_event, isSelected, rowId) =>
+            onTableSelect(isSelected, rowId, rows, selectedIds),
+        })}
+        canSelectAll={hasSelectableRows}
         sortBy={{
           index: getSortColumnIndex(columns, sortBy),
           direction: sortOrder,
