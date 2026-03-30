@@ -173,12 +173,10 @@ module InsightsCloud::Api
       end
 
       test "should update InsightsClientReportStatus when parameter is false and block request" do
-        # Set the host parameter for the status refresh (which uses parameters.find_by)
-        @host.host_parameters << HostParameter.create(
-          name: InsightsCloud.enable_client_param,
-          value: 'false',
-          parameter_type: 'boolean'
-        )
+        # Remove the common parameter from setup and set it to false
+        CommonParameter.where(name: InsightsCloud.enable_client_param).delete_all
+        FactoryBot.create(:common_parameter, name: InsightsCloud.enable_client_param, key_type: 'boolean', value: false)
+
         # Stub telemetry_config to return false (disabled)
         InsightsCloud::Api::MachineTelemetriesController.any_instance.stubs(:telemetry_config).returns(false)
 
