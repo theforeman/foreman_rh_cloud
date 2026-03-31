@@ -6,6 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import NewHostDetailsTab from '../NewHostDetailsTab';
+import { OVERVIEW_TAB_PATH } from '../../ForemanRhCloudHelpers';
 
 const mockHistoryReplace = jest.fn();
 
@@ -212,7 +213,7 @@ describe('NewHostDetailsTab', () => {
         </Provider>
       );
 
-      expect(mockHistoryReplace).toHaveBeenCalledWith('/Overview');
+      expect(mockHistoryReplace).toHaveBeenCalledWith(OVERVIEW_TAB_PATH);
     });
 
     it('should redirect to Overview when insights facet is missing', () => {
@@ -232,7 +233,7 @@ describe('NewHostDetailsTab', () => {
         </Provider>
       );
 
-      expect(mockHistoryReplace).toHaveBeenCalledWith('/Overview');
+      expect(mockHistoryReplace).toHaveBeenCalledWith(OVERVIEW_TAB_PATH);
     });
 
     it('should not redirect when host is valid RHEL with insights facet', () => {
@@ -247,7 +248,7 @@ describe('NewHostDetailsTab', () => {
         </Provider>
       );
 
-      expect(mockHistoryReplace).not.toHaveBeenCalledWith('/Overview');
+      expect(mockHistoryReplace).not.toHaveBeenCalled();
     });
 
     it('should not redirect when host data is not yet loaded', () => {
@@ -259,7 +260,7 @@ describe('NewHostDetailsTab', () => {
         </Provider>
       );
 
-      expect(mockHistoryReplace).not.toHaveBeenCalledWith('/Overview');
+      expect(mockHistoryReplace).not.toHaveBeenCalled();
     });
   });
 });

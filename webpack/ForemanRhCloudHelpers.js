@@ -5,6 +5,8 @@
  */
 export const foremanUrl = path => `${window.URL_PREFIX}${path}`;
 
+export const OVERVIEW_TAB_PATH = '/Overview';
+
 export const isNotRhelHost = ({ hostDetails }) =>
   // This regex tries matches sane variations of "RedHat", "RHEL" and "RHCOS"
   !new RegExp('red[\\s\\-]?hat|rh[\\s\\-]?el|rhc[\\s\\-]?os', 'i').test(

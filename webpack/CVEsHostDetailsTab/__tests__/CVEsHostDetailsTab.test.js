@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import CVEsHostDetailsTabWrapper from '../CVEsHostDetailsTab';
+import { OVERVIEW_TAB_PATH } from '../../ForemanRhCloudHelpers';
 
 const mockHistoryReplace = jest.fn();
 
@@ -47,7 +48,7 @@ describe('CVEsHostDetailsTabWrapper', () => {
     jest.clearAllMocks();
   });
 
-  it('renders without crashing', () => {
+  it('renders without crashing and does not redirect for valid host', () => {
     const { container } = render(
       <MemoryRouter>
         <CVEsHostDetailsTabWrapper response={defaultResponse} />
@@ -58,6 +59,7 @@ describe('CVEsHostDetailsTabWrapper', () => {
         '.rh-cloud-insights-vulnerability-host-details-component'
       )
     ).toBeTruthy();
+    expect(mockHistoryReplace).not.toHaveBeenCalled();
   });
 
   it('remounts ScalprumComponent when systemId changes', () => {
@@ -112,7 +114,7 @@ describe('CVEsHostDetailsTabWrapper', () => {
       </MemoryRouter>
     );
 
-    expect(mockHistoryReplace).toHaveBeenCalledWith('/Overview');
+    expect(mockHistoryReplace).toHaveBeenCalledWith(OVERVIEW_TAB_PATH);
     expect(
       container.querySelector(
         '.rh-cloud-insights-vulnerability-host-details-component'
@@ -129,6 +131,6 @@ describe('CVEsHostDetailsTabWrapper', () => {
       </MemoryRouter>
     );
 
-    expect(mockHistoryReplace).not.toHaveBeenCalledWith('/Overview');
+    expect(mockHistoryReplace).not.toHaveBeenCalled();
   });
 });

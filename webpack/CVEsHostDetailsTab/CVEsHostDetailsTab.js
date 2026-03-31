@@ -4,7 +4,10 @@ import { useHistory } from 'react-router-dom';
 import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
 import { createProviderOptions } from '../common/ScalprumModule/ScalprumContext';
 import { useInsightsPermissions } from '../common/Hooks/PermissionsHooks';
-import { vulnerabilityDisabled } from '../ForemanRhCloudHelpers';
+import {
+  vulnerabilityDisabled,
+  OVERVIEW_TAB_PATH,
+} from '../ForemanRhCloudHelpers';
 import './CVEsHostDetailsTab.scss';
 
 const CVEsHostDetailsTab = ({ systemId }) => {
@@ -35,7 +38,7 @@ const CVEsHostDetailsTabWrapper = ({ response }) => {
 
   useEffect(() => {
     if (shouldHideTab && history) {
-      history.replace('/Overview');
+      history.replace(OVERVIEW_TAB_PATH);
     }
   }, [shouldHideTab, history]);
 
@@ -56,6 +59,10 @@ const CVEsHostDetailsTabWrapper = ({ response }) => {
 CVEsHostDetailsTabWrapper.propTypes = {
   response: PropTypes.shape({
     id: PropTypes.number,
+    operatingsystem_name: PropTypes.string,
+    vulnerability: PropTypes.shape({
+      enabled: PropTypes.bool,
+    }),
     subscription_facet_attributes: PropTypes.shape({
       uuid: PropTypes.string,
     }),
