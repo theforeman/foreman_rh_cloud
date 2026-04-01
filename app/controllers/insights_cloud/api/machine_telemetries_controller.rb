@@ -88,9 +88,16 @@ module InsightsCloud::Api
     private
 
     def ensure_telemetry_enabled_for_consumer
-      unless (config = telemetry_config(@host))
+      config = telemetry_config(@host)
+
+      # Always update the status based on current parameter value
+      # This will set USER_OMITTED if parameter is false, or REPORTING/NO_REPORT if true
+      @host.get_status(InsightsClientReportStatus).refresh!
+      @host.refresh_global_status!
+
+      unless config
         logger.debug("Rejected telemetry forwarding for host #{@host.name}, insights param is set to: #{config}")
-        render_message 'Telemetry is not enabled for this host', :status => 403
+        return render_message('Telemetry is not enabled for this host', :status => 403)
       end
       config
     end

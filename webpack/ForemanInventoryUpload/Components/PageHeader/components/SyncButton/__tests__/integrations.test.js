@@ -30,6 +30,7 @@ describe('SyncButton integration test', () => {
                 host_statuses: {
                   sync: 0,
                   disconnect: 2,
+                  user_omitted: 1,
                 },
               },
               result: 'success',

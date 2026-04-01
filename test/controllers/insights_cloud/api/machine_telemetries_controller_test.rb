@@ -4,6 +4,7 @@ require 'rest-client'
 module InsightsCloud::Api
   class MachineTelemetriesControllerTest < ActionController::TestCase
     include KatelloCVEHelper
+    include CandlepinIsolation
 
     setup do
       FactoryBot.create(:common_parameter, name: InsightsCloud.enable_client_param, key_type: 'boolean', value: true)
@@ -169,6 +170,45 @@ module InsightsCloud::Api
         get :forward_request, params: { "path" => "/redhat_access/r/insights/uploads/" }
 
         assert_not_nil InsightsFacet.find_by(host_id: @host.id)
+      end
+
+      test "should update InsightsClientReportStatus when parameter is false and block request" do
+        # Remove the common parameter from setup and set it to false
+        CommonParameter.where(name: InsightsCloud.enable_client_param).delete_all
+        FactoryBot.create(:common_parameter, name: InsightsCloud.enable_client_param, key_type: 'boolean', value: false)
+
+        # Stub telemetry_config to return false (disabled)
+        InsightsCloud::Api::MachineTelemetriesController.any_instance.stubs(:telemetry_config).returns(false)
+
+        get :forward_request, params: { "path" => "platform/ingress/v1/upload" }
+
+        # Request should be blocked
+        assert_response 403
+        assert_equal 'Telemetry is not enabled for this host', JSON.parse(@response.body)['message']
+
+        # But status should be updated to USER_OMITTED
+        @host.reload
+        insights_status = @host.get_status(InsightsClientReportStatus)
+        assert insights_status.persisted?, 'InsightsClientReportStatus should be created'
+        assert_equal InsightsClientReportStatus::USER_OMITTED, insights_status.status
+      end
+
+      test "should update InsightsClientReportStatus on successful upload" do
+        # Stub telemetry_config to return true (enabled) - common param from setup works for this
+        InsightsCloud::Api::MachineTelemetriesController.any_instance.stubs(:telemetry_config).returns(true)
+
+        net_http_resp = Net::HTTPResponse.new(1.0, 200, "OK")
+        res = RestClient::Response.create('response body', net_http_resp, @http_req)
+        ::ForemanRhCloud::CloudRequestForwarder.any_instance.stubs(:forward_request).returns(res)
+
+        get :forward_request, params: { "path" => "/redhat_access/r/insights/uploads/" }
+
+        assert_response :success
+
+        # Status should have been refreshed during the request
+        @host.reload
+        insights_status = @host.get_status(InsightsClientReportStatus)
+        assert insights_status.persisted?, 'InsightsClientReportStatus should be created and persisted'
       end
     end
 

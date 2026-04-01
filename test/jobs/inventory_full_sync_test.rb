@@ -5,6 +5,7 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
   include Dynflow::Testing::Factories
   include MockCerts
   include KatelloCVEHelper
+  include CandlepinIsolation
 
   setup do
     User.current = User.find_by(login: 'secret_admin')
@@ -309,5 +310,216 @@ class InventoryFullSyncTest < ActiveSupport::TestCase
     @host2.reload
 
     assert_nil InventorySync::InventoryStatus.where(host_id: @host3.id).first
+  end
+
+  test 'user-omitted hosts get USER_OMITTED status' do
+    # Add parameter to exclude host1
+    @host1.host_parameters << HostParameter.create(
+      name: 'host_registration_insights_inventory',
+      value: 'false',
+      parameter_type: 'boolean'
+    )
+    @host1.save!
+
+    setup_certs_expectation do
+      InventorySync::Async::InventoryFullSync.any_instance.stubs(:candlepin_id_cert)
+    end
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
+    FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
+
+    action = create_and_plan_action(InventorySync::Async::InventoryFullSync, @host1.organization)
+    run_action(action)
+
+    @host1.reload
+    @host2.reload
+
+    # Host1 should be USER_OMITTED
+    assert_equal InventorySync::InventoryStatus::USER_OMITTED,
+      InventorySync::InventoryStatus.where(host_id: @host1.id).first.status,
+      'Host with host_registration_insights_inventory=false should have USER_OMITTED status'
+
+    # Host2 should be SYNC
+    assert_equal InventorySync::InventoryStatus::SYNC,
+      InventorySync::InventoryStatus.where(host_id: @host2.id).first.status,
+      'Normal host should have SYNC status'
+  end
+
+  test 'user-omitted hosts are not marked as disconnected' do
+    # Add parameter to exclude host1
+    @host1.host_parameters << HostParameter.create(
+      name: 'host_registration_insights_inventory',
+      value: 'false',
+      parameter_type: 'boolean'
+    )
+    @host1.save!
+
+    # Host1 is not in the cloud inventory response
+    setup_certs_expectation do
+      InventorySync::Async::InventoryFullSync.any_instance.stubs(:candlepin_id_cert)
+    end
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:affected_host_ids).returns([@host1.id, @host2.id])
+    FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
+
+    action = create_and_plan_action(InventorySync::Async::InventoryFullSync, @host1.organization)
+    run_action(action)
+
+    @host1.reload
+
+    # Host1 should be USER_OMITTED, not DISCONNECT
+    assert_equal InventorySync::InventoryStatus::USER_OMITTED,
+      InventorySync::InventoryStatus.where(host_id: @host1.id).first.status,
+      'User-omitted host should have USER_OMITTED status even if not in cloud inventory'
+  end
+
+  test 'host_statuses output includes all three counts' do
+    # Create a mix of hosts with different statuses
+    # Host1: will be user-omitted
+    @host1.host_parameters << HostParameter.create(
+      name: 'host_registration_insights_inventory',
+      value: 'false',
+      parameter_type: 'boolean'
+    )
+    @host1.save!
+
+    # Host2: will be synced (in cloud inventory)
+    # Host3: will be disconnected (not in cloud inventory)
+
+    # Create inventory response with only host2 (exclude host1 and host3)
+    inventory_with_host2_only = @inventory.dup
+    inventory_with_host2_only['results'] = [@inventory['results'][0]] # Only host2
+    inventory_with_host2_only['total'] = 1
+    inventory_with_host2_only['count'] = 1
+
+    setup_certs_expectation do
+      InventorySync::Async::InventoryFullSync.any_instance.stubs(:candlepin_id_cert)
+    end
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(inventory_with_host2_only)
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:affected_host_ids).returns([@host1.id, @host2.id, @host3.id])
+    FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
+
+    action = create_and_plan_action(InventorySync::Async::InventoryFullSync, @host1.organization)
+    run_action(action)
+
+    # Verify the statuses were actually set correctly
+    @host1.reload
+    @host2.reload
+    @host3.reload
+
+    assert_equal InventorySync::InventoryStatus::USER_OMITTED,
+      InventorySync::InventoryStatus.where(host_id: @host1.id).first.status,
+      'Host with host_registration_insights_inventory=false should have USER_OMITTED status'
+    assert_equal InventorySync::InventoryStatus::SYNC,
+      InventorySync::InventoryStatus.where(host_id: @host2.id).first.status,
+      'Host in cloud inventory should have SYNC status'
+    assert_equal InventorySync::InventoryStatus::DISCONNECT,
+      InventorySync::InventoryStatus.where(host_id: @host3.id).first.status,
+      'Host not in cloud inventory and not user-omitted should have DISCONNECT status'
+  end
+
+  test 'user-omitted status respects parameter inheritance from hostgroup' do
+    # Create a hostgroup and assign it to host1
+    hostgroup = FactoryBot.create(:hostgroup)
+    hostgroup.organizations << @host1.organization
+    @host1.hostgroup = hostgroup
+    @host1.save!
+
+    # Set parameter at hostgroup level, not directly on host
+    # This verifies the fix that uses search_for instead of querying HostParameter directly
+    hostgroup.group_parameters << GroupParameter.create(
+      name: 'host_registration_insights_inventory',
+      value: 'false',
+      key_type: 'boolean'
+    )
+    hostgroup.save!
+
+    # Verify parameter is inherited (not set directly on host)
+    assert_nil @host1.parameters.find_by(name: 'host_registration_insights_inventory'),
+      'Test setup: parameter should not be set directly on host'
+    refute ::Foreman::Cast.to_bool(@host1.host_param('host_registration_insights_inventory')),
+      'Test setup: parameter should be inherited from hostgroup'
+
+    # Host2 remains normal (no parameter)
+    setup_certs_expectation do
+      InventorySync::Async::InventoryFullSync.any_instance.stubs(:candlepin_id_cert)
+    end
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory)
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:affected_host_ids).returns([@host1.id, @host2.id])
+    FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
+
+    action = create_and_plan_action(InventorySync::Async::InventoryFullSync, @host1.organization)
+    run_action(action)
+
+    @host1.reload
+    @host2.reload
+
+    # Host1 should be USER_OMITTED (inherited parameter from hostgroup)
+    host1_status = InventorySync::InventoryStatus.where(host_id: @host1.id).first
+    assert_not_nil host1_status, 'Host1 should have an inventory status'
+    assert_equal InventorySync::InventoryStatus::USER_OMITTED, host1_status.status,
+      'Host with inherited host_registration_insights_inventory=false should have USER_OMITTED status'
+
+    # Host2 should be SYNC
+    assert_equal InventorySync::InventoryStatus::SYNC,
+      InventorySync::InventoryStatus.where(host_id: @host2.id).first.status,
+      'Normal host should have SYNC status'
+  end
+
+  test 'user-omitted statuses are cleared before re-creating them to avoid silent create failures' do
+    # First sync: host1 is user-omitted
+    @host1.host_parameters << HostParameter.create(
+      name: 'host_registration_insights_inventory',
+      value: 'false',
+      parameter_type: 'boolean'
+    )
+    @host1.save!
+
+    setup_certs_expectation do
+      InventorySync::Async::InventoryFullSync.any_instance.stubs(:candlepin_id_cert)
+    end
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:query_inventory).returns(@inventory).twice
+    InventorySync::Async::InventoryFullSync.any_instance.expects(:affected_host_ids).returns([@host1.id, @host2.id]).twice
+    FactoryBot.create(:fact_value, fact_name: fact_names['virt::uuid'], value: '1234', host: @host2)
+
+    # Run first sync
+    action = create_and_plan_action(InventorySync::Async::InventoryFullSync, @host1.organization)
+    run_action(action)
+
+    @host1.reload
+    initial_status = InventorySync::InventoryStatus.where(host_id: @host1.id).first
+    assert_equal InventorySync::InventoryStatus::USER_OMITTED, initial_status.status,
+      'Initial sync: host should be USER_OMITTED'
+    initial_status_id = initial_status.id
+
+    # Verify there's only one status record for host1
+    assert_equal 1, InventorySync::InventoryStatus.where(host_id: @host1.id).count,
+      'Should have exactly one status record after first sync'
+
+    # Run second sync (parameter still false)
+    # Without clearing old user_omitted statuses, the .create would silently fail
+    # with 'Host has already been taken' due to uniqueness constraint
+    setup_certs_expectation do
+      InventorySync::Async::InventoryFullSync.any_instance.stubs(:candlepin_id_cert)
+    end
+
+    action2 = create_and_plan_action(InventorySync::Async::InventoryFullSync, @host1.organization)
+    run_action(action2)
+
+    @host1.reload
+    final_status = InventorySync::InventoryStatus.where(host_id: @host1.id).first
+
+    # Verify status is still USER_OMITTED (not stale from first sync)
+    assert_equal InventorySync::InventoryStatus::USER_OMITTED, final_status.status,
+      'Status should be USER_OMITTED after second sync'
+
+    # Verify there's still only one status record (old one was deleted before creating new one)
+    assert_equal 1, InventorySync::InventoryStatus.where(host_id: @host1.id).count,
+      'Should have exactly one status record (old cleared before new created)'
+
+    # Verify the old status record was actually deleted and replaced with a new one
+    refute InventorySync::InventoryStatus.exists?(initial_status_id),
+      'Old status record should have been deleted before creating new one'
+    assert_not_equal initial_status_id, final_status.id,
+      'New status record should have different ID, proving old was deleted'
   end
 end
