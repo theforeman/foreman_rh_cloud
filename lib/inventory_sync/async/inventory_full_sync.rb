@@ -15,16 +15,26 @@ module InventorySync
 
       def setup_statuses
         @subscribed_hosts_ids = Set.new(affected_host_ids)
+        @omitted_ids = Set.new(user_omitted_host_ids)
+
+        # Remove user-omitted hosts from subscribed set. In normal operation, affected_host_ids
+        # already excludes user-omitted hosts via for_slice, but this handles edge cases like
+        # a host transitioning from uploaded to user-omitted between syncs.
+        @subscribed_hosts_ids.subtract(@omitted_ids)
 
         InventorySync::InventoryStatus.transaction do
           InventorySync::InventoryStatus.where(host_id: @subscribed_hosts_ids).delete_all
+          InventorySync::InventoryStatus.where(host_id: @omitted_ids).delete_all
           yield
-          add_missing_hosts_statuses(@subscribed_hosts_ids)
+          add_missing_hosts_statuses(@subscribed_hosts_ids) # any remaining hosts after yield are disconnected
+          add_user_omitted_host_statuses(@omitted_ids)
           host_statuses[:disconnect] += @subscribed_hosts_ids.size
+          host_statuses[:user_omitted] += @omitted_ids.size
         end
 
-        logger.debug("Synced hosts amount: #{host_statuses[:sync]}")
-        logger.debug("Disconnected hosts amount: #{host_statuses[:disconnect]}")
+        logger.debug("Synced hosts count: #{host_statuses[:sync]}")
+        logger.debug("Disconnected hosts count: #{host_statuses[:disconnect]}")
+        logger.debug("User-omitted hosts count: #{host_statuses[:user_omitted]}")
         output[:host_statuses] = host_statuses
       end
 
@@ -44,6 +54,7 @@ module InventorySync
       private
 
       def update_hosts_status(status_hashes)
+        # create Inventory statuses
         InventorySync::InventoryStatus.create(status_hashes)
         updated_ids = status_hashes.map { |hash| hash[:host_id] }
         @subscribed_hosts_ids.subtract(updated_ids)
@@ -61,10 +72,23 @@ module InventorySync
         )
       end
 
+      def add_user_omitted_host_statuses(host_ids)
+        InventorySync::InventoryStatus.create(
+          host_ids.map do |host_id|
+            {
+              host_id: host_id,
+              status: InventorySync::InventoryStatus::USER_OMITTED,
+              reported_at: DateTime.current,
+            }
+          end
+        )
+      end
+
       def host_statuses
         @host_statuses ||= {
           sync: 0,
           disconnect: 0,
+          user_omitted: 0,
         }
       end
 
@@ -72,6 +96,18 @@ module InventorySync
         ForemanInventoryUpload::Generators::Queries.for_slice(
           Host.unscoped.where(organization: organizations)
         ).pluck(:id)
+      end
+
+      def user_omitted_host_ids
+        param_name = InsightsCloud.enable_client_param_inventory
+
+        # Use search_for to respect parameter inheritance (global, org, hostgroup, host)
+        # This matches the same logic used by for_slice, ensuring consistency
+        Host.unscoped
+            .where(organization: organizations)
+            .joins(:subscription_facet)
+            .search_for("params.#{param_name} = f")
+            .pluck(:id)
       end
     end
   end
