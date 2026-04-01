@@ -40,6 +40,7 @@ module ForemanRhCloud
         ::Host::Managed.include RhCloudHost
 
         ::Katello::Api::Rhsm::CandlepinDynflowProxyController.include InsightsCloud::PackageProfileUploadExtensions
+        ::Katello::Api::Rhsm::CandlepinProxiesController.include InsightsCloud::CandlepinProxiesExtensions
         ::Katello::RegistrationManager.singleton_class.prepend ::ForemanRhCloud::RegistrationManagerExtensions
       end
     end

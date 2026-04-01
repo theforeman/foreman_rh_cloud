@@ -6,6 +6,7 @@ module InsightsCloud
       # This method explicitly listens on Katello actions
       # rubocop:disable Rails/LexicallyScopedActionFilter
       after_action :generate_host_report, only: [:upload_package_profile, :upload_profiles]
+      after_action :update_insights_client_status, only: [:upload_package_profile, :upload_profiles]
       # rubocop:enable Rails/LexicallyScopedActionFilter
     end
 
@@ -30,6 +31,14 @@ module InsightsCloud
 
       insights_facet = @host.build_insights(uuid: @host.subscription_facet.uuid)
       insights_facet.save
+    end
+
+    def update_insights_client_status
+      # Update InsightsClientReportStatus whenever host checks in via subscription-manager
+      # This ensures USER_OMITTED status gets set even when insights-client isn't installed
+      # (parameter=false means insights-client won't be installed, so it won't hit MachineTelemetriesController)
+      @host.get_status(InsightsClientReportStatus).refresh!
+      @host.refresh_global_status!
     end
   end
 end

@@ -9,6 +9,7 @@ Array [
           "message": <Toast
             disconnectHosts={2}
             syncHosts={0}
+            userOmittedHosts={1}
           />,
           "sticky": true,
           "type": "success",
