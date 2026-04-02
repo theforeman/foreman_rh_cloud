@@ -47,7 +47,7 @@ module ForemanInventoryUpload
           resource_type: 'Organization',
           resource_id: org_id,
         })
-        .with_duration
+        .select_duration
         .order('started_at DESC')
         .first
     end

@@ -15,7 +15,7 @@ module ForemanInventoryUpload
         tasks = ForemanTasks::Task
                 .active
                 .for_action_types(ACTION_TYPES)
-                .with_duration
+                .select_duration
 
         if organization_id.present?
           tasks = tasks.joins(:links)
@@ -40,7 +40,7 @@ module ForemanInventoryUpload
 
         tasks = ForemanTasks::Task
                 .for_action_types(ACTION_TYPES)
-                .with_duration
+                .select_duration
                 .order('started_at DESC')
                 .limit(limit)
 
