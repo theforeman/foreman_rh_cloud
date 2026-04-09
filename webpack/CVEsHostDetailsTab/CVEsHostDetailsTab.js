@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
 import { createProviderOptions } from '../common/ScalprumModule/ScalprumContext';
 import { useInsightsPermissions } from '../common/Hooks/PermissionsHooks';
+import {
+  vulnerabilityDisabled,
+  useTabRedirect,
+} from '../ForemanRhCloudHelpers';
 import './CVEsHostDetailsTab.scss';
 
 const CVEsHostDetailsTab = ({ systemId }) => {
@@ -26,6 +30,15 @@ CVEsHostDetailsTab.propTypes = {
 
 const CVEsHostDetailsTabWrapper = ({ response }) => {
   const permissions = useInsightsPermissions();
+  const isHostDataLoaded = Boolean(response?.id);
+  const shouldHideTab = useTabRedirect(
+    isHostDataLoaded && vulnerabilityDisabled({ hostDetails: response })
+  );
+
+  if (shouldHideTab) {
+    return null;
+  }
+
   return (
     <ScalprumProvider {...createProviderOptions(permissions)}>
       <CVEsHostDetailsTab
@@ -38,10 +51,19 @@ const CVEsHostDetailsTabWrapper = ({ response }) => {
 
 CVEsHostDetailsTabWrapper.propTypes = {
   response: PropTypes.shape({
-    subscription_facet_attributes: PropTypes.shape({
-      uuid: PropTypes.string.isRequired,
+    id: PropTypes.number,
+    operatingsystem_name: PropTypes.string,
+    vulnerability: PropTypes.shape({
+      enabled: PropTypes.bool,
     }),
-  }).isRequired,
+    subscription_facet_attributes: PropTypes.shape({
+      uuid: PropTypes.string,
+    }),
+  }),
+};
+
+CVEsHostDetailsTabWrapper.defaultProps = {
+  response: {},
 };
 
 export default CVEsHostDetailsTabWrapper;

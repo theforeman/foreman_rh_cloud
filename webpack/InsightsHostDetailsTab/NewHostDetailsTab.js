@@ -25,6 +25,11 @@ import { useIopConfig } from '../common/Hooks/ConfigHooks';
 import { generateRuleUrl } from '../InsightsCloudSync/InsightsCloudSync';
 import { createProviderOptions } from '../common/ScalprumModule/ScalprumContext';
 import { useInsightsPermissions } from '../common/Hooks/PermissionsHooks';
+import {
+  isNotRhelHost,
+  hasNoInsightsFacet,
+  useTabRedirect,
+} from '../ForemanRhCloudHelpers';
 
 // Hosted Insights advisor
 const NewHostDetailsTab = ({ hostName, router }) => {
@@ -165,7 +170,18 @@ const IopInsightsTabWrapped = props => {
 };
 
 const InsightsTab = props => {
+  const { response } = props;
   const isIop = useIopConfig();
+  const isHostDataLoaded = Boolean(response?.id);
+  const shouldHideTab = useTabRedirect(
+    isHostDataLoaded &&
+      (isNotRhelHost({ hostDetails: response }) ||
+        hasNoInsightsFacet({ response, hostDetails: response }))
+  );
+
+  if (shouldHideTab) {
+    return null;
+  }
 
   return isIop ? (
     <IopInsightsTabWrapped {...props} />
@@ -174,6 +190,16 @@ const InsightsTab = props => {
   );
 };
 
-InsightsTab.defaultProps = {};
+InsightsTab.propTypes = {
+  response: PropTypes.shape({
+    id: PropTypes.number,
+    operatingsystem_name: PropTypes.string,
+    insights_attributes: PropTypes.object,
+  }),
+};
+
+InsightsTab.defaultProps = {
+  response: {},
+};
 
 export default InsightsTab;
