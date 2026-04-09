@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import SearchBar from 'foremanReact/components/SearchBar';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
@@ -29,7 +28,7 @@ import { useInsightsPermissions } from '../common/Hooks/PermissionsHooks';
 import {
   isNotRhelHost,
   hasNoInsightsFacet,
-  OVERVIEW_TAB_PATH,
+  useTabRedirect,
 } from '../ForemanRhCloudHelpers';
 
 // Hosted Insights advisor
@@ -172,19 +171,13 @@ const IopInsightsTabWrapped = props => {
 
 const InsightsTab = props => {
   const { response } = props;
-  const history = useHistory();
   const isIop = useIopConfig();
   const isHostDataLoaded = Boolean(response?.id);
-  const shouldHideTab =
+  const shouldHideTab = useTabRedirect(
     isHostDataLoaded &&
-    (isNotRhelHost({ hostDetails: response }) ||
-      hasNoInsightsFacet({ response, hostDetails: response }));
-
-  useEffect(() => {
-    if (shouldHideTab && history) {
-      history.replace(OVERVIEW_TAB_PATH);
-    }
-  }, [shouldHideTab, history]);
+      (isNotRhelHost({ hostDetails: response }) ||
+        hasNoInsightsFacet({ response, hostDetails: response }))
+  );
 
   if (shouldHideTab) {
     return null;

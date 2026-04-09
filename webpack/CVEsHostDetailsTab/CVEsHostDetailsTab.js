@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
 import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
 import { createProviderOptions } from '../common/ScalprumModule/ScalprumContext';
 import { useInsightsPermissions } from '../common/Hooks/PermissionsHooks';
 import {
   vulnerabilityDisabled,
-  OVERVIEW_TAB_PATH,
+  useTabRedirect,
 } from '../ForemanRhCloudHelpers';
 import './CVEsHostDetailsTab.scss';
 
@@ -30,17 +29,11 @@ CVEsHostDetailsTab.propTypes = {
 };
 
 const CVEsHostDetailsTabWrapper = ({ response }) => {
-  const history = useHistory();
   const permissions = useInsightsPermissions();
   const isHostDataLoaded = Boolean(response?.id);
-  const shouldHideTab =
-    isHostDataLoaded && vulnerabilityDisabled({ hostDetails: response });
-
-  useEffect(() => {
-    if (shouldHideTab && history) {
-      history.replace(OVERVIEW_TAB_PATH);
-    }
-  }, [shouldHideTab, history]);
+  const shouldHideTab = useTabRedirect(
+    isHostDataLoaded && vulnerabilityDisabled({ hostDetails: response })
+  );
 
   if (shouldHideTab) {
     return null;
