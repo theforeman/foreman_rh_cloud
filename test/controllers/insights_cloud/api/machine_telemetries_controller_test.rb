@@ -154,8 +154,22 @@ module InsightsCloud::Api
 
         get :forward_request, params: { "path" => "platform/module-update-router/v1/channel" }
         assert_equal 500, @response.status
-        assert_equal 'Cloud request failed', JSON.parse(@response.body)['message']
-        assert_match /#{@body}/, JSON.parse(@response.body)['response']
+        assert_equal @body, @response.body
+      end
+
+      test "should forward JSON error responses without double-escaping" do
+        json_error = { errors: [{ detail: 'inventory_id must exist', status: '404' }] }.to_json
+        net_http_resp = Net::HTTPResponse.new(1.0, 404, "Not Found")
+        net_http_resp['content-type'] = 'application/json'
+        res = RestClient::Response.create(json_error, net_http_resp, @http_req)
+        ::ForemanRhCloud::CloudRequestForwarder.any_instance.stubs(:execute_cloud_request).raises(RestClient::NotFound.new(res))
+
+        get :forward_request, params: { "path" => "api/vulnerability/v1/systems/00000000-0000-0000-0000-000000000000" }
+        assert_equal 404, @response.status
+        assert_includes @response.content_type, 'application/json'
+        assert_equal json_error, @response.body
+        parsed = JSON.parse(@response.body)
+        assert_equal 'inventory_id must exist', parsed['errors'][0]['detail']
       end
 
       test "should create insights facet" do
