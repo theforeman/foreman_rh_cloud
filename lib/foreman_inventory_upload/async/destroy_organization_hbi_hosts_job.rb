@@ -30,11 +30,11 @@ module ForemanInventoryUpload
           }
         )
 
-        output[:result] = _("Successfully deleted all HBI hosts for organization %s") % org.label
+        output[:result] = format(_("Successfully deleted all HBI hosts for organization %s"), org.label)
       rescue RestClient::NotFound
-        output[:result] = _("No HBI hosts found for organization %s") % org&.label
+        output[:result] = format(_("No HBI hosts found for organization %s"), org&.label)
       rescue StandardError => e
-        logger.error(_("Failed to destroy HBI hosts for organization %s: %s") % [org&.label, e.message])
+        logger.error(format(_("Failed to destroy HBI hosts for organization %s: %s"), org&.label, e.message))
         raise
       end
 
