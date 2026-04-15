@@ -11,13 +11,7 @@ class DestroyOrganizationHbiHostsJobTest < ActiveSupport::TestCase
     @org = FactoryBot.create(:organization)
   end
 
-  teardown do
-    ForemanRhCloud.unstub(:with_iop_smart_proxy?)
-  end
-
-  test 'Deletes all HBI hosts for organization in IoP mode' do
-    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
-
+  test 'Deletes all HBI hosts for organization' do
     expected_url = ForemanInventoryUpload.hosts_delete_all_url
 
     ForemanInventoryUpload::Async::DestroyOrganizationHbiHostsJob.any_instance.expects(:execute_cloud_request).with do |params|
@@ -33,20 +27,7 @@ class DestroyOrganizationHbiHostsJobTest < ActiveSupport::TestCase
     assert_match(/Successfully deleted/, action.output[:result])
   end
 
-  test 'Skips HBI deletion when not in IoP mode' do
-    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
-
-    ForemanInventoryUpload::Async::DestroyOrganizationHbiHostsJob.any_instance.expects(:execute_cloud_request).never
-
-    action = create_and_plan_action(ForemanInventoryUpload::Async::DestroyOrganizationHbiHostsJob, @org.id)
-    action = run_action(action)
-
-    assert_match(/not in IoP mode/, action.output[:result])
-  end
-
   test 'Handles RestClient::NotFound gracefully' do
-    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
-
     ForemanInventoryUpload::Async::DestroyOrganizationHbiHostsJob.any_instance.expects(:execute_cloud_request).raises(RestClient::NotFound)
 
     action = create_and_plan_action(ForemanInventoryUpload::Async::DestroyOrganizationHbiHostsJob, @org.id)
@@ -56,8 +37,6 @@ class DestroyOrganizationHbiHostsJobTest < ActiveSupport::TestCase
   end
 
   test 'Raises on other errors' do
-    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
-
     ForemanInventoryUpload::Async::DestroyOrganizationHbiHostsJob.any_instance.expects(:execute_cloud_request).raises(
       RestClient::InternalServerError.new
     )

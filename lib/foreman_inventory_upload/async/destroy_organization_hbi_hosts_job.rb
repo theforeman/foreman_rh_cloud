@@ -8,11 +8,6 @@ module ForemanInventoryUpload
       end
 
       def run
-        unless ForemanRhCloud.with_iop_smart_proxy?
-          output[:result] = _("Skipping HBI host cleanup: not in IoP mode")
-          return
-        end
-
         org = Organization.find_by(id: input[:organization_id])
         unless org
           output[:result] = _("Organization not found")
