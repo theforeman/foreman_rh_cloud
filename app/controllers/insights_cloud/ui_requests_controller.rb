@@ -36,14 +36,10 @@ module InsightsCloud
       rescue RestClient::ExceptionWithResponse => e
         response_obj = e.response.presence || e.exception
         code = response_obj.try(:code) || response_obj.try(:http_code) || 500
-        message = 'Cloud request failed'
+        upstream_content_type = response_obj.try(:headers)&.[](:content_type)
+        content_type = upstream_content_type&.match?(/json/) ? upstream_content_type : 'application/json'
 
-        return render json: {
-          :message => message,
-          :error => response_obj.to_s,
-          :headers => {},
-          :response => response_obj,
-        }, status: code
+        return render body: response_obj.to_s, status: code, content_type: content_type
       rescue StandardError => e
         # Catch any other exceptions here, such as Errno::ECONNREFUSED
         logger.warn("Cloud request failed with exception: #{e}")
