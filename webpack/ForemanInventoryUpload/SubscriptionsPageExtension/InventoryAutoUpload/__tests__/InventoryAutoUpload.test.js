@@ -1,17 +1,39 @@
-import { testComponentSnapshotsWithFixtures } from '@theforeman/test';
-import { noop } from 'foremanReact/common/helpers';
-
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 import InventoryAutoUpload from '../InventoryAutoUpload';
 
-const fixtures = {
-  'render with props': {
-    autoUploadEnabled: true,
-    setSetting: noop,
-    getSettings: noop,
-  },
-};
+jest.mock('../../../../common/Switcher', () => ({ label }) => (
+  <div data-testid="switcher">{label}</div>
+));
+jest.mock(
+  '../../../Components/InventorySettings/InventorySettings',
+  () => () => <div data-testid="inventory-settings">InventorySettings</div>
+);
 
 describe('InventoryAutoUpload', () => {
-  describe('rendering', () =>
-    testComponentSnapshotsWithFixtures(InventoryAutoUpload, fixtures));
+  const defaultProps = {
+    autoUploadEnabled: true,
+    setSetting: jest.fn(),
+    getSettings: jest.fn(),
+  };
+
+  it('renders the heading', () => {
+    render(<InventoryAutoUpload {...defaultProps} />);
+    expect(screen.getByText('Red Hat Cloud Inventory')).toBeTruthy();
+  });
+
+  it('renders the auto upload switcher', () => {
+    render(<InventoryAutoUpload {...defaultProps} />);
+    expect(screen.getByText('Inventory Auto Upload')).toBeTruthy();
+  });
+
+  it('renders the advanced settings button', () => {
+    render(<InventoryAutoUpload {...defaultProps} />);
+    expect(screen.getByText('Show Advanced Settings')).toBeTruthy();
+  });
+
+  it('calls getSettings on mount', () => {
+    render(<InventoryAutoUpload {...defaultProps} />);
+    expect(defaultProps.getSettings).toHaveBeenCalled();
+  });
 });
