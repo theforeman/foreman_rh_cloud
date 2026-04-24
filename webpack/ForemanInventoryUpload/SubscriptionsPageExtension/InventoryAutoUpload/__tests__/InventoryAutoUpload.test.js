@@ -11,29 +11,31 @@ jest.mock(
 );
 
 describe('InventoryAutoUpload', () => {
-  const defaultProps = {
+  const buildProps = (overrides = {}) => ({
     autoUploadEnabled: true,
     setSetting: jest.fn(),
     getSettings: jest.fn(),
-  };
+    ...overrides,
+  });
 
   it('renders the heading', () => {
-    render(<InventoryAutoUpload {...defaultProps} />);
+    render(<InventoryAutoUpload {...buildProps()} />);
     expect(screen.getByText('Red Hat Cloud Inventory')).toBeTruthy();
   });
 
   it('renders the auto upload switcher', () => {
-    render(<InventoryAutoUpload {...defaultProps} />);
+    render(<InventoryAutoUpload {...buildProps()} />);
     expect(screen.getByText('Inventory Auto Upload')).toBeTruthy();
   });
 
   it('renders the advanced settings button', () => {
-    render(<InventoryAutoUpload {...defaultProps} />);
-    expect(screen.getByText('Show Advanced Settings')).toBeTruthy();
+    render(<InventoryAutoUpload {...buildProps()} />);
+    expect(screen.getByRole('button', { name: /Show Advanced Settings/ })).toBeTruthy();
   });
 
   it('calls getSettings on mount', () => {
-    render(<InventoryAutoUpload {...defaultProps} />);
-    expect(defaultProps.getSettings).toHaveBeenCalled();
+    const props = buildProps();
+    render(<InventoryAutoUpload {...props} />);
+    expect(props.getSettings).toHaveBeenCalled();
   });
 });

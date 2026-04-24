@@ -11,7 +11,7 @@ describe('CloudConnectorButton', () => {
         onClick={jest.fn()}
       />
     );
-    expect(screen.getByText('Configure cloud connector')).toBeTruthy();
+    expect(screen.getByRole('button', { name: /Configure cloud connector/ })).toBeTruthy();
   });
 
   it('renders "Reconfigure cloud connector" when resolved', () => {
@@ -21,7 +21,7 @@ describe('CloudConnectorButton', () => {
         onClick={jest.fn()}
       />
     );
-    expect(screen.getByText('Reconfigure cloud connector')).toBeTruthy();
+    expect(screen.getByRole('button', { name: /Reconfigure cloud connector/ })).toBeTruthy();
   });
 
   it('renders in-progress button when pending', () => {
@@ -45,7 +45,7 @@ describe('CloudConnectorButton', () => {
         onClick={onClick}
       />
     );
-    fireEvent.click(screen.getByText('Configure cloud connector'));
+    fireEvent.click(screen.getByRole('button', { name: /Configure cloud connector/ }));
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 });

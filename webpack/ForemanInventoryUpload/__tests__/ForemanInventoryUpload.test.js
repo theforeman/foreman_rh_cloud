@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -13,7 +13,13 @@ jest.mock('../Components/AccountList', () => () => (
 ));
 jest.mock('foremanReact/routes/common/PageLayout/PageLayout', () => ({
   children,
-}) => <div data-testid="page-layout">{children}</div>);
+  beforeToolbarComponent,
+}) => (
+  <div data-testid="page-layout">
+    {beforeToolbarComponent}
+    {children}
+  </div>
+));
 
 const mockStore = configureMockStore([thunk]);
 
@@ -26,5 +32,8 @@ describe('ForemanInventoryUpload', () => {
       </Provider>
     );
     expect(container.querySelector('.rh-cloud-inventory-page')).toBeTruthy();
+    expect(screen.getByTestId('page-layout')).toBeTruthy();
+    expect(screen.getByTestId('page-header')).toBeTruthy();
+    expect(screen.getByTestId('account-list')).toBeTruthy();
   });
 });

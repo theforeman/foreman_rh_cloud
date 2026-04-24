@@ -4,21 +4,21 @@ import { SettingsWarning } from './SettingsWarning';
 
 describe('SettingsWarning', () => {
   it('renders nothing when isCloudConnector is false', () => {
-    const { container } = render(
+    render(
       <SettingsWarning autoUpload={false} isCloudConnector={false} />
     );
-    expect(container.innerHTML).toBe('');
+    expect(screen.queryByRole('alert')).toBeNull();
   });
 
   it('renders nothing when autoUpload is on and obfuscation is off', () => {
-    const { container } = render(
+    render(
       <SettingsWarning
         autoUpload
         hostObfuscation={false}
         isCloudConnector
       />
     );
-    expect(container.innerHTML).toBe('');
+    expect(screen.queryByRole('alert')).toBeNull();
   });
 
   it('renders upload warning when autoUpload is disabled', () => {

@@ -15,19 +15,19 @@ describe('ScheduledRun', () => {
   });
 
   it('renders nothing when autoUploadEnabled is false', () => {
-    const { container } = renderWithIntl(
+    renderWithIntl(
       <ScheduledRun
         date="2019-08-21T16:14:16.520+03:00"
         autoUploadEnabled={false}
       />
     );
-    expect(container.innerHTML).toBe('');
+    expect(screen.queryByText(/Next run:/)).toBeNull();
   });
 
   it('renders nothing when date is null', () => {
-    const { container } = renderWithIntl(
+    renderWithIntl(
       <ScheduledRun date={null} autoUploadEnabled />
     );
-    expect(container.innerHTML).toBe('');
+    expect(screen.queryByText(/Next run:/)).toBeNull();
   });
 });

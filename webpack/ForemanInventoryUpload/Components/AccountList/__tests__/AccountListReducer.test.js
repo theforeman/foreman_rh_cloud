@@ -1,6 +1,7 @@
 import {
   INVENTORY_ACCOUNT_STATUS_POLLING,
   INVENTORY_ACCOUNT_STATUS_POLLING_START,
+  INVENTORY_ACCOUNT_STATUS_POLLING_STOP,
   INVENTORY_ACCOUNT_STATUS_POLLING_ERROR,
   INVENTORY_PROCESS_RESTART,
 } from '../AccountListConstants';
@@ -48,6 +49,19 @@ describe('AccountList reducer', () => {
       payload: { pollingProcessID },
     });
     expect(state.pollingProcessID).toBe(pollingProcessID);
+  });
+
+  it('handles INVENTORY_ACCOUNT_STATUS_POLLING_STOP (default case)', () => {
+    const prevState = reducer(undefined, {
+      type: INVENTORY_ACCOUNT_STATUS_POLLING_START,
+      payload: { pollingProcessID },
+    });
+    const state = reducer(prevState, {
+      type: INVENTORY_ACCOUNT_STATUS_POLLING_STOP,
+    });
+    expect(state.pollingProcessID).toBe(pollingProcessID);
+    expect(state.accounts).toEqual({});
+    expect(state.error).toBeNull();
   });
 
   it('handles INVENTORY_PROCESS_RESTART', () => {

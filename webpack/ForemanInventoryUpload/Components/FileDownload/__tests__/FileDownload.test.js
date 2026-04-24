@@ -5,13 +5,13 @@ import FileDownload from '../FileDownload';
 describe('FileDownload', () => {
   it('renders the download button', () => {
     render(<FileDownload />);
-    expect(screen.getByText('Download Report')).toBeTruthy();
+    expect(screen.getByRole('button', { name: /Download Report/ })).toBeTruthy();
   });
 
   it('calls onClick when button is clicked', () => {
     const onClick = jest.fn();
     render(<FileDownload onClick={onClick} />);
-    fireEvent.click(screen.getByText('Download Report'));
+    fireEvent.click(screen.getByRole('button', { name: /Download Report/ }));
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 });
