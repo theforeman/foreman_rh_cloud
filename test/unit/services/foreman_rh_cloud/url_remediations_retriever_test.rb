@@ -67,4 +67,40 @@ class URLRemediationsRetrieverTest < ActiveSupport::TestCase
 
     retriever.create_playbook
   end
+
+  test 'Merges multiple hosts query params into a single array' do
+    retriever = ForemanRhCloud::URLRemediationsRetriever.new(
+      organization_id: FactoryBot.create(:organization).id,
+      url: 'http://test.example.com/api/remediations/1234/playbook?hosts=uuid-1&hosts=uuid-2'
+    )
+
+    retriever.stubs(:cert_auth_available?).returns(true)
+
+    response = mock('response')
+    response.stubs(:body).returns('TEST_PLAYBOOK')
+    retriever.expects(:execute_cloud_request).with do |params|
+      params[:method] == :post &&
+      params[:url] == 'http://test.example.com/api/remediations/1234/playbook' &&
+      JSON.parse(params[:payload]) == ['uuid-1', 'uuid-2']
+    end.returns(response)
+
+    retriever.create_playbook
+  end
+
+  test 'Falls back to GET when hosts query param is empty' do
+    retriever = ForemanRhCloud::URLRemediationsRetriever.new(
+      organization_id: FactoryBot.create(:organization).id,
+      url: 'http://test.example.com/api/remediations/1234/playbook?hosts='
+    )
+
+    retriever.stubs(:cert_auth_available?).returns(true)
+
+    response = mock('response')
+    response.stubs(:body).returns('TEST_PLAYBOOK')
+    retriever.expects(:execute_cloud_request).with do |params|
+      params[:method] == :get
+    end.returns(response)
+
+    retriever.create_playbook
+  end
 end

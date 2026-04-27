@@ -10,7 +10,8 @@ module ForemanRhCloud
       hosts_param = query_params.delete('hosts')
 
       if hosts_param.present?
-        @host_uuids = hosts_param.flat_map { |v| v.split(',') }
+        @host_uuids = hosts_param.flat_map { |v| v.split(',') }.map(&:strip).reject(&:blank?)
+        @host_uuids = nil if @host_uuids.empty?
         parsed_url.query = query_params.any? ? URI.encode_www_form(query_params) : nil
         @url = parsed_url.to_s
       else
