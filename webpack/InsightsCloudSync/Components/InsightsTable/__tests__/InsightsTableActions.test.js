@@ -119,11 +119,12 @@ describe('InsightsTable actions', () => {
 
       expect(push).toHaveBeenCalled();
 
-      const getCall = get.mock.calls[0][0];
-      expect(getCall.key).toBe(INSIGHTS_HITS_API_KEY);
-      expect(getCall.url).toBe(INSIGHTS_HITS_PATH);
-      expect(getCall.params.page).toBe(2);
-      expect(getCall.params.per_page).toBe(7);
+      expect(get).toHaveBeenCalledTimes(1);
+      const getArg = get.mock.calls[0][0];
+      expect(getArg.key).toBe(INSIGHTS_HITS_API_KEY);
+      expect(getArg.url).toBe(INSIGHTS_HITS_PATH);
+      expect(getArg.params.page).toBe(2);
+      expect(getArg.params.per_page).toBe(7);
     });
 
     it('clears select all alert when isSelectAll is false', () => {
