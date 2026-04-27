@@ -19,3 +19,4 @@ Gemfile.lock
 .rubocop*--*
 public/
 .claude
+.idea/
