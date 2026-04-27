@@ -1,62 +1,78 @@
-import { testActionSnapshotWithFixtures } from '@theforeman/test';
 import { API } from 'foremanReact/redux/API';
+import { addToast } from 'foremanReact/components/ToastsList';
 import {
   getInsightsSyncSettings,
   setInsightsSyncEnabled,
 } from '../InsightsSettingsActions';
-import { rhCloudStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
-
-const serverMock = {
-  data: { insightsSyncEnabled: true },
-};
+import {
+  INSIGHTS_SYNC_SETTING_SET,
+  INSIGHTS_SYNC_SETTINGS_GET_SUCCESS,
+} from '../InsightsSettingsConstants';
 
 jest.mock('foremanReact/redux/API');
-API.get.mockImplementation(() => serverMock);
-API.patch.mockImplementation(() => serverMock);
-
-const runWithGetState = (state, action, params) => dispatch => {
-  const getState = () => rhCloudStateWrapper({ InsightsCloudSync: state });
-  action(params)(dispatch, getState);
-};
-
-const fixtures = {
-  'should generate INSIGHTS_SYNC_SETTINGS_GET_SUCCESS action': () =>
-    runWithGetState({ settings: {} }, getInsightsSyncSettings, {}),
-  'should handle getInsightsSyncSettings with error ': () => {
-    API.get.mockImplementationOnce(() =>
-      Promise.reject(new Error('Network error!'))
-    );
-    return runWithGetState({ settings: {} }, getInsightsSyncSettings, {});
-  },
-  'should generate INSIGHTS_SYNC_SETTING_SET action': () =>
-    runWithGetState(
-      { settings: { insightsSyncEnabled: false } },
-      setInsightsSyncEnabled,
-      true
-    ),
-  'should handle setInsightsSyncEnabled with error ': () => {
-    API.patch.mockImplementationOnce(() =>
-      Promise.reject(new Error('Network error!'))
-    );
-    return runWithGetState(
-      { settings: { insightsSyncEnabled: false } },
-      setInsightsSyncEnabled,
-      true
-    );
-  },
-};
+jest.mock('foremanReact/components/ToastsList', () => ({
+  addToast: jest.fn(opts => ({ type: 'ADD_TOAST', payload: opts })),
+}));
 
 describe('InsightsSettings actions', () => {
-  const { location } = window;
+  let dispatch;
 
-  beforeAll(() => {
-    delete window.location;
-    window.location = { href: jest.fn() };
+  beforeEach(() => {
+    dispatch = jest.fn();
+    jest.clearAllMocks();
   });
 
-  afterAll(() => {
-    window.location = location;
+  describe('getInsightsSyncSettings', () => {
+    it('dispatches success action with settings on success', async () => {
+      API.get.mockResolvedValue({ data: { insightsSyncEnabled: true } });
+
+      await getInsightsSyncSettings()(dispatch);
+
+      expect(API.get).toHaveBeenCalledWith('/insights_cloud/settings');
+      expect(dispatch).toHaveBeenCalledWith({
+        type: INSIGHTS_SYNC_SETTINGS_GET_SUCCESS,
+        payload: { settings: { insightsSyncEnabled: true } },
+      });
+    });
+
+    it('dispatches error toast on failure', async () => {
+      API.get.mockRejectedValue(new Error('Network error!'));
+
+      await getInsightsSyncSettings()(dispatch);
+
+      expect(addToast).toHaveBeenCalledWith({
+        sticky: true,
+        type: 'error',
+        message: 'Network error!',
+      });
+    });
   });
 
-  return testActionSnapshotWithFixtures(fixtures);
+  describe('setInsightsSyncEnabled', () => {
+    it('dispatches setting set action on success', async () => {
+      API.patch.mockResolvedValue({ data: { insightsSyncEnabled: true } });
+
+      await setInsightsSyncEnabled(true)(dispatch);
+
+      expect(API.patch).toHaveBeenCalledWith('/insights_cloud/settings', {
+        insightsSyncEnabled: true,
+      });
+      expect(dispatch).toHaveBeenCalledWith({
+        type: INSIGHTS_SYNC_SETTING_SET,
+        payload: { settings: { insightsSyncEnabled: true } },
+      });
+    });
+
+    it('dispatches error toast on failure', async () => {
+      API.patch.mockRejectedValue(new Error('Network error!'));
+
+      await setInsightsSyncEnabled(true)(dispatch);
+
+      expect(addToast).toHaveBeenCalledWith({
+        sticky: true,
+        type: 'error',
+        message: 'Network error!',
+      });
+    });
+  });
 });
