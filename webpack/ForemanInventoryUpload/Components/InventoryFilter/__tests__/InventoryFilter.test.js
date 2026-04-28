@@ -2,9 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import InventoryFilter from '../InventoryFilter';
 
-jest.mock('foremanReact/Root/Context/ForemanContext', () => ({
-  useForemanOrganization: () => ({ title: 'Any Organization' }),
-}));
+jest.mock('foremanReact/Root/Context/ForemanContext');
 
 describe('InventoryFilter', () => {
   it('renders the filter input', () => {

@@ -6,9 +6,7 @@ import thunk from 'redux-thunk';
 import ConnectedInventoryFilter from '../index';
 import { INVENTORY_FILTER_UPDATE } from '../InventoryFilterConstants';
 
-jest.mock('foremanReact/Root/Context/ForemanContext', () => ({
-  useForemanOrganization: () => ({ title: 'Any Organization' }),
-}));
+jest.mock('foremanReact/Root/Context/ForemanContext');
 
 const mockStore = configureMockStore([thunk]);
 
