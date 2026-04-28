@@ -6,8 +6,14 @@ import {
 
 describe('ForemanRhCloud helpers', () => {
   describe('foremanUrl', () => {
+    const originalUrlPrefix = global.URL_PREFIX;
+
     beforeAll(() => {
       global.URL_PREFIX = 'MY_TEST_URL_PREFIX.example.com';
+    });
+
+    afterAll(() => {
+      global.URL_PREFIX = originalUrlPrefix;
     });
 
     it('prepends URL_PREFIX to path', () => {
