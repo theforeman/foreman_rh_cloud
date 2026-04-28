@@ -1,4 +1,3 @@
-import { get } from 'foremanReact/redux/API';
 import { push } from 'connected-react-router';
 import {
   fetchInsights,
@@ -16,10 +15,6 @@ import {
   INSIGHTS_HITS_PATH,
 } from '../InsightsTableConstants';
 import { hits } from './fixtures';
-
-jest.mock('foremanReact/redux/API', () => ({
-  get: jest.fn(action => action),
-}));
 
 jest.mock('connected-react-router', () => ({
   push: jest.fn(args => ({ type: '@@router/CALL_HISTORY_METHOD', payload: args })),
@@ -119,9 +114,11 @@ describe('InsightsTable actions', () => {
 
       expect(push).toHaveBeenCalled();
 
-      expect(get).toHaveBeenCalledTimes(1);
-      const getArg = get.mock.calls[0][0];
-      expect(getArg.key).toBe(INSIGHTS_HITS_API_KEY);
+      const apiAction = dispatch.mock.calls.find(
+        call => call[0] && call[0].key === INSIGHTS_HITS_API_KEY
+      );
+      expect(apiAction).toBeTruthy();
+      const getArg = apiAction[0];
       expect(getArg.url).toBe(INSIGHTS_HITS_PATH);
       expect(getArg.params.page).toBe(2);
       expect(getArg.params.per_page).toBe(7);

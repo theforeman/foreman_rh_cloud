@@ -1,5 +1,4 @@
 import { API } from 'foremanReact/redux/API';
-import { addToast } from 'foremanReact/components/ToastsList';
 import {
   getInsightsSyncSettings,
   setInsightsSyncEnabled,
@@ -10,9 +9,6 @@ import {
 } from '../InsightsSettingsConstants';
 
 jest.mock('foremanReact/redux/API');
-jest.mock('foremanReact/components/ToastsList', () => ({
-  addToast: jest.fn(opts => ({ type: 'ADD_TOAST', payload: opts })),
-}));
 
 describe('InsightsSettings actions', () => {
   let dispatch;
@@ -40,10 +36,11 @@ describe('InsightsSettings actions', () => {
 
       await getInsightsSyncSettings()(dispatch);
 
-      expect(addToast).toHaveBeenCalledWith({
-        sticky: true,
-        type: 'error',
-        message: 'Network error!',
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TOASTS_ADD',
+        payload: {
+          message: { sticky: true, type: 'error', message: 'Network error!' },
+        },
       });
     });
   });
@@ -68,10 +65,11 @@ describe('InsightsSettings actions', () => {
 
       await setInsightsSyncEnabled(true)(dispatch);
 
-      expect(addToast).toHaveBeenCalledWith({
-        sticky: true,
-        type: 'error',
-        message: 'Network error!',
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TOASTS_ADD',
+        payload: {
+          message: { sticky: true, type: 'error', message: 'Network error!' },
+        },
       });
     });
   });

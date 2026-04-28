@@ -4,11 +4,7 @@ import InsightsTable from '../InsightsTable';
 import { tableProps } from './fixtures';
 
 jest.mock('../../../../common/Hooks/ConfigHooks');
-
-jest.mock('foremanReact/Root/Context/ForemanContext', () => ({
-  useForemanSettings: () => ({ perPage: 20 }),
-}));
-
+jest.mock('foremanReact/Root/Context/ForemanContext');
 jest.mock('../Pagination', () => () => null);
 
 const buildProps = (overrides = {}) => ({
