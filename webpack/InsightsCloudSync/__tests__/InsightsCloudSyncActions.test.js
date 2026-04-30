@@ -2,15 +2,7 @@ import { syncInsights } from '../InsightsCloudSyncActions';
 import { INSIGHTS_CLOUD_SYNC } from '../InsightsCloudSyncConstants';
 
 
-jest.mock('../../common/ForemanTasks', () => ({
-  setupTaskPolling: jest.fn(opts => ({ type: 'SETUP_TASK_POLLING', ...opts })),
-  taskRelatedToast: jest.fn((id, type, msg) => ({
-    type: 'TASK_TOAST',
-    id,
-    toastType: type,
-    msg,
-  })),
-}));
+jest.mock('../../common/ForemanTasks');
 
 describe('InsightsCloudSync actions', () => {
   let dispatch;

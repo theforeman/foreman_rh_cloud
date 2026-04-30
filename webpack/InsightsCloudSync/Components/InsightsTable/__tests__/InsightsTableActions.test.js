@@ -14,7 +14,6 @@ import {
   INSIGHTS_HITS_API_KEY,
   INSIGHTS_HITS_PATH,
 } from '../InsightsTableConstants';
-import { hits } from './fixtures';
 
 jest.mock('connected-react-router', () => ({
   push: jest.fn(args => ({ type: '@@router/CALL_HISTORY_METHOD', payload: args })),

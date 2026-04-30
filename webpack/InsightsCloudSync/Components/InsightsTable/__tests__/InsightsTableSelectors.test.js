@@ -1,5 +1,5 @@
 import { insightsStateWrapper } from '../../../../ForemanRhCloudTestHelpers';
-import { routerState, APIState, APIErrorState, hits } from './fixtures';
+import { routerState, APIState, APIErrorState } from './fixtures';
 import {
   selectError,
   selectHits,
