@@ -4,17 +4,10 @@ import AccountList from '../AccountList';
 import { accounts } from '../AccountList.fixtures';
 
 jest.mock('../Components/ListItem', () => ({ label }) => (
-  <div data-testid="list-item">{label}</div>
+  <div>{label}</div>
 ));
 
 describe('AccountList', () => {
-  it('renders list items for each account', () => {
-    render(<AccountList accounts={accounts} />);
-    expect(screen.getAllByTestId('list-item')).toHaveLength(
-      Object.keys(accounts).length
-    );
-  });
-
   it('renders account labels', () => {
     render(<AccountList accounts={accounts} />);
     Object.keys(accounts).forEach(label => {

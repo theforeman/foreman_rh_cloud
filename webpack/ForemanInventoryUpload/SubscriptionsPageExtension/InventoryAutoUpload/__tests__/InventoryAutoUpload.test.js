@@ -2,9 +2,6 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import InventoryAutoUpload from '../InventoryAutoUpload';
 
-jest.mock('../../../../common/Switcher', () => ({ label }) => (
-  <div data-testid="switcher">{label}</div>
-));
 jest.mock(
   '../../../Components/InventorySettings/InventorySettings',
   () => () => <div data-testid="inventory-settings">InventorySettings</div>

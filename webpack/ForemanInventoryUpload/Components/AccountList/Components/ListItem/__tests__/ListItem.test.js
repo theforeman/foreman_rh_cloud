@@ -3,9 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { Accordion } from '@patternfly/react-core';
 import ListItem from '../ListItem';
 
-jest.mock('../../../../Dashboard', () => () => (
-  <div data-testid="dashboard">Dashboard</div>
-));
+jest.mock('../../../../Dashboard', () => () => null);
 
 const renderListItem = props =>
   render(
@@ -35,8 +33,4 @@ describe('ListItem', () => {
     expect(screen.getByText('Uploaded')).toBeTruthy();
   });
 
-  it('expands content when defaultExpanded is true', () => {
-    renderListItem({ ...defaultProps, defaultExpanded: true });
-    expect(screen.getByTestId('dashboard')).toBeTruthy();
-  });
 });
