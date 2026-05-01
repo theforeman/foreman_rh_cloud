@@ -84,23 +84,50 @@ module ForemanRhCloud
 
   # For testing purposes we can override the default hostname with an environment variable SATELLITE_RH_CLOUD_FOREMAN_HOST
   def self.foreman_host
-    @foreman_host ||= begin
-      fullname = foreman_host_name
-      ::Host.unscoped.friendly.find(fullname)
-    rescue ActiveRecord::RecordNotFound
-      # fullname didn't work. Let's try shortname
+    return @foreman_host if defined?(@foreman_host)
+
+    fullname = foreman_host_name
+    return @foreman_host = nil unless fullname
+
+    # Try fullname first
+    host = ::Host.unscoped.friendly.where(name: fullname).first
+
+    # If not found, try shortname
+    if host.nil?
       shortname = /(?<shortname>[^\.]*)\.?.*/.match(fullname)[:shortname]
-      ::Host.unscoped.friendly.find(shortname)
+      host = ::Host.unscoped.friendly.where(name: shortname).first
     end
+
+    @foreman_host = host
   end
 
   def self.foreman_host_name
-    ENV['SATELLITE_RH_CLOUD_FOREMAN_HOST'] || marked_foreman_host&.name || ::SmartProxy.default_capsule.name
+    ENV['SATELLITE_RH_CLOUD_FOREMAN_HOST'] || marked_foreman_host&.name || foreman_url_hostname
+  end
+
+  def self.foreman_url_hostname
+    return nil unless Setting[:foreman_url]
+
+    begin
+      # Ensure setting is a string to avoid TypeError from URI.parse
+      url = Setting[:foreman_url].to_s
+      URI.parse(url).host
+    rescue URI::InvalidURIError, ArgumentError, TypeError => e
+      Rails.logger.warn("Invalid foreman_url setting: #{e.message}")
+      nil
+    end
   end
 
   def self.marked_foreman_host
-    ::Host.unscoped.search_for('infrastructure_facet.foreman = true').first
-  rescue ScopedSearch::QueryNotSupported
+    # Find host with infrastructure_facet.foreman_instance = true
+    # Facets use a special mechanism in Foreman, so we query the facet table directly
+    return nil unless defined?(HostFacets::InfrastructureFacet)
+
+    facet = HostFacets::InfrastructureFacet.find_by(foreman_instance: true)
+    facet&.host
+  rescue ActiveRecord::StatementInvalid => e
+    # Table might not exist yet during migrations
+    Rails.logger.debug("Could not query marked foreman host: #{e.message}")
     nil
   end
 
