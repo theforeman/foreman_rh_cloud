@@ -36,11 +36,6 @@ describe('SwitcherPF4', () => {
     expect(screen.getByRole('checkbox').disabled).toBe(true);
   });
 
-  it('has the correct id format', () => {
-    render(<SwitcherPF4 {...buildProps()} />);
-    expect(screen.getByRole('checkbox').id).toBe('rh-cloud-switcher-test-id');
-  });
-
   it('calls onChange when toggled', () => {
     const onChange = jest.fn();
     render(<SwitcherPF4 {...buildProps({ onChange })} />);

@@ -3,15 +3,6 @@ import { render, screen } from '@testing-library/react';
 import InsightsTab from '../InsightsTab';
 import { hits, hostID } from './InsightsTab.fixtures';
 
-jest.mock('../components/ListItem', () =>
-  // eslint-disable-next-line react/prop-types
-  ({ title, totalRisk }) => (
-    <div data-testid="list-item" data-risk={totalRisk}>
-      {title}
-    </div>
-  )
-);
-
 describe('InsightsTab', () => {
   it('renders "No recommendations" message when hits is empty', () => {
     render(<InsightsTab hostID={hostID} hits={[]} />);
@@ -25,14 +16,11 @@ describe('InsightsTab', () => {
     expect(screen.getByText('Recommendations')).toBeTruthy();
   });
 
-  it('renders list items for each hit', () => {
-    render(<InsightsTab hostID={hostID} hits={hits} />);
-    expect(screen.getAllByTestId('list-item')).toHaveLength(hits.length);
-  });
-
   it('displays hit titles', () => {
     render(<InsightsTab hostID={hostID} hits={hits} />);
-    expect(screen.getByText(hits[0].title)).toBeTruthy();
+    hits.forEach(hit => {
+      expect(screen.getByText(hit.title)).toBeTruthy();
+    });
   });
 
   it('calls fetchHits on mount', () => {
@@ -48,9 +36,11 @@ describe('InsightsTab', () => {
       { ...hits[0], title: 'Medium risk', total_risk: 2 },
     ];
     render(<InsightsTab hostID={hostID} hits={multipleHits} />);
-    const items = screen.getAllByTestId('list-item');
-    expect(items[0].getAttribute('data-risk')).toBe('4');
-    expect(items[1].getAttribute('data-risk')).toBe('2');
-    expect(items[2].getAttribute('data-risk')).toBe('1');
+    const titles = screen.getAllByText(/risk/i).map(el => el.textContent);
+    const highRiskIndex = titles.findIndex(t => t === 'High risk');
+    const mediumRiskIndex = titles.findIndex(t => t === 'Medium risk');
+    const lowRiskIndex = titles.findIndex(t => t === 'Low risk');
+    expect(highRiskIndex).toBeLessThan(mediumRiskIndex);
+    expect(mediumRiskIndex).toBeLessThan(lowRiskIndex);
   });
 });

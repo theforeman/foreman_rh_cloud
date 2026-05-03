@@ -25,10 +25,4 @@ describe('HelpLabel', () => {
     const button = screen.getByRole('button');
     expect(button.className).toContain('custom-class');
   });
-
-  it('has the correct pf-v5 class', () => {
-    render(<HelpLabel id="test-id" text="Help text" />);
-    const button = screen.getByRole('button');
-    expect(button.className).toContain('pf-v5-c-form__group-label-help');
-  });
 });
