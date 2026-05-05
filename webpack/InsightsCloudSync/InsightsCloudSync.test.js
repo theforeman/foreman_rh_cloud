@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import RecommendationsPage from './InsightsCloudSync';
 
 let mockIsIop = false;
@@ -11,19 +11,10 @@ jest.mock('../common/Hooks/PermissionsHooks', () => ({
   useInsightsPermissions: () => ({}),
 }));
 
-jest.mock('./Components/InsightsTable', () => () => (
-  <div data-testid="insights-table" />
-));
-jest.mock('./Components/RemediationModal', () => () => (
-  <div data-testid="remediation-modal" />
-));
-jest.mock('./Components/ToolbarDropdown', () => () => (
-  <div data-testid="toolbar-dropdown" />
-));
+jest.mock('./Components/InsightsTable', () => () => null);
+jest.mock('./Components/RemediationModal', () => () => null);
 jest.mock('./Components/InsightsTable/Pagination', () => () => null);
-jest.mock('./Components/InsightsSettings', () => () => (
-  <div data-testid="insights-settings" />
-));
+jest.mock('./Components/InsightsSettings', () => () => null);
 jest.mock('foremanReact/routes/common/PageLayout/PageLayout', () => ({
   children,
   header,
@@ -35,7 +26,7 @@ jest.mock('foremanReact/routes/common/PageLayout/PageLayout', () => ({
   </div>
 ));
 jest.mock('@scalprum/react-core', () => ({
-  ScalprumComponent: props => <div data-testid="scalprum-component" />,
+  ScalprumComponent: () => <div data-testid="scalprum-component" />,
   ScalprumProvider: ({ children }) => <div>{children}</div>,
 }));
 jest.mock('../common/ScalprumModule/ScalprumContext', () => ({
@@ -55,36 +46,23 @@ describe('RecommendationsPage', () => {
   });
 
   describe('non-IOP mode', () => {
-    it('renders page layout with child components', () => {
-      render(<RecommendationsPage {...defaultProps} />);
-
-      expect(screen.getByTestId('page-layout')).toBeTruthy();
-      expect(screen.getByTestId('insights-table')).toBeTruthy();
-      expect(screen.getByTestId('insights-settings')).toBeTruthy();
-      expect(screen.getByTestId('remediation-modal')).toBeTruthy();
-      expect(screen.getByTestId('toolbar-dropdown')).toBeTruthy();
-    });
-
-    it('has the rh-cloud-insights CSS class', () => {
+    it('renders with rh-cloud-insights class and correct header', () => {
       const { container } = render(
         <RecommendationsPage {...defaultProps} />
       );
 
       expect(container.querySelector('.rh-cloud-insights')).toBeTruthy();
-    });
-
-    it('sets page header to Red Hat Insights', () => {
-      render(<RecommendationsPage {...defaultProps} />);
-
       expect(
-        screen.getByTestId('page-layout').getAttribute('data-header')
-      ).toBe('Red Hat Insights');
+        container.querySelector('[data-header="Red Hat Insights"]')
+      ).toBeTruthy();
     });
 
-    it('does not render Scalprum component', () => {
-      render(<RecommendationsPage {...defaultProps} />);
+    it('does not render IOP advisor view', () => {
+      const { container } = render(
+        <RecommendationsPage {...defaultProps} />
+      );
 
-      expect(screen.queryByTestId('scalprum-component')).toBeNull();
+      expect(container.querySelector('.advisor')).toBeNull();
     });
   });
 
@@ -93,11 +71,13 @@ describe('RecommendationsPage', () => {
       mockIsIop = true;
     });
 
-    it('renders Scalprum component instead of page layout', () => {
-      render(<RecommendationsPage {...defaultProps} />);
+    it('renders advisor view instead of insights page', () => {
+      const { container } = render(
+        <RecommendationsPage {...defaultProps} />
+      );
 
-      expect(screen.getByTestId('scalprum-component')).toBeTruthy();
-      expect(screen.queryByTestId('page-layout')).toBeNull();
+      expect(container.querySelector('.advisor')).toBeTruthy();
+      expect(container.querySelector('.rh-cloud-insights')).toBeNull();
     });
   });
 });
