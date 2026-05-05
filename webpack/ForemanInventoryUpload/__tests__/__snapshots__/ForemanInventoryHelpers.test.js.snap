@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`ForemanInventoryUpload helpers should return inventory Url 1`] = `"/foreman_inventory_upload/test_path"`;
-
-exports[`ForemanInventoryUpload helpers should return inventory docs url 1`] = `"/links/manual/?root_url=https%3A%2F%2Fdocs.redhat.com%2Fen%2Fdocumentation%2Fred_hat_lightspeed%2F1-latest%2Fhtml-single%2Fred_hat_lightspeed_remediations_guide%2Findex"`;

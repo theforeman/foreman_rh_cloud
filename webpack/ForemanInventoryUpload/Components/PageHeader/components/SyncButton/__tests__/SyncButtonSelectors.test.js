@@ -1,27 +1,29 @@
-import { testSelectorsSnapshotWithFixtures } from '@theforeman/test';
 import { selectTaskStatus } from '../SyncButtonSelectors';
 
-const state = {
+const buildState = result => ({
   API: {
     INVENTORY_SYNC_TASK_UPDATE: {
       response: {
-        endedAt: '2021-03-08T14:27:30.718+02:00',
-        output: {
-          host_statuses: {
-            sync: 0,
-            disconnect: 2,
-          },
-        },
-        result: 'pending',
+        result,
       },
-      status: 'RESOLVED',
     },
   },
-};
+});
 
-const fixtures = {
-  'should return InventorySync status': () => selectTaskStatus(state),
-};
+describe('SyncButton selectors', () => {
+  it('uppercases the result string', () => {
+    expect(selectTaskStatus(buildState('pending'))).toBe('PENDING');
+  });
 
-describe('SyncButton selectors', () =>
-  testSelectorsSnapshotWithFixtures(fixtures));
+  it('handles other result strings', () => {
+    expect(selectTaskStatus(buildState('success'))).toBe('SUCCESS');
+  });
+
+  it('returns null when result is not a string', () => {
+    expect(selectTaskStatus(buildState(null))).toBeNull();
+  });
+
+  it('returns null when result is undefined', () => {
+    expect(selectTaskStatus(buildState(undefined))).toBeNull();
+  });
+});
