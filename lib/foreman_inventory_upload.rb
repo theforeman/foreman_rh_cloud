@@ -103,6 +103,10 @@ module ForemanInventoryUpload
     "#{inventory_base_url}/#{host_uuid}"
   end
 
+  def self.hosts_delete_all_url
+    "#{inventory_base_url}/all?confirm_delete_all=true"
+  end
+
   def self.hosts_by_ids_url(host_uuids)
     host_ids_string = host_uuids.join(',')
     "#{inventory_base_url}/#{host_ids_string}"
