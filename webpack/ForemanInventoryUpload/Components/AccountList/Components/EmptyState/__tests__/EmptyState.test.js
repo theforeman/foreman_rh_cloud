@@ -1,13 +1,17 @@
-import { testComponentSnapshotsWithFixtures } from '@theforeman/test';
-
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 import EmptyState from '../EmptyState';
 
-const fixtures = {
-  'render without Props': {},
-  /** fixtures, props for the component */
-};
-
 describe('EmptyState', () => {
-  describe('rendering', () =>
-    testComponentSnapshotsWithFixtures(EmptyState, fixtures));
+  it('renders fetching data message', () => {
+    render(<EmptyState />);
+    expect(
+      screen.getByText('Fetching data about your accounts')
+    ).toBeTruthy();
+  });
+
+  it('renders loading indicator', () => {
+    render(<EmptyState />);
+    expect(screen.getByText('Loading...')).toBeTruthy();
+  });
 });

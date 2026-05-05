@@ -1,13 +1,15 @@
-import { testComponentSnapshotsWithFixtures } from '@theforeman/test';
-
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 import TabContainer from '../TabContainer';
 
-const fixtures = {
-  'render without Props': {},
-  /** fixtures, props for the component */
-};
-
 describe('TabContainer', () => {
-  describe('rendering', () =>
-    testComponentSnapshotsWithFixtures(TabContainer, fixtures));
+  it('renders children', () => {
+    render(<TabContainer><span>Tab content</span></TabContainer>);
+    expect(screen.getByText('Tab content')).toBeTruthy();
+  });
+
+  it('renders with custom className', () => {
+    const { container } = render(<TabContainer className="my-tab" />);
+    expect(container.querySelector('.my-tab')).toBeTruthy();
+  });
 });
