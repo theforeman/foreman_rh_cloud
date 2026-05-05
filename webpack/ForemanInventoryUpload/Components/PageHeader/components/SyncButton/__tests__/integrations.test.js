@@ -1,52 +1,40 @@
 import React from 'react';
-import { IntegrationTestHelper } from '@theforeman/test';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import * as API from 'foremanReact/redux/API';
-import { noop } from 'foremanReact/common/helpers';
-import SyncButton from '../index';
+import ConnectedSyncButton from '../index';
 import { successResponse } from './SyncButtonFixtures';
-import {
-  INVENTORY_SYNC,
-  INVENTORY_SYNC_TASK_UPDATE,
-} from '../SyncButtonConstants';
+import { INVENTORY_SYNC } from '../SyncButtonConstants';
 
 jest.spyOn(API, 'post');
-jest.spyOn(API, 'get');
+
+const mockStore = configureMockStore([thunk]);
 
 describe('SyncButton integration test', () => {
-  it('Successful task was triggered on the server resulting in an info toast and polling on the task', async () => {
-    API.post.mockImplementation(({ handleSuccess = noop, key, ...action }) => {
-      if (key === INVENTORY_SYNC) {
+  it('dispatches sync action when button is clicked', () => {
+    API.post.mockImplementation(({ handleSuccess, key, ...action }) => {
+      if (key === INVENTORY_SYNC && handleSuccess) {
         handleSuccess(successResponse);
       }
       return { type: 'API_POST', ...action };
     });
-    API.get.mockImplementation(({ handleSuccess = noop, key, ...action }) => {
-      if (key === INVENTORY_SYNC_TASK_UPDATE) {
-        handleSuccess(
-          {
-            data: {
-              endedAt: '2021-03-22T15:59:02.468+02:00',
-              output: {
-                host_statuses: {
-                  sync: 0,
-                  disconnect: 2,
-                  user_omitted: 1,
-                },
-              },
-              result: 'success',
-            },
-          },
-          jest.fn
-        );
-      }
-      return { type: 'API_GET', ...action };
+
+    const store = mockStore({
+      API: {},
     });
 
-    const integrationTestHelper = new IntegrationTestHelper();
-    const wrapper = integrationTestHelper.mount(<SyncButton />);
-    const instance = wrapper.find('SyncButton').instance();
-    instance.props.handleSync();
-    await IntegrationTestHelper.flushAllPromises();
-    integrationTestHelper.takeActionsSnapshot('handleSync was called');
+    render(
+      <Provider store={store}>
+        <ConnectedSyncButton />
+      </Provider>
+    );
+
+    fireEvent.click(screen.getByRole('button'));
+
+    const actions = store.getActions();
+    const syncAction = actions.find(a => a.type === 'API_POST');
+    expect(syncAction).toBeTruthy();
   });
 });

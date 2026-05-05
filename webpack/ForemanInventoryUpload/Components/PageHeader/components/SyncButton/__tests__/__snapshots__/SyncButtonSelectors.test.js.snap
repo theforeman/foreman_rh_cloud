@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`SyncButton selectors should return InventorySync status 1`] = `"PENDING"`;

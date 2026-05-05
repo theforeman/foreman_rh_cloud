@@ -1,12 +1,19 @@
-import { testComponentSnapshotsWithFixtures } from '@theforeman/test';
-
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 import PageTitle from '../PageTitle';
 
-const fixtures = {
-  'render without Props': {},
-};
+jest.mock('../components/CloudPingModal', () => () => (
+  <div data-testid="cloud-ping-modal">CloudPingModal</div>
+));
 
 describe('PageTitle', () => {
-  describe('rendering', () =>
-    testComponentSnapshotsWithFixtures(PageTitle, fixtures));
+  it('renders the page title', () => {
+    render(<PageTitle />);
+    expect(screen.getByText('Red Hat Inventory')).toBeTruthy();
+  });
+
+  it('renders the kebab dropdown', () => {
+    const { container } = render(<PageTitle />);
+    expect(container.querySelector('.title-dropdown')).toBeTruthy();
+  });
 });
