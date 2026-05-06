@@ -2,7 +2,8 @@ require 'test_plugin_helper'
 
 class MetadataGeneratorTest < ActiveSupport::TestCase
   setup do
-    ForemanRhCloud.instance_variable_set(:@foreman_host, nil)
+    # reset cached value - must remove the variable entirely, not just set to nil
+    ForemanRhCloud.remove_instance_variable(:@foreman_host) if ForemanRhCloud.instance_variable_defined?(:@foreman_host)
   end
 
   test 'generates an empty report' do
@@ -63,5 +64,27 @@ class MetadataGeneratorTest < ActiveSupport::TestCase
     assert_equal 2, slice['number_hosts']
     assert_not_nil(slice = slices['test_12345'])
     assert_equal 3, slice['number_hosts']
+  end
+
+  test 'generates metadata when foreman_host is nil' do
+    ForemanRhCloud.stubs(:foreman_host).returns(nil)
+    ForemanRhCloud.stubs(:foreman_host_name).returns('satellite.example.com')
+
+    generator = ForemanInventoryUpload::Generators::Metadata.new
+
+    # Should not raise an error
+    json_str = nil
+    assert_nothing_raised do
+      json_str = generator.render do
+      end
+    end
+
+    # Verify hostname is from foreman_host_name
+    actual = JSON.parse(json_str.join("\n"))
+    assert_equal 'satellite.example.com', actual['reporting_host_name']
+    # Verify IP and BIOS UUID fields are nil when host is nil
+    # This is acceptable per SAT-25889 - cloud services don't rely on these fields
+    assert_nil actual['reporting_host_ips']
+    assert_nil actual['reporting_host_bios_uuid']
   end
 end

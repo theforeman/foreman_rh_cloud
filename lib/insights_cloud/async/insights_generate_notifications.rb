@@ -13,7 +13,16 @@ module InsightsCloud
       end
 
       def add_satellite_notifications
-        hits_count = InsightsHit.where(host_id: foreman_host.id).count
+        host = foreman_host
+
+        # Skip if no Foreman host record exists
+        unless host
+          logger.debug("Skipping Insights notifications: no Foreman host record found")
+          blueprint&.notifications&.destroy_all
+          return
+        end
+
+        hits_count = InsightsHit.where(host_id: host.id).count
 
         # Remove stale notifications
         blueprint.notifications.destroy_all

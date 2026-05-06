@@ -96,7 +96,14 @@ module ForemanInventoryUpload
   end
 
   def self.inventory_self_url
-    inventory_base_url + "?hostname_or_id=#{ForemanRhCloud.foreman_host.fqdn}"
+    host = ForemanRhCloud.foreman_host
+    hostname = host ? host.fqdn : ForemanRhCloud.foreman_host_name
+    if hostname.nil?
+      Rails.logger.warn("Cannot determine Foreman hostname for inventory sync. " \
+                        "Please configure Setting[:foreman_url]. " \
+                        "Containerized setups must explicitly set this.")
+    end
+    inventory_base_url + "?hostname_or_id=#{hostname}"
   end
 
   def self.host_by_id_url(host_uuid)

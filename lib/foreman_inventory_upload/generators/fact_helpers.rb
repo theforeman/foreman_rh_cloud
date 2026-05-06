@@ -114,6 +114,7 @@ module ForemanInventoryUpload
 
       def host_ips(host)
         # Determines and returns the IP addresses associated with a host, applying obfuscation if enabled.
+        return {} if host.nil?
 
         # If IP obfuscation is enabled for the host return a representation of obfuscated IP addresses.
         return obfuscated_ips(host) if obfuscate_ips?(host)
@@ -163,10 +164,29 @@ module ForemanInventoryUpload
 
       def hostname_match
         bash_hostname = `uname -n`.chomp
-        foreman_hostname = ForemanRhCloud.foreman_host&.name
-        if bash_hostname == foreman_hostname
-          fqdn(ForemanRhCloud.foreman_host)
-        elsif Setting[:obfuscate_inventory_hostnames]
+        foreman_host = ForemanRhCloud.foreman_host
+
+        # If bash hostname matches foreman_host, use fqdn
+        if foreman_host && bash_hostname == foreman_host.name
+          return fqdn(foreman_host)
+        end
+
+        # If no foreman_host, try foreman_host_name from Setting[:foreman_url]
+        unless foreman_host
+          foreman_hostname_from_setting = ForemanRhCloud.foreman_host_name
+          if foreman_hostname_from_setting
+            # Apply obfuscation if enabled
+            return obfuscate_fqdn(foreman_hostname_from_setting) if Setting[:obfuscate_inventory_hostnames]
+
+            return foreman_hostname_from_setting
+          end
+          # Otherwise fall through to bash_hostname below
+          # NOTE: Containerized foremanctl setups must configure Setting[:foreman_url]
+          # as bash hostname may not be available or meaningful in containers
+        end
+
+        # Fallback to bash hostname (with obfuscation if enabled)
+        if Setting[:obfuscate_inventory_hostnames]
           obfuscate_fqdn(bash_hostname)
         else
           bash_hostname
@@ -174,6 +194,8 @@ module ForemanInventoryUpload
       end
 
       def bios_uuid(host)
+        return nil if host.nil?
+
         value = fact_value(host, 'dmi::system::uuid') || ''
         uuid_value(value)
       end
