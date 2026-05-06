@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`InsightsCloudSync helpers should return insights cloud Url 1`] = `"/insights_cloud/test_path"`;
