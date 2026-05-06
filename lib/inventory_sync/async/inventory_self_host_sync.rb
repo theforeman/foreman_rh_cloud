@@ -4,7 +4,14 @@ module InventorySync
       set_callback :step, :around, :create_facets
 
       def plan
-        super(ForemanRhCloud.foreman_host.organization)
+        host = ForemanRhCloud.foreman_host
+
+        if host.nil?
+          logger.warn("Skipping self-host inventory sync: no Foreman host record found.")
+          return
+        end
+
+        super(host.organization)
       end
 
       def create_facets
@@ -22,7 +29,10 @@ module InventorySync
       private
 
       def add_missing_insights_facet(uuids_hash)
-        facet = InsightsFacet.find_or_create_by(host_id: ForemanRhCloud.foreman_host.id) do |facet|
+        host = ForemanRhCloud.foreman_host
+        return unless host # Guard against nil
+
+        facet = InsightsFacet.find_or_create_by(host_id: host.id) do |facet|
           facet.uuid = uuids_hash.values.first
         end
 
