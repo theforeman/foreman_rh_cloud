@@ -106,4 +106,13 @@ class InventorySelfHostSyncTest < ActiveSupport::TestCase
 
     assert_equal @host1_inventory_id, @host1.insights.uuid
   end
+
+  test 'skips sync when foreman_host is nil' do
+    ForemanRhCloud.stubs(:foreman_host).returns(nil)
+
+    plan = ForemanTasks.sync_task(InventorySync::Async::InventorySelfHostSync)
+
+    # Task should be stopped (not executed) when host is nil, not failed
+    assert_equal 'stopped', plan.state
+  end
 end

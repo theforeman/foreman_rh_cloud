@@ -2,8 +2,9 @@ require 'test_plugin_helper'
 
 class ForemanRhCloudSelfHostTest < ActiveSupport::TestCase
   setup do
-    # reset cached value
-    ForemanRhCloud.instance_variable_set(:@foreman_host, nil)
+    # reset cached value - must remove the variable entirely, not just set to nil
+    ForemanRhCloud.remove_instance_variable(:@foreman_host) if ForemanRhCloud.instance_variable_defined?(:@foreman_host)
+    ENV.delete('SATELLITE_RH_CLOUD_FOREMAN_HOST')
   end
 
   test 'finds host by fullname' do
@@ -31,5 +32,52 @@ class ForemanRhCloudSelfHostTest < ActiveSupport::TestCase
     actual = ForemanRhCloud.foreman_host
 
     assert_equal @host, actual
+  end
+
+  test 'returns nil when host does not exist' do
+    ForemanRhCloud.expects(:foreman_host_name).returns('nonexistent.example.com')
+
+    actual = ForemanRhCloud.foreman_host
+
+    assert_nil actual
+  end
+
+  test 'returns nil and does not query Host when foreman_host_name is nil' do
+    ForemanRhCloud.stubs(:foreman_host_name).returns(nil)
+    ::Host.unscoped.friendly.expects(:where).never
+
+    assert_nil ForemanRhCloud.foreman_host
+  end
+
+  test 'caches nil value to avoid repeated lookups' do
+    ForemanRhCloud.expects(:foreman_host_name).once.returns('nonexistent.example.com')
+
+    2.times { ForemanRhCloud.foreman_host }
+  end
+
+  test 'extracts hostname from foreman_url setting' do
+    Setting[:foreman_url] = 'https://satellite.example.com'
+
+    actual = ForemanRhCloud.foreman_url_hostname
+
+    assert_equal 'satellite.example.com', actual
+  end
+
+  test 'handles invalid foreman_url gracefully' do
+    # Stub Setting to return invalid URL without validation
+    Setting.stubs(:[]).with(:foreman_url).returns('not a valid url')
+
+    actual = ForemanRhCloud.foreman_url_hostname
+
+    assert_nil actual
+  end
+
+  test 'foreman_host_name uses foreman_url when marked_foreman_host is nil' do
+    ForemanRhCloud.expects(:marked_foreman_host).returns(nil)
+    ForemanRhCloud.expects(:foreman_url_hostname).returns('satellite.example.com')
+
+    actual = ForemanRhCloud.foreman_host_name
+
+    assert_equal 'satellite.example.com', actual
   end
 end
