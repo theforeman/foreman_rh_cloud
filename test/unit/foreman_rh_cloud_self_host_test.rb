@@ -4,6 +4,7 @@ class ForemanRhCloudSelfHostTest < ActiveSupport::TestCase
   setup do
     # reset cached value - must remove the variable entirely, not just set to nil
     ForemanRhCloud.remove_instance_variable(:@foreman_host) if ForemanRhCloud.instance_variable_defined?(:@foreman_host)
+    ENV.delete('SATELLITE_RH_CLOUD_FOREMAN_HOST')
   end
 
   test 'finds host by fullname' do
@@ -27,7 +28,6 @@ class ForemanRhCloudSelfHostTest < ActiveSupport::TestCase
   end
 
   test 'finds host by infrastructure facet' do
-    ENV.delete('SATELLITE_RH_CLOUD_FOREMAN_HOST')
     @host = FactoryBot.create(:host, :managed, :with_infrastructure_facet)
     actual = ForemanRhCloud.foreman_host
 
@@ -52,9 +52,7 @@ class ForemanRhCloudSelfHostTest < ActiveSupport::TestCase
   test 'caches nil value to avoid repeated lookups' do
     ForemanRhCloud.expects(:foreman_host_name).once.returns('nonexistent.example.com')
 
-    # Call twice, should only query once
-    ForemanRhCloud.foreman_host
-    ForemanRhCloud.foreman_host
+    2.times { ForemanRhCloud.foreman_host }
   end
 
   test 'extracts hostname from foreman_url setting' do
@@ -74,9 +72,7 @@ class ForemanRhCloudSelfHostTest < ActiveSupport::TestCase
     assert_nil actual
   end
 
-  test 'foreman_host_name uses foreman_url when SmartProxy not available' do
-    # Clear ENV variable that might interfere
-    ENV.delete('SATELLITE_RH_CLOUD_FOREMAN_HOST')
+  test 'foreman_host_name uses foreman_url when marked_foreman_host is nil' do
     ForemanRhCloud.expects(:marked_foreman_host).returns(nil)
     ForemanRhCloud.expects(:foreman_url_hostname).returns('satellite.example.com')
 
