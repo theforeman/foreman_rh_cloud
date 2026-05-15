@@ -3,6 +3,8 @@ import componentRegistry from 'foremanReact/components/componentRegistry';
 import { registerRoutes as foremanRegisterRoutes } from 'foremanReact/routes/RoutingService';
 import ForemanInventoryUpload from './ForemanInventoryUpload';
 import InsightsVulnerabilityListPage from './InsightsVulnerability/InsightsVulnerabilityListPage';
+import InsightsComplianceReportsPage from './InsightsCompliance/InsightsComplianceReportsPage';
+import InsightsCompliancePoliciesPage from './InsightsCompliance/InsightsCompliancePoliciesPage';
 import InsightsCloudSync from './InsightsCloudSync';
 import IopRecommendationDetails from './IopRecommendationDetails/IopRecommendationDetails';
 import InsightsHostDetailsTab from './InsightsHostDetailsTab';
@@ -19,6 +21,14 @@ const pages = [
     type: InsightsVulnerabilityListPage,
   },
   { name: 'CveDetailsPage', type: CveDetailsPage },
+  {
+    name: 'InsightsComplianceReportsPage',
+    type: InsightsComplianceReportsPage,
+  },
+  {
+    name: 'InsightsCompliancePoliciesPage',
+    type: InsightsCompliancePoliciesPage,
+  },
 ];
 
 export const registerPages = () => {
@@ -50,6 +60,16 @@ export const routes = [
     path: '/foreman_rh_cloud/insights_vulnerability/:cveId',
     exact: true,
     render: props => <CveDetailsPage {...props} />,
+  },
+  {
+    path: '/foreman_rh_cloud/insights_compliance/reports',
+    exact: false,
+    render: props => <InsightsComplianceReportsPage {...props} />,
+  },
+  {
+    path: '/foreman_rh_cloud/insights_compliance/scappolicies',
+    exact: false,
+    render: props => <InsightsCompliancePoliciesPage {...props} />,
   },
 ];
 

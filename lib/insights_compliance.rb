@@ -1,0 +1,2 @@
+module InsightsCompliance
+end

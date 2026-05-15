@@ -93,31 +93,42 @@ module ForemanRhCloud
             {},
             :resource_type => 'ForemanRhCloud'
           )
+           # Insights Compliance permissions
+          permission(
+            :view_compliance,
+            {},
+            :resource_type => 'ForemanRhCloud'
+          )
+          permission(
+            :edit_compliance,
+            {},
+            :resource_type => 'ForemanRhCloud'
+          )
         end
 
         # Core RH Cloud permissions for inventory upload and sync
         rh_cloud_permissions = [:view_foreman_rh_cloud, :generate_foreman_rh_cloud, :view_insights_hits, :dispatch_cloud_requests, :control_organization_insights]
 
-        # Insights application permissions (Vulnerability, Advisor)
-        insights_permissions = [:view_vulnerability, :edit_vulnerability, :view_advisor, :edit_advisor]
+        # Insights application permissions (Vulnerability, Advisor, Compliance)
+        insights_permissions = [:view_vulnerability, :edit_vulnerability, :view_advisor, :edit_advisor, :view_compliance, :edit_compliance]
 
         plugin_permissions = rh_cloud_permissions + insights_permissions
 
-        read_only_permissions = [:view_foreman_rh_cloud, :view_insights_hits, :view_vulnerability, :view_advisor]
+        read_only_permissions = [:view_foreman_rh_cloud, :view_insights_hits, :view_vulnerability, :view_advisor, :view_compliance]
 
         role 'ForemanRhCloud', plugin_permissions, 'Role granting permissions to view the hosts inventory,
                                                     generate a report, upload it to the cloud, download it locally,
-                                                    and manage Insights Vulnerability and Advisor features'
+                                                    and manage Insights Vulnerability, Advisor, and Compliance features'
 
         role 'ForemanRhCloud Read Only', read_only_permissions, 'Role granting read-only permissions to view
-                                                                 Insights Vulnerability, Advisor, and host inventory'
+                                                                 Insights Vulnerability, Advisor, Compliance, and host inventory'
 
         add_permissions_to_default_roles Role::ORG_ADMIN => plugin_permissions,
           Role::MANAGER => plugin_permissions,
           Role::SYSTEM_ADMIN => plugin_permissions
 
         # Adding a top-level menu item
-        sub_menu :top_menu, :insights_menu, caption: N_('Insights'), icon: 'fa fa-cloud', after: :hosts_menu do
+        sub_menu :top_menu, :insights_menu, caption: N_('Red Hat Lightspeed'), icon: 'fa fa-cloud', after: :hosts_menu do
           menu :top_menu,
             :inventory_upload,
             caption: N_('Inventory Upload'),
@@ -130,6 +141,20 @@ module ForemanRhCloud
             :insights_vulnerability,
             caption: N_('Vulnerability'),
             url: '/foreman_rh_cloud/insights_vulnerability',
+            url_hash: { controller: :react, action: :index },
+            parent: :insights_menu,
+            if: -> { ForemanRhCloud.with_iop_smart_proxy? }
+          menu :top_menu,
+            :insights_compliance_reports,
+            caption: N_('Compliance Reports'),
+            url: '/foreman_rh_cloud/insights_compliance/reports',
+            url_hash: { controller: :react, action: :index },
+            parent: :insights_menu,
+            if: -> { ForemanRhCloud.with_iop_smart_proxy? }
+          menu :top_menu,
+            :insights_compliance_scappolicies,
+            caption: N_('SCAP Policies'),
+            url: '/foreman_rh_cloud/insights_compliance/scappolicies',
             url_hash: { controller: :react, action: :index },
             parent: :insights_menu,
             if: -> { ForemanRhCloud.with_iop_smart_proxy? }

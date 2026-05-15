@@ -14,6 +14,11 @@ export const modulesConfig = {
     manifestLocation: `${window.location.origin}/assets/apps/inventory/fed-mods.json`,
     cdnPath: `${window.location.origin}/assets/apps/inventory/`,
   },
+  compliance: {
+    name: 'compliance',
+    manifestLocation: `${window.location.origin}/assets/apps/compliance/fed-mods.json`,
+    cdnPath: `${window.location.origin}/assets/apps/compliance/`,
+  },
 };
 
 export const mockUser = {

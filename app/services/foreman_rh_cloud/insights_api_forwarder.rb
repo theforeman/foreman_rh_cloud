@@ -23,6 +23,9 @@ module ForemanRhCloud
     #                      | DELETE /api/insights/v1/hostack/{id}/
     #                      | POST /api/insights/v1/rule/{rule_id}/unack_hosts/
     #
+    # view_compliance      | GET /api/compliance/v2/*
+    # edit_compliance      | POST/PATCH/PUT/DELETE /api/compliance/v2/*
+    #
     SCOPED_REQUESTS = [
       # Inventory hosts - requires view_vulnerability for GET
       {
@@ -127,6 +130,38 @@ module ForemanRhCloud
         tag_name: :tags,
         permissions: {
           'GET' => :view_advisor,
+        },
+      },
+      # Compliance reports - GET requires view_compliance
+      {
+        test: %r{api/compliance/v2/reports},
+        tag_name: :tags,
+        permissions: {
+          'GET' => :view_compliance,
+        },
+      },
+      # Compliance policies - read vs write
+      {
+        test: %r{api/compliance/v2/policies},
+        tag_name: :tags,
+        permissions: {
+          'GET' => :view_compliance,
+          'POST' => :edit_compliance,
+          'PATCH' => :edit_compliance,
+          'PUT' => :edit_compliance,
+          'DELETE' => :edit_compliance,
+        },
+      },
+      # Compliance systems and other read endpoints
+      {
+        test: %r{api/compliance/v2/.*},
+        tag_name: :tags,
+        permissions: {
+          'GET' => :view_compliance,
+          'POST' => :edit_compliance,
+          'PATCH' => :edit_compliance,
+          'PUT' => :edit_compliance,
+          'DELETE' => :edit_compliance,
         },
       },
       # Other API endpoints (tagging only, no permission enforcement)
