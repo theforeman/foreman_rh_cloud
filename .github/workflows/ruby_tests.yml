@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
       matrix:
         foreman:
-          - develop
+          - refs/pull/11004/head
     uses: theforeman/actions/.github/workflows/foreman_plugin.yml@v0
     with:
       plugin: foreman_rh_cloud
