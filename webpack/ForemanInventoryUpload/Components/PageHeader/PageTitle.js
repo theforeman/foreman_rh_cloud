@@ -18,9 +18,11 @@ import {
   getInventoryDocsUrl,
 } from '../../ForemanInventoryHelpers';
 import CloudPingModal from './components/CloudPingModal';
+import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 
 const PageTitle = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const isIop = useIopConfig();
   const [showPingModal, setPingModal] = useState(false);
   const togglePingModal = () => setPingModal(v => !v);
   const dropdownItems = [
@@ -42,13 +44,17 @@ const PageTitle = () => {
     >
       {DOCS_BUTTON_TEXT}
     </DropdownItem>,
-    <DropdownItem
-      key="cloud-ping"
-      ouiaId="dropdownItem-cloud-ping"
-      onClick={togglePingModal}
-    >
-      {CLOUD_PING_TITLE}
-    </DropdownItem>,
+    ...(!isIop
+      ? [
+          <DropdownItem
+            key="cloud-ping"
+            ouiaId="dropdownItem-cloud-ping"
+            onClick={togglePingModal}
+          >
+            {CLOUD_PING_TITLE}
+          </DropdownItem>,
+        ]
+      : []),
   ];
   return (
     <Grid className="inventory-upload-header-title">
