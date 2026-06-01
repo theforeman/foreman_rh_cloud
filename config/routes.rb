@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   namespace :foreman_rh_cloud do
     get 'inventory_upload', to: 'foreman_rh_cloud#inventory_upload'
     get 'recommendations', to: 'foreman_rh_cloud#recommendations'
+    get 'recommendations/pathways/:slug', to: 'foreman_rh_cloud#recommendations'
     get 'recommendations/:rule_id', to: 'foreman_rh_cloud#recommendations'
     get 'insights_cloud', to: '/react#index' # Uses foreman's react controller
     get 'insights_vulnerability', to: '/react#index'
