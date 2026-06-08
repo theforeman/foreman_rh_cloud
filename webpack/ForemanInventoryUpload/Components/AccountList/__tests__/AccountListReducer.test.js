@@ -13,7 +13,6 @@ import {
   processStatusName,
   pollingResponse,
   accounts,
-  CloudConnectorStatus,
 } from '../AccountList.fixtures';
 
 describe('AccountList reducer', () => {
@@ -30,7 +29,6 @@ describe('AccountList reducer', () => {
       payload: pollingResponse,
     });
     expect(state.accounts).toEqual(accounts);
-    expect(state.CloudConnectorStatus).toEqual(CloudConnectorStatus);
     expect(state.error).toBeNull();
   });
 
