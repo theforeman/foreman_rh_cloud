@@ -32,5 +32,4 @@ describe('ListItem', () => {
     expect(screen.getByText('Generated')).toBeTruthy();
     expect(screen.getByText('Uploaded')).toBeTruthy();
   });
-
 });

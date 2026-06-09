@@ -1,11 +1,18 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Text, TextVariants, Popover, Button } from '@patternfly/react-core';
+import {
+  Text,
+  TextVariants,
+  Popover,
+  Button,
+  FormGroup,
+  Grid,
+  GridItem,
+} from '@patternfly/react-core';
 import { InfoAltIcon, CaretRightIcon } from '@patternfly/react-icons';
-import { FormGroup, Grid } from 'patternfly-react';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { foremanUrl } from '../../../ForemanRhCloudHelpers';
-import Switcher from '../../../common/Switcher';
+import SwitcherPF4 from '../../../common/Switcher/SwitcherPF4';
 import { settingsDict } from '../../Components/InventorySettings/AdvancedSetting/AdvancedSettingsConstants';
 import InventorySettings from '../../Components/InventorySettings/InventorySettings';
 
@@ -27,19 +34,19 @@ const InventoryAutoUploadSwitcher = ({
       <Grid>
         <h3>{__('Red Hat Cloud Inventory')}</h3>
         <hr />
-        <Grid.Row>
-          <Switcher
-            id="auto-upload"
-            label={__('Inventory Auto Upload')}
-            tooltip={__(
-              'Enable automatic upload of your hosts inventory to the Red Hat cloud'
-            )}
-            isChecked={autoUploadEnabled}
-            onChange={handleToggle}
-            labelCol={5}
-          />
-
-          <Grid.Col sm={5}>
+        <Grid hasGutter>
+          <GridItem span={7}>
+            <SwitcherPF4
+              id="auto-upload"
+              label={__('Inventory Auto Upload')}
+              tooltip={__(
+                'Enable automatic upload of your hosts inventory to the Red Hat cloud'
+              )}
+              isChecked={autoUploadEnabled}
+              onChange={handleToggle}
+            />
+          </GridItem>
+          <GridItem span={5}>
             <Popover
               headerContent={
                 <strong>{__('Advanced Inventory Settings')}</strong>
@@ -55,11 +62,11 @@ const InventoryAutoUploadSwitcher = ({
                 {__('Show Advanced Settings')} <CaretRightIcon />
               </Button>
             </Popover>
-          </Grid.Col>
-        </Grid.Row>
+          </GridItem>
+        </Grid>
         <br />
-        <Grid.Row>
-          <Grid.Col sm={12}>
+        <Grid>
+          <GridItem span={12}>
             <Text component={TextVariants.p} ouiaId="text-more-details">
               <InfoAltIcon /> {__('More details can be found in')}{' '}
               <Text
@@ -76,8 +83,8 @@ const InventoryAutoUploadSwitcher = ({
                 </strong>
               </Text>
             </Text>
-          </Grid.Col>
-        </Grid.Row>
+          </GridItem>
+        </Grid>
       </Grid>
     </FormGroup>
   );

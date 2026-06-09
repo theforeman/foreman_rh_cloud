@@ -121,14 +121,11 @@ describe('PageHeader', () => {
         },
       });
 
-      const gridRow = container.querySelector('.row');
-      expect(gridRow).toBeTruthy();
+      const grid = container.querySelector('.pf-v5-l-grid');
+      expect(grid).toBeTruthy();
 
-      const filterColumn = container.querySelector('.col-xs-4');
-      expect(filterColumn).toBeTruthy();
-
-      const toolbarColumn = container.querySelector('.col-xs-7');
-      expect(toolbarColumn).toBeTruthy();
+      expect(screen.getByTestId('inventory-filter')).toBeTruthy();
+      expect(screen.getByTestId('toolbar-buttons')).toBeTruthy();
     });
 
     test('renders description section only when not in IoP mode', () => {

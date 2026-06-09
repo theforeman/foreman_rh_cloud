@@ -1,7 +1,6 @@
 import { syncInsights } from '../InsightsCloudSyncActions';
 import { INSIGHTS_CLOUD_SYNC } from '../InsightsCloudSyncConstants';
 
-
 jest.mock('../../common/ForemanTasks');
 
 describe('InsightsCloudSync actions', () => {

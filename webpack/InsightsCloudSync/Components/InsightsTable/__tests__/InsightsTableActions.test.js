@@ -16,7 +16,10 @@ import {
 } from '../InsightsTableConstants';
 
 jest.mock('connected-react-router', () => ({
-  push: jest.fn(args => ({ type: '@@router/CALL_HISTORY_METHOD', payload: args })),
+  push: jest.fn(args => ({
+    type: '@@router/CALL_HISTORY_METHOD',
+    payload: args,
+  })),
 }));
 
 const buildGetState = (queryOverrides = {}) => () => ({

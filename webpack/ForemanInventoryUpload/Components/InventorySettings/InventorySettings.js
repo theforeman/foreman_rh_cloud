@@ -52,12 +52,12 @@ const InventorySettings = () => {
       })}
       <MinimalInventoryDropdown setChosenValue={setChosenValue} />
       {Object.keys(childSettingsDict).length > 0 && ( // Only render this section if there are child settings
-        <div style={{ marginTop: '1.5em' }}>
+        <div className="child-settings">
           <Flex>
-            <FlexItem>
-              <span style={{ width: '6em' }} />
+            <FlexItem flex={{ default: 'flexNone' }}>
+              <span className="child-settings-spacer" />
             </FlexItem>
-            <FlexItem>
+            <FlexItem flex={{ default: 'flex_1' }}>
               {Object.keys(childSettingsDict).map(key => (
                 <AdvancedSetting
                   key={key}

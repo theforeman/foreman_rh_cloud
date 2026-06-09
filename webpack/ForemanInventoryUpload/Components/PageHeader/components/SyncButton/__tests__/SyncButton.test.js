@@ -5,7 +5,9 @@ import SyncButton from '../SyncButton';
 describe('SyncButton', () => {
   it('renders the sync button text', () => {
     render(<SyncButton handleSync={jest.fn()} />);
-    expect(screen.getByRole('button', { name: /Sync all inventory status/ })).toBeTruthy();
+    expect(
+      screen.getByRole('button', { name: /Sync all inventory status/ })
+    ).toBeTruthy();
   });
 
   it('calls handleSync on click', () => {

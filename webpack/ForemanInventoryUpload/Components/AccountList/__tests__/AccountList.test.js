@@ -3,9 +3,7 @@ import { render, screen } from '@testing-library/react';
 import AccountList from '../AccountList';
 import { accounts } from '../AccountList.fixtures';
 
-jest.mock('../Components/ListItem', () => ({ label }) => (
-  <div>{label}</div>
-));
+jest.mock('../Components/ListItem', () => ({ label }) => <div>{label}</div>);
 
 describe('AccountList', () => {
   it('renders account labels', () => {
@@ -26,9 +24,7 @@ describe('AccountList', () => {
 
   it('shows empty state when accounts are empty', () => {
     render(<AccountList accounts={{}} />);
-    expect(
-      screen.getByText('Fetching data about your accounts')
-    ).toBeTruthy();
+    expect(screen.getByText('Fetching data about your accounts')).toBeTruthy();
   });
 
   it('shows error state when error is present', () => {
