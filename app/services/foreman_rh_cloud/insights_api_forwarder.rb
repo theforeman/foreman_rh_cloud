@@ -8,6 +8,30 @@ module ForemanRhCloud
     #
     # Foreman Permission   | Paths
     # ---------------------|--------------------------------------------------
+    # view_compliance      | GET /api/inventory/v1/hosts(/*)
+    # view_compliance      | GET /api/compliance/v2/systems
+    # view_compliance      | GET /api/compliance/v2/systems/{system_id}
+    # view_compliance      | GET /api/compliance/v2/systems/os_versions
+    # view_compliance      | GET /api/compliance/v2/systems/{system_id}/policies
+    # view_compliance      | GET /api/compliance/v2/systems/{system_id}/reports
+    # view_compliance      | GET /api/compliance/v2/reports/{report_id}/systems
+    # view_compliance      | GET /api/compliance/v2/reports/{report_id}/systems/{system_id}
+    # view_compliance      | GET /api/compliance/v2/reports/{report_id}/systems/os_versions
+    # view_compliance      | GET /api/compliance/v2/policies/{policy_id}/systems/os_versions
+    # view_compliance      | GET /api/compliance/v2/*
+    # edit_compliance      | POST /api/compliance/v2/policies
+    # edit_compliance      | DELETE /api/compliance/v2/policies/{policy_id}
+    # edit_compliance      | PATCH /api/compliance/v2/policies/{policy_id}
+    # edit_compliance      | POST /api/compliance/v2/policies/{policy_id}/systems
+    # edit_compliance      | DELETE /api/compliance/v2/policies/{policy_id}/systems/{system_id}
+    # edit_compliance      | PATCH /api/compliance/v2/policies/{policy_id}/systems/{system_id}
+    # edit_compliance      | POST /api/compliance/v2/policies/{policy_id}/tailorings
+    # edit_compliance      | PATCH /api/compliance/v2/policies/{policy_id}/tailorings/{tailoring_id}
+    # edit_compliance      | POST /api/compliance/v2/policies/{policy_id}/tailorings/{tailoring_id}/rules
+    # edit_compliance      | DELETE /api/compliance/v2/policies/{policy_id}/tailorings/{tailoring_id}/rules/{rule_id}
+    # edit_compliance      | PATCH /api/compliance/v2/policies/{policy_id}/tailorings/{tailoring_id}/rules/{rule_id}
+    # edit_compliance      | DELETE /api/compliance/v2/reports/{report_id}
+    #
     # view_vulnerability   | GET /api/inventory/v1/hosts(/*)
     # view_vulnerability   | GET /api/vulnerability/v1/*
     #                      | POST /api/vulnerability/v1/vulnerabilities/cves
@@ -24,12 +48,140 @@ module ForemanRhCloud
     #                      | POST /api/insights/v1/rule/{rule_id}/unack_hosts/
     #
     SCOPED_REQUESTS = [
-      # Inventory hosts - requires view_vulnerability for GET
+      # Inventory hosts - shared dependency;
+      #                 - requires view_compliance or view_vulnerability for GET
       {
         test: %r{api/inventory/v1/hosts(/.*)?$},
         tag_name: :tags,
         permissions: {
-          'GET' => :view_vulnerability,
+          'GET' => [:view_compliance, :view_vulnerability],
+        },
+      },
+      # Policies - requires view_compliance for GET, edit_compliance for POST/DELETE/PATCH
+      {
+        test: %r{api/compliance/v2/policies(/[^/]*)?$},
+        permissions: {
+          'GET' => :view_compliance,
+          'POST' => :edit_compliance,
+          'DELETE' => :edit_compliance,
+          'PATCH' => :edit_compliance,
+        },
+      },
+      # System and policies assigned to them - requires view_compliance for GET, edit_compliance for POST/DELETE/PATCH
+      {
+        test: %r{api/compliance/v2/policies/[^/]+/systems(/[^/]*)?$},
+        tag_name: :tags,
+        permissions: {
+          'GET' => :view_compliance,
+          'POST' => :edit_compliance,
+          'DELETE' => :edit_compliance,
+          'PATCH' => :edit_compliance,
+        },
+      },
+      # Tailorings of assigned policies - requires view_compliance for GET, edit_compliance for POST/PATCH
+      {
+        test: %r{api/compliance/v2/policies/[^/]+/tailorings(/[^/]*)?$},
+        permissions: {
+          'GET' => :view_compliance,
+          'POST' => :edit_compliance,
+          'PATCH' => :edit_compliance,
+        },
+      },
+      # Rules of Tailorings - requires view_compliance for GET, edit_compliance for POST/DELETE/PATCH
+      {
+        test: %r{api/compliance/v2/policies/[^/]+/tailorings/[^/]+/rules(/[^/]*)?$},
+        permissions: {
+          'GET' => :view_compliance,
+          'POST' => :edit_compliance,
+          'DELETE' => :edit_compliance,
+          'PATCH' => :edit_compliance,
+        },
+      },
+      # Compliance Reports - requires view_compliance for GET, edit_compliance for DELETE
+      {
+        test: %r{api/compliance/v2/reports(/[^/]*)?$},
+        permissions: {
+          'GET' => :view_compliance,
+          'DELETE' => :edit_compliance,
+        },
+      },
+      # Systems assigned to a report - requires view_compliance for GET
+      {
+        test: %r{api/compliance/v2/reports/[^/]+/systems$},
+        tag_name: :tags,
+        permissions: {
+          'GET' => :view_compliance,
+        },
+      },
+      # Individual system in a report - requires view_compliance for GET
+      {
+        test: %r{api/compliance/v2/reports/[^/]+/systems/[^/]+$},
+        tag_name: :tags,
+        permissions: {
+          'GET' => :view_compliance,
+        },
+      },
+      # OS versions for systems in a report - requires view_compliance for GET
+      {
+        test: %r{api/compliance/v2/reports/[^/]+/systems/os_versions$},
+        tag_name: :tags,
+        permissions: {
+          'GET' => :view_compliance,
+        },
+      },
+      # OS versions for systems in a policy - requires view_compliance for GET
+      {
+        test: %r{api/compliance/v2/policies/[^/]+/systems/os_versions$},
+        tag_name: :tags,
+        permissions: {
+          'GET' => :view_compliance,
+        },
+      },
+      # Compliance Systems list - requires view_compliance for GET
+      {
+        test: %r{api/compliance/v2/systems$},
+        tag_name: :tags,
+        permissions: {
+          'GET' => :view_compliance,
+        },
+      },
+      # Individual compliance system - requires view_compliance for GET
+      {
+        test: %r{api/compliance/v2/systems/[^/]+$},
+        tag_name: :tags,
+        permissions: {
+          'GET' => :view_compliance,
+        },
+      },
+      # OS versions for all systems - requires view_compliance for GET
+      {
+        test: %r{api/compliance/v2/systems/os_versions$},
+        tag_name: :tags,
+        permissions: {
+          'GET' => :view_compliance,
+        },
+      },
+      # Policies for a specific system - requires view_compliance for GET
+      {
+        test: %r{api/compliance/v2/systems/[^/]+/policies$},
+        tag_name: :tags,
+        permissions: {
+          'GET' => :view_compliance,
+        },
+      },
+      # Reports for a specific system - requires view_compliance for GET
+      {
+        test: %r{api/compliance/v2/systems/[^/]+/reports$},
+        tag_name: :tags,
+        permissions: {
+          'GET' => :view_compliance,
+        },
+      },
+      # Other compliance endpoints - GET requires view_compliance
+      {
+        test: %r{api/compliance/v2/.*},
+        permissions: {
+          'GET' => :view_compliance,
         },
       },
       # Vulnerability CVEs list - POST requires view_vulnerability (no tags support per OpenAPI spec)
@@ -136,9 +288,9 @@ module ForemanRhCloud
 
     def forward_request(original_request, path, controller_name, user, organization, location)
       # Check permissions before forwarding
-      permission = required_permission_for(path, original_request.request_method)
-      if permission && !user&.can?(permission)
-        logger.warn("User #{user&.login || 'anonymous'} lacks permission #{permission} for #{original_request.request_method} #{path}")
+      permissions = required_permission_for(path, original_request.request_method)
+      if permissions && Array(permissions).none? { |p| user&.can?(p) }
+        logger.warn("User #{user&.login || 'anonymous'} lacks permissions #{Array(permissions).join(', ')} for #{original_request.request_method} #{path}")
         raise ::Foreman::PermissionMissingException.new(N_("You do not have permission to perform this action"))
       end
 
