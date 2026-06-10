@@ -48,12 +48,13 @@ module ForemanRhCloud
     #                      | POST /api/insights/v1/rule/{rule_id}/unack_hosts/
     #
     SCOPED_REQUESTS = [
-      # Inventory hosts - requires view_compliance for GET
+      # Inventory hosts - shared dependency;
+      #                 - requires view_compliance or view_vulnerability for GET
       {
         test: %r{api/inventory/v1/hosts(/.*)?$},
         tag_name: :tags,
         permissions: {
-          'GET' => :view_compliance,
+          'GET' => [:view_compliance, :view_vulnerability],
         },
       },
       # Policies - requires view_compliance for GET, edit_compliance for POST/DELETE/PATCH
@@ -183,14 +184,6 @@ module ForemanRhCloud
           'GET' => :view_compliance,
         },
       },
-      # Inventory hosts - requires view_vulnerability for GET
-      {
-        test: %r{api/inventory/v1/hosts(/.*)?$},
-        tag_name: :tags,
-        permissions: {
-          'GET' => :view_vulnerability,
-        },
-      },
       # Vulnerability CVEs list - POST requires view_vulnerability (no tags support per OpenAPI spec)
       {
         test: %r{api/vulnerability/v1/vulnerabilities/cves},
@@ -295,9 +288,9 @@ module ForemanRhCloud
 
     def forward_request(original_request, path, controller_name, user, organization, location)
       # Check permissions before forwarding
-      permission = required_permission_for(path, original_request.request_method)
-      if permission && !user&.can?(permission)
-        logger.warn("User #{user&.login || 'anonymous'} lacks permission #{permission} for #{original_request.request_method} #{path}")
+      permissions = required_permission_for(path, original_request.request_method)
+      if permissions && Array(permissions).none? { |p| user&.can?(p) }
+        logger.warn("User #{user&.login || 'anonymous'} lacks permissions #{Array(permissions).join(', ')} for #{original_request.request_method} #{path}")
         raise ::Foreman::PermissionMissingException.new(N_("You do not have permission to perform this action"))
       end
 

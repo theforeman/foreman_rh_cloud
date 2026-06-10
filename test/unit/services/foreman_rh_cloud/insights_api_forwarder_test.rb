@@ -270,7 +270,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
 
   # Permission enforcement tests
 
-  # GET /api/inventory/v1/hosts requires view_vulnerability
+  # GET /api/inventory/v1/hosts is a shared dependency - view_compliance OR view_vulnerability grants access
   test 'should allow GET request to inventory hosts when user has view_vulnerability permission' do
     user_agent = { :foo => :bar }
     params = {}
@@ -283,6 +283,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       'action_dispatch.request.query_parameters' => params
     )
 
+    @user.stubs(:can?).with(:view_compliance).returns(false)
     @user.stubs(:can?).with(:view_vulnerability).returns(true)
     ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag)
     @forwarder.expects(:execute_cloud_request).returns(true)
@@ -290,7 +291,18 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     @forwarder.forward_request(req, 'api/inventory/v1/hosts', 'test_controller', @user, @organization, @location)
   end
 
-  test 'should deny GET request to inventory hosts when user lacks view_vulnerability permission' do
+  test 'should allow GET request to inventory hosts when user has view_compliance permission' do
+    req = build_request(method: 'GET', uri: '/api/inventory/v1/hosts')
+
+    @user.stubs(:can?).with(:view_compliance).returns(true)
+    @user.stubs(:can?).with(:view_vulnerability).returns(false)
+    ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag)
+    @forwarder.expects(:execute_cloud_request).returns(true)
+
+    @forwarder.forward_request(req, 'api/inventory/v1/hosts', 'test_controller', @user, @organization, @location)
+  end
+
+  test 'should deny GET request to inventory hosts when user lacks both view_compliance and view_vulnerability' do
     user_agent = { :foo => :bar }
     params = {}
 
@@ -302,6 +314,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       'action_dispatch.request.query_parameters' => params
     )
 
+    @user.stubs(:can?).with(:view_compliance).returns(false)
     @user.stubs(:can?).with(:view_vulnerability).returns(false)
 
     assert_raises(::Foreman::PermissionMissingException) do
@@ -362,9 +375,10 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
 
   # Data-driven tests for required_permission_for
   PERMISSION_MAPPINGS = [
+    # Shared inventory hosts endpoint - either view_compliance or view_vulnerability grants GET access
+    { path: 'api/inventory/v1/hosts', method: 'GET', expected: [:view_compliance, :view_vulnerability] },
+    { path: 'api/inventory/v1/hosts/abc-123', method: 'GET', expected: [:view_compliance, :view_vulnerability] },
     # Compliance endpoints
-    { path: 'api/inventory/v1/hosts', method: 'GET', expected: :view_compliance },
-    { path: 'api/inventory/v1/hosts/abc-123', method: 'GET', expected: :view_compliance },
     { path: 'api/compliance/v2/policies', method: 'GET', expected: :view_compliance },
     { path: 'api/compliance/v2/policies', method: 'POST', expected: :edit_compliance },
     { path: 'api/compliance/v2/policies/policy-123', method: 'GET', expected: :view_compliance },
@@ -398,8 +412,6 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     { path: 'api/compliance/v2/systems/system-456/reports', method: 'GET', expected: :view_compliance },
     { path: 'api/compliance/v2/profiles', method: 'GET', expected: :view_compliance },
     # Vulnerability endpoints
-    { path: 'api/inventory/v1/hosts', method: 'GET', expected: :view_vulnerability },
-    { path: 'api/inventory/v1/hosts/abc-123', method: 'GET', expected: :view_vulnerability },
     { path: 'api/vulnerability/v1/vulnerabilities/cves', method: 'POST', expected: :view_vulnerability },
     { path: 'api/vulnerability/v1/status', method: 'PATCH', expected: :edit_vulnerability },
     { path: 'api/vulnerability/v1/cves/status', method: 'PATCH', expected: :edit_vulnerability },
