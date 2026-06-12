@@ -30,35 +30,26 @@ class CloudConnectorAnnounceTaskTest < ActiveSupport::TestCase
   test 'skips when rhc_instance_id is not set' do
     Setting[:rhc_instance_id] = nil
 
-    ForemanRhCloud::CloudPresence.any_instance
-                                 .expects(:announce_to_sources)
-                                 .never
-
     action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask)
-    run_action(action)
+
+    assert_empty action.execution_plan.planned_run_steps
   end
 
   test 'skips when rhc_instance_id is empty string' do
     Setting[:rhc_instance_id] = ''
 
-    ForemanRhCloud::CloudPresence.any_instance
-                                 .expects(:announce_to_sources)
-                                 .never
-
     action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask)
-    run_action(action)
+
+    assert_empty action.execution_plan.planned_run_steps
   end
 
   test 'skips when in IoP mode' do
     Setting[:rhc_instance_id] = 'test-rhc-id'
     ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
 
-    ForemanRhCloud::CloudPresence.any_instance
-                                 .expects(:announce_to_sources)
-                                 .never
-
     action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask)
-    run_action(action)
+
+    assert_empty action.execution_plan.planned_run_steps
   end
 
   test 'skips organizations without a manifest' do
@@ -97,7 +88,7 @@ class CloudConnectorAnnounceTaskTest < ActiveSupport::TestCase
     assert_match(/Announced:/, action.output[:status].to_s)
   end
 
-  test 'continues processing other orgs when one fails' do
+  test 'continues processing other orgs when one fails and task errors' do
     Setting[:rhc_instance_id] = 'test-rhc-id'
 
     InsightsCloud::Async::CloudConnectorAnnounceTask.any_instance
@@ -111,9 +102,9 @@ class CloudConnectorAnnounceTaskTest < ActiveSupport::TestCase
     end
 
     action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask)
-    action = run_action(action)
 
+    error = assert_raises(StandardError) { run_action(action) }
+    assert_match(/Sources announcement failed for:/, error.message)
     assert_equal Organization.unscoped.count, call_count
-    assert_match(/Failed:/, action.output[:status].to_s)
   end
 end

@@ -28,7 +28,7 @@ module InsightsCloud
       def run
         announced = []
         skipped = []
-        failed = []
+        failed = {}
 
         Organization.unscoped.each do |org|
           unless cert_auth_available?(org)
@@ -42,14 +42,19 @@ module InsightsCloud
         rescue StandardError => ex
           logger.warn("Failed to announce to Sources for organization #{org.name}: #{ex}")
           logger.debug { ex.backtrace.join("\n") }
-          failed << org.name
+          failed[org.name] = ex.message
         end
 
         parts = []
         parts << "Announced: #{announced.join(', ')}" if announced.any?
         parts << "Skipped (no manifest): #{skipped.join(', ')}" if skipped.any?
-        parts << "Failed: #{failed.join(', ')}" if failed.any?
+        if failed.any?
+          failed_details = failed.map { |name, msg| "#{name}: #{msg}" }.join('; ')
+          parts << "Failed: #{failed_details}"
+        end
         output[:status] = parts.join('. ')
+
+        error!("Sources announcement failed for: #{failed.keys.join(', ')}") if failed.any?
       end
 
       def rescue_strategy_for_self
