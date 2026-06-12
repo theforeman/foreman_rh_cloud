@@ -16,7 +16,7 @@ module InsightsCloud
         end
 
         unless Setting[:allow_auto_inventory_upload]
-          logger.warn(
+          logger.debug(
             'Cloud connector is configured (rhc_instance_id is set) but automatic inventory upload is disabled. ' \
             'Enable the "Automatic inventory upload" setting for full cloud connector functionality.'
           )
@@ -32,7 +32,6 @@ module InsightsCloud
 
         Organization.unscoped.each do |org|
           unless cert_auth_available?(org)
-            logger.info("Skipping Sources announcement for organization #{org.name}: no manifest available")
             skipped << org.name
             next
           end
@@ -42,6 +41,7 @@ module InsightsCloud
           announced << org.name
         rescue StandardError => ex
           logger.warn("Failed to announce to Sources for organization #{org.name}: #{ex}")
+          logger.debug { ex.backtrace.join("\n") }
           failed << org.name
         end
 
