@@ -3,8 +3,9 @@ module InsightsCloud
     class CloudConnectorAnnounceTask < ::Actions::EntryAction
       include ::Actions::RecurringAction
       include ::ForemanRhCloud::CertAuth
+      include ForemanInventoryUpload::Async::DelayedStart
 
-      def plan
+      def plan(immediate = false)
         if ForemanRhCloud.with_iop_smart_proxy?
           logger.debug('Sources announcement skipped: running in IoP mode')
           return
@@ -22,7 +23,13 @@ module InsightsCloud
           )
         end
 
-        plan_self
+        if immediate
+          plan_self
+        else
+          after_delay do
+            plan_self
+          end
+        end
       end
 
       def run

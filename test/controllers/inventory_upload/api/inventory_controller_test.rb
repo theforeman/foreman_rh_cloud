@@ -39,7 +39,7 @@ module InventoryUpload::Api
       test_task = FactoryBot.create(:some_task)
 
       ForemanTasks.expects(:async_task)
-        .with(InsightsCloud::Async::CloudConnectorAnnounceTask)
+        .with(InsightsCloud::Async::CloudConnectorAnnounceTask, true)
         .returns(test_task)
 
       post :announce_to_sources

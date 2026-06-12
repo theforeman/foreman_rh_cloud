@@ -72,7 +72,7 @@ module Api
 
         api :POST, "/rh_cloud/announce_to_sources", N_("Register Satellite in Red Hat Sources for cloud connector")
         def announce_to_sources
-          task = ForemanTasks.async_task(InsightsCloud::Async::CloudConnectorAnnounceTask)
+          task = ForemanTasks.async_task(InsightsCloud::Async::CloudConnectorAnnounceTask, true)
 
           render json: {
             task: task,
