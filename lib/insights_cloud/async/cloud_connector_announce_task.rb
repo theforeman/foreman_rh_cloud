@@ -26,7 +26,8 @@ module InsightsCloud
       end
 
       def run
-        announced = []
+        registered = []
+        already_registered = []
         skipped = []
         failed = {}
 
@@ -37,8 +38,12 @@ module InsightsCloud
           end
 
           presence = ForemanRhCloud::CloudPresence.new(org, logger)
-          presence.announce_to_sources
-          announced << org.name
+          result = presence.announce_to_sources
+          if result == :already_registered
+            already_registered << org.name
+          else
+            registered << org.name
+          end
         rescue StandardError => ex
           logger.warn("Failed to announce to Sources for organization #{org.name}: #{ex}")
           logger.debug { ex.backtrace.join("\n") }
@@ -46,7 +51,8 @@ module InsightsCloud
         end
 
         parts = []
-        parts << "Announced: #{announced.join(', ')}" if announced.any?
+        parts << "Registered: #{registered.join(', ')}" if registered.any?
+        parts << "Already registered: #{already_registered.join(', ')}" if already_registered.any?
         parts << "Skipped (no manifest): #{skipped.join(', ')}" if skipped.any?
         if failed.any?
           failed_details = failed.map { |name, msg| "#{name}: #{msg}" }.join('; ')

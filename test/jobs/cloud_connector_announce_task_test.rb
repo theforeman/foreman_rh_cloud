@@ -22,7 +22,7 @@ class CloudConnectorAnnounceTaskTest < ActiveSupport::TestCase
     action = run_action(action)
 
     status = action.output[:status].to_s
-    assert_match(/Announced:/, status)
+    assert_match(/Registered:|Already registered:/, status)
     refute_match(/Skipped/, status)
     refute_match(/Failed/, status)
   end
@@ -67,7 +67,7 @@ class CloudConnectorAnnounceTaskTest < ActiveSupport::TestCase
 
     status = action.output[:status].to_s
     assert_match(/Skipped \(no manifest\):/, status)
-    refute_match(/Announced/, status)
+    refute_match(/Registered/, status)
     refute_match(/Failed/, status)
   end
 
@@ -85,7 +85,7 @@ class CloudConnectorAnnounceTaskTest < ActiveSupport::TestCase
     action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask)
     action = run_action(action)
 
-    assert_match(/Announced:/, action.output[:status].to_s)
+    assert_match(/Registered:|Already registered:/, action.output[:status].to_s)
   end
 
   test 'continues processing other orgs when one fails and task errors' do
