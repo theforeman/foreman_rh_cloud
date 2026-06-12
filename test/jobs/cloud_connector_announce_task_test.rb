@@ -4,6 +4,11 @@ require 'foreman_tasks/test_helpers'
 class CloudConnectorAnnounceTaskTest < ActiveSupport::TestCase
   include Dynflow::Testing::Factories
 
+  setup do
+    InsightsCloud::Async::CloudConnectorAnnounceTask.any_instance
+                                                    .stubs(:recent_cloud_remediation?).returns(false)
+  end
+
   teardown do
     ForemanRhCloud.unstub(:with_iop_smart_proxy?)
   end

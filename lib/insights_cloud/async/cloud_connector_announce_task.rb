@@ -44,6 +44,11 @@ module InsightsCloud
             next
           end
 
+          if recent_cloud_remediation?(org)
+            already_registered << org.name
+            next
+          end
+
           presence = ForemanRhCloud::CloudPresence.new(org, logger)
           result = presence.announce_to_sources
           if result == :already_registered
@@ -68,6 +73,17 @@ module InsightsCloud
         output[:status] = parts.join('. ')
 
         error!("Sources announcement failed for: #{failed.keys.join(', ')}") if failed.any?
+      end
+
+      def recent_cloud_remediation?(org)
+        feature = RemoteExecutionFeature.find_by(label: 'rh_cloud_connector_run_playbook')
+        return false unless feature
+
+        JobInvocation.where(remote_execution_feature_id: feature.id)
+                     .joins(targeting: :hosts)
+                     .where(hosts: { organization_id: org.id })
+                     .where('job_invocations.created_at > ?', 24.hours.ago)
+                     .exists?
       end
 
       def rescue_strategy_for_self
