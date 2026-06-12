@@ -1,39 +1,59 @@
 module InsightsCloud
   module Async
     class CloudConnectorAnnounceTask < ::Actions::EntryAction
-      def self.subscribe
-        Actions::RemoteExecution::RunHostsJob
-      end
+      include ::Actions::RecurringAction
+      include ::ForemanRhCloud::CertAuth
 
-      def self.connector_feature_id
-        @connector_feature_id ||= RemoteExecutionFeature.feature!(ForemanRhCloud::CloudConnector::CLOUD_CONNECTOR_FEATURE).id
-      end
+      def plan
+        if ForemanRhCloud.with_iop_smart_proxy?
+          logger.debug('Sources announcement skipped: running in IoP mode')
+          return
+        end
 
-      def plan(job_invocation)
-        return unless connector_playbook_job?(job_invocation)
+        if Setting[:rhc_instance_id].blank?
+          logger.debug('Sources announcement skipped: rhc_instance_id is not set')
+          return
+        end
+
+        unless Setting[:allow_auto_inventory_upload]
+          logger.warn(
+            'Cloud connector is configured (rhc_instance_id is set) but automatic inventory upload is disabled. ' \
+            'Enable the "Automatic inventory upload" setting for full cloud connector functionality.'
+          )
+        end
 
         plan_self
       end
 
-      def finalize
+      def run
+        announced = []
+        skipped = []
+        failed = []
+
         Organization.unscoped.each do |org|
+          unless cert_auth_available?(org)
+            logger.info("Skipping Sources announcement for organization #{org.name}: no manifest available")
+            skipped << org.name
+            next
+          end
+
           presence = ForemanRhCloud::CloudPresence.new(org, logger)
           presence.announce_to_sources
+          announced << org.name
         rescue StandardError => ex
-          logger.warn(ex)
+          logger.warn("Failed to announce to Sources for organization #{org.name}: #{ex}")
+          failed << org.name
         end
+
+        parts = []
+        parts << "Announced: #{announced.join(', ')}" if announced.any?
+        parts << "Skipped (no manifest): #{skipped.join(', ')}" if skipped.any?
+        parts << "Failed: #{failed.join(', ')}" if failed.any?
+        output[:status] = parts.join('. ')
       end
 
       def rescue_strategy_for_self
         Dynflow::Action::Rescue::Skip
-      end
-
-      def connector_playbook_job?(job_invocation)
-        job_invocation&.remote_execution_feature_id == connector_feature_id
-      end
-
-      def connector_feature_id
-        self.class.connector_feature_id
       end
 
       def logger

@@ -35,20 +35,20 @@ module InventoryUpload::Api
       assert_equal test_task.id.to_s, actual_task['id']
     end
 
-    test 'Starts cloud connector configuration job' do
-      test_job = FactoryBot.create(:job_invocation)
+    test 'Triggers Sources announcement task' do
+      test_task = FactoryBot.create(:some_task)
 
-      ForemanRhCloud::CloudConnector.any_instance
-        .expects(:install)
-        .returns(test_job)
+      ForemanTasks.expects(:async_task)
+        .with(InsightsCloud::Async::CloudConnectorAnnounceTask)
+        .returns(test_task)
 
-      post :enable_cloud_connector
+      post :announce_to_sources
 
       assert_response :success
 
-      actual_job = @response.parsed_body
-
-      assert_equal test_job.id, actual_job['id']
+      actual_task = @response.parsed_body['task']
+      assert_not_nil actual_task
+      assert_equal test_task.id.to_s, actual_task['id']
     end
   end
 end
