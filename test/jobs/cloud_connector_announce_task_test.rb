@@ -93,6 +93,26 @@ class CloudConnectorAnnounceTaskTest < ActiveSupport::TestCase
     assert_match(/Registered:|Already registered:/, action.output[:status].to_s)
   end
 
+  test 'skips orgs with recent cloud remediation jobs' do
+    Setting[:rhc_instance_id] = 'test-rhc-id'
+
+    InsightsCloud::Async::CloudConnectorAnnounceTask.any_instance
+                                                    .stubs(:cert_auth_available?).returns(true)
+    InsightsCloud::Async::CloudConnectorAnnounceTask.any_instance
+                                                    .stubs(:recent_cloud_remediation?).returns(true)
+
+    ForemanRhCloud::CloudPresence.any_instance
+                                 .expects(:announce_to_sources)
+                                 .never
+
+    action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask)
+    action = run_action(action)
+
+    status = action.output[:status].to_s
+    assert_match(/Already registered \(recent cloud remediation\):/, status)
+    refute_match(/\bRegistered:/, status)
+  end
+
   test 'continues processing other orgs when one fails and task errors' do
     Setting[:rhc_instance_id] = 'test-rhc-id'
 

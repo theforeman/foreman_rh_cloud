@@ -34,6 +34,7 @@ module InsightsCloud
 
       def run
         registered = []
+        confirmed_by_remediation = []
         already_registered = []
         skipped = []
         failed = {}
@@ -45,7 +46,7 @@ module InsightsCloud
           end
 
           if recent_cloud_remediation?(org)
-            already_registered << org.name
+            confirmed_by_remediation << org.name
             next
           end
 
@@ -65,6 +66,7 @@ module InsightsCloud
         parts = []
         parts << "Registered: #{registered.join(', ')}" if registered.any?
         parts << "Already registered: #{already_registered.join(', ')}" if already_registered.any?
+        parts << "Already registered (recent cloud remediation): #{confirmed_by_remediation.join(', ')}" if confirmed_by_remediation.any?
         parts << "Skipped (no manifest): #{skipped.join(', ')}" if skipped.any?
         if failed.any?
           failed_details = failed.map { |name, msg| "#{name}: #{msg}" }.join('; ')
