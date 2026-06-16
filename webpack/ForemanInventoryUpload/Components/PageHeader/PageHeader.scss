@@ -1,6 +1,6 @@
 .rh-cloud-inventory-page {
   .inventory-upload-header {
-    margin-top: 35px;
+    padding: var(--pf-v5-global--spacer--md) var(--pf-v5-global--spacer--lg) var(--pf-v5-global--spacer--lg) var(--pf-v5-global--spacer--lg);
 
     h1 {
       font-family: 'RedHatDisplay';
@@ -33,7 +33,6 @@
     }
 
     .inventory-upload-header-title {
-      margin-top: -15px;
       margin-bottom: 8px;
     }
 
