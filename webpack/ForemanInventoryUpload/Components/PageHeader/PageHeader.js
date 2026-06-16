@@ -4,7 +4,6 @@ import InventorySettings from '../InventorySettings';
 import PageDescription from './components/PageDescription';
 import InventoryFilter from '../InventoryFilter';
 import ToolbarButtons from './components/ToolbarButtons';
-import SettingsWarning from './components/SettingsWarning';
 import PageTitle from './PageTitle';
 import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 import './PageHeader.scss';
@@ -14,7 +13,6 @@ const PageHeader = () => {
 
   return (
     <div className="inventory-upload-header">
-      <SettingsWarning />
       <PageTitle />
       {!isIop && (
         <div className="inventory-upload-header-description">

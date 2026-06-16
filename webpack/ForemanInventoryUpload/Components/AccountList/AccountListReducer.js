@@ -20,7 +20,6 @@ export default (state = initialState, action) => {
       accounts,
       accountID,
       processStatusName,
-      CloudConnectorStatus,
     } = {},
   } = action;
 
@@ -29,7 +28,6 @@ export default (state = initialState, action) => {
       return state.merge({
         ...state,
         accounts,
-        CloudConnectorStatus,
         error: null,
       });
     case INVENTORY_ACCOUNT_STATUS_POLLING_ERROR:

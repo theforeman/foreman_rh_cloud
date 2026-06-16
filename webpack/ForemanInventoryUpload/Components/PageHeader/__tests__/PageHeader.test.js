@@ -20,9 +20,6 @@ jest.mock('foremanReact/Root/Context/ForemanContext', () => ({
 
 // Mock child components to isolate PageHeader testing
 // This prevents child component complexity from affecting our tests
-jest.mock('../components/SettingsWarning', () => () => (
-  <div data-testid="settings-warning">SettingsWarning</div>
-));
 jest.mock('../PageTitle', () => () => (
   <div data-testid="page-title">PageTitle</div>
 ));
@@ -59,7 +56,6 @@ describe('PageHeader', () => {
       });
 
       // All components should be present when not in IoP mode
-      expect(screen.getByTestId('settings-warning')).toBeTruthy();
       expect(screen.getByTestId('page-title')).toBeTruthy();
       expect(screen.getByTestId('inventory-settings')).toBeTruthy();
       expect(screen.getByTestId('page-description')).toBeTruthy();
@@ -83,7 +79,6 @@ describe('PageHeader', () => {
       });
 
       // Core components should still be present
-      expect(screen.getByTestId('settings-warning')).toBeTruthy();
       expect(screen.getByTestId('page-title')).toBeTruthy();
       expect(screen.getByTestId('inventory-filter')).toBeTruthy();
       expect(screen.getByTestId('toolbar-buttons')).toBeTruthy();

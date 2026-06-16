@@ -1,1 +1,1 @@
-gem 'katello', github: 'Katello/katello', branch: ENV.fetch('KATELLO_BRANCH', 'master')
+gem 'katello', github: 'Katello/katello', ref: ENV.fetch('KATELLO_REF', 'master')

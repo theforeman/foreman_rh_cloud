@@ -32,11 +32,6 @@ export const processStatusName = 'upload_report_status';
 
 export const filterTerm = 'some_filter';
 
-export const CloudConnectorStatus = {
-  id: 7,
-  task: { id: 11 },
-};
-
 export const props = {
   accounts,
   fetchAccountsStatus: noop,
@@ -47,7 +42,6 @@ export const props = {
 
 export const pollingResponse = {
   accounts,
-  CloudConnectorStatus,
 };
 
 export const fetchAccountsStatusResponse = {
