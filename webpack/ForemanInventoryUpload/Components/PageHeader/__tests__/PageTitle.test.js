@@ -18,6 +18,7 @@ jest.mock('foremanReact/Root/Context/ForemanContext', () => ({
 jest.mock('../components/CloudPingModal', () => () => (
   <div data-testid="cloud-ping-modal">CloudPingModal</div>
 ));
+jest.mock('foremanReact/common/helpers', () => ({ getDocsURL: () => {} }));
 
 describe('PageTitle', () => {
   afterEach(() => {
