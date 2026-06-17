@@ -1,14 +1,14 @@
 import URI from 'urijs';
+import { getDocsURL } from 'foremanReact/common/helpers';
 import { foremanUrl } from '../ForemanRhCloudHelpers';
 
 export const inventoryUrl = path =>
   foremanUrl(`/foreman_inventory_upload/${path}`);
 
 export const getInventoryDocsUrl = () =>
-  foremanUrl(
-    `/links/manual/?root_url=${URI.encode(
-      'https://docs.redhat.com/en/documentation/red_hat_lightspeed/1-latest/html-single/red_hat_lightspeed_remediations_guide/index'
-    )}`
+  getDocsURL(
+    'Managing_Hosts',
+    'configuring-foreman-server-for-cloud-connection'
   );
 
 export const getSubscriptionServiceDocsUrl = () =>

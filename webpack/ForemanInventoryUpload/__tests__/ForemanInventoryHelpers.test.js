@@ -1,6 +1,21 @@
-import { isExitCodeLoading } from '../ForemanInventoryHelpers';
+jest.mock('foremanReact/common/helpers', () => ({
+  getDocsURL: jest.fn(),
+}));
+
+import { getDocsURL } from 'foremanReact/common/helpers';
+import { getInventoryDocsUrl, isExitCodeLoading } from '../ForemanInventoryHelpers';
 
 describe('ForemanInventoryUpload helpers', () => {
+  describe('getInventoryDocsUrl', () => {
+    it('requests the Managing Hosts guide at the cloud connection chapter', () => {
+      getInventoryDocsUrl();
+      expect(getDocsURL).toHaveBeenCalledWith(
+        'Managing_Hosts',
+        'configuring-foreman-server-for-cloud-connection'
+      );
+    });
+  });
+
   describe('isExitCodeLoading', () => {
     it('returns true when exit code contains "running"', () => {
       expect(isExitCodeLoading('currently running')).toBe(true);
