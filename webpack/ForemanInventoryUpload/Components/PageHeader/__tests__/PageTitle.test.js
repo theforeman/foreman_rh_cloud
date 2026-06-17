@@ -5,6 +5,7 @@ import PageTitle from '../PageTitle';
 jest.mock('../components/CloudPingModal', () => () => (
   <div data-testid="cloud-ping-modal">CloudPingModal</div>
 ));
+jest.mock('foremanReact/common/helpers', () => ({ getDocsURL: () => {} }));
 
 describe('PageTitle', () => {
   it('renders the page title', () => {
