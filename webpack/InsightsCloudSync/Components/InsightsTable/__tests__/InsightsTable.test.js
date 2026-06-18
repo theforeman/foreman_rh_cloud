@@ -90,23 +90,62 @@ describe('InsightsTable', () => {
     ).toBeTruthy();
   });
 
-  it('selects all selectable rows via header checkbox', () => {
+  it('selects all enabled rows via header checkbox', () => {
     const props = buildProps({ hits: selectableHits, selectedIds: {} });
     render(<InsightsTable {...props} />);
 
-    const [headerCheckbox] = screen.getAllByRole('checkbox');
+    const headerCheckbox = screen.getByLabelText(/Select all rows/i);
     fireEvent.click(headerCheckbox);
+
+    expect(props.onTableSelect).toHaveBeenCalledTimes(1);
+    const [
+      isSelected,
+      rowId,
+      rowsArg,
+      selectedIdsArg,
+    ] = props.onTableSelect.mock.calls[0];
+
+    expect(isSelected).toBe(true);
+    expect(rowId).toBe(-1);
+    expect(selectedIdsArg).toEqual({});
+    expect(rowsArg).toHaveLength(selectableHits.length);
+    expect(rowsArg.map(row => row.id)).toEqual(
+      selectableHits.map(hit => hit.id)
+    );
+
+    const disabledRows = rowsArg.filter(row => row.disableCheckbox);
+    expect(disabledRows).toHaveLength(1);
+    expect(disabledRows[0].id).toBe(17);
+    expect(disabledRows[0].selected).toBe(false);
+
+    const enabledRows = rowsArg.filter(row => !row.disableCheckbox);
+    expect(enabledRows).toHaveLength(2);
+    enabledRows.forEach(row => {
+      expect(row.selected).toBe(false);
+    });
+  });
+
+  it('selects an individual row via row checkbox', () => {
+    const props = buildProps({ hits: selectableHits, selectedIds: {} });
+    render(<InsightsTable {...props} />);
+
+    const rowCheckboxes = screen.getAllByRole('checkbox').slice(1);
+    const firstSelectableCheckbox = rowCheckboxes.find(
+      checkbox => !checkbox.disabled
+    );
+    expect(firstSelectableCheckbox).toBeTruthy();
+    fireEvent.click(firstSelectableCheckbox);
 
     expect(props.onTableSelect).toHaveBeenCalledTimes(1);
     expect(props.onTableSelect).toHaveBeenCalledWith(
       true,
-      -1,
+      0,
       expect.any(Array),
       {}
     );
   });
 
-  it('renders disabled checkbox rows as unselectable', () => {
+  it('renders disabled checkbox rows as disabled', () => {
     const props = buildProps({ hits: selectableHits, selectedIds: {} });
     render(<InsightsTable {...props} />);
 
@@ -124,7 +163,10 @@ describe('InsightsTable', () => {
   });
 
   it('reflects partial/all header checkbox state from selected ids', () => {
-    const props = buildProps({ hits: selectableHits, selectedIds: { 16: true } });
+    const props = buildProps({
+      hits: selectableHits,
+      selectedIds: { 16: true },
+    });
     const { rerender } = render(<InsightsTable {...props} />);
 
     let [headerCheckbox] = screen.getAllByRole('checkbox');
@@ -153,11 +195,41 @@ describe('InsightsTable', () => {
     );
   });
 
+  it('passes base sort index when selection column is absent', () => {
+    const props = buildProps({
+      hits: Immutable([
+        {
+          id: 16,
+          hostname: 'foo.example.com',
+          title: 'Decreased security: Yum GPG verification disabled',
+          total_risk: 1,
+          has_playbook: false,
+          results_url: 'https://cloud.redhat.com/foo',
+          solution_url: '',
+        },
+      ]),
+      sortBy: '',
+      sortOrder: SortByDirection.asc,
+    });
+    render(<InsightsTable {...props} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Hostname/i }));
+
+    expect(props.onTableSort).toHaveBeenCalledTimes(1);
+    expect(props.onTableSort).toHaveBeenCalledWith(
+      expect.any(Array),
+      0,
+      expect.stringMatching(/asc|desc/)
+    );
+  });
+
   it('does not trigger sort for non-sortable Actions column', () => {
     const props = buildProps({ hits: selectableHits });
     render(<InsightsTable {...props} />);
 
-    fireEvent.click(screen.getByRole('columnheader', { name: /Actions/i }));
+    const actionsHeader = screen.getByText(/Actions/i).closest('th');
+    expect(actionsHeader).toBeTruthy();
+    fireEvent.click(actionsHeader);
 
     expect(props.onTableSort).not.toHaveBeenCalled();
   });

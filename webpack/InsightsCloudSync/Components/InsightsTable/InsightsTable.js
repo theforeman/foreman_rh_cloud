@@ -56,12 +56,10 @@ const InsightsTable = ({
   const isIop = useIopConfig();
 
   useEffect(() => {
-    setRows(
-      modifySelectedRows(hits, selectedIds, showSelectAllAlert, isIop)
-    );
+    setRows(modifySelectedRows(hits, selectedIds, showSelectAllAlert, isIop));
 
     if (hideHost) setColumns(getColumnsWithoutHostname());
-  }, [hits, selectedIds, hideHost]);
+  }, [hits, selectedIds, hideHost, isIop]);
 
   const hasSelectableRows = rows.some(row => !row.disableCheckbox);
   const hasRows = rows.length > 0;
@@ -102,7 +100,7 @@ const InsightsTable = ({
         variant="compact"
       >
         <Thead>
-          <Tr>
+          <Tr ouiaId="recommendations-table-head-row">
             {hasSelectableRows && (
               <Th
                 aria-label={__('Select all recommendations')}
@@ -140,7 +138,7 @@ const InsightsTable = ({
         </Thead>
         <Tbody>
           {rows.map((row, rowIndex) => (
-            <Tr key={row.id}>
+            <Tr key={row.id} ouiaId={`recommendations-row-${row.id}`}>
               {hasSelectableRows && (
                 <Td
                   select={{

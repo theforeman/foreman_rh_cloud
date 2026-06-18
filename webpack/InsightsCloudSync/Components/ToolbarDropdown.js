@@ -51,6 +51,7 @@ const ToolbarDropdown = ({ onRecommendationSync }) => {
           ref={toggleRef}
           variant="plain"
           aria-label={__('Recommendations actions')}
+          onClick={() => setIsDropdownOpen(prev => !prev)}
           isExpanded={isDropdownOpen}
         >
           <EllipsisVIcon />

@@ -17,7 +17,7 @@ import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 // Sample iopData:
 // const iopTestData = Immutable([
 //   {
-//     hostid: 'c7c6727e-2966-4f7c-87f1-20ef14db7a2d',
+//     hostid: 'sample-insights-host-id',
 //     host_name: 'advisor-test.local',
 //     rulename: 'hardening_cryptopol_krb5|NO_CPOL_KRB5',
 //     resolutions: [
@@ -32,7 +32,7 @@ import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 //     description: 'Decreased security: krb5 crypto-policies overridden',
 //   },
 //   {
-//     hostid: 'c7c6727e-2966-4f7c-87f1-20ef14db7a2d',
+//     hostid: 'sample-insights-host-id',
 //     host_name: 'advisor-test.local',
 //     rulename: 'hardening_logging_auditd|HARDENING_LOGGING_5_AUDITD',
 //     resolutions: [
@@ -129,7 +129,7 @@ const RemediationModal = ({
           aria-label="remediations Table"
         >
           <Thead>
-            <Tr>
+            <Tr ouiaId="remediations-table-head-row">
               {columns.map(column => (
                 <Th key={column.id} width={column.width}>
                   {column.title}
@@ -139,7 +139,7 @@ const RemediationModal = ({
           </Thead>
           <Tbody>
             {rows.map(row => (
-              <Tr key={row.id}>
+              <Tr key={row.id} ouiaId={`remediations-row-${row.id}`}>
                 {columns.map(column => {
                   const value = row[column.id];
                   return (
