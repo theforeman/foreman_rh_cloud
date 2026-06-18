@@ -3,9 +3,14 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Table,
-  TableHeader,
-  TableBody,
-} from '@patternfly/react-table/deprecated';
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+  SortByDirection,
+} from '@patternfly/react-table';
+import { translate as __ } from 'foremanReact/common/I18n';
 import { useForemanSettings } from 'foremanReact/Root/Context/ForemanContext';
 import SelectAllAlert from './SelectAllAlert';
 import {
@@ -59,6 +64,27 @@ const InsightsTable = ({
   }, [hits, selectedIds, hideHost]);
 
   const hasSelectableRows = rows.some(row => !row.disableCheckbox);
+  const hasRows = rows.length > 0;
+  const selectedRowsCount = rows.filter(
+    row => !row.disableCheckbox && row.selected
+  ).length;
+  const selectableRowsCount = rows.filter(row => !row.disableCheckbox).length;
+  const allSelected = hasRows && selectableRowsCount === selectedRowsCount;
+  const isSortDirectionValid =
+    sortOrder === SortByDirection.asc || sortOrder === SortByDirection.desc;
+  const sortIndex = getSortColumnIndex(columns, sortBy);
+  const sortByState = isSortDirectionValid
+    ? {
+        index: hasSelectableRows ? sortIndex + 1 : sortIndex,
+        direction: sortOrder,
+      }
+    : undefined;
+
+  const getCellContent = (row, col) => {
+    if (col.id === 'actions') return col.formatter(row);
+    const value = row[col.id];
+    return col.formatter ? col.formatter(value) : value;
+  };
 
   return (
     <React.Fragment>
@@ -73,24 +99,62 @@ const InsightsTable = ({
         className="rh-cloud-recommendations-table"
         ouiaId="rh-cloud-recommendations-table"
         aria-label="Recommendations Table"
-        {...(hasSelectableRows && {
-          onSelect: (_event, isSelected, rowId) =>
-            onTableSelect(isSelected, rowId, rows, selectedIds),
-        })}
-        canSelectAll={hasSelectableRows}
-        sortBy={{
-          index: getSortColumnIndex(columns, sortBy),
-          direction: sortOrder,
-        }}
-        onSort={(_event, index, direction) =>
-          onTableSort(columns, index, direction)
-        }
-        cells={columns}
-        rows={rows}
         variant="compact"
       >
-        <TableHeader />
-        <TableBody />
+        <Thead>
+          <Tr>
+            {hasSelectableRows && (
+              <Th
+                select={{
+                  onSelect: (_event, isSelected) =>
+                    onTableSelect(isSelected, -1, rows, selectedIds),
+                  isSelected: allSelected,
+                }}
+              />
+            )}
+            {columns.map((column, index) => (
+              <Th
+                key={column.id}
+                width={column.width}
+                screenReaderText={!column.title ? __('Actions') : undefined}
+                sort={
+                  column.sortKey
+                    ? {
+                        sortBy: sortByState,
+                        onSort: (_event, colIndex, direction) =>
+                          onTableSort(columns, colIndex, direction),
+                        columnIndex: hasSelectableRows ? index + 1 : index,
+                      }
+                    : undefined
+                }
+              >
+                {column.title}
+              </Th>
+            ))}
+          </Tr>
+        </Thead>
+        <Tbody>
+          {rows.map((row, rowIndex) => (
+            <Tr key={row.id}>
+              {hasSelectableRows && (
+                <Td
+                  select={{
+                    rowIndex,
+                    isDisabled: row.disableCheckbox,
+                    onSelect: (_event, isSelected) =>
+                      onTableSelect(isSelected, rowIndex, rows, selectedIds),
+                    isSelected: row.selected,
+                  }}
+                />
+              )}
+              {columns.map(column => (
+                <Td key={`${row.id}-${column.id}`}>
+                  {getCellContent(row, column)}
+                </Td>
+              ))}
+            </Tr>
+          ))}
+        </Tbody>
       </Table>
       <TableEmptyState status={status} error={error} rowsLength={rows.length} />
       <Pagination variant="bottom" />

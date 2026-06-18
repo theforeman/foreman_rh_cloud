@@ -4,8 +4,9 @@ import { translate as __ } from 'foremanReact/common/I18n';
 import {
   Dropdown,
   DropdownItem,
-  KebabToggle,
-} from '@patternfly/react-core/deprecated';
+  DropdownList,
+  MenuToggle,
+} from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import { redHatAdvisorSystems } from '../InsightsCloudSyncHelpers';
 import { useIopConfig } from '../../common/Hooks/ConfigHooks';
@@ -44,13 +45,22 @@ const ToolbarDropdown = ({ onRecommendationSync }) => {
       className="title-dropdown"
       ouiaId="title-dropdown"
       onSelect={() => setIsDropdownOpen(false)}
-      toggle={
-        <KebabToggle onToggle={(_event, isOpen) => setIsDropdownOpen(isOpen)} />
-      }
+      onOpenChange={setIsDropdownOpen}
+      toggle={toggleRef => (
+        <MenuToggle
+          ref={toggleRef}
+          variant="plain"
+          aria-label={__('Recommendations actions')}
+          onClick={() => setIsDropdownOpen(prev => !prev)}
+          isExpanded={isDropdownOpen}
+        />
+      )}
       isOpen={isDropdownOpen}
-      isPlain
-      dropdownItems={dropdownItems}
-    />
+      shouldFocusToggleOnSelect
+      popperProps={{ position: 'right' }}
+    >
+      <DropdownList>{dropdownItems}</DropdownList>
+    </Dropdown>
   );
 };
 

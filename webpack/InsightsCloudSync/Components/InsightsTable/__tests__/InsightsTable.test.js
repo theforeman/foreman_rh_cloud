@@ -36,9 +36,7 @@ describe('InsightsTable', () => {
     const props = buildProps();
     render(<InsightsTable {...props} />);
 
-    expect(
-      screen.getByRole('grid', { name: /Recommendations Table/ })
-    ).toBeTruthy();
+    expect(screen.getByLabelText(/Recommendations Table/)).toBeTruthy();
   });
 
   it('re-fetches when hostname changes', () => {
@@ -46,9 +44,7 @@ describe('InsightsTable', () => {
     const { rerender } = render(<InsightsTable {...props} />);
 
     props.fetchInsights.mockClear();
-    rerender(
-      <InsightsTable {...props} hostname="host2.example.com" />
-    );
+    rerender(<InsightsTable {...props} hostname="host2.example.com" />);
 
     expect(props.fetchInsights).toHaveBeenCalledTimes(1);
   });
@@ -57,6 +53,8 @@ describe('InsightsTable', () => {
     const props = buildProps({ hits: [], status: 'RESOLVED' });
     const { container } = render(<InsightsTable {...props} />);
 
-    expect(container.querySelector('.rh-cloud-recommendations-table')).toBeTruthy();
+    expect(
+      container.querySelector('.rh-cloud-recommendations-table')
+    ).toBeTruthy();
   });
 });

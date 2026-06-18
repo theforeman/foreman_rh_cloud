@@ -1,38 +1,40 @@
 import React from 'react';
-import { cellWidth } from '@patternfly/react-table';
 import { Icon } from '@patternfly/react-core';
 import { CheckCircleIcon } from '@patternfly/react-icons';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { foremanUrl } from '../../../ForemanRhCloudHelpers';
 
-export const rebootFormatter = ({ title: reboot }) => ({
-  children: reboot ? (
+export const rebootFormatter = reboot =>
+  reboot ? (
     <Icon color="green">
       <CheckCircleIcon />
     </Icon>
   ) : (
     __('No')
-  ),
-});
+  );
 
 export const columns = [
   {
+    id: 'hostname',
     sortKey: 'hostname',
     title: __('Hostname'),
-    transforms: [cellWidth(20)],
+    width: 20,
   },
   {
+    id: 'recommendation',
     title: __('Recommendation'),
-    transforms: [cellWidth(35)],
+    width: 35,
   },
   {
+    id: 'resolution',
     title: __('Resolution'),
-    transforms: [cellWidth(30)],
+    width: 30,
   },
   {
+    id: 'reboot',
     title: __('Reboot Required'),
-    transforms: [cellWidth(15)],
-    cellTransforms: [rebootFormatter],
+    width: 15,
+    formatter: rebootFormatter,
   },
 ];
 

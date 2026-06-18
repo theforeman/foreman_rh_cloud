@@ -96,8 +96,7 @@ export const clearAllSelection = () => dispatch => {
 };
 
 export const onTableSort = (columns, index, direction) => {
-  // The checkbox column shifts the data columns by 1;
-  const { sortKey } = columns[index - 1];
+  const { sortKey } = columns[index];
   return fetchInsights({
     sortBy: sortKey,
     sortOrder: direction,

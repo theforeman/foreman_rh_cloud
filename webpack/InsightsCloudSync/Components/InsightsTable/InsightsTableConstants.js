@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import { DropdownItem } from '@patternfly/react-core/deprecated';
-import { sortable, cellWidth } from '@patternfly/react-table';
+import { DropdownItem } from '@patternfly/react-core';
 import { AnsibeTowerIcon, ExternalLinkAltIcon } from '@patternfly/react-icons';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { foremanUrl } from '../../../ForemanRhCloudHelpers';
@@ -9,26 +8,23 @@ import DropdownToggle from '../../../common/DropdownToggle';
 import InsightsSection from './InsightsSection';
 import InsightsLabel from './InsightsLabel';
 
-export const totalRiskFormatter = ({ title: totalRisk }) => ({
-  children: (
-    <InsightsSection className="insights-total-risk" type="icon-group">
-      <InsightsLabel value={totalRisk} />
-    </InsightsSection>
-  ),
-});
+export const totalRiskFormatter = totalRisk => (
+  <InsightsSection className="insights-total-risk" type="icon-group">
+    <InsightsLabel value={totalRisk} />
+  </InsightsSection>
+);
 
-export const hasPlaybookFormatter = ({ title: hasPlaybook }) => ({
-  children: hasPlaybook ? (
+export const hasPlaybookFormatter = hasPlaybook =>
+  hasPlaybook ? (
     <span className="td-insights-remediate-playbook">
       <AnsibeTowerIcon />
       {__('Playbook')}
     </span>
   ) : (
     <span className="td-insights-remediate-manual">{__('Manual')}</span>
-  ),
-});
+  );
 
-export const actionsFormatter = (props, { rowData = {} }) => {
+export const actionsFormatter = rowData => {
   const { recommendationUrl, accessRHUrl, isLocalAdvisorEngine } = rowData;
   const dropdownItems = [];
 
@@ -51,9 +47,7 @@ export const actionsFormatter = (props, { rowData = {} }) => {
       </DropdownItem>
     );
 
-  return {
-    children: <DropdownToggle items={dropdownItems} />,
-  };
+  return <DropdownToggle items={dropdownItems} />;
 };
 
 export const columns = [
@@ -61,39 +55,39 @@ export const columns = [
     id: 'hostname',
     sortKey: 'hostname',
     title: __('Hostname'),
-    transforms: [cellWidth(20), sortable],
+    width: 20,
   },
   {
     id: 'recommendation',
     sortKey: 'title',
     title: __('Recommendation'),
-    transforms: [cellWidth(50), sortable],
+    width: 50,
   },
   {
-    id: 'total risk',
+    id: 'total_risk',
     sortKey: 'total_risk',
     title: __('Total risk'),
-    transforms: [cellWidth(15), sortable],
-    cellTransforms: [totalRiskFormatter],
+    width: 15,
+    formatter: totalRiskFormatter,
   },
   {
-    id: 'remediate',
+    id: 'has_playbook',
     title: __('Remediate'),
-    transforms: [cellWidth(10)],
-    cellTransforms: [hasPlaybookFormatter],
+    width: 10,
+    formatter: hasPlaybookFormatter,
   },
   {
     id: 'actions',
     title: '',
-    transforms: [cellWidth(5)],
-    cellTransforms: [actionsFormatter],
+    width: 5,
+    formatter: actionsFormatter,
   },
 ];
 
 export const getColumnsWithoutHostname = () => {
-  const nextCols = columns.slice(1);
-  nextCols[0].transforms = [cellWidth(70), sortable];
-  return nextCols;
+  return columns
+    .slice(1)
+    .map(col => (col.id === 'recommendation' ? { ...col, width: 70 } : col));
 };
 
 export const paginationTitles = {
