@@ -6,7 +6,6 @@ export const modifySelectedRows = (
   hits,
   selectedIds,
   showSelectAllAlert,
-  hideHost,
   isLocalAdvisorEngine
 ) => {
   if (hits.length === 0) return [];

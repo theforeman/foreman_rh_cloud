@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Dropdown, DropdownList, MenuToggle } from '@patternfly/react-core';
+import { EllipsisVIcon } from '@patternfly/react-icons';
 
 const DropdownToggle = ({ items, ...props }) => {
   const [isOpen, setOpen] = useState(false);
@@ -14,9 +15,10 @@ const DropdownToggle = ({ items, ...props }) => {
           ref={toggleRef}
           variant="plain"
           aria-label="Table actions"
-          onClick={() => setOpen(prev => !prev)}
           isExpanded={isOpen}
-        />
+        >
+          <EllipsisVIcon />
+        </MenuToggle>
       )}
       isOpen={isOpen}
       shouldFocusToggleOnSelect

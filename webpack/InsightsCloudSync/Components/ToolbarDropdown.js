@@ -7,7 +7,7 @@ import {
   DropdownList,
   MenuToggle,
 } from '@patternfly/react-core';
-import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+import { EllipsisVIcon, ExternalLinkAltIcon } from '@patternfly/react-icons';
 import { redHatAdvisorSystems } from '../InsightsCloudSyncHelpers';
 import { useIopConfig } from '../../common/Hooks/ConfigHooks';
 
@@ -51,9 +51,10 @@ const ToolbarDropdown = ({ onRecommendationSync }) => {
           ref={toggleRef}
           variant="plain"
           aria-label={__('Recommendations actions')}
-          onClick={() => setIsDropdownOpen(prev => !prev)}
           isExpanded={isDropdownOpen}
-        />
+        >
+          <EllipsisVIcon />
+        </MenuToggle>
       )}
       isOpen={isDropdownOpen}
       shouldFocusToggleOnSelect

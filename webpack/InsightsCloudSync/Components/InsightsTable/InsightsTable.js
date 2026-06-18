@@ -57,7 +57,7 @@ const InsightsTable = ({
 
   useEffect(() => {
     setRows(
-      modifySelectedRows(hits, selectedIds, showSelectAllAlert, hideHost, isIop)
+      modifySelectedRows(hits, selectedIds, showSelectAllAlert, isIop)
     );
 
     if (hideHost) setColumns(getColumnsWithoutHostname());
@@ -105,6 +105,7 @@ const InsightsTable = ({
           <Tr>
             {hasSelectableRows && (
               <Th
+                aria-label={__('Select all recommendations')}
                 select={{
                   onSelect: (_event, isSelected) =>
                     onTableSelect(isSelected, -1, rows, selectedIds),
@@ -122,7 +123,11 @@ const InsightsTable = ({
                     ? {
                         sortBy: sortByState,
                         onSort: (_event, colIndex, direction) =>
-                          onTableSort(columns, colIndex, direction),
+                          onTableSort(
+                            columns,
+                            colIndex - (hasSelectableRows ? 1 : 0),
+                            direction
+                          ),
                         columnIndex: hasSelectableRows ? index + 1 : index,
                       }
                     : undefined
