@@ -38,6 +38,16 @@ Rails.application.routes.draw do
     get 'insights_cloud', to: '/react#index' # Uses foreman's react controller
     get 'insights_vulnerability', to: '/react#index'
     get 'insights_vulnerability/:cve_id', to: '/react#index'
+    scope 'insights_compliance' do
+      get 'reports', to: '/react#index'
+      get 'reports/:report_id', to: '/react#index'
+      get 'reports/:report_id/delete', to: '/react#index'
+      get 'scappolicies', to: '/react#index'
+      get 'scappolicies/new', to: '/react#index'
+      get 'scappolicies/:policy_id', to: '/react#index'
+      get 'scappolicies/:policy_id/edit', to: '/react#index'
+      get 'scappolicies/:policy_id/delete', to: '/react#index'
+    end
   end
 
   scope :module => :'insights_cloud/api', :path => :redhat_access do

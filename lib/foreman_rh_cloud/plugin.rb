@@ -144,6 +144,20 @@ module ForemanRhCloud
             url_hash: { controller: :react, action: :index },
             parent: :insights_menu,
             if: -> { ForemanRhCloud.with_iop_smart_proxy? }
+          menu :top_menu,
+            :insights_compliance_reports,
+            caption: N_('Compliance Reports'),
+            url: '/foreman_rh_cloud/insights_compliance/reports',
+            url_hash: { controller: :react, action: :index },
+            parent: :insights_menu,
+            if: -> { ForemanRhCloud.with_iop_smart_proxy? }
+          menu :top_menu,
+            :insights_compliance_scappolicies,
+            caption: N_('SCAP Policies'),
+            url: '/foreman_rh_cloud/insights_compliance/scappolicies',
+            url_hash: { controller: :react, action: :index },
+            parent: :insights_menu,
+            if: -> { ForemanRhCloud.with_iop_smart_proxy? }
         end
 
         # In IoP case we want the page to be in the admin menu
