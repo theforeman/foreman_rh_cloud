@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown, KebabToggle } from '@patternfly/react-core/deprecated';
+import { Dropdown, DropdownList, MenuToggle } from '@patternfly/react-core';
+import { EllipsisVIcon } from '@patternfly/react-icons';
+import { translate as __ } from 'foremanReact/common/I18n';
 
 const DropdownToggle = ({ items, ...props }) => {
   const [isOpen, setOpen] = useState(false);
@@ -8,13 +10,25 @@ const DropdownToggle = ({ items, ...props }) => {
     <Dropdown
       ouiaId="toggle-dropdown"
       onSelect={() => setOpen(false)}
-      toggle={<KebabToggle onToggle={(_event, value) => setOpen(value)} />}
+      onOpenChange={setOpen}
+      toggle={toggleRef => (
+        <MenuToggle
+          ref={toggleRef}
+          variant="plain"
+          aria-label={__('Table actions')}
+          onClick={() => setOpen(prev => !prev)}
+          isExpanded={isOpen}
+        >
+          <EllipsisVIcon />
+        </MenuToggle>
+      )}
       isOpen={isOpen}
-      isPlain
-      dropdownItems={items}
-      position="right"
+      shouldFocusToggleOnSelect
+      popperProps={{ position: 'right' }}
       {...props}
-    />
+    >
+      <DropdownList>{items}</DropdownList>
+    </Dropdown>
   );
 };
 

@@ -29,8 +29,7 @@ export const modifyRows = (
     // For IoP:
     // All of the values will be plain strings
     // {
-    // eslint-disable-next-line spellcheck/spell-checker
-    //  hit_id: "c7c6727e-2966-4f7c-87f1-20ef14db7a2d", <-- this refers to a host by insights ID
+    //  hit_id: "sample-insights-host-id", <-- this refers to a host by insights ID
     //  rule_id: "hardening_ssh_client_alive|OPENSSH_HARDENING_CLIENT_ALIVE",
     //  resolution_type: "less_secure",
     //  resolution_id:"hardening_ssh_client_alive|OPENSSH_HARDENING_CLIENT_ALIVE_less_secure", <-- joined rule id and resolution type
@@ -48,9 +47,10 @@ export const modifyRows = (
       resolution_id: getResolutionId(selectedResolution, id, isIop),
     });
     return {
-      cells: [
-        hostname,
-        title,
+      id,
+      hostname,
+      recommendation: title,
+      resolution: (
         <div>
           <Resolutions
             hit_id={isIop ? host_id : id}
@@ -59,10 +59,9 @@ export const modifyRows = (
             selectedResolution={selectedResolution}
             isIop={isIop}
           />
-        </div>,
-        reboot,
-      ],
-      id,
+        </div>
+      ),
+      reboot,
     };
   });
 

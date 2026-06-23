@@ -6,7 +6,6 @@ export const modifySelectedRows = (
   hits,
   selectedIds,
   showSelectAllAlert,
-  hideHost,
   isLocalAdvisorEngine
 ) => {
   if (hits.length === 0) return [];
@@ -24,12 +23,13 @@ export const modifySelectedRows = (
         solution_url,
       }) => {
         const disableCheckbox = !has_playbook;
-        const cells = [hostname, title, total_risk, has_playbook, results_url];
-        if (hideHost) cells.shift();
         return {
-          cells,
           disableCheckbox,
           id,
+          hostname,
+          recommendation: title,
+          total_risk,
+          has_playbook,
           /** The main table checkbox will be seen as selected only if all rows are selected,
            * in this case we need to select also the disabled once and hide it with css */
           selected: selectedIds[id] || (disableCheckbox && showSelectAllAlert),
@@ -45,8 +45,7 @@ export const getSortColumnIndex = (columns, sortBy) => {
   let colIndex = 0;
   columns.forEach((col, index) => {
     if (col.sortKey === sortBy) {
-      // The checkbox column shifts the data columns by 1;
-      colIndex = index + 1;
+      colIndex = index;
     }
   });
   return colIndex;
