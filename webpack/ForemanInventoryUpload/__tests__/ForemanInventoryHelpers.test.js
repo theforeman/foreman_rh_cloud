@@ -7,11 +7,11 @@ import { getInventoryDocsUrl, isExitCodeLoading } from '../ForemanInventoryHelpe
 
 describe('ForemanInventoryUpload helpers', () => {
   describe('getInventoryDocsUrl', () => {
-    it('requests the Managing Hosts guide at the cloud connection chapter', () => {
+    it('requests the admin guide cloud connection chapter', () => {
       getInventoryDocsUrl();
       expect(getDocsURL).toHaveBeenCalledWith(
-        'Managing_Hosts',
-        'configuring-foreman-server-for-cloud-connection'
+        'Administering_Project',
+        'configuring-project-server-for-cloud-connection'
       );
     });
   });

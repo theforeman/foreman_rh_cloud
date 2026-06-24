@@ -7,8 +7,8 @@ export const inventoryUrl = path =>
 
 export const getInventoryDocsUrl = () =>
   getDocsURL(
-    'Managing_Hosts',
-    'configuring-foreman-server-for-cloud-connection'
+    'Administering_Project',
+    'configuring-project-server-for-cloud-connection'
   );
 
 export const getSubscriptionServiceDocsUrl = () =>
