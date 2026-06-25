@@ -1,9 +1,12 @@
+import { getDocsURL } from 'foremanReact/common/helpers';
+import {
+  getInventoryDocsUrl,
+  isExitCodeLoading,
+} from '../ForemanInventoryHelpers';
+
 jest.mock('foremanReact/common/helpers', () => ({
   getDocsURL: jest.fn(),
 }));
-
-import { getDocsURL } from 'foremanReact/common/helpers';
-import { getInventoryDocsUrl, isExitCodeLoading } from '../ForemanInventoryHelpers';
 
 describe('ForemanInventoryUpload helpers', () => {
   describe('getInventoryDocsUrl', () => {

@@ -1,14 +1,27 @@
 .rh-cloud-inventory-page {
   .inventory-settings {
-    border: 1px solid #ededed;
-    border-radius: 4px;
+    border: 1px solid var(--pf-v5-global--BorderColor--100);
+    border-radius: var(--pf-v5-global--BorderRadius--sm);
     padding: 10px;
-    margin-bottom: 15px;
+    margin-bottom: var(--pf-v5-global--spacer--md);
+    margin-left: 20px;
     float: right;
+    max-width: 450px;
 
     h3 {
       margin-top: 0;
+      margin-bottom: 10px;
       font-weight: 600;
+      font-size: var(--pf-v5-global--FontSize--md);
+    }
+
+    .child-settings {
+      margin-top: 10px;
+      margin-left: 0;
+
+      .child-settings-spacer {
+        display: none;
+      }
     }
   }
 }

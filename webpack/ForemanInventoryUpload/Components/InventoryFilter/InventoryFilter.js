@@ -1,11 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, TextInput } from '@patternfly/react-core';
+import {
+  FormGroup,
+  TextInput,
+  InputGroup,
+  InputGroupItem,
+  Button,
+} from '@patternfly/react-core';
+import { TimesIcon } from '@patternfly/react-icons';
 import { noop } from 'foremanReact/common/helpers';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { useForemanOrganization } from 'foremanReact/Root/Context/ForemanContext';
-import ClearButton from './Components/ClearButton';
 import './inventoryFilter.scss';
 import { ANY_ORGANIZATION } from './InventoryFilterConstants';
 
@@ -24,15 +30,28 @@ const InventoryFilter = ({
   return (
     <form id="inventory_filter_form">
       <FormGroup>
-        <TextInput
-          id="inventory_filter_input"
-          ouiaId="inventory_filter_input"
-          value={filterTerm}
-          type="text"
-          placeholder={__('Filter..')}
-          onChange={(e, v) => handleFilterChange(v)}
-        />
-        <ClearButton onClear={handleFilterClear} />
+        <InputGroup>
+          <InputGroupItem isFill>
+            <TextInput
+              id="inventory_filter_input"
+              ouiaId="inventory_filter_input"
+              value={filterTerm}
+              type="text"
+              placeholder={__('Filter..')}
+              onChange={(e, v) => handleFilterChange(v)}
+            />
+          </InputGroupItem>
+          <InputGroupItem>
+            <Button
+              ouiaId="inventory-filter-clear-button"
+              variant="plain"
+              aria-label={__('Clear')}
+              onClick={handleFilterClear}
+            >
+              <TimesIcon />
+            </Button>
+          </InputGroupItem>
+        </InputGroup>
       </FormGroup>
     </form>
   );
