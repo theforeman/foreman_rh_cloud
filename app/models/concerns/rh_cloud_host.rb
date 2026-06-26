@@ -49,8 +49,9 @@ module RhCloudHost
   module ClassMethods
     def search_by_insights_recommendations_count(_key, operator, value)
       if ForemanRhCloud.with_iop_smart_proxy?
-        raise ScopedSearch::QueryNotSupported,
+        raise ScopedSearch::QueryNotSupported.new(
           _('Searching by recommendations count is not supported in IoP mode. Recommendation counts are fetched live from the IoP Smart Proxy and are not stored locally.')
+        )
       end
 
       facet_table = InsightsFacet.table_name
