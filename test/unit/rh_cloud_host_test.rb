@@ -343,6 +343,50 @@ class RhCloudHostTest < ActiveSupport::TestCase
     end
   end
 
+  context 'scoped search on insights_recommendations_count' do
+    setup do
+      @org = FactoryBot.create(:organization)
+    end
+
+    teardown do
+      ForemanRhCloud.unstub(:with_iop_smart_proxy?)
+    end
+
+    test 'searches insights_facets.hits_count in non-IoP mode' do
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
+      host_with_hits = FactoryBot.create(:host, :with_insights_hits, organization: @org)
+      InsightsFacet.reset_counters(host_with_hits.insights.id, :hits_count)
+      host_without_hits = FactoryBot.create(:host, :managed, organization: @org)
+
+      results = Host::Managed.search_for('insights_recommendations_count = 1')
+
+      assert_includes results, host_with_hits
+      assert_not_includes results, host_without_hits
+    end
+
+    test 'raises QueryNotSupported in IoP mode' do
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+
+      error = assert_raises(ScopedSearch::QueryNotSupported) do
+        Host::Managed.search_for('insights_recommendations_count = 1')
+      end
+
+      assert_match(/not supported in IoP mode/, error.message)
+    end
+
+    test 'handles hosts without insights facets in non-IoP mode' do
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
+      host_without_facet = FactoryBot.create(:host, :managed, organization: @org)
+      host_with_facet = FactoryBot.create(:host, :with_insights_hits, organization: @org)
+      InsightsFacet.reset_counters(host_with_facet.insights.id, :hits_count)
+
+      results = Host::Managed.search_for('insights_recommendations_count = 1')
+
+      assert_includes results, host_with_facet
+      assert_not_includes results, host_without_facet
+    end
+  end
+
   test 'scoped search for user_omitted inventory status works' do
     host1 = FactoryBot.create(:host, :managed)
     host2 = FactoryBot.create(:host, :managed)

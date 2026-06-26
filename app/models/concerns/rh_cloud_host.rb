@@ -10,7 +10,8 @@ module RhCloudHost
     )
 
     has_many :insights_hits, through: :insights, source: :hits
-    scoped_search :relation => :insights, :on => :hits_count, :only_explicit => true, :rename => :insights_recommendations_count
+    scoped_search :on => :id, :rename => :insights_recommendations_count, :only_explicit => true,
+      :ext_method => :search_by_insights_recommendations_count, :complete_value => false
 
     has_one :insights_client_report_status_object, :class_name => '::InsightsClientReportStatus', :foreign_key => 'host_id'
     scoped_search :relation => :insights_client_report_status_object, :on => :status, :rename => :insights_client_report_status,
@@ -46,6 +47,23 @@ module RhCloudHost
   end
 
   module ClassMethods
+    def search_by_insights_recommendations_count(_key, operator, value)
+      if ForemanRhCloud.with_iop_smart_proxy?
+        raise ScopedSearch::QueryNotSupported,
+          _('Searching by recommendations count is not supported in IoP mode. Recommendation counts are fetched live from the IoP Smart Proxy and are not stored locally.')
+      end
+
+      facet_table = InsightsFacet.table_name
+      condition = sanitize_sql_for_conditions(
+        ["#{facet_table}.hits_count #{operator} ?", value_to_sql(operator, value)]
+      )
+
+      {
+        joins: "LEFT JOIN #{facet_table} ON #{facet_table}.host_id = #{Host::Managed.table_name}.id",
+        conditions: condition,
+      }
+    end
+
     def search_by_insights_uuid(_key, operator, value)
       # Determine which facet table to search based on IoP mode
       facet_table = ForemanRhCloud.with_iop_smart_proxy? ? Katello::Host::SubscriptionFacet.table_name : InsightsFacet.table_name
