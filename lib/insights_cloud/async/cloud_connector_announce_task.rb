@@ -82,9 +82,10 @@ module InsightsCloud
         return false unless feature
 
         JobInvocation.where(remote_execution_feature_id: feature.id)
+                     .joins(:task)
                      .joins(targeting: :hosts)
                      .where(hosts: { organization_id: org.id })
-                     .where('job_invocations.created_at > ?', 24.hours.ago)
+                     .where('foreman_tasks_tasks.started_at > ?', 24.hours.ago)
                      .exists?
       end
 
