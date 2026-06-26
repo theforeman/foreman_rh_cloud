@@ -46,8 +46,6 @@ module RhCloudHost
     end
   end
 
-  NUMERIC_OPERATORS = ['=', '!=', '>', '>=', '<', '<='].freeze
-
   module ClassMethods
     def search_by_insights_recommendations_count(_key, operator, value)
       if ForemanRhCloud.with_iop_smart_proxy?
@@ -56,7 +54,7 @@ module RhCloudHost
         )
       end
 
-      unless RhCloudHost::NUMERIC_OPERATORS.include?(operator)
+      unless ScopedSearch::QueryBuilder::SQL_OPERATORS.value?(operator)
         raise ScopedSearch::QueryNotSupported.new(
           _('Unsupported operator for recommendations count search: %s') % operator
         )
