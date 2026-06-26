@@ -364,6 +364,18 @@ class RhCloudHostTest < ActiveSupport::TestCase
       assert_not_includes results, host_without_hits
     end
 
+    test 'supports greater-than operator in non-IoP mode' do
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
+      host_with_hits = FactoryBot.create(:host, :with_insights_hits, organization: @org)
+      InsightsFacet.reset_counters(host_with_hits.insights.id, :hits_count)
+      host_without_hits = FactoryBot.create(:host, :managed, organization: @org)
+
+      results = Host::Managed.search_for('insights_recommendations_count > 0')
+
+      assert_includes results, host_with_hits
+      assert_not_includes results, host_without_hits
+    end
+
     test 'raises QueryNotSupported in IoP mode' do
       ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
 
@@ -371,7 +383,7 @@ class RhCloudHostTest < ActiveSupport::TestCase
         Host::Managed.search_for('insights_recommendations_count = 1')
       end
 
-      assert_match(/not supported in IoP mode/, error.message)
+      assert_match(/not available in IoP mode/, error.message)
     end
 
     test 'handles hosts without insights facets in non-IoP mode' do

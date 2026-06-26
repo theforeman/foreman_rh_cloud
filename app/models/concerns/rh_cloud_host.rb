@@ -46,17 +46,25 @@ module RhCloudHost
     end
   end
 
+  NUMERIC_OPERATORS = ['=', '!=', '>', '>=', '<', '<='].freeze
+
   module ClassMethods
     def search_by_insights_recommendations_count(_key, operator, value)
       if ForemanRhCloud.with_iop_smart_proxy?
         raise ScopedSearch::QueryNotSupported.new(
-          _('Searching by recommendations count is not supported in IoP mode. Recommendation counts are fetched live from the IoP Smart Proxy and are not stored locally.')
+          _('Searching by recommendations count is not available in IoP mode.')
+        )
+      end
+
+      unless RhCloudHost::NUMERIC_OPERATORS.include?(operator)
+        raise ScopedSearch::QueryNotSupported.new(
+          _('Unsupported operator for recommendations count search: %s') % operator
         )
       end
 
       facet_table = InsightsFacet.table_name
       condition = sanitize_sql_for_conditions(
-        ["#{facet_table}.hits_count #{operator} ?", value_to_sql(operator, value)]
+        ["COALESCE(#{facet_table}.hits_count, 0) #{operator} ?", value_to_sql(operator, value)]
       )
 
       {
