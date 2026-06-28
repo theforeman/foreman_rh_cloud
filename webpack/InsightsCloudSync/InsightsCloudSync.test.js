@@ -15,16 +15,15 @@ jest.mock('./Components/InsightsTable', () => () => null);
 jest.mock('./Components/RemediationModal', () => () => null);
 jest.mock('./Components/InsightsTable/Pagination', () => () => null);
 jest.mock('./Components/InsightsSettings', () => () => null);
-jest.mock('foremanReact/routes/common/PageLayout/PageLayout', () => ({
-  children,
-  header,
-  toolbarButtons,
-}) => (
-  <div data-testid="page-layout" data-header={header}>
-    {toolbarButtons}
-    {children}
-  </div>
-));
+jest.mock(
+  'foremanReact/routes/common/PageLayout/PageLayout',
+  () => ({ children, header, toolbarButtons }) => (
+    <div data-testid="page-layout" data-header={header}>
+      {toolbarButtons}
+      {children}
+    </div>
+  )
+);
 jest.mock('@scalprum/react-core', () => ({
   ScalprumComponent: () => <div data-testid="scalprum-component" />,
   ScalprumProvider: ({ children }) => <div>{children}</div>,
@@ -47,9 +46,7 @@ describe('RecommendationsPage', () => {
 
   describe('non-IOP mode', () => {
     it('renders with rh-cloud-insights class and correct header', () => {
-      const { container } = render(
-        <RecommendationsPage {...defaultProps} />
-      );
+      const { container } = render(<RecommendationsPage {...defaultProps} />);
 
       expect(container.querySelector('.rh-cloud-insights')).toBeTruthy();
       expect(
@@ -58,9 +55,7 @@ describe('RecommendationsPage', () => {
     });
 
     it('does not render IOP advisor view', () => {
-      const { container } = render(
-        <RecommendationsPage {...defaultProps} />
-      );
+      const { container } = render(<RecommendationsPage {...defaultProps} />);
 
       expect(container.querySelector('.advisor')).toBeNull();
     });
@@ -72,9 +67,7 @@ describe('RecommendationsPage', () => {
     });
 
     it('renders advisor view instead of insights page', () => {
-      const { container } = render(
-        <RecommendationsPage {...defaultProps} />
-      );
+      const { container } = render(<RecommendationsPage {...defaultProps} />);
 
       expect(container.querySelector('.advisor')).toBeTruthy();
       expect(container.querySelector('.rh-cloud-insights')).toBeNull();

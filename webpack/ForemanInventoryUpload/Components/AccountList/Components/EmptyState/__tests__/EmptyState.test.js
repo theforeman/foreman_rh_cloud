@@ -5,9 +5,7 @@ import EmptyState from '../EmptyState';
 describe('EmptyState', () => {
   it('renders fetching data message', () => {
     render(<EmptyState />);
-    expect(
-      screen.getByText('Fetching data about your accounts')
-    ).toBeTruthy();
+    expect(screen.getByText('Fetching data about your accounts')).toBeTruthy();
   });
 
   it('renders loading indicator', () => {

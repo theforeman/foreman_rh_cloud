@@ -72,6 +72,7 @@ const MinimalInventoryDropdown = ({ setChosenValue }) => {
       isOpen={isOpen}
       onSelect={onSelect}
       onOpenChange={val => setIsOpen(val)}
+      popperProps={{ width: '350px' }}
       toggle={toggleRef => (
         <MenuToggle
           ref={toggleRef}
@@ -84,20 +85,18 @@ const MinimalInventoryDropdown = ({ setChosenValue }) => {
       )}
       shouldFocusToggleOnSelect
     >
-      <div style={{ maxWidth: '28em' }}>
-        <DropdownList>
-          {Object.entries(dropdownValues).map(([value, item]) => (
-            <DropdownItem
-              value={value}
-              key={value}
-              description={item.description}
-              ouiaId={`inventory-dropdownItem-${value}`}
-            >
-              {item.title}
-            </DropdownItem>
-          ))}
-        </DropdownList>
-      </div>
+      <DropdownList>
+        {Object.entries(dropdownValues).map(([value, item]) => (
+          <DropdownItem
+            value={value}
+            key={value}
+            description={item.description}
+            ouiaId={`inventory-dropdownItem-${value}`}
+          >
+            {item.title}
+          </DropdownItem>
+        ))}
+      </DropdownList>
     </Dropdown>
   );
 };

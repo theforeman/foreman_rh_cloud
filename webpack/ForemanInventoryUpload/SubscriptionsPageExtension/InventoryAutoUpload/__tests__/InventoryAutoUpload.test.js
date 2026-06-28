@@ -22,12 +22,16 @@ describe('InventoryAutoUpload', () => {
 
   it('renders the auto upload switcher', () => {
     render(<InventoryAutoUpload {...buildProps()} />);
-    expect(screen.getByText('Inventory Auto Upload')).toBeTruthy();
+    expect(
+      screen.getByRole('checkbox', { name: /Inventory Auto Upload/ })
+    ).toBeTruthy();
   });
 
   it('renders the advanced settings button', () => {
     render(<InventoryAutoUpload {...buildProps()} />);
-    expect(screen.getByRole('button', { name: /Show Advanced Settings/ })).toBeTruthy();
+    expect(
+      screen.getByRole('button', { name: /Show Advanced Settings/ })
+    ).toBeTruthy();
   });
 
   it('calls getSettings on mount', () => {

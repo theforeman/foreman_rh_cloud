@@ -31,7 +31,9 @@ describe('InventoryFilter integration test', () => {
 
     const actions = store.getActions();
     const filterAction = actions.find(
-      a => a.type === INVENTORY_FILTER_UPDATE && a.payload.filterTerm === 'some_new_filter'
+      a =>
+        a.type === INVENTORY_FILTER_UPDATE &&
+        a.payload.filterTerm === 'some_new_filter'
     );
     expect(filterAction).toBeTruthy();
   });

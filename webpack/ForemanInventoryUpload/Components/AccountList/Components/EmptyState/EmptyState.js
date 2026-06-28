@@ -1,15 +1,23 @@
 import React from 'react';
-import { EmptyState, Spinner } from 'patternfly-react';
+import {
+  EmptyState,
+  EmptyStateHeader,
+  EmptyStateIcon,
+  EmptyStateBody,
+  EmptyStateVariant,
+  Spinner,
+} from '@patternfly/react-core';
 import { translate as __ } from 'foremanReact/common/I18n';
 import './emptyState.scss';
 
 const inventoryEmptyState = () => (
-  <EmptyState>
-    <Spinner loading inline size="lg" />
-    <EmptyState.Title>
-      {__('Fetching data about your accounts')}
-    </EmptyState.Title>
-    <EmptyState.Info>{__('Loading...')}</EmptyState.Info>
+  <EmptyState variant={EmptyStateVariant.lg}>
+    <EmptyStateIcon icon={Spinner} />
+    <EmptyStateHeader
+      titleText={<>{__('Fetching data about your accounts')}</>}
+      headingLevel="h2"
+    />
+    <EmptyStateBody>{__('Loading...')}</EmptyStateBody>
   </EmptyState>
 );
 
