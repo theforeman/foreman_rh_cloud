@@ -59,11 +59,13 @@ module ForemanInventoryUpload
       def try_execute
         if content_disconnected?
           logger.info("Upload canceled: connection to Insights is not enabled. Report location: #{filename}")
+          done!
           return
         end
 
         unless organization.owner_details&.dig('upstreamConsumer', 'idCert')
           logger.info("Skipping organization '#{organization}', no candlepin certificate defined.")
+          done!
           return
         end
 
