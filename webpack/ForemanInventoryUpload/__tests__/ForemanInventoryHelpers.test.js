@@ -14,7 +14,7 @@ describe('ForemanInventoryUpload helpers', () => {
       getInventoryDocsUrl();
       expect(getDocsURL).toHaveBeenCalledWith(
         'Administering_Project',
-        'configuring-project-server-for-cloud-connection'
+        'configuring-foreman-server-for-cloud-connection'
       );
     });
   });
