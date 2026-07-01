@@ -61,9 +61,19 @@ module RhCloudHost
       end
 
       facet_table = InsightsFacet.table_name
-      condition = sanitize_sql_for_conditions(
-        ["COALESCE(#{facet_table}.hits_count, 0) #{operator} ?", value_to_sql(operator, value)]
-      )
+      hits_count_col = "COALESCE(#{facet_table}.hits_count, 0)"
+
+      if ['IN', 'NOT IN'].include?(operator)
+        values = value.is_a?(Array) ? value : value.to_s.split(',').map(&:strip)
+        placeholders = (['?'] * values.size).join(',')
+        condition = sanitize_sql_for_conditions(
+          ["#{hits_count_col} #{operator} (#{placeholders})", *values]
+        )
+      else
+        condition = sanitize_sql_for_conditions(
+          ["#{hits_count_col} #{operator} ?", value_to_sql(operator, value)]
+        )
+      end
 
       {
         joins: "LEFT JOIN #{facet_table} ON #{facet_table}.host_id = #{Host::Managed.table_name}.id",
