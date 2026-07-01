@@ -10,10 +10,10 @@ jest.mock('foremanReact/common/helpers', () => ({
 
 describe('ForemanInventoryUpload helpers', () => {
   describe('getInventoryDocsUrl', () => {
-    it('requests the Managing Hosts guide at the cloud connection chapter', () => {
+    it('requests the admin guide cloud connection chapter', () => {
       getInventoryDocsUrl();
       expect(getDocsURL).toHaveBeenCalledWith(
-        'Managing_Hosts',
+        'Administering_Project',
         'configuring-foreman-server-for-cloud-connection'
       );
     });

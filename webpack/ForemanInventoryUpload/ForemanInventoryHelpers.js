@@ -7,7 +7,7 @@ export const inventoryUrl = path =>
 
 export const getInventoryDocsUrl = () =>
   getDocsURL(
-    'Managing_Hosts',
+    'Administering_Project',
     'configuring-foreman-server-for-cloud-connection'
   );
 
