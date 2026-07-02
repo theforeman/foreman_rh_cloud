@@ -401,4 +401,33 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
       file.close
     end
   end
+
+  test 'mark as done when upload aborted due to missing certificate' do
+    # Remove certificate from organization
+    Organization.any_instance.stubs(:owner_details).returns({})
+
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, nil, @organization.id)
+
+    # Execute the action
+    action.send(:try_execute)
+
+    # Verify it is marked as done
+    assert action.done?
+  end
+
+  test 'mark as done when upload aborted due to disconnected mode' do
+    Setting.stubs(:[]).with(:subscription_connection_enabled).returns(false)
+
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, nil, @organization.id)
+
+    # Execute the action
+    action.send(:try_execute)
+
+    # Verify it is marked as done
+    assert action.done?
+  end
 end
