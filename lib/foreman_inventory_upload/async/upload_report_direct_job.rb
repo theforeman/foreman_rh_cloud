@@ -78,6 +78,18 @@ module ForemanInventoryUpload
 
         move_to_done_folder
         done!
+      rescue RestClient::ExceptionWithResponse => e
+        if non_retryable_upload_error?(e)
+          logger.warn(
+            "Upload skipped for organization '#{organization}' " \
+            "due to non-retryable response (#{e.http_code}): #{sanitized_http_body(e)}"
+          )
+          output[:status] = 'upload_skipped_non_retryable'
+          done!
+          return
+        end
+
+        raise
       end
 
       def upload_file(cer_path)
@@ -159,6 +171,24 @@ module ForemanInventoryUpload
       def content_disconnected?
         return false if ForemanRhCloud.with_iop_smart_proxy?
         !Setting[:subscription_connection_enabled]
+      end
+
+      def non_retryable_upload_error?(exception)
+        code = exception.http_code.to_i
+        code >= 400 && code < 500 && ![408, 429].include?(code)
+      end
+
+      def sanitized_http_body(exception)
+        body = exception.http_body.to_s
+        max_length = 500
+
+        if body.length > max_length
+          "#{body[0, max_length]}... [truncated]"
+        else
+          body
+        end
+      rescue StandardError
+        exception.message.to_s
       end
 
       def logger

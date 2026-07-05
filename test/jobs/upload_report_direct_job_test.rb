@@ -241,6 +241,46 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     end
   end
 
+  test 'marks action done on non-retryable client upload errors' do
+    response = mock('response')
+    response.stubs(:code).returns(422)
+    response.stubs(:body).returns('No eligible hosts in report')
+
+    ForemanInventoryUpload::Async::UploadReportDirectJob.any_instance.stubs(:upload_file)
+                                                        .raises(RestClient::UnprocessableEntity.new(response))
+
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
+    runtime_output = {}
+    action.stubs(:output).returns(runtime_output)
+
+    # Non-retryable 4xx responses should not raise and should end polling.
+    action.send(:try_execute)
+    assert action.done?
+    assert_equal 'upload_skipped_non_retryable', runtime_output[:status]
+  end
+
+  test 'keeps retry behavior for retryable client upload errors' do
+    response = mock('response')
+    response.stubs(:code).returns(429)
+    response.stubs(:body).returns('Too Many Requests')
+
+    ForemanInventoryUpload::Async::UploadReportDirectJob.any_instance.stubs(:upload_file)
+                                                        .raises(RestClient::TooManyRequests.new(response))
+
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, @filename, @organization.id)
+    runtime_output = {}
+    action.stubs(:output).returns(runtime_output)
+
+    assert_raises(RestClient::TooManyRequests) do
+      action.send(:try_execute)
+    end
+    assert_nil runtime_output[:status]
+  end
+
   test 'uses proxy configuration from ForemanRhCloud' do
     proxy_url = 'http://proxy.example.com:8080'
     ForemanRhCloud.stubs(:transformed_http_proxy_string).returns(proxy_url)
