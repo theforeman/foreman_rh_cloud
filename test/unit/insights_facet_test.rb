@@ -6,6 +6,10 @@ class InsightsFacetTest < ActiveSupport::TestCase
     InsightsFacet.reset_counters(@host.insights.id, :hits_count)
   end
 
+  teardown do
+    ForemanRhCloud.unstub(:with_iop_smart_proxy?)
+  end
+
   test 'host with hits can be deleted' do
     assert_equal 1, @host.insights.hits.count
 
@@ -16,6 +20,7 @@ class InsightsFacetTest < ActiveSupport::TestCase
   end
 
   test 'search host by recommendations_count' do
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
     FactoryBot.create(:host) # create another host with no recommendations
 
     assert_equal 1, Host.search_for('insights_recommendations_count = 1').count
