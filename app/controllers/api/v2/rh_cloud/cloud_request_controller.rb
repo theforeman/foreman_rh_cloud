@@ -3,6 +3,7 @@ module Api::V2::RhCloud
     include ForemanRhCloud::IopSmartProxyAccess
     layout false
 
+    before_action :set_admin_user, only: [:update]
     before_action :require_non_iop_smart_proxy, only: [:update]
 
     KNOWN_DIRECTIVES = {
