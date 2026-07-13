@@ -233,6 +233,28 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     assert_equal :tags, result
   end
 
+  test 'scope_request? should return tag_name for report test_results list endpoint' do
+    get_req = ActionDispatch::Request.new(
+      'REQUEST_URI' => '/api/compliance/v2/reports/report-123/test_results',
+      'REQUEST_METHOD' => 'GET',
+      'rack.input' => ::Puma::NullIO.new
+    )
+
+    result = @forwarder.send(:scope_request?, get_req, 'api/compliance/v2/reports/report-123/test_results')
+    assert_equal :tags, result
+  end
+
+  test 'scope_request? should return tag_name for individual test_result endpoint' do
+    get_req = ActionDispatch::Request.new(
+      'REQUEST_URI' => '/api/compliance/v2/reports/report-123/test_results/result-456',
+      'REQUEST_METHOD' => 'GET',
+      'rack.input' => ::Puma::NullIO.new
+    )
+
+    result = @forwarder.send(:scope_request?, get_req, 'api/compliance/v2/reports/report-123/test_results/result-456')
+    assert_equal :tags, result
+  end
+
   test 'prepare_tags should use provided tag_name' do
     result = @forwarder.send(:prepare_tags, @user, @organization, @location, :custom_tag)
 
