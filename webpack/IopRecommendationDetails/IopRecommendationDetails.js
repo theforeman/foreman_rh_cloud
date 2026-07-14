@@ -25,6 +25,7 @@ const IopRecommendationDetails = props => {
           scope={scope}
           module={pathwayModule}
           pathwayId={pathwayMatch.params.slug}
+          IopRemediationModal={RemediationModal}
           {...props}
         />
       </div>
