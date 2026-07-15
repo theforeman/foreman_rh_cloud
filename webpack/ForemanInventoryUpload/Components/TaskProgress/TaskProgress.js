@@ -31,6 +31,9 @@ import { selectSubscriptionConnectionEnabled } from '../InventorySettings/Invent
 import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 import './taskProgress.scss';
 
+const SECONDS_PER_MINUTE = 60;
+const PERCENT_COMPLETE = 100;
+
 const TaskProgress = ({
   task,
   title,
@@ -213,8 +216,8 @@ const TaskProgress = ({
     ) {
       return '';
     }
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
+    const mins = Math.floor(seconds / SECONDS_PER_MINUTE);
+    const secs = Math.floor(seconds % SECONDS_PER_MINUTE);
     if (mins > 0) {
       return `${mins}m ${secs}s`;
     }
@@ -232,7 +235,7 @@ const TaskProgress = ({
   if (isStartingNewTask) {
     progressValue = 0;
   } else if (task.state === 'stopped') {
-    progressValue = 100;
+    progressValue = PERCENT_COMPLETE;
   } else {
     progressValue = task.progress || 0;
   }

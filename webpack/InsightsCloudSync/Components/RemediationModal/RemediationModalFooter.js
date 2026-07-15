@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { Button } from '@patternfly/react-core';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { useBulkSelect } from 'foremanReact/components/PF4/TableIndexPage/Table/TableHooks';
-import { JOB_INVOCATION_PATH } from './RemediationTableConstants';
+import {
+  JOB_INVOCATION_PATH,
+  FORM_SUBMIT_DELAY_MS,
+} from './RemediationTableConstants';
 
 const ModalFooter = ({ toggleModal, resolutions, hostsIds, isIop }) => {
   let token = document.querySelector('meta[name="csrf-token"]');
@@ -24,7 +27,7 @@ const ModalFooter = ({ toggleModal, resolutions, hostsIds, isIop }) => {
     setTimeout(() => {
       // eslint-disable-next-line no-unused-expressions
       formRef.current?.submit?.();
-    }, 100);
+    }, FORM_SUBMIT_DELAY_MS);
   };
   return (
     <form

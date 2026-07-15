@@ -20,6 +20,8 @@ import { translate as __ } from 'foremanReact/common/I18n';
 import RelativeDateTime from 'foremanReact/components/common/dates/RelativeDateTime';
 import './taskHistory.scss';
 
+const SECONDS_PER_MINUTE = 60;
+
 const TaskHistory = ({ tasks, title }) => {
   if (!tasks || tasks.length === 0) {
     return (
@@ -52,8 +54,8 @@ const TaskHistory = ({ tasks, title }) => {
     if (!Number.isFinite(seconds) || seconds < 0) {
       return __('N/A');
     }
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
+    const mins = Math.floor(seconds / SECONDS_PER_MINUTE);
+    const secs = Math.floor(seconds % SECONDS_PER_MINUTE);
     if (mins > 0) {
       return `${mins}m ${secs}s`;
     }

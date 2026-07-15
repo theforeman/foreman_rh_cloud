@@ -45,3 +45,5 @@ export const JOB_INVOCATION_PATH = foremanUrl('/job_invocations/new');
 export const REMEDIATIONS_API_KEY = 'INSIGHTS_REMEDIATIONS';
 
 export const SUBMIT_RESOLUTIONS = 'SUBMIT_INSIGHTS_RESOLUTIONS';
+
+export const FORM_SUBMIT_DELAY_MS = 100;

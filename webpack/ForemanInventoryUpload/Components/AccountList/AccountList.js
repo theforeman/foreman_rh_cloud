@@ -8,6 +8,7 @@ import EmptyState from './Components/EmptyState';
 import ErrorState from './Components/ErrorState';
 import EmptyResults from './Components/EmptyResults';
 import { filterAccounts } from './AccountListHelper';
+import { ACCOUNT_STATUS_POLLING_INTERVAL_MS } from './AccountListConstants';
 import './accountList.scss';
 
 const AccountList = ({
@@ -21,7 +22,10 @@ const AccountList = ({
 }) => {
   useEffect(() => {
     fetchAccountsStatus();
-    const pollingID = setInterval(fetchAccountsStatus, 2000);
+    const pollingID = setInterval(
+      fetchAccountsStatus,
+      ACCOUNT_STATUS_POLLING_INTERVAL_MS
+    );
     startAccountStatusPolling(pollingID);
 
     return () => {
