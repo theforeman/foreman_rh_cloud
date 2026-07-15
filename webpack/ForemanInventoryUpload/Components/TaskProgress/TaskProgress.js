@@ -29,10 +29,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { inventoryUrl } from '../../ForemanInventoryHelpers';
 import { selectSubscriptionConnectionEnabled } from '../InventorySettings/InventorySettingsSelectors';
 import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
+import { SECONDS_PER_MINUTE, PERCENT_COMPLETE } from '../TaskConstants';
 import './taskProgress.scss';
-
-const SECONDS_PER_MINUTE = 60;
-const PERCENT_COMPLETE = 100;
 
 const TaskProgress = ({
   task,

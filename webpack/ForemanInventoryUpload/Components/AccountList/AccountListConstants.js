@@ -7,4 +7,8 @@ export const INVENTORY_ACCOUNT_STATUS_POLLING_START =
 export const INVENTORY_ACCOUNT_STATUS_POLLING_STOP =
   'INVENTORY_ACCOUNT_STATUS_POLLING_STOP';
 export const INVENTORY_PROCESS_RESTART = 'INVENTORY_PROCESS_RESTART';
+
+// How often to re-fetch account statuses while generation/upload is in
+// progress. Frequent enough to reflect status changes promptly, without
+// hammering the status endpoint.
 export const ACCOUNT_STATUS_POLLING_INTERVAL_MS = 2000;

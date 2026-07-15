@@ -18,9 +18,8 @@ import {
 } from '@patternfly/react-icons';
 import { translate as __ } from 'foremanReact/common/I18n';
 import RelativeDateTime from 'foremanReact/components/common/dates/RelativeDateTime';
+import { SECONDS_PER_MINUTE } from '../TaskConstants';
 import './taskHistory.scss';
-
-const SECONDS_PER_MINUTE = 60;
 
 const TaskHistory = ({ tasks, title }) => {
   if (!tasks || tasks.length === 0) {

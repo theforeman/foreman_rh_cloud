@@ -46,4 +46,6 @@ export const REMEDIATIONS_API_KEY = 'INSIGHTS_REMEDIATIONS';
 
 export const SUBMIT_RESOLUTIONS = 'SUBMIT_INSIGHTS_RESOLUTIONS';
 
+// Brief delay before the (non-React) form submit/navigation fires, so the
+// button's isLoading spinner has a chance to render first.
 export const FORM_SUBMIT_DELAY_MS = 100;
