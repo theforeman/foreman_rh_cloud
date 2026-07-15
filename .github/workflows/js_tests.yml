@@ -6,7 +6,7 @@ permissions:
 on:
   push:
     branches:
-      - develop
+      - 3.18-stable
   pull_request:
 
 jobs:
@@ -15,3 +15,4 @@ jobs:
     uses: theforeman/actions/.github/workflows/foreman_plugin_js.yml@v0
     with:
       plugin: foreman_rh_cloud
+      foreman_version: 3.18-stable
