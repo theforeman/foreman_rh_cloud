@@ -2,6 +2,7 @@ export const hostID = 1234;
 
 export const hits = [
   {
+    id: 1,
     hostname: 'my-host.example.com',
     rhel_version: '7.8',
     uuid: '4739b323-a343-4e89-b71b-81991b8dc656',
@@ -15,6 +16,12 @@ export const hits = [
     results_url:
       'https://cloud.redhat.com/insights/advisor/recommendations/ansible_deprecated_repo%7CANSIBLE_DEPRECATED_REPO/4739b323-a343-4e89-b71b-81991b8dc656/',
   },
+];
+
+export const multipleHits = [
+  { ...hits[0], id: 1, title: 'Low risk', total_risk: 1 },
+  { ...hits[0], id: 2, title: 'High risk', total_risk: 4 },
+  { ...hits[0], id: 3, title: 'Medium risk', total_risk: 2 },
 ];
 
 export const props = {

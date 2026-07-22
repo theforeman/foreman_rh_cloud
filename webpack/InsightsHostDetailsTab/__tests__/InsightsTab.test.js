@@ -1,46 +1,68 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { rtlHelpers } from 'foremanReact/common/rtlTestHelpers';
 import InsightsTab from '../InsightsTab';
-import { hits, hostID } from './InsightsTab.fixtures';
+import { hits, hostID, multipleHits } from './InsightsTab.fixtures';
+
+const { renderWithI18n } = rtlHelpers;
+
+const renderInsightsTab = (props = {}) =>
+  renderWithI18n(
+    <InsightsTab hostID={hostID} hits={[]} fetchHits={jest.fn()} {...props} />
+  );
 
 describe('InsightsTab', () => {
-  it('renders "No recommendations" message when hits is empty', () => {
-    render(<InsightsTab hostID={hostID} hits={[]} />);
+  it('renders empty state heading when there are no recommendations', async () => {
+    renderInsightsTab({ hits: [] });
+
     expect(
-      screen.getByText('No recommendations were found for this host!')
-    ).toBeTruthy();
+      await screen.findByRole('heading', {
+        name: 'No recommendations were found for this host!',
+      })
+    ).toBeInTheDocument();
+
+    expect(
+      screen.queryByRole('heading', { name: 'Recommendations' })
+    ).not.toBeInTheDocument();
   });
 
-  it('renders Recommendations heading when hits exist', () => {
-    render(<InsightsTab hostID={hostID} hits={hits} />);
-    expect(screen.getByText('Recommendations')).toBeTruthy();
+  it('renders recommendations heading when hits exist', async () => {
+    renderInsightsTab({ hits });
+
+    expect(
+      await screen.findByRole('heading', { name: 'Recommendations' })
+    ).toBeInTheDocument();
   });
 
-  it('displays hit titles', () => {
-    render(<InsightsTab hostID={hostID} hits={hits} />);
-    hits.forEach(hit => {
-      expect(screen.getByText(hit.title)).toBeTruthy();
+  it('displays recommendation titles in the list', async () => {
+    renderInsightsTab({ hits });
+
+    expect(
+      await screen.findByText(
+        'New Ansible Engine packages are inaccessible when dedicated Ansible repo is not enabled'
+      )
+    ).toBeInTheDocument();
+  });
+
+  it('requests recommendations for the host on mount', async () => {
+    const fetchHits = jest.fn();
+
+    renderInsightsTab({ hits: [], fetchHits });
+
+    await waitFor(() => {
+      expect(fetchHits).toHaveBeenCalledWith(hostID);
     });
   });
 
-  it('calls fetchHits on mount', () => {
-    const fetchHits = jest.fn();
-    render(<InsightsTab hostID={hostID} hits={[]} fetchHits={fetchHits} />);
-    expect(fetchHits).toHaveBeenCalledWith(hostID);
-  });
+  it('sorts recommendations by total risk descending', async () => {
+    renderInsightsTab({ hits: multipleHits });
 
-  it('sorts hits by total_risk descending', () => {
-    const multipleHits = [
-      { ...hits[0], title: 'Low risk', total_risk: 1 },
-      { ...hits[0], title: 'High risk', total_risk: 4 },
-      { ...hits[0], title: 'Medium risk', total_risk: 2 },
-    ];
-    render(<InsightsTab hostID={hostID} hits={multipleHits} />);
-    const titles = screen.getAllByText(/risk/i).map(el => el.textContent);
-    const highRiskIndex = titles.findIndex(t => t === 'High risk');
-    const mediumRiskIndex = titles.findIndex(t => t === 'Medium risk');
-    const lowRiskIndex = titles.findIndex(t => t === 'Low risk');
-    expect(highRiskIndex).toBeLessThan(mediumRiskIndex);
-    expect(mediumRiskIndex).toBeLessThan(lowRiskIndex);
+    const hitsList = await screen.findByTestId('hits-list');
+    const toggles = within(hitsList).getAllByRole('button');
+
+    expect(toggles[0]).toHaveTextContent('High risk');
+    expect(toggles[1]).toHaveTextContent('Medium risk');
+    expect(toggles[2]).toHaveTextContent('Low risk');
   });
 });

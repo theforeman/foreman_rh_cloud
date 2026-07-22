@@ -1,33 +1,24 @@
-import React, { Fragment } from 'react';
-import { ListView, Icon } from 'patternfly-react';
+import React, { useState } from 'react';
+import {
+  AccordionContent,
+  AccordionItem,
+  AccordionToggle,
+  Flex,
+  FlexItem,
+  Truncate,
+} from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 import { translate as __ } from 'foremanReact/common/I18n';
-
-const labelMapper = {
-  1: __('Low'),
-  2: __('Moderate'),
-  3: __('Important'),
-  4: __('Critical'),
-};
+import InsightsLabel from '../../../InsightsCloudSync/Components/InsightsTable/InsightsLabel';
 
 const ListItem = ({ title, totalRisk, resultsUrl, solutionUrl }) => {
-  const heading = (
-    <p className="ellipsis list-item-heading" title={title}>
-      {title}
-    </p>
-  );
-
-  const riskLabel = labelMapper[totalRisk];
-  const additionalInfo = [
-    <span key={`risk-info-${title}`} className={`risk-label risk-${totalRisk}`}>
-      <p>{riskLabel}</p>
-    </span>,
-  ];
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const knowledgebaseLink = solutionUrl && (
     <p>
       <a href={solutionUrl} target="_blank" rel="noopener noreferrer">
-        {__('Knowledgebase article')} <Icon name="external-link" />
+        {__('Knowledgebase article')} <ExternalLinkAltIcon />
       </a>
     </p>
   );
@@ -35,24 +26,41 @@ const ListItem = ({ title, totalRisk, resultsUrl, solutionUrl }) => {
   const insightsCloudLink = resultsUrl && (
     <p>
       <a href={resultsUrl} target="_blank" rel="noopener noreferrer">
-        {__('Read more about it in RH cloud insights')}{' '}
-        <Icon name="external-link" />
+        {__('Read more about it in RH cloud insights')}
+        <ExternalLinkAltIcon />
       </a>
     </p>
   );
 
   return (
-    <ListView.Item
-      heading={heading}
-      additionalInfo={additionalInfo}
-      hideCloseIcon
-    >
-      <Fragment>
-        <p>{title}</p>
-        {knowledgebaseLink}
-        {insightsCloudLink}
-      </Fragment>
-    </ListView.Item>
+    <AccordionItem>
+      <AccordionToggle
+        onClick={() => setIsExpanded(currentValue => !currentValue)}
+        isExpanded={isExpanded}
+      >
+        <Flex
+          alignItems={{ default: 'alignItemsCenter' }}
+          justifyContent={{ default: 'justifyContentSpaceBetween' }}
+          flexWrap={{ default: 'nowrap' }}
+        >
+          <FlexItem>
+            <Truncate content={title} />
+          </FlexItem>
+          <FlexItem>
+            <InsightsLabel value={totalRisk} />
+          </FlexItem>
+        </Flex>
+      </AccordionToggle>
+      <AccordionContent isHidden={!isExpanded}>
+        {isExpanded && (
+          <>
+            <p>{title}</p>
+            {knowledgebaseLink}
+            {insightsCloudLink}
+          </>
+        )}
+      </AccordionContent>
+    </AccordionItem>
   );
 };
 

@@ -5,6 +5,7 @@ import { HelpIcon } from '@patternfly/react-icons';
 
 export const HelpLabel = ({ text, id, className }) => {
   if (!text) return null;
+
   return (
     <Popover id={`${id}-help`} bodyContent={text} aria-label="help-text">
       <Button
