@@ -1,84 +1,18 @@
 #host_details_insights_tab {
-  #btn_toolbar {
-    float: right;
-  }
-
-  #btn_fullscreen {
-    margin-left: 5px;
-
-    .fa-arrows-alt {
-      margin-left: 5px;
-    }
-  }
-
-  h2 {
-    margin-top: 5px;
-  }
-
   #hits_list {
     max-height: 650px;
     overflow-y: scroll;
     overflow-x: hidden;
-    margin-top: 15px;
-
-    .list-view-pf-expand {
-      padding: 0;
-    }
-
-    .list-group-item-header {
-      .list-view-pf-expand .fa-angle-right {
-        margin-top: 6px;
-      }
-
-      .list-view-pf-main-info .list-view-pf-description {
-        width: 83%;
-
-        .list-group-item-heading {
-          width: 375px;
-        }
-
-        p {
-          margin: 0;
-          font-size: 14px;
-        }
-      }
-
-      .list-view-pf-additional-info {
-        .risk-label {
-          padding: 5px 8px;
-          border-radius: 12px;
-
-          &.risk-1 {
-            background-color: #e7f1fa;
-          }
-
-          &.risk-2 {
-            background-color: #fdf7e7;
-          }
-
-          &.risk-3 {
-            background-color: #f9dddd;
-          }
-
-          &.risk-4 {
-            background-color: #ffecec;
-          }
-
-          p {
-            margin: 0;
-          }
-        }
-      }
-    }
+    margin-top: var(--pf-v5-global--spacer--md);
 
     &::-webkit-scrollbar {
-      width: 12px;
-      height: 12px;
+      width: var(--pf-v5-global--spacer--sm);
+      height: var(--pf-v5-global--spacer--sm);
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #222;
-      border-radius: 6px;
+      background: var(--pf-v5-global--palette--black-900);
+      border-radius: var(--pf-v5-global--BorderRadius--sm);
       border: 3px solid transparent;
       background-clip: content-box;
     }
@@ -86,9 +20,9 @@
 }
 
 #new_host_details_insights_tab {
-  padding: 24px;
+  padding: var(--pf-v5-global--spacer--lg);
 }
 
 #total-risks-dropdown-container ul.pf-v5-c-menu__list {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
