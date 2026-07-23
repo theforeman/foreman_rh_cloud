@@ -5,6 +5,7 @@ import ForemanInventoryUpload from './ForemanInventoryUpload';
 import InsightsVulnerabilityListPage from './InsightsVulnerability/InsightsVulnerabilityListPage';
 import InsightsCloudSync from './InsightsCloudSync';
 import IopRecommendationDetails from './IopRecommendationDetails/IopRecommendationDetails';
+import IopPathwayDetails from './IopPathwayDetails/IopPathwayDetails';
 import InsightsHostDetailsTab from './InsightsHostDetailsTab';
 import CveDetailsPage from './CveDetailsPage';
 import InsightsComplianceReportsPage from './InsightsCompliance/InsightsComplianceReportsPage';
@@ -40,6 +41,11 @@ export const routes = [
     path: '/foreman_rh_cloud/insights_cloud',
     exact: true,
     render: props => <InsightsCloudSync {...props} />,
+  },
+  {
+    path: '/foreman_rh_cloud/recommendations/pathways/:slug',
+    exact: false,
+    render: props => <IopPathwayDetails {...props} />,
   },
   {
     path: '/foreman_rh_cloud/recommendations',
