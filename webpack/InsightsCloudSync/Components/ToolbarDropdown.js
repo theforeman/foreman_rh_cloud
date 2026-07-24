@@ -53,6 +53,7 @@ const ToolbarDropdown = ({ onRecommendationSync }) => {
           aria-label={__('Recommendations actions')}
           onClick={() => setIsDropdownOpen(prev => !prev)}
           isExpanded={isDropdownOpen}
+          ouiaId="recommendations-dropdown-toggle"
         >
           <EllipsisVIcon />
         </MenuToggle>

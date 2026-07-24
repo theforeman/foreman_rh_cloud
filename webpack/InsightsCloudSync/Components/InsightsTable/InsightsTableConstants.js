@@ -31,7 +31,7 @@ export const actionsFormatter = rowData => {
   recommendationUrl &&
     !isLocalAdvisorEngine &&
     dropdownItems.push(
-      <DropdownItem key="recommendation-url">
+      <DropdownItem key="recommendation-url" ouiaId="insights-dropdown-item-recommendation-url">
         <a href={recommendationUrl} target="_blank" rel="noopener noreferrer">
           {__('View in Red Hat Insights')} <ExternalLinkAltIcon />
         </a>
@@ -40,7 +40,7 @@ export const actionsFormatter = rowData => {
 
   accessRHUrl &&
     dropdownItems.push(
-      <DropdownItem key="access-url">
+      <DropdownItem key="access-url" ouiaId="insights-dropdown-item-knowledgebase">
         <a href={accessRHUrl} target="_blank" rel="noopener noreferrer">
           {__('Knowledgebase article')} <ExternalLinkAltIcon />
         </a>

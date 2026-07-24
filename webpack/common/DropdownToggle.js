@@ -18,6 +18,7 @@ const DropdownToggle = ({ items, ...props }) => {
           aria-label={__('Table actions')}
           onClick={() => setOpen(prev => !prev)}
           isExpanded={isOpen}
+          ouiaId="toggle-dropdown-toggle"
         >
           <EllipsisVIcon />
         </MenuToggle>

@@ -79,6 +79,7 @@ const MinimalInventoryDropdown = ({ setChosenValue }) => {
           isFullWidth
           onClick={onToggleClick}
           isExpanded={isOpen}
+          ouiaId="inventory-dropdown-toggle"
         >
           {dropdownValues[currentDropdownValue].title}
         </MenuToggle>
