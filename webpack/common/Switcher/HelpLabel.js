@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Popover } from '@patternfly/react-core';
+import { Button, Popover } from '@patternfly/react-core';
 import { HelpIcon } from '@patternfly/react-icons';
 
 export const HelpLabel = ({ text, id, className }) => {
   if (!text) return null;
   return (
     <Popover id={`${id}-help`} bodyContent={text} aria-label="help-text">
-      <button
-        onClick={e => e.preventDefault()}
-        className={`pf-v5-c-form__group-label-help ${className}`}
+      <Button
+        variant="plain"
+        ouiaId={`help-button-${id}`}
+        className={className}
       >
         <HelpIcon />
-      </button>
+      </Button>
     </Popover>
   );
 };
