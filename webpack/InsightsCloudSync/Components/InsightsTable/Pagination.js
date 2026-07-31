@@ -42,6 +42,7 @@ const Pagination = ({ variant, ...props }) => {
 
   return (
     <PfPagination
+      ouiaId={`recommendations-pagination-${variant}`}
       itemCount={itemCount}
       widgetId={`recommendation-pagination-${variant}`}
       perPage={perPage}

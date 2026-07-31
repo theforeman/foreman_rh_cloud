@@ -59,6 +59,7 @@ const PageTitle = () => {
               variant="plain"
               onClick={() => setIsDropdownOpen(prev => !prev)}
               isExpanded={isDropdownOpen}
+              ouiaId="title-dropdown-toggle"
             >
               <EllipsisVIcon />
             </MenuToggle>

@@ -1,10 +1,11 @@
 {
-  "plugins": ["@theforeman/foreman", "spellcheck"],
+  "plugins": ["@theforeman/foreman", "@theforeman/rules", "spellcheck"],
   "extends": [
     "plugin:@theforeman/foreman/core",
     "plugin:@theforeman/foreman/plugins"
   ],
   "rules": {
+    "@theforeman/rules/require-ouiaid": "error",
     "spellcheck/spell-checker": [
       "error",
       {
