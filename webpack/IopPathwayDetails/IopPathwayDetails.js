@@ -7,33 +7,34 @@ import { createProviderOptions } from '../common/ScalprumModule/ScalprumContext'
 import { useInsightsPermissions } from '../common/Hooks/PermissionsHooks';
 
 const scope = 'advisor';
-const module = './RecommendationDetailsWrapped';
+const pathwayModule = './PathwayDetailsWrapped';
 
-const IopRecommendationDetails = props => {
-  const urlParams = useRouteMatch('/foreman_rh_cloud/recommendations/:rule_id');
-  // eslint-disable-next-line camelcase
-  const ruleId = urlParams?.params?.rule_id;
+const IopPathwayDetails = props => {
+  const pathwayMatch = useRouteMatch(
+    '/foreman_rh_cloud/recommendations/pathways/:slug'
+  );
+  const slug = pathwayMatch?.params?.slug;
 
   return (
-    <div className="iop-recommendation-details-scalprum advisor">
+    <div className="iop-pathway-details-scalprum advisor">
       <ScalprumComponent
         scope={scope}
-        module={module}
+        module={pathwayModule}
+        pathwayId={slug}
         IopRemediationModal={RemediationModal}
-        ruleId={ruleId}
         {...props}
       />
     </div>
   );
 };
 
-const IopRecommendationDetailsWrapped = props => {
+const IopPathwayDetailsWrapped = props => {
   const permissions = useInsightsPermissions();
   return (
     <ScalprumProvider {...createProviderOptions(permissions)}>
-      <IopRecommendationDetails {...props} />
+      <IopPathwayDetails {...props} />
     </ScalprumProvider>
   );
 };
 
-export default IopRecommendationDetailsWrapped;
+export default IopPathwayDetailsWrapped;
