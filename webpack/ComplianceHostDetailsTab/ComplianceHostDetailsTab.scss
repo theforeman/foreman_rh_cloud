@@ -1,0 +1,9 @@
+div.rh-cloud-insights-compliance-host-details-component {
+  padding: 0;
+
+  .rh-cloud-iop-host-details-iframe {
+    // helps with scrolling the iframe content
+    // TODO: remove this once we have a better way to handle scrolling
+    height: 1400px;
+  }
+}
