@@ -122,6 +122,8 @@ module ForemanRhCloud
         role 'ForemanRhCloud Read Only', read_only_permissions, 'Role granting read-only permissions to view
                                                                  Insights Compliance, Vulnerability, Advisor, and host inventory'
 
+        role 'Cloud Connector', [:dispatch_cloud_requests], 'Role granting permission to dispatch cloud connector requests'
+
         add_permissions_to_default_roles Role::ORG_ADMIN => plugin_permissions,
           Role::MANAGER => plugin_permissions,
           Role::SYSTEM_ADMIN => plugin_permissions
