@@ -25,16 +25,6 @@ const PERMISSION_MAPPING = {
   ],
   view_advisor: ['advisor:recommendation-results:read', 'advisor:exports:read'],
   edit_advisor: ['advisor:disable-recommendations:write'],
-  view_compliance: [
-    'inventory:hosts:read',
-    'compliance:report:read',
-    'compliance:policy:read',
-  ],
-  edit_compliance: [
-    'compliance:policy:write',
-    'compliance:policy:create',
-    'compliance:policy:delete',
-  ],
 };
 
 /**
