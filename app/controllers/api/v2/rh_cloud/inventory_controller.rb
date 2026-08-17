@@ -70,13 +70,13 @@ module Api
           render json: { message: error.message }, status: :bad_request
         end
 
-        api :POST, "/rh_cloud/announce_to_sources", N_("Register in Red Hat Sources for cloud connector")
+        api :POST, "/rh_cloud/announce_to_sources", N_("Schedule a task to register in Red Hat Sources for cloud connector")
         def announce_to_sources
           task = ForemanTasks.async_task(InsightsCloud::Async::CloudConnectorAnnounceTask, true)
 
           render json: {
             task: task,
-          }, status: :ok
+          }, status: :accepted
         end
       end
     end
