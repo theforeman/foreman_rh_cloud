@@ -117,10 +117,10 @@ describe('InsightsTable actions', () => {
       expect(push).toHaveBeenCalled();
 
       const apiAction = dispatch.mock.calls.find(
-        call => call[0] && call[0].key === INSIGHTS_HITS_API_KEY
+        call => call[0] && call[0].payload?.key === INSIGHTS_HITS_API_KEY
       );
       expect(apiAction).toBeTruthy();
-      const getArg = apiAction[0];
+      const getArg = apiAction[0].payload;
       expect(getArg.url).toBe(INSIGHTS_HITS_PATH);
       expect(getArg.params.page).toBe(2);
       expect(getArg.params.per_page).toBe(7);
