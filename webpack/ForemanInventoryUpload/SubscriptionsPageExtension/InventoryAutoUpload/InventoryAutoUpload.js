@@ -8,6 +8,7 @@ import {
   FormGroup,
   Grid,
   GridItem,
+  Title,
 } from '@patternfly/react-core';
 import { InfoAltIcon, CaretRightIcon } from '@patternfly/react-icons';
 import { translate as __ } from 'foremanReact/common/I18n';
@@ -32,7 +33,9 @@ const InventoryAutoUploadSwitcher = ({
   return (
     <FormGroup>
       <Grid>
-        <h3>{__('Red Hat Cloud Inventory')}</h3>
+        <Title headingLevel="h3" size="lg" ouiaId="rh-cloud-inventory-title">
+          {__('Red Hat Cloud Inventory')}
+        </Title>
         <hr />
         <Grid hasGutter>
           <GridItem span={7}>
