@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { translate as __ } from 'foremanReact/common/I18n';
-import { Flex, FlexItem } from '@patternfly/react-core';
+import { Flex, FlexItem, Title } from '@patternfly/react-core';
 
 import AdvancedSetting from './AdvancedSetting';
 import {
@@ -32,7 +32,9 @@ const InventorySettings = () => {
 
   return (
     <div className="inventory-settings">
-      <h3>{__('Settings')}</h3>
+      <Title headingLevel="h3" size="lg" ouiaId="inventory-settings-title">
+        {__('Settings')}
+      </Title>
       {[...settingKeys].map(key => {
         const isChildSetting = Object.hasOwnProperty.call(
           childSettingsDict,
