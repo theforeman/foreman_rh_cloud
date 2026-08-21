@@ -101,6 +101,22 @@ class ForemanRhCloudIopMetadataTest < ActiveSupport::TestCase
       assert_equal 'https://iop.example.com', ForemanRhCloud.cert_base_url
     end
 
+    test 'cloud_cert_base_url returns IoP URL when IoP exists and force_cla_connection is off' do
+      create_iop_proxy
+      Setting[:force_cla_connection] = false
+
+      assert_equal 'https://iop.example.com', ForemanRhCloud.cloud_cert_base_url
+    end
+
+    test 'cloud_cert_base_url returns cloud URL when IoP exists and force_cla_connection is on' do
+      create_iop_proxy
+      Setting[:force_cla_connection] = true
+
+      assert_equal 'https://cert.cloud.redhat.com', ForemanRhCloud.cloud_cert_base_url
+    ensure
+      Setting[:force_cla_connection] = false
+    end
+
     test 'legacy_insights_url returns IoP URL when IoP smart proxy exists' do
       create_iop_proxy
 
@@ -151,6 +167,17 @@ class ForemanRhCloudIopMetadataTest < ActiveSupport::TestCase
       assert_equal 'https://iop.example.com', ForemanRhCloud.cert_base_url
     ensure
       ENV.delete('SATELLITE_CERT_RH_CLOUD_URL')
+    end
+
+    test 'cloud_cert_base_url uses ENV var when force_cla_connection is on' do
+      ENV['SATELLITE_CERT_RH_CLOUD_URL'] = 'https://env-cert.cloud.test'
+      Setting[:force_cla_connection] = true
+      create_iop_proxy
+
+      assert_equal 'https://env-cert.cloud.test', ForemanRhCloud.cloud_cert_base_url
+    ensure
+      ENV.delete('SATELLITE_CERT_RH_CLOUD_URL')
+      Setting[:force_cla_connection] = false
     end
 
     test 'legacy_insights_url prefers IoP URL over ENV var' do

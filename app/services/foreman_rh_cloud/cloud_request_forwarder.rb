@@ -36,8 +36,9 @@ module ForemanRhCloud
       }
       requested_url = original_request.original_fullpath.end_with?('/') ? original_request.path + '/' : original_request.path
       params = path_params(requested_url)
+      force_cloud = params[:force_cloud]
 
-      if ForemanRhCloud.with_iop_smart_proxy?
+      if ForemanRhCloud.with_iop_smart_proxy? && !force_cloud
         params[:ssl_ca_file] = ForemanRhCloud.ca_cert
       end
 
@@ -70,10 +71,13 @@ module ForemanRhCloud
 
     def path_params(request_path)
       case request_path
-      when lightspeed?
+      when lightspeed_cla?
+        force_cloud = ForemanRhCloud.with_iop_smart_proxy? && Setting[:force_cla_connection]
         {
-          url: ForemanRhCloud.cert_base_url + request_path,
-        }
+          url: ForemanRhCloud.cloud_cert_base_url + request_path,
+          force_cloud: force_cloud,
+          proxy: (force_cloud ? ForemanRhCloud.transformed_cloud_http_proxy_string : nil),
+        }.compact
       when platform_request?
         {
           url: ForemanRhCloud.cert_base_url + request_path.sub('/redhat_access/r/insights/platform', '/api'),
@@ -104,7 +108,7 @@ module ForemanRhCloud
       "for=\"_#{host.subscription_facet.uuid}\""
     end
 
-    def lightspeed?
+    def lightspeed_cla?
       ->(request_path) { request_path.include? '/lightspeed' }
     end
 
