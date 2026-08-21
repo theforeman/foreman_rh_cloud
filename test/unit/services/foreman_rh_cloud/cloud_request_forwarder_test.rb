@@ -10,7 +10,9 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
 
     ForemanRhCloud.stubs(:base_url).returns('https://cloud.example.com')
     ForemanRhCloud.stubs(:cert_base_url).returns('https://cert.cloud.example.com')
+    ForemanRhCloud.stubs(:cloud_cert_base_url).returns('https://cert.cloud.example.com')
     ForemanRhCloud.stubs(:legacy_insights_url).returns('https://cert-api.access.example.com')
+    ForemanRhCloud.stubs(:transformed_cloud_http_proxy_string).returns(nil)
 
     UpstreamOnlySettingsTestHelper.set_if_available('allow_multiple_content_views')
     env = FactoryBot.create(:katello_k_t_environment)
@@ -34,6 +36,7 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
 
   test 'should prepare correct cloud url' do
     paths = {
+      "/api/lightspeed/v1/query" => "https://cert.cloud.example.com/api/lightspeed/v1/query",
       "/redhat_access/r/insights/platform/module-update-router/v1/channel?module=insights-core" => "https://cert.cloud.example.com/api/module-update-router/v1/channel?module=insights-core",
       "/redhat_access/r/insights/v1/static/release/insights-core.egg" => "https://cert-api.access.example.com/r/insights/v1/static/release/insights-core.egg",
       "/redhat_access/r/insights/v1/static/uploader.v2.json" => "https://cert-api.access.example.com/r/insights/v1/static/uploader.v2.json",
@@ -48,6 +51,31 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
       actual_params = @forwarder.path_params(key)
       assert_equal value, actual_params[:url]
     end
+  end
+
+  test 'does not force CLA to cloud when IoP is enabled and setting is off' do
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+    ForemanRhCloud.stubs(:cert_base_url).returns('https://iop.example.com')
+    ForemanRhCloud.stubs(:cloud_cert_base_url).returns('https://iop.example.com')
+    Setting.stubs(:[]).with(:force_cla_connection).returns(false)
+
+    actual = @forwarder.path_params('/api/lightspeed/v1/query')
+
+    assert_equal 'https://iop.example.com/api/lightspeed/v1/query', actual[:url]
+    refute actual[:force_cloud]
+  end
+
+  test 'forwards CLA to cloud when IoP is enabled and force_cla_connection is on' do
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+    ForemanRhCloud.stubs(:cert_base_url).returns('https://iop.example.com')
+    ForemanRhCloud.stubs(:cloud_cert_base_url).returns('https://cert.cloud.example.com')
+    ForemanRhCloud.stubs(:transformed_cloud_http_proxy_string).returns(nil)
+    Setting.stubs(:[]).with(:force_cla_connection).returns(true)
+
+    actual = @forwarder.path_params('/api/lightspeed/v1/query')
+
+    assert_equal 'https://cert.cloud.example.com/api/lightspeed/v1/query', actual[:url]
+    assert actual[:force_cloud]
   end
 
   test 'should forward payload from request parameters' do

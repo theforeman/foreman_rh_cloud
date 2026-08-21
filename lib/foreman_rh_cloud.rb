@@ -21,6 +21,14 @@ module ForemanRhCloud
     env_or_on_premise_url('SATELLITE_CERT_RH_CLOUD_URL') || 'https://cert.cloud.redhat.com'
   end
 
+  # Lightspeed/CLA is cloud-only. Use the cloud URL only when the admin
+  # enables force_cla_connection; otherwise follow cert_base_url (IoP when IoP is on).
+  def self.cloud_cert_base_url
+    return cert_base_url unless Setting[:force_cla_connection]
+
+    ENV['SATELLITE_CERT_RH_CLOUD_URL'] || 'https://cert.cloud.redhat.com'
+  end
+
   def self.legacy_insights_url
     env_or_on_premise_url('SATELLITE_LEGACY_INSIGHTS_URL') || 'https://cert-api.access.redhat.com'
   end
@@ -48,9 +56,17 @@ module ForemanRhCloud
   def self.proxy_string
     return '' if ForemanRhCloud.with_iop_smart_proxy?
 
+    cloud_proxy_string
+  end
+
+  def self.cloud_proxy_string
     HttpProxy.default_global_content_proxy&.full_url ||
     ForemanRhCloud.global_foreman_proxy ||
     ''
+  end
+
+  def self.transformed_cloud_http_proxy_string
+    transform_scheme(fix_port(cloud_proxy_string))
   end
 
   def self.fix_port(uri_string)

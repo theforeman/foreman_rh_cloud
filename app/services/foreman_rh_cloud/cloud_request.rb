@@ -3,12 +3,13 @@ module ForemanRhCloud
     extend ActiveSupport::Concern
 
     def execute_cloud_request(params)
+      force_cloud = params.delete(:force_cloud)
       final_params = {
         verify_ssl: ForemanRhCloud.verify_ssl_method,
         proxy: ForemanRhCloud.transformed_http_proxy_string,
       }.deep_merge(params)
 
-      if ForemanRhCloud.with_iop_smart_proxy?
+      if ForemanRhCloud.with_iop_smart_proxy? && !force_cloud
         final_params[:ssl_ca_file] ||= ForemanRhCloud.ca_cert
       end
 
