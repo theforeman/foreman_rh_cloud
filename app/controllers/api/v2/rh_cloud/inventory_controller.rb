@@ -71,7 +71,10 @@ module Api
         end
 
         api :POST, "/rh_cloud/announce_to_sources", N_("Schedule a task to register in Red Hat Sources for cloud connector")
+        param :instance_id, String, required: true, desc: N_("RHC instance ID to register with Red Hat Sources")
         def announce_to_sources
+          Setting[:rhc_instance_id] = params[:instance_id]
+
           task = ForemanTasks.async_task(InsightsCloud::Async::CloudConnectorAnnounceTask, true)
 
           render json: {

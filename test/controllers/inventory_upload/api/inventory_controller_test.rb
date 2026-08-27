@@ -42,9 +42,11 @@ module InventoryUpload::Api
         .with(InsightsCloud::Async::CloudConnectorAnnounceTask, true)
         .returns(test_task)
 
-      post :announce_to_sources
+      post :announce_to_sources, params: { instance_id: 'test-instance-id' }
 
       assert_response :success
+
+      assert_equal 'test-instance-id', Setting[:rhc_instance_id]
 
       actual_task = @response.parsed_body['task']
       assert_not_nil actual_task
