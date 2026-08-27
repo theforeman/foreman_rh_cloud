@@ -7,8 +7,6 @@ Rails.application.routes.draw do
     get 'settings', to: 'uploads_settings#index'
     post 'setting', to: 'uploads_settings#set_advanced_setting'
 
-    post 'cloud_connector', to: 'uploads#enable_cloud_connector'
-
     resources :tasks, only: [:create, :show]
 
     get 'status', to: 'cloud_status#index'
@@ -72,7 +70,7 @@ Rails.application.routes.draw do
       end
 
       namespace 'rh_cloud' do
-        post 'enable_connector', to: 'inventory#enable_cloud_connector'
+        post 'announce_to_sources', to: 'inventory#announce_to_sources'
         post 'cloud_request', to: 'cloud_request#update'
         get 'advisor_engine_config', to: 'advisor_engine_config#show'
 

@@ -31,8 +31,7 @@ module ForemanRhCloud
             :generate_foreman_rh_cloud,
             'foreman_inventory_upload/reports': [:generate],
             'foreman_inventory_upload/tasks': [:create],
-            'api/v2/rh_cloud/inventory': [:get_hosts, :remove_hosts, :sync_inventory_status, :download_file, :generate_report, :enable_cloud_connector],
-            'foreman_inventory_upload/uploads': [:enable_cloud_connector],
+            'api/v2/rh_cloud/inventory': [:get_hosts, :remove_hosts, :sync_inventory_status, :download_file, :generate_report, :announce_to_sources],
             'foreman_inventory_upload/uploads_settings': [:set_advanced_setting],
             'foreman_inventory_upload/missing_hosts': [:remove_hosts],
             'insights_cloud/settings': [:update],
@@ -122,6 +121,8 @@ module ForemanRhCloud
 
         role 'ForemanRhCloud Read Only', read_only_permissions, 'Role granting read-only permissions to view
                                                                  Insights Compliance, Vulnerability, Advisor, and host inventory'
+
+        role 'Cloud Connector', [:dispatch_cloud_requests], 'Role granting permission to dispatch cloud connector requests'
 
         add_permissions_to_default_roles Role::ORG_ADMIN => plugin_permissions,
           Role::MANAGER => plugin_permissions,

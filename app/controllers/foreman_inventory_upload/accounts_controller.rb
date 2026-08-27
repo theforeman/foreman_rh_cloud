@@ -29,7 +29,6 @@ module ForemanInventoryUpload
 
       render json: {
         accounts: accounts,
-        CloudConnectorStatus: ForemanInventoryUpload::UploadsSettingsController.cloud_connector_status,
       }, status: :ok
     end
 

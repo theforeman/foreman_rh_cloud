@@ -159,6 +159,7 @@ Each namespace follows Rails directory structure (`app/{models,controllers,views
   - `InventorySync::Async::InventoryScheduledSync` - Daily inventory sync
   - `InsightsCloud::Async::InsightsScheduledSync` - Daily recommendations sync
   - `InsightsCloud::Async::InsightsClientStatusAging` - Daily status cleanup
+  - `InsightsCloud::Async::CloudConnectorAnnounceTask` - Daily Sources registration check (self-healing)
 
 **Key models:**
 - `InsightsRule` - Problem definitions from Red Hat Insights
@@ -250,10 +251,13 @@ return (
 
 ### Cloud Connector (Cloud-Initiated Remediations)
 
-Requires setup on Foreman server:
+Setup via foremanctl (`foremanctl deploy --add-feature cloud-connector`):
 - `rhcd` service (listener)
 - `yggdrasil-worker-forwarder` (worker)
-- Registration in Red Hat Sources registry
+- `rhc_instance_id` setting set via Foreman API
+- Registration in Red Hat Sources registry via `POST /api/v2/rh_cloud/announce_to_sources`
+
+Sources registration is also checked daily by `CloudConnectorAnnounceTask` for self-healing.
 
 Flow: Cloud UI → rhcd → worker → Foreman API → REX job → playbook execution
 

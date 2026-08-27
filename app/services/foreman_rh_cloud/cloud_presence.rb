@@ -74,6 +74,9 @@ module ForemanRhCloud
 
     def register_rhc_instance
       raise Foreman::Exception.new('rhc_instance_id is empty, cannot register RHC to the cloud') if Setting[:rhc_instance_id].empty?
+
+      return :already_registered if rhc_connection_exists?
+
       source_id = satellite_instance_source || create_satellite_instance_source
 
       create_response = JSON.parse(
@@ -95,6 +98,22 @@ module ForemanRhCloud
       @satellite_instance_source = create_response['id']
     end
 
+    def rhc_connection_exists?
+      response = JSON.parse(
+        execute_cloud_request(
+          method: :get,
+          url: rhc_connection_url,
+          headers: {
+            content_type: :json,
+          },
+          ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),
+          ssl_client_key: OpenSSL::PKey.read(certs[:key])
+        )
+      )
+
+      response['data']&.any?
+    end
+
     private
 
     def sources_url(path)
@@ -111,6 +130,10 @@ module ForemanRhCloud
 
     def create_satellite_instance_source_url
       sources_url('/sources')
+    end
+
+    def rhc_connection_url
+      sources_url("/rhc_connections?filter[rhc_id]=#{Setting[:rhc_instance_id]}")
     end
 
     def create_rhc_connections_url

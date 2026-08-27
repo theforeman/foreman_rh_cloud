@@ -174,15 +174,20 @@ and configured to be able to access the Foreman server.
 4. The rhcd instance needs to be registered in the
 `Sources` cloud registry as a valid listener.
 
-This configuration process is initiated by the "Configure
-cloud connector" button in the UI, and is implemented as a
-REX job and a subscriber task. The REX job is initiated
-with a specific feature, and executes a playbook from
-`foreman-operations` collection. One of the steps in the
-task is a request to Foreman server to persist the rhcd id.
-The subscriber task waits for this task to finish and then
-using the rhcd id from the REX job, it calls the Sources
-API to properly subscribe the new rhcd instance.
+This configuration process is handled by foremanctl
+(`foremanctl deploy --add-feature cloud-connector`), which
+installs the packages, templates the worker config, starts
+the rhcd service, and sets the `rhc_instance_id` setting
+via the Foreman API. After setup, foremanctl calls
+`POST /api/v2/rh_cloud/announce_to_sources` to register
+the rhcd instance in the Sources cloud registry.
+
+A daily recurring task (`CloudConnectorAnnounceTask`) also
+checks Sources registration for self-healing — if the
+registration is ever lost, it re-registers automatically.
+The task skips organizations that have had recent
+cloud-initiated remediation jobs (proving connectivity)
+or that lack a valid manifest.
 
 Once the configuration phase is finished the remediation
 request will be able to flow from the cloud, through the
