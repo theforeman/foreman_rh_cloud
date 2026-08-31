@@ -22,6 +22,7 @@ module ForemanRhCloud
             setting('include_parameter_tags', type: :boolean, description: N_('Should import include parameter tags from Foreman? Ignored when using local Insights.'), default: false, full_name: N_('Include parameters in insights-client reports'))
             setting('rhc_instance_id', type: :string, description: N_('RHC daemon id. Ignored when using local Insights.'), default: nil, full_name: N_('ID of the RHC(Yggdrasil) daemon'))
             setting('insights_minimal_data_collection', type: :boolean, default: false, full_name: N_('Minimal data collection'), description: N_('Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights.'))
+            setting('force_cla_connection', type: :boolean, default: false, full_name: N_('Force RHEL Lightspeed CLA connection'), description: N_('Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off.'))
           end
         end
 
