@@ -48,7 +48,6 @@ module ForemanRhCloud
             'foreman_inventory_upload/cloud_status': [:index],
             'foreman_inventory_upload/uploads_settings': [:index],
             'foreman_inventory_upload/missing_hosts': [:index],
-            'api/v2/rh_cloud/advisor_engine_config': [:show],
             'foreman_rh_cloud/foreman_rh_cloud': [:inventory_upload, :recommendations],
             'react': [:index]
           )

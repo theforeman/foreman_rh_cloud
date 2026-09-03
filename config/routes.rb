@@ -72,8 +72,6 @@ Rails.application.routes.draw do
       namespace 'rh_cloud' do
         post 'announce_to_sources', to: 'inventory#announce_to_sources'
         post 'cloud_request', to: 'cloud_request#update'
-        get 'advisor_engine_config', to: 'advisor_engine_config#show'
-
         # Inventory upload task endpoints
         get 'inventory_upload/tasks/current', to: 'foreman_inventory_upload/api/tasks#current'
         get 'inventory_upload/tasks/history', to: 'foreman_inventory_upload/api/tasks#history'
