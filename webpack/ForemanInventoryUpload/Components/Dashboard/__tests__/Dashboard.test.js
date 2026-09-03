@@ -1,67 +1,97 @@
 import React from 'react';
-import { shallow } from '@theforeman/test';
+import { screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { rtlHelpers } from 'foremanReact/common/rtlTestHelpers';
 import Dashboard from '../Dashboard';
 
+const { renderWithStoreAndI18n } = rtlHelpers;
+
+jest.mock('../../../../common/Hooks/ConfigHooks', () => ({
+  useIopConfig: jest.fn(() => false),
+}));
+
+const runningTask = {
+  id: 'task-1',
+  state: 'running',
+  result: null,
+  progress: 50,
+};
+
+const inventoryStore = {
+  API: {
+    INVENTORY_SETTINGS: {
+      response: { subscriptionConnectionEnabled: true },
+    },
+  },
+};
+
+const renderDashboard = (props = {}) =>
+  renderWithStoreAndI18n(<Dashboard {...props} />, inventoryStore);
+
 describe('Dashboard', () => {
-  it('should render TaskProgress component with correct props', () => {
-    const account = {
-      id: 1,
-      generate_task: {
-        id: 'task-1',
-        state: 'running',
-        result: null,
-        progress: 50,
-      },
-    };
+  it('renders report generation progress for a running task', async () => {
     const onTaskStart = jest.fn();
 
-    const wrapper = shallow(
-      <Dashboard account={account} onTaskStart={onTaskStart} />
-    );
+    renderDashboard({
+      account: { id: 1, generate_task: runningTask },
+      onTaskStart,
+    });
 
-    const taskProgress = wrapper.find('TaskProgress');
-    expect(taskProgress).toHaveLength(1);
-    expect(taskProgress.prop('task')).toEqual(account.generate_task);
-    expect(taskProgress.prop('title')).toBe('Report Generation');
-    expect(taskProgress.prop('organizationId')).toBe(1);
-    expect(taskProgress.prop('taskType')).toBe('generate');
-    expect(taskProgress.prop('onTaskStart')).toBe(onTaskStart);
+    expect(await screen.findByText('Report Generation')).toBeInTheDocument();
+    expect(screen.getByLabelText('task-progress')).toBeInTheDocument();
+    expect(screen.getByText('Running')).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'View task details' })
+    ).toHaveAttribute('href', '/foreman_tasks/tasks/task-1');
+    expect(
+      screen.getByRole('button', { name: 'Generate and upload report' })
+    ).toBeDisabled();
+    expect(
+      screen.getByRole('button', { name: 'Generate report' })
+    ).toBeDisabled();
   });
 
-  it('should handle missing account gracefully', () => {
-    const wrapper = shallow(<Dashboard account={null} onTaskStart={null} />);
+  it('shows an empty state when account data is missing', async () => {
+    renderDashboard({ account: null, onTaskStart: null });
 
-    const taskProgress = wrapper.find('TaskProgress');
-    expect(taskProgress).toHaveLength(1);
-    expect(taskProgress.prop('task')).toBeNull();
-    expect(taskProgress.prop('organizationId')).toBeNull();
-    expect(taskProgress.prop('emptyMessage')).toBe(
-      'No account data available.'
-    );
+    expect(await screen.findByText('No recent tasks')).toBeInTheDocument();
+    expect(screen.getByText('No account data available.')).toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: 'Generate report' })
+    ).not.toBeInTheDocument();
   });
 
-  it('should handle missing generate_task gracefully', () => {
-    const account = { id: 1, generate_task: null };
-    const wrapper = shallow(<Dashboard account={account} onTaskStart={null} />);
+  it('shows generate actions when the account has no generate task', async () => {
+    renderDashboard({
+      account: { id: 1, generate_task: null },
+      onTaskStart: null,
+    });
 
-    const taskProgress = wrapper.find('TaskProgress');
-    expect(taskProgress).toHaveLength(1);
-    expect(taskProgress.prop('task')).toBeNull();
-    expect(taskProgress.prop('organizationId')).toBe(1);
+    expect(
+      await screen.findByText('No report generation tasks have been run yet.')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Generate and upload report' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Generate report' })
+    ).toBeInTheDocument();
   });
 
-  it('should handle missing account.id gracefully', () => {
-    const account = {
-      generate_task: {
-        id: 'task-1',
-        state: 'running',
-      },
-    };
-    const wrapper = shallow(<Dashboard account={account} onTaskStart={null} />);
+  it('renders the task without generate actions when account id is missing', async () => {
+    renderDashboard({
+      account: { generate_task: runningTask },
+      onTaskStart: null,
+    });
 
-    const taskProgress = wrapper.find('TaskProgress');
-    expect(taskProgress).toHaveLength(1);
-    expect(taskProgress.prop('organizationId')).toBeNull();
-    expect(taskProgress.prop('task')).toEqual(account.generate_task);
+    expect(
+      await screen.findByRole('link', { name: 'View task details' })
+    ).toHaveAttribute('href', '/foreman_tasks/tasks/task-1');
+    expect(
+      screen.queryByRole('button', { name: 'Generate report' })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: 'Generate and upload report' })
+    ).not.toBeInTheDocument();
   });
 });
