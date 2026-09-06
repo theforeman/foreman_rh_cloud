@@ -11,8 +11,9 @@ module ForemanRhCloud
 
     def execute_cloud_request(params)
       organization = params.delete(:organization)
+      force_cloud = params[:force_cloud]
       # Cache the value of with_iop_smart_proxy? to avoid multiple calls to the database
-      with_iop_smart_proxy = ForemanRhCloud.with_iop_smart_proxy?
+      with_iop_smart_proxy = ForemanRhCloud.with_iop_smart_proxy? && !force_cloud
       certs = with_iop_smart_proxy ? foreman_certificate : candlepin_id_cert(organization)
       default_params = {
         ssl_client_cert: OpenSSL::X509::Certificate.new(certs[:cert]),

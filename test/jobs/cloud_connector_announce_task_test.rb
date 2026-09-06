@@ -1,125 +1,135 @@
-require 'json'
 require 'test_plugin_helper'
 require 'foreman_tasks/test_helpers'
-require "#{ForemanTasks::Engine.root}/test/support/dummy_dynflow_action"
 
 class CloudConnectorAnnounceTaskTest < ActiveSupport::TestCase
   include Dynflow::Testing::Factories
 
   setup do
-    RemoteExecutionFeature.register(
-      :ansible_configure_cloud_connector,
-      N_('Configure Cloud Connector on given hosts'),
-      :description => N_('Configure Cloud Connector on given hosts'),
-      :proxy_selector_override => ::RemoteExecutionProxySelector::INTERNAL_PROXY
-    )
-
-    @job_invocation = generate_job_invocation(:ansible_configure_cloud_connector)
-
-    # reset connector feature ID cache
-    InsightsCloud::Async::CloudConnectorAnnounceTask.instance_variable_set(:@connector_feature_id, nil)
+    InsightsCloud::Async::CloudConnectorAnnounceTask.any_instance
+                                                    .stubs(:recent_cloud_remediation?).returns(false)
   end
 
-  test 'It executes cloud presence announcer' do
-    ForemanRhCloud::CloudPresence.any_instance.expects(:announce_to_sources).times(Organization.unscoped.count)
-
-    action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask, @job_invocation)
-    finalize_action(action)
+  teardown do
+    ForemanRhCloud.unstub(:with_iop_smart_proxy?)
   end
 
-  private
+  test 'announces to sources for all organizations when rhc_instance_id is set' do
+    Setting[:rhc_instance_id] = 'test-rhc-id'
 
-  def generate_job_invocation(feature_name)
-    job_template = FactoryBot.build(
-      :job_template,
-      :template => 'BLEH'
-    )
-    feature = RemoteExecutionFeature.feature!(feature_name).id
+    InsightsCloud::Async::CloudConnectorAnnounceTask.any_instance
+                                                    .stubs(:cert_auth_available?).returns(true)
 
-    job_invocation = FactoryBot.create(
-      :job_invocation,
-      remote_execution_feature_id: feature,
-      task_id: FactoryBot.create(:dynflow_task).id
-    )
+    ForemanRhCloud::CloudPresence.any_instance
+                                 .expects(:announce_to_sources)
+                                 .times(Organization.unscoped.count)
 
-    job_template.template_inputs << playbook_url_input = FactoryBot.build(:template_input,
-      :name => 'playbook_url',
-      :input_type => 'user',
-      :required => true)
-    job_template.template_inputs << report_url_input = FactoryBot.build(:template_input,
-      :name => 'report_url',
-      :input_type => 'user',
-      :required => true)
-    job_template.template_inputs << correlation_id_input = FactoryBot.build(:template_input,
-      :name => 'correlation_id',
-      :input_type => 'user',
-      :required => true)
-    job_template.template_inputs << report_interval_input = FactoryBot.build(:template_input,
-      :name => 'report_interval',
-      :input_type => 'user',
-      :required => true)
+    action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask)
+    action = run_action(action)
 
-    template_invocation = FactoryBot.build(:template_invocation,
-      :template => job_template,
-      :job_invocation => job_invocation)
+    status = action.output[:status].to_s
+    assert_match(/Registered:|Already registered:/, status)
+    refute_match(/Skipped/, status)
+    refute_match(/Failed/, status)
+  end
 
-    template_invocation.input_values << FactoryBot.create(
-      :template_invocation_input_value,
-      :template_invocation => template_invocation,
-      :template_input => playbook_url_input,
-      :value => 'http://example.com/TEST_PLAYBOOK'
-    )
-    template_invocation.input_values << FactoryBot.create(
-      :template_invocation_input_value,
-      :template_invocation => template_invocation,
-      :template_input => report_url_input,
-      :value => 'http://example.com/TEST_REPORT'
-    )
-    template_invocation.input_values << FactoryBot.create(
-      :template_invocation_input_value,
-      :template_invocation => template_invocation,
-      :template_input => correlation_id_input,
-      :value => 'TEST_CORRELATION'
-    )
-    template_invocation.input_values << FactoryBot.create(
-      :template_invocation_input_value,
-      :template_invocation => template_invocation,
-      :template_input => report_interval_input,
-      :value => '1'
-    )
+  test 'skips when rhc_instance_id is not set' do
+    Setting[:rhc_instance_id] = nil
 
-    @host1 = FactoryBot.create(:host, :with_insights_hits, name: 'host1')
-    @host1.insights.uuid = 'TEST_UUID1'
-    @host1.insights.save!
-    @host2 = FactoryBot.create(:host, :with_insights_hits, name: 'host2')
-    @host2.insights.uuid = 'TEST_UUID2'
-    @host2.insights.save!
+    action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask)
 
-    targeting = FactoryBot.create(:targeting, hosts: [@host1, @host2])
-    job_invocation.targeting = targeting
-    job_invocation.save!
+    assert_empty action.execution_plan.planned_run_steps
+  end
 
-    job_invocation.template_invocations << FactoryBot.create(
-      :template_invocation,
-      run_host_job_task: FactoryBot.create(:dynflow_task),
-      host_id: @host1.id
-    )
-    job_invocation.template_invocations << FactoryBot.create(
-      :template_invocation,
-      run_host_job_task: FactoryBot.create(:dynflow_task),
-      host_id: @host2.id
-    )
+  test 'skips when rhc_instance_id is empty string' do
+    Setting[:rhc_instance_id] = ''
 
-    fake_output = (1..5).map do |i|
-      { 'timestamp' => (Time.now - (5 - i)).to_f, 'output' => "#{i}\n" }
+    action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask)
+
+    assert_empty action.execution_plan.planned_run_steps
+  end
+
+  test 'skips when in IoP mode' do
+    Setting[:rhc_instance_id] = 'test-rhc-id'
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+
+    action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask)
+
+    assert_empty action.execution_plan.planned_run_steps
+  end
+
+  test 'skips organizations without a manifest' do
+    Setting[:rhc_instance_id] = 'test-rhc-id'
+
+    InsightsCloud::Async::CloudConnectorAnnounceTask.any_instance
+                                                    .stubs(:cert_auth_available?).returns(false)
+
+    ForemanRhCloud::CloudPresence.any_instance
+                                 .expects(:announce_to_sources)
+                                 .never
+
+    action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask)
+    action = run_action(action)
+
+    status = action.output[:status].to_s
+    assert_match(/Skipped \(no manifest\):/, status)
+    refute_match(/Registered/, status)
+    refute_match(/Failed/, status)
+  end
+
+  test 'still runs when allow_auto_inventory_upload is disabled' do
+    Setting[:rhc_instance_id] = 'test-rhc-id'
+    Setting[:allow_auto_inventory_upload] = false
+
+    InsightsCloud::Async::CloudConnectorAnnounceTask.any_instance
+                                                    .stubs(:cert_auth_available?).returns(true)
+
+    ForemanRhCloud::CloudPresence.any_instance
+                                 .expects(:announce_to_sources)
+                                 .times(Organization.unscoped.count)
+
+    action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask)
+    action = run_action(action)
+
+    assert_match(/Registered:|Already registered:/, action.output[:status].to_s)
+  end
+
+  test 'skips orgs with recent cloud remediation jobs' do
+    Setting[:rhc_instance_id] = 'test-rhc-id'
+
+    InsightsCloud::Async::CloudConnectorAnnounceTask.any_instance
+                                                    .stubs(:cert_auth_available?).returns(true)
+    InsightsCloud::Async::CloudConnectorAnnounceTask.any_instance
+                                                    .stubs(:recent_cloud_remediation?).returns(true)
+
+    ForemanRhCloud::CloudPresence.any_instance
+                                 .expects(:announce_to_sources)
+                                 .never
+
+    action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask)
+    action = run_action(action)
+
+    status = action.output[:status].to_s
+    assert_match(/Already registered \(recent cloud remediation\):/, status)
+    refute_match(/\bRegistered:/, status)
+  end
+
+  test 'continues processing other orgs when one fails and task errors' do
+    Setting[:rhc_instance_id] = 'test-rhc-id'
+
+    InsightsCloud::Async::CloudConnectorAnnounceTask.any_instance
+                                                    .stubs(:cert_auth_available?).returns(true)
+
+    call_count = 0
+    ForemanRhCloud::CloudPresence.any_instance.stubs(:announce_to_sources).with do
+      call_count += 1
+      raise(StandardError.new('API error')) if call_count == 1
+      true
     end
-    Support::DummyDynflowAction.any_instance.stubs(:live_output).returns(fake_output)
-    Support::DummyDynflowAction.any_instance.stubs(:exit_status).returns(0)
 
-    job_invocation
-  end
+    action = create_and_plan_action(InsightsCloud::Async::CloudConnectorAnnounceTask)
 
-  def read_jsonl(jsonl)
-    jsonl.lines.map { |l| JSON.parse(l) }
+    error = assert_raises(StandardError) { run_action(action) }
+    assert_match(/Sources announcement failed for:/, error.message)
+    assert_equal Organization.unscoped.count, call_count
   end
 end

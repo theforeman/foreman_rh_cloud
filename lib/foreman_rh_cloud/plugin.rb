@@ -22,6 +22,7 @@ module ForemanRhCloud
             setting('include_parameter_tags', type: :boolean, description: N_('Should import include parameter tags from Foreman? Ignored when using local Insights.'), default: false, full_name: N_('Include parameters in insights-client reports'))
             setting('rhc_instance_id', type: :string, description: N_('RHC daemon id. Ignored when using local Insights.'), default: nil, full_name: N_('ID of the RHC(Yggdrasil) daemon'))
             setting('insights_minimal_data_collection', type: :boolean, default: false, full_name: N_('Minimal data collection'), description: N_('Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights.'))
+            setting('force_cla_connection', type: :boolean, default: false, full_name: N_('Force RHEL Lightspeed CLA connection'), description: N_('Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off.'))
           end
         end
 
@@ -31,8 +32,7 @@ module ForemanRhCloud
             :generate_foreman_rh_cloud,
             'foreman_inventory_upload/reports': [:generate],
             'foreman_inventory_upload/tasks': [:create],
-            'api/v2/rh_cloud/inventory': [:get_hosts, :remove_hosts, :sync_inventory_status, :download_file, :generate_report, :enable_cloud_connector],
-            'foreman_inventory_upload/uploads': [:enable_cloud_connector],
+            'api/v2/rh_cloud/inventory': [:get_hosts, :remove_hosts, :sync_inventory_status, :download_file, :generate_report, :announce_to_sources],
             'foreman_inventory_upload/uploads_settings': [:set_advanced_setting],
             'foreman_inventory_upload/missing_hosts': [:remove_hosts],
             'insights_cloud/settings': [:update],
@@ -48,7 +48,6 @@ module ForemanRhCloud
             'foreman_inventory_upload/cloud_status': [:index],
             'foreman_inventory_upload/uploads_settings': [:index],
             'foreman_inventory_upload/missing_hosts': [:index],
-            'api/v2/rh_cloud/advisor_engine_config': [:show],
             'foreman_rh_cloud/foreman_rh_cloud': [:inventory_upload, :recommendations],
             'react': [:index]
           )
@@ -122,6 +121,8 @@ module ForemanRhCloud
 
         role 'ForemanRhCloud Read Only', read_only_permissions, 'Role granting read-only permissions to view
                                                                  Insights Compliance, Vulnerability, Advisor, and host inventory'
+
+        role 'Cloud Connector', [:dispatch_cloud_requests], 'Role granting permission to dispatch cloud connector requests'
 
         add_permissions_to_default_roles Role::ORG_ADMIN => plugin_permissions,
           Role::MANAGER => plugin_permissions,

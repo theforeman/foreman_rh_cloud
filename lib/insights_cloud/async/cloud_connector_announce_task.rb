@@ -1,39 +1,96 @@
 module InsightsCloud
   module Async
     class CloudConnectorAnnounceTask < ::Actions::EntryAction
-      def self.subscribe
-        Actions::RemoteExecution::RunHostsJob
-      end
+      include ::Actions::RecurringAction
+      include ::ForemanRhCloud::CertAuth
+      include ForemanInventoryUpload::Async::DelayedStart
 
-      def self.connector_feature_id
-        @connector_feature_id ||= RemoteExecutionFeature.feature!(ForemanRhCloud::CloudConnector::CLOUD_CONNECTOR_FEATURE).id
-      end
-
-      def plan(job_invocation)
-        return unless connector_playbook_job?(job_invocation)
-
-        plan_self
-      end
-
-      def finalize
-        Organization.unscoped.each do |org|
-          presence = ForemanRhCloud::CloudPresence.new(org, logger)
-          presence.announce_to_sources
-        rescue StandardError => ex
-          logger.warn(ex)
+      def plan(immediate = false)
+        if ForemanRhCloud.with_iop_smart_proxy?
+          logger.debug('Sources announcement skipped: running in IoP mode')
+          return
         end
+
+        if Setting[:rhc_instance_id].blank?
+          logger.debug('Sources announcement skipped: rhc_instance_id is not set')
+          return
+        end
+
+        unless Setting[:allow_auto_inventory_upload]
+          logger.debug(
+            'Cloud connector is configured (rhc_instance_id is set) but automatic inventory upload is disabled. ' \
+            'Enable the "Automatic inventory upload" setting for full cloud connector functionality.'
+          )
+        end
+
+        if immediate
+          plan_self
+        else
+          after_delay do
+            plan_self
+          end
+        end
+      end
+
+      def run
+        registered = []
+        confirmed_by_remediation = []
+        already_registered = []
+        skipped = []
+        failed = {}
+
+        Organization.unscoped.each do |org|
+          unless cert_auth_available?(org)
+            skipped << org.name
+            next
+          end
+
+          if recent_cloud_remediation?(org)
+            confirmed_by_remediation << org.name
+            next
+          end
+
+          presence = ForemanRhCloud::CloudPresence.new(org, logger)
+          result = presence.announce_to_sources
+          if result == :already_registered
+            already_registered << org.name
+          else
+            registered << org.name
+          end
+        rescue StandardError => ex
+          logger.warn("Failed to announce to Sources for organization #{org.name}: #{ex}")
+          logger.debug { ex.backtrace.join("\n") }
+          failed[org.name] = ex.message
+        end
+
+        parts = []
+        parts << "Registered: #{registered.join(', ')}" if registered.any?
+        parts << "Already registered: #{already_registered.join(', ')}" if already_registered.any?
+        parts << "Already registered (recent cloud remediation): #{confirmed_by_remediation.join(', ')}" if confirmed_by_remediation.any?
+        parts << "Skipped (no manifest): #{skipped.join(', ')}" if skipped.any?
+        if failed.any?
+          failed_details = failed.map { |name, msg| "#{name}: #{msg}" }.join('; ')
+          parts << "Failed: #{failed_details}"
+        end
+        output[:status] = parts.join('. ')
+
+        error!("Sources announcement failed for: #{failed.keys.join(', ')}") if failed.any?
+      end
+
+      def recent_cloud_remediation?(org)
+        feature = RemoteExecutionFeature.find_by(label: 'rh_cloud_connector_run_playbook')
+        return false unless feature
+
+        JobInvocation.where(remote_execution_feature_id: feature.id)
+                     .joins(:task)
+                     .joins(targeting: :hosts)
+                     .where(hosts: { organization_id: org.id })
+                     .where('foreman_tasks_tasks.started_at > ?', 24.hours.ago)
+                     .exists?
       end
 
       def rescue_strategy_for_self
         Dynflow::Action::Rescue::Skip
-      end
-
-      def connector_playbook_job?(job_invocation)
-        job_invocation&.remote_execution_feature_id == connector_feature_id
-      end
-
-      def connector_feature_id
-        self.class.connector_feature_id
       end
 
       def logger

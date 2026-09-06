@@ -1,22 +1,11 @@
 module ForemanInventoryUpload
   class UploadsController < ::ApplicationController
     include InventoryUpload::ReportActions
-    include ForemanRhCloud::IopSmartProxyAccess
-
-    before_action :require_non_iop_smart_proxy, only: [:enable_cloud_connector]
 
     def download_file
       filename, file = report_file(params[:organization_id])
 
       send_file file, disposition: 'attachment', filename: filename
-    end
-
-    def enable_cloud_connector
-      # Set the autoupload to true, since it's required by the feature.
-      Setting[:allow_auto_inventory_upload] = true
-
-      cloud_connector = ForemanRhCloud::CloudConnector.new
-      render json: cloud_connector.install.to_json
     end
   end
 end

@@ -7,7 +7,7 @@ module Api
         include InventoryUpload::TaskActions
         include ForemanRhCloud::IopSmartProxyAccess
 
-        before_action :require_non_iop_smart_proxy, only: [:enable_cloud_connector]
+        before_action :require_non_iop_smart_proxy, only: [:announce_to_sources]
 
         api :GET, "/organizations/:organization_id/rh_cloud/report", N_("Download latest report")
         param :organization_id, Integer, required: true, desc: N_("Set the current organization context for the request")
@@ -70,10 +70,16 @@ module Api
           render json: { message: error.message }, status: :bad_request
         end
 
-        api :POST, "/rh_cloud/enable_connector", N_("Enable cloud connector")
-        def enable_cloud_connector
-          cloud_connector = ForemanRhCloud::CloudConnector.new
-          render json: cloud_connector.install.to_json
+        api :POST, "/rh_cloud/announce_to_sources", N_("Schedule a task to register in Red Hat Sources for cloud connector")
+        param :instance_id, String, required: true, desc: N_("RHC instance ID to register with Red Hat Sources")
+        def announce_to_sources
+          Setting[:rhc_instance_id] = params[:instance_id]
+
+          task = ForemanTasks.async_task(InsightsCloud::Async::CloudConnectorAnnounceTask, true)
+
+          render json: {
+            task: task,
+          }, status: :accepted
         end
       end
     end
