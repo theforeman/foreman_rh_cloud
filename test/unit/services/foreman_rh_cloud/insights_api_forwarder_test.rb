@@ -427,6 +427,8 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     { path: 'api/vulnerability/v1/cves/CVE-2024-1234', method: 'GET', expected: :view_vulnerability },
     { path: 'api/vulnerability/v1/playbooks/abc-123', method: 'GET', expected: :view_vulnerability },
     { path: 'api/vulnerability/v1/report/abc-123', method: 'GET', expected: :view_vulnerability },
+    { path: 'api/vulnerability/v1/feature/cves_without_errata', method: 'GET', expected: :view_vulnerability },
+    { path: 'api/vulnerability/v1/feature/cves_without_errata', method: 'PATCH', expected: :edit_vulnerability },
     # Advisor endpoints
     { path: 'api/insights/v1/stats/systems', method: 'GET', expected: :view_advisor },
     { path: 'api/insights/v1/ack/', method: 'POST', expected: :edit_advisor },
