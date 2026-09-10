@@ -6,7 +6,7 @@ permissions:
 on:
   push:
     branches:
-      - develop
+      - foreman_5_0
   pull_request:
 
 jobs:
