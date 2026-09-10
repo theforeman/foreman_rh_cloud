@@ -239,6 +239,14 @@ module ForemanRhCloud
           'GET' => :view_vulnerability,
         },
       },
+      # CVEs without errata feature flag - no tags support (per OpenAPI spec)
+      {
+        test: %r{api/vulnerability/v1/feature/cves_without_errata$},
+        permissions: {
+          'GET' => :view_vulnerability,
+          'PATCH' => :edit_vulnerability,
+        },
+      },
       # Other vulnerability endpoints - GET requires view_vulnerability (with tags support)
       {
         test: %r{api/vulnerability/v1/.*},
