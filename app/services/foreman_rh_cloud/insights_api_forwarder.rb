@@ -39,6 +39,7 @@ module ForemanRhCloud
     # edit_vulnerability   | PATCH /api/vulnerability/v1/cves/status
     #                      | PATCH /api/vulnerability/v1/cves/business_risk
     # edit_vulnerability   | PATCH /api/vulnerability/v1/systems/opt_out
+    #                      | PATCH /api/vulnerability/v1/feature/cves_without_errata
     #
     # view_advisor         | GET /api/insights/v1/*
     # edit_advisor         | POST /api/insights/v1/ack/
