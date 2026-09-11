@@ -8,6 +8,7 @@ import IopRecommendationDetails from './IopRecommendationDetails/IopRecommendati
 import IopPathwayDetails from './IopPathwayDetails/IopPathwayDetails';
 import InsightsHostDetailsTab from './InsightsHostDetailsTab';
 import CveDetailsPage from './CveDetailsPage';
+import InsightsCompliancePage from './InsightsCompliance/InsightsCompliancePage';
 import './common/styles.scss';
 
 const pages = [
@@ -20,6 +21,7 @@ const pages = [
     type: InsightsVulnerabilityListPage,
   },
   { name: 'CveDetailsPage', type: CveDetailsPage },
+  { name: 'InsightsCompliancePage', type: InsightsCompliancePage },
 ];
 
 export const registerPages = () => {
@@ -56,6 +58,11 @@ export const routes = [
     path: '/foreman_rh_cloud/insights_vulnerability/:cveId',
     exact: true,
     render: props => <CveDetailsPage {...props} />,
+  },
+  {
+    path: '/foreman_rh_cloud/insights_compliance',
+    exact: false,
+    render: props => <InsightsCompliancePage {...props} />,
   },
 ];
 
