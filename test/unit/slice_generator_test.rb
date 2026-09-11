@@ -220,6 +220,35 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert true, @host.subscription_facet.hypervisor?
   end
 
+  test 'generates a report with minimal data collection retaining virtual_host_uuid for a guest' do
+    Setting[:insights_minimal_data_collection] = true
+    hypervisor_host = FactoryBot.create(
+      :host,
+      :with_subscription,
+      :with_content,
+      content_view: @host.content_views.first,
+      lifecycle_environment: @host.lifecycle_environments.first,
+      organization: @host.organization
+    )
+
+    @host.subscription_facet.hypervisor_host = hypervisor_host
+    @host.subscription_facet.save!
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_not_nil(host_facts = actual_host['facts']&.first)
+    assert_equal 'satellite', host_facts['namespace']
+    assert_not_nil(fact_values = host_facts['facts'])
+    assert_equal hypervisor_host.subscription_facet.uuid, fact_values['virtual_host_uuid']
+    assert_nil actual_host['fqdn']
+    assert_nil fact_values['virtual_host_name']
+  end
+
   test 'packages are excluded in the report with minimal data collection' do
     Setting[:exclude_installed_packages] = false
     Setting[:insights_minimal_data_collection] = true

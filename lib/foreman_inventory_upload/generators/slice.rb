@@ -78,12 +78,24 @@ module ForemanInventoryUpload
           @stream.simple_field('number_of_cpus', fact_value(host, 'cpu::cpu(s)')) { |v| v.to_i } if fact_value(host, 'cpu::cpu(s)').present?
           @stream.simple_field('number_of_sockets', fact_value(host, 'cpu::cpu_socket(s)'), :last) { |v| v.to_i } if fact_value(host, 'cpu::cpu_socket(s)').present?
         end
+        virtual_host_uuid = host.subscription_facet&.hypervisor_host&.subscription_facet&.uuid
         if host.subscription_facet.hypervisor?
           @stream.simple_field('cpu_socket(s)', fact_value(host, 'cpu::cpu_socket(s)'))
           @stream.simple_field('hypervisor_type', fact_value(host, 'hypervisor::type'))
-          @stream.simple_field('hypervisor_version', fact_value(host, 'hypervisor::version'), :last)
+          @stream.simple_field('hypervisor_version', fact_value(host, 'hypervisor::version'), virtual_host_uuid.blank?)
         else
-          @stream.simple_field('cpu_socket(s)', fact_value(host, 'cpu::cpu_socket(s)'), :last)
+          @stream.simple_field('cpu_socket(s)', fact_value(host, 'cpu::cpu_socket(s)'), virtual_host_uuid.blank?)
+        end
+        # Guests need the hypervisor mapping in the satellite facts namespace for Subscription Watch, even in minimal mode
+        return if virtual_host_uuid.blank?
+
+        @stream.array_field('facts', :last) do
+          @stream.object do
+            @stream.simple_field('namespace', SATELLITE_NAMESPACE)
+            @stream.object_field('facts', :last) do
+              @stream.simple_field('virtual_host_uuid', virtual_host_uuid, :last)
+            end
+          end
         end
       end
 
