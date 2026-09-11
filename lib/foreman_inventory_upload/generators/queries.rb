@@ -62,7 +62,7 @@ module ForemanInventoryUpload
             :content_facet,
             :host_statuses,
             :inventory_upload_facts,
-            subscription_facet: [:pools, :installed_products, :hypervisor_host]
+            subscription_facet: [:pools, :installed_products, { hypervisor_host: :subscription_facet }]
           )
       end
 
