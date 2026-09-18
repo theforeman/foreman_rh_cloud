@@ -5,6 +5,7 @@ module ForemanRhCloud
     TAG_NAMESPACE = 'sat_iam'.freeze
     TAG_SHORT_NAME = 'scope'.freeze
     TAG_NAME = "#{TAG_NAMESPACE}/#{TAG_SHORT_NAME}".freeze
+    SYNC_CACHE_TTL = 10.seconds
 
     def self.auth_tag_for(user, org, loc)
       new(user, org, loc, nil).auth_tag
@@ -20,20 +21,28 @@ module ForemanRhCloud
     end
 
     def update_tag
-      loc_name = location_name_for_tag
-      logger.debug("Updating tags for user: #{@user}, org: #{@org.name}, loc: #{loc_name}")
+      cached = Rails.cache.read(sync_cache_key)
+      return cached if cached
 
-      payload = tags_query_payload
-      params = {
-        organization: @org,
-        method: :post,
-        url: "#{InsightsCloud.gateway_url}/tags",
-        headers: {
-          content_type: :json,
-        },
-        payload: payload.to_json,
-      }
-      execute_cloud_request(params) unless payload[:host_id_list].empty?
+      Foreman::AdvisoryLockManager.with_session_lock(sync_lock_name) do
+        Rails.cache.fetch(sync_cache_key, expires_in: SYNC_CACHE_TTL) do
+          loc_name = location_name_for_tag
+          logger.debug("Updating tags for user: #{@user}, org: #{@org.name}, loc: #{loc_name}")
+
+          payload = tags_query_payload
+          params = {
+            organization: @org,
+            method: :post,
+            url: "#{InsightsCloud.gateway_url}/tags",
+            headers: {
+              content_type: :json,
+            },
+            payload: payload.to_json,
+          }
+          execute_cloud_request(params) unless payload[:host_id_list].empty?
+          true
+        end
+      end
     end
 
     def allowed_hosts
@@ -62,6 +71,14 @@ module ForemanRhCloud
 
     def location_name_for_tag
       @loc ? @loc.name : '*'
+    end
+
+    def sync_cache_key
+      ['rh_cloud_tags_auth_sync', @user, @org, @loc].compact
+    end
+
+    def sync_lock_name
+      [@user, @org, @loc].compact.map(&:cache_key).join('/')
     end
   end
 end
