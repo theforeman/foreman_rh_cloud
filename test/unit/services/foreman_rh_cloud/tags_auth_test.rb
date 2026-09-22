@@ -3,6 +3,7 @@ require 'json'
 
 class TagsAuthTest < ActiveSupport::TestCase
   setup do
+    Rails.cache.clear
     @user = FactoryBot.build(:user)
     @logger = Logger.new(IO::NULL)
     @org = FactoryBot.build(:organization)
@@ -38,6 +39,29 @@ class TagsAuthTest < ActiveSupport::TestCase
     @auth.expects(:allowed_hosts).returns(nil)
     @auth.expects(:execute_cloud_request).never
 
+    @auth.update_tag
+  end
+
+  test 'Does not repeat cloud request for the same user/org/location within the sync TTL' do
+    @auth.stubs(:allowed_hosts).returns(['test_uuid1'])
+    @auth.expects(:execute_cloud_request).once
+
+    @auth.update_tag
+    @auth.update_tag
+  end
+
+  test 'Serializes sync through an advisory lock on a cold cache miss' do
+    @auth.stubs(:allowed_hosts).returns(['test_uuid1'])
+    Foreman::AdvisoryLockManager.expects(:with_session_lock).yields
+
+    @auth.update_tag
+  end
+
+  test 'Skips the advisory lock entirely on a warm cache hit' do
+    @auth.stubs(:allowed_hosts).returns(['test_uuid1'])
+    @auth.update_tag
+
+    Foreman::AdvisoryLockManager.expects(:with_session_lock).never
     @auth.update_tag
   end
 
