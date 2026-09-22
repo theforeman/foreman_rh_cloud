@@ -3,7 +3,7 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 14.0.2",
+        "Project-Id-Version": "foreman_rh_cloud 14.6.1",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
         "Last-Translator": "Ondřej Gajdušek, 2026",
@@ -28,6 +28,9 @@
       ],
       "About subscription watch": [
         "订阅查看"
+      ],
+      "Actions": [
+        ""
       ],
       "Actions history": [
         "操作历史记录"
@@ -68,27 +71,6 @@
       "Clear Selection": [
         "清除选择"
       ],
-      "Cloud Connector has been configured however obfuscating host names setting is enabled, it's recommended to disable it": [
-        "已配置了云连接器，但启用了模糊主机名设置，建议禁用它"
-      ],
-      "Cloud Connector has been configured however the inventory auto-upload is disabled, it's recommended to enable it": [
-        "已配置了云连接器，但禁用了清单自动上传，建议启用它"
-      ],
-      "Cloud Connector is in progress": [
-        "云连接器正在进行"
-      ],
-      "Cloud connector job link": [
-        "云连接器作业链接"
-      ],
-      "Cloud connector setup has failed: ": [
-        "云连接器设置失败： "
-      ],
-      "Cloud connector setup has started: ": [
-        "云连接器设置已启动： "
-      ],
-      "Cloud connector setup is in progress now: ": [
-        "云连接器设置现在正在进行： "
-      ],
       "Completed": [
         "完成"
       ],
@@ -97,12 +79,6 @@
       ],
       "Configure": [
         "配置"
-      ],
-      "Configure Cloud Connector on given hosts": [
-        "在给定主机上配置 Cloud Connector"
-      ],
-      "Configure cloud connector": [
-        "配置云连接器"
       ],
       "Connectivity test": [
         "连接测试"
@@ -113,6 +89,9 @@
       "Current page": [
         "当前页"
       ],
+      "Destroy HBI hosts for organization": [
+        ""
+      ],
       "Details": [
         "详情"
       ],
@@ -122,17 +101,11 @@
       "Disable vulnerability analysis": [
         "禁用漏洞分析"
       ],
-      "Disconnected hosts: ": [
-        "断开连接的主机："
-      ],
       "Displays manifest statuses per accessible organizations.": [
         "显示每个可访问的机构的清单状态。"
       ],
       "Documentation": [
         "文档"
-      ],
-      "Download Report": [
-        "下载报告"
       ],
       "Download latest report": [
         "下载最新的报告"
@@ -164,9 +137,6 @@
       "Enable automatic upload of your hosts inventory to the Red Hat cloud": [
         "启用自动将主机清单上传到红帽云"
       ],
-      "Enable cloud connector": [
-        "启用云连接器"
-      ],
       "Enable inventory upload": [
         "启用清单上传"
       ],
@@ -185,14 +155,17 @@
       "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights.": [
         "在上传到红帽云时排除安装的软件包。（如果 insights_minimal_data_collection 设置为 true，则忽略此设置，且安装的软件包始终被排除。）在使用本地 Insights 时忽略。"
       ],
-      "Exit Code: %s": [
-        "退出代码：%s"
+      "Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: ": [
+        ""
       ],
       "Failed": [
         "失败"
       ],
       "Failed to destroy HBI host %s: %s": [
         "销毁 HBI 主机 %s 失败：%s"
+      ],
+      "Failed to destroy HBI hosts for organization %s: %s": [
+        ""
       ],
       "Failed to fetch hosts": [
         "获取主机失败"
@@ -212,20 +185,20 @@
       "Fix host": [
         "修复主机"
       ],
-      "For more info, please visit the": [
-        "如需更多信息，请访问"
-      ],
       "For more information about Insights and Cloud Connector, see:": [
         "有关 Insights 和云连接器的更多信息，请参阅"
       ],
       "For more information about the Subscriptions service, see:": [
         "有关订阅服务的更多信息，请参阅："
       ],
+      "Force RHEL Lightspeed CLA connection": [
+        ""
+      ],
       "Foreman plugin that process & upload data to Red Hat Cloud": [
         "处理数据并将其上传到红帽云的 Foreman 插件"
       ],
-      "Full Screen": [
-        "全屏"
+      "Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off.": [
+        ""
       ],
       "Generate and upload report": [
         "生成并上传报告"
@@ -238,9 +211,6 @@
       ],
       "Generated": [
         "生成"
-      ],
-      "Generating": [
-        "生成中"
       ],
       "Go to Foreman Insights page": [
         "进入 Foreman Insights 页面"
@@ -266,14 +236,17 @@
       "Host inventory report job": [
         "主机清单报告作业"
       ],
-      "Host was not uploaded to your RH cloud inventory": [
-        "主机没有上传到您的 RH 云清单"
+      "Host is excluded from upload to console.redhat.com Inventory service due to host parameter": [
+        ""
+      ],
+      "Host is not present on console.redhat.com Inventory service": [
+        ""
+      ],
+      "Host is uploaded and present on console.redhat.com Inventory service": [
+        ""
       ],
       "Hostname": [
         "主机名"
-      ],
-      "Hosts with subscription in organization: ": [
-        "机构中具有订阅的主机： "
       ],
       "ID of the RHC(Yggdrasil) daemon": [
         "RHC (Yggdrasil)守护进程的 ID"
@@ -347,11 +320,11 @@
       "N/A": [
         "不适用"
       ],
-      "Next run: ": [
-        "下一次运行 ："
-      ],
       "No": [
         "否"
+      ],
+      "No HBI hosts found for organization %s": [
+        ""
       ],
       "No account data available.": [
         "没有可用的帐户数据。"
@@ -380,14 +353,17 @@
       "None of the selected hosts are registered": [
         "所选主机都没有注册"
       ],
+      "Not present on console.redhat.com Inventory service: ": [
+        ""
+      ],
       "Not reporting": [
         "未报告"
       ],
+      "Not reporting because host_registration_insights parameter value is false": [
+        ""
+      ],
       "Nothing to sync, there are no hosts with subscription for this organization.": [
         "没有同步，此机构没有带有订阅的主机。"
-      ],
-      "Notice": [
-        "注意事項"
       ],
       "Obfuscate host ipv4 addresses": [
         "模糊的主机 ipv4 地址"
@@ -419,6 +395,12 @@
       "Oops! Couldn't find organization that matches your query": [
         "未找到与您的查询匹配的机构"
       ],
+      "Organization": [
+        ""
+      ],
+      "Organization not found": [
+        ""
+      ],
       "Organization status": [
         "机构标签"
       ],
@@ -440,6 +422,9 @@
       "RHC daemon id. Ignored when using local Insights.": [
         "RHC 守护进程 ID。在使用本地 Insights 时忽略。"
       ],
+      "RHC instance ID to register with Red Hat Sources": [
+        ""
+      ],
       "Read more about it in RH cloud insights": [
         "在 RH Cloud insights 中了解更多有关它的信息"
       ],
@@ -458,14 +443,14 @@
       "Recommendations": [
         "建议"
       ],
+      "Recommendations actions": [
+        ""
+      ],
       "Recommendations selected: %s.": [
         "选择的建议：%s。"
       ],
       "Recommendations synced successfully": [
         "成功同步建议"
-      ],
-      "Reconfigure cloud connector": [
-        "重新配置云连接器"
       ],
       "Red Hat Cloud Inventory": [
         "红帽云清单"
@@ -479,8 +464,8 @@
       "Red Hat Inventory": [
         "Red Hat 清单"
       ],
-      "Remain": [
-        "保留"
+      "Registered hosts in organization: ": [
+        ""
       ],
       "Remediate": [
         "补救"
@@ -521,8 +506,17 @@
       "Satellite server has %{hits_count} recommendations by Red Hat": [
         "Satellite 服务器有 %{hits_count} 个红帽提供的建议"
       ],
+      "Schedule a task to register in Red Hat Sources for cloud connector": [
+        ""
+      ],
       "Scoped search string for host removal": [
         "用于删除主机的有范围的搜索字符串"
+      ],
+      "Searching by recommendations count is not available in IoP mode.": [
+        ""
+      ],
+      "Select all recommendations": [
+        ""
       ],
       "Select recommendations from all pages": [
         "在所有页面中选择建议"
@@ -541,9 +535,6 @@
       ],
       "Show Advanced Settings": [
         "显示高级设置"
-      ],
-      "Show if system is configured to use local iop-advisor-engine.": [
-        "显示系统是否被配置为使用本地 iop-advisor-engine。"
       ],
       "Single-host report job": [
         "单主机报告作业"
@@ -566,11 +557,8 @@
       "Success": [
         "成功"
       ],
-      "Successfully synced hosts: ": [
-        "成功同步的主机："
-      ],
-      "Successfully uploaded to your RH cloud inventory": [
-        "成功上传到您的 RH 云清单"
+      "Successfully deleted all HBI hosts for organization %s": [
+        ""
       ],
       "Sync automatically": [
         "自动同步"
@@ -580,6 +568,9 @@
       ],
       "Synchronize recommendations Automatically": [
         "自动同步建议"
+      ],
+      "Table actions": [
+        ""
       ],
       "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.": [
         "Foreman 清单上传插件会自动将 Foreman 主机清单数据上传到 Insights 的 Inventory 服务，订阅服务使用这些信息来提供订阅报告。如果使用订阅服务，则需要启用清单上传。"
@@ -605,9 +596,6 @@
       "There were no missing Insights facets": [
         "没有缺失的 Insights 情况"
       ],
-      "This action will also enable automatic reports upload": [
-        "此操作还会启用自动报告上传"
-      ],
       "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day.": [
         "要为所有 Foreman 机构启用此报告，请将 {uploadButtonName} 设置为 on。数据将每天自动报告一次。"
       ],
@@ -626,6 +614,9 @@
       "Unknown": [
         "未知"
       ],
+      "Unsupported operator for recommendations count search: %s": [
+        ""
+      ],
       "Upload hits from iop-advisor-engine": [
         "从 iop-advisor-engine 上传 hits"
       ],
@@ -641,8 +632,8 @@
       "Uploaded": [
         "已上传"
       ],
-      "Uploading": [
-        "上载中"
+      "Uploaded and present on console.redhat.com Inventory service: ": [
+        ""
       ],
       "Value %{value} is not a valid UUID": [
         "值 %{value} 不是一个有效的 UUID"
@@ -680,6 +671,9 @@
       "Whether the resolution requires reboot": [
         "resolution 是否需要重启"
       ],
+      "You can review this information later by looking at the Inventory status of each host.": [
+        ""
+      ],
       "You do not have permission to perform this action": [
         "您没有执行此操作的权限"
       ],
@@ -688,9 +682,6 @@
       ],
       "generic": [
         "通用"
-      ],
-      "hosts page": [
-        "主机页"
       ],
       "impact name": [
         "影响名称"
@@ -763,9 +754,6 @@
       ],
       "upload resolutions related to the hits": [
         "上传与 hits 相关的 resolutions"
-      ],
-      "view the job in progress": [
-        "查看正在进行中的任务"
       ],
       "view the task page for more details": [
         "查看任务页面以了解更多详细信息"

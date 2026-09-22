@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: foreman_rh_cloud 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-09 14:17-0500\n"
-"PO-Revision-Date: 2026-02-09 14:17-0500\n"
+"POT-Creation-Date: 2026-09-22 17:30+0000\n"
+"PO-Revision-Date: 2026-09-22 17:30+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -133,10 +133,6 @@ msgstr ""
 msgid "upload hits details json"
 msgstr ""
 
-#: ../app/controllers/api/v2/rh_cloud/advisor_engine_config_controller.rb:7
-msgid "Show if system is configured to use local iop-advisor-engine."
-msgstr ""
-
 #: ../app/controllers/api/v2/rh_cloud/inventory_controller.rb:12
 msgid "Download latest report"
 msgstr ""
@@ -171,7 +167,11 @@ msgid "Start inventory synchronization"
 msgstr ""
 
 #: ../app/controllers/api/v2/rh_cloud/inventory_controller.rb:73
-msgid "Enable cloud connector"
+msgid "Schedule a task to register in Red Hat Sources for cloud connector"
+msgstr ""
+
+#: ../app/controllers/api/v2/rh_cloud/inventory_controller.rb:74
+msgid "RHC instance ID to register with Red Hat Sources"
 msgstr ""
 
 #:
@@ -197,11 +197,11 @@ msgid "No task was found"
 msgstr ""
 
 #: ../app/helpers/foreman_insights_host_helper.rb:7
-#: ../lib/foreman_rh_cloud/plugin.rb:128 ../lib/foreman_rh_cloud/plugin.rb:181
-#: ../lib/foreman_rh_cloud/plugin.rb:182
+#: ../lib/foreman_rh_cloud/plugin.rb:140 ../lib/foreman_rh_cloud/plugin.rb:193
+#: ../lib/foreman_rh_cloud/plugin.rb:194
 #: ../webpack/ForemanColumnExtensions/index.js:65
 #: ../webpack/ForemanRhCloudFills.js:35
-#: ../webpack/InsightsHostDetailsTab/InsightsTab.js:46
+#: ../webpack/InsightsHostDetailsTab/InsightsTab.js:40
 msgid "Recommendations"
 msgstr ""
 
@@ -209,34 +209,52 @@ msgstr ""
 msgid "Host Insights recommendations"
 msgstr ""
 
-#: ../app/models/insights_client_report_status.rb:11
-#: ../lib/foreman_rh_cloud/plugin.rb:15 ../lib/foreman_rh_cloud/plugin.rb:120
-#: ../lib/foreman_rh_cloud/plugin.rb:174
+#: ../app/models/concerns/rh_cloud_host.rb:53
+msgid "Searching by recommendations count is not available in IoP mode."
+msgstr ""
+
+#: ../app/models/concerns/rh_cloud_host.rb:59
+msgid "Unsupported operator for recommendations count search: %s"
+msgstr ""
+
+#: ../app/models/insights_client_report_status.rb:12
+#: ../lib/foreman_rh_cloud/plugin.rb:15 ../lib/foreman_rh_cloud/plugin.rb:132
+#: ../lib/foreman_rh_cloud/plugin.rb:186
 #: ../webpack/ForemanColumnExtensions/index.js:60
 msgid "Insights"
 msgstr ""
 
-#: ../app/models/insights_client_report_status.rb:17
+#: ../app/models/insights_client_report_status.rb:18
 msgid "Reporting"
 msgstr ""
 
-#: ../app/models/insights_client_report_status.rb:19
+#: ../app/models/insights_client_report_status.rb:20
 msgid "Not reporting"
 msgstr ""
 
-#: ../app/models/inventory_sync/inventory_status.rb:7
+#: ../app/models/insights_client_report_status.rb:22
+msgid "Not reporting because host_registration_insights parameter value is false"
+msgstr ""
+
+#: ../app/models/inventory_sync/inventory_status.rb:8
 msgid "Inventory"
 msgstr ""
 
-#: ../app/models/inventory_sync/inventory_status.rb:24
-msgid "Host was not uploaded to your RH cloud inventory"
+#: ../app/models/inventory_sync/inventory_status.rb:27
+msgid "Host is not present on console.redhat.com Inventory service"
 msgstr ""
 
-#: ../app/models/inventory_sync/inventory_status.rb:26
-msgid "Successfully uploaded to your RH cloud inventory"
+#: ../app/models/inventory_sync/inventory_status.rb:29
+msgid "Host is uploaded and present on console.redhat.com Inventory service"
 msgstr ""
 
-#: ../app/services/foreman_rh_cloud/insights_api_forwarder.rb:142
+#: ../app/models/inventory_sync/inventory_status.rb:31
+msgid ""
+"Host is excluded from upload to console.redhat.com Inventory service due to ho"
+"st parameter"
+msgstr ""
+
+#: ../app/services/foreman_rh_cloud/insights_api_forwarder.rb:319
 msgid "You do not have permission to perform this action"
 msgstr ""
 
@@ -249,16 +267,41 @@ msgstr ""
 msgid "Satellite server has %{hits_count} recommendations by Red Hat"
 msgstr ""
 
-#: ../lib/foreman_inventory_upload/async/create_missing_insights_facets.rb:25
+#: ../lib/foreman_inventory_upload/async/create_missing_insights_facets.rb:31
 msgid "There were no missing Insights facets"
 msgstr ""
 
-#: ../lib/foreman_inventory_upload/async/create_missing_insights_facets.rb:25
+#: ../lib/foreman_inventory_upload/async/create_missing_insights_facets.rb:31
 msgid "Missing Insights facets created: %s"
 msgstr ""
 
 #: ../lib/foreman_inventory_upload/async/delayed_start.rb:22
 msgid "Wait and %s"
+msgstr ""
+
+#:
+#: ../lib/foreman_inventory_upload/async/destroy_organization_hbi_hosts_job.rb:13
+msgid "Organization not found"
+msgstr ""
+
+#:
+#: ../lib/foreman_inventory_upload/async/destroy_organization_hbi_hosts_job.rb:28
+msgid "Successfully deleted all HBI hosts for organization %s"
+msgstr ""
+
+#:
+#: ../lib/foreman_inventory_upload/async/destroy_organization_hbi_hosts_job.rb:30
+msgid "No HBI hosts found for organization %s"
+msgstr ""
+
+#:
+#: ../lib/foreman_inventory_upload/async/destroy_organization_hbi_hosts_job.rb:32
+msgid "Failed to destroy HBI hosts for organization %s: %s"
+msgstr ""
+
+#:
+#: ../lib/foreman_inventory_upload/async/destroy_organization_hbi_hosts_job.rb:45
+msgid "Destroy HBI hosts for organization"
 msgstr ""
 
 #: ../lib/foreman_inventory_upload/async/generate_all_reports_job.rb:37
@@ -281,7 +324,7 @@ msgstr ""
 msgid "Single-host report job"
 msgstr ""
 
-#: ../lib/foreman_inventory_upload/generators/fact_helpers.rb:188
+#: ../lib/foreman_inventory_upload/generators/fact_helpers.rb:202
 msgid "Value %{value} is not a valid UUID"
 msgstr ""
 
@@ -290,24 +333,20 @@ msgstr ""
 msgid "Enable inventory upload"
 msgstr ""
 
-#: ../lib/foreman_rh_cloud/engine.rb:70
+#: ../lib/foreman_rh_cloud/engine.rb:73
 msgid "Apply Insights recommendations"
 msgstr ""
 
-#: ../lib/foreman_rh_cloud/engine.rb:71
+#: ../lib/foreman_rh_cloud/engine.rb:74
 msgid "Run remediation playbook generated by Insights"
 msgstr ""
 
-#: ../lib/foreman_rh_cloud/engine.rb:76
+#: ../lib/foreman_rh_cloud/engine.rb:79
 msgid "Run RH Cloud playbook"
 msgstr ""
 
-#: ../lib/foreman_rh_cloud/engine.rb:77
+#: ../lib/foreman_rh_cloud/engine.rb:80
 msgid "Run playbook generated by Red Hat remediations app"
-msgstr ""
-
-#: ../lib/foreman_rh_cloud/engine.rb:83 ../lib/foreman_rh_cloud/engine.rb:84
-msgid "Configure Cloud Connector on given hosts"
 msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:16
@@ -318,7 +357,7 @@ msgstr ""
 
 #: ../lib/foreman_rh_cloud/plugin.rb:16
 #: ../webpack/ForemanInventoryUpload/Components/InventorySettings/AdvancedSetting/AdvancedSettingsConstants.js:6
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:36
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:38
 msgid "Automatic inventory upload"
 msgstr ""
 
@@ -411,20 +450,30 @@ msgid ""
 "Ignored when using local Insights."
 msgstr ""
 
-#: ../lib/foreman_rh_cloud/plugin.rb:123 ../lib/foreman_rh_cloud/plugin.rb:141
-#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:75
+#: ../lib/foreman_rh_cloud/plugin.rb:25
+msgid "Force RHEL Lightspeed CLA connection"
+msgstr ""
+
+#: ../lib/foreman_rh_cloud/plugin.rb:25
+msgid ""
+"Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mod"
+"e is off."
+msgstr ""
+
+#: ../lib/foreman_rh_cloud/plugin.rb:135 ../lib/foreman_rh_cloud/plugin.rb:153
+#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:85
 msgid "Inventory Upload"
 msgstr ""
 
-#: ../lib/foreman_rh_cloud/plugin.rb:131
+#: ../lib/foreman_rh_cloud/plugin.rb:143
 msgid "Vulnerability"
 msgstr ""
 
-#: ../lib/foreman_rh_cloud/plugin.rb:180
+#: ../lib/foreman_rh_cloud/plugin.rb:192
 msgid "RH Cloud"
 msgstr ""
 
-#: ../lib/insights_cloud/async/insights_generate_notifications.rb:50
+#: ../lib/insights_cloud/async/insights_generate_notifications.rb:59
 msgid "Fix host"
 msgstr ""
 
@@ -433,17 +482,17 @@ msgid "Total CVEs"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/AccountList/Components/EmptyResults/EmptyResults.js:10
+#: ../webpack/ForemanInventoryUpload/Components/AccountList/Components/EmptyResults/EmptyResults.js:17
 msgid "Oops! Couldn't find organization that matches your query"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/AccountList/Components/EmptyState/EmptyState.js:10
+#: ../webpack/ForemanInventoryUpload/Components/AccountList/Components/EmptyState/EmptyState.js:17
 msgid "Fetching data about your accounts"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/AccountList/Components/EmptyState/EmptyState.js:12
+#: ../webpack/ForemanInventoryUpload/Components/AccountList/Components/EmptyState/EmptyState.js:20
 msgid "Loading..."
 msgstr ""
 
@@ -475,18 +524,15 @@ msgstr ""
 msgid "No report generation tasks have been run yet."
 msgstr ""
 
-#: ../webpack/ForemanInventoryUpload/Components/FileDownload/FileDownload.js:12
-#: ../webpack/ForemanInventoryUpload/Components/TabHeader/TabHeader.js:56
-msgid "Download Report"
-msgstr ""
-
 #:
-#: ../webpack/ForemanInventoryUpload/Components/InventoryFilter/Components/ClearButton/ClearButton.js:10
+#: ../webpack/ForemanInventoryUpload/Components/InventoryFilter/Components/ClearButton/ClearButton.js:9
+#: ../webpack/ForemanInventoryUpload/Components/InventoryFilter/Components/ClearButton/ClearButton.js:14
+#: ../webpack/ForemanInventoryUpload/Components/InventoryFilter/InventoryFilter.js:48
 msgid "Clear"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/InventoryFilter/InventoryFilter.js:32
+#: ../webpack/ForemanInventoryUpload/Components/InventoryFilter/InventoryFilter.js:40
 msgid "Filter.."
 msgstr ""
 
@@ -497,7 +543,7 @@ msgstr ""
 
 #:
 #: ../webpack/ForemanInventoryUpload/Components/InventorySettings/AdvancedSetting/AdvancedSettingsConstants.js:7
-#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:34
+#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:45
 msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
 msgstr ""
 
@@ -527,7 +573,7 @@ msgid "Exclude installed packages from being uploaded to the Red Hat cloud"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/InventorySettings/InventorySettings.js:35
+#: ../webpack/ForemanInventoryUpload/Components/InventorySettings/InventorySettings.js:36
 msgid "Settings"
 msgstr ""
 
@@ -548,84 +594,33 @@ msgstr ""
 msgid "Send additional data to enhance Insights services, as per the settings"
 msgstr ""
 
-#:
-#: ../webpack/ForemanInventoryUpload/Components/NavContainer/NavContainer.fixtures.js:9
-msgid "Generating"
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/PageTitle.js:58
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTable.js:118
+msgid "Actions"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/NavContainer/NavContainer.fixtures.js:15
-#: ../webpack/ForemanInventoryUpload/Components/NavContainer/NavContainer.js:22
-msgid "Uploading"
-msgstr ""
-
-#:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudConnectorButton/CloudConnectorActions.js:14
-msgid "Cloud connector setup is in progress now: "
-msgstr ""
-
-#:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudConnectorButton/CloudConnectorActions.js:16
-msgid "Cloud connector job link"
-msgstr ""
-
-#:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudConnectorButton/CloudConnectorActions.js:20
-msgid "Cloud connector setup has failed: "
-msgstr ""
-
-#:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudConnectorButton/CloudConnectorButton.js:16
-msgid "Cloud connector setup has started: "
-msgstr ""
-
-#:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudConnectorButton/CloudConnectorButton.js:18
-msgid "view the job in progress"
-msgstr ""
-
-#:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudConnectorButton/CloudConnectorButton.js:30
-msgid "Cloud Connector is in progress"
-msgstr ""
-
-#:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudConnectorButton/CloudConnectorButton.js:40
-msgid "Reconfigure cloud connector"
-msgstr ""
-
-#:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudConnectorButton/CloudConnectorButton.js:47
-msgid "Configure cloud connector"
-msgstr ""
-
-#:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudConnectorButton/index.js:20
-msgid "Notice"
-msgstr ""
-
-#:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudConnectorButton/index.js:21
-msgid "This action will also enable automatic reports upload"
-msgstr ""
-
-#:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudPingModal/index.js:90
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudPingModal/index.js:72
 msgid "Organization status"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudPingModal/index.js:93
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudPingModal/index.js:75
 msgid "Displays manifest statuses per accessible organizations."
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudPingModal/index.js:100
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudPingModal/index.js:82
 msgid "%s organizations"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:18
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/CloudPingModal/index.js:96
+msgid "Organization"
+msgstr ""
+
+#:
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:20
 msgid ""
 "The Red Hat Hybrid Cloud Console provides a set of cloud services, including R"
 "ed Hat Insights and Subscriptions, that provide predictive analysis, remediati"
@@ -633,7 +628,7 @@ msgid ""
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:23
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:25
 msgid ""
 "The Foreman inventory upload plugin automatically uploads Foreman host invento"
 "ry data to the Inventory service of Insights, where it can also be used by the"
@@ -642,69 +637,54 @@ msgid ""
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:31
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:33
 msgid ""
 "To enable this reporting for all Foreman organizations, set {uploadButtonName}"
 " to on. The data will be reported automatically once per day."
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:46
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:48
 msgid ""
 "To manually upload the data for a specific organization, select an organizatio"
 "n and click {restartButtonName}."
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:51
-#: ../webpack/ForemanInventoryUpload/Components/TabHeader/TabHeader.js:25
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:84
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:95
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:53
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:85
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:96
 msgid "Generate and upload report"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:60
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:62
 msgid "Learn more about {minimalDataCollectionSetting}."
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:73
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:75
 msgid "setting minimal data collection"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:80
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:82
 msgid "For more information about the Subscriptions service, see:"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:87
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:89
 msgid "About subscription watch"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:91
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:93
 msgid "For more information about Insights and Cloud Connector, see:"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:98
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/PageDescription/PageDescription.js:100
 msgid "Red Hat Insights Data and Application Security"
-msgstr ""
-
-#:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/SettingsWarning/SettingsWarning.js:27
-msgid ""
-"Cloud Connector has been configured however the inventory auto-upload is disab"
-"led, it's recommended to enable it"
-msgstr ""
-
-#:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/SettingsWarning/SettingsWarning.js:42
-msgid ""
-"Cloud Connector has been configured however obfuscating host names setting is "
-"enabled, it's recommended to disable it"
 msgstr ""
 
 #:
@@ -713,175 +693,161 @@ msgid "Inventory sync has started:"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/SyncButton/SyncButtonActions.js:56
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/SyncButton/SyncButtonActions.js:62
 msgid "Inventory sync has failed: "
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/SyncButton/components/Toast.js:11
-msgid "Hosts with subscription in organization: "
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/SyncButton/components/Toast.js:24
+msgid "Registered hosts in organization: "
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/SyncButton/components/Toast.js:15
-msgid "Successfully synced hosts: "
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/SyncButton/components/Toast.js:30
+msgid "Uploaded and present on console.redhat.com Inventory service: "
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/SyncButton/components/Toast.js:19
-msgid "Disconnected hosts: "
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/SyncButton/components/Toast.js:34
+msgid "Not present on console.redhat.com Inventory service: "
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/SyncButton/components/Toast.js:23
-msgid "For more info, please visit the"
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/SyncButton/components/Toast.js:41
+msgid ""
+"Excluded from upload to console.redhat.com Inventory service because host_regi"
+"stration_insights_inventory parameter value is false: "
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/SyncButton/components/Toast.js:29
-msgid "hosts page"
+#: ../webpack/ForemanInventoryUpload/Components/PageHeader/components/SyncButton/components/Toast.js:50
+msgid ""
+"You can review this information later by looking at the Inventory status of ea"
+"ch host."
 msgstr ""
 
-#: ../webpack/ForemanInventoryUpload/Components/ScheduledRun/ScheduledRun.js:13
-msgid "Next run: "
+#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:30
+msgid "No task history"
 msgstr ""
 
-#: ../webpack/ForemanInventoryUpload/Components/StatusChart/StatusChart.js:10
-#: ../webpack/ForemanInventoryUpload/Components/StatusChart/StatusChart.js:41
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:198
-msgid "Completed"
+#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:33
+msgid "Previous tasks will appear here."
 msgstr ""
 
-#: ../webpack/ForemanInventoryUpload/Components/StatusChart/StatusChart.js:11
-msgid "Remain"
+#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:54
+msgid "N/A"
 msgstr ""
 
-#: ../webpack/ForemanInventoryUpload/Components/TabHeader/TabHeader.js:26
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:106
-msgid "Generate report"
+#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:65
+msgid "Success"
 msgstr ""
 
-#: ../webpack/ForemanInventoryUpload/Components/TabHeader/TabHeader.js:30
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:64
+#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:66
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:200
+msgid "Failed"
+msgstr ""
+
+#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:67
+msgid "Warning"
+msgstr ""
+
+#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:68
+msgid "Unknown"
+msgstr ""
+
+#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:104
+msgid "Details"
+msgstr ""
+
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:65
 msgid ""
 "Upload is disabled because subscription connection is not enabled. Enable it i"
 "n Administer > Settings > Content."
 msgstr ""
 
-#: ../webpack/ForemanInventoryUpload/Components/TabHeader/TabHeader.js:43
-msgid "Exit Code: %s"
-msgstr ""
-
-#: ../webpack/ForemanInventoryUpload/Components/TabHeader/TabHeader.js:60
-msgid "Full Screen"
-msgstr ""
-
-#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:29
-msgid "No task history"
-msgstr ""
-
-#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:32
-msgid "Previous tasks will appear here."
-msgstr ""
-
-#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:53
-msgid "N/A"
-msgstr ""
-
-#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:64
-msgid "Success"
-msgstr ""
-
-#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:65
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:199
-msgid "Failed"
-msgstr ""
-
-#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:66
-msgid "Warning"
-msgstr ""
-
-#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:67
-msgid "Unknown"
-msgstr ""
-
-#: ../webpack/ForemanInventoryUpload/Components/TaskHistory/TaskHistory.js:103
-msgid "Details"
+#:
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:107
+msgid "Generate report"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:125
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:126
 msgid "Invalid response from server"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:140
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:141
 msgid "Report generation started"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:141
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:142
 msgid "Report generation and upload started"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:148
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:149
 msgid "View task"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:174
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:175
 msgid "No recent tasks"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:177
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:178
 msgid "No tasks have been run yet."
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:195
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:241
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:196
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:242
 msgid "Running"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:196
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:197
 msgid "Paused"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:200
-msgid "Completed with warnings"
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:199
+msgid "Completed"
 msgstr ""
 
 #:
 #: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:201
+msgid "Completed with warnings"
+msgstr ""
+
+#:
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:202
 msgid "Stopped"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:263
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:260
 msgid "Started"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:271
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:268
 msgid "Duration"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:277
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:274
 msgid "Report saved to"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:292
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:289
 msgid "View task details"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:303
+#: ../webpack/ForemanInventoryUpload/Components/TaskProgress/TaskProgress.js:300
 msgid "Download report"
 msgstr ""
 
@@ -906,32 +872,32 @@ msgid "Connectivity test"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:28
+#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:37
 msgid "Red Hat Cloud Inventory"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:33
+#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:44
 msgid "Inventory Auto Upload"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:45
+#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:55
 msgid "Advanced Inventory Settings"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:55
+#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:65
 msgid "Show Advanced Settings"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:64
+#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:74
 msgid "More details can be found in"
 msgstr ""
 
 #:
-#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:73
+#: ../webpack/ForemanInventoryUpload/SubscriptionsPageExtension/InventoryAutoUpload/InventoryAutoUpload.js:83
 msgid "Configure"
 msgstr ""
 
@@ -973,110 +939,134 @@ msgid ""
 "cloud"
 msgstr ""
 
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsLabel.js:13
+#: ../webpack/InsightsHostDetailsTab/InsightsTabConstants.js:9
+msgid "Low"
+msgstr ""
+
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsLabel.js:14
+#: ../webpack/InsightsHostDetailsTab/InsightsTabConstants.js:14
+msgid "Moderate"
+msgstr ""
+
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsLabel.js:15
+#: ../webpack/InsightsHostDetailsTab/InsightsTabConstants.js:19
+msgid "Important"
+msgstr ""
+
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsLabel.js:16
+#: ../webpack/InsightsHostDetailsTab/InsightsTabConstants.js:24
+msgid "Critical"
+msgstr ""
+
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTable.js:106
+msgid "Select all recommendations"
+msgstr ""
+
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:24
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:21
 msgid "Playbook"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:27
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:24
 msgid "Manual"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:40
-#: ../webpack/InsightsCloudSync/Components/ToolbarDropdown.js:36
-#: ../webpack/InsightsHostDetailsTab/NewHostDetailsTab.js:59
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:36
+#: ../webpack/InsightsCloudSync/Components/ToolbarDropdown.js:37
+#: ../webpack/InsightsHostDetailsTab/NewHostDetailsTab.js:79
 msgid "View in Red Hat Insights"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:49
-#: ../webpack/InsightsHostDetailsTab/components/ListItem/ListItem.js:30
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:45
+#: ../webpack/InsightsHostDetailsTab/components/ListItem/ListItem.js:21
 msgid "Knowledgebase article"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:63
-#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationTableConstants.js:21
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:57
+#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationTableConstants.js:20
 msgid "Hostname"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:69
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:63
 #: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationTableConstants.js:25
 msgid "Recommendation"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:75
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:69
 msgid "Total risk"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:81
-#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationModal.js:113
-#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationModalFooter.js:44
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:75
+#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationModal.js:107
+#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationModalFooter.js:47
 msgid "Remediate"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:100
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:94
 #: ../webpack/InsightsCloudSync/Components/InsightsTable/Pagination.js:19
 msgid "items"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:101
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:95
 msgid "page"
 msgstr ""
 
 #:
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:96
 #: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:102
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:108
 #: ../webpack/InsightsCloudSync/Components/InsightsTable/Pagination.js:21
 #: ../webpack/InsightsCloudSync/Components/InsightsTable/Pagination.js:27
 msgid "Items per page"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:103
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:97
 #: ../webpack/InsightsCloudSync/Components/InsightsTable/Pagination.js:22
 msgid "per page"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:104
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:98
 #: ../webpack/InsightsCloudSync/Components/InsightsTable/Pagination.js:23
 msgid "Go to first page"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:105
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:99
 #: ../webpack/InsightsCloudSync/Components/InsightsTable/Pagination.js:24
 msgid "Go to previous page"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:106
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:100
 #: ../webpack/InsightsCloudSync/Components/InsightsTable/Pagination.js:25
 msgid "Go to last page"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:107
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:101
 #: ../webpack/InsightsCloudSync/Components/InsightsTable/Pagination.js:26
 msgid "Go to next page"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:109
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:103
 #: ../webpack/InsightsCloudSync/Components/InsightsTable/Pagination.js:28
 msgid "Current page"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:110
+#: ../webpack/InsightsCloudSync/Components/InsightsTable/InsightsTableConstants.js:104
 #: ../webpack/InsightsCloudSync/Components/InsightsTable/Pagination.js:29
 msgid "Pagination"
 msgstr ""
@@ -1098,32 +1088,36 @@ msgid "Clear Selection"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationModal.js:120
+#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationModal.js:114
 msgid "Remediation summary"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationModalFooter.js:52
+#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationModalFooter.js:55
 msgid "Cancel"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationTableConstants.js:14
+#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationTableConstants.js:13
 msgid "No"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationTableConstants.js:29
+#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationTableConstants.js:30
 msgid "Resolution"
 msgstr ""
 
 #:
-#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationTableConstants.js:33
+#: ../webpack/InsightsCloudSync/Components/RemediationModal/RemediationTableConstants.js:35
 msgid "Reboot Required"
 msgstr ""
 
-#: ../webpack/InsightsCloudSync/Components/ToolbarDropdown.js:25
+#: ../webpack/InsightsCloudSync/Components/ToolbarDropdown.js:26
 msgid "Sync recommendations"
+msgstr ""
+
+#: ../webpack/InsightsCloudSync/Components/ToolbarDropdown.js:53
+msgid "Recommendations actions"
 msgstr ""
 
 #: ../webpack/InsightsCloudSync/InsightsCloudSyncActions.js:28
@@ -1138,28 +1132,8 @@ msgstr ""
 msgid "Recommendations synced successfully"
 msgstr ""
 
-#: ../webpack/InsightsHostDetailsTab/InsightsTab.js:20
+#: ../webpack/InsightsHostDetailsTab/InsightsTab.js:23
 msgid "No recommendations were found for this host!"
-msgstr ""
-
-#: ../webpack/InsightsHostDetailsTab/InsightsTabConstants.js:9
-#: ../webpack/InsightsHostDetailsTab/components/ListItem/ListItem.js:7
-msgid "Low"
-msgstr ""
-
-#: ../webpack/InsightsHostDetailsTab/InsightsTabConstants.js:14
-#: ../webpack/InsightsHostDetailsTab/components/ListItem/ListItem.js:8
-msgid "Moderate"
-msgstr ""
-
-#: ../webpack/InsightsHostDetailsTab/InsightsTabConstants.js:19
-#: ../webpack/InsightsHostDetailsTab/components/ListItem/ListItem.js:9
-msgid "Important"
-msgstr ""
-
-#: ../webpack/InsightsHostDetailsTab/InsightsTabConstants.js:24
-#: ../webpack/InsightsHostDetailsTab/components/ListItem/ListItem.js:10
-msgid "Critical"
 msgstr ""
 
 #: ../webpack/InsightsHostDetailsTab/InsightsTotalRiskChart.js:164
@@ -1174,11 +1148,11 @@ msgstr ""
 msgid "No results found"
 msgstr ""
 
-#: ../webpack/InsightsHostDetailsTab/NewHostDetailsTab.js:46
+#: ../webpack/InsightsHostDetailsTab/NewHostDetailsTab.js:66
 msgid "Go to Foreman Insights page"
 msgstr ""
 
-#: ../webpack/InsightsHostDetailsTab/components/ListItem/ListItem.js:38
+#: ../webpack/InsightsHostDetailsTab/components/ListItem/ListItem.js:29
 msgid "Read more about it in RH cloud insights"
 msgstr ""
 
@@ -1210,6 +1184,10 @@ msgstr ""
 
 #: ../webpack/InsightsVulnerabilityHostIndexExtensions/CVECountCell.js:49
 msgid "Analysis disabled"
+msgstr ""
+
+#: ../webpack/common/DropdownToggle.js:18
+msgid "Table actions"
 msgstr ""
 
 #: ../webpack/common/ForemanTasks/ForemanTasksActions.js:30

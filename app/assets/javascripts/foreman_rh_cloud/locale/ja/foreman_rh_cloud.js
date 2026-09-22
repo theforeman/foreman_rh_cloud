@@ -3,7 +3,7 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 14.0.2",
+        "Project-Id-Version": "foreman_rh_cloud 14.6.1",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
         "Last-Translator": "Ondřej Gajdušek, 2026",
@@ -28,6 +28,9 @@
       ],
       "About subscription watch": [
         "Subscription Watch の概要"
+      ],
+      "Actions": [
+        ""
       ],
       "Actions history": [
         "アクション履歴"
@@ -68,27 +71,6 @@
       "Clear Selection": [
         "選択項目を解除する"
       ],
-      "Cloud Connector has been configured however obfuscating host names setting is enabled, it's recommended to disable it": [
-        "Cloud Connector が設定されていますが、ホスト名の設定が難読化されています。この設定を無効にすることを推奨します"
-      ],
-      "Cloud Connector has been configured however the inventory auto-upload is disabled, it's recommended to enable it": [
-        "Cloud Connector が設定されていますが、インベントリーの自動アップロードは無効になっています。この設定を有効にすることを推奨します"
-      ],
-      "Cloud Connector is in progress": [
-        "Cloud Connector が設定中です"
-      ],
-      "Cloud connector job link": [
-        "Cloud Connector のジョブリンク"
-      ],
-      "Cloud connector setup has failed: ": [
-        "Cloud Connector の設定に失敗しました: "
-      ],
-      "Cloud connector setup has started: ": [
-        "Cloud Connector の設定が開始しました: "
-      ],
-      "Cloud connector setup is in progress now: ": [
-        "Cloud Connector の設定が進行中です: "
-      ],
       "Completed": [
         "完了"
       ],
@@ -97,12 +79,6 @@
       ],
       "Configure": [
         "設定"
-      ],
-      "Configure Cloud Connector on given hosts": [
-        "特定のホストで Cloud Connector を設定します。"
-      ],
-      "Configure cloud connector": [
-        "Cloud Connector の設定"
       ],
       "Connectivity test": [
         "接続性テスト"
@@ -113,6 +89,9 @@
       "Current page": [
         "現在のページ"
       ],
+      "Destroy HBI hosts for organization": [
+        ""
+      ],
       "Details": [
         "詳細"
       ],
@@ -122,17 +101,11 @@
       "Disable vulnerability analysis": [
         "脆弱性分析の無効化"
       ],
-      "Disconnected hosts: ": [
-        "非接続ホスト: "
-      ],
       "Displays manifest statuses per accessible organizations.": [
         "アクセス可能な組織別にマニフェストステータスを表示します。"
       ],
       "Documentation": [
         "ドキュメント"
-      ],
-      "Download Report": [
-        "レポートのダウンロード"
       ],
       "Download latest report": [
         "最新レポートのダウンロード"
@@ -164,9 +137,6 @@
       "Enable automatic upload of your hosts inventory to the Red Hat cloud": [
         "ホストインベントリーの Red Hat クラウドに対して自動アップロードを有効にする"
       ],
-      "Enable cloud connector": [
-        "Cloud Connector の有効化"
-      ],
       "Enable inventory upload": [
         "インベントリーアップロードの有効化"
       ],
@@ -185,14 +155,17 @@
       "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights.": [
         "インストール済みパッケージをRed Hatクラウドへのアップロード対象から除外します。(insights_minimal_data_collection が true に設定されている場合、インストール済みパッケージは常に除外されるため、この設定は無視されます。) ローカルの Insights を使用している場合は無視されます。"
       ],
-      "Exit Code: %s": [
-        "終了コード: %s"
+      "Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: ": [
+        ""
       ],
       "Failed": [
         "失敗"
       ],
       "Failed to destroy HBI host %s: %s": [
         "HBI ホスト %s を破棄できませんでした: %s"
+      ],
+      "Failed to destroy HBI hosts for organization %s: %s": [
+        ""
       ],
       "Failed to fetch hosts": [
         "ホストを取得できませんでした"
@@ -212,20 +185,20 @@
       "Fix host": [
         "ホストの修正"
       ],
-      "For more info, please visit the": [
-        "詳細は、以下を参照してください"
-      ],
       "For more information about Insights and Cloud Connector, see:": [
         "Insights と Cloud Connector の詳細は、以下を参照してください。"
       ],
       "For more information about the Subscriptions service, see:": [
         "サブスクリプションサービスの詳細は、以下を参照してください。"
       ],
+      "Force RHEL Lightspeed CLA connection": [
+        ""
+      ],
       "Foreman plugin that process & upload data to Red Hat Cloud": [
         "データを処理して Red Hat Cloud にアップロードする Foreman プラグイン"
       ],
-      "Full Screen": [
-        "全画面"
+      "Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off.": [
+        ""
       ],
       "Generate and upload report": [
         "レポートの生成およびアップロード"
@@ -238,9 +211,6 @@
       ],
       "Generated": [
         "生成済み"
-      ],
-      "Generating": [
-        "生成中"
       ],
       "Go to Foreman Insights page": [
         "Foreman Insights ページへ移動する"
@@ -266,14 +236,17 @@
       "Host inventory report job": [
         "ホストインベントリーレポートジョブ"
       ],
-      "Host was not uploaded to your RH cloud inventory": [
-        "ホストが RH クラウドインベントリーにアップロードされませんでした"
+      "Host is excluded from upload to console.redhat.com Inventory service due to host parameter": [
+        ""
+      ],
+      "Host is not present on console.redhat.com Inventory service": [
+        ""
+      ],
+      "Host is uploaded and present on console.redhat.com Inventory service": [
+        ""
       ],
       "Hostname": [
         "ホスト名"
-      ],
-      "Hosts with subscription in organization: ": [
-        "組織のサブスクリプションが割り当てられたホスト: "
       ],
       "ID of the RHC(Yggdrasil) daemon": [
         "RHC (Yggdrasil) デーモンの ID"
@@ -347,11 +320,11 @@
       "N/A": [
         "N/A"
       ],
-      "Next run: ": [
-        "次の実行: "
-      ],
       "No": [
         "いいえ"
+      ],
+      "No HBI hosts found for organization %s": [
+        ""
       ],
       "No account data available.": [
         "利用可能なアカウントデータがありません。"
@@ -380,14 +353,17 @@
       "None of the selected hosts are registered": [
         "選択したホストが登録されていません"
       ],
+      "Not present on console.redhat.com Inventory service: ": [
+        ""
+      ],
       "Not reporting": [
         "報告なし"
       ],
+      "Not reporting because host_registration_insights parameter value is false": [
+        ""
+      ],
       "Nothing to sync, there are no hosts with subscription for this organization.": [
         "同期するものがありません。この組織でサブスクリプションが割り当てられているホストはありません。"
-      ],
-      "Notice": [
-        "注意"
       ],
       "Obfuscate host ipv4 addresses": [
         "ホストの ipv4 アドレスの難読化"
@@ -419,6 +395,12 @@
       "Oops! Couldn't find organization that matches your query": [
         "クエリーに合致する組織が見つかりませんでした"
       ],
+      "Organization": [
+        ""
+      ],
+      "Organization not found": [
+        ""
+      ],
       "Organization status": [
         "組織ステータス"
       ],
@@ -440,6 +422,9 @@
       "RHC daemon id. Ignored when using local Insights.": [
         "RHC デーモン ID。ローカルの Insights を使用している場合は無視されます。"
       ],
+      "RHC instance ID to register with Red Hat Sources": [
+        ""
+      ],
       "Read more about it in RH cloud insights": [
         "詳細は、RH cloud insights を参照してください。"
       ],
@@ -458,14 +443,14 @@
       "Recommendations": [
         "推奨事項"
       ],
+      "Recommendations actions": [
+        ""
+      ],
       "Recommendations selected: %s.": [
         "選択済みの推奨事項: %s 件"
       ],
       "Recommendations synced successfully": [
         "推奨事項が正常に同期されました"
-      ],
-      "Reconfigure cloud connector": [
-        "Cloud Connector の再設定"
       ],
       "Red Hat Cloud Inventory": [
         "Red Hat Cloud インベントリー"
@@ -479,8 +464,8 @@
       "Red Hat Inventory": [
         "Red Hat インベントリー"
       ],
-      "Remain": [
-        "そのままにする"
+      "Registered hosts in organization: ": [
+        ""
       ],
       "Remediate": [
         "修復"
@@ -521,8 +506,17 @@
       "Satellite server has %{hits_count} recommendations by Red Hat": [
         "Satellite Server には、Red Hat からの推奨事項が %{hits_count} 件あります。"
       ],
+      "Schedule a task to register in Red Hat Sources for cloud connector": [
+        ""
+      ],
       "Scoped search string for host removal": [
         "ホストを削除する場合に対象を特定の範囲に限定する検索文字列"
+      ],
+      "Searching by recommendations count is not available in IoP mode.": [
+        ""
+      ],
+      "Select all recommendations": [
+        ""
       ],
       "Select recommendations from all pages": [
         "すべてのページから推奨事項を選択する"
@@ -541,9 +535,6 @@
       ],
       "Show Advanced Settings": [
         "詳細設定の表示"
-      ],
-      "Show if system is configured to use local iop-advisor-engine.": [
-        "システムがローカル iop-advisor-engine を使用するように設定されているかどうかを表示します。"
       ],
       "Single-host report job": [
         "単一ホストレポートジョブ"
@@ -566,11 +557,8 @@
       "Success": [
         "成功"
       ],
-      "Successfully synced hosts: ": [
-        "ホストが正常に同期されました: "
-      ],
-      "Successfully uploaded to your RH cloud inventory": [
-        "RH クラウドインベントリーへのアップロードに成功しました"
+      "Successfully deleted all HBI hosts for organization %s": [
+        ""
       ],
       "Sync automatically": [
         "自動同期"
@@ -580,6 +568,9 @@
       ],
       "Synchronize recommendations Automatically": [
         "推奨事項を自動的に同期する"
+      ],
+      "Table actions": [
+        ""
       ],
       "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.": [
         "Foreman インベントリーアップロードプラグインは、Foreman ホストのインベントリーデータを Insights のインベントリーサービスに自動的にアップロードします。このデータは、サブスクリプションサービスでもサブスクリプションレポートに使用できます。サブスクリプションサービスを使用する場合は、インベントリーアップロードを有効にする必要があります。"
@@ -605,9 +596,6 @@
       "There were no missing Insights facets": [
         "不足している Insights のファセットはありませんでした。"
       ],
-      "This action will also enable automatic reports upload": [
-        "このアクションを実行すると、自動レポートのアップロードも有効になります。"
-      ],
       "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day.": [
         "すべての Foreman 組織でこのレポートを有効にするには、{uploadButtonName} をオンに設定します。データは 1 日に 1 回自動的にレポートされます。"
       ],
@@ -626,6 +614,9 @@
       "Unknown": [
         "不明"
       ],
+      "Unsupported operator for recommendations count search: %s": [
+        ""
+      ],
       "Upload hits from iop-advisor-engine": [
         "iop-advisor-engine からの検索結果をアップロードする"
       ],
@@ -641,8 +632,8 @@
       "Uploaded": [
         "アップロード済み"
       ],
-      "Uploading": [
-        "アップロード中..."
+      "Uploaded and present on console.redhat.com Inventory service: ": [
+        ""
       ],
       "Value %{value} is not a valid UUID": [
         "%{value} の値は有効な UUID ではありません"
@@ -680,6 +671,9 @@
       "Whether the resolution requires reboot": [
         "解決策には再起動が必要かどうか"
       ],
+      "You can review this information later by looking at the Inventory status of each host.": [
+        ""
+      ],
       "You do not have permission to perform this action": [
         "このアクションを実行するパーミッションがありません"
       ],
@@ -688,9 +682,6 @@
       ],
       "generic": [
         "汎用"
-      ],
-      "hosts page": [
-        "ホストページ"
       ],
       "impact name": [
         "影響名"
@@ -763,9 +754,6 @@
       ],
       "upload resolutions related to the hits": [
         "検索結果に関連する解決策をアップロードする"
-      ],
-      "view the job in progress": [
-        "処理中のジョブを表示する"
       ],
       "view the task page for more details": [
         "詳細は、タスクページを表示します。"
