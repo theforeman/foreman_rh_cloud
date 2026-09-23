@@ -10,10 +10,9 @@
 # Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2026
 # Ondřej Gajdušek, 2026
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: foreman_rh_cloud 14.0.2\n"
+"Project-Id-Version: foreman_rh_cloud 14.6.1\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
 "Last-Translator: Ondřej Gajdušek, 2026\n"
@@ -35,6 +34,9 @@ msgstr "조직 컨텍스트에서 특정 조직을 선택해야 합니다."
 
 msgid "About subscription watch"
 msgstr "서브스크립션 감시 정보"
+
+msgid "Actions"
+msgstr ""
 
 msgid "Actions history"
 msgstr "작업 내역"
@@ -75,27 +77,6 @@ msgstr "삭제"
 msgid "Clear Selection"
 msgstr "선택 취소"
 
-msgid "Cloud Connector has been configured however obfuscating host names setting is enabled, it's recommended to disable it"
-msgstr "Cloud Connector가 구성되었지만 호스트 이름 난독화 설정이 활성화되어 있으므로 비활성화하는 것이 좋습니다."
-
-msgid "Cloud Connector has been configured however the inventory auto-upload is disabled, it's recommended to enable it"
-msgstr "Cloud Connector가 구성되었지만 인벤토리 자동 업로드가 비활성화되어 있으므로 활성화하는 것이 좋습니다."
-
-msgid "Cloud Connector is in progress"
-msgstr "클라우드 커넥터가 진행 중입니다."
-
-msgid "Cloud connector job link"
-msgstr "클라우드 커넥터 작업 링크"
-
-msgid "Cloud connector setup has failed: "
-msgstr "클라우드 커넥터 설정에 실패했습니다: "
-
-msgid "Cloud connector setup has started: "
-msgstr "클라우드 커넥터 설정이 시작되었습니다: "
-
-msgid "Cloud connector setup is in progress now: "
-msgstr "현재 클라우드 커넥터 설정이 진행 중입니다. "
-
 msgid "Completed"
 msgstr "완료"
 
@@ -104,12 +85,6 @@ msgstr "경고와 함께 완료됨"
 
 msgid "Configure"
 msgstr "설정"
-
-msgid "Configure Cloud Connector on given hosts"
-msgstr "지정된 호스트에서 Cloud Connector 구성"
-
-msgid "Configure cloud connector"
-msgstr "클라우드 커넥터 구성"
 
 msgid "Connectivity test"
 msgstr "연결성 테스트"
@@ -120,6 +95,9 @@ msgstr "중요함"
 msgid "Current page"
 msgstr "현재 페이지"
 
+msgid "Destroy HBI hosts for organization"
+msgstr ""
+
 msgid "Details"
 msgstr "상세 정보"
 
@@ -129,17 +107,11 @@ msgstr "비활성화 "
 msgid "Disable vulnerability analysis"
 msgstr "취약점 분석이 비활성화되었습니다"
 
-msgid "Disconnected hosts: "
-msgstr "연결이 끊긴 호스트: "
-
 msgid "Displays manifest statuses per accessible organizations."
 msgstr "액세스 가능한 조직별 매니페스트 상태를 표시합니다."
 
 msgid "Documentation"
 msgstr "문서 "
-
-msgid "Download Report"
-msgstr "보고서 다운로드"
 
 msgid "Download latest report"
 msgstr "최신 보고서 다운로드"
@@ -171,9 +143,6 @@ msgstr "호스트 인벤토리를 Red Hat 클라우드에 자동 업로드하도
 msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
 msgstr "호스트 인벤토리를 Red Hat 클라우드에 자동으로 업로드하도록 설정"
 
-msgid "Enable cloud connector"
-msgstr "클라우드 커넥터 활성화"
-
 msgid "Enable inventory upload"
 msgstr "인벤토리 업로드 활성화"
 
@@ -192,14 +161,17 @@ msgstr "설치된 패키지가 Red Hat 클라우드에 업로드되는 것을 �
 msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights."
 msgstr "설치된 패키지가 Red Hat 클라우드에 업로드되지 않도록 제외합니다. (insights_minimal_data_collection이 true로 설정된 경우 이 설정은 무시되고 설치된 패키지는 항상 제외됩니다.) 로컬 Insights를 사용하는 경우에는 이 설정이 무시됩니다."
 
-msgid "Exit Code: %s"
-msgstr "종료 코드: %s"
+msgid "Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: "
+msgstr ""
 
 msgid "Failed"
 msgstr "실패 "
 
 msgid "Failed to destroy HBI host %s: %s"
 msgstr "HBI 호스트 %s 삭제 실패: %s"
+
+msgid "Failed to destroy HBI hosts for organization %s: %s"
+msgstr ""
 
 msgid "Failed to fetch hosts"
 msgstr "호스트를 가져오는 데 실패했습니다"
@@ -219,20 +191,20 @@ msgstr "필터..."
 msgid "Fix host"
 msgstr "호스트 수정"
 
-msgid "For more info, please visit the"
-msgstr "자세한 내용은 다음에서 참조하세요"
-
 msgid "For more information about Insights and Cloud Connector, see:"
 msgstr "Insights 및 Cloud Connector에 대한 자세한 내용은 다음을 참조하세요."
 
 msgid "For more information about the Subscriptions service, see:"
 msgstr "서브스크립션 서비스에 대한 자세한 정보는 다음을 참조하십시오:"
 
+msgid "Force RHEL Lightspeed CLA connection"
+msgstr ""
+
 msgid "Foreman plugin that process & upload data to Red Hat Cloud"
 msgstr "Red Hat Cloud에 데이터를 처리하고 업로드하는 Foreman 플러그인"
 
-msgid "Full Screen"
-msgstr "전체 화면"
+msgid "Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off."
+msgstr ""
 
 msgid "Generate and upload report"
 msgstr "보고서 생성 및 업로드"
@@ -245,9 +217,6 @@ msgstr "보고서를 생성하되 업로드하지 마십시오."
 
 msgid "Generated"
 msgstr "생성됨"
-
-msgid "Generating"
-msgstr "생성 중"
 
 msgid "Go to Foreman Insights page"
 msgstr "Foreman Insights 페이지로 이동"
@@ -273,14 +242,17 @@ msgstr "호스트 Insights 추천"
 msgid "Host inventory report job"
 msgstr "호스트 인벤토리 보고서 작업"
 
-msgid "Host was not uploaded to your RH cloud inventory"
-msgstr "호스트가 RH 클라우드 인벤토리에 업로드되지 않았습니다."
+msgid "Host is excluded from upload to console.redhat.com Inventory service due to host parameter"
+msgstr ""
+
+msgid "Host is not present on console.redhat.com Inventory service"
+msgstr ""
+
+msgid "Host is uploaded and present on console.redhat.com Inventory service"
+msgstr ""
 
 msgid "Hostname"
 msgstr "호스트 이름"
-
-msgid "Hosts with subscription in organization: "
-msgstr "조직에 서브스크립션이 있는 호스트: "
 
 msgid "ID of the RHC(Yggdrasil) daemon"
 msgstr "RHC(Yggdrasil) 데몬의 ID"
@@ -354,11 +326,11 @@ msgstr "자세한 내용은 다음에서 확인할 수 있습니다."
 msgid "N/A"
 msgstr "해당 없음"
 
-msgid "Next run: "
-msgstr "다음 실행: "
-
 msgid "No"
 msgstr "아니오  "
+
+msgid "No HBI hosts found for organization %s"
+msgstr ""
 
 msgid "No account data available."
 msgstr "계정 정보가 없습니다."
@@ -387,14 +359,17 @@ msgstr "아직 실행된 작업이 없습니다."
 msgid "None of the selected hosts are registered"
 msgstr "선택된 호스트 중 등록된 호스트는 없습니다."
 
+msgid "Not present on console.redhat.com Inventory service: "
+msgstr ""
+
 msgid "Not reporting"
 msgstr "보고하지 않음"
 
+msgid "Not reporting because host_registration_insights parameter value is false"
+msgstr ""
+
 msgid "Nothing to sync, there are no hosts with subscription for this organization."
 msgstr "동기화할 것이 없습니다. 이 조직에 대한 서브스크립션이 있는 호스트가 없습니다."
-
-msgid "Notice"
-msgstr "주의 "
 
 msgid "Obfuscate host ipv4 addresses"
 msgstr "호스트 ipv4 주소 난독화"
@@ -426,6 +401,12 @@ msgstr "Red Hat 클라우드에 필요한 최소한의 데이터만 전송하고
 msgid "Oops! Couldn't find organization that matches your query"
 msgstr "죄송합니다! 귀하의 쿼리와 일치하는 조직을 찾을 수 없습니다."
 
+msgid "Organization"
+msgstr ""
+
+msgid "Organization not found"
+msgstr ""
+
 msgid "Organization status"
 msgstr "조직 상태"
 
@@ -447,6 +428,9 @@ msgstr "RH 클라우드"
 msgid "RHC daemon id. Ignored when using local Insights."
 msgstr "RHC 데몬 ID입니다. 로컬 Insights를 사용할 때는 무시됩니다."
 
+msgid "RHC instance ID to register with Red Hat Sources"
+msgstr ""
+
 msgid "Read more about it in RH cloud insights"
 msgstr "RH 클라우드 Insights에서 이에 대해 자세히 알아보세요."
 
@@ -465,14 +449,14 @@ msgstr "추천 동기화가 시작되었습니다: "
 msgid "Recommendations"
 msgstr "권장 사항"
 
+msgid "Recommendations actions"
+msgstr ""
+
 msgid "Recommendations selected: %s."
 msgstr "선택된 권장 사항:%s ."
 
 msgid "Recommendations synced successfully"
 msgstr "추천사항이 성공적으로 동기화되었습니다."
-
-msgid "Reconfigure cloud connector"
-msgstr "클라우드 커넥터 재구성"
 
 msgid "Red Hat Cloud Inventory"
 msgstr "Red Hat 클라우드 인벤토리"
@@ -486,8 +470,8 @@ msgstr "Red Hat Insights 데이터 및 애플리케이션 보안"
 msgid "Red Hat Inventory"
 msgstr "Red Hat 인벤토리"
 
-msgid "Remain"
-msgstr "유지"
+msgid "Registered hosts in organization: "
+msgstr ""
 
 msgid "Remediate"
 msgstr "개선 사항"
@@ -528,8 +512,17 @@ msgstr "실행 중"
 msgid "Satellite server has %{hits_count} recommendations by Red Hat"
 msgstr "Satellite 서버에는 Red Hat의 권장 사항이 %{hits_count} 개 있습니다"
 
+msgid "Schedule a task to register in Red Hat Sources for cloud connector"
+msgstr ""
+
 msgid "Scoped search string for host removal"
 msgstr "호스트 제거를 위한 범위 검색 문자열"
+
+msgid "Searching by recommendations count is not available in IoP mode."
+msgstr ""
+
+msgid "Select all recommendations"
+msgstr ""
 
 msgid "Select recommendations from all pages"
 msgstr "모든 페이지에서 추천을 선택하세요"
@@ -548,9 +541,6 @@ msgstr "Foreman에서 매개변수 태그를 가져와야 할까요? 로컬 Insi
 
 msgid "Show Advanced Settings"
 msgstr "고급 설정 표시"
-
-msgid "Show if system is configured to use local iop-advisor-engine."
-msgstr "시스템이 로컬 iop-advisor-engine을 사용하도록 구성되어 있는지 표시하십시오."
 
 msgid "Single-host report job"
 msgstr "단일 호스트 보고서 작업"
@@ -573,11 +563,8 @@ msgstr "중단됨"
 msgid "Success"
 msgstr "성공 "
 
-msgid "Successfully synced hosts: "
-msgstr "성공적으로 호스트를 동기화했습니다: "
-
-msgid "Successfully uploaded to your RH cloud inventory"
-msgstr "RH 클라우드 인벤토리에 성공적으로 업로드되었습니다."
+msgid "Successfully deleted all HBI hosts for organization %s"
+msgstr ""
 
 msgid "Sync automatically"
 msgstr "자동으로 동기화"
@@ -587,6 +574,9 @@ msgstr "동기화 권장 사항"
 
 msgid "Synchronize recommendations Automatically"
 msgstr "추천 사항을 자동으로 동기화합니다"
+
+msgid "Table actions"
+msgstr ""
 
 msgid "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required."
 msgstr "Foreman 인벤토리 업로드 플러그인은 Foreman 호스트 인벤토리 데이터를 자동으로 Insights의 인벤토리 서비스에 업로드하며, 이 데이터는 서브스크립션 보고서를 위한 서브스크립션 서비스에서도 사용할 수 있습니다. 서브스크립션 서비스를 사용하는 경우, 인벤토리 업로드를 활성화하는 것이 필수입니다."
@@ -612,9 +602,6 @@ msgstr "호스트에 대한 권장 사항이 없음"
 msgid "There were no missing Insights facets"
 msgstr "누락된 Insights 항목이 없습니다."
 
-msgid "This action will also enable automatic reports upload"
-msgstr "이 작업을 수행하면 자동 보고서 업로드도 활성화됩니다."
-
 msgid "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day."
 msgstr "이 보고서를 모든 Foreman 조직에 대해 활성화하려면 {uploadButtonName}를 켬으로 설정하십시오. 데이터는 하루에 한 번 자동으로 보고됩니다."
 
@@ -633,6 +620,9 @@ msgstr "총 위험"
 msgid "Unknown"
 msgstr "알 수 없음"
 
+msgid "Unsupported operator for recommendations count search: %s"
+msgstr ""
+
 msgid "Upload hits from iop-advisor-engine"
 msgstr "iop-advisor-engine에서 히트 업로드"
 
@@ -648,8 +638,8 @@ msgstr "히트와 관련된 규칙 업로드"
 msgid "Uploaded"
 msgstr "업로드됨"
 
-msgid "Uploading"
-msgstr "업로드 중"
+msgid "Uploaded and present on console.redhat.com Inventory service: "
+msgstr ""
 
 msgid "Value %{value} is not a valid UUID"
 msgstr "값%{value}이/가 유효한 UUID가 아닙니다"
@@ -687,6 +677,9 @@ msgstr "경고"
 msgid "Whether the resolution requires reboot"
 msgstr "해결을 위해 재부팅이 필요한지 여부"
 
+msgid "You can review this information later by looking at the Inventory status of each host."
+msgstr ""
+
 msgid "You do not have permission to perform this action"
 msgstr "이 작업을 수행할 권한이 없습니다."
 
@@ -695,9 +688,6 @@ msgstr "카테고리 이름"
 
 msgid "generic"
 msgstr "일반"
-
-msgid "hosts page"
-msgstr "호스트 페이지"
 
 msgid "impact name"
 msgstr "영향 이름"
@@ -770,9 +760,6 @@ msgstr "히트 상세정보 json 업로드"
 
 msgid "upload resolutions related to the hits"
 msgstr "히트와 관련된 해결책 업로드"
-
-msgid "view the job in progress"
-msgstr "진행중인 작업 보기"
 
 msgid "view the task page for more details"
 msgstr "자세한 내용은 작업 페이지 보기"

@@ -3,7 +3,7 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 14.0.2",
+        "Project-Id-Version": "foreman_rh_cloud 14.6.1",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
         "Last-Translator": "Ondřej Gajdušek, 2026",
@@ -28,6 +28,9 @@
       ],
       "About subscription watch": [
         "Informations sur la vérification des abonnements"
+      ],
+      "Actions": [
+        ""
       ],
       "Actions history": [
         "Historique des actions"
@@ -68,27 +71,6 @@
       "Clear Selection": [
         "Annuler la sélection"
       ],
-      "Cloud Connector has been configured however obfuscating host names setting is enabled, it's recommended to disable it": [
-        "Le connecteur cloud a été configuré mais le paramètre Obfusquer les noms d'hôtes est activé, il est recommandé de le désactiver."
-      ],
-      "Cloud Connector has been configured however the inventory auto-upload is disabled, it's recommended to enable it": [
-        "Le connecteur cloud a été configuré mais le chargement automatique de l'inventaire est désactivé, il est recommandé de l'activer."
-      ],
-      "Cloud Connector is in progress": [
-        "Connecteur cloud en cours"
-      ],
-      "Cloud connector job link": [
-        "Lien au job de connecteur cloud"
-      ],
-      "Cloud connector setup has failed: ": [
-        "L'installation du connecteur cloud a échoué : "
-      ],
-      "Cloud connector setup has started: ": [
-        "L'installation du connecteur cloud a commencé : "
-      ],
-      "Cloud connector setup is in progress now: ": [
-        "L'installation du connecteur cloud est en cours : "
-      ],
       "Completed": [
         "Terminé"
       ],
@@ -97,12 +79,6 @@
       ],
       "Configure": [
         "Configurer"
-      ],
-      "Configure Cloud Connector on given hosts": [
-        "Configurer Cloud Connector sur des hôtes donnés"
-      ],
-      "Configure cloud connector": [
-        "Configurer le connecteur cloud"
       ],
       "Connectivity test": [
         "Test de connectivité"
@@ -113,6 +89,9 @@
       "Current page": [
         "Page actuelle"
       ],
+      "Destroy HBI hosts for organization": [
+        ""
+      ],
       "Details": [
         "Détails"
       ],
@@ -122,17 +101,11 @@
       "Disable vulnerability analysis": [
         "Désactiver l’analyse des vulnérabilités"
       ],
-      "Disconnected hosts: ": [
-        "Hôtes déconnectés : "
-      ],
       "Displays manifest statuses per accessible organizations.": [
         "Affiche les statuts des manifestes par organisation accessible."
       ],
       "Documentation": [
         "Documentation"
-      ],
-      "Download Report": [
-        "Télécharger le rapport"
       ],
       "Download latest report": [
         "Télécharger le dernier rapport"
@@ -164,9 +137,6 @@
       "Enable automatic upload of your hosts inventory to the Red Hat cloud": [
         "Activer le téléchargement automatique de l'inventaire de vos hôtes dans Red Hat Cloud"
       ],
-      "Enable cloud connector": [
-        "Activer le connecteur cloud"
-      ],
       "Enable inventory upload": [
         "Activer le téléchargement de l'inventaire"
       ],
@@ -185,14 +155,17 @@
       "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights.": [
         "Exclure les paquets installés du téléchargement vers le cloud Red Hat. (Si insights_minimal_data_collection est défini sur « true », ce paramètre est ignoré et les paquets installés sont toujours exclus.) Ignoré lors de l'utilisation d'Insights local."
       ],
-      "Exit Code: %s": [
-        "Code de sortie : %s"
+      "Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: ": [
+        ""
       ],
       "Failed": [
         "Échec"
       ],
       "Failed to destroy HBI host %s: %s": [
         "N’a pas pu détruire l’hôte HBI %s: %s"
+      ],
+      "Failed to destroy HBI hosts for organization %s: %s": [
+        ""
       ],
       "Failed to fetch hosts": [
         "Erreur de récupération des hôtes"
@@ -212,20 +185,20 @@
       "Fix host": [
         "Fixer l'hôte"
       ],
-      "For more info, please visit the": [
-        "Pour plus d'informations, veuillez consulter"
-      ],
       "For more information about Insights and Cloud Connector, see:": [
         "Pour plus d'informations sur Insights et Cloud Connector, consultez :"
       ],
       "For more information about the Subscriptions service, see:": [
         "Pour plus d'informations sur le service d'abonnements, consultez :"
       ],
+      "Force RHEL Lightspeed CLA connection": [
+        ""
+      ],
       "Foreman plugin that process & upload data to Red Hat Cloud": [
         "Plugin Foreman qui traite et télécharge les données vers Red Hat Cloud"
       ],
-      "Full Screen": [
-        "Plein écran"
+      "Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off.": [
+        ""
       ],
       "Generate and upload report": [
         "Générer et télécharger un rapport"
@@ -238,9 +211,6 @@
       ],
       "Generated": [
         "Généré"
-      ],
-      "Generating": [
-        "En cours de génération"
       ],
       "Go to Foreman Insights page": [
         "Accéder à la page Foreman Insights"
@@ -266,14 +236,17 @@
       "Host inventory report job": [
         "Tâche de rapport d'inventaire des hôtes"
       ],
-      "Host was not uploaded to your RH cloud inventory": [
-        "L'hôte n'a pas été téléchargé dans votre inventaire RH Cloud."
+      "Host is excluded from upload to console.redhat.com Inventory service due to host parameter": [
+        ""
+      ],
+      "Host is not present on console.redhat.com Inventory service": [
+        ""
+      ],
+      "Host is uploaded and present on console.redhat.com Inventory service": [
+        ""
       ],
       "Hostname": [
         "Nom d'hôte"
-      ],
-      "Hosts with subscription in organization: ": [
-        "Hôtes avec abonnement dans l'organisation : "
       ],
       "ID of the RHC(Yggdrasil) daemon": [
         "ID du démon RHC(Yggdrasil)"
@@ -347,11 +320,11 @@
       "N/A": [
         "Sans objet"
       ],
-      "Next run: ": [
-        "Exécution suivante :"
-      ],
       "No": [
         "Non"
+      ],
+      "No HBI hosts found for organization %s": [
+        ""
       ],
       "No account data available.": [
         "Aucune donnée associée à ce compte n’est disponible."
@@ -380,14 +353,17 @@
       "None of the selected hosts are registered": [
         "Aucun de ces hôtes n’est enregistré"
       ],
+      "Not present on console.redhat.com Inventory service: ": [
+        ""
+      ],
       "Not reporting": [
         "Non rapporté"
       ],
+      "Not reporting because host_registration_insights parameter value is false": [
+        ""
+      ],
       "Nothing to sync, there are no hosts with subscription for this organization.": [
         "Rien à synchroniser, il n'y a pas d'hôtes avec abonnement pour cette organisation."
-      ],
-      "Notice": [
-        "Note"
       ],
       "Obfuscate host ipv4 addresses": [
         "Obfusquer les adresses ipv4 des hôtes"
@@ -419,6 +395,12 @@
       "Oops! Couldn't find organization that matches your query": [
         "Oups ! Nous n'avons pas trouvé d'organisation correspondant à votre demande."
       ],
+      "Organization": [
+        ""
+      ],
+      "Organization not found": [
+        ""
+      ],
       "Organization status": [
         "Statut de l'organisation"
       ],
@@ -440,6 +422,9 @@
       "RHC daemon id. Ignored when using local Insights.": [
         "Identifiant du démon RHC. Ignoré lors de l'utilisation d'Insights local."
       ],
+      "RHC instance ID to register with Red Hat Sources": [
+        ""
+      ],
       "Read more about it in RH cloud insights": [
         "Plus d'informations dans RH cloud insights"
       ],
@@ -458,14 +443,14 @@
       "Recommendations": [
         "Recommandations"
       ],
+      "Recommendations actions": [
+        ""
+      ],
       "Recommendations selected: %s.": [
         "Recommandations sélectionnées : %s."
       ],
       "Recommendations synced successfully": [
         "Les recommandations ont été synchronisées"
-      ],
-      "Reconfigure cloud connector": [
-        "Reconfigurer le connecteur cloud"
       ],
       "Red Hat Cloud Inventory": [
         "Inventaire Red Hat Cloud"
@@ -479,8 +464,8 @@
       "Red Hat Inventory": [
         "Inventaire Red Hat"
       ],
-      "Remain": [
-        "Restant"
+      "Registered hosts in organization: ": [
+        ""
       ],
       "Remediate": [
         "Remédier"
@@ -521,8 +506,17 @@
       "Satellite server has %{hits_count} recommendations by Red Hat": [
         "Le serveur satellite a %{hits_count} recommandations de Red Hat"
       ],
+      "Schedule a task to register in Red Hat Sources for cloud connector": [
+        ""
+      ],
       "Scoped search string for host removal": [
         "Chaîne de recherche limitée pour la suppression de l'hôte"
+      ],
+      "Searching by recommendations count is not available in IoP mode.": [
+        ""
+      ],
+      "Select all recommendations": [
+        ""
       ],
       "Select recommendations from all pages": [
         "Sélectionner des recommandations sur toutes les pages"
@@ -541,9 +535,6 @@
       ],
       "Show Advanced Settings": [
         "Afficher les paramètres avancés"
-      ],
-      "Show if system is configured to use local iop-advisor-engine.": [
-        "Indique si le système est configuré pour utiliser le moteur iop-advisor local."
       ],
       "Single-host report job": [
         "Tâche de rapport à hôte unique"
@@ -566,11 +557,8 @@
       "Success": [
         "Réussite"
       ],
-      "Successfully synced hosts: ": [
-        "Synchronisation des hôtes réussie : "
-      ],
-      "Successfully uploaded to your RH cloud inventory": [
-        "Téléchargement réussi dans votre inventaire RH cloud"
+      "Successfully deleted all HBI hosts for organization %s": [
+        ""
       ],
       "Sync automatically": [
         "Sync automatique"
@@ -580,6 +568,9 @@
       ],
       "Synchronize recommendations Automatically": [
         "Synchroniser automatiquement les recommandations"
+      ],
+      "Table actions": [
+        ""
       ],
       "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.": [
         "Le plugin de téléchargement d'inventaire Foreman télécharge automatiquement les données d'inventaire des hôtes Foreman vers le service Inventaire d'Insights, où elles peuvent également être utilisées par le service Abonnements pour générer des rapports d'abonnement. Si vous utilisez le service Abonnements, l'activation du téléchargement d'inventaire est requise."
@@ -605,9 +596,6 @@
       "There were no missing Insights facets": [
         "Il n'y avait aucune facette Insights manquante."
       ],
-      "This action will also enable automatic reports upload": [
-        "Cette action permettra également le téléchargement automatique des rapports"
-      ],
       "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day.": [
         "Pour activer ce rapport pour toutes les organisations Foreman, définissez{uploadButtonName} à activé. Les données seront signalées automatiquement une fois par jour."
       ],
@@ -626,6 +614,9 @@
       "Unknown": [
         "Inconnu"
       ],
+      "Unsupported operator for recommendations count search: %s": [
+        ""
+      ],
       "Upload hits from iop-advisor-engine": [
         "Télécharger les hits depuis iop-advisor-engine"
       ],
@@ -641,8 +632,8 @@
       "Uploaded": [
         "Téléchargé"
       ],
-      "Uploading": [
-        "Téléchargement"
+      "Uploaded and present on console.redhat.com Inventory service: ": [
+        ""
       ],
       "Value %{value} is not a valid UUID": [
         "La valeur %{value} ne correspond pas à un UUID valide"
@@ -680,6 +671,9 @@
       "Whether the resolution requires reboot": [
         "Si la résolution nécessite un redémarrage"
       ],
+      "You can review this information later by looking at the Inventory status of each host.": [
+        ""
+      ],
       "You do not have permission to perform this action": [
         "Vous n'êtes pas autorisé à entreprendre cette action"
       ],
@@ -688,9 +682,6 @@
       ],
       "generic": [
         "générique"
-      ],
-      "hosts page": [
-        "page hôtes"
       ],
       "impact name": [
         "nom de l'impact"
@@ -763,9 +754,6 @@
       ],
       "upload resolutions related to the hits": [
         "télécharger les résolutions liées aux hits"
-      ],
-      "view the job in progress": [
-        "visualiser job en cours"
       ],
       "view the task page for more details": [
         "consulter la page de la tâche pour plus de détails"
