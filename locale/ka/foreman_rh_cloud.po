@@ -6,10 +6,9 @@
 # Translators:
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2026
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: foreman_rh_cloud 14.0.2\n"
+"Project-Id-Version: foreman_rh_cloud 14.6.1\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2026\n"
@@ -21,16 +20,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 msgid " Sync all inventory status"
-msgstr ""
+msgstr " ყველა ინვენტარის სტატუსის სინქრონიზაცია"
 
 msgid "%s organizations"
 msgstr "%s ორგანიზაცია"
 
 msgid "A specific organization must be selected from the organization context."
-msgstr ""
+msgstr "ორგანიზაციის კონტექსტიდან სპეციფიკური ორგანიზაცია უნდა აირჩიოთ."
 
 msgid "About subscription watch"
 msgstr "გამოწერის ყურების შესახებ"
+
+msgid "Actions"
+msgstr ""
 
 msgid "Actions history"
 msgstr "აქტივობების ისტორია"
@@ -42,10 +44,10 @@ msgid "All recommendations are now selected."
 msgstr "ახლა ყველა რეკომენდაცია მონიშნულია."
 
 msgid "Analysis disabled"
-msgstr ""
+msgstr "ანალიზი გამორთულია"
 
 msgid "Analytics data collection"
-msgstr ""
+msgstr "ანალიზის მონაცემების შეგროვება"
 
 msgid "Any Organization"
 msgstr "ნებისმიერი ორგანიზაცია"
@@ -60,7 +62,7 @@ msgid "Automatic inventory upload"
 msgstr "ინვენტარის ავტომატური ატვირთვა"
 
 msgid "Automatic mismatch deletion"
-msgstr ""
+msgstr "ავტომატური შეუსაბამობის დადგენა"
 
 msgid "Cancel"
 msgstr "გაუქმება"
@@ -71,41 +73,14 @@ msgstr "გაწმენდა"
 msgid "Clear Selection"
 msgstr "მონიშნულის გასუფთავება"
 
-msgid "Cloud Connector has been configured however obfuscating host names setting is enabled, it's recommended to disable it"
-msgstr "Cloud Connector-ი მორგებულია, მაგრამ ჰოსტის სახელების დამახინჯება ჩართულია. რეკომენდებულია, გამორთოთ ის"
-
-msgid "Cloud Connector has been configured however the inventory auto-upload is disabled, it's recommended to enable it"
-msgstr "Cloud Connector-ი მორგებულია, მაგრამ ინვენტარის ავტომატური ატვირთვა გამორთულია. რეკომენდებულია, ჩართოთ ის"
-
-msgid "Cloud Connector is in progress"
-msgstr "მიმდინარეობს ღრუბელთან მიერთება"
-
-msgid "Cloud connector job link"
-msgstr "Cloud connector-ის დავალების ბმული"
-
-msgid "Cloud connector setup has failed: "
-msgstr "Cloud connector-ის მორგების შეცდომა: "
-
-msgid "Cloud connector setup has started: "
-msgstr "Cloud connector-ის მორგება დაიწყო: "
-
-msgid "Cloud connector setup is in progress now: "
-msgstr "მიმდინარეობს Cloud connector-ის მორგება: "
-
 msgid "Completed"
 msgstr "დასრულებულია"
 
 msgid "Completed with warnings"
-msgstr ""
+msgstr "დასრულდა შენიშვნებით"
 
 msgid "Configure"
 msgstr "მორგება"
-
-msgid "Configure Cloud Connector on given hosts"
-msgstr "მითითებულ ჰოსტებზე Cloud Connector-ის მორგება"
-
-msgid "Configure cloud connector"
-msgstr ""
 
 msgid "Connectivity test"
 msgstr "მიერთების შემოწმება"
@@ -116,17 +91,17 @@ msgstr "კრიტიკული"
 msgid "Current page"
 msgstr "მიმდინარე გვერდი"
 
-msgid "Details"
+msgid "Destroy HBI hosts for organization"
 msgstr ""
+
+msgid "Details"
+msgstr "დეტალები"
 
 msgid "Disable"
 msgstr "გამორთვა"
 
 msgid "Disable vulnerability analysis"
-msgstr ""
-
-msgid "Disconnected hosts: "
-msgstr "გამორთული ჰოსტები: "
+msgstr "მოწყვლადობის ანალიზის გამორთვა"
 
 msgid "Displays manifest statuses per accessible organizations."
 msgstr "მანიფესტის სტატუსების ჩვენება თითოეული წვდომადი ორგანიზაციისთვის."
@@ -134,14 +109,11 @@ msgstr "მანიფესტის სტატუსების ჩვე�
 msgid "Documentation"
 msgstr "დოკუმენტაცია"
 
-msgid "Download Report"
-msgstr "ანგარიშის გადმოწერა"
-
 msgid "Download latest report"
 msgstr "უახლესი ანგარიშის გადმოწერა"
 
 msgid "Download report"
-msgstr ""
+msgstr "ანგარიშის გადმოწერა"
 
 msgid "Duration"
 msgstr "ხანგრძლოვობა"
@@ -167,20 +139,17 @@ msgstr ""
 msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
 msgstr "თქვენი ჰოსტების ინვენტარის Red Hat Cloud-ში ავტომატური ატვირთვის ჩართვა"
 
-msgid "Enable cloud connector"
-msgstr "ღრუბელთან მიერთების ჩართვა"
-
 msgid "Enable inventory upload"
 msgstr "ინვენტარის ატვირთვის ჩართვა"
 
 msgid "Enable vulnerability analysis"
-msgstr ""
+msgstr "მოწყვლადობის ანალიზის ჩართვა"
 
 msgid "Encountered an error while trying to access the server:"
 msgstr "შეცდომა სერვერთან წვდომის მცდელობისას:"
 
 msgid "Exclude installed packages"
-msgstr ""
+msgstr "დაყენებული პაკეტების ამოღება"
 
 msgid "Exclude installed packages from being uploaded to the Red Hat cloud"
 msgstr "Red Hat cloud-ში ატვირთული პაკეტების სიიდან დაყენებული პაკეტების ამოღება"
@@ -188,23 +157,26 @@ msgstr "Red Hat cloud-ში ატვირთული პაკეტებ�
 msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights."
 msgstr ""
 
-msgid "Exit Code: %s"
-msgstr "გასვლის კოდი: %s"
+msgid "Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: "
+msgstr ""
 
 msgid "Failed"
-msgstr ""
+msgstr "ჩავარდა"
 
 msgid "Failed to destroy HBI host %s: %s"
 msgstr ""
 
-msgid "Failed to fetch hosts"
+msgid "Failed to destroy HBI hosts for organization %s: %s"
 msgstr ""
+
+msgid "Failed to fetch hosts"
+msgstr "ჰოსტების გამოთხოვა ჩავარდა"
 
 msgid "Failed to update vulnerability analysis status"
 msgstr ""
 
 msgid "Fetch Insights-related host details"
-msgstr ""
+msgstr "Insights-თან დაკავშირებული ჰოსტის დეტალების გამოთხოვა"
 
 msgid "Fetching data about your accounts"
 msgstr "მონაცემების გამოთხოვა თქვენი ანგარიშების შესახებ"
@@ -215,38 +187,35 @@ msgstr "ფილტრი..."
 msgid "Fix host"
 msgstr "ჰოსტის გასწორება"
 
-msgid "For more info, please visit the"
-msgstr "მეტი ინფორმაციისთვის ეწვიეთ"
-
 msgid "For more information about Insights and Cloud Connector, see:"
 msgstr ""
 
 msgid "For more information about the Subscriptions service, see:"
 msgstr ""
 
+msgid "Force RHEL Lightspeed CLA connection"
+msgstr ""
+
 msgid "Foreman plugin that process & upload data to Red Hat Cloud"
 msgstr "Foreman-ის დამატება, რომელიც მონაცემების დამუშავებაზე და Red Hat Cloud-ში ატვირთვაზე აგებს პასუხს"
 
-msgid "Full Screen"
-msgstr "სრულეკრანიანი რეჟიმი"
+msgid "Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off."
+msgstr ""
 
 msgid "Generate and upload report"
-msgstr ""
+msgstr "ანგარიშის გენერაცია და ატვრთვა"
 
 msgid "Generate report"
-msgstr ""
+msgstr "ანგარიშის გენერაცია"
 
 msgid "Generate the report, but do not upload"
-msgstr ""
+msgstr "ანგარიშის შექმნა, მაგრამ ატვირთვის გარეშე"
 
 msgid "Generated"
 msgstr "გენერირებული"
 
-msgid "Generating"
-msgstr "გენერაცია"
-
 msgid "Go to Foreman Insights page"
-msgstr ""
+msgstr "Foreman Insights-ის გვერდზე გადასვლა"
 
 msgid "Go to first page"
 msgstr "პირველ გვერდზე"
@@ -269,14 +238,17 @@ msgstr "ჰოსტის Insights-ის რეკომენდაციე�
 msgid "Host inventory report job"
 msgstr ""
 
-msgid "Host was not uploaded to your RH cloud inventory"
-msgstr "ჰოსტის თქვენი RH-ის ღრუბლოვან ინვენტარში არ ატვირთულა"
+msgid "Host is excluded from upload to console.redhat.com Inventory service due to host parameter"
+msgstr ""
+
+msgid "Host is not present on console.redhat.com Inventory service"
+msgstr ""
+
+msgid "Host is uploaded and present on console.redhat.com Inventory service"
+msgstr ""
 
 msgid "Hostname"
 msgstr "ჰოსტის სახელი"
-
-msgid "Hosts with subscription in organization: "
-msgstr "გამოწერის მქონე ჰოსტები ორგანიზაციაში: "
 
 msgid "ID of the RHC(Yggdrasil) daemon"
 msgstr "RHC(Yggdrasil)-ის დემონის ID"
@@ -291,7 +263,7 @@ msgid "Insights"
 msgstr "Insights"
 
 msgid "Invalid response from server"
-msgstr ""
+msgstr "სერვერის არასწორი პასუხი"
 
 msgid "Inventory"
 msgstr "ინვენტარი"
@@ -318,7 +290,7 @@ msgid "Learn more about {minimalDataCollectionSetting}."
 msgstr ""
 
 msgid "List of host UUIDs"
-msgstr ""
+msgstr "ჰოსტის UUID-ების სია"
 
 msgid "Loading"
 msgstr "იტვირთება"
@@ -330,13 +302,13 @@ msgid "Low"
 msgstr "დაბალი"
 
 msgid "Manage vulnerability analysis"
-msgstr ""
+msgstr "მოწყვლადობის ანალიზის მართვა"
 
 msgid "Manual"
 msgstr "ხელით"
 
 msgid "Minimal data collection"
-msgstr ""
+msgstr "მინიმალური მონაცემების მოგროვება"
 
 msgid "Missing Insights facets created: %s"
 msgstr ""
@@ -350,17 +322,17 @@ msgstr "მეტი დეტალი შეგიძლიათ იპოვ
 msgid "N/A"
 msgstr "არარსებული"
 
-msgid "Next run: "
-msgstr "შემდეგი გაშვება: "
-
 msgid "No"
 msgstr "არა"
 
-msgid "No account data available."
+msgid "No HBI hosts found for organization %s"
 msgstr ""
 
+msgid "No account data available."
+msgstr "ანგარიშის მონაცემები ხელმისაწვდომი არაა."
+
 msgid "No recent tasks"
-msgstr ""
+msgstr "უახლესი ამოცანების გარეშე"
 
 msgid "No recommendations were found for this host!"
 msgstr "ამ ჰოსტისთვის რეკომენდაციები აღმოჩენილი არაა!"
@@ -372,31 +344,34 @@ msgid "No results found"
 msgstr "შედეგების გარეშე"
 
 msgid "No task history"
-msgstr ""
+msgstr "ამოცანის ისტორიის გარეშე"
 
 msgid "No task was found"
 msgstr "ამოცანა ვერ ვიპოვე"
 
 msgid "No tasks have been run yet."
-msgstr ""
+msgstr "ჯერ ამოცანები არ გაშვებულა."
 
 msgid "None of the selected hosts are registered"
+msgstr "არცერთი მონიშნული ჰოსტებიდან დარეგისტრირებული არაა"
+
+msgid "Not present on console.redhat.com Inventory service: "
 msgstr ""
 
 msgid "Not reporting"
 msgstr "ანგარიშების გარეშე"
 
+msgid "Not reporting because host_registration_insights parameter value is false"
+msgstr ""
+
 msgid "Nothing to sync, there are no hosts with subscription for this organization."
 msgstr "დასასინქრონებელი არაფერია. ამ ორგანიზაციისთვის გამოწერის მქონე ჰოსტები არ არსებობს."
-
-msgid "Notice"
-msgstr "გაფრთხილება"
 
 msgid "Obfuscate host ipv4 addresses"
 msgstr "ჰოსტის ipv4 მისამართების ობფუსკაცია"
 
 msgid "Obfuscate host ipv4 addresses."
-msgstr ""
+msgstr "ჰოსტის ipv4 მისამართების ობფუსკაცია."
 
 msgid "Obfuscate host names"
 msgstr "ჰოსტის სახელების ობფუსკაცია"
@@ -422,6 +397,12 @@ msgstr ""
 msgid "Oops! Couldn't find organization that matches your query"
 msgstr "ვაი! ორგანიზაცია, რომელიც თქვენს პირობებში ჯდება, ვერ ვიპოვე"
 
+msgid "Organization"
+msgstr ""
+
+msgid "Organization not found"
+msgstr ""
+
 msgid "Organization status"
 msgstr "ორგანიზაციის სტატუსი"
 
@@ -429,18 +410,21 @@ msgid "Pagination"
 msgstr "გვერდებად დაყოფა"
 
 msgid "Paused"
-msgstr ""
+msgstr "შეჩერებულია"
 
 msgid "Playbook"
 msgstr "Playbook"
 
 msgid "Previous tasks will appear here."
-msgstr ""
+msgstr "წინა ამოცანები აქ გამოჩნდება."
 
 msgid "RH Cloud"
 msgstr "RH Cloud"
 
 msgid "RHC daemon id. Ignored when using local Insights."
+msgstr ""
+
+msgid "RHC instance ID to register with Red Hat Sources"
 msgstr ""
 
 msgid "Read more about it in RH cloud insights"
@@ -461,14 +445,14 @@ msgstr "რეკომენდაციის სინქრონიზა�
 msgid "Recommendations"
 msgstr "რეკომენდაციები"
 
+msgid "Recommendations actions"
+msgstr ""
+
 msgid "Recommendations selected: %s."
 msgstr "არჩეული რეკომენდაციები: %s."
 
 msgid "Recommendations synced successfully"
 msgstr "რეკომენდაციების სინქრონიზაცია წარმატებულია"
-
-msgid "Reconfigure cloud connector"
-msgstr ""
 
 msgid "Red Hat Cloud Inventory"
 msgstr "Red Hat Cloud-ის ინვენტარი"
@@ -482,8 +466,8 @@ msgstr "Red Hat Insights-ის მონაცემებისა და ა�
 msgid "Red Hat Inventory"
 msgstr "Red Hat-ის ინვენტარი"
 
-msgid "Remain"
-msgstr "დარჩენა"
+msgid "Registered hosts in organization: "
+msgstr ""
 
 msgid "Remediate"
 msgstr "გამოსწორება"
@@ -492,16 +476,16 @@ msgid "Remediation summary"
 msgstr "აღდგენის შეჯამება"
 
 msgid "Report Generation"
-msgstr ""
+msgstr "ანგარიშის გენერაცია"
 
 msgid "Report generation and upload started"
-msgstr ""
+msgstr "ანგარიშის გენერაცია და ატვირთვა გაეშვა"
 
 msgid "Report generation started"
-msgstr ""
+msgstr "ანგარიშის გენერაცია გაეშვა"
 
 msgid "Report saved to"
-msgstr ""
+msgstr "ანგარიში შენახულია ფაილში"
 
 msgid "Reporting"
 msgstr "ანგარიში"
@@ -519,12 +503,21 @@ msgid "Run remediation playbook generated by Insights"
 msgstr "Insights-ის მიერ გენერირებული აღდგენის playbook-ის გაშვება"
 
 msgid "Running"
-msgstr ""
+msgstr "გაშვებულია"
 
 msgid "Satellite server has %{hits_count} recommendations by Red Hat"
 msgstr "Satellite -ის სერვერს Red Hat-სგან %{hits_count} რეკომენდაცია გააჩნია"
 
+msgid "Schedule a task to register in Red Hat Sources for cloud connector"
+msgstr ""
+
 msgid "Scoped search string for host removal"
+msgstr ""
+
+msgid "Searching by recommendations count is not available in IoP mode."
+msgstr ""
+
+msgid "Select all recommendations"
 msgstr ""
 
 msgid "Select recommendations from all pages"
@@ -545,9 +538,6 @@ msgstr ""
 msgid "Show Advanced Settings"
 msgstr "დამატებითი პარამეტრების ცვენება"
 
-msgid "Show if system is configured to use local iop-advisor-engine."
-msgstr ""
-
 msgid "Single-host report job"
 msgstr ""
 
@@ -561,19 +551,16 @@ msgid "Start report generation"
 msgstr "ანგარიშის გენერაციის დაწყება"
 
 msgid "Started"
-msgstr ""
+msgstr "გაშვებულია"
 
 msgid "Stopped"
-msgstr ""
+msgstr "გაჩერებულია"
 
 msgid "Success"
+msgstr "წარმატება"
+
+msgid "Successfully deleted all HBI hosts for organization %s"
 msgstr ""
-
-msgid "Successfully synced hosts: "
-msgstr "წარმატებით სინქრონიზებული ჰოსტები: "
-
-msgid "Successfully uploaded to your RH cloud inventory"
-msgstr "ჰოსტი თქვენი RH-ის ღრუბლოვან ინვენტარში არ ატვირთულა"
 
 msgid "Sync automatically"
 msgstr "ავტომატური სინქრონიზაცია"
@@ -583,6 +570,9 @@ msgstr "სინქრონიზაციის რეკომენდა�
 
 msgid "Synchronize recommendations Automatically"
 msgstr "რეკომენდაციების ავტომატური სინქრონიზაცია"
+
+msgid "Table actions"
+msgstr ""
 
 msgid "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required."
 msgstr ""
@@ -603,13 +593,10 @@ msgid "The task failed with the following error:"
 msgstr "დავალება შემდეგი შეცდომით დასრულდა:"
 
 msgid "There are no recommendations for your hosts"
-msgstr ""
+msgstr "თქვენი ჰოსტებისთვის რეკომენდაციები არ არსებობს"
 
 msgid "There were no missing Insights facets"
 msgstr ""
-
-msgid "This action will also enable automatic reports upload"
-msgstr "ეს ქმედება ავტომატურად ანგარიშების ატვირთვასაც ჩართავს"
 
 msgid "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day."
 msgstr ""
@@ -618,7 +605,7 @@ msgid "To manually upload the data for a specific organization, select an organi
 msgstr ""
 
 msgid "Total CVEs"
-msgstr ""
+msgstr "სულ CVE-ები"
 
 msgid "Total risk"
 msgstr "სრული რისკი"
@@ -629,11 +616,14 @@ msgstr "სულ რისკები"
 msgid "Unknown"
 msgstr "უცნობი"
 
-msgid "Upload hits from iop-advisor-engine"
+msgid "Unsupported operator for recommendations count search: %s"
 msgstr ""
 
+msgid "Upload hits from iop-advisor-engine"
+msgstr "დამთხვევების ატვირთვა iop-advisor-engine-დან"
+
 msgid "Upload hits information"
-msgstr ""
+msgstr "დამთხვევების ინფორმაციის ატვირთვა"
 
 msgid "Upload is disabled because subscription connection is not enabled. Enable it in Administer > Settings > Content."
 msgstr ""
@@ -642,10 +632,10 @@ msgid "Upload rules related to the hits"
 msgstr ""
 
 msgid "Uploaded"
-msgstr ""
+msgstr "ატვირთულია"
 
-msgid "Uploading"
-msgstr "ატვირთვა"
+msgid "Uploaded and present on console.redhat.com Inventory service: "
+msgstr ""
 
 msgid "Value %{value} is not a valid UUID"
 msgstr "მნიშვნელობა %{value} არასწორი UUID-ია"
@@ -657,22 +647,22 @@ msgid "View in Red Hat Insights"
 msgstr "Red Hat Insights-ში ნახვა"
 
 msgid "View task"
-msgstr ""
+msgstr "ამოცანის ნახვა"
 
 msgid "View task details"
-msgstr ""
+msgstr "ამოცანის დეტალების ნახვა"
 
 msgid "Vulnerabilities"
-msgstr ""
+msgstr "მოწყვლადობები"
 
 msgid "Vulnerability"
-msgstr ""
+msgstr "მოწყვლადობა"
 
 msgid "Vulnerability analysis disabled"
-msgstr ""
+msgstr "მოწყვლადობის ანალიზი გამორთულია"
 
 msgid "Vulnerability analysis enabled"
-msgstr ""
+msgstr "მოწყვლადობის ანალიზი ჩართულია"
 
 msgid "Wait and %s"
 msgstr "დაელოდეთ და %s"
@@ -683,20 +673,20 @@ msgstr "შეტყობინება"
 msgid "Whether the resolution requires reboot"
 msgstr ""
 
+msgid "You can review this information later by looking at the Inventory status of each host."
+msgstr ""
+
 msgid "You do not have permission to perform this action"
 msgstr ""
 
 msgid "category name"
-msgstr ""
+msgstr "კატეგორიის სახელი"
 
 msgid "generic"
-msgstr ""
-
-msgid "hosts page"
-msgstr "ჰოსტების გვერდი"
+msgstr "ზოგადი"
 
 msgid "impact name"
-msgstr ""
+msgstr "გავლენის სახელი"
 
 msgid "iop payload including resolutions, rules, hits"
 msgstr ""
@@ -705,10 +695,10 @@ msgid "items"
 msgstr "ელემენტი"
 
 msgid "likelihood number"
-msgstr ""
+msgstr "სიზუსტის ნომერი"
 
 msgid "more info"
-msgstr ""
+msgstr "მეტი ინფორმაცია"
 
 msgid "page"
 msgstr "პანელი"
@@ -717,58 +707,55 @@ msgid "per page"
 msgstr "გვერდზე"
 
 msgid "publish date (YYYY-MM-DD)"
-msgstr ""
+msgstr "გამოცემის თარიღი (წწწ-თთ-დდ)"
 
 msgid "rating"
-msgstr ""
+msgstr "შეფასება"
 
 msgid "reason"
-msgstr ""
+msgstr "მიზეზი"
 
 msgid "reboot required"
-msgstr ""
+msgstr "საჭიროა გადატვირთვა"
 
 msgid "resolution description"
-msgstr ""
+msgstr "გადაწყვეტის აღწერა"
 
 msgid "resolution risk"
-msgstr ""
+msgstr "გადაწყვეტის რისკი"
 
 msgid "result url"
-msgstr ""
+msgstr "შედეგის url"
 
 msgid "rule description"
-msgstr ""
+msgstr "წესის აღწერა"
 
 msgid "rule id"
-msgstr ""
+msgstr "წესის id"
 
 msgid "rule title"
-msgstr ""
+msgstr "წესის სახელი"
 
 msgid "setting minimal data collection"
-msgstr ""
+msgstr "მინიმალური მონაცემების მოგროვების მორგება"
 
 msgid "solution url"
-msgstr ""
+msgstr "გადაწყვეტის url"
 
 msgid "summary"
-msgstr ""
+msgstr "შეჯამება"
 
 msgid "total risk"
-msgstr ""
+msgstr "სრული რისკი"
 
 msgid "type"
-msgstr ""
+msgstr "ტიპი"
 
 msgid "upload hits details json"
-msgstr ""
+msgstr "დამთხვევის დეტალების json-ის ატვირთვა"
 
 msgid "upload resolutions related to the hits"
 msgstr ""
-
-msgid "view the job in progress"
-msgstr "გაშვებული დავალების ნახვა"
 
 msgid "view the task page for more details"
 msgstr "მეტი დეტალებისთვის იხილეთ ამოცანის გვერდი"

@@ -3,7 +3,7 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 14.0.2",
+        "Project-Id-Version": "foreman_rh_cloud 14.6.1",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
         "Last-Translator": "Ondřej Gajdušek, 2026",
@@ -28,6 +28,9 @@
       ],
       "About subscription watch": [
         "서브스크립션 감시 정보"
+      ],
+      "Actions": [
+        ""
       ],
       "Actions history": [
         "작업 내역"
@@ -68,27 +71,6 @@
       "Clear Selection": [
         "선택 취소"
       ],
-      "Cloud Connector has been configured however obfuscating host names setting is enabled, it's recommended to disable it": [
-        "Cloud Connector가 구성되었지만 호스트 이름 난독화 설정이 활성화되어 있으므로 비활성화하는 것이 좋습니다."
-      ],
-      "Cloud Connector has been configured however the inventory auto-upload is disabled, it's recommended to enable it": [
-        "Cloud Connector가 구성되었지만 인벤토리 자동 업로드가 비활성화되어 있으므로 활성화하는 것이 좋습니다."
-      ],
-      "Cloud Connector is in progress": [
-        "클라우드 커넥터가 진행 중입니다."
-      ],
-      "Cloud connector job link": [
-        "클라우드 커넥터 작업 링크"
-      ],
-      "Cloud connector setup has failed: ": [
-        "클라우드 커넥터 설정에 실패했습니다: "
-      ],
-      "Cloud connector setup has started: ": [
-        "클라우드 커넥터 설정이 시작되었습니다: "
-      ],
-      "Cloud connector setup is in progress now: ": [
-        "현재 클라우드 커넥터 설정이 진행 중입니다. "
-      ],
       "Completed": [
         "완료"
       ],
@@ -97,12 +79,6 @@
       ],
       "Configure": [
         "설정"
-      ],
-      "Configure Cloud Connector on given hosts": [
-        "지정된 호스트에서 Cloud Connector 구성"
-      ],
-      "Configure cloud connector": [
-        "클라우드 커넥터 구성"
       ],
       "Connectivity test": [
         "연결성 테스트"
@@ -113,6 +89,9 @@
       "Current page": [
         "현재 페이지"
       ],
+      "Destroy HBI hosts for organization": [
+        ""
+      ],
       "Details": [
         "상세 정보"
       ],
@@ -122,17 +101,11 @@
       "Disable vulnerability analysis": [
         "취약점 분석이 비활성화되었습니다"
       ],
-      "Disconnected hosts: ": [
-        "연결이 끊긴 호스트: "
-      ],
       "Displays manifest statuses per accessible organizations.": [
         "액세스 가능한 조직별 매니페스트 상태를 표시합니다."
       ],
       "Documentation": [
         "문서 "
-      ],
-      "Download Report": [
-        "보고서 다운로드"
       ],
       "Download latest report": [
         "최신 보고서 다운로드"
@@ -164,9 +137,6 @@
       "Enable automatic upload of your hosts inventory to the Red Hat cloud": [
         "호스트 인벤토리를 Red Hat 클라우드에 자동으로 업로드하도록 설정"
       ],
-      "Enable cloud connector": [
-        "클라우드 커넥터 활성화"
-      ],
       "Enable inventory upload": [
         "인벤토리 업로드 활성화"
       ],
@@ -185,14 +155,17 @@
       "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights.": [
         "설치된 패키지가 Red Hat 클라우드에 업로드되지 않도록 제외합니다. (insights_minimal_data_collection이 true로 설정된 경우 이 설정은 무시되고 설치된 패키지는 항상 제외됩니다.) 로컬 Insights를 사용하는 경우에는 이 설정이 무시됩니다."
       ],
-      "Exit Code: %s": [
-        "종료 코드: %s"
+      "Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: ": [
+        ""
       ],
       "Failed": [
         "실패 "
       ],
       "Failed to destroy HBI host %s: %s": [
         "HBI 호스트 %s 삭제 실패: %s"
+      ],
+      "Failed to destroy HBI hosts for organization %s: %s": [
+        ""
       ],
       "Failed to fetch hosts": [
         "호스트를 가져오는 데 실패했습니다"
@@ -212,20 +185,20 @@
       "Fix host": [
         "호스트 수정"
       ],
-      "For more info, please visit the": [
-        "자세한 내용은 다음에서 참조하세요"
-      ],
       "For more information about Insights and Cloud Connector, see:": [
         "Insights 및 Cloud Connector에 대한 자세한 내용은 다음을 참조하세요."
       ],
       "For more information about the Subscriptions service, see:": [
         "서브스크립션 서비스에 대한 자세한 정보는 다음을 참조하십시오:"
       ],
+      "Force RHEL Lightspeed CLA connection": [
+        ""
+      ],
       "Foreman plugin that process & upload data to Red Hat Cloud": [
         "Red Hat Cloud에 데이터를 처리하고 업로드하는 Foreman 플러그인"
       ],
-      "Full Screen": [
-        "전체 화면"
+      "Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off.": [
+        ""
       ],
       "Generate and upload report": [
         "보고서 생성 및 업로드"
@@ -238,9 +211,6 @@
       ],
       "Generated": [
         "생성됨"
-      ],
-      "Generating": [
-        "생성 중"
       ],
       "Go to Foreman Insights page": [
         "Foreman Insights 페이지로 이동"
@@ -266,14 +236,17 @@
       "Host inventory report job": [
         "호스트 인벤토리 보고서 작업"
       ],
-      "Host was not uploaded to your RH cloud inventory": [
-        "호스트가 RH 클라우드 인벤토리에 업로드되지 않았습니다."
+      "Host is excluded from upload to console.redhat.com Inventory service due to host parameter": [
+        ""
+      ],
+      "Host is not present on console.redhat.com Inventory service": [
+        ""
+      ],
+      "Host is uploaded and present on console.redhat.com Inventory service": [
+        ""
       ],
       "Hostname": [
         "호스트 이름"
-      ],
-      "Hosts with subscription in organization: ": [
-        "조직에 서브스크립션이 있는 호스트: "
       ],
       "ID of the RHC(Yggdrasil) daemon": [
         "RHC(Yggdrasil) 데몬의 ID"
@@ -347,11 +320,11 @@
       "N/A": [
         "해당 없음"
       ],
-      "Next run: ": [
-        "다음 실행: "
-      ],
       "No": [
         "아니오  "
+      ],
+      "No HBI hosts found for organization %s": [
+        ""
       ],
       "No account data available.": [
         "계정 정보가 없습니다."
@@ -380,14 +353,17 @@
       "None of the selected hosts are registered": [
         "선택된 호스트 중 등록된 호스트는 없습니다."
       ],
+      "Not present on console.redhat.com Inventory service: ": [
+        ""
+      ],
       "Not reporting": [
         "보고하지 않음"
       ],
+      "Not reporting because host_registration_insights parameter value is false": [
+        ""
+      ],
       "Nothing to sync, there are no hosts with subscription for this organization.": [
         "동기화할 것이 없습니다. 이 조직에 대한 서브스크립션이 있는 호스트가 없습니다."
-      ],
-      "Notice": [
-        "주의 "
       ],
       "Obfuscate host ipv4 addresses": [
         "호스트 ipv4 주소 난독화"
@@ -419,6 +395,12 @@
       "Oops! Couldn't find organization that matches your query": [
         "죄송합니다! 귀하의 쿼리와 일치하는 조직을 찾을 수 없습니다."
       ],
+      "Organization": [
+        ""
+      ],
+      "Organization not found": [
+        ""
+      ],
       "Organization status": [
         "조직 상태"
       ],
@@ -440,6 +422,9 @@
       "RHC daemon id. Ignored when using local Insights.": [
         "RHC 데몬 ID입니다. 로컬 Insights를 사용할 때는 무시됩니다."
       ],
+      "RHC instance ID to register with Red Hat Sources": [
+        ""
+      ],
       "Read more about it in RH cloud insights": [
         "RH 클라우드 Insights에서 이에 대해 자세히 알아보세요."
       ],
@@ -458,14 +443,14 @@
       "Recommendations": [
         "권장 사항"
       ],
+      "Recommendations actions": [
+        ""
+      ],
       "Recommendations selected: %s.": [
         "선택된 권장 사항:%s ."
       ],
       "Recommendations synced successfully": [
         "추천사항이 성공적으로 동기화되었습니다."
-      ],
-      "Reconfigure cloud connector": [
-        "클라우드 커넥터 재구성"
       ],
       "Red Hat Cloud Inventory": [
         "Red Hat 클라우드 인벤토리"
@@ -479,8 +464,8 @@
       "Red Hat Inventory": [
         "Red Hat 인벤토리"
       ],
-      "Remain": [
-        "유지"
+      "Registered hosts in organization: ": [
+        ""
       ],
       "Remediate": [
         "개선 사항"
@@ -521,8 +506,17 @@
       "Satellite server has %{hits_count} recommendations by Red Hat": [
         "Satellite 서버에는 Red Hat의 권장 사항이 %{hits_count} 개 있습니다"
       ],
+      "Schedule a task to register in Red Hat Sources for cloud connector": [
+        ""
+      ],
       "Scoped search string for host removal": [
         "호스트 제거를 위한 범위 검색 문자열"
+      ],
+      "Searching by recommendations count is not available in IoP mode.": [
+        ""
+      ],
+      "Select all recommendations": [
+        ""
       ],
       "Select recommendations from all pages": [
         "모든 페이지에서 추천을 선택하세요"
@@ -541,9 +535,6 @@
       ],
       "Show Advanced Settings": [
         "고급 설정 표시"
-      ],
-      "Show if system is configured to use local iop-advisor-engine.": [
-        "시스템이 로컬 iop-advisor-engine을 사용하도록 구성되어 있는지 표시하십시오."
       ],
       "Single-host report job": [
         "단일 호스트 보고서 작업"
@@ -566,11 +557,8 @@
       "Success": [
         "성공 "
       ],
-      "Successfully synced hosts: ": [
-        "성공적으로 호스트를 동기화했습니다: "
-      ],
-      "Successfully uploaded to your RH cloud inventory": [
-        "RH 클라우드 인벤토리에 성공적으로 업로드되었습니다."
+      "Successfully deleted all HBI hosts for organization %s": [
+        ""
       ],
       "Sync automatically": [
         "자동으로 동기화"
@@ -580,6 +568,9 @@
       ],
       "Synchronize recommendations Automatically": [
         "추천 사항을 자동으로 동기화합니다"
+      ],
+      "Table actions": [
+        ""
       ],
       "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.": [
         "Foreman 인벤토리 업로드 플러그인은 Foreman 호스트 인벤토리 데이터를 자동으로 Insights의 인벤토리 서비스에 업로드하며, 이 데이터는 서브스크립션 보고서를 위한 서브스크립션 서비스에서도 사용할 수 있습니다. 서브스크립션 서비스를 사용하는 경우, 인벤토리 업로드를 활성화하는 것이 필수입니다."
@@ -605,9 +596,6 @@
       "There were no missing Insights facets": [
         "누락된 Insights 항목이 없습니다."
       ],
-      "This action will also enable automatic reports upload": [
-        "이 작업을 수행하면 자동 보고서 업로드도 활성화됩니다."
-      ],
       "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day.": [
         "이 보고서를 모든 Foreman 조직에 대해 활성화하려면 {uploadButtonName}를 켬으로 설정하십시오. 데이터는 하루에 한 번 자동으로 보고됩니다."
       ],
@@ -626,6 +614,9 @@
       "Unknown": [
         "알 수 없음"
       ],
+      "Unsupported operator for recommendations count search: %s": [
+        ""
+      ],
       "Upload hits from iop-advisor-engine": [
         "iop-advisor-engine에서 히트 업로드"
       ],
@@ -641,8 +632,8 @@
       "Uploaded": [
         "업로드됨"
       ],
-      "Uploading": [
-        "업로드 중"
+      "Uploaded and present on console.redhat.com Inventory service: ": [
+        ""
       ],
       "Value %{value} is not a valid UUID": [
         "값%{value}이/가 유효한 UUID가 아닙니다"
@@ -680,6 +671,9 @@
       "Whether the resolution requires reboot": [
         "해결을 위해 재부팅이 필요한지 여부"
       ],
+      "You can review this information later by looking at the Inventory status of each host.": [
+        ""
+      ],
       "You do not have permission to perform this action": [
         "이 작업을 수행할 권한이 없습니다."
       ],
@@ -688,9 +682,6 @@
       ],
       "generic": [
         "일반"
-      ],
-      "hosts page": [
-        "호스트 페이지"
       ],
       "impact name": [
         "영향 이름"
@@ -763,9 +754,6 @@
       ],
       "upload resolutions related to the hits": [
         "히트와 관련된 해결책 업로드"
-      ],
-      "view the job in progress": [
-        "진행중인 작업 보기"
       ],
       "view the task page for more details": [
         "자세한 내용은 작업 페이지 보기"
