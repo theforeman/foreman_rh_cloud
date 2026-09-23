@@ -11,10 +11,9 @@
 # Bryan Kearney <bryan.kearney@gmail.com>, 2026
 # Ondřej Gajdušek, 2026
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: foreman_rh_cloud 14.0.2\n"
+"Project-Id-Version: foreman_rh_cloud 14.6.1\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
 "Last-Translator: Ondřej Gajdušek, 2026\n"
@@ -37,6 +36,9 @@ msgstr "必须从机构上下文中选择一个特定的机构。"
 
 msgid "About subscription watch"
 msgstr "订阅查看"
+
+msgid "Actions"
+msgstr ""
 
 msgid "Actions history"
 msgstr "操作历史记录"
@@ -77,27 +79,6 @@ msgstr "清除"
 msgid "Clear Selection"
 msgstr "清除选择"
 
-msgid "Cloud Connector has been configured however obfuscating host names setting is enabled, it's recommended to disable it"
-msgstr "已配置了云连接器，但启用了模糊主机名设置，建议禁用它"
-
-msgid "Cloud Connector has been configured however the inventory auto-upload is disabled, it's recommended to enable it"
-msgstr "已配置了云连接器，但禁用了清单自动上传，建议启用它"
-
-msgid "Cloud Connector is in progress"
-msgstr "云连接器正在进行"
-
-msgid "Cloud connector job link"
-msgstr "云连接器作业链接"
-
-msgid "Cloud connector setup has failed: "
-msgstr "云连接器设置失败： "
-
-msgid "Cloud connector setup has started: "
-msgstr "云连接器设置已启动： "
-
-msgid "Cloud connector setup is in progress now: "
-msgstr "云连接器设置现在正在进行： "
-
 msgid "Completed"
 msgstr "完成"
 
@@ -106,12 +87,6 @@ msgstr "完成，带有警告"
 
 msgid "Configure"
 msgstr "配置"
-
-msgid "Configure Cloud Connector on given hosts"
-msgstr "在给定主机上配置 Cloud Connector"
-
-msgid "Configure cloud connector"
-msgstr "配置云连接器"
 
 msgid "Connectivity test"
 msgstr "连接测试"
@@ -122,6 +97,9 @@ msgstr "关键"
 msgid "Current page"
 msgstr "当前页"
 
+msgid "Destroy HBI hosts for organization"
+msgstr ""
+
 msgid "Details"
 msgstr "详情"
 
@@ -131,17 +109,11 @@ msgstr "禁用"
 msgid "Disable vulnerability analysis"
 msgstr "禁用漏洞分析"
 
-msgid "Disconnected hosts: "
-msgstr "断开连接的主机："
-
 msgid "Displays manifest statuses per accessible organizations."
 msgstr "显示每个可访问的机构的清单状态。"
 
 msgid "Documentation"
 msgstr "文档"
-
-msgid "Download Report"
-msgstr "下载报告"
 
 msgid "Download latest report"
 msgstr "下载最新的报告"
@@ -173,9 +145,6 @@ msgstr "启用自动将主机清单上传到红帽云。在使用本地 Insights
 msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
 msgstr "启用自动将主机清单上传到红帽云"
 
-msgid "Enable cloud connector"
-msgstr "启用云连接器"
-
 msgid "Enable inventory upload"
 msgstr "启用清单上传"
 
@@ -194,14 +163,17 @@ msgstr "将安装的软件包上传到红帽云"
 msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights."
 msgstr "在上传到红帽云时排除安装的软件包。（如果 insights_minimal_data_collection 设置为 true，则忽略此设置，且安装的软件包始终被排除。）在使用本地 Insights 时忽略。"
 
-msgid "Exit Code: %s"
-msgstr "退出代码：%s"
+msgid "Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: "
+msgstr ""
 
 msgid "Failed"
 msgstr "失败"
 
 msgid "Failed to destroy HBI host %s: %s"
 msgstr "销毁 HBI 主机 %s 失败：%s"
+
+msgid "Failed to destroy HBI hosts for organization %s: %s"
+msgstr ""
 
 msgid "Failed to fetch hosts"
 msgstr "获取主机失败"
@@ -221,20 +193,20 @@ msgstr "过滤器..."
 msgid "Fix host"
 msgstr "修复主机"
 
-msgid "For more info, please visit the"
-msgstr "如需更多信息，请访问"
-
 msgid "For more information about Insights and Cloud Connector, see:"
 msgstr "有关 Insights 和云连接器的更多信息，请参阅"
 
 msgid "For more information about the Subscriptions service, see:"
 msgstr "有关订阅服务的更多信息，请参阅："
 
+msgid "Force RHEL Lightspeed CLA connection"
+msgstr ""
+
 msgid "Foreman plugin that process & upload data to Red Hat Cloud"
 msgstr "处理数据并将其上传到红帽云的 Foreman 插件"
 
-msgid "Full Screen"
-msgstr "全屏"
+msgid "Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off."
+msgstr ""
 
 msgid "Generate and upload report"
 msgstr "生成并上传报告"
@@ -247,9 +219,6 @@ msgstr "生成报告，但不上传"
 
 msgid "Generated"
 msgstr "生成"
-
-msgid "Generating"
-msgstr "生成中"
 
 msgid "Go to Foreman Insights page"
 msgstr "进入 Foreman Insights 页面"
@@ -275,14 +244,17 @@ msgstr "主机 Insights 建议"
 msgid "Host inventory report job"
 msgstr "主机清单报告作业"
 
-msgid "Host was not uploaded to your RH cloud inventory"
-msgstr "主机没有上传到您的 RH 云清单"
+msgid "Host is excluded from upload to console.redhat.com Inventory service due to host parameter"
+msgstr ""
+
+msgid "Host is not present on console.redhat.com Inventory service"
+msgstr ""
+
+msgid "Host is uploaded and present on console.redhat.com Inventory service"
+msgstr ""
 
 msgid "Hostname"
 msgstr "主机名"
-
-msgid "Hosts with subscription in organization: "
-msgstr "机构中具有订阅的主机： "
 
 msgid "ID of the RHC(Yggdrasil) daemon"
 msgstr "RHC (Yggdrasil)守护进程的 ID"
@@ -356,11 +328,11 @@ msgstr "如需更多详细信息，请参阅"
 msgid "N/A"
 msgstr "不适用"
 
-msgid "Next run: "
-msgstr "下一次运行 ："
-
 msgid "No"
 msgstr "否"
+
+msgid "No HBI hosts found for organization %s"
+msgstr ""
 
 msgid "No account data available."
 msgstr "没有可用的帐户数据。"
@@ -389,14 +361,17 @@ msgstr "还没有运行任何任务。"
 msgid "None of the selected hosts are registered"
 msgstr "所选主机都没有注册"
 
+msgid "Not present on console.redhat.com Inventory service: "
+msgstr ""
+
 msgid "Not reporting"
 msgstr "未报告"
 
+msgid "Not reporting because host_registration_insights parameter value is false"
+msgstr ""
+
 msgid "Nothing to sync, there are no hosts with subscription for this organization."
 msgstr "没有同步，此机构没有带有订阅的主机。"
-
-msgid "Notice"
-msgstr "注意事項"
 
 msgid "Obfuscate host ipv4 addresses"
 msgstr "模糊的主机 ipv4 地址"
@@ -428,6 +403,12 @@ msgstr "仅将最低所需的数据发送到红帽云，禁用模糊设置"
 msgid "Oops! Couldn't find organization that matches your query"
 msgstr "未找到与您的查询匹配的机构"
 
+msgid "Organization"
+msgstr ""
+
+msgid "Organization not found"
+msgstr ""
+
 msgid "Organization status"
 msgstr "机构标签"
 
@@ -449,6 +430,9 @@ msgstr "RH Cloud"
 msgid "RHC daemon id. Ignored when using local Insights."
 msgstr "RHC 守护进程 ID。在使用本地 Insights 时忽略。"
 
+msgid "RHC instance ID to register with Red Hat Sources"
+msgstr ""
+
 msgid "Read more about it in RH cloud insights"
 msgstr "在 RH Cloud insights 中了解更多有关它的信息"
 
@@ -467,14 +451,14 @@ msgstr "建议同步已启动： "
 msgid "Recommendations"
 msgstr "建议"
 
+msgid "Recommendations actions"
+msgstr ""
+
 msgid "Recommendations selected: %s."
 msgstr "选择的建议：%s。"
 
 msgid "Recommendations synced successfully"
 msgstr "成功同步建议"
-
-msgid "Reconfigure cloud connector"
-msgstr "重新配置云连接器"
 
 msgid "Red Hat Cloud Inventory"
 msgstr "红帽云清单"
@@ -488,8 +472,8 @@ msgstr "Red Hat Insights 数据和应用程序安全"
 msgid "Red Hat Inventory"
 msgstr "Red Hat 清单"
 
-msgid "Remain"
-msgstr "保留"
+msgid "Registered hosts in organization: "
+msgstr ""
 
 msgid "Remediate"
 msgstr "补救"
@@ -530,8 +514,17 @@ msgstr "執行中"
 msgid "Satellite server has %{hits_count} recommendations by Red Hat"
 msgstr "Satellite 服务器有 %{hits_count} 个红帽提供的建议"
 
+msgid "Schedule a task to register in Red Hat Sources for cloud connector"
+msgstr ""
+
 msgid "Scoped search string for host removal"
 msgstr "用于删除主机的有范围的搜索字符串"
+
+msgid "Searching by recommendations count is not available in IoP mode."
+msgstr ""
+
+msgid "Select all recommendations"
+msgstr ""
 
 msgid "Select recommendations from all pages"
 msgstr "在所有页面中选择建议"
@@ -550,9 +543,6 @@ msgstr "是否应该导入 Foreman 中的 include 参数标签？在使用本地
 
 msgid "Show Advanced Settings"
 msgstr "显示高级设置"
-
-msgid "Show if system is configured to use local iop-advisor-engine."
-msgstr "显示系统是否被配置为使用本地 iop-advisor-engine。"
 
 msgid "Single-host report job"
 msgstr "单主机报告作业"
@@ -575,11 +565,8 @@ msgstr "停止"
 msgid "Success"
 msgstr "成功"
 
-msgid "Successfully synced hosts: "
-msgstr "成功同步的主机："
-
-msgid "Successfully uploaded to your RH cloud inventory"
-msgstr "成功上传到您的 RH 云清单"
+msgid "Successfully deleted all HBI hosts for organization %s"
+msgstr ""
 
 msgid "Sync automatically"
 msgstr "自动同步"
@@ -589,6 +576,9 @@ msgstr "同步建议"
 
 msgid "Synchronize recommendations Automatically"
 msgstr "自动同步建议"
+
+msgid "Table actions"
+msgstr ""
 
 msgid "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required."
 msgstr "Foreman 清单上传插件会自动将 Foreman 主机清单数据上传到 Insights 的 Inventory 服务，订阅服务使用这些信息来提供订阅报告。如果使用订阅服务，则需要启用清单上传。"
@@ -614,9 +604,6 @@ msgstr "没有适用于您的主机的建议"
 msgid "There were no missing Insights facets"
 msgstr "没有缺失的 Insights 情况"
 
-msgid "This action will also enable automatic reports upload"
-msgstr "此操作还会启用自动报告上传"
-
 msgid "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day."
 msgstr "要为所有 Foreman 机构启用此报告，请将 {uploadButtonName} 设置为 on。数据将每天自动报告一次。"
 
@@ -635,6 +622,9 @@ msgstr "总风险"
 msgid "Unknown"
 msgstr "未知"
 
+msgid "Unsupported operator for recommendations count search: %s"
+msgstr ""
+
 msgid "Upload hits from iop-advisor-engine"
 msgstr "从 iop-advisor-engine 上传 hits"
 
@@ -650,8 +640,8 @@ msgstr "上传与 hits 相关的 rule"
 msgid "Uploaded"
 msgstr "已上传"
 
-msgid "Uploading"
-msgstr "上载中"
+msgid "Uploaded and present on console.redhat.com Inventory service: "
+msgstr ""
 
 msgid "Value %{value} is not a valid UUID"
 msgstr "值 %{value} 不是一个有效的 UUID"
@@ -689,6 +679,9 @@ msgstr "警告"
 msgid "Whether the resolution requires reboot"
 msgstr "resolution 是否需要重启"
 
+msgid "You can review this information later by looking at the Inventory status of each host."
+msgstr ""
+
 msgid "You do not have permission to perform this action"
 msgstr "您没有执行此操作的权限"
 
@@ -697,9 +690,6 @@ msgstr "类别名称"
 
 msgid "generic"
 msgstr "通用"
-
-msgid "hosts page"
-msgstr "主机页"
 
 msgid "impact name"
 msgstr "影响名称"
@@ -772,9 +762,6 @@ msgstr "上传 hits 详情 json"
 
 msgid "upload resolutions related to the hits"
 msgstr "上传与 hits 相关的 resolutions"
-
-msgid "view the job in progress"
-msgstr "查看正在进行中的任务"
 
 msgid "view the task page for more details"
 msgstr "查看任务页面以了解更多详细信息"

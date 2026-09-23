@@ -3,7 +3,7 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 14.0.2",
+        "Project-Id-Version": "foreman_rh_cloud 14.6.1",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
         "Last-Translator": "Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2026",
@@ -18,16 +18,19 @@
         "plural_forms": "nplurals=2; plural=(n!=1);"
       },
       " Sync all inventory status": [
-        ""
+        " ყველა ინვენტარის სტატუსის სინქრონიზაცია"
       ],
       "%s organizations": [
         "%s ორგანიზაცია"
       ],
       "A specific organization must be selected from the organization context.": [
-        ""
+        "ორგანიზაციის კონტექსტიდან სპეციფიკური ორგანიზაცია უნდა აირჩიოთ."
       ],
       "About subscription watch": [
         "გამოწერის ყურების შესახებ"
+      ],
+      "Actions": [
+        ""
       ],
       "Actions history": [
         "აქტივობების ისტორია"
@@ -39,10 +42,10 @@
         "ახლა ყველა რეკომენდაცია მონიშნულია."
       ],
       "Analysis disabled": [
-        ""
+        "ანალიზი გამორთულია"
       ],
       "Analytics data collection": [
-        ""
+        "ანალიზის მონაცემების შეგროვება"
       ],
       "Any Organization": [
         "ნებისმიერი ორგანიზაცია"
@@ -57,7 +60,7 @@
         "ინვენტარის ავტომატური ატვირთვა"
       ],
       "Automatic mismatch deletion": [
-        ""
+        "ავტომატური შეუსაბამობის დადგენა"
       ],
       "Cancel": [
         "გაუქმება"
@@ -68,41 +71,14 @@
       "Clear Selection": [
         "მონიშნულის გასუფთავება"
       ],
-      "Cloud Connector has been configured however obfuscating host names setting is enabled, it's recommended to disable it": [
-        "Cloud Connector-ი მორგებულია, მაგრამ ჰოსტის სახელების დამახინჯება ჩართულია. რეკომენდებულია, გამორთოთ ის"
-      ],
-      "Cloud Connector has been configured however the inventory auto-upload is disabled, it's recommended to enable it": [
-        "Cloud Connector-ი მორგებულია, მაგრამ ინვენტარის ავტომატური ატვირთვა გამორთულია. რეკომენდებულია, ჩართოთ ის"
-      ],
-      "Cloud Connector is in progress": [
-        "მიმდინარეობს ღრუბელთან მიერთება"
-      ],
-      "Cloud connector job link": [
-        "Cloud connector-ის დავალების ბმული"
-      ],
-      "Cloud connector setup has failed: ": [
-        "Cloud connector-ის მორგების შეცდომა: "
-      ],
-      "Cloud connector setup has started: ": [
-        "Cloud connector-ის მორგება დაიწყო: "
-      ],
-      "Cloud connector setup is in progress now: ": [
-        "მიმდინარეობს Cloud connector-ის მორგება: "
-      ],
       "Completed": [
         "დასრულებულია"
       ],
       "Completed with warnings": [
-        ""
+        "დასრულდა შენიშვნებით"
       ],
       "Configure": [
         "მორგება"
-      ],
-      "Configure Cloud Connector on given hosts": [
-        "მითითებულ ჰოსტებზე Cloud Connector-ის მორგება"
-      ],
-      "Configure cloud connector": [
-        ""
       ],
       "Connectivity test": [
         "მიერთების შემოწმება"
@@ -113,17 +89,17 @@
       "Current page": [
         "მიმდინარე გვერდი"
       ],
-      "Details": [
+      "Destroy HBI hosts for organization": [
         ""
+      ],
+      "Details": [
+        "დეტალები"
       ],
       "Disable": [
         "გამორთვა"
       ],
       "Disable vulnerability analysis": [
-        ""
-      ],
-      "Disconnected hosts: ": [
-        "გამორთული ჰოსტები: "
+        "მოწყვლადობის ანალიზის გამორთვა"
       ],
       "Displays manifest statuses per accessible organizations.": [
         "მანიფესტის სტატუსების ჩვენება თითოეული წვდომადი ორგანიზაციისთვის."
@@ -131,14 +107,11 @@
       "Documentation": [
         "დოკუმენტაცია"
       ],
-      "Download Report": [
-        "ანგარიშის გადმოწერა"
-      ],
       "Download latest report": [
         "უახლესი ანგარიშის გადმოწერა"
       ],
       "Download report": [
-        ""
+        "ანგარიშის გადმოწერა"
       ],
       "Duration": [
         "ხანგრძლოვობა"
@@ -164,20 +137,17 @@
       "Enable automatic upload of your hosts inventory to the Red Hat cloud": [
         "თქვენი ჰოსტების ინვენტარის Red Hat Cloud-ში ავტომატური ატვირთვის ჩართვა"
       ],
-      "Enable cloud connector": [
-        "ღრუბელთან მიერთების ჩართვა"
-      ],
       "Enable inventory upload": [
         "ინვენტარის ატვირთვის ჩართვა"
       ],
       "Enable vulnerability analysis": [
-        ""
+        "მოწყვლადობის ანალიზის ჩართვა"
       ],
       "Encountered an error while trying to access the server:": [
         "შეცდომა სერვერთან წვდომის მცდელობისას:"
       ],
       "Exclude installed packages": [
-        ""
+        "დაყენებული პაკეტების ამოღება"
       ],
       "Exclude installed packages from being uploaded to the Red Hat cloud": [
         "Red Hat cloud-ში ატვირთული პაკეტების სიიდან დაყენებული პაკეტების ამოღება"
@@ -185,23 +155,26 @@
       "Exclude installed packages from being uploaded to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored and installed packages are always excluded.) Ignored when using local Insights.": [
         ""
       ],
-      "Exit Code: %s": [
-        "გასვლის კოდი: %s"
+      "Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: ": [
+        ""
       ],
       "Failed": [
-        ""
+        "ჩავარდა"
       ],
       "Failed to destroy HBI host %s: %s": [
         ""
       ],
-      "Failed to fetch hosts": [
+      "Failed to destroy HBI hosts for organization %s: %s": [
         ""
+      ],
+      "Failed to fetch hosts": [
+        "ჰოსტების გამოთხოვა ჩავარდა"
       ],
       "Failed to update vulnerability analysis status": [
         ""
       ],
       "Fetch Insights-related host details": [
-        ""
+        "Insights-თან დაკავშირებული ჰოსტის დეტალების გამოთხოვა"
       ],
       "Fetching data about your accounts": [
         "მონაცემების გამოთხოვა თქვენი ანგარიშების შესახებ"
@@ -212,38 +185,35 @@
       "Fix host": [
         "ჰოსტის გასწორება"
       ],
-      "For more info, please visit the": [
-        "მეტი ინფორმაციისთვის ეწვიეთ"
-      ],
       "For more information about Insights and Cloud Connector, see:": [
         ""
       ],
       "For more information about the Subscriptions service, see:": [
         ""
       ],
+      "Force RHEL Lightspeed CLA connection": [
+        ""
+      ],
       "Foreman plugin that process & upload data to Red Hat Cloud": [
         "Foreman-ის დამატება, რომელიც მონაცემების დამუშავებაზე და Red Hat Cloud-ში ატვირთვაზე აგებს პასუხს"
       ],
-      "Full Screen": [
-        "სრულეკრანიანი რეჟიმი"
+      "Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off.": [
+        ""
       ],
       "Generate and upload report": [
-        ""
+        "ანგარიშის გენერაცია და ატვრთვა"
       ],
       "Generate report": [
-        ""
+        "ანგარიშის გენერაცია"
       ],
       "Generate the report, but do not upload": [
-        ""
+        "ანგარიშის შექმნა, მაგრამ ატვირთვის გარეშე"
       ],
       "Generated": [
         "გენერირებული"
       ],
-      "Generating": [
-        "გენერაცია"
-      ],
       "Go to Foreman Insights page": [
-        ""
+        "Foreman Insights-ის გვერდზე გადასვლა"
       ],
       "Go to first page": [
         "პირველ გვერდზე"
@@ -266,14 +236,17 @@
       "Host inventory report job": [
         ""
       ],
-      "Host was not uploaded to your RH cloud inventory": [
-        "ჰოსტის თქვენი RH-ის ღრუბლოვან ინვენტარში არ ატვირთულა"
+      "Host is excluded from upload to console.redhat.com Inventory service due to host parameter": [
+        ""
+      ],
+      "Host is not present on console.redhat.com Inventory service": [
+        ""
+      ],
+      "Host is uploaded and present on console.redhat.com Inventory service": [
+        ""
       ],
       "Hostname": [
         "ჰოსტის სახელი"
-      ],
-      "Hosts with subscription in organization: ": [
-        "გამოწერის მქონე ჰოსტები ორგანიზაციაში: "
       ],
       "ID of the RHC(Yggdrasil) daemon": [
         "RHC(Yggdrasil)-ის დემონის ID"
@@ -288,7 +261,7 @@
         "Insights"
       ],
       "Invalid response from server": [
-        ""
+        "სერვერის არასწორი პასუხი"
       ],
       "Inventory": [
         "ინვენტარი"
@@ -315,7 +288,7 @@
         ""
       ],
       "List of host UUIDs": [
-        ""
+        "ჰოსტის UUID-ების სია"
       ],
       "Loading": [
         "იტვირთება"
@@ -327,13 +300,13 @@
         "დაბალი"
       ],
       "Manage vulnerability analysis": [
-        ""
+        "მოწყვლადობის ანალიზის მართვა"
       ],
       "Manual": [
         "ხელით"
       ],
       "Minimal data collection": [
-        ""
+        "მინიმალური მონაცემების მოგროვება"
       ],
       "Missing Insights facets created: %s": [
         ""
@@ -347,17 +320,17 @@
       "N/A": [
         "არარსებული"
       ],
-      "Next run: ": [
-        "შემდეგი გაშვება: "
-      ],
       "No": [
         "არა"
       ],
-      "No account data available.": [
+      "No HBI hosts found for organization %s": [
         ""
       ],
+      "No account data available.": [
+        "ანგარიშის მონაცემები ხელმისაწვდომი არაა."
+      ],
       "No recent tasks": [
-        ""
+        "უახლესი ამოცანების გარეშე"
       ],
       "No recommendations were found for this host!": [
         "ამ ჰოსტისთვის რეკომენდაციები აღმოჩენილი არაა!"
@@ -369,31 +342,34 @@
         "შედეგების გარეშე"
       ],
       "No task history": [
-        ""
+        "ამოცანის ისტორიის გარეშე"
       ],
       "No task was found": [
         "ამოცანა ვერ ვიპოვე"
       ],
       "No tasks have been run yet.": [
-        ""
+        "ჯერ ამოცანები არ გაშვებულა."
       ],
       "None of the selected hosts are registered": [
+        "არცერთი მონიშნული ჰოსტებიდან დარეგისტრირებული არაა"
+      ],
+      "Not present on console.redhat.com Inventory service: ": [
         ""
       ],
       "Not reporting": [
         "ანგარიშების გარეშე"
       ],
+      "Not reporting because host_registration_insights parameter value is false": [
+        ""
+      ],
       "Nothing to sync, there are no hosts with subscription for this organization.": [
         "დასასინქრონებელი არაფერია. ამ ორგანიზაციისთვის გამოწერის მქონე ჰოსტები არ არსებობს."
-      ],
-      "Notice": [
-        "გაფრთხილება"
       ],
       "Obfuscate host ipv4 addresses": [
         "ჰოსტის ipv4 მისამართების ობფუსკაცია"
       ],
       "Obfuscate host ipv4 addresses.": [
-        ""
+        "ჰოსტის ipv4 მისამართების ობფუსკაცია."
       ],
       "Obfuscate host names": [
         "ჰოსტის სახელების ობფუსკაცია"
@@ -419,6 +395,12 @@
       "Oops! Couldn't find organization that matches your query": [
         "ვაი! ორგანიზაცია, რომელიც თქვენს პირობებში ჯდება, ვერ ვიპოვე"
       ],
+      "Organization": [
+        ""
+      ],
+      "Organization not found": [
+        ""
+      ],
       "Organization status": [
         "ორგანიზაციის სტატუსი"
       ],
@@ -426,18 +408,21 @@
         "გვერდებად დაყოფა"
       ],
       "Paused": [
-        ""
+        "შეჩერებულია"
       ],
       "Playbook": [
         "Playbook"
       ],
       "Previous tasks will appear here.": [
-        ""
+        "წინა ამოცანები აქ გამოჩნდება."
       ],
       "RH Cloud": [
         "RH Cloud"
       ],
       "RHC daemon id. Ignored when using local Insights.": [
+        ""
+      ],
+      "RHC instance ID to register with Red Hat Sources": [
         ""
       ],
       "Read more about it in RH cloud insights": [
@@ -458,14 +443,14 @@
       "Recommendations": [
         "რეკომენდაციები"
       ],
+      "Recommendations actions": [
+        ""
+      ],
       "Recommendations selected: %s.": [
         "არჩეული რეკომენდაციები: %s."
       ],
       "Recommendations synced successfully": [
         "რეკომენდაციების სინქრონიზაცია წარმატებულია"
-      ],
-      "Reconfigure cloud connector": [
-        ""
       ],
       "Red Hat Cloud Inventory": [
         "Red Hat Cloud-ის ინვენტარი"
@@ -479,8 +464,8 @@
       "Red Hat Inventory": [
         "Red Hat-ის ინვენტარი"
       ],
-      "Remain": [
-        "დარჩენა"
+      "Registered hosts in organization: ": [
+        ""
       ],
       "Remediate": [
         "გამოსწორება"
@@ -489,16 +474,16 @@
         "აღდგენის შეჯამება"
       ],
       "Report Generation": [
-        ""
+        "ანგარიშის გენერაცია"
       ],
       "Report generation and upload started": [
-        ""
+        "ანგარიშის გენერაცია და ატვირთვა გაეშვა"
       ],
       "Report generation started": [
-        ""
+        "ანგარიშის გენერაცია გაეშვა"
       ],
       "Report saved to": [
-        ""
+        "ანგარიში შენახულია ფაილში"
       ],
       "Reporting": [
         "ანგარიში"
@@ -516,12 +501,21 @@
         "Insights-ის მიერ გენერირებული აღდგენის playbook-ის გაშვება"
       ],
       "Running": [
-        ""
+        "გაშვებულია"
       ],
       "Satellite server has %{hits_count} recommendations by Red Hat": [
         "Satellite -ის სერვერს Red Hat-სგან %{hits_count} რეკომენდაცია გააჩნია"
       ],
+      "Schedule a task to register in Red Hat Sources for cloud connector": [
+        ""
+      ],
       "Scoped search string for host removal": [
+        ""
+      ],
+      "Searching by recommendations count is not available in IoP mode.": [
+        ""
+      ],
+      "Select all recommendations": [
         ""
       ],
       "Select recommendations from all pages": [
@@ -542,9 +536,6 @@
       "Show Advanced Settings": [
         "დამატებითი პარამეტრების ცვენება"
       ],
-      "Show if system is configured to use local iop-advisor-engine.": [
-        ""
-      ],
       "Single-host report job": [
         ""
       ],
@@ -558,19 +549,16 @@
         "ანგარიშის გენერაციის დაწყება"
       ],
       "Started": [
-        ""
+        "გაშვებულია"
       ],
       "Stopped": [
-        ""
+        "გაჩერებულია"
       ],
       "Success": [
+        "წარმატება"
+      ],
+      "Successfully deleted all HBI hosts for organization %s": [
         ""
-      ],
-      "Successfully synced hosts: ": [
-        "წარმატებით სინქრონიზებული ჰოსტები: "
-      ],
-      "Successfully uploaded to your RH cloud inventory": [
-        "ჰოსტი თქვენი RH-ის ღრუბლოვან ინვენტარში არ ატვირთულა"
       ],
       "Sync automatically": [
         "ავტომატური სინქრონიზაცია"
@@ -580,6 +568,9 @@
       ],
       "Synchronize recommendations Automatically": [
         "რეკომენდაციების ავტომატური სინქრონიზაცია"
+      ],
+      "Table actions": [
+        ""
       ],
       "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.": [
         ""
@@ -600,13 +591,10 @@
         "დავალება შემდეგი შეცდომით დასრულდა:"
       ],
       "There are no recommendations for your hosts": [
-        ""
+        "თქვენი ჰოსტებისთვის რეკომენდაციები არ არსებობს"
       ],
       "There were no missing Insights facets": [
         ""
-      ],
-      "This action will also enable automatic reports upload": [
-        "ეს ქმედება ავტომატურად ანგარიშების ატვირთვასაც ჩართავს"
       ],
       "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day.": [
         ""
@@ -615,7 +603,7 @@
         ""
       ],
       "Total CVEs": [
-        ""
+        "სულ CVE-ები"
       ],
       "Total risk": [
         "სრული რისკი"
@@ -626,11 +614,14 @@
       "Unknown": [
         "უცნობი"
       ],
-      "Upload hits from iop-advisor-engine": [
+      "Unsupported operator for recommendations count search: %s": [
         ""
       ],
+      "Upload hits from iop-advisor-engine": [
+        "დამთხვევების ატვირთვა iop-advisor-engine-დან"
+      ],
       "Upload hits information": [
-        ""
+        "დამთხვევების ინფორმაციის ატვირთვა"
       ],
       "Upload is disabled because subscription connection is not enabled. Enable it in Administer > Settings > Content.": [
         ""
@@ -639,10 +630,10 @@
         ""
       ],
       "Uploaded": [
-        ""
+        "ატვირთულია"
       ],
-      "Uploading": [
-        "ატვირთვა"
+      "Uploaded and present on console.redhat.com Inventory service: ": [
+        ""
       ],
       "Value %{value} is not a valid UUID": [
         "მნიშვნელობა %{value} არასწორი UUID-ია"
@@ -654,22 +645,22 @@
         "Red Hat Insights-ში ნახვა"
       ],
       "View task": [
-        ""
+        "ამოცანის ნახვა"
       ],
       "View task details": [
-        ""
+        "ამოცანის დეტალების ნახვა"
       ],
       "Vulnerabilities": [
-        ""
+        "მოწყვლადობები"
       ],
       "Vulnerability": [
-        ""
+        "მოწყვლადობა"
       ],
       "Vulnerability analysis disabled": [
-        ""
+        "მოწყვლადობის ანალიზი გამორთულია"
       ],
       "Vulnerability analysis enabled": [
-        ""
+        "მოწყვლადობის ანალიზი ჩართულია"
       ],
       "Wait and %s": [
         "დაელოდეთ და %s"
@@ -680,20 +671,20 @@
       "Whether the resolution requires reboot": [
         ""
       ],
+      "You can review this information later by looking at the Inventory status of each host.": [
+        ""
+      ],
       "You do not have permission to perform this action": [
         ""
       ],
       "category name": [
-        ""
+        "კატეგორიის სახელი"
       ],
       "generic": [
-        ""
-      ],
-      "hosts page": [
-        "ჰოსტების გვერდი"
+        "ზოგადი"
       ],
       "impact name": [
-        ""
+        "გავლენის სახელი"
       ],
       "iop payload including resolutions, rules, hits": [
         ""
@@ -702,10 +693,10 @@
         "ელემენტი"
       ],
       "likelihood number": [
-        ""
+        "სიზუსტის ნომერი"
       ],
       "more info": [
-        ""
+        "მეტი ინფორმაცია"
       ],
       "page": [
         "პანელი"
@@ -714,58 +705,55 @@
         "გვერდზე"
       ],
       "publish date (YYYY-MM-DD)": [
-        ""
+        "გამოცემის თარიღი (წწწ-თთ-დდ)"
       ],
       "rating": [
-        ""
+        "შეფასება"
       ],
       "reason": [
-        ""
+        "მიზეზი"
       ],
       "reboot required": [
-        ""
+        "საჭიროა გადატვირთვა"
       ],
       "resolution description": [
-        ""
+        "გადაწყვეტის აღწერა"
       ],
       "resolution risk": [
-        ""
+        "გადაწყვეტის რისკი"
       ],
       "result url": [
-        ""
+        "შედეგის url"
       ],
       "rule description": [
-        ""
+        "წესის აღწერა"
       ],
       "rule id": [
-        ""
+        "წესის id"
       ],
       "rule title": [
-        ""
+        "წესის სახელი"
       ],
       "setting minimal data collection": [
-        ""
+        "მინიმალური მონაცემების მოგროვების მორგება"
       ],
       "solution url": [
-        ""
+        "გადაწყვეტის url"
       ],
       "summary": [
-        ""
+        "შეჯამება"
       ],
       "total risk": [
-        ""
+        "სრული რისკი"
       ],
       "type": [
-        ""
+        "ტიპი"
       ],
       "upload hits details json": [
-        ""
+        "დამთხვევის დეტალების json-ის ატვირთვა"
       ],
       "upload resolutions related to the hits": [
         ""
-      ],
-      "view the job in progress": [
-        "გაშვებული დავალების ნახვა"
       ],
       "view the task page for more details": [
         "მეტი დეტალებისთვის იხილეთ ამოცანის გვერდი"
