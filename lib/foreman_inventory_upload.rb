@@ -1,12 +1,6 @@
 module ForemanInventoryUpload
   def self.base_folder
-    # in production setup, where selinux is enabled, we only have rights to
-    # create folders under /var/lib/foreman. If the folder does not exist, it's
-    # a dev setup, where we can use the parent of the current working directory
-    @base_folder ||= File.join(
-      Dir.glob('/var/lib/foreman').first || File.dirname(Dir.getwd),
-      'red_hat_inventory/'
-    )
+    @base_folder ||= Rails.root.join('tmp/red_hat_inventory').to_s
   end
 
   def self.uploads_folder
