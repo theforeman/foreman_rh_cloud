@@ -29,12 +29,12 @@ From command-line:
 
     # generate report for specific organization (don't upload)
     export organization_id=1
-    export target=/var/lib/foreman/red_hat_inventory/generated_reports/
+    export target=/var/run/foreman/red_hat_inventory/generated_reports/
     /usr/sbin/foreman-rake rh_cloud_inventory:report:generate
 
     # upload previously generated report (needs to be named 'report_for_#{organization_id}.tar.gz')
     export organization_id=1
-    export target=/var/lib/foreman/red_hat_inventory/generated_reports/
+    export target=/var/run/foreman/red_hat_inventory/generated_reports/
     /usr/sbin/foreman-rake rh_cloud_inventory:report:upload
 
 #### Fetch hosts remediation data
