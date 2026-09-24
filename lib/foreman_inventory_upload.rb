@@ -1,12 +1,20 @@
 module ForemanInventoryUpload
+  SHARED_TMPDIR = '/var/run/foreman'.freeze
+
   def self.base_folder
-    # in production setup, where selinux is enabled, we only have rights to
-    # create folders under /var/lib/foreman. If the folder does not exist, it's
-    # a dev setup, where we can use the parent of the current working directory
-    @base_folder ||= File.join(
-      Dir.glob('/var/lib/foreman').first || File.dirname(Dir.getwd),
-      'red_hat_inventory/'
-    )
+    # In containers foremanctl shares /var/run/foreman between Foreman and
+    # Dynflow via the foreman-data-run volume, so inventory reports written
+    # by Dynflow are visible to Foreman's send_file. In development the
+    # directory either does not exist or is not writable, so fall back to
+    # Rails.root/tmp.
+    @base_folder ||= begin
+      base_path = if File.writable?(SHARED_TMPDIR)
+        Pathname.new(SHARED_TMPDIR).join('red_hat_inventory')
+      else
+        Rails.root.join('tmp', 'red_hat_inventory')
+      end
+      "#{base_path}/"
+    end
   end
 
   def self.uploads_folder
