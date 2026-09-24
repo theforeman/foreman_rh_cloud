@@ -16,6 +16,8 @@ class ForemanInventoryUploadTest < ActiveSupport::TestCase
   test 'falls back to rails tmp when shared tmpdir is not writable' do
     File.expects(:writable?).with(ForemanInventoryUpload::SHARED_TMPDIR).returns(false)
 
-    assert_equal "#{Rails.root.join('tmp', 'red_hat_inventory')}/", ForemanInventoryUpload.base_folder
+    base_path = Rails.root.join('tmp/red_hat_inventory')
+    expected_path = "#{base_path}/"
+    assert_equal expected_path, ForemanInventoryUpload.base_folder
   end
 end

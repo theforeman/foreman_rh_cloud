@@ -9,10 +9,10 @@ module ForemanInventoryUpload
     # Rails.root/tmp.
     @base_folder ||= begin
       base_path = if File.writable?(SHARED_TMPDIR)
-        Pathname.new(SHARED_TMPDIR).join('red_hat_inventory')
-      else
-        Rails.root.join('tmp', 'red_hat_inventory')
-      end
+                    Pathname.new(SHARED_TMPDIR).join('red_hat_inventory')
+                  else
+                    Rails.root.join('tmp/red_hat_inventory')
+                  end
       "#{base_path}/"
     end
   end
