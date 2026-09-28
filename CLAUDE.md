@@ -88,7 +88,7 @@ bundle exec rake rh_cloud_inventory:report:generate_upload
 organization_id=1 bundle exec rake rh_cloud_inventory:report:generate_upload
 
 # Generate report without uploading
-organization_id=1 target=/var/lib/foreman/red_hat_inventory/generated_reports/ \
+organization_id=1 target=tmp/red_hat_inventory/generated_reports/ \
   bundle exec rake rh_cloud_inventory:report:generate
 
 # Sync recommendations from Insights
