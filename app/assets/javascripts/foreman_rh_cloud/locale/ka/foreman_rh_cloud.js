@@ -3,7 +3,7 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 14.6.1",
+        "Project-Id-Version": "foreman_rh_cloud 14.7.0",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
         "Last-Translator": "Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2026",
@@ -30,7 +30,7 @@
         "გამოწერის ყურების შესახებ"
       ],
       "Actions": [
-        ""
+        "ქმედებები"
       ],
       "Actions history": [
         "აქტივობების ისტორია"
@@ -399,7 +399,7 @@
         ""
       ],
       "Organization not found": [
-        ""
+        "ორგანიზაცია არ არსებობს"
       ],
       "Organization status": [
         "ორგანიზაციის სტატუსი"

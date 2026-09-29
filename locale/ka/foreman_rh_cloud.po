@@ -8,7 +8,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: foreman_rh_cloud 14.6.1\n"
+"Project-Id-Version: foreman_rh_cloud 14.7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2026\n"
@@ -32,7 +32,7 @@ msgid "About subscription watch"
 msgstr "გამოწერის ყურების შესახებ"
 
 msgid "Actions"
-msgstr ""
+msgstr "ქმედებები"
 
 msgid "Actions history"
 msgstr "აქტივობების ისტორია"
@@ -401,7 +401,7 @@ msgid "Organization"
 msgstr ""
 
 msgid "Organization not found"
-msgstr ""
+msgstr "ორგანიზაცია არ არსებობს"
 
 msgid "Organization status"
 msgstr "ორგანიზაციის სტატუსი"
