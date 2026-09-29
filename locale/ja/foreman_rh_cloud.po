@@ -10,7 +10,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: foreman_rh_cloud 14.6.1\n"
+"Project-Id-Version: foreman_rh_cloud 14.7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
 "Last-Translator: Ondřej Gajdušek, 2026\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid " Sync all inventory status"
-msgstr " すべてのインベントリー状況を同期する"
+msgstr " すべてのインベントリーステータスを同期する"
 
 msgid "%s organizations"
 msgstr "組織 %s 件"
@@ -34,7 +34,7 @@ msgid "About subscription watch"
 msgstr "Subscription Watch の概要"
 
 msgid "Actions"
-msgstr ""
+msgstr "アクション"
 
 msgid "Actions history"
 msgstr "アクション履歴"
@@ -94,7 +94,7 @@ msgid "Current page"
 msgstr "現在のページ"
 
 msgid "Destroy HBI hosts for organization"
-msgstr ""
+msgstr "組織の HBI ホストを破棄する"
 
 msgid "Details"
 msgstr "詳細"
@@ -160,7 +160,7 @@ msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If 
 msgstr "インストール済みパッケージをRed Hatクラウドへのアップロード対象から除外します。(insights_minimal_data_collection が true に設定されている場合、インストール済みパッケージは常に除外されるため、この設定は無視されます。) ローカルの Insights を使用している場合は無視されます。"
 
 msgid "Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: "
-msgstr ""
+msgstr "host_registration_insights_inventory パラメーターの値が false であるため、console.redhat.com Inventory サービスへのアップロードから除外されました: "
 
 msgid "Failed"
 msgstr "失敗"
@@ -169,7 +169,7 @@ msgid "Failed to destroy HBI host %s: %s"
 msgstr "HBI ホスト %s を破棄できませんでした: %s"
 
 msgid "Failed to destroy HBI hosts for organization %s: %s"
-msgstr ""
+msgstr "組織 %s の HBI ホストの破棄に失敗しました: %s"
 
 msgid "Failed to fetch hosts"
 msgstr "ホストを取得できませんでした"
@@ -190,25 +190,25 @@ msgid "Fix host"
 msgstr "ホストの修正"
 
 msgid "For more information about Insights and Cloud Connector, see:"
-msgstr "Insights と Cloud Connector の詳細は、以下を参照してください。"
+msgstr "Insights と Cloud Connector の詳細は、以下を参照してください:"
 
 msgid "For more information about the Subscriptions service, see:"
-msgstr "サブスクリプションサービスの詳細は、以下を参照してください。"
+msgstr "サブスクリプションサービスの詳細は、以下を参照してください:"
 
 msgid "Force RHEL Lightspeed CLA connection"
-msgstr ""
+msgstr "RHEL Lightspeed CLA 接続を強制する"
 
 msgid "Foreman plugin that process & upload data to Red Hat Cloud"
 msgstr "データを処理して Red Hat Cloud にアップロードする Foreman プラグイン"
 
 msgid "Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off."
-msgstr ""
+msgstr "IoP モードの場合でも、リクエストを Lightspeed CLA に転送します。IoP モードがオフの場合は無視されます。"
 
 msgid "Generate and upload report"
 msgstr "レポートの生成およびアップロード"
 
 msgid "Generate report"
-msgstr "レポートの生成"
+msgstr "レポートを生成する"
 
 msgid "Generate the report, but do not upload"
 msgstr "レポートを生成するがアップロードしない"
@@ -241,13 +241,13 @@ msgid "Host inventory report job"
 msgstr "ホストインベントリーレポートジョブ"
 
 msgid "Host is excluded from upload to console.redhat.com Inventory service due to host parameter"
-msgstr ""
+msgstr "ホストパラメーターが原因で、ホストは console.redhat.com Inventory サービスへのアップロードから除外されています"
 
 msgid "Host is not present on console.redhat.com Inventory service"
-msgstr ""
+msgstr "ホストは console.redhat.com Inventory サービスに表示されていません"
 
 msgid "Host is uploaded and present on console.redhat.com Inventory service"
-msgstr ""
+msgstr "ホストがアップロードされ、console.redhat.com Inventory サービスに表示されています"
 
 msgid "Hostname"
 msgstr "ホスト名"
@@ -298,7 +298,7 @@ msgid "Loading"
 msgstr "ロード中"
 
 msgid "Loading..."
-msgstr "読み込み中..."
+msgstr "ロード中..."
 
 msgid "Low"
 msgstr "低"
@@ -319,7 +319,7 @@ msgid "Moderate"
 msgstr "中"
 
 msgid "More details can be found in"
-msgstr "詳細は、以下を参照してください: "
+msgstr "詳細は、以下を参照してください:"
 
 msgid "N/A"
 msgstr "N/A"
@@ -328,7 +328,7 @@ msgid "No"
 msgstr "いいえ"
 
 msgid "No HBI hosts found for organization %s"
-msgstr ""
+msgstr "組織 %s の HBI ホストが見つかりません"
 
 msgid "No account data available."
 msgstr "利用可能なアカウントデータがありません。"
@@ -343,7 +343,7 @@ msgid "No report generation tasks have been run yet."
 msgstr "レポート生成タスクはまだ実行されていません。"
 
 msgid "No results found"
-msgstr "結果は見つかりませんでした"
+msgstr "該当する結果が見つかりませんでした"
 
 msgid "No task history"
 msgstr "タスク履歴なし"
@@ -358,13 +358,13 @@ msgid "None of the selected hosts are registered"
 msgstr "選択したホストが登録されていません"
 
 msgid "Not present on console.redhat.com Inventory service: "
-msgstr ""
+msgstr "console.redhat.com Inventory サービスに表示されていません: "
 
 msgid "Not reporting"
 msgstr "報告なし"
 
 msgid "Not reporting because host_registration_insights parameter value is false"
-msgstr ""
+msgstr "host_registration_insights パラメーターの値が false のため、レポートされません"
 
 msgid "Nothing to sync, there are no hosts with subscription for this organization."
 msgstr "同期するものがありません。この組織でサブスクリプションが割り当てられているホストはありません。"
@@ -400,10 +400,10 @@ msgid "Oops! Couldn't find organization that matches your query"
 msgstr "クエリーに合致する組織が見つかりませんでした"
 
 msgid "Organization"
-msgstr ""
+msgstr "組織"
 
 msgid "Organization not found"
-msgstr ""
+msgstr "組織が見つかりません"
 
 msgid "Organization status"
 msgstr "組織ステータス"
@@ -427,10 +427,10 @@ msgid "RHC daemon id. Ignored when using local Insights."
 msgstr "RHC デーモン ID。ローカルの Insights を使用している場合は無視されます。"
 
 msgid "RHC instance ID to register with Red Hat Sources"
-msgstr ""
+msgstr "Red Hat Sources に登録するための RHC インスタンス ID"
 
 msgid "Read more about it in RH cloud insights"
-msgstr "詳細は、RH cloud insights を参照してください。"
+msgstr "詳細は、RH cloud insights を参照してください"
 
 msgid "Reboot Required"
 msgstr "再起動が必要です"
@@ -448,16 +448,16 @@ msgid "Recommendations"
 msgstr "推奨事項"
 
 msgid "Recommendations actions"
-msgstr ""
+msgstr "推奨事項のアクション"
 
 msgid "Recommendations selected: %s."
-msgstr "選択済みの推奨事項: %s 件"
+msgstr "選択済みの推奨事項: %s 件。"
 
 msgid "Recommendations synced successfully"
 msgstr "推奨事項が正常に同期されました"
 
 msgid "Red Hat Cloud Inventory"
-msgstr "Red Hat Cloud インベントリー"
+msgstr "Red Hat Cloud Inventory"
 
 msgid "Red Hat Insights"
 msgstr "Red Hat Insights"
@@ -466,10 +466,10 @@ msgid "Red Hat Insights Data and Application Security"
 msgstr "Red Hat Insights データおよびアプリケーションセキュリティー"
 
 msgid "Red Hat Inventory"
-msgstr "Red Hat インベントリー"
+msgstr "Red Hat Inventory"
 
 msgid "Registered hosts in organization: "
-msgstr ""
+msgstr "組織内の登録済みホスト: "
 
 msgid "Remediate"
 msgstr "修復"
@@ -487,7 +487,7 @@ msgid "Report generation started"
 msgstr "レポート生成が開始される"
 
 msgid "Report saved to"
-msgstr "レポートの保存先: "
+msgstr "レポートの保存先:"
 
 msgid "Reporting"
 msgstr "レポート"
@@ -508,19 +508,19 @@ msgid "Running"
 msgstr "実行中"
 
 msgid "Satellite server has %{hits_count} recommendations by Red Hat"
-msgstr "Satellite Server には、Red Hat からの推奨事項が %{hits_count} 件あります。"
+msgstr "Satellite Server には、Red Hat からの推奨事項が %{hits_count} 件あります"
 
 msgid "Schedule a task to register in Red Hat Sources for cloud connector"
-msgstr ""
+msgstr "Cloud Connector 向けに Red Hat Sources に登録するタスクをスケジュールする"
 
 msgid "Scoped search string for host removal"
 msgstr "ホストを削除する場合に対象を特定の範囲に限定する検索文字列"
 
 msgid "Searching by recommendations count is not available in IoP mode."
-msgstr ""
+msgstr "IoP モードでは、推奨事項数による検索は利用できません。"
 
 msgid "Select all recommendations"
-msgstr ""
+msgstr "すべての推奨事項を選択する"
 
 msgid "Select recommendations from all pages"
 msgstr "すべてのページから推奨事項を選択する"
@@ -562,7 +562,7 @@ msgid "Success"
 msgstr "成功"
 
 msgid "Successfully deleted all HBI hosts for organization %s"
-msgstr ""
+msgstr "組織 %s のすべての HBI ホストを正常に削除しました"
 
 msgid "Sync automatically"
 msgstr "自動同期"
@@ -574,10 +574,10 @@ msgid "Synchronize recommendations Automatically"
 msgstr "推奨事項を自動的に同期する"
 
 msgid "Table actions"
-msgstr ""
+msgstr "テーブルアクション"
 
 msgid "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required."
-msgstr "Foreman インベントリーアップロードプラグインは、Foreman ホストのインベントリーデータを Insights のインベントリーサービスに自動的にアップロードします。このデータは、サブスクリプションサービスでもサブスクリプションレポートに使用できます。サブスクリプションサービスを使用する場合は、インベントリーアップロードを有効にする必要があります。"
+msgstr "Foreman インベントリーアップロードプラグインは、Foreman ホストのインベントリーデータを Insights の Inventory サービスに自動的にアップロードします。このデータは、Subscriptions サービスでもサブスクリプションレポートに使用できます。Subscriptions サービスを使用する場合は、インベントリーアップロードを有効にする必要があります。"
 
 msgid "The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Foreman instance."
 msgstr "Red Hat Hybrid Cloud Console は、この Foreman インスタンスの予測分析、問題の修復、統合サブスクリプションレポートを提供する Red Hat Insights およびサブスクリプションを含む一連のクラウドサービスを提供します。"
@@ -592,13 +592,13 @@ msgid "The server returned the following error: %s"
 msgstr "サーバーは以下のエラーを返しました: %s"
 
 msgid "The task failed with the following error:"
-msgstr "タスクは以下のエラーで失敗しました: "
+msgstr "タスクは以下のエラーで失敗しました:"
 
 msgid "There are no recommendations for your hosts"
 msgstr "ホストに関する推奨事項はありません"
 
 msgid "There were no missing Insights facets"
-msgstr "不足している Insights のファセットはありませんでした。"
+msgstr "不足している Insights のファセットはありませんでした"
 
 msgid "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day."
 msgstr "すべての Foreman 組織でこのレポートを有効にするには、{uploadButtonName} をオンに設定します。データは 1 日に 1 回自動的にレポートされます。"
@@ -619,7 +619,7 @@ msgid "Unknown"
 msgstr "不明"
 
 msgid "Unsupported operator for recommendations count search: %s"
-msgstr ""
+msgstr "推奨事項数の検索でサポートされていない Operator: %s"
 
 msgid "Upload hits from iop-advisor-engine"
 msgstr "iop-advisor-engine からの検索結果をアップロードする"
@@ -637,7 +637,7 @@ msgid "Uploaded"
 msgstr "アップロード済み"
 
 msgid "Uploaded and present on console.redhat.com Inventory service: "
-msgstr ""
+msgstr "console.redhat.com Inventory サービスにアップロードされ、表示されています: "
 
 msgid "Value %{value} is not a valid UUID"
 msgstr "%{value} の値は有効な UUID ではありません"
@@ -676,7 +676,7 @@ msgid "Whether the resolution requires reboot"
 msgstr "解決策には再起動が必要かどうか"
 
 msgid "You can review this information later by looking at the Inventory status of each host."
-msgstr ""
+msgstr "この情報は、各ホストの Inventory ステータスを参照することで、後から確認できます。"
 
 msgid "You do not have permission to perform this action"
 msgstr "このアクションを実行するパーミッションがありません"
@@ -760,4 +760,4 @@ msgid "upload resolutions related to the hits"
 msgstr "検索結果に関連する解決策をアップロードする"
 
 msgid "view the task page for more details"
-msgstr "詳細は、タスクページを表示します。"
+msgstr "詳細は、タスクページを表示します"

@@ -5,16 +5,16 @@
 #
 # Translators:
 # Romain Vrignaud <rvrignaud@gmail.com>, 2023
-# 21966816214bc546c1fc8a185e75ca1c, 2023
 # Claer <transiblu@claer.hammock.fr>, 2023
 # Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2026
-# Amit Upadhye <aupadhye@redhat.com>, 2026
 # Bryan Kearney <bryan.kearney@gmail.com>, 2026
+# Amit Upadhye <aupadhye@redhat.com>, 2026
+# 21966816214bc546c1fc8a185e75ca1c, 2026
 # Ondřej Gajdušek, 2026
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: foreman_rh_cloud 14.6.1\n"
+"Project-Id-Version: foreman_rh_cloud 14.7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
 "Last-Translator: Ondřej Gajdušek, 2026\n"
@@ -39,7 +39,7 @@ msgid "About subscription watch"
 msgstr "Informations sur la vérification des abonnements"
 
 msgid "Actions"
-msgstr ""
+msgstr "Actions"
 
 msgid "Actions history"
 msgstr "Historique des actions"
@@ -99,7 +99,7 @@ msgid "Current page"
 msgstr "Page actuelle"
 
 msgid "Destroy HBI hosts for organization"
-msgstr ""
+msgstr "Détruire les hôtes HBI pour l'organisation"
 
 msgid "Details"
 msgstr "Détails"
@@ -138,10 +138,10 @@ msgid "Enable automatic synchronization of Insights recommendations from the Red
 msgstr "Activer la synchronisation automatique des recommandations Insights à partir de Red Hat Cloud"
 
 msgid "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights."
-msgstr "Activer la synchronisation automatique des recommandations Insights à partir de Red Hat Cloud"
+msgstr "Activez la synchronisation automatique des recommandations Insights depuis le cloud Red Hat. Ignorée lors de l'utilisation d'Insights en local."
 
 msgid "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights."
-msgstr "Activer le téléchargement automatique de votre inventaire d'hôtes dans Red Hat Cloud. Ignoré lors de l'utilisation d'Insights local."
+msgstr "Activez le chargement automatique de votre inventaire d'hôtes vers le cloud Red Hat. Cette option est ignorée lors de l'utilisation d'Insights en local."
 
 msgid "Enable automatic upload of your hosts inventory to the Red Hat cloud"
 msgstr "Activer le téléchargement automatique de l'inventaire de vos hôtes dans Red Hat Cloud"
@@ -165,7 +165,7 @@ msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If 
 msgstr "Exclure les paquets installés du téléchargement vers le cloud Red Hat. (Si insights_minimal_data_collection est défini sur « true », ce paramètre est ignoré et les paquets installés sont toujours exclus.) Ignoré lors de l'utilisation d'Insights local."
 
 msgid "Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: "
-msgstr ""
+msgstr "Exclu du chargement sur le service d'inventaire console.redhat.com car la valeur du paramètre host_registration_insights_inventory est fausse : "
 
 msgid "Failed"
 msgstr "Échec"
@@ -174,7 +174,7 @@ msgid "Failed to destroy HBI host %s: %s"
 msgstr "N’a pas pu détruire l’hôte HBI %s: %s"
 
 msgid "Failed to destroy HBI hosts for organization %s: %s"
-msgstr ""
+msgstr "Échec de la destruction des hôtes HBI pour l'organisation %s: %s"
 
 msgid "Failed to fetch hosts"
 msgstr "Erreur de récupération des hôtes"
@@ -201,13 +201,13 @@ msgid "For more information about the Subscriptions service, see:"
 msgstr "Pour plus d'informations sur le service d'abonnements, consultez :"
 
 msgid "Force RHEL Lightspeed CLA connection"
-msgstr ""
+msgstr "Forcer la connexion RHEL Lightspeed CLA"
 
 msgid "Foreman plugin that process & upload data to Red Hat Cloud"
 msgstr "Plugin Foreman qui traite et télécharge les données vers Red Hat Cloud"
 
 msgid "Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off."
-msgstr ""
+msgstr "Transmettre les requêtes à Lightspeed CLA même en mode IoP. Ignorer lorsque le mode IoP est désactivé."
 
 msgid "Generate and upload report"
 msgstr "Générer et télécharger un rapport"
@@ -246,13 +246,13 @@ msgid "Host inventory report job"
 msgstr "Tâche de rapport d'inventaire des hôtes"
 
 msgid "Host is excluded from upload to console.redhat.com Inventory service due to host parameter"
-msgstr ""
+msgstr "L'hôte est exclu du chargement vers le service d'inventaire console.redhat.com en raison d'un paramètre de l'hôte"
 
 msgid "Host is not present on console.redhat.com Inventory service"
-msgstr ""
+msgstr "L'hôte est absent du service d'inventaire console.redhat.com"
 
 msgid "Host is uploaded and present on console.redhat.com Inventory service"
-msgstr ""
+msgstr "L'hôte est téléchargé et présent sur le service d'inventaire console.redhat.com"
 
 msgid "Hostname"
 msgstr "Nom d'hôte"
@@ -333,7 +333,7 @@ msgid "No"
 msgstr "Non"
 
 msgid "No HBI hosts found for organization %s"
-msgstr ""
+msgstr "Aucun hôte HBI trouvé pour l'organisation %s"
 
 msgid "No account data available."
 msgstr "Aucune donnée associée à ce compte n’est disponible."
@@ -348,7 +348,7 @@ msgid "No report generation tasks have been run yet."
 msgstr "Aucune tâche de génération de rapport exécutée pour l’instant."
 
 msgid "No results found"
-msgstr "Aucun résultat"
+msgstr "Aucun résultat trouvé"
 
 msgid "No task history"
 msgstr "Aucun historique de tâche"
@@ -363,13 +363,13 @@ msgid "None of the selected hosts are registered"
 msgstr "Aucun de ces hôtes n’est enregistré"
 
 msgid "Not present on console.redhat.com Inventory service: "
-msgstr ""
+msgstr "Service d'inventaire absent de console.redhat.com : "
 
 msgid "Not reporting"
 msgstr "Non rapporté"
 
 msgid "Not reporting because host_registration_insights parameter value is false"
-msgstr ""
+msgstr "Aucun rapport n'est généré car la valeur du paramètre host_registration_insights est fausse."
 
 msgid "Nothing to sync, there are no hosts with subscription for this organization."
 msgstr "Rien à synchroniser, il n'y a pas d'hôtes avec abonnement pour cette organisation."
@@ -387,7 +387,7 @@ msgid "Obfuscate host names sent to the Red Hat cloud"
 msgstr "Obfusquer les noms d'hôtes envoyés à Red Hat Cloud"
 
 msgid "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights."
-msgstr "Masquer les noms d'hôtes envoyés au cloud Red Hat. (Si insights_minimal_data_collection est défini sur « true », ce paramètre sera ignoré, car les noms d'hôtes ne sont pas inclus dans le rapport.) Ignoré lors de l'utilisation d'Insights local."
+msgstr "Masquer les noms d'hôtes envoyés au cloud Red Hat. (Si insights_minimal_data_collection est défini sur true, ce paramètre est ignoré car les noms d'hôtes ne sont pas inclus dans le rapport.) Ignoré lors de l'utilisation d'Insights en local."
 
 msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud"
 msgstr "Obfusquer les adresses ipv4 envoyées à Red Hat Cloud"
@@ -396,7 +396,7 @@ msgid "Obfuscate ipv4 addresses sent to the Red Hat cloud.  (If insights_minimal
 msgstr "Masquer les adresses IPv4 envoyées au cloud Red Hat. (Si insights_minimal_data_collection est défini sur « true », ce paramètre est ignoré, car les adresses IPv4 des hôtes ne sont pas incluses dans le rapport.) Ignoré lors de l'utilisation d'Insights local."
 
 msgid "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights."
-msgstr "N'incluez que les données minimales requises dans les rapports d'inventaire pour le téléchargement vers le cloud Red Hat. Dans ce cas, les packages installés sont exclus du rapport, quel que soit le paramètre exclude_installed_packages, et les noms d'hôtes et adresses IPv4 sont exclus du rapport, quels que soient les paramètres de masquage. Ignoré lors de l'utilisation d'Insights local."
+msgstr "N'incluez que les données minimales requises dans les rapports d'inventaire destinés au cloud Red Hat. Dans ce cas, les paquets installés sont exclus du rapport, quel que soit le paramètre `exclude_installed_packages`, et les noms d'hôtes et adresses IPv4 sont exclus, quels que soient les paramètres d'obfuscation. Ces informations sont ignorées lors de l'utilisation d'Insights en local."
 
 msgid "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled"
 msgstr "Envoyez uniquement les données minimales requises au cloud Red Hat, les paramètres d'obfuscation (masquage) sont désactivés"
@@ -405,10 +405,10 @@ msgid "Oops! Couldn't find organization that matches your query"
 msgstr "Oups ! Nous n'avons pas trouvé d'organisation correspondant à votre demande."
 
 msgid "Organization"
-msgstr ""
+msgstr "Organisation"
 
 msgid "Organization not found"
-msgstr ""
+msgstr "Organisation non trouvée"
 
 msgid "Organization status"
 msgstr "Statut de l'organisation"
@@ -432,7 +432,7 @@ msgid "RHC daemon id. Ignored when using local Insights."
 msgstr "Identifiant du démon RHC. Ignoré lors de l'utilisation d'Insights local."
 
 msgid "RHC instance ID to register with Red Hat Sources"
-msgstr ""
+msgstr "ID d'instance RHC à enregistrer auprès des sources Red Hat"
 
 msgid "Read more about it in RH cloud insights"
 msgstr "Plus d'informations dans RH cloud insights"
@@ -453,7 +453,7 @@ msgid "Recommendations"
 msgstr "Recommandations"
 
 msgid "Recommendations actions"
-msgstr ""
+msgstr "Actions recommandées"
 
 msgid "Recommendations selected: %s."
 msgstr "Recommandations sélectionnées : %s."
@@ -474,7 +474,7 @@ msgid "Red Hat Inventory"
 msgstr "Inventaire Red Hat"
 
 msgid "Registered hosts in organization: "
-msgstr ""
+msgstr "Hôtes inscrits dans l'organisation : "
 
 msgid "Remediate"
 msgstr "Remédier"
@@ -516,16 +516,16 @@ msgid "Satellite server has %{hits_count} recommendations by Red Hat"
 msgstr "Le serveur satellite a %{hits_count} recommandations de Red Hat"
 
 msgid "Schedule a task to register in Red Hat Sources for cloud connector"
-msgstr ""
+msgstr "Planifiez une tâche pour enregistrer le connecteur Red Hat Sources pour le cloud."
 
 msgid "Scoped search string for host removal"
 msgstr "Chaîne de recherche limitée pour la suppression de l'hôte"
 
 msgid "Searching by recommendations count is not available in IoP mode."
-msgstr ""
+msgstr "La recherche par nombre de recommandations n'est pas disponible en mode IoP."
 
 msgid "Select all recommendations"
-msgstr ""
+msgstr "Sélectionnez toutes les recommandations"
 
 msgid "Select recommendations from all pages"
 msgstr "Sélectionner des recommandations sur toutes les pages"
@@ -564,10 +564,10 @@ msgid "Stopped"
 msgstr "Arrêté"
 
 msgid "Success"
-msgstr "Réussite"
+msgstr "Réussi"
 
 msgid "Successfully deleted all HBI hosts for organization %s"
-msgstr ""
+msgstr "Suppression réussie de tous les hôtes HBI pour l'organisation %s"
 
 msgid "Sync automatically"
 msgstr "Sync automatique"
@@ -579,7 +579,7 @@ msgid "Synchronize recommendations Automatically"
 msgstr "Synchroniser automatiquement les recommandations"
 
 msgid "Table actions"
-msgstr ""
+msgstr "Actions du tableau"
 
 msgid "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required."
 msgstr "Le plugin de téléchargement d'inventaire Foreman télécharge automatiquement les données d'inventaire des hôtes Foreman vers le service Inventaire d'Insights, où elles peuvent également être utilisées par le service Abonnements pour générer des rapports d'abonnement. Si vous utilisez le service Abonnements, l'activation du téléchargement d'inventaire est requise."
@@ -624,7 +624,7 @@ msgid "Unknown"
 msgstr "Inconnu"
 
 msgid "Unsupported operator for recommendations count search: %s"
-msgstr ""
+msgstr "Opérateur non pris en charge pour la recherche du nombre de recommandations : %s"
 
 msgid "Upload hits from iop-advisor-engine"
 msgstr "Télécharger les hits depuis iop-advisor-engine"
@@ -642,7 +642,7 @@ msgid "Uploaded"
 msgstr "Téléchargé"
 
 msgid "Uploaded and present on console.redhat.com Inventory service: "
-msgstr ""
+msgstr "Téléchargé et disponible sur console.redhat.com Service d'inventaire : "
 
 msgid "Value %{value} is not a valid UUID"
 msgstr "La valeur %{value} ne correspond pas à un UUID valide"
@@ -681,7 +681,7 @@ msgid "Whether the resolution requires reboot"
 msgstr "Si la résolution nécessite un redémarrage"
 
 msgid "You can review this information later by looking at the Inventory status of each host."
-msgstr ""
+msgstr "Vous pourrez consulter ces informations ultérieurement en consultant l'état d'inventaire de chaque hôte."
 
 msgid "You do not have permission to perform this action"
 msgstr "Vous n'êtes pas autorisé à entreprendre cette action"
