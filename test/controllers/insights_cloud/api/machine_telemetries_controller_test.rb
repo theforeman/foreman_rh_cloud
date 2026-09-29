@@ -228,7 +228,6 @@ module InsightsCloud::Api
 
     context '#branch_info' do
       setup do
-        UpstreamOnlySettingsTestHelper.set_if_available('allow_multiple_content_views')
         User.current = User.find_by(login: 'secret_admin')
         env = FactoryBot.create(:katello_k_t_environment)
         env2 = FactoryBot.create(:katello_k_t_environment, organization: env.organization)
