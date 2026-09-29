@@ -3,7 +3,7 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 14.6.1",
+        "Project-Id-Version": "foreman_rh_cloud 14.7.0",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
         "Last-Translator": "Ondřej Gajdušek, 2026",
@@ -18,7 +18,7 @@
         "plural_forms": "nplurals=1; plural=0;"
       },
       " Sync all inventory status": [
-        " すべてのインベントリー状況を同期する"
+        " すべてのインベントリーステータスを同期する"
       ],
       "%s organizations": [
         "組織 %s 件"
@@ -30,7 +30,7 @@
         "Subscription Watch の概要"
       ],
       "Actions": [
-        ""
+        "アクション"
       ],
       "Actions history": [
         "アクション履歴"
@@ -90,7 +90,7 @@
         "現在のページ"
       ],
       "Destroy HBI hosts for organization": [
-        ""
+        "組織の HBI ホストを破棄する"
       ],
       "Details": [
         "詳細"
@@ -156,7 +156,7 @@
         "インストール済みパッケージをRed Hatクラウドへのアップロード対象から除外します。(insights_minimal_data_collection が true に設定されている場合、インストール済みパッケージは常に除外されるため、この設定は無視されます。) ローカルの Insights を使用している場合は無視されます。"
       ],
       "Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: ": [
-        ""
+        "host_registration_insights_inventory パラメーターの値が false であるため、console.redhat.com Inventory サービスへのアップロードから除外されました: "
       ],
       "Failed": [
         "失敗"
@@ -165,7 +165,7 @@
         "HBI ホスト %s を破棄できませんでした: %s"
       ],
       "Failed to destroy HBI hosts for organization %s: %s": [
-        ""
+        "組織 %s の HBI ホストの破棄に失敗しました: %s"
       ],
       "Failed to fetch hosts": [
         "ホストを取得できませんでした"
@@ -186,25 +186,25 @@
         "ホストの修正"
       ],
       "For more information about Insights and Cloud Connector, see:": [
-        "Insights と Cloud Connector の詳細は、以下を参照してください。"
+        "Insights と Cloud Connector の詳細は、以下を参照してください:"
       ],
       "For more information about the Subscriptions service, see:": [
-        "サブスクリプションサービスの詳細は、以下を参照してください。"
+        "サブスクリプションサービスの詳細は、以下を参照してください:"
       ],
       "Force RHEL Lightspeed CLA connection": [
-        ""
+        "RHEL Lightspeed CLA 接続を強制する"
       ],
       "Foreman plugin that process & upload data to Red Hat Cloud": [
         "データを処理して Red Hat Cloud にアップロードする Foreman プラグイン"
       ],
       "Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off.": [
-        ""
+        "IoP モードの場合でも、リクエストを Lightspeed CLA に転送します。IoP モードがオフの場合は無視されます。"
       ],
       "Generate and upload report": [
         "レポートの生成およびアップロード"
       ],
       "Generate report": [
-        "レポートの生成"
+        "レポートを生成する"
       ],
       "Generate the report, but do not upload": [
         "レポートを生成するがアップロードしない"
@@ -237,13 +237,13 @@
         "ホストインベントリーレポートジョブ"
       ],
       "Host is excluded from upload to console.redhat.com Inventory service due to host parameter": [
-        ""
+        "ホストパラメーターが原因で、ホストは console.redhat.com Inventory サービスへのアップロードから除外されています"
       ],
       "Host is not present on console.redhat.com Inventory service": [
-        ""
+        "ホストは console.redhat.com Inventory サービスに表示されていません"
       ],
       "Host is uploaded and present on console.redhat.com Inventory service": [
-        ""
+        "ホストがアップロードされ、console.redhat.com Inventory サービスに表示されています"
       ],
       "Hostname": [
         "ホスト名"
@@ -294,7 +294,7 @@
         "ロード中"
       ],
       "Loading...": [
-        "読み込み中..."
+        "ロード中..."
       ],
       "Low": [
         "低"
@@ -315,7 +315,7 @@
         "中"
       ],
       "More details can be found in": [
-        "詳細は、以下を参照してください: "
+        "詳細は、以下を参照してください:"
       ],
       "N/A": [
         "N/A"
@@ -324,7 +324,7 @@
         "いいえ"
       ],
       "No HBI hosts found for organization %s": [
-        ""
+        "組織 %s の HBI ホストが見つかりません"
       ],
       "No account data available.": [
         "利用可能なアカウントデータがありません。"
@@ -339,7 +339,7 @@
         "レポート生成タスクはまだ実行されていません。"
       ],
       "No results found": [
-        "結果は見つかりませんでした"
+        "該当する結果が見つかりませんでした"
       ],
       "No task history": [
         "タスク履歴なし"
@@ -354,13 +354,13 @@
         "選択したホストが登録されていません"
       ],
       "Not present on console.redhat.com Inventory service: ": [
-        ""
+        "console.redhat.com Inventory サービスに表示されていません: "
       ],
       "Not reporting": [
         "報告なし"
       ],
       "Not reporting because host_registration_insights parameter value is false": [
-        ""
+        "host_registration_insights パラメーターの値が false のため、レポートされません"
       ],
       "Nothing to sync, there are no hosts with subscription for this organization.": [
         "同期するものがありません。この組織でサブスクリプションが割り当てられているホストはありません。"
@@ -396,10 +396,10 @@
         "クエリーに合致する組織が見つかりませんでした"
       ],
       "Organization": [
-        ""
+        "組織"
       ],
       "Organization not found": [
-        ""
+        "組織が見つかりません"
       ],
       "Organization status": [
         "組織ステータス"
@@ -423,10 +423,10 @@
         "RHC デーモン ID。ローカルの Insights を使用している場合は無視されます。"
       ],
       "RHC instance ID to register with Red Hat Sources": [
-        ""
+        "Red Hat Sources に登録するための RHC インスタンス ID"
       ],
       "Read more about it in RH cloud insights": [
-        "詳細は、RH cloud insights を参照してください。"
+        "詳細は、RH cloud insights を参照してください"
       ],
       "Reboot Required": [
         "再起動が必要です"
@@ -444,16 +444,16 @@
         "推奨事項"
       ],
       "Recommendations actions": [
-        ""
+        "推奨事項のアクション"
       ],
       "Recommendations selected: %s.": [
-        "選択済みの推奨事項: %s 件"
+        "選択済みの推奨事項: %s 件。"
       ],
       "Recommendations synced successfully": [
         "推奨事項が正常に同期されました"
       ],
       "Red Hat Cloud Inventory": [
-        "Red Hat Cloud インベントリー"
+        "Red Hat Cloud Inventory"
       ],
       "Red Hat Insights": [
         "Red Hat Insights"
@@ -462,10 +462,10 @@
         "Red Hat Insights データおよびアプリケーションセキュリティー"
       ],
       "Red Hat Inventory": [
-        "Red Hat インベントリー"
+        "Red Hat Inventory"
       ],
       "Registered hosts in organization: ": [
-        ""
+        "組織内の登録済みホスト: "
       ],
       "Remediate": [
         "修復"
@@ -483,7 +483,7 @@
         "レポート生成が開始される"
       ],
       "Report saved to": [
-        "レポートの保存先: "
+        "レポートの保存先:"
       ],
       "Reporting": [
         "レポート"
@@ -504,19 +504,19 @@
         "実行中"
       ],
       "Satellite server has %{hits_count} recommendations by Red Hat": [
-        "Satellite Server には、Red Hat からの推奨事項が %{hits_count} 件あります。"
+        "Satellite Server には、Red Hat からの推奨事項が %{hits_count} 件あります"
       ],
       "Schedule a task to register in Red Hat Sources for cloud connector": [
-        ""
+        "Cloud Connector 向けに Red Hat Sources に登録するタスクをスケジュールする"
       ],
       "Scoped search string for host removal": [
         "ホストを削除する場合に対象を特定の範囲に限定する検索文字列"
       ],
       "Searching by recommendations count is not available in IoP mode.": [
-        ""
+        "IoP モードでは、推奨事項数による検索は利用できません。"
       ],
       "Select all recommendations": [
-        ""
+        "すべての推奨事項を選択する"
       ],
       "Select recommendations from all pages": [
         "すべてのページから推奨事項を選択する"
@@ -558,7 +558,7 @@
         "成功"
       ],
       "Successfully deleted all HBI hosts for organization %s": [
-        ""
+        "組織 %s のすべての HBI ホストを正常に削除しました"
       ],
       "Sync automatically": [
         "自動同期"
@@ -570,10 +570,10 @@
         "推奨事項を自動的に同期する"
       ],
       "Table actions": [
-        ""
+        "テーブルアクション"
       ],
       "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.": [
-        "Foreman インベントリーアップロードプラグインは、Foreman ホストのインベントリーデータを Insights のインベントリーサービスに自動的にアップロードします。このデータは、サブスクリプションサービスでもサブスクリプションレポートに使用できます。サブスクリプションサービスを使用する場合は、インベントリーアップロードを有効にする必要があります。"
+        "Foreman インベントリーアップロードプラグインは、Foreman ホストのインベントリーデータを Insights の Inventory サービスに自動的にアップロードします。このデータは、Subscriptions サービスでもサブスクリプションレポートに使用できます。Subscriptions サービスを使用する場合は、インベントリーアップロードを有効にする必要があります。"
       ],
       "The Red Hat Hybrid Cloud Console provides a set of cloud services, including Red Hat Insights and Subscriptions, that provide predictive analysis, remediation of issues, and unified subscription reporting for this Foreman instance.": [
         "Red Hat Hybrid Cloud Console は、この Foreman インスタンスの予測分析、問題の修復、統合サブスクリプションレポートを提供する Red Hat Insights およびサブスクリプションを含む一連のクラウドサービスを提供します。"
@@ -588,13 +588,13 @@
         "サーバーは以下のエラーを返しました: %s"
       ],
       "The task failed with the following error:": [
-        "タスクは以下のエラーで失敗しました: "
+        "タスクは以下のエラーで失敗しました:"
       ],
       "There are no recommendations for your hosts": [
         "ホストに関する推奨事項はありません"
       ],
       "There were no missing Insights facets": [
-        "不足している Insights のファセットはありませんでした。"
+        "不足している Insights のファセットはありませんでした"
       ],
       "To enable this reporting for all Foreman organizations, set {uploadButtonName} to on. The data will be reported automatically once per day.": [
         "すべての Foreman 組織でこのレポートを有効にするには、{uploadButtonName} をオンに設定します。データは 1 日に 1 回自動的にレポートされます。"
@@ -615,7 +615,7 @@
         "不明"
       ],
       "Unsupported operator for recommendations count search: %s": [
-        ""
+        "推奨事項数の検索でサポートされていない Operator: %s"
       ],
       "Upload hits from iop-advisor-engine": [
         "iop-advisor-engine からの検索結果をアップロードする"
@@ -633,7 +633,7 @@
         "アップロード済み"
       ],
       "Uploaded and present on console.redhat.com Inventory service: ": [
-        ""
+        "console.redhat.com Inventory サービスにアップロードされ、表示されています: "
       ],
       "Value %{value} is not a valid UUID": [
         "%{value} の値は有効な UUID ではありません"
@@ -672,7 +672,7 @@
         "解決策には再起動が必要かどうか"
       ],
       "You can review this information later by looking at the Inventory status of each host.": [
-        ""
+        "この情報は、各ホストの Inventory ステータスを参照することで、後から確認できます。"
       ],
       "You do not have permission to perform this action": [
         "このアクションを実行するパーミッションがありません"
@@ -756,7 +756,7 @@
         "検索結果に関連する解決策をアップロードする"
       ],
       "view the task page for more details": [
-        "詳細は、タスクページを表示します。"
+        "詳細は、タスクページを表示します"
       ]
     }
   }

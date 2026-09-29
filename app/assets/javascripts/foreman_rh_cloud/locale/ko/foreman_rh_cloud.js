@@ -3,7 +3,7 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 14.6.1",
+        "Project-Id-Version": "foreman_rh_cloud 14.7.0",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
         "Last-Translator": "Ondřej Gajdušek, 2026",
@@ -30,7 +30,7 @@
         "서브스크립션 감시 정보"
       ],
       "Actions": [
-        ""
+        "동작 "
       ],
       "Actions history": [
         "작업 내역"
@@ -90,7 +90,7 @@
         "현재 페이지"
       ],
       "Destroy HBI hosts for organization": [
-        ""
+        "조직의 HBI 호스트 삭제"
       ],
       "Details": [
         "상세 정보"
@@ -156,7 +156,7 @@
         "설치된 패키지가 Red Hat 클라우드에 업로드되지 않도록 제외합니다. (insights_minimal_data_collection이 true로 설정된 경우 이 설정은 무시되고 설치된 패키지는 항상 제외됩니다.) 로컬 Insights를 사용하는 경우에는 이 설정이 무시됩니다."
       ],
       "Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: ": [
-        ""
+        "host_registration_insights_inventory 매개변수 값이 false이므로 console.redhat.com 인벤토리 서비스에 업로드되지 않도록 제외된 호스트:"
       ],
       "Failed": [
         "실패 "
@@ -165,7 +165,7 @@
         "HBI 호스트 %s 삭제 실패: %s"
       ],
       "Failed to destroy HBI hosts for organization %s: %s": [
-        ""
+        "조직 %s의 HBI 호스트를 삭제하지 못했습니다: %s"
       ],
       "Failed to fetch hosts": [
         "호스트를 가져오는 데 실패했습니다"
@@ -192,13 +192,13 @@
         "서브스크립션 서비스에 대한 자세한 정보는 다음을 참조하십시오:"
       ],
       "Force RHEL Lightspeed CLA connection": [
-        ""
+        "RHEL Lightspeed CLA 연결 강제 적용"
       ],
       "Foreman plugin that process & upload data to Red Hat Cloud": [
         "Red Hat Cloud에 데이터를 처리하고 업로드하는 Foreman 플러그인"
       ],
       "Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off.": [
-        ""
+        "IoP 모드에서도 요청을 Lightspeed CLA로 전달합니다. IoP 모드가 꺼져 있으면 무시됩니다."
       ],
       "Generate and upload report": [
         "보고서 생성 및 업로드"
@@ -237,13 +237,13 @@
         "호스트 인벤토리 보고서 작업"
       ],
       "Host is excluded from upload to console.redhat.com Inventory service due to host parameter": [
-        ""
+        "호스트 매개변수로 인해 console.redhat.com 인벤토리 서비스에 업로드되지 않도록 제외된 호스트"
       ],
       "Host is not present on console.redhat.com Inventory service": [
-        ""
+        "호스트가 console.redhat.com 인벤토리 서비스에 없습니다."
       ],
       "Host is uploaded and present on console.redhat.com Inventory service": [
-        ""
+        "호스트가 업로드되어 console.redhat.com 인벤토리 서비스에 표시됩니다."
       ],
       "Hostname": [
         "호스트 이름"
@@ -294,7 +294,7 @@
         "로딩 중 "
       ],
       "Loading...": [
-        "로딩..."
+        "로딩 중..."
       ],
       "Low": [
         "낮음"
@@ -324,7 +324,7 @@
         "아니오  "
       ],
       "No HBI hosts found for organization %s": [
-        ""
+        "조직 %s에 대한 HBI 호스트를 찾을 수 없습니다."
       ],
       "No account data available.": [
         "계정 정보가 없습니다."
@@ -354,13 +354,13 @@
         "선택된 호스트 중 등록된 호스트는 없습니다."
       ],
       "Not present on console.redhat.com Inventory service: ": [
-        ""
+        "console.redhat.com 인벤토리 서비스에 없는 호스트:"
       ],
       "Not reporting": [
         "보고하지 않음"
       ],
       "Not reporting because host_registration_insights parameter value is false": [
-        ""
+        "host_registration_insights 매개변수 값이 false이므로 보고하지 않습니다"
       ],
       "Nothing to sync, there are no hosts with subscription for this organization.": [
         "동기화할 것이 없습니다. 이 조직에 대한 서브스크립션이 있는 호스트가 없습니다."
@@ -396,10 +396,10 @@
         "죄송합니다! 귀하의 쿼리와 일치하는 조직을 찾을 수 없습니다."
       ],
       "Organization": [
-        ""
+        "조직 "
       ],
       "Organization not found": [
-        ""
+        "조직을 찾을 수 없습니다"
       ],
       "Organization status": [
         "조직 상태"
@@ -423,7 +423,7 @@
         "RHC 데몬 ID입니다. 로컬 Insights를 사용할 때는 무시됩니다."
       ],
       "RHC instance ID to register with Red Hat Sources": [
-        ""
+        "Red Hat Sources에 등록할 RHC 인스턴스 ID"
       ],
       "Read more about it in RH cloud insights": [
         "RH 클라우드 Insights에서 이에 대해 자세히 알아보세요."
@@ -444,7 +444,7 @@
         "권장 사항"
       ],
       "Recommendations actions": [
-        ""
+        "권장 사항 작업"
       ],
       "Recommendations selected: %s.": [
         "선택된 권장 사항:%s ."
@@ -465,7 +465,7 @@
         "Red Hat 인벤토리"
       ],
       "Registered hosts in organization: ": [
-        ""
+        "조직에 등록된 호스트: "
       ],
       "Remediate": [
         "개선 사항"
@@ -507,16 +507,16 @@
         "Satellite 서버에는 Red Hat의 권장 사항이 %{hits_count} 개 있습니다"
       ],
       "Schedule a task to register in Red Hat Sources for cloud connector": [
-        ""
+        "클라우드 커넥터의 Red Hat Sources에 등록하는 작업 예약"
       ],
       "Scoped search string for host removal": [
         "호스트 제거를 위한 범위 검색 문자열"
       ],
       "Searching by recommendations count is not available in IoP mode.": [
-        ""
+        "IoP 모드에서는 권장 사항 수를 기준으로 검색할 수 없습니다."
       ],
       "Select all recommendations": [
-        ""
+        "모든 권장 사항 선택"
       ],
       "Select recommendations from all pages": [
         "모든 페이지에서 추천을 선택하세요"
@@ -558,7 +558,7 @@
         "성공 "
       ],
       "Successfully deleted all HBI hosts for organization %s": [
-        ""
+        "조직 %s의 모든 HBI 호스트가 성공적으로 삭제되었습니다."
       ],
       "Sync automatically": [
         "자동으로 동기화"
@@ -570,7 +570,7 @@
         "추천 사항을 자동으로 동기화합니다"
       ],
       "Table actions": [
-        ""
+        "테이블 작업"
       ],
       "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.": [
         "Foreman 인벤토리 업로드 플러그인은 Foreman 호스트 인벤토리 데이터를 자동으로 Insights의 인벤토리 서비스에 업로드하며, 이 데이터는 서브스크립션 보고서를 위한 서브스크립션 서비스에서도 사용할 수 있습니다. 서브스크립션 서비스를 사용하는 경우, 인벤토리 업로드를 활성화하는 것이 필수입니다."
@@ -615,7 +615,7 @@
         "알 수 없음"
       ],
       "Unsupported operator for recommendations count search: %s": [
-        ""
+        "권장 사항 수 검색에 지원되지 않는 연산자: %s"
       ],
       "Upload hits from iop-advisor-engine": [
         "iop-advisor-engine에서 히트 업로드"
@@ -633,7 +633,7 @@
         "업로드됨"
       ],
       "Uploaded and present on console.redhat.com Inventory service: ": [
-        ""
+        "console.redhat.com 인벤토리 서비스에 업로드되어 표시된 호스트: "
       ],
       "Value %{value} is not a valid UUID": [
         "값%{value}이/가 유효한 UUID가 아닙니다"
@@ -672,7 +672,7 @@
         "해결을 위해 재부팅이 필요한지 여부"
       ],
       "You can review this information later by looking at the Inventory status of each host.": [
-        ""
+        "각 호스트의 인벤토리 상태에서 이 정보를 나중에 검토할 수 있습니다."
       ],
       "You do not have permission to perform this action": [
         "이 작업을 수행할 권한이 없습니다."

@@ -6,14 +6,14 @@
 # Translators:
 # tim123, 2023
 # 0868a4d1af5275b3f70b0a6dac4c99a4, 2023
-# Amit Upadhye <aupadhye@redhat.com>, 2026
 # Ewoud Kohl van Wijngaarden <ewoud+transifex@kohlvanwijngaarden.nl>, 2026
 # Bryan Kearney <bryan.kearney@gmail.com>, 2026
+# Amit Upadhye <aupadhye@redhat.com>, 2026
 # Ondřej Gajdušek, 2026
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: foreman_rh_cloud 14.6.1\n"
+"Project-Id-Version: foreman_rh_cloud 14.7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-01-20 13:26+0000\n"
 "Last-Translator: Ondřej Gajdušek, 2026\n"
@@ -38,7 +38,7 @@ msgid "About subscription watch"
 msgstr "订阅查看"
 
 msgid "Actions"
-msgstr ""
+msgstr "操作"
 
 msgid "Actions history"
 msgstr "操作历史记录"
@@ -98,7 +98,7 @@ msgid "Current page"
 msgstr "当前页"
 
 msgid "Destroy HBI hosts for organization"
-msgstr ""
+msgstr "为机构销毁 HBI 主机"
 
 msgid "Details"
 msgstr "详情"
@@ -164,7 +164,7 @@ msgid "Exclude installed packages from being uploaded to the Red Hat cloud. (If 
 msgstr "在上传到红帽云时排除安装的软件包。（如果 insights_minimal_data_collection 设置为 true，则忽略此设置，且安装的软件包始终被排除。）在使用本地 Insights 时忽略。"
 
 msgid "Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: "
-msgstr ""
+msgstr "因为 host_registration_insights_inventory 参数值为 false，被排除在上传至 console.redhat.com Inventory 服务的范围之外。"
 
 msgid "Failed"
 msgstr "失败"
@@ -173,7 +173,7 @@ msgid "Failed to destroy HBI host %s: %s"
 msgstr "销毁 HBI 主机 %s 失败：%s"
 
 msgid "Failed to destroy HBI hosts for organization %s: %s"
-msgstr ""
+msgstr "为机构 %s 销毁 HBI 主机失败：%s"
 
 msgid "Failed to fetch hosts"
 msgstr "获取主机失败"
@@ -200,13 +200,13 @@ msgid "For more information about the Subscriptions service, see:"
 msgstr "有关订阅服务的更多信息，请参阅："
 
 msgid "Force RHEL Lightspeed CLA connection"
-msgstr ""
+msgstr "强制 RHEL Lightspeed CLA 连接"
 
 msgid "Foreman plugin that process & upload data to Red Hat Cloud"
 msgstr "处理数据并将其上传到红帽云的 Foreman 插件"
 
 msgid "Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off."
-msgstr ""
+msgstr "即使处于 IoP 模式，也会将请求转发至 Lightspeed CLA。当 IoP 模式未开启时，此设置将被忽略。"
 
 msgid "Generate and upload report"
 msgstr "生成并上传报告"
@@ -245,13 +245,13 @@ msgid "Host inventory report job"
 msgstr "主机清单报告作业"
 
 msgid "Host is excluded from upload to console.redhat.com Inventory service due to host parameter"
-msgstr ""
+msgstr "由于主机参数设置，该主机已被排除在上传至 console.redhat.com Inventory 服务的范围之外。"
 
 msgid "Host is not present on console.redhat.com Inventory service"
-msgstr ""
+msgstr "console.redhat.com 清单服务中没有主机"
 
 msgid "Host is uploaded and present on console.redhat.com Inventory service"
-msgstr ""
+msgstr "主机已上传并存在于 console.redhat.com Inventory 服务中"
 
 msgid "Hostname"
 msgstr "主机名"
@@ -332,7 +332,7 @@ msgid "No"
 msgstr "否"
 
 msgid "No HBI hosts found for organization %s"
-msgstr ""
+msgstr "未找到用于机构 %s 的 HBI 主机 "
 
 msgid "No account data available."
 msgstr "没有可用的帐户数据。"
@@ -362,13 +362,13 @@ msgid "None of the selected hosts are registered"
 msgstr "所选主机都没有注册"
 
 msgid "Not present on console.redhat.com Inventory service: "
-msgstr ""
+msgstr "console.redhat.com Inventory 服务没有包括： "
 
 msgid "Not reporting"
 msgstr "未报告"
 
 msgid "Not reporting because host_registration_insights parameter value is false"
-msgstr ""
+msgstr "未上报数据，因为 host_registration_insights 参数的值为 false。"
 
 msgid "Nothing to sync, there are no hosts with subscription for this organization."
 msgstr "没有同步，此机构没有带有订阅的主机。"
@@ -404,10 +404,10 @@ msgid "Oops! Couldn't find organization that matches your query"
 msgstr "未找到与您的查询匹配的机构"
 
 msgid "Organization"
-msgstr ""
+msgstr "机构"
 
 msgid "Organization not found"
-msgstr ""
+msgstr "没有找到机构"
 
 msgid "Organization status"
 msgstr "机构标签"
@@ -431,7 +431,7 @@ msgid "RHC daemon id. Ignored when using local Insights."
 msgstr "RHC 守护进程 ID。在使用本地 Insights 时忽略。"
 
 msgid "RHC instance ID to register with Red Hat Sources"
-msgstr ""
+msgstr "用于注册 Red Hat Sources 的 RHC 实例 ID"
 
 msgid "Read more about it in RH cloud insights"
 msgstr "在 RH Cloud insights 中了解更多有关它的信息"
@@ -452,7 +452,7 @@ msgid "Recommendations"
 msgstr "建议"
 
 msgid "Recommendations actions"
-msgstr ""
+msgstr "建议操作"
 
 msgid "Recommendations selected: %s."
 msgstr "选择的建议：%s。"
@@ -473,7 +473,7 @@ msgid "Red Hat Inventory"
 msgstr "Red Hat 清单"
 
 msgid "Registered hosts in organization: "
-msgstr ""
+msgstr "机构中注册的主机： "
 
 msgid "Remediate"
 msgstr "补救"
@@ -515,16 +515,16 @@ msgid "Satellite server has %{hits_count} recommendations by Red Hat"
 msgstr "Satellite 服务器有 %{hits_count} 个红帽提供的建议"
 
 msgid "Schedule a task to register in Red Hat Sources for cloud connector"
-msgstr ""
+msgstr "调度一个在 Red Hat Sources 中注册云连接器的任务"
 
 msgid "Scoped search string for host removal"
 msgstr "用于删除主机的有范围的搜索字符串"
 
 msgid "Searching by recommendations count is not available in IoP mode."
-msgstr ""
+msgstr "在 IoP 模式下不支持按推荐数量进行搜索。"
 
 msgid "Select all recommendations"
-msgstr ""
+msgstr "选择所有建议"
 
 msgid "Select recommendations from all pages"
 msgstr "在所有页面中选择建议"
@@ -566,7 +566,7 @@ msgid "Success"
 msgstr "成功"
 
 msgid "Successfully deleted all HBI hosts for organization %s"
-msgstr ""
+msgstr "为机构 %s 成功删除所有 HBI 主机"
 
 msgid "Sync automatically"
 msgstr "自动同步"
@@ -578,7 +578,7 @@ msgid "Synchronize recommendations Automatically"
 msgstr "自动同步建议"
 
 msgid "Table actions"
-msgstr ""
+msgstr "表操作"
 
 msgid "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required."
 msgstr "Foreman 清单上传插件会自动将 Foreman 主机清单数据上传到 Insights 的 Inventory 服务，订阅服务使用这些信息来提供订阅报告。如果使用订阅服务，则需要启用清单上传。"
@@ -623,7 +623,7 @@ msgid "Unknown"
 msgstr "未知"
 
 msgid "Unsupported operator for recommendations count search: %s"
-msgstr ""
+msgstr "不支持按推荐数量进行搜索的运算符：%s"
 
 msgid "Upload hits from iop-advisor-engine"
 msgstr "从 iop-advisor-engine 上传 hits"
@@ -641,7 +641,7 @@ msgid "Uploaded"
 msgstr "已上传"
 
 msgid "Uploaded and present on console.redhat.com Inventory service: "
-msgstr ""
+msgstr "上传并存在于 console.redhat.com Inventory 服务中： "
 
 msgid "Value %{value} is not a valid UUID"
 msgstr "值 %{value} 不是一个有效的 UUID"
@@ -680,7 +680,7 @@ msgid "Whether the resolution requires reboot"
 msgstr "resolution 是否需要重启"
 
 msgid "You can review this information later by looking at the Inventory status of each host."
-msgstr ""
+msgstr "稍后，您可以通过查看每个主机的 Inventory 状态来查看此信息。"
 
 msgid "You do not have permission to perform this action"
 msgstr "您没有执行此操作的权限"
