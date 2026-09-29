@@ -3,7 +3,7 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 14.6.1",
+        "Project-Id-Version": "foreman_rh_cloud 14.7.0",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
         "Last-Translator": "Ondřej Gajdušek, 2026",
@@ -30,7 +30,7 @@
         "Informations sur la vérification des abonnements"
       ],
       "Actions": [
-        ""
+        "Actions"
       ],
       "Actions history": [
         "Historique des actions"
@@ -90,7 +90,7 @@
         "Page actuelle"
       ],
       "Destroy HBI hosts for organization": [
-        ""
+        "Détruire les hôtes HBI pour l'organisation"
       ],
       "Details": [
         "Détails"
@@ -129,10 +129,10 @@
         "Activer la synchronisation automatique des recommandations Insights à partir de Red Hat Cloud"
       ],
       "Enable automatic synchronization of Insights recommendations from the Red Hat cloud. Ignored when using local Insights.": [
-        "Activer la synchronisation automatique des recommandations Insights à partir de Red Hat Cloud"
+        "Activez la synchronisation automatique des recommandations Insights depuis le cloud Red Hat. Ignorée lors de l'utilisation d'Insights en local."
       ],
       "Enable automatic upload of your host inventory to the Red Hat cloud. Ignored when using local Insights.": [
-        "Activer le téléchargement automatique de votre inventaire d'hôtes dans Red Hat Cloud. Ignoré lors de l'utilisation d'Insights local."
+        "Activez le chargement automatique de votre inventaire d'hôtes vers le cloud Red Hat. Cette option est ignorée lors de l'utilisation d'Insights en local."
       ],
       "Enable automatic upload of your hosts inventory to the Red Hat cloud": [
         "Activer le téléchargement automatique de l'inventaire de vos hôtes dans Red Hat Cloud"
@@ -156,7 +156,7 @@
         "Exclure les paquets installés du téléchargement vers le cloud Red Hat. (Si insights_minimal_data_collection est défini sur « true », ce paramètre est ignoré et les paquets installés sont toujours exclus.) Ignoré lors de l'utilisation d'Insights local."
       ],
       "Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: ": [
-        ""
+        "Exclu du chargement sur le service d'inventaire console.redhat.com car la valeur du paramètre host_registration_insights_inventory est fausse : "
       ],
       "Failed": [
         "Échec"
@@ -165,7 +165,7 @@
         "N’a pas pu détruire l’hôte HBI %s: %s"
       ],
       "Failed to destroy HBI hosts for organization %s: %s": [
-        ""
+        "Échec de la destruction des hôtes HBI pour l'organisation %s: %s"
       ],
       "Failed to fetch hosts": [
         "Erreur de récupération des hôtes"
@@ -192,13 +192,13 @@
         "Pour plus d'informations sur le service d'abonnements, consultez :"
       ],
       "Force RHEL Lightspeed CLA connection": [
-        ""
+        "Forcer la connexion RHEL Lightspeed CLA"
       ],
       "Foreman plugin that process & upload data to Red Hat Cloud": [
         "Plugin Foreman qui traite et télécharge les données vers Red Hat Cloud"
       ],
       "Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off.": [
-        ""
+        "Transmettre les requêtes à Lightspeed CLA même en mode IoP. Ignorer lorsque le mode IoP est désactivé."
       ],
       "Generate and upload report": [
         "Générer et télécharger un rapport"
@@ -237,13 +237,13 @@
         "Tâche de rapport d'inventaire des hôtes"
       ],
       "Host is excluded from upload to console.redhat.com Inventory service due to host parameter": [
-        ""
+        "L'hôte est exclu du chargement vers le service d'inventaire console.redhat.com en raison d'un paramètre de l'hôte"
       ],
       "Host is not present on console.redhat.com Inventory service": [
-        ""
+        "L'hôte est absent du service d'inventaire console.redhat.com"
       ],
       "Host is uploaded and present on console.redhat.com Inventory service": [
-        ""
+        "L'hôte est téléchargé et présent sur le service d'inventaire console.redhat.com"
       ],
       "Hostname": [
         "Nom d'hôte"
@@ -324,7 +324,7 @@
         "Non"
       ],
       "No HBI hosts found for organization %s": [
-        ""
+        "Aucun hôte HBI trouvé pour l'organisation %s"
       ],
       "No account data available.": [
         "Aucune donnée associée à ce compte n’est disponible."
@@ -339,7 +339,7 @@
         "Aucune tâche de génération de rapport exécutée pour l’instant."
       ],
       "No results found": [
-        "Aucun résultat"
+        "Aucun résultat trouvé"
       ],
       "No task history": [
         "Aucun historique de tâche"
@@ -354,13 +354,13 @@
         "Aucun de ces hôtes n’est enregistré"
       ],
       "Not present on console.redhat.com Inventory service: ": [
-        ""
+        "Service d'inventaire absent de console.redhat.com : "
       ],
       "Not reporting": [
         "Non rapporté"
       ],
       "Not reporting because host_registration_insights parameter value is false": [
-        ""
+        "Aucun rapport n'est généré car la valeur du paramètre host_registration_insights est fausse."
       ],
       "Nothing to sync, there are no hosts with subscription for this organization.": [
         "Rien à synchroniser, il n'y a pas d'hôtes avec abonnement pour cette organisation."
@@ -378,7 +378,7 @@
         "Obfusquer les noms d'hôtes envoyés à Red Hat Cloud"
       ],
       "Obfuscate host names sent to the Red Hat cloud. (If insights_minimal_data_collection is set to true, this setting is ignored because host names are not included in the report.) Ignored when using local Insights.": [
-        "Masquer les noms d'hôtes envoyés au cloud Red Hat. (Si insights_minimal_data_collection est défini sur « true », ce paramètre sera ignoré, car les noms d'hôtes ne sont pas inclus dans le rapport.) Ignoré lors de l'utilisation d'Insights local."
+        "Masquer les noms d'hôtes envoyés au cloud Red Hat. (Si insights_minimal_data_collection est défini sur true, ce paramètre est ignoré car les noms d'hôtes ne sont pas inclus dans le rapport.) Ignoré lors de l'utilisation d'Insights en local."
       ],
       "Obfuscate ipv4 addresses sent to the Red Hat cloud": [
         "Obfusquer les adresses ipv4 envoyées à Red Hat Cloud"
@@ -387,7 +387,7 @@
         "Masquer les adresses IPv4 envoyées au cloud Red Hat. (Si insights_minimal_data_collection est défini sur « true », ce paramètre est ignoré, car les adresses IPv4 des hôtes ne sont pas incluses dans le rapport.) Ignoré lors de l'utilisation d'Insights local."
       ],
       "Only include the minimum required data in inventory reports for uploading to Red Hat cloud. When this is true, installed packages are excluded from the report regardless of the exclude_installed_packages setting, and host names and IPv4 addresses are excluded from the report regardless of obfuscation settings. Ignored when using local Insights.": [
-        "N'incluez que les données minimales requises dans les rapports d'inventaire pour le téléchargement vers le cloud Red Hat. Dans ce cas, les packages installés sont exclus du rapport, quel que soit le paramètre exclude_installed_packages, et les noms d'hôtes et adresses IPv4 sont exclus du rapport, quels que soient les paramètres de masquage. Ignoré lors de l'utilisation d'Insights local."
+        "N'incluez que les données minimales requises dans les rapports d'inventaire destinés au cloud Red Hat. Dans ce cas, les paquets installés sont exclus du rapport, quel que soit le paramètre `exclude_installed_packages`, et les noms d'hôtes et adresses IPv4 sont exclus, quels que soient les paramètres d'obfuscation. Ces informations sont ignorées lors de l'utilisation d'Insights en local."
       ],
       "Only send the minimum required data to Red Hat cloud, obfuscation settings are disabled": [
         "Envoyez uniquement les données minimales requises au cloud Red Hat, les paramètres d'obfuscation (masquage) sont désactivés"
@@ -396,10 +396,10 @@
         "Oups ! Nous n'avons pas trouvé d'organisation correspondant à votre demande."
       ],
       "Organization": [
-        ""
+        "Organisation"
       ],
       "Organization not found": [
-        ""
+        "Organisation non trouvée"
       ],
       "Organization status": [
         "Statut de l'organisation"
@@ -423,7 +423,7 @@
         "Identifiant du démon RHC. Ignoré lors de l'utilisation d'Insights local."
       ],
       "RHC instance ID to register with Red Hat Sources": [
-        ""
+        "ID d'instance RHC à enregistrer auprès des sources Red Hat"
       ],
       "Read more about it in RH cloud insights": [
         "Plus d'informations dans RH cloud insights"
@@ -444,7 +444,7 @@
         "Recommandations"
       ],
       "Recommendations actions": [
-        ""
+        "Actions recommandées"
       ],
       "Recommendations selected: %s.": [
         "Recommandations sélectionnées : %s."
@@ -465,7 +465,7 @@
         "Inventaire Red Hat"
       ],
       "Registered hosts in organization: ": [
-        ""
+        "Hôtes inscrits dans l'organisation : "
       ],
       "Remediate": [
         "Remédier"
@@ -507,16 +507,16 @@
         "Le serveur satellite a %{hits_count} recommandations de Red Hat"
       ],
       "Schedule a task to register in Red Hat Sources for cloud connector": [
-        ""
+        "Planifiez une tâche pour enregistrer le connecteur Red Hat Sources pour le cloud."
       ],
       "Scoped search string for host removal": [
         "Chaîne de recherche limitée pour la suppression de l'hôte"
       ],
       "Searching by recommendations count is not available in IoP mode.": [
-        ""
+        "La recherche par nombre de recommandations n'est pas disponible en mode IoP."
       ],
       "Select all recommendations": [
-        ""
+        "Sélectionnez toutes les recommandations"
       ],
       "Select recommendations from all pages": [
         "Sélectionner des recommandations sur toutes les pages"
@@ -555,10 +555,10 @@
         "Arrêté"
       ],
       "Success": [
-        "Réussite"
+        "Réussi"
       ],
       "Successfully deleted all HBI hosts for organization %s": [
-        ""
+        "Suppression réussie de tous les hôtes HBI pour l'organisation %s"
       ],
       "Sync automatically": [
         "Sync automatique"
@@ -570,7 +570,7 @@
         "Synchroniser automatiquement les recommandations"
       ],
       "Table actions": [
-        ""
+        "Actions du tableau"
       ],
       "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.": [
         "Le plugin de téléchargement d'inventaire Foreman télécharge automatiquement les données d'inventaire des hôtes Foreman vers le service Inventaire d'Insights, où elles peuvent également être utilisées par le service Abonnements pour générer des rapports d'abonnement. Si vous utilisez le service Abonnements, l'activation du téléchargement d'inventaire est requise."
@@ -615,7 +615,7 @@
         "Inconnu"
       ],
       "Unsupported operator for recommendations count search: %s": [
-        ""
+        "Opérateur non pris en charge pour la recherche du nombre de recommandations : %s"
       ],
       "Upload hits from iop-advisor-engine": [
         "Télécharger les hits depuis iop-advisor-engine"
@@ -633,7 +633,7 @@
         "Téléchargé"
       ],
       "Uploaded and present on console.redhat.com Inventory service: ": [
-        ""
+        "Téléchargé et disponible sur console.redhat.com Service d'inventaire : "
       ],
       "Value %{value} is not a valid UUID": [
         "La valeur %{value} ne correspond pas à un UUID valide"
@@ -672,7 +672,7 @@
         "Si la résolution nécessite un redémarrage"
       ],
       "You can review this information later by looking at the Inventory status of each host.": [
-        ""
+        "Vous pourrez consulter ces informations ultérieurement en consultant l'état d'inventaire de chaque hôte."
       ],
       "You do not have permission to perform this action": [
         "Vous n'êtes pas autorisé à entreprendre cette action"

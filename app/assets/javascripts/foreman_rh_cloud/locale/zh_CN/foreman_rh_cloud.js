@@ -3,7 +3,7 @@
   "locale_data": {
     "foreman_rh_cloud": {
       "": {
-        "Project-Id-Version": "foreman_rh_cloud 14.6.1",
+        "Project-Id-Version": "foreman_rh_cloud 14.7.0",
         "Report-Msgid-Bugs-To": "",
         "PO-Revision-Date": "2023-01-20 13:26+0000",
         "Last-Translator": "Ondřej Gajdušek, 2026",
@@ -30,7 +30,7 @@
         "订阅查看"
       ],
       "Actions": [
-        ""
+        "操作"
       ],
       "Actions history": [
         "操作历史记录"
@@ -90,7 +90,7 @@
         "当前页"
       ],
       "Destroy HBI hosts for organization": [
-        ""
+        "为机构销毁 HBI 主机"
       ],
       "Details": [
         "详情"
@@ -156,7 +156,7 @@
         "在上传到红帽云时排除安装的软件包。（如果 insights_minimal_data_collection 设置为 true，则忽略此设置，且安装的软件包始终被排除。）在使用本地 Insights 时忽略。"
       ],
       "Excluded from upload to console.redhat.com Inventory service because host_registration_insights_inventory parameter value is false: ": [
-        ""
+        "因为 host_registration_insights_inventory 参数值为 false，被排除在上传至 console.redhat.com Inventory 服务的范围之外。"
       ],
       "Failed": [
         "失败"
@@ -165,7 +165,7 @@
         "销毁 HBI 主机 %s 失败：%s"
       ],
       "Failed to destroy HBI hosts for organization %s: %s": [
-        ""
+        "为机构 %s 销毁 HBI 主机失败：%s"
       ],
       "Failed to fetch hosts": [
         "获取主机失败"
@@ -192,13 +192,13 @@
         "有关订阅服务的更多信息，请参阅："
       ],
       "Force RHEL Lightspeed CLA connection": [
-        ""
+        "强制 RHEL Lightspeed CLA 连接"
       ],
       "Foreman plugin that process & upload data to Red Hat Cloud": [
         "处理数据并将其上传到红帽云的 Foreman 插件"
       ],
       "Forward requests to Lightspeed CLA even when in IoP mode. Ignored when IoP mode is off.": [
-        ""
+        "即使处于 IoP 模式，也会将请求转发至 Lightspeed CLA。当 IoP 模式未开启时，此设置将被忽略。"
       ],
       "Generate and upload report": [
         "生成并上传报告"
@@ -237,13 +237,13 @@
         "主机清单报告作业"
       ],
       "Host is excluded from upload to console.redhat.com Inventory service due to host parameter": [
-        ""
+        "由于主机参数设置，该主机已被排除在上传至 console.redhat.com Inventory 服务的范围之外。"
       ],
       "Host is not present on console.redhat.com Inventory service": [
-        ""
+        "console.redhat.com 清单服务中没有主机"
       ],
       "Host is uploaded and present on console.redhat.com Inventory service": [
-        ""
+        "主机已上传并存在于 console.redhat.com Inventory 服务中"
       ],
       "Hostname": [
         "主机名"
@@ -324,7 +324,7 @@
         "否"
       ],
       "No HBI hosts found for organization %s": [
-        ""
+        "未找到用于机构 %s 的 HBI 主机 "
       ],
       "No account data available.": [
         "没有可用的帐户数据。"
@@ -354,13 +354,13 @@
         "所选主机都没有注册"
       ],
       "Not present on console.redhat.com Inventory service: ": [
-        ""
+        "console.redhat.com Inventory 服务没有包括： "
       ],
       "Not reporting": [
         "未报告"
       ],
       "Not reporting because host_registration_insights parameter value is false": [
-        ""
+        "未上报数据，因为 host_registration_insights 参数的值为 false。"
       ],
       "Nothing to sync, there are no hosts with subscription for this organization.": [
         "没有同步，此机构没有带有订阅的主机。"
@@ -396,10 +396,10 @@
         "未找到与您的查询匹配的机构"
       ],
       "Organization": [
-        ""
+        "机构"
       ],
       "Organization not found": [
-        ""
+        "没有找到机构"
       ],
       "Organization status": [
         "机构标签"
@@ -423,7 +423,7 @@
         "RHC 守护进程 ID。在使用本地 Insights 时忽略。"
       ],
       "RHC instance ID to register with Red Hat Sources": [
-        ""
+        "用于注册 Red Hat Sources 的 RHC 实例 ID"
       ],
       "Read more about it in RH cloud insights": [
         "在 RH Cloud insights 中了解更多有关它的信息"
@@ -444,7 +444,7 @@
         "建议"
       ],
       "Recommendations actions": [
-        ""
+        "建议操作"
       ],
       "Recommendations selected: %s.": [
         "选择的建议：%s。"
@@ -465,7 +465,7 @@
         "Red Hat 清单"
       ],
       "Registered hosts in organization: ": [
-        ""
+        "机构中注册的主机： "
       ],
       "Remediate": [
         "补救"
@@ -507,16 +507,16 @@
         "Satellite 服务器有 %{hits_count} 个红帽提供的建议"
       ],
       "Schedule a task to register in Red Hat Sources for cloud connector": [
-        ""
+        "调度一个在 Red Hat Sources 中注册云连接器的任务"
       ],
       "Scoped search string for host removal": [
         "用于删除主机的有范围的搜索字符串"
       ],
       "Searching by recommendations count is not available in IoP mode.": [
-        ""
+        "在 IoP 模式下不支持按推荐数量进行搜索。"
       ],
       "Select all recommendations": [
-        ""
+        "选择所有建议"
       ],
       "Select recommendations from all pages": [
         "在所有页面中选择建议"
@@ -558,7 +558,7 @@
         "成功"
       ],
       "Successfully deleted all HBI hosts for organization %s": [
-        ""
+        "为机构 %s 成功删除所有 HBI 主机"
       ],
       "Sync automatically": [
         "自动同步"
@@ -570,7 +570,7 @@
         "自动同步建议"
       ],
       "Table actions": [
-        ""
+        "表操作"
       ],
       "The Foreman inventory upload plugin automatically uploads Foreman host inventory data to the Inventory service of Insights, where it can also be used by the Subscriptions service for subscription reporting. If you use the Subscriptions service, enabling inventory uploads is required.": [
         "Foreman 清单上传插件会自动将 Foreman 主机清单数据上传到 Insights 的 Inventory 服务，订阅服务使用这些信息来提供订阅报告。如果使用订阅服务，则需要启用清单上传。"
@@ -615,7 +615,7 @@
         "未知"
       ],
       "Unsupported operator for recommendations count search: %s": [
-        ""
+        "不支持按推荐数量进行搜索的运算符：%s"
       ],
       "Upload hits from iop-advisor-engine": [
         "从 iop-advisor-engine 上传 hits"
@@ -633,7 +633,7 @@
         "已上传"
       ],
       "Uploaded and present on console.redhat.com Inventory service: ": [
-        ""
+        "上传并存在于 console.redhat.com Inventory 服务中： "
       ],
       "Value %{value} is not a valid UUID": [
         "值 %{value} 不是一个有效的 UUID"
@@ -672,7 +672,7 @@
         "resolution 是否需要重启"
       ],
       "You can review this information later by looking at the Inventory status of each host.": [
-        ""
+        "稍后，您可以通过查看每个主机的 Inventory 状态来查看此信息。"
       ],
       "You do not have permission to perform this action": [
         "您没有执行此操作的权限"
