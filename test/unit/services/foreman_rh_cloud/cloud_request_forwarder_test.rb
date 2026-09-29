@@ -14,7 +14,6 @@ class CloudRequestForwarderTest < ActiveSupport::TestCase
     ForemanRhCloud.stubs(:legacy_insights_url).returns('https://cert-api.access.example.com')
     ForemanRhCloud.stubs(:transformed_cloud_http_proxy_string).returns(nil)
 
-    UpstreamOnlySettingsTestHelper.set_if_available('allow_multiple_content_views')
     env = FactoryBot.create(:katello_k_t_environment)
     env2 = FactoryBot.create(:katello_k_t_environment, organization: env.organization)
 
