@@ -10,6 +10,7 @@ import {
   hasNoInsightsFacet,
 } from './ForemanRhCloudHelpers';
 import CVEsHostDetailsTabWrapper from './CVEsHostDetailsTab/CVEsHostDetailsTab';
+import ComplianceHostDetailsTabWrapper from './ComplianceHostDetailsTab/ComplianceHostDetailsTab';
 import InsightsVulnerabilityActionsBar from './InsightsVulnerabilityActionsBar';
 
 const fills = [
@@ -49,6 +50,16 @@ const fills = [
     metadata: {
       hideTab: vulnerabilityDisabled,
       title: __('Vulnerabilities'),
+    },
+  },
+  {
+    slot: 'host-details-page-tabs',
+    name: 'Compliance',
+    component: props => <ComplianceHostDetailsTabWrapper {...props} />,
+    weight: 350,
+    metadata: {
+      hideTab: props => isNotRhelHost(props) || hasNoInsightsFacet(props),
+      title: __('Compliance'),
     },
   },
 ];
