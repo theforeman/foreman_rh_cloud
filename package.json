@@ -4,12 +4,7 @@
   "description": "Inventory Upload =============",
   "main": "index.js",
   "scripts": {
-    "lint": "tfm-lint --plugin -d /webpack",
-    "lint:spelling": "eslint ./webpack",
-    "test": "tfm-test --plugin",
-    "test:watch": "tfm-test --plugin --watchAll",
-    "test:current": "tfm-test --plugin --watch",
-    "publish-coverage": "tfm-publish-coverage"
+    "lint:spelling": "eslint -c eslint.spelling.config.js ./webpack"
   },
   "repository": {
     "type": "git",
@@ -18,20 +13,18 @@
   "bugs": {
     "url": "http://projects.theforeman.org/projects/foreman_rh_cloud/issues"
   },
-  "peerDependencies": {
-    "@theforeman/vendor": ">= 15.0.1"
-  },
   "dependencies": {
     "@scalprum/react-core": "^0.9.3",
     "@scalprum/core": "^0.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.7.0",
-    "@theforeman/builder": ">= 15.0.1",
-    "@theforeman/test": ">= 15.0.1",
-    "@theforeman/eslint-plugin-foreman": ">= 15.0.1",
     "babel-eslint": "~10.0.0",
     "eslint": "~6.7.2",
+    "eslint-plugin-import": "~2.22.1",
+    "eslint-plugin-jsx-a11y": "~6.4.1",
+    "eslint-plugin-react": "~7.22.0",
+    "eslint-plugin-react-hooks": "~4.2.0",
     "eslint-plugin-spellcheck": "~0.0.17",
     "jed": "~1.1.1",
     "prettier": "~1.19.1",
