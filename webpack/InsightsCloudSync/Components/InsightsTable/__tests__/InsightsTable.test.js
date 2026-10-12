@@ -71,6 +71,22 @@ describe('InsightsTable', () => {
     expect(screen.getByLabelText(/Recommendations Table/)).toBeTruthy();
   });
 
+  it('uses row indexes for recommendation action OUIA IDs', () => {
+    const props = buildProps({ hits: selectableHits });
+    const { container } = render(<InsightsTable {...props} />);
+    const actionToggleIds = [
+      ...container.querySelectorAll(
+        '[data-ouia-component-id^="recommendations-actions-toggle-"]'
+      ),
+    ].map(element => element.dataset.ouiaComponentId);
+
+    expect(actionToggleIds).toEqual([
+      'recommendations-actions-toggle-0',
+      'recommendations-actions-toggle-1',
+      'recommendations-actions-toggle-2',
+    ]);
+  });
+
   it('re-fetches when hostname changes', () => {
     const props = buildProps({ hostname: 'host1.example.com' });
     const { rerender } = render(<InsightsTable {...props} />);
