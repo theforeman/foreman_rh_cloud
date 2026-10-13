@@ -249,6 +249,32 @@ class SliceGeneratorTest < ActiveSupport::TestCase
     assert_nil fact_values['virtual_host_name']
   end
 
+  test 'generates valid JSON with minimal data collection for a physical host with no system profile facts' do
+    Setting[:insights_minimal_data_collection] = true
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(false)
+    # No facts created: simulates a physical host that reports none of the
+    # cpu/memory facts, has no installed products, is not a hypervisor, and has
+    # no hypervisor host.  All four conditions that previously produced a
+    # trailing comma after an empty system_profile object are true here.
+
+    batch = Host.where(id: @host.id).in_batches.first
+    generator = create_generator(batch)
+
+    json_str = generator.render
+    # JSON.parse raises if the output contains a trailing comma
+    actual = JSON.parse(json_str.join("\n"))
+
+    assert_equal '00000000-0000-0000-0000-000000000000', actual['report_slice_id']
+    assert_not_nil(actual_host = actual['hosts'].first)
+    assert_equal 1, generator.hosts_count
+    assert_equal '1234', actual_host['account']
+    assert_not_nil actual_host['subscription_manager_id']
+    assert_not_nil actual_host['system_profile']
+    assert_empty actual_host['system_profile']
+    assert_nil actual_host['cpu_socket(s)']
+    assert_nil actual_host['facts']
+  end
+
   test 'packages are excluded in the report with minimal data collection' do
     Setting[:exclude_installed_packages] = false
     Setting[:insights_minimal_data_collection] = true
