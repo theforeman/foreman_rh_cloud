@@ -62,9 +62,38 @@ module ForemanInventoryUpload
           'infrastructure_type',
           ActiveModel::Type::Boolean.new.cast(fact_value(host, 'virt::is_guest')) ? 'virtual' : 'physical'
         )
-        @stream.object_field('system_profile') do
-          unless (installed_products = host.subscription_facet&.installed_products).empty?
-            @stream.array_field('installed_products') do
+        virtual_host_uuid      = host.subscription_facet&.hypervisor_host&.subscription_facet&.uuid
+        cpu_socket_val         = fact_value(host, 'cpu::cpu_socket(s)')
+        hypervisor_type_val    = host.subscription_facet.hypervisor? ? fact_value(host, 'hypervisor::type') : nil
+        hypervisor_version_val = host.subscription_facet.hypervisor? ? fact_value(host, 'hypervisor::version') : nil
+
+        # Use the same omission rules as simple_field to predict which string fields
+        # will be written after system_profile. For the UUID, use present? to match
+        # the blank? guard that controls whether the facts array is emitted.
+        fields_follow_system_profile = [will_emit_field?(cpu_socket_val),
+                                        will_emit_field?(hypervisor_type_val),
+                                        will_emit_field?(hypervisor_version_val),
+                                        virtual_host_uuid.present?].any?
+
+        installed_products = host.subscription_facet&.installed_products || []
+        cores_val  = fact_value(host, 'cpu::core(s)_per_socket')
+        memory_val = fact_value(host, 'memory::memtotal')
+        cpu_val    = fact_value(host, 'cpu::cpu(s)')
+
+        # Numeric facts use present? (not will_emit_field?) so that whitespace-only
+        # values are excluded rather than converted to 0 by to_i.
+        # Determine which system_profile field will be emitted last so :last can
+        # be passed to the correct call and no trailing comma is left inside the object.
+        last_sp_field = if cpu_socket_val.present? then :sockets
+                        elsif cpu_val.present? then :cpus
+                        elsif memory_val.present? then :memory
+                        elsif cores_val.present? then :cores
+                        elsif !installed_products.empty? then :products
+                        end
+
+        @stream.object_field('system_profile', !fields_follow_system_profile) do
+          unless installed_products.empty?
+            @stream.array_field('installed_products', last_sp_field == :products) do
               @stream.raw(installed_products.map do |product|
                 {
                   'name': product.name,
@@ -73,18 +102,22 @@ module ForemanInventoryUpload
               end.join(', '))
             end
           end
-          @stream.simple_field('cores_per_socket', fact_value(host, 'cpu::core(s)_per_socket')) { |v| v.to_i } if fact_value(host, 'cpu::core(s)_per_socket').present?
-          @stream.simple_field('system_memory_bytes', fact_value(host, 'memory::memtotal')) { |v| kilobytes_to_bytes(v.to_i) } if fact_value(host, 'memory::memtotal').present?
-          @stream.simple_field('number_of_cpus', fact_value(host, 'cpu::cpu(s)')) { |v| v.to_i } if fact_value(host, 'cpu::cpu(s)').present?
-          @stream.simple_field('number_of_sockets', fact_value(host, 'cpu::cpu_socket(s)'), :last) { |v| v.to_i } if fact_value(host, 'cpu::cpu_socket(s)').present?
+          @stream.simple_field('cores_per_socket', cores_val, last_sp_field == :cores) { |v| v.to_i } if cores_val.present?
+          @stream.simple_field('system_memory_bytes', memory_val, last_sp_field == :memory) { |v| kilobytes_to_bytes(v.to_i) } if memory_val.present?
+          @stream.simple_field('number_of_cpus', cpu_val, last_sp_field == :cpus) { |v| v.to_i } if cpu_val.present?
+          @stream.simple_field('number_of_sockets', cpu_socket_val, last_sp_field == :sockets) { |v| v.to_i } if cpu_socket_val.present?
         end
-        virtual_host_uuid = host.subscription_facet&.hypervisor_host&.subscription_facet&.uuid
+
         if host.subscription_facet.hypervisor?
-          @stream.simple_field('cpu_socket(s)', fact_value(host, 'cpu::cpu_socket(s)'))
-          @stream.simple_field('hypervisor_type', fact_value(host, 'hypervisor::type'))
-          @stream.simple_field('hypervisor_version', fact_value(host, 'hypervisor::version'), virtual_host_uuid.blank?)
+          type_emits    = will_emit_field?(hypervisor_type_val)
+          version_emits = will_emit_field?(hypervisor_version_val)
+          @stream.simple_field('cpu_socket(s)', cpu_socket_val,
+            !type_emits && !version_emits && virtual_host_uuid.blank?)
+          @stream.simple_field('hypervisor_type', hypervisor_type_val,
+            !version_emits && virtual_host_uuid.blank?)
+          @stream.simple_field('hypervisor_version', hypervisor_version_val, virtual_host_uuid.blank?)
         else
-          @stream.simple_field('cpu_socket(s)', fact_value(host, 'cpu::cpu_socket(s)'), virtual_host_uuid.blank?)
+          @stream.simple_field('cpu_socket(s)', cpu_socket_val, virtual_host_uuid.blank?)
         end
         # Guests need the hypervisor mapping in the satellite facts namespace for Subscription Watch, even in minimal mode
         return if virtual_host_uuid.blank?
@@ -97,6 +130,12 @@ module ForemanInventoryUpload
             end
           end
         end
+      end
+
+      def will_emit_field?(value)
+        return false if value.nil? || value.try(:empty?)
+        return false if value.kind_of?(Array) && value.compact.empty?
+        true
       end
 
       def report_host(host)
