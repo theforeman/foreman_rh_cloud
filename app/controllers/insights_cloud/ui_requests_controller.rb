@@ -2,6 +2,9 @@ module InsightsCloud
   class UIRequestsController < ::ApplicationController
     layout false
 
+    # Skip controller-level authorization since InsightsApiForwarder does path-specific permission checks
+    skip_before_action :authorize, :only => [:forward_request, :translate_insights_host]
+
     before_action :ensure_org, :find_location, :only => [:forward_request]
 
     # The method that "proxies" requests over to Cloud
@@ -18,6 +21,10 @@ module InsightsCloud
           @organization,
           @location
         )
+      rescue ::ForemanRhCloud::InsightsApiForwarder::UnsupportedOperationError => e
+        logger.warn("Unsupported operation: #{e}")
+        message = e.message
+        return render json: { message: message, error: message }, status: :not_found
       rescue ::Foreman::PermissionMissingException => e
         logger.warn("Permission denied for forwarding request: #{e}")
         message = e.message
@@ -76,12 +83,15 @@ module InsightsCloud
     end
 
     def translate_insights_host
-      facet = InsightsFacet.find_by(uuid: params[:uuid])
+      # Scope facet lookup to hosts the user can access
+      facet = InsightsFacet.joins(:host).merge(Host.authorized(:view_hosts)).find_by(uuid: params[:uuid])
+
       if facet.present?
         Rails.logger.debug "Found InsightsFacet #{params[:uuid]}"
         redirect_to host_details_page_path(facet.host_id)
       else
-        Rails.logger.error "Could not find InsightsFacet for #{params[:uuid]}"
+        # Don't leak whether the UUID exists - treat unauthorized and non-existent the same
+        Rails.logger.error "Could not find accessible InsightsFacet for #{params[:uuid]}"
         redirect_to '/page-not-found'
       end
     end

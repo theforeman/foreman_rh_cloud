@@ -4,6 +4,9 @@ module ForemanRhCloud
   class InsightsApiForwarder
     include ForemanRhCloud::CertAuth
 
+    class UnsupportedOperationError < StandardError
+    end
+
     # Permission mapping for API paths:
     #
     # Foreman Permission   | Paths
@@ -55,7 +58,7 @@ module ForemanRhCloud
         test: %r{api/inventory/v1/hosts(/.*)?$},
         tag_name: :tags,
         permissions: {
-          'GET' => [:view_compliance, :view_vulnerability],
+          'GET' => [:view_advisor, :view_compliance, :view_vulnerability],
         },
       },
       # Policies - requires view_compliance for GET, edit_compliance for POST/DELETE/PATCH
@@ -312,7 +315,13 @@ module ForemanRhCloud
     ].freeze
 
     def forward_request(original_request, path, controller_name, user, organization, location)
-      # Check permissions before forwarding
+      # Reject paths that don't match any known pattern
+      unless path_mapped?(path)
+        logger.warn("Unmapped path: #{original_request.request_method} #{path}")
+        raise UnsupportedOperationError.new(N_("This operation is not supported"))
+      end
+
+      # Check permissions for mapped paths (nil means no permission required for this method)
       permissions = required_permission_for(path, original_request.request_method)
       if permissions && Array(permissions).none? { |p| user&.can?(p) }
         logger.warn("User #{user&.login || 'anonymous'} lacks permissions #{Array(permissions).join(', ')} for #{original_request.request_method} #{path}")
@@ -435,26 +444,27 @@ module ForemanRhCloud
       Foreman::Logging.logger('app')
     end
 
+    # Checks whether the path matches any known pattern in SCOPED_REQUESTS
+    # @param path [String] The request path
+    # @return [Boolean] true if the path matches a known pattern
+    def path_mapped?(path)
+      SCOPED_REQUESTS.any? { |pattern| pattern[:test].match?(path) }
+    end
+
     # Returns the required permission for the given path and HTTP method
     # Resolves overlapping patterns by choosing the most specific matcher,
     # defined as the one with the longest regex source that matches the path.
-    # This avoids permission changes caused by reordering SCOPED_REQUESTS.
     # @param path [String] The request path
     # @param http_method [String] The HTTP method (GET, POST, etc.)
-    # @return [Symbol, nil] The required permission symbol or nil if no permission required
+    # @return [Symbol, Array<Symbol>] The required permission(s)
+    # @return [nil] No permission required (pattern has no permissions or method not listed)
     def required_permission_for(path, http_method)
-      # Collect all matching patterns
       matching_patterns = SCOPED_REQUESTS.select { |pattern| pattern[:test].match?(path) }
       return nil if matching_patterns.empty?
 
-      # Choose the most specific pattern: longest regex source wins.
-      # This makes overlapping patterns deterministic and independent of array order.
       request_pattern = matching_patterns.max_by { |pattern| pattern[:test].source.length }
 
-      permissions = request_pattern[:permissions]
-      return nil unless permissions
-
-      permissions[http_method]
+      request_pattern.dig(:permissions, http_method)
     end
   end
 end
