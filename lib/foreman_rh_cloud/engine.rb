@@ -38,6 +38,7 @@ module ForemanRhCloud
         ::Katello::UINotifications::Subscriptions::ManifestImportSuccess.include ForemanInventoryUpload::Notifications::ManifestImportSuccessNotificationOverride if defined?(Katello)
 
         ::Host::Managed.include RhCloudHost
+        ::Organization.has_many :inventory_upload_reports, class_name: 'ForemanInventoryUpload::Report', dependent: :destroy
 
         ::Katello::Api::Rhsm::CandlepinDynflowProxyController.include InsightsCloud::PackageProfileUploadExtensions
         ::Katello::Api::Rhsm::CandlepinProxiesController.include InsightsCloud::CandlepinProxiesExtensions
