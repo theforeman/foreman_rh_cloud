@@ -12,9 +12,7 @@ module Api
         api :GET, "/organizations/:organization_id/rh_cloud/report", N_("Download latest report")
         param :organization_id, Integer, required: true, desc: N_("Set the current organization context for the request")
         def download_file
-          filename, file = report_file(params[:organization_id])
-
-          send_file file, disposition: 'attachment', filename: filename
+          send_report(params[:organization_id])
         rescue InventoryUpload::ReportActions::ReportMissingError => error
           render json: { message: error.message }, status: :not_found
         end

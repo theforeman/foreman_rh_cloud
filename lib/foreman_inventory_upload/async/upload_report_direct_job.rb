@@ -46,25 +46,36 @@ module ForemanInventoryUpload
         :link
       end
 
-      def plan(filename, organization_id)
+      def plan(source, organization_id)
         organization = Organization.find(organization_id)
         action_subject(organization)
 
-        plan_self(
-          filename: filename,
-          organization_id: organization_id
-        )
+        input = { organization_id: organization_id }
+        input.merge!(source) if source.is_a?(Hash)
+        input[:filename] = source unless source.is_a?(Hash)
+        plan_self(input)
       end
 
       def try_execute
+        if input[:report_id]
+          execute_upload
+        else
+          LegacyArchiveLock.synchronize(shared: true) { execute_upload }
+        end
+      end
+
+      def execute_upload
+        report&.uploading!
         if content_disconnected?
           logger.info("Upload canceled: connection to Insights is not enabled. Report location: #{filename}")
+          complete_report
           done!
           return
         end
 
         unless organization.owner_details&.dig('upstreamConsumer', 'idCert')
           logger.info("Skipping organization '#{organization}', no candlepin certificate defined.")
+          complete_report
           done!
           return
         end
@@ -78,12 +89,15 @@ module ForemanInventoryUpload
 
         move_to_done_folder
         done!
+      rescue StandardError
+        report&.failed!
+        raise
       end
 
       def upload_file(cer_path)
         cert_content = File.read(cer_path)
 
-        File.open(filename, 'rb') do |file|
+        with_report_file do |file|
           # Wrap file with FileUpload class for RestClient multipart handling
           # RestClient requires objects with :read, :path, and :content_type methods
           wrapped_file = FileUpload.new(file, content_type: 'application/vnd.redhat.qpc.tar+tgz')
@@ -109,6 +123,8 @@ module ForemanInventoryUpload
       end
 
       def move_to_done_folder
+        return complete_report(uploaded: true) if report
+
         FileUtils.mkdir_p(ForemanInventoryUpload.done_folder)
         done_file = ForemanInventoryUpload.done_file_path(File.basename(filename))
         if File.exist?(done_file)
@@ -149,7 +165,7 @@ module ForemanInventoryUpload
       end
 
       def filename
-        input[:filename]
+        report&.filename || input[:filename]
       end
 
       def organization
@@ -167,6 +183,27 @@ module ForemanInventoryUpload
 
       def rescue_strategy_for_self
         Dynflow::Action::Rescue::Fail
+      end
+
+      private
+
+      def report
+        @report ||= ForemanInventoryUpload::Report.where(organization_id: input[:organization_id]).find(input[:report_id]) if input[:report_id]
+      end
+
+      def with_report_file(&block)
+        return report.archive.open(&block) if report
+
+        File.open(filename, 'rb', &block)
+      end
+
+      def complete_report(uploaded: false)
+        return unless report
+
+        report.update!(
+          state: uploaded ? :completed : :skipped,
+          uploaded_at: uploaded ? Time.current : nil
+        )
       end
     end
   end
