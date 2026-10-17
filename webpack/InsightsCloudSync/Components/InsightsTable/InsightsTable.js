@@ -78,8 +78,8 @@ const InsightsTable = ({
       }
     : undefined;
 
-  const getCellContent = (row, col) => {
-    if (col.id === 'actions') return col.formatter(row);
+  const getCellContent = (row, col, rowIndex) => {
+    if (col.id === 'actions') return col.formatter(row, rowIndex);
     const value = row[col.id];
     return col.formatter ? col.formatter(value) : value;
   };
@@ -152,7 +152,7 @@ const InsightsTable = ({
               )}
               {columns.map(column => (
                 <Td key={`${row.id}-${column.id}`}>
-                  {getCellContent(row, column)}
+                  {getCellContent(row, column, rowIndex)}
                 </Td>
               ))}
             </Tr>
