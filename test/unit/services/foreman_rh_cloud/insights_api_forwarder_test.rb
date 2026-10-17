@@ -40,7 +40,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     @forwarder.forward_request(req, '/api/vulnerability/v1/cves/abc-123/affected_systems', 'test_controller', @user, @organization, @location)
   end
 
-  test 'should not scope GET requests for unknown uris' do
+  test 'should reject GET requests for unknown uris' do
     user_agent = { :foo => :bar }
     params = {}
 
@@ -52,14 +52,10 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       'action_dispatch.request.query_parameters' => params
     )
 
-    ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag).never
-    @forwarder.expects(:execute_cloud_request).with do |actual_params|
-      actual = actual_params[:headers][:params]
-      assert_equal 0, actual.count
-      true
+    # Unmapped paths should raise UnsupportedOperationError (returns 404)
+    assert_raises(::ForemanRhCloud::InsightsApiForwarder::UnsupportedOperationError) do
+      @forwarder.forward_request(req, '/api/vulnerability/foo/bar', 'test_controller', @user, @organization, @location)
     end
-
-    @forwarder.forward_request(req, '/api/vulnerability/foo/bar', 'test_controller', @user, @organization, @location)
   end
 
   test 'should merge URI params in GET requests' do
@@ -87,7 +83,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     @forwarder.forward_request(req, '/api/vulnerability/v1/cves/abc-123/affected_systems', 'test_controller', @user, @organization, @location)
   end
 
-  test 'should not scope POST requests' do
+  test 'should reject unmapped POST requests' do
     post_data = 'Random POST data'
     req = ActionDispatch::Request.new(
       'REQUEST_URI' => '/foo/bar',
@@ -96,17 +92,13 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       'RAW_POST_DATA' => post_data
     )
 
-    ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag).never
-    @forwarder.expects(:execute_cloud_request).with do |actual_params|
-      actual = actual_params[:headers][:params]
-      assert_equal 0, actual.count
-      true
+    # Unmapped POST paths should raise UnsupportedOperationError (returns 404)
+    assert_raises(::ForemanRhCloud::InsightsApiForwarder::UnsupportedOperationError) do
+      @forwarder.forward_request(req, '/foo/bar', 'test_controller', @user, @organization, @location)
     end
-
-    @forwarder.forward_request(req, '/api/vulnerability/v1/cves', 'test_controller', @user, @organization, @location)
   end
 
-  test 'should not scope PUT requests' do
+  test 'should reject unmapped PUT requests' do
     put_data = 'Random PUT data'
     req = ActionDispatch::Request.new(
       'REQUEST_URI' => '/foo/bar',
@@ -115,17 +107,13 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       'RAW_POST_DATA' => put_data
     )
 
-    ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag).never
-    @forwarder.expects(:execute_cloud_request).with do |actual_params|
-      actual = actual_params[:headers][:params]
-      assert_equal 0, actual.count
-      true
+    # Unmapped PUT paths should raise UnsupportedOperationError (returns 404)
+    assert_raises(::ForemanRhCloud::InsightsApiForwarder::UnsupportedOperationError) do
+      @forwarder.forward_request(req, '/foo/bar', 'test_controller', @user, @organization, @location)
     end
-
-    @forwarder.forward_request(req, '/api/vulnerability/v1/cves', 'test_controller', @user, @organization, @location)
   end
 
-  test 'should not scope PATCH requests' do
+  test 'should reject unmapped PATCH requests' do
     post_data = 'Random PATCH data'
     req = ActionDispatch::Request.new(
       'REQUEST_URI' => '/foo/bar',
@@ -135,14 +123,10 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       "action_dispatch.request.path_parameters" => { :format => "json" }
     )
 
-    ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag).never
-    @forwarder.expects(:execute_cloud_request).with do |actual_params|
-      actual = actual_params[:headers][:params]
-      assert_equal 0, actual.count
-      true
+    # Unmapped PATCH paths should raise UnsupportedOperationError (returns 404)
+    assert_raises(::ForemanRhCloud::InsightsApiForwarder::UnsupportedOperationError) do
+      @forwarder.forward_request(req, '/foo/bar', 'test_controller', @user, @organization, @location)
     end
-
-    @forwarder.forward_request(req, '/api/vulnerability/v1/cves', 'test_controller', @user, @organization, @location)
   end
 
   test 'scope_request? should return tag_name for scoped requests' do
