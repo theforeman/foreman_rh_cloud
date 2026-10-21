@@ -53,7 +53,7 @@ module ForemanRhCloud
     #
     SCOPED_REQUESTS = [
       # Inventory hosts - shared dependency;
-      #                 - requires view_compliance or view_vulnerability for GET
+      #                 - requires view_advisor, view_compliance, or view_vulnerability for GET
       {
         test: %r{api/inventory/v1/hosts(/.*)?$},
         tag_name: :tags,

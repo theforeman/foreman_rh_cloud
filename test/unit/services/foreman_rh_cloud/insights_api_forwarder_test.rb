@@ -276,19 +276,11 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
 
   # Permission enforcement tests
 
-  # GET /api/inventory/v1/hosts is a shared dependency - view_compliance OR view_vulnerability grants access
+  # GET /api/inventory/v1/hosts is a shared dependency - view_advisor, view_compliance, OR view_vulnerability grants access
   test 'should allow GET request to inventory hosts when user has view_vulnerability permission' do
-    user_agent = { :foo => :bar }
-    params = {}
+    req = build_request(method: 'GET', uri: '/api/inventory/v1/hosts')
 
-    req = ActionDispatch::Request.new(
-      'REQUEST_URI' => '/api/inventory/v1/hosts',
-      'REQUEST_METHOD' => 'GET',
-      'HTTP_USER_AGENT' => user_agent,
-      'rack.input' => ::Puma::NullIO.new,
-      'action_dispatch.request.query_parameters' => params
-    )
-
+    @user.stubs(:can?).with(:view_advisor).returns(false)
     @user.stubs(:can?).with(:view_compliance).returns(false)
     @user.stubs(:can?).with(:view_vulnerability).returns(true)
     ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag)
@@ -300,6 +292,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
   test 'should allow GET request to inventory hosts when user has view_compliance permission' do
     req = build_request(method: 'GET', uri: '/api/inventory/v1/hosts')
 
+    @user.stubs(:can?).with(:view_advisor).returns(false)
     @user.stubs(:can?).with(:view_compliance).returns(true)
     @user.stubs(:can?).with(:view_vulnerability).returns(false)
     ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag)
@@ -308,18 +301,10 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     @forwarder.forward_request(req, 'api/inventory/v1/hosts', 'test_controller', @user, @organization, @location)
   end
 
-  test 'should deny GET request to inventory hosts when user lacks both view_compliance and view_vulnerability' do
-    user_agent = { :foo => :bar }
-    params = {}
+  test 'should deny GET request to inventory hosts when user lacks view_advisor, view_compliance, and view_vulnerability' do
+    req = build_request(method: 'GET', uri: '/api/inventory/v1/hosts')
 
-    req = ActionDispatch::Request.new(
-      'REQUEST_URI' => '/api/inventory/v1/hosts',
-      'REQUEST_METHOD' => 'GET',
-      'HTTP_USER_AGENT' => user_agent,
-      'rack.input' => ::Puma::NullIO.new,
-      'action_dispatch.request.query_parameters' => params
-    )
-
+    @user.stubs(:can?).with(:view_advisor).returns(false)
     @user.stubs(:can?).with(:view_compliance).returns(false)
     @user.stubs(:can?).with(:view_vulnerability).returns(false)
 
@@ -382,8 +367,8 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
   # Data-driven tests for required_permission_for
   PERMISSION_MAPPINGS = [
     # Shared inventory hosts endpoint - either view_compliance or view_vulnerability grants GET access
-    { path: 'api/inventory/v1/hosts', method: 'GET', expected: [:view_compliance, :view_vulnerability] },
-    { path: 'api/inventory/v1/hosts/abc-123', method: 'GET', expected: [:view_compliance, :view_vulnerability] },
+    { path: 'api/inventory/v1/hosts', method: 'GET', expected: [:view_advisor, :view_compliance, :view_vulnerability] },
+    { path: 'api/inventory/v1/hosts/abc-123', method: 'GET', expected: [:view_advisor, :view_compliance, :view_vulnerability] },
     # Compliance endpoints
     { path: 'api/compliance/v2/policies', method: 'GET', expected: :view_compliance },
     { path: 'api/compliance/v2/policies', method: 'POST', expected: :edit_compliance },
