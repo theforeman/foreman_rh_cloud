@@ -635,4 +635,63 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
       @forwarder.forward_request(req, 'api/insights/v1/stats/systems', 'test_controller', nil, @organization, @location)
     end
   end
+
+  # Zero-permission user tests: verify current allow-by-default behavior
+  # for methods not explicitly listed in a pattern's permissions.
+  # TODO: Change to deny-by-default - these should raise UnsupportedOperationError instead of forwarding.
+  test 'should forward zero-permission user GET to advisor ack endpoint (allow-by-default)' do
+    req = build_request(method: 'GET', uri: '/api/insights/v1/ack/')
+    @user.stubs(:can?).returns(false)
+    @forwarder.expects(:execute_cloud_request).returns(true)
+
+    @forwarder.forward_request(req, 'api/insights/v1/ack/', 'test_controller', @user, @organization, @location)
+  end
+
+  test 'should forward zero-permission user GET to advisor hostack endpoint (allow-by-default)' do
+    req = build_request(method: 'GET', uri: '/api/insights/v1/hostack/')
+    @user.stubs(:can?).returns(false)
+    @forwarder.expects(:execute_cloud_request).returns(true)
+
+    @forwarder.forward_request(req, 'api/insights/v1/hostack/', 'test_controller', @user, @organization, @location)
+  end
+
+  test 'should forward zero-permission user GET to vulnerability status endpoint (allow-by-default)' do
+    req = build_request(method: 'GET', uri: '/api/vulnerability/v1/status')
+    @user.stubs(:can?).returns(false)
+    @forwarder.expects(:execute_cloud_request).returns(true)
+
+    @forwarder.forward_request(req, 'api/vulnerability/v1/status', 'test_controller', @user, @organization, @location)
+  end
+
+  test 'should forward zero-permission user GET to vulnerability cves status endpoint (allow-by-default)' do
+    req = build_request(method: 'GET', uri: '/api/vulnerability/v1/cves/status')
+    @user.stubs(:can?).returns(false)
+    @forwarder.expects(:execute_cloud_request).returns(true)
+
+    @forwarder.forward_request(req, 'api/vulnerability/v1/cves/status', 'test_controller', @user, @organization, @location)
+  end
+
+  test 'should forward zero-permission user GET to vulnerability cves business_risk endpoint (allow-by-default)' do
+    req = build_request(method: 'GET', uri: '/api/vulnerability/v1/cves/business_risk')
+    @user.stubs(:can?).returns(false)
+    @forwarder.expects(:execute_cloud_request).returns(true)
+
+    @forwarder.forward_request(req, 'api/vulnerability/v1/cves/business_risk', 'test_controller', @user, @organization, @location)
+  end
+
+  test 'should forward zero-permission user GET to inventory catch-all endpoint (allow-by-default)' do
+    req = build_request(method: 'GET', uri: '/api/inventory/v1/system_profile/operating_system')
+    @user.stubs(:can?).returns(false)
+    @forwarder.expects(:execute_cloud_request).returns(true)
+
+    @forwarder.forward_request(req, 'api/inventory/v1/system_profile/operating_system', 'test_controller', @user, @organization, @location)
+  end
+
+  test 'should forward zero-permission user GET to tasks catch-all endpoint (allow-by-default)' do
+    req = build_request(method: 'GET', uri: '/api/tasks/v1/some_task')
+    @user.stubs(:can?).returns(false)
+    @forwarder.expects(:execute_cloud_request).returns(true)
+
+    @forwarder.forward_request(req, 'api/tasks/v1/some_task', 'test_controller', @user, @organization, @location)
+  end
 end
