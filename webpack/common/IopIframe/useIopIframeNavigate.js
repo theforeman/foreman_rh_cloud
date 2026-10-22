@@ -8,15 +8,17 @@ import { useEffect } from 'react';
  * @param {string} options.navigateMessageType
  * @param {(appRoute: string) => string} options.getForemanPath
  * @param {string} options.defaultAppRoute fallback when payload.appRoute is missing
+ * @param {boolean} [options.replaceSearch] Replace query-only updates in page history
  */
 export const useIopIframeNavigate = ({
   history,
   navigateMessageType,
   getForemanPath,
   defaultAppRoute,
+  replaceSearch = false,
 }) => {
   useEffect(() => {
-    const handleMessage = event => {
+    const handleMessage = (event) => {
       if (event.origin !== window.location.origin) {
         return;
       }
@@ -28,13 +30,28 @@ export const useIopIframeNavigate = ({
       const appRoute = event.data.payload?.appRoute || defaultAppRoute;
       const nextPath = getForemanPath(appRoute);
 
-      if (window.location.pathname !== nextPath) {
-        history.push(nextPath);
+      const currentPath = window.location.pathname;
+      const currentUrl = `${currentPath}${replaceSearch ? window.location.search : ''}`;
+      if (currentUrl !== nextPath) {
+        if (
+          replaceSearch &&
+          new URL(nextPath, window.location.origin).pathname === currentPath
+        ) {
+          history.replace(nextPath);
+        } else {
+          history.push(nextPath);
+        }
       }
     };
 
     window.addEventListener('message', handleMessage);
 
     return () => window.removeEventListener('message', handleMessage);
-  }, [defaultAppRoute, getForemanPath, history, navigateMessageType]);
+  }, [
+    defaultAppRoute,
+    getForemanPath,
+    history,
+    navigateMessageType,
+    replaceSearch,
+  ]);
 };
