@@ -80,7 +80,8 @@ const InventoryAutoUploadSwitcher = ({
                 rel="noopener noreferrer"
               >
                 <strong>
-                  {__('Configure')}
+                  {/* eslint-disable-next-line spellcheck/spell-checker */}
+                  {__('Red Hat Lightspeed')}
                   {' > '}
                   {__('Inventory Upload')}
                 </strong>
