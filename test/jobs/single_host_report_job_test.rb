@@ -104,22 +104,18 @@ class SingleHostReportJobTest < ActiveSupport::TestCase
     assert_nil action.hostname(999_999)
   end
 
-  test 'generates report with correct archive name for single host' do
-    expected_filter = "id=#{@host.id}"
-    expected_archive_name = ForemanInventoryUpload.facts_archive_name(@host.organization_id, expected_filter)
-
+  test 'passes the generated report to the upload job' do
     action = create_action(ForemanInventoryUpload::Async::SingleHostReportJob)
     organization = Organization.find(@host.organization_id)
     action.expects(:action_subject).with(organization)
     plan_action(action, base_folder, @host.organization_id, @host.id)
 
-    assert_action_planned_with(
-      action,
-      ForemanInventoryUpload::Async::QueueForUploadJob,
-      base_folder,
-      expected_archive_name,
-      @host.organization_id
-    )
+    assert_action_planned_with(action, ForemanInventoryUpload::Async::QueueForUploadJob) do |plan_input|
+      report_reference, organization_id = plan_input
+      report_reference.is_a?(Dynflow::ExecutionPlan::OutputReference) &&
+        report_reference.subkeys == ['report_id'] &&
+        organization_id == @host.organization_id
+    end
   end
 
   test 'respects IoP mode for facet creation' do

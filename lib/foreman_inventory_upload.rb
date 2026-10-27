@@ -1,4 +1,8 @@
 module ForemanInventoryUpload
+  def self.active_storage?
+    ApplicationRecord.respond_to?(:has_one_attached)
+  end
+
   def self.base_folder
     @base_folder ||= Rails.root.join('tmp/red_hat_inventory').to_s
   end
@@ -25,6 +29,10 @@ module ForemanInventoryUpload
   end
 
   def self.generated_reports_folder
+    # New attachment-backed jobs only need this name, not a writable legacy
+    # directory on the web process which plans them.
+    return File.join(base_folder, 'generated_reports/') if active_storage?
+
     @generated_reports_folder ||= ensure_folder(
       File.join(
         ForemanInventoryUpload.base_folder,
@@ -39,6 +47,10 @@ module ForemanInventoryUpload
 
   def self.report_file_paths(organization_id)
     filename = facts_archive_name(organization_id)
+    if active_storage?
+      report = Report.where(organization_id: organization_id, filename: filename).latest_first.first
+      return [report.filename] if report&.archive&.attached?
+    end
     # Report files start in generated
     # They are then MOVED (not copied) to uploads, then done.
     # When they are moved to the new folder, they overwrite any file with the same name.
@@ -47,9 +59,9 @@ module ForemanInventoryUpload
     # Completed uploads will be in done
     # The ordering here ensures we get the correct file path every time.
     Dir[
-      ForemanInventoryUpload.generated_reports_file_path(filename),
-      ForemanInventoryUpload.uploads_file_path(filename),
-      ForemanInventoryUpload.done_file_path(filename),
+      File.join(base_folder, 'generated_reports', filename),
+      File.join(base_folder, 'uploads', filename),
+      File.join(base_folder, 'uploads', 'done', filename),
     ]
   end
 
@@ -58,7 +70,7 @@ module ForemanInventoryUpload
   end
 
   def self.facts_archive_name(organization, filter = nil)
-    "report_for_#{organization}#{filter.empty? ? nil : "[#{filter.to_s.parameterize}]"}.tar.xz"
+    "report_for_#{organization}#{filter.to_s.empty? ? nil : "[#{filter.to_s.parameterize}]"}.tar.xz"
   end
 
   def self.upload_url
