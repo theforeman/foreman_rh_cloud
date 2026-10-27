@@ -5,12 +5,12 @@ import ForemanInventoryUpload from './ForemanInventoryUpload';
 import InsightsVulnerabilityListPage from './InsightsVulnerability/InsightsVulnerabilityListPage';
 import InsightsCloudSync from './InsightsCloudSync';
 import IopRecommendationDetails from './IopRecommendationDetails/IopRecommendationDetails';
-import IopPathwayDetails from './IopPathwayDetails/IopPathwayDetails';
 import InsightsHostDetailsTab from './InsightsHostDetailsTab';
 import CveDetailsPage from './CveDetailsPage';
 import InsightsCompliancePage from './InsightsCompliance/InsightsCompliancePage';
 import InsightsVulnerabilityIframePage from './InsightsVulnerability/InsightsVulnerabilityIframePage';
 import './common/styles.scss';
+import InsightsAdvisorIframePage from './InsightsAdvisor/InsightsAdvisorIframePage';
 
 const pages = [
   { name: 'ForemanInventoryUpload', type: ForemanInventoryUpload },
@@ -38,17 +38,22 @@ export const routes = [
   {
     path: '/foreman_rh_cloud/recommendations/pathways/:slug',
     exact: false,
-    render: props => <IopPathwayDetails {...props} />,
+    render: props => <InsightsAdvisorIframePage {...props} />,
   },
   {
     path: '/foreman_rh_cloud/recommendations',
     exact: false,
-    render: props => <IopRecommendationDetails {...props} />,
+    render: props => <InsightsAdvisorIframePage {...props} />,
   },
   {
     path: '/foreman_rh_cloud/inventory_upload',
     exact: true,
     render: props => <ForemanInventoryUpload {...props} />,
+  },
+  {
+    path: '/foreman_rh_cloud/insights_advisor',
+    exact: false,
+    render: props => <InsightsAdvisorIframePage {...props} />,
   },
   {
     path: '/foreman_rh_cloud/insights_vulnerability',

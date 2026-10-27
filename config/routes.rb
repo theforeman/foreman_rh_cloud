@@ -36,6 +36,19 @@ Rails.application.routes.draw do
     get 'insights_cloud', to: '/react#index' # Uses foreman's react controller
     get 'insights_vulnerability', to: '/react#index'
     get 'insights_vulnerability/:cve_id', to: '/react#index'
+    get 'insights_advisor', to: 'foreman_rh_cloud#recommendations'
+    scope 'insights_advisor' do
+      get 'recommendations', to: 'foreman_rh_cloud#recommendations'
+      get 'recommendations/pathways', to: 'foreman_rh_cloud#recommendations'
+      get 'recommendations/pathways/systems/:id/:inventory_id', to: 'foreman_rh_cloud#recommendations'
+      get 'recommendations/pathways/systems/:id', to: 'foreman_rh_cloud#recommendations'
+      get 'recommendations/pathways/:id/:inventory_id', to: 'foreman_rh_cloud#recommendations'
+      get 'recommendations/pathways/:id', to: 'foreman_rh_cloud#recommendations'
+      get 'recommendations/:id/:inventory_id', to: 'foreman_rh_cloud#recommendations'
+      get 'recommendations/:id', to: 'foreman_rh_cloud#recommendations'
+      get 'systems', to: 'foreman_rh_cloud#recommendations'
+      get 'systems/:inventory_id', to: 'foreman_rh_cloud#recommendations'
+    end
     scope 'insights_compliance' do
       get 'reports', to: '/react#index'
       get 'reports/:report_id', to: '/react#index'

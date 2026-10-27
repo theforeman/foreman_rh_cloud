@@ -18,14 +18,14 @@ it('pushes page changes, replaces filter changes, and ignores duplicate routes',
   };
   render(<Listener />);
   const navigate = (appRoute) =>
-    act(() =>
+    act(() => {
       window.dispatchEvent(
         new MessageEvent('message', {
           origin: window.location.origin,
           data: { type: 'IOP_VULNERABILITY_NAVIGATE', payload: { appRoute } },
         })
-      )
-    );
+      );
+    });
   navigate('cves');
   expect(history.push).not.toHaveBeenCalled();
   navigate('cves?filter=test');
