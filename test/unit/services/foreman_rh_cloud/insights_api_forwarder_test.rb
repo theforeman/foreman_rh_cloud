@@ -322,20 +322,20 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     # Inventory hosts - shared dependency (any one of three permissions grants GET access)
     { path: 'api/inventory/v1/hosts', permissions: { 'GET' => [:view_advisor, :view_compliance, :view_vulnerability] } },
     { path: 'api/inventory/v1/hosts/abc-123', permissions: { 'GET' => [:view_advisor, :view_compliance, :view_vulnerability] } },
-    # Compliance - policies
-    { path: 'api/compliance/v2/policies', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance } },
-    { path: 'api/compliance/v2/policies/policy-123', permissions: { 'GET' => :view_compliance, 'DELETE' => :edit_compliance, 'PATCH' => :edit_compliance } },
-    # Compliance - policy systems
+    # Compliance - policies (pattern policies(/[^/]*)?$ matches both list and individual with same permissions)
+    { path: 'api/compliance/v2/policies', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance, 'DELETE' => :edit_compliance, 'PATCH' => :edit_compliance } },
+    { path: 'api/compliance/v2/policies/policy-123', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance, 'DELETE' => :edit_compliance, 'PATCH' => :edit_compliance } },
+    # Compliance - policy systems (pattern systems(/[^/]*)?$ matches both list and individual)
     { path: 'api/compliance/v2/policies/policy-123/systems', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance, 'DELETE' => :edit_compliance, 'PATCH' => :edit_compliance } },
-    { path: 'api/compliance/v2/policies/policy-123/systems/system-456', permissions: { 'GET' => :view_compliance, 'DELETE' => :edit_compliance, 'PATCH' => :edit_compliance } },
-    # Compliance - tailorings
-    { path: 'api/compliance/v2/policies/policy-123/tailorings', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance } },
+    { path: 'api/compliance/v2/policies/policy-123/systems/system-456', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance, 'DELETE' => :edit_compliance, 'PATCH' => :edit_compliance } },
+    # Compliance - tailorings (pattern tailorings(/[^/]*)?$ matches both list and individual)
+    { path: 'api/compliance/v2/policies/policy-123/tailorings', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance, 'PATCH' => :edit_compliance } },
     { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance, 'PATCH' => :edit_compliance } },
-    # Compliance - tailoring rules
-    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance } },
-    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999', permissions: { 'GET' => :view_compliance, 'DELETE' => :edit_compliance, 'PATCH' => :edit_compliance } },
-    # Compliance - reports
-    { path: 'api/compliance/v2/reports', permissions: { 'GET' => :view_compliance } },
+    # Compliance - tailoring rules (pattern rules(/[^/]*)?$ matches both list and individual)
+    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance, 'DELETE' => :edit_compliance, 'PATCH' => :edit_compliance } },
+    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance, 'DELETE' => :edit_compliance, 'PATCH' => :edit_compliance } },
+    # Compliance - reports (pattern reports(/[^/]*)?$ matches both list and individual)
+    { path: 'api/compliance/v2/reports', permissions: { 'GET' => :view_compliance, 'DELETE' => :edit_compliance } },
     { path: 'api/compliance/v2/reports/report-123', permissions: { 'GET' => :view_compliance, 'DELETE' => :edit_compliance } },
     { path: 'api/compliance/v2/reports/report-123/systems', permissions: { 'GET' => :view_compliance } },
     { path: 'api/compliance/v2/reports/report-123/systems/system-456', permissions: { 'GET' => :view_compliance } },
