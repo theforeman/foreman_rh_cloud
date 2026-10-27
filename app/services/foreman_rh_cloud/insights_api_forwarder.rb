@@ -309,22 +309,22 @@ module ForemanRhCloud
           'GET' => :view_advisor,
         },
       },
-      # Other API endpoints (tagging only, no permission enforcement)
-      { test: %r{api/inventory/.*}, tag_name: :tags },
-      { test: %r{api/tasks/.*}, tag_name: :tags },
     ].freeze
 
     def forward_request(original_request, path, controller_name, user, organization, location)
-      # Reject paths that don't match any known pattern
-      unless path_mapped?(path)
-        logger.warn("Unmapped path: #{original_request.request_method} #{path}")
+      http_method = original_request.request_method
+      pattern = resolve_pattern(path)
+      permissions = pattern&.dig(:permissions, http_method)
+
+      # Deny-by-default: reject if no matching pattern or no permission mapping for this HTTP method
+      unless permissions
+        logger.warn("Unmapped operation: #{http_method} #{path}")
         raise UnsupportedOperationError.new(N_("This operation is not supported"))
       end
 
-      # Check permissions for mapped paths (nil means no permission required for this method)
-      permissions = required_permission_for(path, original_request.request_method)
-      if permissions && Array(permissions).none? { |p| user&.can?(p) }
-        logger.warn("User #{user&.login || 'anonymous'} lacks permissions #{Array(permissions).join(', ')} for #{original_request.request_method} #{path}")
+      # Check user has the required permission(s)
+      if Array(permissions).none? { |p| user&.can?(p) }
+        logger.warn("User #{user&.login || 'anonymous'} lacks permissions #{Array(permissions).join(', ')} for #{http_method} #{path}")
         raise ::Foreman::PermissionMissingException.new(N_("You do not have permission to perform this action"))
       end
 
@@ -410,22 +410,7 @@ module ForemanRhCloud
     def scope_request?(original_request, path)
       return nil unless original_request.get?
 
-      # Find patterns that match this path AND are relevant for GET requests.
-      # A pattern is relevant if it either:
-      # - Has tag_name defined (supports scoping)
-      # - Has GET permissions defined (explicitly handles GET, even without tags)
-      # This ensures patterns like api/vulnerability/v1/cves/[^/]+$ (GET without tags)
-      # take precedence over general patterns, while POST-only patterns are ignored.
-      matching_patterns = SCOPED_REQUESTS.select do |pattern|
-        pattern[:test].match?(path) && (pattern[:tag_name] || pattern.dig(:permissions, 'GET'))
-      end
-      return nil if matching_patterns.empty?
-
-      # Choose the most specific pattern by regex source length
-      request_pattern = matching_patterns.max_by { |pattern| pattern[:test].source.length }
-
-      # Return the tag_name (may be nil if the most specific pattern doesn't support tags)
-      request_pattern[:tag_name]
+      resolve_pattern(path)&.[](:tag_name)
     end
 
     def core_app_name
@@ -444,27 +429,25 @@ module ForemanRhCloud
       Foreman::Logging.logger('app')
     end
 
-    # Checks whether the path matches any known pattern in SCOPED_REQUESTS
+    # Resolves the most specific SCOPED_REQUESTS pattern matching the given path.
+    # When multiple patterns match, chooses the one with the longest regex source
+    # as a proxy for specificity.
     # @param path [String] The request path
-    # @return [Boolean] true if the path matches a known pattern
-    def path_mapped?(path)
-      SCOPED_REQUESTS.any? { |pattern| pattern[:test].match?(path) }
+    # @return [Hash, nil] The matching pattern hash, or nil if no pattern matches
+    def resolve_pattern(path)
+      matching = SCOPED_REQUESTS.select { |p| p[:test].match?(path) }
+      return nil if matching.empty?
+
+      matching.max_by { |p| p[:test].source.length }
     end
 
-    # Returns the required permission for the given path and HTTP method
-    # Resolves overlapping patterns by choosing the most specific matcher,
-    # defined as the one with the longest regex source that matches the path.
+    # Returns the required permission for the given path and HTTP method.
     # @param path [String] The request path
     # @param http_method [String] The HTTP method (GET, POST, etc.)
     # @return [Symbol, Array<Symbol>] The required permission(s)
-    # @return [nil] No permission required (pattern has no permissions or method not listed)
+    # @return [nil] No matching pattern or method not listed in the pattern's permissions
     def required_permission_for(path, http_method)
-      matching_patterns = SCOPED_REQUESTS.select { |pattern| pattern[:test].match?(path) }
-      return nil if matching_patterns.empty?
-
-      request_pattern = matching_patterns.max_by { |pattern| pattern[:test].source.length }
-
-      request_pattern.dig(:permissions, http_method)
+      resolve_pattern(path)&.dig(:permissions, http_method)
     end
   end
 end

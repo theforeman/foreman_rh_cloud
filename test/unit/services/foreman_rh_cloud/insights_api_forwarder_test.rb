@@ -131,12 +131,12 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
 
   test 'scope_request? should return tag_name for scoped requests' do
     get_req = ActionDispatch::Request.new(
-      'REQUEST_URI' => '/api/vulnerability/v1/vulnerabilities/cves',
+      'REQUEST_URI' => '/api/vulnerability/v1/cves/CVE-2024-1234/affected_systems',
       'REQUEST_METHOD' => 'GET',
       'rack.input' => ::Puma::NullIO.new
     )
 
-    result = @forwarder.send(:scope_request?, get_req, 'api/vulnerability/v1/vulnerabilities/cves')
+    result = @forwarder.send(:scope_request?, get_req, 'api/vulnerability/v1/cves/CVE-2024-1234/affected_systems')
     assert_equal :tags, result
   end
 
@@ -274,9 +274,7 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     ActionDispatch::Request.new(env)
   end
 
-  # Permission enforcement tests
-
-  # GET /api/inventory/v1/hosts is a shared dependency - view_advisor, view_compliance, OR view_vulnerability grants access
+  # Inventory hosts OR-logic: any single permission is sufficient
   test 'should allow GET request to inventory hosts when user has view_vulnerability permission' do
     req = build_request(method: 'GET', uri: '/api/inventory/v1/hosts')
 
@@ -301,317 +299,6 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     @forwarder.forward_request(req, 'api/inventory/v1/hosts', 'test_controller', @user, @organization, @location)
   end
 
-  test 'should deny GET request to inventory hosts when user lacks view_advisor, view_compliance, and view_vulnerability' do
-    req = build_request(method: 'GET', uri: '/api/inventory/v1/hosts')
-
-    @user.stubs(:can?).with(:view_advisor).returns(false)
-    @user.stubs(:can?).with(:view_compliance).returns(false)
-    @user.stubs(:can?).with(:view_vulnerability).returns(false)
-
-    assert_raises(::Foreman::PermissionMissingException) do
-      @forwarder.forward_request(req, 'api/inventory/v1/hosts', 'test_controller', @user, @organization, @location)
-    end
-  end
-
-  # POST /api/vulnerability/v1/vulnerabilities/cves requires view_vulnerability
-  test 'should deny POST request to vulnerabilities cves when user lacks view_vulnerability permission' do
-    post_data = '{"test": "data"}'
-    req = ActionDispatch::Request.new(
-      'REQUEST_URI' => '/api/vulnerability/v1/vulnerabilities/cves',
-      'REQUEST_METHOD' => 'POST',
-      'rack.input' => ::Puma::NullIO.new,
-      'RAW_POST_DATA' => post_data
-    )
-
-    @user.stubs(:can?).with(:view_vulnerability).returns(false)
-
-    assert_raises(::Foreman::PermissionMissingException) do
-      @forwarder.forward_request(req, 'api/vulnerability/v1/vulnerabilities/cves', 'test_controller', @user, @organization, @location)
-    end
-  end
-
-  # PATCH /api/vulnerability/v1/status requires edit_vulnerability
-  test 'should allow PATCH request to vulnerability status when user has edit_vulnerability permission' do
-    patch_data = '{"status": "resolved"}'
-    req = ActionDispatch::Request.new(
-      'REQUEST_URI' => '/api/vulnerability/v1/status',
-      'REQUEST_METHOD' => 'PATCH',
-      'rack.input' => ::Puma::NullIO.new,
-      'RAW_POST_DATA' => patch_data,
-      "action_dispatch.request.path_parameters" => { :format => "json" }
-    )
-
-    @user.stubs(:can?).with(:edit_vulnerability).returns(true)
-    @forwarder.expects(:execute_cloud_request).returns(true)
-
-    @forwarder.forward_request(req, 'api/vulnerability/v1/status', 'test_controller', @user, @organization, @location)
-  end
-
-  test 'should deny PATCH request to vulnerability status when user lacks edit_vulnerability permission' do
-    patch_data = '{"status": "resolved"}'
-    req = ActionDispatch::Request.new(
-      'REQUEST_URI' => '/api/vulnerability/v1/status',
-      'REQUEST_METHOD' => 'PATCH',
-      'rack.input' => ::Puma::NullIO.new,
-      'RAW_POST_DATA' => patch_data,
-      "action_dispatch.request.path_parameters" => { :format => "json" }
-    )
-
-    @user.stubs(:can?).with(:edit_vulnerability).returns(false)
-
-    assert_raises(::Foreman::PermissionMissingException) do
-      @forwarder.forward_request(req, 'api/vulnerability/v1/status', 'test_controller', @user, @organization, @location)
-    end
-  end
-
-  # Data-driven tests for required_permission_for
-  PERMISSION_MAPPINGS = [
-    # Shared inventory hosts endpoint - either view_compliance or view_vulnerability grants GET access
-    { path: 'api/inventory/v1/hosts', method: 'GET', expected: [:view_advisor, :view_compliance, :view_vulnerability] },
-    { path: 'api/inventory/v1/hosts/abc-123', method: 'GET', expected: [:view_advisor, :view_compliance, :view_vulnerability] },
-    # Compliance endpoints
-    { path: 'api/compliance/v2/policies', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/policies', method: 'POST', expected: :edit_compliance },
-    { path: 'api/compliance/v2/policies/policy-123', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/policies/policy-123', method: 'DELETE', expected: :edit_compliance },
-    { path: 'api/compliance/v2/policies/policy-123', method: 'PATCH', expected: :edit_compliance },
-    { path: 'api/compliance/v2/policies/policy-123/systems', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/policies/policy-123/systems', method: 'POST', expected: :edit_compliance },
-    { path: 'api/compliance/v2/policies/policy-123/systems/system-456', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/policies/policy-123/systems/system-456', method: 'DELETE', expected: :edit_compliance },
-    { path: 'api/compliance/v2/policies/policy-123/systems/system-456', method: 'PATCH', expected: :edit_compliance },
-    { path: 'api/compliance/v2/policies/policy-123/tailorings', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/policies/policy-123/tailorings', method: 'POST', expected: :edit_compliance },
-    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789', method: 'PATCH', expected: :edit_compliance },
-    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules', method: 'POST', expected: :edit_compliance },
-    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999', method: 'DELETE', expected: :edit_compliance },
-    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999', method: 'PATCH', expected: :edit_compliance },
-    { path: 'api/compliance/v2/reports', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/reports/report-123', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/reports/report-123', method: 'DELETE', expected: :edit_compliance },
-    { path: 'api/compliance/v2/reports/report-123/systems', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/reports/report-123/systems/system-456', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/reports/report-123/systems/os_versions', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/policies/policy-123/systems/os_versions', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/systems', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/systems/system-456', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/systems/os_versions', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/systems/system-456/policies', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/systems/system-456/reports', method: 'GET', expected: :view_compliance },
-    { path: 'api/compliance/v2/profiles', method: 'GET', expected: :view_compliance },
-    # Vulnerability endpoints
-    { path: 'api/vulnerability/v1/vulnerabilities/cves', method: 'POST', expected: :view_vulnerability },
-    { path: 'api/vulnerability/v1/status', method: 'PATCH', expected: :edit_vulnerability },
-    { path: 'api/vulnerability/v1/cves/status', method: 'PATCH', expected: :edit_vulnerability },
-    { path: 'api/vulnerability/v1/cves/business_risk', method: 'PATCH', expected: :edit_vulnerability },
-    { path: 'api/vulnerability/v1/systems/opt_out', method: 'PATCH', expected: :edit_vulnerability },
-    { path: 'api/vulnerability/v1/dashbar', method: 'GET', expected: :view_vulnerability },
-    { path: 'api/vulnerability/v1/cves/CVE-2024-1234/affected_systems', method: 'GET', expected: :view_vulnerability },
-    # Endpoints without tags support (still require view_vulnerability)
-    { path: 'api/vulnerability/v1/apistatus', method: 'GET', expected: :view_vulnerability },
-    { path: 'api/vulnerability/v1/version', method: 'GET', expected: :view_vulnerability },
-    { path: 'api/vulnerability/v1/business_risk', method: 'GET', expected: :view_vulnerability },
-    { path: 'api/vulnerability/v1/announcement', method: 'GET', expected: :view_vulnerability },
-    { path: 'api/vulnerability/v1/cves/CVE-2024-1234', method: 'GET', expected: :view_vulnerability },
-    { path: 'api/vulnerability/v1/playbooks/abc-123', method: 'GET', expected: :view_vulnerability },
-    { path: 'api/vulnerability/v1/report/abc-123', method: 'GET', expected: :view_vulnerability },
-    { path: 'api/vulnerability/v1/feature/cves_without_errata', method: 'GET', expected: :view_vulnerability },
-    { path: 'api/vulnerability/v1/feature/cves_without_errata', method: 'PATCH', expected: :edit_vulnerability },
-    # Advisor endpoints
-    { path: 'api/insights/v1/stats/systems', method: 'GET', expected: :view_advisor },
-    { path: 'api/insights/v1/ack/', method: 'POST', expected: :edit_advisor },
-    { path: 'api/insights/v1/ack/rule_id', method: 'DELETE', expected: :edit_advisor },
-    { path: 'api/insights/v1/hostack/', method: 'POST', expected: :edit_advisor },
-    { path: 'api/insights/v1/hostack/123', method: 'DELETE', expected: :edit_advisor },
-    { path: 'api/insights/v1/rule/test_rule/unack_hosts', method: 'POST', expected: :edit_advisor },
-    # Unknown endpoints
-    { path: 'api/unknown/endpoint', method: 'GET', expected: nil },
-  ].freeze
-
-  PERMISSION_MAPPINGS.each do |mapping|
-    test "required_permission_for returns #{mapping[:expected].inspect} for #{mapping[:method]} #{mapping[:path]}" do
-      permission = @forwarder.send(:required_permission_for, mapping[:path], mapping[:method])
-      assert_equal mapping[:expected], permission
-    end
-  end
-
-  # Advisor permission integration tests
-  test 'should allow GET request to insights endpoint when user has view_advisor permission' do
-    req = build_request(method: 'GET', uri: '/api/insights/v1/stats/systems')
-
-    @user.stubs(:can?).with(:view_advisor).returns(true)
-    ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag)
-    @forwarder.expects(:execute_cloud_request).returns(true)
-
-    @forwarder.forward_request(req, 'api/insights/v1/stats/systems', 'test_controller', @user, @organization, @location)
-  end
-
-  test 'should deny GET request to insights endpoint when user lacks view_advisor permission' do
-    req = build_request(method: 'GET', uri: '/api/insights/v1/stats/systems')
-
-    @user.stubs(:can?).with(:view_advisor).returns(false)
-
-    assert_raises(::Foreman::PermissionMissingException) do
-      @forwarder.forward_request(req, 'api/insights/v1/stats/systems', 'test_controller', @user, @organization, @location)
-    end
-  end
-
-  test 'should allow POST request to insights ack when user has edit_advisor permission' do
-    req = build_request(method: 'POST', uri: '/api/insights/v1/ack/', data: '{"rule_id": "test|RULE"}')
-
-    @user.stubs(:can?).with(:edit_advisor).returns(true)
-    @forwarder.expects(:execute_cloud_request).returns(true)
-
-    @forwarder.forward_request(req, 'api/insights/v1/ack/', 'test_controller', @user, @organization, @location)
-  end
-
-  test 'should deny POST request to insights ack when user lacks edit_advisor permission' do
-    req = build_request(method: 'POST', uri: '/api/insights/v1/ack/', data: '{"rule_id": "test|RULE"}')
-
-    @user.stubs(:can?).with(:edit_advisor).returns(false)
-
-    assert_raises(::Foreman::PermissionMissingException) do
-      @forwarder.forward_request(req, 'api/insights/v1/ack/', 'test_controller', @user, @organization, @location)
-    end
-  end
-
-  # Compliance permission integration tests
-  test 'should allow GET request to compliance policies when user has view_compliance permission' do
-    req = build_request(method: 'GET', uri: '/api/compliance/v2/policies')
-
-    @user.stubs(:can?).with(:view_compliance).returns(true)
-    @forwarder.expects(:execute_cloud_request).returns(true)
-
-    @forwarder.forward_request(req, 'api/compliance/v2/policies', 'test_controller', @user, @organization, @location)
-  end
-
-  test 'should deny GET request to compliance policies when user lacks view_compliance permission' do
-    req = build_request(method: 'GET', uri: '/api/compliance/v2/policies')
-
-    @user.stubs(:can?).with(:view_compliance).returns(false)
-
-    assert_raises(::Foreman::PermissionMissingException) do
-      @forwarder.forward_request(req, 'api/compliance/v2/policies', 'test_controller', @user, @organization, @location)
-    end
-  end
-
-  test 'should allow POST request to compliance policies when user has edit_compliance permission' do
-    req = build_request(method: 'POST', uri: '/api/compliance/v2/policies', data: '{"name": "test-policy"}')
-
-    @user.stubs(:can?).with(:edit_compliance).returns(true)
-    @forwarder.expects(:execute_cloud_request).returns(true)
-
-    @forwarder.forward_request(req, 'api/compliance/v2/policies', 'test_controller', @user, @organization, @location)
-  end
-
-  test 'should deny POST request to compliance policies when user lacks edit_compliance permission' do
-    req = build_request(method: 'POST', uri: '/api/compliance/v2/policies', data: '{"name": "test-policy"}')
-
-    @user.stubs(:can?).with(:edit_compliance).returns(false)
-
-    assert_raises(::Foreman::PermissionMissingException) do
-      @forwarder.forward_request(req, 'api/compliance/v2/policies', 'test_controller', @user, @organization, @location)
-    end
-  end
-
-  test 'should allow PATCH request to compliance policy when user has edit_compliance permission' do
-    req = build_request(method: 'PATCH', uri: '/api/compliance/v2/policies/policy-123', data: '{"name": "updated-policy"}')
-
-    @user.stubs(:can?).with(:edit_compliance).returns(true)
-    @forwarder.expects(:execute_cloud_request).returns(true)
-
-    @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123', 'test_controller', @user, @organization, @location)
-  end
-
-  test 'should deny PATCH request to compliance policy when user lacks edit_compliance permission' do
-    req = build_request(method: 'PATCH', uri: '/api/compliance/v2/policies/policy-123', data: '{"name": "updated-policy"}')
-
-    @user.stubs(:can?).with(:edit_compliance).returns(false)
-
-    assert_raises(::Foreman::PermissionMissingException) do
-      @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123', 'test_controller', @user, @organization, @location)
-    end
-  end
-
-  test 'should allow DELETE request to compliance policy when user has edit_compliance permission' do
-    req = build_request(method: 'DELETE', uri: '/api/compliance/v2/policies/policy-123')
-
-    @user.stubs(:can?).with(:edit_compliance).returns(true)
-    @forwarder.expects(:execute_cloud_request).returns(true)
-
-    @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123', 'test_controller', @user, @organization, @location)
-  end
-
-  test 'should deny DELETE request to compliance policy when user lacks edit_compliance permission' do
-    req = build_request(method: 'DELETE', uri: '/api/compliance/v2/policies/policy-123')
-
-    @user.stubs(:can?).with(:edit_compliance).returns(false)
-
-    assert_raises(::Foreman::PermissionMissingException) do
-      @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123', 'test_controller', @user, @organization, @location)
-    end
-  end
-
-  test 'should allow POST request to compliance policy systems when user has edit_compliance permission' do
-    req = build_request(method: 'POST', uri: '/api/compliance/v2/policies/policy-123/systems', data: '{"id": "system-456"}')
-
-    @user.stubs(:can?).with(:edit_compliance).returns(true)
-    @forwarder.expects(:execute_cloud_request).returns(true)
-
-    @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123/systems', 'test_controller', @user, @organization, @location)
-  end
-
-  test 'should deny POST request to compliance policy systems when user lacks edit_compliance permission' do
-    req = build_request(method: 'POST', uri: '/api/compliance/v2/policies/policy-123/systems', data: '{"id": "system-456"}')
-
-    @user.stubs(:can?).with(:edit_compliance).returns(false)
-
-    assert_raises(::Foreman::PermissionMissingException) do
-      @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123/systems', 'test_controller', @user, @organization, @location)
-    end
-  end
-
-  test 'should allow DELETE request to compliance report when user has edit_compliance permission' do
-    req = build_request(method: 'DELETE', uri: '/api/compliance/v2/reports/report-123')
-
-    @user.stubs(:can?).with(:edit_compliance).returns(true)
-    @forwarder.expects(:execute_cloud_request).returns(true)
-
-    @forwarder.forward_request(req, 'api/compliance/v2/reports/report-123', 'test_controller', @user, @organization, @location)
-  end
-
-  test 'should deny DELETE request to compliance report when user lacks edit_compliance permission' do
-    req = build_request(method: 'DELETE', uri: '/api/compliance/v2/reports/report-123')
-
-    @user.stubs(:can?).with(:edit_compliance).returns(false)
-
-    assert_raises(::Foreman::PermissionMissingException) do
-      @forwarder.forward_request(req, 'api/compliance/v2/reports/report-123', 'test_controller', @user, @organization, @location)
-    end
-  end
-
-  test 'should allow DELETE request to compliance tailoring rule when user has edit_compliance permission' do
-    req = build_request(method: 'DELETE', uri: '/api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999')
-
-    @user.stubs(:can?).with(:edit_compliance).returns(true)
-    @forwarder.expects(:execute_cloud_request).returns(true)
-
-    @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999', 'test_controller', @user, @organization, @location)
-  end
-
-  test 'should deny DELETE request to compliance tailoring rule when user lacks edit_compliance permission' do
-    req = build_request(method: 'DELETE', uri: '/api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999')
-
-    @user.stubs(:can?).with(:edit_compliance).returns(false)
-
-    assert_raises(::Foreman::PermissionMissingException) do
-      @forwarder.forward_request(req, 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999', 'test_controller', @user, @organization, @location)
-    end
-  end
-
   # Edge case: anonymous user
   test 'should deny request when user is nil' do
     req = build_request(method: 'GET', uri: '/api/insights/v1/stats/systems')
@@ -621,62 +308,110 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     end
   end
 
-  # Zero-permission user tests: verify current allow-by-default behavior
-  # for methods not explicitly listed in a pattern's permissions.
-  # TODO: Change to deny-by-default - these should raise UnsupportedOperationError instead of forwarding.
-  test 'should forward zero-permission user GET to advisor ack endpoint (allow-by-default)' do
-    req = build_request(method: 'GET', uri: '/api/insights/v1/ack/')
-    @user.stubs(:can?).returns(false)
-    @forwarder.expects(:execute_cloud_request).returns(true)
+  # Comprehensive permission matrix tests
+  #
+  # For each path, every HTTP method is tested via forward_request:
+  # - Mapped operations (method listed in permissions) → user lacking permission gets PermissionMissingException
+  # - Unmapped operations (method not listed) → rejected with UnsupportedOperationError, execute_cloud_request never called
+  #
+  # Allow behavior (user WITH permission) is tested by the happy-path tests above.
 
-    @forwarder.forward_request(req, 'api/insights/v1/ack/', 'test_controller', @user, @organization, @location)
-  end
+  HTTP_METHODS = %w[GET HEAD POST PUT PATCH DELETE OPTIONS].freeze
 
-  test 'should forward zero-permission user GET to advisor hostack endpoint (allow-by-default)' do
-    req = build_request(method: 'GET', uri: '/api/insights/v1/hostack/')
-    @user.stubs(:can?).returns(false)
-    @forwarder.expects(:execute_cloud_request).returns(true)
+  PERMISSION_MAPPINGS = [
+    # Inventory hosts - shared dependency (any one of three permissions grants GET access)
+    { path: 'api/inventory/v1/hosts', permissions: { 'GET' => [:view_advisor, :view_compliance, :view_vulnerability] } },
+    { path: 'api/inventory/v1/hosts/abc-123', permissions: { 'GET' => [:view_advisor, :view_compliance, :view_vulnerability] } },
+    # Compliance - policies
+    { path: 'api/compliance/v2/policies', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance } },
+    { path: 'api/compliance/v2/policies/policy-123', permissions: { 'GET' => :view_compliance, 'DELETE' => :edit_compliance, 'PATCH' => :edit_compliance } },
+    # Compliance - policy systems
+    { path: 'api/compliance/v2/policies/policy-123/systems', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance, 'DELETE' => :edit_compliance, 'PATCH' => :edit_compliance } },
+    { path: 'api/compliance/v2/policies/policy-123/systems/system-456', permissions: { 'GET' => :view_compliance, 'DELETE' => :edit_compliance, 'PATCH' => :edit_compliance } },
+    # Compliance - tailorings
+    { path: 'api/compliance/v2/policies/policy-123/tailorings', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance } },
+    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance, 'PATCH' => :edit_compliance } },
+    # Compliance - tailoring rules
+    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules', permissions: { 'GET' => :view_compliance, 'POST' => :edit_compliance } },
+    { path: 'api/compliance/v2/policies/policy-123/tailorings/tailoring-789/rules/rule-999', permissions: { 'GET' => :view_compliance, 'DELETE' => :edit_compliance, 'PATCH' => :edit_compliance } },
+    # Compliance - reports
+    { path: 'api/compliance/v2/reports', permissions: { 'GET' => :view_compliance } },
+    { path: 'api/compliance/v2/reports/report-123', permissions: { 'GET' => :view_compliance, 'DELETE' => :edit_compliance } },
+    { path: 'api/compliance/v2/reports/report-123/systems', permissions: { 'GET' => :view_compliance } },
+    { path: 'api/compliance/v2/reports/report-123/systems/system-456', permissions: { 'GET' => :view_compliance } },
+    { path: 'api/compliance/v2/reports/report-123/systems/os_versions', permissions: { 'GET' => :view_compliance } },
+    # Compliance - test results
+    { path: 'api/compliance/v2/reports/report-123/test_results', permissions: { 'GET' => :view_compliance } },
+    { path: 'api/compliance/v2/reports/report-123/test_results/result-456', permissions: { 'GET' => :view_compliance } },
+    # Compliance - policy system os_versions
+    { path: 'api/compliance/v2/policies/policy-123/systems/os_versions', permissions: { 'GET' => :view_compliance } },
+    # Compliance - systems
+    { path: 'api/compliance/v2/systems', permissions: { 'GET' => :view_compliance } },
+    { path: 'api/compliance/v2/systems/system-456', permissions: { 'GET' => :view_compliance } },
+    { path: 'api/compliance/v2/systems/os_versions', permissions: { 'GET' => :view_compliance } },
+    { path: 'api/compliance/v2/systems/system-456/policies', permissions: { 'GET' => :view_compliance } },
+    { path: 'api/compliance/v2/systems/system-456/reports', permissions: { 'GET' => :view_compliance } },
+    # Compliance - catch-all
+    { path: 'api/compliance/v2/profiles', permissions: { 'GET' => :view_compliance } },
+    # Vulnerability - CVEs list (POST only)
+    { path: 'api/vulnerability/v1/vulnerabilities/cves', permissions: { 'POST' => :view_vulnerability } },
+    # Vulnerability - write-only endpoints (PATCH only)
+    { path: 'api/vulnerability/v1/status', permissions: { 'PATCH' => :edit_vulnerability } },
+    { path: 'api/vulnerability/v1/cves/status', permissions: { 'PATCH' => :edit_vulnerability } },
+    { path: 'api/vulnerability/v1/cves/business_risk', permissions: { 'PATCH' => :edit_vulnerability } },
+    { path: 'api/vulnerability/v1/systems/opt_out', permissions: { 'PATCH' => :edit_vulnerability } },
+    # Vulnerability - endpoints without tags support (GET only)
+    { path: 'api/vulnerability/v1/apistatus', permissions: { 'GET' => :view_vulnerability } },
+    { path: 'api/vulnerability/v1/version', permissions: { 'GET' => :view_vulnerability } },
+    { path: 'api/vulnerability/v1/business_risk', permissions: { 'GET' => :view_vulnerability } },
+    { path: 'api/vulnerability/v1/announcement', permissions: { 'GET' => :view_vulnerability } },
+    { path: 'api/vulnerability/v1/cves/CVE-2024-1234', permissions: { 'GET' => :view_vulnerability } },
+    { path: 'api/vulnerability/v1/playbooks/abc-123', permissions: { 'GET' => :view_vulnerability } },
+    { path: 'api/vulnerability/v1/report/abc-123', permissions: { 'GET' => :view_vulnerability } },
+    # Vulnerability - cves_without_errata (GET + PATCH)
+    { path: 'api/vulnerability/v1/feature/cves_without_errata', permissions: { 'GET' => :view_vulnerability, 'PATCH' => :edit_vulnerability } },
+    # Vulnerability - catch-all (GET with tags)
+    { path: 'api/vulnerability/v1/dashbar', permissions: { 'GET' => :view_vulnerability } },
+    { path: 'api/vulnerability/v1/cves/CVE-2024-1234/affected_systems', permissions: { 'GET' => :view_vulnerability } },
+    # Advisor - ack (POST/DELETE)
+    { path: 'api/insights/v1/ack/', permissions: { 'POST' => :edit_advisor, 'DELETE' => :edit_advisor } },
+    { path: 'api/insights/v1/ack/rule_id', permissions: { 'POST' => :edit_advisor, 'DELETE' => :edit_advisor } },
+    # Advisor - hostack (POST/DELETE)
+    { path: 'api/insights/v1/hostack/', permissions: { 'POST' => :edit_advisor, 'DELETE' => :edit_advisor } },
+    { path: 'api/insights/v1/hostack/123', permissions: { 'POST' => :edit_advisor, 'DELETE' => :edit_advisor } },
+    # Advisor - unack_hosts (POST)
+    { path: 'api/insights/v1/rule/test_rule/unack_hosts', permissions: { 'POST' => :edit_advisor } },
+    # Advisor - catch-all (GET)
+    { path: 'api/insights/v1/stats/systems', permissions: { 'GET' => :view_advisor } },
+    # Unmapped paths (no pattern matches at all)
+    { path: 'api/unknown/endpoint', permissions: {} },
+    { path: 'api/inventory/v1/system_profile/operating_system', permissions: {} },
+    { path: 'api/tasks/v1/some_task', permissions: {} },
+  ].freeze
 
-    @forwarder.forward_request(req, 'api/insights/v1/hostack/', 'test_controller', @user, @organization, @location)
-  end
+  PERMISSION_MAPPINGS.each do |mapping|
+    HTTP_METHODS.each do |http_method|
+      expected_permission = mapping[:permissions][http_method]
 
-  test 'should forward zero-permission user GET to vulnerability status endpoint (allow-by-default)' do
-    req = build_request(method: 'GET', uri: '/api/vulnerability/v1/status')
-    @user.stubs(:can?).returns(false)
-    @forwarder.expects(:execute_cloud_request).returns(true)
+      if expected_permission
+        test "#{http_method} #{mapping[:path]} enforces #{Array(expected_permission).join(', ')}" do
+          req = build_request(method: http_method, uri: "/#{mapping[:path]}")
+          Array(expected_permission).each { |perm| @user.stubs(:can?).with(perm).returns(false) }
 
-    @forwarder.forward_request(req, 'api/vulnerability/v1/status', 'test_controller', @user, @organization, @location)
-  end
+          assert_raises(::Foreman::PermissionMissingException) do
+            @forwarder.forward_request(req, mapping[:path], 'test_controller', @user, @organization, @location)
+          end
+        end
+      else
+        test "#{http_method} #{mapping[:path]} is rejected as unmapped operation" do
+          req = build_request(method: http_method, uri: "/#{mapping[:path]}")
+          @forwarder.expects(:execute_cloud_request).never
 
-  test 'should forward zero-permission user GET to vulnerability cves status endpoint (allow-by-default)' do
-    req = build_request(method: 'GET', uri: '/api/vulnerability/v1/cves/status')
-    @user.stubs(:can?).returns(false)
-    @forwarder.expects(:execute_cloud_request).returns(true)
-
-    @forwarder.forward_request(req, 'api/vulnerability/v1/cves/status', 'test_controller', @user, @organization, @location)
-  end
-
-  test 'should forward zero-permission user GET to vulnerability cves business_risk endpoint (allow-by-default)' do
-    req = build_request(method: 'GET', uri: '/api/vulnerability/v1/cves/business_risk')
-    @user.stubs(:can?).returns(false)
-    @forwarder.expects(:execute_cloud_request).returns(true)
-
-    @forwarder.forward_request(req, 'api/vulnerability/v1/cves/business_risk', 'test_controller', @user, @organization, @location)
-  end
-
-  test 'should forward zero-permission user GET to inventory catch-all endpoint (allow-by-default)' do
-    req = build_request(method: 'GET', uri: '/api/inventory/v1/system_profile/operating_system')
-    @user.stubs(:can?).returns(false)
-    @forwarder.expects(:execute_cloud_request).returns(true)
-
-    @forwarder.forward_request(req, 'api/inventory/v1/system_profile/operating_system', 'test_controller', @user, @organization, @location)
-  end
-
-  test 'should forward zero-permission user GET to tasks catch-all endpoint (allow-by-default)' do
-    req = build_request(method: 'GET', uri: '/api/tasks/v1/some_task')
-    @user.stubs(:can?).returns(false)
-    @forwarder.expects(:execute_cloud_request).returns(true)
-
-    @forwarder.forward_request(req, 'api/tasks/v1/some_task', 'test_controller', @user, @organization, @location)
+          assert_raises(::ForemanRhCloud::InsightsApiForwarder::UnsupportedOperationError) do
+            @forwarder.forward_request(req, mapping[:path], 'test_controller', @user, @organization, @location)
+          end
+        end
+      end
+    end
   end
 end
