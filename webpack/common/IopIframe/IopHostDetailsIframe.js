@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useIopConfig } from '../Hooks/ConfigHooks';
 import { useInsightsPermissions } from '../Hooks/PermissionsHooks';
 import { useIopIframeChrome } from './useIopIframeChrome';
 import { useIopIframeHeight } from './useIopIframeHeight';
@@ -21,11 +22,13 @@ const IopHostDetailsIframe = ({
 }) => {
   const iframeRef = useRef(null);
   const permissions = useInsightsPermissions();
+  const iop = useIopConfig();
   const sendChromeContext = useIopIframeChrome({
     iframeRef,
     permissions,
     appRoute,
     embedded: 'host-tab',
+    iop,
     readyMessageType,
   });
   useIopIframeHeight({ iframeRef });
