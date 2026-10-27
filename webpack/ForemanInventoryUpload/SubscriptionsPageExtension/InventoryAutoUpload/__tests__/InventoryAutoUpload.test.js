@@ -2,6 +2,11 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import InventoryAutoUpload from '../InventoryAutoUpload';
 
+let mockIsIop = false;
+jest.mock('../../../common/Hooks/ConfigHooks', () => ({
+  useIopConfig: () => mockIsIop,
+}));
+
 jest.mock(
   '../../../Components/InventorySettings/InventorySettings',
   () => () => <div data-testid="inventory-settings">InventorySettings</div>
@@ -13,6 +18,10 @@ describe('InventoryAutoUpload', () => {
     setSetting: jest.fn(),
     getSettings: jest.fn(),
     ...overrides,
+  });
+
+  beforeEach(() => {
+    mockIsIop = false;
   });
 
   it('renders the heading', () => {
@@ -38,5 +47,19 @@ describe('InventoryAutoUpload', () => {
     const props = buildProps();
     render(<InventoryAutoUpload {...props} />);
     expect(props.getSettings).toHaveBeenCalled();
+  });
+
+  it('points to the Insights menu in regular mode', () => {
+    mockIsIop = false;
+    render(<InventoryAutoUpload {...buildProps()} />);
+    expect(screen.getByText(/Insights/)).toBeTruthy();
+    expect(screen.queryByText(/Administer/)).toBeNull();
+  });
+
+  it('points to the Administer menu in IoP mode', () => {
+    mockIsIop = true;
+    render(<InventoryAutoUpload {...buildProps()} />);
+    expect(screen.getByText(/Administer/)).toBeTruthy();
+    expect(screen.queryByText(/Insights/)).toBeNull();
   });
 });

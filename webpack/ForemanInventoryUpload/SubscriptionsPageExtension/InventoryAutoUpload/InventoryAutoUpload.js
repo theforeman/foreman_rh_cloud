@@ -13,6 +13,7 @@ import {
 import { InfoAltIcon, CaretRightIcon } from '@patternfly/react-icons';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { foremanUrl } from '../../../ForemanRhCloudHelpers';
+import { useIopConfig } from '../../../common/Hooks/ConfigHooks';
 import SwitcherPF4 from '../../../common/Switcher/SwitcherPF4';
 import { settingsDict } from '../../Components/InventorySettings/AdvancedSetting/AdvancedSettingsConstants';
 import InventorySettings from '../../Components/InventorySettings/InventorySettings';
@@ -22,6 +23,7 @@ const InventoryAutoUploadSwitcher = ({
   setSetting,
   getSettings,
 }) => {
+  const isIop = useIopConfig();
   useEffect(() => {
     getSettings();
   }, [getSettings]);
@@ -80,7 +82,7 @@ const InventoryAutoUploadSwitcher = ({
                 rel="noopener noreferrer"
               >
                 <strong>
-                  {__('Insights')}
+                  {isIop ? __('Administer') : __('Insights')}
                   {' > '}
                   {__('Inventory Upload')}
                 </strong>
