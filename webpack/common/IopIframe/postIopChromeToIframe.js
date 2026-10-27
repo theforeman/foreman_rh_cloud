@@ -10,10 +10,11 @@ import { IOP_CHROME_INIT } from './iopIframeConstants';
  * @param {string} options.appRoute Path inside the iframe application page (e.g. reports, systems/<uuid>)
  * @param {string} [options.pathname] Foreman pathname (informational; passed through to the child)
  * @param {string} [options.embedded] Embedding mode for the iframe (e.g. 'host-tab')
+ * @param {boolean} [options.iop] Informes whether the iframe is in an IoP smart proxy or Foreman
  */
 export const postIopChromeToIframe = (
   iframe,
-  { permissions = [], pathname = '', appRoute = '', embedded } = {}
+  { permissions = [], pathname = '', appRoute = '', embedded, iop = false } = {}
 ) => {
   if (!iframe?.contentWindow || typeof window === 'undefined') {
     return;
@@ -27,6 +28,7 @@ export const postIopChromeToIframe = (
         permissions,
         appRoute,
         pathname,
+        iop: Boolean(iop),
         ...(embedded ? { embedded } : {}),
       },
     },

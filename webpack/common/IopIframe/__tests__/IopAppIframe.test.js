@@ -16,6 +16,7 @@ jest.mock('foremanReact/Root/Context/ForemanContext', () => ({
   useForemanContext: () => ({
     metadata: {
       permissions: new Set(['view_hosts']),
+      foreman_rh_cloud: { iop: true },
     },
   }),
   useForemanPermissions: () => new Set(['view_hosts']),
@@ -64,6 +65,7 @@ describe('IopAppIframe', () => {
       expect.objectContaining({
         appRoute: 'cves',
         pathname: `${routePrefix}/cves`,
+        iop: true,
       })
     );
   });

@@ -17,6 +17,7 @@ jest.mock('foremanReact/Root/Context/ForemanContext', () => ({
   useForemanContext: () => ({
     metadata: {
       permissions: new Set(['view_hosts']),
+      foreman_rh_cloud: { iop: true },
     },
   }),
   useForemanPermissions: () => new Set(['view_hosts']),
@@ -83,6 +84,7 @@ describe('ComplianceHostDetailsTabWrapper', () => {
       expect.objectContaining({
         appRoute: 'systems/1-2-3',
         embedded: 'host-tab',
+        iop: true,
       })
     );
   });
@@ -119,6 +121,7 @@ describe('ComplianceHostDetailsTabWrapper', () => {
       expect.objectContaining({
         appRoute: 'systems/uuid-host-B',
         embedded: 'host-tab',
+        iop: true,
       })
     );
   });
