@@ -46,9 +46,12 @@ module ForemanRhCloud
     #
     # view_advisor         | GET /api/insights/v1/*
     # edit_advisor         | POST /api/insights/v1/ack/
+    #                      | PUT /api/insights/v1/ack/{rule_id}/
     #                      | DELETE /api/insights/v1/ack/{rule_id}/
     #                      | POST /api/insights/v1/hostack/
+    #                      | PUT /api/insights/v1/hostack/{id}/
     #                      | DELETE /api/insights/v1/hostack/{id}/
+    #                      | POST /api/insights/v1/rule/{rule_id}/ack_hosts/
     #                      | POST /api/insights/v1/rule/{rule_id}/unack_hosts/
     #
     SCOPED_REQUESTS = [
@@ -204,18 +207,20 @@ module ForemanRhCloud
           'GET' => :view_compliance,
         },
       },
-      # Vulnerability CVEs list - POST requires view_vulnerability (no tags support per OpenAPI spec)
+      # Vulnerability CVEs list and IDs - GET/POST require view_vulnerability (no tags support per OpenAPI spec)
       {
-        test: %r{api/vulnerability/v1/vulnerabilities/cves},
+        test: %r{api/vulnerability/v1/vulnerabilities/cves(/ids)?$},
         permissions: {
+          'GET' => :view_vulnerability,
           'POST' => :view_vulnerability,
         },
       },
-      # Vulnerability status - PATCH requires edit_vulnerability
+      # Vulnerability status - GET requires view_vulnerability, PATCH requires edit_vulnerability
       # Note: GET /status does not support tags parameter per OpenAPI spec
       {
         test: %r{api/vulnerability/v1/status},
         permissions: {
+          'GET' => :view_vulnerability,
           'PATCH' => :edit_vulnerability,
         },
       },
@@ -275,22 +280,34 @@ module ForemanRhCloud
           'GET' => :view_vulnerability,
         },
       },
-      # Advisor ack endpoints - POST/DELETE require edit_advisor
+      # Advisor ack endpoints - GET requires view_advisor, POST/PUT/DELETE require edit_advisor
       {
-        test: %r{api/insights/v1/ack(/[^/]*)?$},
+        test: %r{api/insights/v1/ack(/[^/]*)?/?$},
         tag_name: :tags,
         permissions: {
+          'GET' => :view_advisor,
           'POST' => :edit_advisor,
+          'PUT' => :edit_advisor,
           'DELETE' => :edit_advisor,
         },
       },
-      # Advisor hostack endpoints - POST/DELETE require edit_advisor
+      # Advisor hostack endpoints - GET requires view_advisor, POST/PUT/DELETE require edit_advisor
       {
-        test: %r{api/insights/v1/hostack(/[^/]*)?$},
+        test: %r{api/insights/v1/hostack(/[^/]*)?/?$},
+        tag_name: :tags,
+        permissions: {
+          'GET' => :view_advisor,
+          'POST' => :edit_advisor,
+          'PUT' => :edit_advisor,
+          'DELETE' => :edit_advisor,
+        },
+      },
+      # Advisor rule ack_hosts - POST requires edit_advisor
+      {
+        test: %r{api/insights/v1/rule/[^/]+/ack_hosts},
         tag_name: :tags,
         permissions: {
           'POST' => :edit_advisor,
-          'DELETE' => :edit_advisor,
         },
       },
       # Advisor rule unack_hosts - POST requires edit_advisor
