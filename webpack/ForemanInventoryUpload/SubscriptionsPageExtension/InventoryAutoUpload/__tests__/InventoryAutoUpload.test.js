@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import InventoryAutoUpload from '../InventoryAutoUpload';
 
 let mockIsIop = false;
-jest.mock('../../../common/Hooks/ConfigHooks', () => ({
+jest.mock('../../../../common/Hooks/ConfigHooks', () => ({
   useIopConfig: () => mockIsIop,
 }));
 
