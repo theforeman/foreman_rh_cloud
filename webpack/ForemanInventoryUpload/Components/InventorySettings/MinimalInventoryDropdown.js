@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { translate as __ } from 'foremanReact/common/I18n';
@@ -9,19 +9,13 @@ import {
   MenuToggle,
 } from '@patternfly/react-core';
 
-import { childSettingsDict } from './AdvancedSetting/AdvancedSettingsConstants';
 import { setSetting } from './InventorySettingsActions';
 import { settingsForDropdownSelection } from './minimalInventorySelection';
-import {
-  selectInsightsMinimalDataCollection,
-  selectSettings,
-} from './InventorySettingsSelectors';
+import { selectInsightsMinimalDataCollection } from './InventorySettingsSelectors';
 
 const MinimalInventoryDropdown = ({ setChosenValue }) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
-  const cameFromAnalytics = useRef(false);
-  const settings = useSelector(selectSettings) || {};
   const dropdownValues = {
     minimal: {
       title: __('Minimal data collection'),
@@ -47,20 +41,9 @@ const MinimalInventoryDropdown = ({ setChosenValue }) => {
     setIsOpen(false);
     setChosenValue(value);
 
-    const selection = settingsForDropdownSelection({
-      value,
-      currentlyMinimal: !!currentSettingBoolean,
-      cameFromAnalytics: cameFromAnalytics.current,
-      childSettings: Object.entries(childSettingsDict).map(
-        ([key, setting]) => ({
-          name: setting.name,
-          enabled: !!settings[key],
-        })
-      ),
-    });
-
-    cameFromAnalytics.current = selection.cameFromAnalytics;
-    selection.updates.forEach(update => dispatch(setSetting(update)));
+    settingsForDropdownSelection(value).forEach(update =>
+      dispatch(setSetting(update))
+    );
   };
   return (
     <Dropdown
