@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { translate as __ } from 'foremanReact/common/I18n';
@@ -11,12 +11,17 @@ import {
 
 import { childSettingsDict } from './AdvancedSetting/AdvancedSettingsConstants';
 import { setSetting } from './InventorySettingsActions';
-
-import { selectInsightsMinimalDataCollection } from './InventorySettingsSelectors';
+import { settingsForDropdownSelection } from './minimalInventorySelection';
+import {
+  selectInsightsMinimalDataCollection,
+  selectSettings,
+} from './InventorySettingsSelectors';
 
 const MinimalInventoryDropdown = ({ setChosenValue }) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const cameFromAnalytics = useRef(false);
+  const settings = useSelector(selectSettings) || {};
   const dropdownValues = {
     minimal: {
       title: __('Minimal data collection'),
@@ -31,10 +36,6 @@ const MinimalInventoryDropdown = ({ setChosenValue }) => {
       ),
     },
   };
-  const valueToBoolean = {
-    minimal: true,
-    optional: false,
-  };
   const currentSettingBoolean = useSelector(
     selectInsightsMinimalDataCollection
   );
@@ -46,25 +47,20 @@ const MinimalInventoryDropdown = ({ setChosenValue }) => {
     setIsOpen(false);
     setChosenValue(value);
 
-    dispatch(
-      setSetting({
-        setting: 'insights_minimal_data_collection',
-        value: valueToBoolean[value],
-      })
-    );
+    const selection = settingsForDropdownSelection({
+      value,
+      currentlyMinimal: !!currentSettingBoolean,
+      cameFromAnalytics: cameFromAnalytics.current,
+      childSettings: Object.entries(childSettingsDict).map(
+        ([key, setting]) => ({
+          name: setting.name,
+          enabled: !!settings[key],
+        })
+      ),
+    });
 
-    if (value === 'minimal') {
-      // If user wants to move to minimal data collection, turn on all related settings.
-      // These will be overridden by insights_minimal_data_collection anyway, but this takes care of the visuals.
-      Object.values(childSettingsDict).forEach(setting => {
-        dispatch(
-          setSetting({
-            setting: setting.name,
-            value: true,
-          })
-        );
-      });
-    }
+    cameFromAnalytics.current = selection.cameFromAnalytics;
+    selection.updates.forEach(update => dispatch(setSetting(update)));
   };
   return (
     <Dropdown
