@@ -9,9 +9,8 @@ import {
   MenuToggle,
 } from '@patternfly/react-core';
 
-import { childSettingsDict } from './AdvancedSetting/AdvancedSettingsConstants';
 import { setSetting } from './InventorySettingsActions';
-
+import { settingsForDropdownSelection } from './minimalInventorySelection';
 import { selectInsightsMinimalDataCollection } from './InventorySettingsSelectors';
 
 const MinimalInventoryDropdown = ({ setChosenValue }) => {
@@ -31,10 +30,6 @@ const MinimalInventoryDropdown = ({ setChosenValue }) => {
       ),
     },
   };
-  const valueToBoolean = {
-    minimal: true,
-    optional: false,
-  };
   const currentSettingBoolean = useSelector(
     selectInsightsMinimalDataCollection
   );
@@ -46,25 +41,9 @@ const MinimalInventoryDropdown = ({ setChosenValue }) => {
     setIsOpen(false);
     setChosenValue(value);
 
-    dispatch(
-      setSetting({
-        setting: 'insights_minimal_data_collection',
-        value: valueToBoolean[value],
-      })
+    settingsForDropdownSelection(value).forEach(update =>
+      dispatch(setSetting(update))
     );
-
-    if (value === 'minimal') {
-      // If user wants to move to minimal data collection, turn on all related settings.
-      // These will be overridden by insights_minimal_data_collection anyway, but this takes care of the visuals.
-      Object.values(childSettingsDict).forEach(setting => {
-        dispatch(
-          setSetting({
-            setting: setting.name,
-            value: true,
-          })
-        );
-      });
-    }
   };
   return (
     <Dropdown
