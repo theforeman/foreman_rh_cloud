@@ -61,6 +61,36 @@ class RemoveInsightsHostJobTest < ActiveSupport::TestCase
     assert_equal 'response2', action.output[:response_page2]
   end
 
+  test 'does not remove missing hosts from other organizations' do
+    other_org = FactoryBot.create(:organization)
+    FactoryBot.create(:insights_missing_host, organization: @org)
+    other = FactoryBot.create(:insights_missing_host, organization: other_org)
+
+    ForemanInventoryUpload::Async::RemoveInsightsHostsJob.any_instance.expects(:execute_cloud_request).once.returns(
+      mock_response
+    )
+
+    action = create_and_plan_action(ForemanInventoryUpload::Async::RemoveInsightsHostsJob, '', @org.id)
+    run_action(action)
+
+    assert_equal [other.id], InsightsMissingHost.pluck(:id)
+  end
+
+  test 'scoped search does not match missing hosts in other organizations' do
+    other_org = FactoryBot.create(:organization)
+    FactoryBot.create(:insights_missing_host, name: 'sharedname', organization: @org)
+    other = FactoryBot.create(:insights_missing_host, name: 'sharedname', organization: other_org)
+
+    ForemanInventoryUpload::Async::RemoveInsightsHostsJob.any_instance.expects(:execute_cloud_request).once.returns(
+      mock_response
+    )
+
+    action = create_and_plan_action(ForemanInventoryUpload::Async::RemoveInsightsHostsJob, 'name = sharedname', @org.id)
+    run_action(action)
+
+    assert_equal [other.id], InsightsMissingHost.pluck(:id)
+  end
+
   test 'Uses scoped_search to select hosts' do
     ForemanInventoryUpload::Async::RemoveInsightsHostsJob.any_instance.stubs(:page_size).returns(1)
 
