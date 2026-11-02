@@ -353,10 +353,11 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     { path: 'api/compliance/v2/systems/system-456/reports', permissions: { 'GET' => :view_compliance } },
     # Compliance - catch-all
     { path: 'api/compliance/v2/profiles', permissions: { 'GET' => :view_compliance } },
-    # Vulnerability - CVEs list (POST only)
-    { path: 'api/vulnerability/v1/vulnerabilities/cves', permissions: { 'POST' => :view_vulnerability } },
-    # Vulnerability - write-only endpoints (PATCH only)
-    { path: 'api/vulnerability/v1/status', permissions: { 'PATCH' => :edit_vulnerability } },
+    # Vulnerability - CVEs list and IDs (GET/POST)
+    { path: 'api/vulnerability/v1/vulnerabilities/cves', permissions: { 'GET' => :view_vulnerability, 'POST' => :view_vulnerability } },
+    { path: 'api/vulnerability/v1/vulnerabilities/cves/ids', permissions: { 'GET' => :view_vulnerability, 'POST' => :view_vulnerability } },
+    # Vulnerability - status (GET/PATCH)
+    { path: 'api/vulnerability/v1/status', permissions: { 'GET' => :view_vulnerability, 'PATCH' => :edit_vulnerability } },
     { path: 'api/vulnerability/v1/cves/status', permissions: { 'PATCH' => :edit_vulnerability } },
     { path: 'api/vulnerability/v1/cves/business_risk', permissions: { 'PATCH' => :edit_vulnerability } },
     { path: 'api/vulnerability/v1/systems/opt_out', permissions: { 'PATCH' => :edit_vulnerability } },
@@ -373,12 +374,16 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     # Vulnerability - catch-all (GET with tags)
     { path: 'api/vulnerability/v1/dashbar', permissions: { 'GET' => :view_vulnerability } },
     { path: 'api/vulnerability/v1/cves/CVE-2024-1234/affected_systems', permissions: { 'GET' => :view_vulnerability } },
-    # Advisor - ack (POST/DELETE)
-    { path: 'api/insights/v1/ack/', permissions: { 'POST' => :edit_advisor, 'DELETE' => :edit_advisor } },
-    { path: 'api/insights/v1/ack/rule_id', permissions: { 'POST' => :edit_advisor, 'DELETE' => :edit_advisor } },
-    # Advisor - hostack (POST/DELETE)
-    { path: 'api/insights/v1/hostack/', permissions: { 'POST' => :edit_advisor, 'DELETE' => :edit_advisor } },
-    { path: 'api/insights/v1/hostack/123', permissions: { 'POST' => :edit_advisor, 'DELETE' => :edit_advisor } },
+    # Advisor - ack (GET/POST/PUT/DELETE, with trailing slash variants)
+    { path: 'api/insights/v1/ack/', permissions: { 'GET' => :view_advisor, 'POST' => :edit_advisor, 'PUT' => :edit_advisor, 'DELETE' => :edit_advisor } },
+    { path: 'api/insights/v1/ack/rule_id', permissions: { 'GET' => :view_advisor, 'POST' => :edit_advisor, 'PUT' => :edit_advisor, 'DELETE' => :edit_advisor } },
+    { path: 'api/insights/v1/ack/rule_id/', permissions: { 'GET' => :view_advisor, 'POST' => :edit_advisor, 'PUT' => :edit_advisor, 'DELETE' => :edit_advisor } },
+    # Advisor - hostack (GET/POST/PUT/DELETE, with trailing slash variants)
+    { path: 'api/insights/v1/hostack/', permissions: { 'GET' => :view_advisor, 'POST' => :edit_advisor, 'PUT' => :edit_advisor, 'DELETE' => :edit_advisor } },
+    { path: 'api/insights/v1/hostack/123', permissions: { 'GET' => :view_advisor, 'POST' => :edit_advisor, 'PUT' => :edit_advisor, 'DELETE' => :edit_advisor } },
+    { path: 'api/insights/v1/hostack/123/', permissions: { 'GET' => :view_advisor, 'POST' => :edit_advisor, 'PUT' => :edit_advisor, 'DELETE' => :edit_advisor } },
+    # Advisor - ack_hosts (POST)
+    { path: 'api/insights/v1/rule/test_rule/ack_hosts', permissions: { 'POST' => :edit_advisor } },
     # Advisor - unack_hosts (POST)
     { path: 'api/insights/v1/rule/test_rule/unack_hosts', permissions: { 'POST' => :edit_advisor } },
     # Advisor - catch-all (GET)
