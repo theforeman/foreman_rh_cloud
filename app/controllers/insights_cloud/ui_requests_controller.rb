@@ -1,5 +1,16 @@
 module InsightsCloud
   class UIRequestsController < ::ApplicationController
+    # This controller proxies both browser (session + CSRF token) and
+    # token-authenticated API requests (e.g. Robottelo). ApplicationController's
+    # unconditional protect_from_forgery rejects the latter with a 422, so swap
+    # in the same session-only CSRF check Foreman's API base controller uses.
+    skip_forgery_protection
+    include Foreman::Controller::ApiCsrfProtection
+
+    protect_from_forgery with: :exception,
+      if: :protect_api_from_forgery?,
+      prepend: true
+
     layout false
 
     before_action :ensure_org, :find_location, :only => [:forward_request]
