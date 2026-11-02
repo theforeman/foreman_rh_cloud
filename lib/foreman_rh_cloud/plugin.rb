@@ -137,14 +137,20 @@ module ForemanRhCloud
             url_hash: { controller: :react, action: :index },
             parent: :insights_menu,
             if: -> { !ForemanRhCloud.with_iop_smart_proxy? }
-          menu :top_menu, :insights_hits, caption: N_('Recommendations'), url: '/foreman_rh_cloud/insights_cloud', url_hash: { controller: :react, action: :index }, parent: :insights_menu
+          menu :top_menu,
+            :insights_hits,
+            caption: N_('Recommendations'),
+            url: '/foreman_rh_cloud/insights_cloud',
+            url_hash: { controller: :react, action: :index },
+            parent: :insights_menu,
+            if: -> { User.current&.can?(:view_advisor) || User.current&.can?(:view_insights_hits) }
           menu :top_menu,
             :insights_vulnerability,
             caption: N_('Vulnerability'),
             url: '/foreman_rh_cloud/insights_vulnerability',
             url_hash: { controller: :react, action: :index },
             parent: :insights_menu,
-            if: -> { ForemanRhCloud.with_iop_smart_proxy? }
+            if: -> { ForemanRhCloud.with_iop_smart_proxy? && User.current&.can?(:view_vulnerability) }
           menu :top_menu,
             :insights_compliance_reports,
             caption: N_('Compliance Reports'),
