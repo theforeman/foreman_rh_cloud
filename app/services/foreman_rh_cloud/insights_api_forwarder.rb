@@ -4,6 +4,9 @@ module ForemanRhCloud
   class InsightsApiForwarder
     include ForemanRhCloud::CertAuth
 
+    class UnsupportedOperationError < StandardError
+    end
+
     # Permission mapping for API paths:
     #
     # Foreman Permission   | Paths
@@ -50,17 +53,17 @@ module ForemanRhCloud
     #
     SCOPED_REQUESTS = [
       # Inventory hosts - shared dependency;
-      #                 - requires view_compliance or view_vulnerability for GET
+      #                 - requires view_advisor, view_compliance, or view_vulnerability for GET
       {
-        test: %r{api/inventory/v1/hosts(/.*)?$},
+        test: %r{^api/inventory/v1/hosts(/.*)?$},
         tag_name: :tags,
         permissions: {
-          'GET' => [:view_compliance, :view_vulnerability],
+          'GET' => [:view_advisor, :view_compliance, :view_vulnerability],
         },
       },
       # Policies - requires view_compliance for GET, edit_compliance for POST/DELETE/PATCH
       {
-        test: %r{api/compliance/v2/policies(/[^/]*)?$},
+        test: %r{^api/compliance/v2/policies(/[^/]*)?$},
         permissions: {
           'GET' => :view_compliance,
           'POST' => :edit_compliance,
@@ -70,7 +73,7 @@ module ForemanRhCloud
       },
       # System and policies assigned to them - requires view_compliance for GET, edit_compliance for POST/DELETE/PATCH
       {
-        test: %r{api/compliance/v2/policies/[^/]+/systems(/[^/]*)?$},
+        test: %r{^api/compliance/v2/policies/[^/]+/systems(/[^/]*)?$},
         tag_name: :tags,
         permissions: {
           'GET' => :view_compliance,
@@ -81,7 +84,7 @@ module ForemanRhCloud
       },
       # Tailorings of assigned policies - requires view_compliance for GET, edit_compliance for POST/PATCH
       {
-        test: %r{api/compliance/v2/policies/[^/]+/tailorings(/[^/]*)?$},
+        test: %r{^api/compliance/v2/policies/[^/]+/tailorings(/[^/]*)?$},
         permissions: {
           'GET' => :view_compliance,
           'POST' => :edit_compliance,
@@ -90,7 +93,7 @@ module ForemanRhCloud
       },
       # Rules of Tailorings - requires view_compliance for GET, edit_compliance for POST/DELETE/PATCH
       {
-        test: %r{api/compliance/v2/policies/[^/]+/tailorings/[^/]+/rules(/[^/]*)?$},
+        test: %r{^api/compliance/v2/policies/[^/]+/tailorings/[^/]+/rules(/[^/]*)?$},
         permissions: {
           'GET' => :view_compliance,
           'POST' => :edit_compliance,
@@ -100,7 +103,7 @@ module ForemanRhCloud
       },
       # Compliance Reports - requires view_compliance for GET, edit_compliance for DELETE
       {
-        test: %r{api/compliance/v2/reports(/[^/]*)?$},
+        test: %r{^api/compliance/v2/reports(/[^/]*)?$},
         permissions: {
           'GET' => :view_compliance,
           'DELETE' => :edit_compliance,
@@ -108,7 +111,7 @@ module ForemanRhCloud
       },
       # Systems assigned to a report - requires view_compliance for GET
       {
-        test: %r{api/compliance/v2/reports/[^/]+/systems$},
+        test: %r{^api/compliance/v2/reports/[^/]+/systems$},
         tag_name: :tags,
         permissions: {
           'GET' => :view_compliance,
@@ -116,7 +119,7 @@ module ForemanRhCloud
       },
       # Individual system in a report - requires view_compliance for GET
       {
-        test: %r{api/compliance/v2/reports/[^/]+/systems/[^/]+$},
+        test: %r{^api/compliance/v2/reports/[^/]+/systems/[^/]+$},
         tag_name: :tags,
         permissions: {
           'GET' => :view_compliance,
@@ -124,7 +127,7 @@ module ForemanRhCloud
       },
       # OS versions for systems in a report - requires view_compliance for GET
       {
-        test: %r{api/compliance/v2/reports/[^/]+/systems/os_versions$},
+        test: %r{^api/compliance/v2/reports/[^/]+/systems/os_versions$},
         tag_name: :tags,
         permissions: {
           'GET' => :view_compliance,
@@ -132,7 +135,7 @@ module ForemanRhCloud
       },
       # OS versions for systems in a policy - requires view_compliance for GET
       {
-        test: %r{api/compliance/v2/policies/[^/]+/systems/os_versions$},
+        test: %r{^api/compliance/v2/policies/[^/]+/systems/os_versions$},
         tag_name: :tags,
         permissions: {
           'GET' => :view_compliance,
@@ -140,7 +143,7 @@ module ForemanRhCloud
       },
       # Compliance Systems list - requires view_compliance for GET
       {
-        test: %r{api/compliance/v2/systems$},
+        test: %r{^api/compliance/v2/systems$},
         tag_name: :tags,
         permissions: {
           'GET' => :view_compliance,
@@ -148,7 +151,7 @@ module ForemanRhCloud
       },
       # Individual compliance system - requires view_compliance for GET
       {
-        test: %r{api/compliance/v2/systems/[^/]+$},
+        test: %r{^api/compliance/v2/systems/[^/]+$},
         tag_name: :tags,
         permissions: {
           'GET' => :view_compliance,
@@ -156,7 +159,7 @@ module ForemanRhCloud
       },
       # OS versions for all systems - requires view_compliance for GET
       {
-        test: %r{api/compliance/v2/systems/os_versions$},
+        test: %r{^api/compliance/v2/systems/os_versions$},
         tag_name: :tags,
         permissions: {
           'GET' => :view_compliance,
@@ -164,7 +167,7 @@ module ForemanRhCloud
       },
       # Policies for a specific system - requires view_compliance for GET
       {
-        test: %r{api/compliance/v2/systems/[^/]+/policies$},
+        test: %r{^api/compliance/v2/systems/[^/]+/policies$},
         tag_name: :tags,
         permissions: {
           'GET' => :view_compliance,
@@ -172,7 +175,7 @@ module ForemanRhCloud
       },
       # Reports for a specific system - requires view_compliance for GET
       {
-        test: %r{api/compliance/v2/systems/[^/]+/reports$},
+        test: %r{^api/compliance/v2/systems/[^/]+/reports$},
         tag_name: :tags,
         permissions: {
           'GET' => :view_compliance,
@@ -180,7 +183,7 @@ module ForemanRhCloud
       },
       # Test results for a report - requires view_compliance for GET
       {
-        test: %r{api/compliance/v2/reports/[^/]+/test_results$},
+        test: %r{^api/compliance/v2/reports/[^/]+/test_results$},
         tag_name: :tags,
         permissions: {
           'GET' => :view_compliance,
@@ -188,7 +191,7 @@ module ForemanRhCloud
       },
       # Individual test result in a report - requires view_compliance for GET
       {
-        test: %r{api/compliance/v2/reports/[^/]+/test_results/[^/]+$},
+        test: %r{^api/compliance/v2/reports/[^/]+/test_results/[^/]+$},
         tag_name: :tags,
         permissions: {
           'GET' => :view_compliance,
@@ -196,14 +199,14 @@ module ForemanRhCloud
       },
       # Other compliance endpoints - GET requires view_compliance
       {
-        test: %r{api/compliance/v2/.*},
+        test: %r{^api/compliance/v2/.*},
         permissions: {
           'GET' => :view_compliance,
         },
       },
       # Vulnerability CVEs list - POST requires view_vulnerability (no tags support per OpenAPI spec)
       {
-        test: %r{api/vulnerability/v1/vulnerabilities/cves},
+        test: %r{^api/vulnerability/v1/vulnerabilities/cves$},
         permissions: {
           'POST' => :view_vulnerability,
         },
@@ -211,54 +214,54 @@ module ForemanRhCloud
       # Vulnerability status - PATCH requires edit_vulnerability
       # Note: GET /status does not support tags parameter per OpenAPI spec
       {
-        test: %r{api/vulnerability/v1/status},
+        test: %r{^api/vulnerability/v1/status$},
         permissions: {
           'PATCH' => :edit_vulnerability,
         },
       },
       # CVE status - PATCH requires edit_vulnerability (no GET endpoint)
       {
-        test: %r{api/vulnerability/v1/cves/status},
+        test: %r{^api/vulnerability/v1/cves/status$},
         permissions: {
           'PATCH' => :edit_vulnerability,
         },
       },
       # CVE business risk - PATCH requires edit_vulnerability (no GET endpoint)
       {
-        test: %r{api/vulnerability/v1/cves/business_risk},
+        test: %r{^api/vulnerability/v1/cves/business_risk$},
         permissions: {
           'PATCH' => :edit_vulnerability,
         },
       },
       # Systems opt out - PATCH requires edit_vulnerability (no GET endpoint)
       {
-        test: %r{api/vulnerability/v1/systems/opt_out},
+        test: %r{^api/vulnerability/v1/systems/opt_out$},
         permissions: {
           'PATCH' => :edit_vulnerability,
         },
       },
       # Endpoints without tags support (per OpenAPI spec) - still require view_vulnerability for GET
       {
-        test: %r{api/vulnerability/v1/(apistatus|version|business_risk|announcement)$},
+        test: %r{^api/vulnerability/v1/(apistatus|version|business_risk|announcement)$},
         permissions: {
           'GET' => :view_vulnerability,
         },
       },
       {
-        test: %r{api/vulnerability/v1/cves/[^/]+$},
+        test: %r{^api/vulnerability/v1/cves/[^/]+$},
         permissions: {
           'GET' => :view_vulnerability,
         },
       },
       {
-        test: %r{api/vulnerability/v1/(playbooks|report)/},
+        test: %r{^api/vulnerability/v1/(playbooks|report)/},
         permissions: {
           'GET' => :view_vulnerability,
         },
       },
       # CVEs without errata feature flag - no tags support (per OpenAPI spec)
       {
-        test: %r{api/vulnerability/v1/feature/cves_without_errata$},
+        test: %r{^api/vulnerability/v1/feature/cves_without_errata$},
         permissions: {
           'GET' => :view_vulnerability,
           'PATCH' => :edit_vulnerability,
@@ -266,7 +269,7 @@ module ForemanRhCloud
       },
       # Other vulnerability endpoints - GET requires view_vulnerability (with tags support)
       {
-        test: %r{api/vulnerability/v1/.*},
+        test: %r{^api/vulnerability/v1/.*},
         tag_name: :tags,
         permissions: {
           'GET' => :view_vulnerability,
@@ -274,7 +277,7 @@ module ForemanRhCloud
       },
       # Advisor ack endpoints - POST/DELETE require edit_advisor
       {
-        test: %r{api/insights/v1/ack(/[^/]*)?$},
+        test: %r{^api/insights/v1/ack(/[^/]*)?$},
         tag_name: :tags,
         permissions: {
           'POST' => :edit_advisor,
@@ -283,7 +286,7 @@ module ForemanRhCloud
       },
       # Advisor hostack endpoints - POST/DELETE require edit_advisor
       {
-        test: %r{api/insights/v1/hostack(/[^/]*)?$},
+        test: %r{^api/insights/v1/hostack(/[^/]*)?$},
         tag_name: :tags,
         permissions: {
           'POST' => :edit_advisor,
@@ -292,7 +295,7 @@ module ForemanRhCloud
       },
       # Advisor rule unack_hosts - POST requires edit_advisor
       {
-        test: %r{api/insights/v1/rule/[^/]+/unack_hosts},
+        test: %r{^api/insights/v1/rule/[^/]+/unack_hosts$},
         tag_name: :tags,
         permissions: {
           'POST' => :edit_advisor,
@@ -300,22 +303,27 @@ module ForemanRhCloud
       },
       # Other Advisor/Insights endpoints - GET requires view_advisor
       {
-        test: %r{api/insights/v1/.*},
+        test: %r{^api/insights/v1/.*},
         tag_name: :tags,
         permissions: {
           'GET' => :view_advisor,
         },
       },
-      # Other API endpoints (tagging only, no permission enforcement)
-      { test: %r{api/inventory/.*}, tag_name: :tags },
-      { test: %r{api/tasks/.*}, tag_name: :tags },
     ].freeze
 
     def forward_request(original_request, path, controller_name, user, organization, location)
-      # Check permissions before forwarding
-      permissions = required_permission_for(path, original_request.request_method)
-      if permissions && Array(permissions).none? { |p| user&.can?(p) }
-        logger.warn("User #{user&.login || 'anonymous'} lacks permissions #{Array(permissions).join(', ')} for #{original_request.request_method} #{path}")
+      http_method = original_request.request_method
+      pattern = resolve_pattern(path)
+      permissions = pattern&.dig(:permissions, http_method)
+
+      # Deny-by-default: reject if no matching pattern or no permission mapping for this HTTP method
+      if Array(permissions).empty?
+        raise UnsupportedOperationError.new(N_("This operation is not supported"))
+      end
+
+      # Check user has the required permission(s)
+      if Array(permissions).none? { |p| user&.can?(p) }
+        logger.warn("User #{user&.login || 'anonymous'} lacks permissions #{Array(permissions).join(', ')} for #{http_method} #{path}")
         raise ::Foreman::PermissionMissingException.new(N_("You do not have permission to perform this action"))
       end
 
@@ -401,22 +409,7 @@ module ForemanRhCloud
     def scope_request?(original_request, path)
       return nil unless original_request.get?
 
-      # Find patterns that match this path AND are relevant for GET requests.
-      # A pattern is relevant if it either:
-      # - Has tag_name defined (supports scoping)
-      # - Has GET permissions defined (explicitly handles GET, even without tags)
-      # This ensures patterns like api/vulnerability/v1/cves/[^/]+$ (GET without tags)
-      # take precedence over general patterns, while POST-only patterns are ignored.
-      matching_patterns = SCOPED_REQUESTS.select do |pattern|
-        pattern[:test].match?(path) && (pattern[:tag_name] || pattern.dig(:permissions, 'GET'))
-      end
-      return nil if matching_patterns.empty?
-
-      # Choose the most specific pattern by regex source length
-      request_pattern = matching_patterns.max_by { |pattern| pattern[:test].source.length }
-
-      # Return the tag_name (may be nil if the most specific pattern doesn't support tags)
-      request_pattern[:tag_name]
+      resolve_pattern(path)&.dig(:tag_name)
     end
 
     def core_app_name
@@ -435,26 +428,26 @@ module ForemanRhCloud
       Foreman::Logging.logger('app')
     end
 
-    # Returns the required permission for the given path and HTTP method
-    # Resolves overlapping patterns by choosing the most specific matcher,
-    # defined as the one with the longest regex source that matches the path.
-    # This avoids permission changes caused by reordering SCOPED_REQUESTS.
+    # Resolves the most specific SCOPED_REQUESTS pattern matching the given path.
+    # When multiple patterns match, chooses the one with the longest regex source
+    # as a proxy for specificity.
+    # @param path [String] The request path
+    # @return [Hash, nil] The matching pattern hash, or nil if no pattern matches
+    def resolve_pattern(path)
+      normalized = path.chomp('/')
+      matching = SCOPED_REQUESTS.select { |pattern| pattern[:test].match?(normalized) }
+      return nil if matching.empty?
+
+      matching.max_by { |pattern| pattern[:test].source.length }
+    end
+
+    # Returns the required permission for the given path and HTTP method.
     # @param path [String] The request path
     # @param http_method [String] The HTTP method (GET, POST, etc.)
-    # @return [Symbol, nil] The required permission symbol or nil if no permission required
+    # @return [Symbol, Array<Symbol>] The required permission(s)
+    # @return [nil] No matching pattern or method not listed in the pattern's permissions
     def required_permission_for(path, http_method)
-      # Collect all matching patterns
-      matching_patterns = SCOPED_REQUESTS.select { |pattern| pattern[:test].match?(path) }
-      return nil if matching_patterns.empty?
-
-      # Choose the most specific pattern: longest regex source wins.
-      # This makes overlapping patterns deterministic and independent of array order.
-      request_pattern = matching_patterns.max_by { |pattern| pattern[:test].source.length }
-
-      permissions = request_pattern[:permissions]
-      return nil unless permissions
-
-      permissions[http_method]
+      resolve_pattern(path)&.dig(:permissions, http_method)
     end
   end
 end

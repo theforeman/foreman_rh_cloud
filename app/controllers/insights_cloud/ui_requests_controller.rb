@@ -29,6 +29,9 @@ module InsightsCloud
           @organization,
           @location
         )
+      rescue ::ForemanRhCloud::InsightsApiForwarder::UnsupportedOperationError => e
+        message = e.message
+        return render json: { message: message, error: message }, status: :not_found
       rescue ::Foreman::PermissionMissingException => e
         logger.warn("Permission denied for forwarding request: #{e}")
         message = e.message
