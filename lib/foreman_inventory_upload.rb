@@ -80,6 +80,21 @@ module ForemanInventoryUpload
     folder
   end
 
+  # Host-side path of the foreman-data-run volume used by containerized Satellite.
+  # Inside the container the same files are under Rails.root/tmp/red_hat_inventory
+  # (symlinked to /var/run/foreman/red_hat_inventory).
+  HOST_INVENTORY_REPORT_BASE = '/var/lib/containers/storage/volumes/foreman-data-run/_data/red_hat_inventory'.freeze
+
+  # Map an in-container report path to the Satellite host filesystem path for logging.
+  # Only the volume base is fixed; subdirs and filenames stay dynamic.
+  def self.host_report_path(path)
+    return path if path.blank?
+
+    relative = path.to_s.sub(%r{\A.*?red_hat_inventory/?}, '')
+    relative = File.basename(path) if relative.blank? || relative == path.to_s
+    File.join(HOST_INVENTORY_REPORT_BASE, relative)
+  end
+
   def self.inventory_base_url
     "#{ForemanRhCloud.cert_base_url}/api/inventory/v1/hosts"
   end

@@ -32,6 +32,7 @@ class GenerateHostReportTest < ActiveSupport::TestCase
 
   test 'run generates report archive' do
     expected_target = File.join(base_folder, ForemanInventoryUpload.facts_archive_name(organization.id, filter))
+    expected_host_path = ForemanInventoryUpload.host_report_path(expected_target)
 
     ForemanInventoryUpload::Generators::ArchivedReport.expects(:new).with(expected_target).returns(@mock_generator)
     @mock_generator.expects(:render).with(organization: organization.id, filter: filter)
@@ -44,7 +45,7 @@ class GenerateHostReportTest < ActiveSupport::TestCase
     )
     action = run_action(action)
 
-    assert_match(/Generated #{Regexp.escape(expected_target)} for organization id #{organization.id}/, action.output[:result])
+    assert_match(/Generated #{Regexp.escape(expected_host_path)} for organization id #{organization.id}/, action.output[:result])
   end
 
   test 'generates report with filter' do

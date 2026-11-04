@@ -93,6 +93,7 @@ module ForemanInventoryUpload
         ended_at: task.ended_at,
         duration: task.try(:duration)&.to_f,
         report_file_path: task_report_file_path(task),
+        uploaded: task_uploaded?(task),
       }
     end
 
@@ -107,6 +108,18 @@ module ForemanInventoryUpload
     rescue StandardError => e
       Rails.logger.warn("Failed to get report file path for task #{task.id}: #{e.message}")
       nil
+    end
+
+    def task_uploaded?(task)
+      return false unless task&.state == 'stopped' && task.result == 'success'
+
+      main_action = task.main_action
+      return false unless main_action.respond_to?(:input)
+
+      !!main_action.input[:upload]
+    rescue StandardError => e
+      Rails.logger.warn("Failed to determine upload status for task #{task.id}: #{e.message}")
+      false
     end
   end
 end
