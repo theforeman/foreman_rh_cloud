@@ -299,6 +299,22 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     end
   end
 
+  test 'uploads IoP report without a manifest certificate' do
+    ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+    Organization.any_instance.stubs(:owner_details).returns({})
+
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    plan_action(action, nil, @organization.id)
+    action.expects(:certificate).returns(cert: 'FOREMAN CERTIFICATE', key: 'FOREMAN KEY')
+    action.expects(:upload_file)
+    action.expects(:move_to_done_folder)
+
+    action.send(:try_execute)
+
+    assert action.done?
+  end
+
   test 'file cleanup when upload aborted due to disconnected mode' do
     Setting.stubs(:[]).with(:subscription_connection_enabled).returns(false)
 
