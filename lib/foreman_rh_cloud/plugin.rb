@@ -6,7 +6,7 @@ module ForemanRhCloud
       return if Foreman::Plugin.find(:foreman_rh_cloud)
 
       Foreman::Plugin.register :foreman_rh_cloud do
-        requires_foreman '>= 3.17'
+        requires_foreman '>= 5.1'
         register_gettext
 
         apipie_documented_controllers ["#{ForemanRhCloud::Engine.root}/app/controllers/api/v2/**/*.rb"]
