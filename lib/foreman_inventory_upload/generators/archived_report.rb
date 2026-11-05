@@ -35,6 +35,7 @@ module ForemanInventoryUpload
               @logger.info 'Report archived successfully'
             else
               @logger.info "Tar command failed: #{$CHILD_STATUS}"
+              raise 'Inventory report archive creation failed'
             end
           end
         end

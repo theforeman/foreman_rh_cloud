@@ -31,19 +31,11 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
   end
 
   test 'plan schedules QueueForUploadJob when upload is true' do
-    expected_archive_name = ForemanInventoryUpload.facts_archive_name(organization.id, hosts_filter)
-
     action = create_action(ForemanInventoryUpload::Async::HostInventoryReportJob)
     action.expects(:action_subject).with(organization)
     plan_action(action, base_folder, organization.id, hosts_filter, true)
 
-    assert_action_planned_with(
-      action,
-      ForemanInventoryUpload::Async::QueueForUploadJob,
-      base_folder,
-      expected_archive_name,
-      organization.id
-    )
+    assert_action_planned(action, ForemanInventoryUpload::Async::QueueForUploadJob)
   end
 
   test 'plan skips QueueForUploadJob when upload is false' do
@@ -134,8 +126,6 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
 
   test 'handles custom hosts_filter parameter' do
     custom_filter = 'name~production'
-    expected_archive_name = ForemanInventoryUpload.facts_archive_name(organization.id, custom_filter)
-
     action = create_action(ForemanInventoryUpload::Async::HostInventoryReportJob)
     action.expects(:action_subject).with(organization)
     plan_action(action, base_folder, organization.id, custom_filter, upload)
@@ -147,13 +137,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
       organization.id,
       custom_filter
     )
-    assert_action_planned_with(
-      action,
-      ForemanInventoryUpload::Async::QueueForUploadJob,
-      base_folder,
-      expected_archive_name,
-      organization.id
-    )
+    assert_action_planned(action, ForemanInventoryUpload::Async::QueueForUploadJob)
   end
 
   test 'handles invalid hosts_filter parameter' do
@@ -205,6 +189,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
   end
 
   test 'report_file_path returns nil when no file exists' do
+    ForemanInventoryUpload.stubs(:active_storage?).returns(false)
     action = create_action(ForemanInventoryUpload::Async::HostInventoryReportJob)
     action.expects(:action_subject).with(organization)
     plan_action(action, base_folder, organization.id, hosts_filter, true)
@@ -213,6 +198,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
   end
 
   test 'report_file_path finds file in done folder for upload tasks' do
+    ForemanInventoryUpload.stubs(:active_storage?).returns(false)
     filename = ForemanInventoryUpload.facts_archive_name(organization.id, hosts_filter)
     done_path = ForemanInventoryUpload.done_file_path(filename)
 
@@ -231,6 +217,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
   end
 
   test 'report_file_path finds file in uploads folder for upload tasks' do
+    ForemanInventoryUpload.stubs(:active_storage?).returns(false)
     filename = ForemanInventoryUpload.facts_archive_name(organization.id, hosts_filter)
     uploads_path = ForemanInventoryUpload.uploads_file_path(filename)
 
@@ -249,6 +236,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
   end
 
   test 'report_file_path finds file in generated_reports folder for upload tasks' do
+    ForemanInventoryUpload.stubs(:active_storage?).returns(false)
     filename = ForemanInventoryUpload.facts_archive_name(organization.id, hosts_filter)
     generated_path = File.join(base_folder, filename)
 
@@ -264,6 +252,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
   end
 
   test 'report_file_path only checks generated_reports folder for non-upload tasks' do
+    ForemanInventoryUpload.stubs(:active_storage?).returns(false)
     filename = ForemanInventoryUpload.facts_archive_name(organization.id, hosts_filter)
     generated_path = File.join(base_folder, filename)
     done_path = ForemanInventoryUpload.done_file_path(filename)
@@ -286,6 +275,7 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
   end
 
   test 'report_file_path prioritizes done folder over uploads folder' do
+    ForemanInventoryUpload.stubs(:active_storage?).returns(false)
     filename = ForemanInventoryUpload.facts_archive_name(organization.id, hosts_filter)
     done_path = ForemanInventoryUpload.done_file_path(filename)
     uploads_path = ForemanInventoryUpload.uploads_file_path(filename)

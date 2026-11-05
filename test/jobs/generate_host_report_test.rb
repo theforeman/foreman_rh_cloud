@@ -33,8 +33,12 @@ class GenerateHostReportTest < ActiveSupport::TestCase
   test 'run generates report archive' do
     expected_target = File.join(base_folder, ForemanInventoryUpload.facts_archive_name(organization.id, filter))
 
-    ForemanInventoryUpload::Generators::ArchivedReport.expects(:new).with(expected_target).returns(@mock_generator)
+    ForemanInventoryUpload::Generators::ArchivedReport.expects(:new).with do |path|
+      File.binwrite(path, 'inventory')
+      File.basename(path) == File.basename(expected_target)
+    end.returns(@mock_generator)
     @mock_generator.expects(:render).with(organization: organization.id, filter: filter)
+    FileUtils.touch(expected_target)
 
     action = create_and_plan_action(
       ForemanInventoryUpload::Async::GenerateHostReport,
@@ -44,15 +48,23 @@ class GenerateHostReportTest < ActiveSupport::TestCase
     )
     action = run_action(action)
 
-    assert_match(/Generated #{Regexp.escape(expected_target)} for organization id #{organization.id}/, action.output[:result])
+    assert_match(/Generated #{Regexp.escape(File.basename(expected_target))} for organization id #{organization.id}/, action.output[:result])
+    report = ForemanInventoryUpload::Report.find(action.output[:report_id])
+    assert_equal File.basename(expected_target), report.filename
+    assert_equal action.execution_plan_id, report.execution_plan_uuid
+    assert report.archive.attached?
   end
 
   test 'generates report with filter' do
     filter_value = 'id=123'
     expected_target = File.join(base_folder, ForemanInventoryUpload.facts_archive_name(organization.id, filter_value))
 
-    ForemanInventoryUpload::Generators::ArchivedReport.expects(:new).with(expected_target).returns(@mock_generator)
+    ForemanInventoryUpload::Generators::ArchivedReport.expects(:new).with do |path|
+      File.binwrite(path, 'inventory')
+      File.basename(path) == File.basename(expected_target)
+    end.returns(@mock_generator)
     @mock_generator.expects(:render).with(organization: organization.id, filter: filter_value)
+    FileUtils.touch(expected_target)
 
     action = create_and_plan_action(
       ForemanInventoryUpload::Async::GenerateHostReport,
@@ -83,7 +95,7 @@ class GenerateHostReportTest < ActiveSupport::TestCase
   test 'handles ArchivedReport generator failure' do
     expected_target = File.join(base_folder, ForemanInventoryUpload.facts_archive_name(organization.id, filter))
 
-    ForemanInventoryUpload::Generators::ArchivedReport.expects(:new).with(expected_target).returns(@mock_generator)
+    ForemanInventoryUpload::Generators::ArchivedReport.expects(:new).with { |path| File.basename(path) == File.basename(expected_target) }.returns(@mock_generator)
     @mock_generator.expects(:render).with(organization: organization.id, filter: filter).raises(StandardError.new('Report generation failed'))
 
     action = create_and_plan_action(

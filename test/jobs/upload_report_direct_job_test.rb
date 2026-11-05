@@ -44,6 +44,37 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     assert_equal @organization.id, action.input[:organization_id]
   end
 
+  test 'uploads an Active Storage report and marks it completed' do
+    report = ForemanInventoryUpload::Report.create!(
+      organization: @organization,
+      filename: 'inventory.tar.xz',
+      sha256: Digest::SHA256.hexdigest('inventory')
+    )
+    report.archive.attach(io: StringIO.new('inventory'), filename: report.filename)
+    action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
+    action.expects(:action_subject).with(@organization)
+    key = OpenSSL::PKey::RSA.new(2048)
+    cert = OpenSSL::X509::Certificate.new
+    cert.version = 2
+    cert.serial = 1
+    cert.subject = cert.issuer = OpenSSL::X509::Name.parse('/CN=inventory-test')
+    cert.public_key = key.public_key
+    cert.not_before = Time.current
+    cert.not_after = Time.current + 3600
+    cert.sign(key, OpenSSL::Digest.new('SHA256'))
+    action.stubs(:certificate).returns(cert: cert.to_pem, key: key.to_pem)
+    action.expects(:execute_cloud_request).with do |request|
+      request[:payload][:file].read == 'inventory' && request[:headers]['X-Org-Id'] == @organization.label
+    end.returns(stub(code: 200))
+    plan_action(action, { report_id: report.id }, @organization.id)
+
+    action.send(:try_execute)
+
+    assert_predicate report.reload, :completed?
+    assert_not_nil report.uploaded_at
+    assert action.done?
+  end
+
   test 'output_label generates correct label' do
     label = ForemanInventoryUpload::Async::UploadReportDirectJob.output_label(@organization.id)
     assert_equal "upload_for_#{@organization.id}", label
