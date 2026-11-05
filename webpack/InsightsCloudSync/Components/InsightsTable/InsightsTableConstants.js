@@ -24,7 +24,7 @@ export const hasPlaybookFormatter = hasPlaybook =>
     <span className="td-insights-remediate-manual">{__('Manual')}</span>
   );
 
-export const actionsFormatter = rowData => {
+export const actionsFormatter = (rowData, rowIndex) => {
   const { recommendationUrl, accessRHUrl, isLocalAdvisorEngine } = rowData;
   const dropdownItems = [];
 
@@ -47,7 +47,12 @@ export const actionsFormatter = rowData => {
       </DropdownItem>
     );
 
-  return <DropdownToggle items={dropdownItems} />;
+  return (
+    <DropdownToggle
+      items={dropdownItems}
+      toggleOuiaId={`recommendations-actions-toggle-${rowIndex}`}
+    />
+  );
 };
 
 export const columns = [

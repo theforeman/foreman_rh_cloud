@@ -4,11 +4,11 @@ import { Dropdown, DropdownList, MenuToggle } from '@patternfly/react-core';
 import { EllipsisVIcon } from '@patternfly/react-icons';
 import { translate as __ } from 'foremanReact/common/I18n';
 
-const DropdownToggle = ({ items, ...props }) => {
+const DropdownToggle = ({ items, toggleOuiaId, ...props }) => {
   const [isOpen, setOpen] = useState(false);
   return (
     <Dropdown
-      ouiaId="toggle-dropdown"
+      ouiaId={`${toggleOuiaId}-menu`}
       onSelect={() => setOpen(false)}
       onOpenChange={setOpen}
       toggle={toggleRef => (
@@ -18,7 +18,7 @@ const DropdownToggle = ({ items, ...props }) => {
           aria-label={__('Table actions')}
           onClick={() => setOpen(prev => !prev)}
           isExpanded={isOpen}
-          ouiaId="toggle-dropdown-toggle"
+          ouiaId={toggleOuiaId}
         >
           <EllipsisVIcon />
         </MenuToggle>
@@ -35,6 +35,7 @@ const DropdownToggle = ({ items, ...props }) => {
 
 DropdownToggle.propTypes = {
   items: PropTypes.array.isRequired,
+  toggleOuiaId: PropTypes.string.isRequired,
 };
 
 export default DropdownToggle;
