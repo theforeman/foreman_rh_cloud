@@ -115,7 +115,8 @@ module ForemanInventoryUpload
           logger.warn("Destination file #{done_file} already exists. Overwriting with new report.")
         end
         FileUtils.mv(filename, done_file, force: true)
-        logger.debug("Moved #{filename} to #{done_file}")
+        host_path = ForemanInventoryUpload.host_report_path(done_file)
+        logger.info("Inventory report uploaded successfully. Report path: #{host_path}")
       end
 
       def certificate

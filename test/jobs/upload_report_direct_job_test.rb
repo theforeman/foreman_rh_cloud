@@ -342,9 +342,10 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     # Stub upload_file to avoid actual HTTP upload
     action.stubs(:upload_file).returns(nil)
 
-    # Expect a warning when overwriting the existing done file
+    # Expect a warning when overwriting the existing done file, then success with host path
     action.expects(:logger).at_least_once.returns(mock_logger = mock('logger'))
     mock_logger.expects(:warn).with(regexp_matches(/already exists.*overwriting/i))
+    mock_logger.expects(:info).with(regexp_matches(/Inventory report uploaded successfully\. Report path:/))
     mock_logger.stubs(:debug)
 
     plan_action(action, source_file, @organization.id)
