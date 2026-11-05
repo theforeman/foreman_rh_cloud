@@ -10,6 +10,7 @@ import { postIopChromeToIframe } from './postIopChromeToIframe';
  * @param {string} options.appRoute
  * @param {string} [options.pathname]
  * @param {string} [options.embedded]
+ * @param {boolean} [options.iop] True when an IoP smart proxy is registered; false on upstream Foreman
  * @param {string} options.readyMessageType postMessage type from the child (e.g. IOP_COMPLIANCE_READY)
  * @returns {Function} sendChromeContext — also pass to iframe onLoad
  */
@@ -19,6 +20,7 @@ export const useIopIframeChrome = ({
   appRoute,
   pathname = '',
   embedded,
+  iop,
   readyMessageType,
 }) => {
   const sendChromeContext = useCallback(() => {
@@ -27,8 +29,9 @@ export const useIopIframeChrome = ({
       appRoute,
       pathname,
       embedded,
+      iop,
     });
-  }, [appRoute, embedded, iframeRef, pathname, permissions]);
+  }, [appRoute, embedded, iframeRef, iop, pathname, permissions]);
 
   useEffect(() => {
     sendChromeContext();

@@ -9,6 +9,7 @@ jest.mock('foremanReact/Root/Context/ForemanContext', () => ({
   useForemanContext: () => ({
     metadata: {
       permissions: new Set(['view_compliance']),
+      foreman_rh_cloud: { iop: true },
     },
   }),
   useForemanPermissions: () => new Set(['view_compliance']),

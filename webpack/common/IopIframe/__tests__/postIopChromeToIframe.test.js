@@ -11,6 +11,7 @@ describe('postIopChromeToIframe', () => {
       pathname: '/new/hosts/demo.example.com',
       appRoute: 'systems/uuid-1',
       embedded: 'host-tab',
+      iop: true,
     });
 
     expect(postMessage).toHaveBeenCalledWith(
@@ -22,6 +23,7 @@ describe('postIopChromeToIframe', () => {
           appRoute: 'systems/uuid-1',
           pathname: '/new/hosts/demo.example.com',
           embedded: 'host-tab',
+          iop: true,
         },
       },
       window.location.origin
@@ -46,6 +48,7 @@ describe('postIopChromeToIframe', () => {
           permissions: [],
           appRoute: 'scappolicies',
           pathname: '/foreman_rh_cloud/insights_compliance/scappolicies',
+          iop: false,
         },
       },
       window.location.origin

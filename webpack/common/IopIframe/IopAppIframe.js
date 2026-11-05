@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
+import { useIopConfig } from '../Hooks/ConfigHooks';
 import { useInsightsPermissions } from '../Hooks/PermissionsHooks';
 import { useIopIframeChrome } from './useIopIframeChrome';
 import { useIopIframeNavigate } from './useIopIframeNavigate';
@@ -24,6 +25,7 @@ const IopAppIframe = ({
   const history = useHistory();
   const { pathname } = useLocation();
   const permissions = useInsightsPermissions();
+  const iop = useIopConfig();
   const appRoute = getAppRoute(pathname);
 
   const sendChromeContext = useIopIframeChrome({
@@ -31,6 +33,7 @@ const IopAppIframe = ({
     permissions,
     appRoute,
     pathname,
+    iop,
     readyMessageType,
   });
 
