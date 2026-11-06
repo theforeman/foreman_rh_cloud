@@ -24,8 +24,12 @@ jobs:
       fail-fast: false
       matrix:
         foreman:
-          - develop
+          # Temporary: test against the Foreman PostgreSQL CI fix.
+          - refs/pull/11336/merge
     uses: theforeman/actions/.github/workflows/foreman_plugin.yml@v0
     with:
       plugin: foreman_rh_cloud
       foreman_version: ${{ matrix.foreman }}
+      environment_variables: |
+        FOREMAN_POSTGRES_IMAGE=postgres:13
+        PATH=$GITHUB_WORKSPACE/.github/scripts/postgresql:$PATH

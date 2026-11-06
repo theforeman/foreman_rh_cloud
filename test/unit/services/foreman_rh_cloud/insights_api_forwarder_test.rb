@@ -83,6 +83,29 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     @forwarder.forward_request(req, 'api/vulnerability/v1/cves/abc-123/affected_systems', 'test_controller', @user, @organization, @location)
   end
 
+  test 'should not forward organization_id or location_id query params' do
+    params = { 'organization_id' => @organization.id.to_s, 'location_id' => @location.id.to_s, :page => 5 }
+
+    req = ActionDispatch::Request.new(
+      'REQUEST_URI' => '/api/vulnerability/v1/systems',
+      'REQUEST_METHOD' => 'GET',
+      'rack.input' => ::Puma::NullIO.new,
+      'action_dispatch.request.query_parameters' => params
+    )
+
+    @user.stubs(:can?).with(:view_vulnerability).returns(true)
+    ::ForemanRhCloud::TagsAuth.any_instance.expects(:update_tag)
+    @forwarder.expects(:execute_cloud_request).with do |actual_params|
+      actual = actual_params[:headers][:params]
+      assert_nil(actual.find { |param| param[0].to_s == 'organization_id' })
+      assert_nil(actual.find { |param| param[0].to_s == 'location_id' })
+      assert_equal 5, actual.find { |param| param[0] == :page }[1]
+      true
+    end
+
+    @forwarder.forward_request(req, 'api/vulnerability/v1/systems', 'test_controller', @user, @organization, @location)
+  end
+
   test 'should reject unmapped POST requests' do
     post_data = 'Random POST data'
     req = ActionDispatch::Request.new(
