@@ -59,7 +59,7 @@ module ForemanRhCloud
             'react': [:index]
           )
           permission(
-            :view_hosted_recommendations,
+            :view_insights_hits,
             {
               '/foreman_rh_cloud/insights_cloud': [:index], # for bookmarks and later for showing the page
               'insights_cloud/hits': [:index, :show, :auto_complete_search, :resolutions],
@@ -112,14 +112,14 @@ module ForemanRhCloud
         end
 
         # Core RH Cloud permissions for inventory upload and sync
-        rh_cloud_permissions = [:view_foreman_rh_cloud, :generate_foreman_rh_cloud, :view_hosted_recommendations, :dispatch_cloud_requests, :control_organization_insights]
+        rh_cloud_permissions = [:view_foreman_rh_cloud, :generate_foreman_rh_cloud, :view_insights_hits, :dispatch_cloud_requests, :control_organization_insights]
 
         # Insights application permissions (Compliance, Vulnerability, Advisor)
         insights_permissions = [:view_compliance, :edit_compliance, :view_vulnerability, :edit_vulnerability, :view_advisor, :edit_advisor]
 
         plugin_permissions = rh_cloud_permissions + insights_permissions
 
-        read_only_permissions = [:view_foreman_rh_cloud, :view_hosted_recommendations, :view_compliance, :view_vulnerability, :view_advisor]
+        read_only_permissions = [:view_foreman_rh_cloud, :view_insights_hits, :view_compliance, :view_vulnerability, :view_advisor]
 
         role 'ForemanRhCloud', plugin_permissions, 'Role granting permissions to view the hosts inventory,
                                                     generate a report, upload it to the cloud, download it locally,
@@ -149,7 +149,7 @@ module ForemanRhCloud
             url: '/foreman_rh_cloud/insights_cloud',
             url_hash: { controller: :react, action: :index },
             parent: :insights_menu,
-            if: -> { User.current&.can?(:view_advisor) || User.current&.can?(:view_hosted_recommendations) }
+            if: -> { User.current&.can?(:view_advisor) || User.current&.can?(:view_insights_hits) }
           menu :top_menu,
             :insights_vulnerability,
             caption: N_('Vulnerability'),
