@@ -70,6 +70,19 @@ module ForemanInventoryUpload
         end
       end
 
+      # Whether the UploadReportDirectJob scheduled by this report job completed an upload.
+      # Uses only actions planned under this job (not other orgs in the same execution plan),
+      # and reads that upload action's output so a later sibling failure cannot hide success.
+      def uploaded?
+        return false unless input[:upload]
+        return false unless phase == Dynflow::Action::Present
+
+        upload_action = all_planned_actions(ForemanInventoryUpload::Async::UploadReportDirectJob).find do |action|
+          action.input[:organization_id].to_i == input[:organization_id].to_i
+        end
+        ActiveModel::Type::Boolean.new.cast(upload_action&.output&.[](:uploaded))
+      end
+
       def rescue_strategy_for_self
         Dynflow::Action::Rescue::Fail
       end

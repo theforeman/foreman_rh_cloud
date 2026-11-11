@@ -80,6 +80,75 @@ module ForemanInventoryUpload
     folder
   end
 
+  # Podman volume that holds inventory reports in foremanctl deployments.
+  FOREMAN_DATA_RUN_VOLUME = 'foreman-data-run'.freeze
+
+  # Absolute path of a report file (container or local filesystem).
+  def self.absolute_report_path(path)
+    return path if path.blank?
+
+    File.realpath(path)
+  rescue Errno::ENOENT
+    File.expand_path(path.to_s)
+  end
+
+  # Container path of the foreman-data-run volume root (parent of base_folder).
+  def self.inventory_volume_root
+    container_base = begin
+      File.realpath(base_folder)
+    rescue Errno::ENOENT
+      File.expand_path(base_folder)
+    end
+    File.dirname(container_base)
+  end
+
+  # Path of the report relative to the foreman-data-run volume root
+  # (e.g. "red_hat_inventory/uploads/done/report_for_1.tar.xz").
+  # Returns nil when the report is outside the volume.
+  def self.inventory_volume_relative_path(path)
+    absolute = absolute_report_path(path)
+    return nil if absolute.blank?
+
+    volume_root = inventory_volume_root
+    return nil unless absolute == volume_root || absolute.start_with?("#{volume_root}/")
+
+    relative = absolute.delete_prefix(volume_root).delete_prefix('/')
+    relative.presence || '.'
+  end
+
+  # True when logs should use the local filesystem path (dev/test).
+  # Production/foremanctl logs the volume name + relative path instead,
+  # since mountinfo typically exposes the volume device rather than a host directory.
+  # foremanctl can later inject FOREMAN_DATA_RUN_MOUNTPOINT for a complete host path.
+  def self.filesystem_report_path_logging?
+    Rails.env.development? || Rails.env.test?
+  end
+
+  # Human-readable location for inventory report logs.
+  def self.inventory_report_location(path)
+    return path if path.blank?
+
+    absolute = absolute_report_path(path)
+    return absolute if filesystem_report_path_logging?
+
+    relative = inventory_volume_relative_path(path)
+    mountpoint = ENV['FOREMAN_DATA_RUN_MOUNTPOINT'].presence
+
+    if relative.nil?
+      "#{absolute} (outside podman volume '#{FOREMAN_DATA_RUN_VOLUME}')"
+    elsif mountpoint
+      File.join(mountpoint, relative)
+    else
+      "podman volume '#{FOREMAN_DATA_RUN_VOLUME}' at relative path '#{relative}' " \
+        "(on the host, run: sudo podman volume inspect --format '{{.Mountpoint}}' #{FOREMAN_DATA_RUN_VOLUME} " \
+        "and append that relative path)"
+    end
+  end
+
+  def self.log_inventory_report_saved(logger, path)
+    logger.info("Inventory report saved to #{inventory_report_location(path)}")
+  end
+
   def self.inventory_base_url
     "#{ForemanRhCloud.cert_base_url}/api/inventory/v1/hosts"
   end

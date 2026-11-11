@@ -43,6 +43,7 @@ Dashboard.propTypes = {
       ended_at: PropTypes.string,
       duration: PropTypes.number,
       report_file_path: PropTypes.string,
+      uploaded: PropTypes.bool,
     }),
   }),
   onTaskStart: PropTypes.func,

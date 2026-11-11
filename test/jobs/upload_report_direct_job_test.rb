@@ -35,6 +35,13 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     ForemanRhCloud.unstub(:with_iop_smart_proxy?)
   end
 
+  # plan_action leaves output as a Dynflow OutputReference; try_execute needs a writable Hash.
+  def with_writable_output(action)
+    writable = ActiveSupport::HashWithIndifferentAccess.new
+    action.stubs(:output).returns(writable)
+    writable
+  end
+
   test 'plan sets input correctly' do
     action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
     action.expects(:action_subject).with(@organization)
@@ -220,6 +227,8 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     action.expects(:action_subject).with(@organization)
     plan_action(action, @filename, @organization.id)
 
+    with_writable_output(action)
+
     # Should raise the error (handled by Dynflow retry mechanism)
     assert_raises(RestClient::InternalServerError) do
       action.send(:try_execute)
@@ -234,6 +243,8 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     action = create_action(ForemanInventoryUpload::Async::UploadReportDirectJob)
     action.expects(:action_subject).with(@organization)
     plan_action(action, @filename, @organization.id)
+
+    with_writable_output(action)
 
     # Should raise the error (handled by Dynflow retry mechanism via ExponentialBackoff)
     assert_raises(RestClient::Exceptions::Timeout) do
@@ -289,11 +300,14 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
       action.expects(:action_subject).with(@organization)
       plan_action(action, test_file, @organization.id)
 
-      # Execute the action
+      ForemanInventoryUpload.expects(:log_inventory_report_saved).with(anything, test_file)
+
+      output = with_writable_output(action)
       action.send(:try_execute)
 
       # Verify file still exists (not moved or deleted)
       assert File.exist?(test_file), "File should remain when upload is aborted"
+      refute output[:uploaded]
     ensure
       FileUtils.rm_f(test_file) if File.exist?(test_file)
     end
@@ -313,11 +327,14 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
       action.expects(:action_subject).with(@organization)
       plan_action(action, test_file, @organization.id)
 
-      # Execute the action
+      ForemanInventoryUpload.expects(:log_inventory_report_saved).with(anything, test_file)
+
+      output = with_writable_output(action)
       action.send(:try_execute)
 
-      # Verify file still exists
+      # Verify file still exists and upload was not recorded as completed
       assert File.exist?(test_file), "File should remain when connection is disabled"
+      refute output[:uploaded]
     ensure
       FileUtils.rm_f(test_file) if File.exist?(test_file)
     end
@@ -342,18 +359,20 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     # Stub upload_file to avoid actual HTTP upload
     action.stubs(:upload_file).returns(nil)
 
-    # Expect a warning when overwriting the existing done file
+    # Expect a warning when overwriting the existing done file, then a save path log
     action.expects(:logger).at_least_once.returns(mock_logger = mock('logger'))
     mock_logger.expects(:warn).with(regexp_matches(/already exists.*overwriting/i))
     mock_logger.stubs(:debug)
+    ForemanInventoryUpload.expects(:log_inventory_report_saved).with(mock_logger, done_file_path)
 
     plan_action(action, source_file, @organization.id)
 
-    # Execute the action (which will call move_to_done_folder)
+    output = with_writable_output(action)
     action.send(:try_execute)
 
     # Done file should now contain the new report content
     assert_equal new_report_content, File.read(done_file_path)
+    assert output[:uploaded]
   ensure
     FileUtils.rm_f(source_file) if defined?(source_file) && source_file
     FileUtils.rm_f(done_file_path) if defined?(done_file_path) && done_file_path
@@ -410,7 +429,8 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     action.expects(:action_subject).with(@organization)
     plan_action(action, nil, @organization.id)
 
-    # Execute the action
+    with_writable_output(action)
+    ForemanInventoryUpload.stubs(:log_inventory_report_saved)
     action.send(:try_execute)
 
     # Verify it is marked as done
@@ -424,7 +444,8 @@ class UploadReportDirectJobTest < ActiveSupport::TestCase
     action.expects(:action_subject).with(@organization)
     plan_action(action, nil, @organization.id)
 
-    # Execute the action
+    with_writable_output(action)
+    ForemanInventoryUpload.stubs(:log_inventory_report_saved)
     action.send(:try_execute)
 
     # Verify it is marked as done

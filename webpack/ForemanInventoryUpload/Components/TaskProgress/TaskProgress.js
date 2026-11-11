@@ -271,9 +271,14 @@ const TaskProgress = ({
             </DescriptionListDescription>
           </DescriptionListGroup>
           <DescriptionListGroup>
-            <DescriptionListTerm>{__('Report saved to')}</DescriptionListTerm>
+            <DescriptionListTerm>{__('Report')}</DescriptionListTerm>
             <DescriptionListDescription>
-              {!isStartingNewTask && task.report_file_path}
+              {!isStartingNewTask &&
+                task.state === 'stopped' &&
+                task.result === 'success' &&
+                (task.uploaded
+                  ? __('Report uploaded')
+                  : __('Report generated'))}
             </DescriptionListDescription>
           </DescriptionListGroup>
         </DescriptionList>
@@ -317,6 +322,7 @@ TaskProgress.propTypes = {
     ended_at: PropTypes.string,
     duration: PropTypes.number,
     report_file_path: PropTypes.string,
+    uploaded: PropTypes.bool,
   }),
   title: PropTypes.string,
   emptyMessage: PropTypes.string,

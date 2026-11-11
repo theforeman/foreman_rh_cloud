@@ -44,7 +44,7 @@ class GenerateHostReportTest < ActiveSupport::TestCase
     )
     action = run_action(action)
 
-    assert_match(/Generated #{Regexp.escape(expected_target)} for organization id #{organization.id}/, action.output[:result])
+    assert_equal "Generated report for organization id #{organization.id}", action.output[:result]
   end
 
   test 'generates report with filter' do
