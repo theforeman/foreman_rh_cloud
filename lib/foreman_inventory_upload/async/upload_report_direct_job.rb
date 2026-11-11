@@ -57,14 +57,18 @@ module ForemanInventoryUpload
       end
 
       def try_execute
+        output[:uploaded] = false
+
         if content_disconnected?
-          logger.info("Upload canceled: connection to Insights is not enabled. Report location: #{filename}")
+          logger.info('Upload canceled: connection to Insights is not enabled.')
+          ForemanInventoryUpload.log_inventory_report_saved(logger, filename)
           done!
           return
         end
 
         unless organization.owner_details&.dig('upstreamConsumer', 'idCert')
           logger.info("Skipping organization '#{organization}', no candlepin certificate defined.")
+          ForemanInventoryUpload.log_inventory_report_saved(logger, filename)
           done!
           return
         end
@@ -77,6 +81,7 @@ module ForemanInventoryUpload
         end
 
         move_to_done_folder
+        output[:uploaded] = true
         done!
       end
 
@@ -115,7 +120,16 @@ module ForemanInventoryUpload
           logger.warn("Destination file #{done_file} already exists. Overwriting with new report.")
         end
         FileUtils.mv(filename, done_file, force: true)
-        logger.debug("Moved #{filename} to #{done_file}")
+        ForemanInventoryUpload.log_inventory_report_saved(logger, done_file)
+      end
+
+      def rescue_external_task(error)
+        if poll_attempts[:failed] < poll_max_retries
+          super
+        else
+          ForemanInventoryUpload.log_inventory_report_saved(logger, filename)
+          raise error
+        end
       end
 
       def certificate

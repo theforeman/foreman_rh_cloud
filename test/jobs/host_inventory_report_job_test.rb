@@ -307,4 +307,76 @@ class HostInventoryReportJobTest < ActiveSupport::TestCase
     FileUtils.rm_f(done_path)
     FileUtils.rm_f(uploads_path)
   end
+
+  def stub_upload_action(uploaded:)
+    upload_action = mock('upload_action')
+    upload_action.stubs(:output).returns(uploaded: uploaded)
+    upload_action
+  end
+
+  test 'uploaded? is false when upload was not requested' do
+    action = create_action(ForemanInventoryUpload::Async::HostInventoryReportJob)
+    action.expects(:action_subject).with(organization)
+    plan_action(action, base_folder, organization.id, hosts_filter, false)
+    action.stubs(:phase).returns(Dynflow::Action::Present)
+
+    refute action.uploaded?
+  end
+
+  test 'uploaded? reads output[:uploaded] from this report UploadReportDirectJob' do
+    action = create_action(ForemanInventoryUpload::Async::HostInventoryReportJob)
+    action.expects(:action_subject).with(organization)
+    plan_action(action, base_folder, organization.id, hosts_filter, true)
+    action.stubs(:phase).returns(Dynflow::Action::Present)
+
+    upload_action = stub_upload_action(uploaded: true)
+    action.stubs(:all_planned_actions)
+          .with(ForemanInventoryUpload::Async::UploadReportDirectJob)
+          .returns([upload_action])
+
+    assert action.uploaded?
+  end
+
+  test 'uploaded? remains true when a later step failed after upload completed' do
+    action = create_action(ForemanInventoryUpload::Async::HostInventoryReportJob)
+    action.expects(:action_subject).with(organization)
+    plan_action(action, base_folder, organization.id, hosts_filter, true)
+    action.stubs(:phase).returns(Dynflow::Action::Present)
+
+    # Upload finished successfully; a later sibling (e.g. CreateMissingInsightsFacets) failing
+    # must not change the recorded upload result for this report.
+    upload_action = stub_upload_action(uploaded: true)
+    action.stubs(:all_planned_actions)
+          .with(ForemanInventoryUpload::Async::UploadReportDirectJob)
+          .returns([upload_action])
+
+    assert action.uploaded?
+  end
+
+  test 'uploaded? only considers UploadReportDirectJob planned by this report job' do
+    other_organization = FactoryBot.create(:organization)
+
+    this_action = create_action(ForemanInventoryUpload::Async::HostInventoryReportJob)
+    this_action.expects(:action_subject).with(organization)
+    plan_action(this_action, base_folder, organization.id, hosts_filter, true)
+    this_action.stubs(:phase).returns(Dynflow::Action::Present)
+
+    other_action = create_action(ForemanInventoryUpload::Async::HostInventoryReportJob)
+    other_action.expects(:action_subject).with(other_organization)
+    plan_action(other_action, base_folder, other_organization.id, hosts_filter, true)
+    other_action.stubs(:phase).returns(Dynflow::Action::Present)
+
+    # Each report job only sees its own planned upload action via all_planned_actions.
+    this_upload = stub_upload_action(uploaded: false)
+    other_upload = stub_upload_action(uploaded: true)
+    this_action.stubs(:all_planned_actions)
+               .with(ForemanInventoryUpload::Async::UploadReportDirectJob)
+               .returns([this_upload])
+    other_action.stubs(:all_planned_actions)
+                .with(ForemanInventoryUpload::Async::UploadReportDirectJob)
+                .returns([other_upload])
+
+    refute this_action.uploaded?
+    assert other_action.uploaded?
+  end
 end
