@@ -26,6 +26,14 @@ module ForemanRhCloud
           end
         end
 
+        # These actions use client or Smart Proxy authentication rather than a
+        # permission that can be delegated to a non-admin user.
+        tests_to_skip "AccessPermissionsTest" => [
+          'insights_cloud/api/machine_telemetries/forward_request should have a permission that grants access',
+          'insights_cloud/api/machine_telemetries/branch_info should have a permission that grants access',
+          'api/v2/advisor_engine/advisor_engine/host_details should have a permission that grants access',
+        ]
+
         # Add permissions
         security_block :foreman_rh_cloud do
           permission(
@@ -44,7 +52,6 @@ module ForemanRhCloud
             'foreman_inventory_upload/reports': [:last],
             'foreman_inventory_upload/uploads': [:auto_upload, :show_auto_upload, :download_file, :last],
             'foreman_inventory_upload/tasks': [:show],
-            'foreman_inventory_upload/api/tasks': [:current, :history],
             'foreman_inventory_upload/cloud_status': [:index],
             'foreman_inventory_upload/uploads_settings': [:index],
             'foreman_inventory_upload/missing_hosts': [:index],
