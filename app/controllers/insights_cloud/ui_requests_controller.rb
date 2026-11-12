@@ -13,9 +13,6 @@ module InsightsCloud
 
     layout false
 
-    # translate_insights_host does its own authorization via Host.authorized(:view_hosts)
-    skip_before_action :authorize, :only => [:translate_insights_host]
-
     before_action :ensure_org, :find_location, :only => [:forward_request]
 
     # The method that "proxies" requests over to Cloud
