@@ -3,6 +3,7 @@ require 'foreman_tasks/test_helpers'
 
 class QueueForUploadJobTest < ActiveSupport::TestCase
   include Dynflow::Testing::Factories
+  include Dynflow::Testing::Assertions
 
   let(:organization) { FactoryBot.create(:organization) }
   let(:base_folder) { Dir.mktmpdir }
@@ -50,5 +51,27 @@ class QueueForUploadJobTest < ActiveSupport::TestCase
 
     # Verify the uploads folder was created
     assert Dir.exist?(uploads_folder), "Uploads folder should be created"
+  end
+
+  test 'queues an Active Storage report without a shared file path' do
+    report = ForemanInventoryUpload::Report.create!(
+      organization: organization,
+      filename: report_file,
+      sha256: Digest::SHA256.hexdigest('inventory')
+    )
+    report.archive.attach(io: StringIO.new('inventory'), filename: report_file)
+    action = create_and_plan_action(
+      ForemanInventoryUpload::Async::QueueForUploadJob,
+      report.id,
+      organization.id
+    )
+    assert_action_planned_with(action, ForemanInventoryUpload::Async::UploadReportDirectJob) do |arguments|
+      source, org_id = arguments
+      source[:report_id].is_a?(Dynflow::ExecutionPlan::OutputReference) && org_id == organization.id
+    end
+    action = run_action(action)
+
+    assert_predicate report.reload, :uploading?
+    assert_equal report.id, action.output[:report_id]
   end
 end

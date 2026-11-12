@@ -50,6 +50,13 @@ namespace :rh_cloud_inventory do
           )
 
           if task.result == 'success'
+            if ForemanInventoryUpload.active_storage?
+              report = ForemanInventoryUpload::Report.where(organization_id: organization_id).find(task.execution_plan_action.output[:report_id])
+              target_file = File.join(base_folder, report.filename)
+              ForemanInventoryUpload::LegacyArchiveLock.synchronize(shared: true) do
+                report.archive.open { |file| FileUtils.cp(file.path, target_file) }
+              end
+            end
             unless Setting[:subscription_connection_enabled]
               target_file = File.join(base_folder, ForemanInventoryUpload.facts_archive_name(organization_id, filter))
               puts "Generated #{target_file} for organization id #{organization_id}"
@@ -67,7 +74,12 @@ namespace :rh_cloud_inventory do
       base_folder = ENV['target'] || ForemanInventoryUpload.generated_reports_folder
       organization_id = ENV['organization_id']
       report_file = ForemanInventoryUpload.facts_archive_name(organization_id)
-      ForemanTasks.sync_task(ForemanInventoryUpload::Async::QueueForUploadJob, base_folder, report_file, organization_id)
+      report = ForemanInventoryUpload::Report.where(organization_id: organization_id, filename: report_file).latest_first.first if ForemanInventoryUpload.active_storage? && !ENV['target']
+      if report&.archive&.attached?
+        ForemanTasks.sync_task(ForemanInventoryUpload::Async::QueueForUploadJob, report.id, organization_id)
+      else
+        ForemanTasks.sync_task(ForemanInventoryUpload::Async::QueueForUploadJob, base_folder, report_file, organization_id)
+      end
       puts "Uploaded #{report_file}"
     end
   end

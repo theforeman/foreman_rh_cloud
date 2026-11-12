@@ -19,6 +19,33 @@ module InventoryUpload::Api
       assert_response :success
     end
 
+    test 'streams the latest report from Active Storage' do
+      report = ForemanInventoryUpload::Report.create!(
+        organization: @test_org,
+        filename: ForemanInventoryUpload.facts_archive_name(@test_org.id),
+        sha256: Digest::SHA256.hexdigest('inventory archive')
+      )
+      report.archive.attach(
+        io: StringIO.new('inventory archive'),
+        filename: report.filename,
+        content_type: 'application/x-xz'
+      )
+
+      get :download_file, params: { organization_id: @test_org.id }
+
+      assert_response :success
+      assert_equal 'inventory archive', response.body
+      assert_equal 'application/x-xz', response.media_type
+      assert_includes response.headers['Content-Disposition'], report.filename
+    end
+
+    test 'does not look up archives outside the callers organizations' do
+      User.any_instance.stubs(:my_organizations).returns(Organization.where(id: -1))
+      ForemanInventoryUpload::Report.expects(:where).never
+      get :download_file, params: { organization_id: @test_org.id }
+      assert_response :not_found
+    end
+
     test 'Starts inventory sync action' do
       test_task = FactoryBot.create(:some_task)
 

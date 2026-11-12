@@ -3,9 +3,7 @@ module ForemanInventoryUpload
     include InventoryUpload::ReportActions
 
     def download_file
-      filename, file = report_file(params[:organization_id])
-
-      send_file file, disposition: 'attachment', filename: filename
+      send_report(params[:organization_id])
     end
   end
 end
