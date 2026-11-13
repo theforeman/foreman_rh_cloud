@@ -413,10 +413,11 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
     { path: 'api/insights/v1/ack/', permissions: { 'GET' => :view_advisor, 'POST' => :edit_advisor, 'PUT' => :edit_advisor, 'DELETE' => :edit_advisor } },
     { path: 'api/insights/v1/ack/rule_id', permissions: { 'GET' => :view_advisor, 'POST' => :edit_advisor, 'PUT' => :edit_advisor, 'DELETE' => :edit_advisor } },
     { path: 'api/insights/v1/ack/rule_id/', permissions: { 'GET' => :view_advisor, 'POST' => :edit_advisor, 'PUT' => :edit_advisor, 'DELETE' => :edit_advisor } },
-    # Advisor - hostack (GET/POST/PUT/DELETE, with trailing slash variants)
-    { path: 'api/insights/v1/hostack/', permissions: { 'GET' => :view_advisor, 'POST' => :edit_advisor, 'PUT' => :edit_advisor, 'DELETE' => :edit_advisor } },
-    { path: 'api/insights/v1/hostack/123', permissions: { 'GET' => :view_advisor, 'POST' => :edit_advisor, 'PUT' => :edit_advisor, 'DELETE' => :edit_advisor } },
-    { path: 'api/insights/v1/hostack/123/', permissions: { 'GET' => :view_advisor, 'POST' => :edit_advisor, 'PUT' => :edit_advisor, 'DELETE' => :edit_advisor } },
+    # Advisor - hostack list (GET/POST)
+    { path: 'api/insights/v1/hostack/', permissions: { 'GET' => :view_advisor, 'POST' => :edit_advisor } },
+    # Advisor - individual hostack (GET/PUT/DELETE, with trailing slash variants)
+    { path: 'api/insights/v1/hostack/123', permissions: { 'GET' => :view_advisor, 'PUT' => :edit_advisor, 'DELETE' => :edit_advisor } },
+    { path: 'api/insights/v1/hostack/123/', permissions: { 'GET' => :view_advisor, 'PUT' => :edit_advisor, 'DELETE' => :edit_advisor } },
     # Advisor - ack_hosts (POST)
     { path: 'api/insights/v1/rule/test_rule/ack_hosts', permissions: { 'POST' => :edit_advisor } },
     # Advisor - unack_hosts (POST)
@@ -459,6 +460,63 @@ class UIRequestForwarderTest < ActiveSupport::TestCase
           end
         end
       end
+    end
+  end
+
+  # --- validate_response_host_access tests ---
+
+  test 'validate_response_host_access raises when host is unauthorized' do
+    pattern = { response_host_key: 'system_uuid' }
+    response = '{"system_uuid":"unauthorized-uuid","id":123}'
+
+    @forwarder.stubs(:authorized_host_uuids).returns([])
+
+    assert_raises(::Foreman::PermissionMissingException) do
+      @forwarder.send(:validate_response_host_access, response, pattern, @user, @organization, @location)
+    end
+  end
+
+  test 'validate_response_host_access passes when host is authorized' do
+    pattern = { response_host_key: 'system_uuid' }
+    response = '{"system_uuid":"authorized-uuid","id":123}'
+
+    @forwarder.stubs(:authorized_host_uuids).returns(['authorized-uuid'])
+
+    assert_nothing_raised do
+      @forwarder.send(:validate_response_host_access, response, pattern, @user, @organization, @location)
+    end
+  end
+
+  test 'validate_response_host_access skips when no response_host_key in pattern' do
+    pattern = { tag_name: :tags }
+    response = '{"system_uuid":"any-uuid"}'
+
+    @forwarder.expects(:authorized_host_uuids).never
+
+    assert_nothing_raised do
+      @forwarder.send(:validate_response_host_access, response, pattern, @user, @organization, @location)
+    end
+  end
+
+  test 'validate_response_host_access skips on non-JSON response' do
+    pattern = { response_host_key: 'system_uuid' }
+    response = ''
+
+    @forwarder.expects(:authorized_host_uuids).never
+
+    assert_nothing_raised do
+      @forwarder.send(:validate_response_host_access, response, pattern, @user, @organization, @location)
+    end
+  end
+
+  test 'validate_response_host_access skips when host key missing from response' do
+    pattern = { response_host_key: 'system_uuid' }
+    response = '{"id":123,"rule":"some_rule"}'
+
+    @forwarder.expects(:authorized_host_uuids).never
+
+    assert_nothing_raised do
+      @forwarder.send(:validate_response_host_access, response, pattern, @user, @organization, @location)
     end
   end
 end

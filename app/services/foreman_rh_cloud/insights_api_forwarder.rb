@@ -292,13 +292,23 @@ module ForemanRhCloud
           'DELETE' => :edit_advisor,
         },
       },
-      # Advisor hostack endpoints - GET requires view_advisor, POST/PUT/DELETE require edit_advisor
+      # Advisor hostack list - GET requires view_advisor, POST requires edit_advisor
       {
-        test: %r{^api/insights/v1/hostack(/[^/]*)?/?$},
+        test: %r{^api/insights/v1/hostack/?$},
         tag_name: :tags,
         permissions: {
           'GET' => :view_advisor,
           'POST' => :edit_advisor,
+        },
+      },
+      # Advisor individual hostack - GET requires view_advisor, PUT/DELETE require edit_advisor
+      # Upstream ignores tags for individual lookups, so we validate the response host
+      {
+        test: %r{^api/insights/v1/hostack/[^/]+/?$},
+        tag_name: :tags,
+        response_host_key: 'system_uuid',
+        permissions: {
+          'GET' => :view_advisor,
           'PUT' => :edit_advisor,
           'DELETE' => :edit_advisor,
         },
@@ -360,7 +370,11 @@ module ForemanRhCloud
 
       logger.debug("Sending request to: #{request_opts[:url]}")
 
-      execute_cloud_request(request_opts)
+      response = execute_cloud_request(request_opts)
+
+      validate_response_host_access(response, pattern, user, organization, location)
+
+      response
     end
 
     def prepare_tags(user, organization, location, tag_name)
@@ -444,6 +458,33 @@ module ForemanRhCloud
 
     def logger
       Foreman::Logging.logger('app')
+    end
+
+    def validate_response_host_access(response, pattern, user, organization, location)
+      host_key = pattern&.dig(:response_host_key)
+      return unless host_key
+
+      begin
+        body = JSON.parse(response.to_s)
+      rescue JSON::ParserError
+        return
+      end
+
+      system_uuid = body[host_key]
+      return unless system_uuid
+
+      authorized = authorized_host_uuids(user, organization, location, [system_uuid])
+      return if authorized.include?(system_uuid)
+
+      raise ::Foreman::PermissionMissingException.new(N_("You do not have permission to perform this action"))
+    end
+
+    def authorized_host_uuids(user, organization, location, submitted_uuids)
+      query = InsightsFacet.joins(:host).merge(
+        Host.authorized_as(user, nil, nil).where(organization: organization)
+      )
+      query = query.merge(Host.where(location: location)) if location
+      query.where(uuid: submitted_uuids).pluck(:uuid)
     end
 
     # Resolves the most specific SCOPED_REQUESTS pattern matching the given path.
