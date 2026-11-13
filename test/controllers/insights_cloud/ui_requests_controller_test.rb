@@ -220,6 +220,73 @@ module InsightsCloud
       end
     end
 
+    context '#forward_request organization/location scoping' do
+      setup do
+        as_admin do
+          @org = FactoryBot.create(:organization)
+          @loc = FactoryBot.create(:location)
+          @other_org = FactoryBot.create(:organization)
+          @other_loc = FactoryBot.create(:location)
+          @restricted_user = FactoryBot.create(:user, :organizations => [@org], :locations => [@loc])
+        end
+        setup_user('view', 'insights_hits', nil, @restricted_user)
+        setup_user('view', 'vulnerability', nil, @restricted_user)
+      end
+
+      test 'resolves organization_id/location_id params into the scoped org/location and forwards the request' do
+        net_http_resp = Net::HTTPResponse.new(1.0, 200, 'OK')
+        http_req = RestClient::Request.new(:method => 'GET', :url => 'http://test.theforeman.org')
+        res = RestClient::Response.create('Cloud response body', net_http_resp, http_req)
+
+        ::ForemanRhCloud::InsightsApiForwarder.any_instance.expects(:forward_request).with do |_req, _path, _controller_name, user, organization, location|
+          user == @restricted_user && organization == @org && location == @loc
+        end.returns(res)
+
+        get :forward_request,
+          params: {
+            :format => :json,
+            :controller => 'vulnerabilities',
+            :path => 'api/vulnerability/v1/cves',
+            :organization_id => @org.id,
+            :location_id => @loc.id,
+          },
+          session: set_session_user(@restricted_user)
+
+        assert_response :success
+      end
+
+      test "rejects forward_request when organization_id belongs to an org the user can't access" do
+        ::ForemanRhCloud::InsightsApiForwarder.any_instance.expects(:forward_request).never
+
+        get :forward_request,
+          params: {
+            :format => :json,
+            :controller => 'vulnerabilities',
+            :path => 'api/vulnerability/v1/cves',
+            :organization_id => @other_org.id,
+          },
+          session: set_session_user(@restricted_user)
+
+        assert_equal 404, @response.status
+      end
+
+      test "rejects forward_request when location_id belongs to a location the user can't access" do
+        ::ForemanRhCloud::InsightsApiForwarder.any_instance.expects(:forward_request).never
+
+        get :forward_request,
+          params: {
+            :format => :json,
+            :controller => 'vulnerabilities',
+            :path => 'api/vulnerability/v1/cves',
+            :organization_id => @org.id,
+            :location_id => @other_loc.id,
+          },
+          session: set_session_user(@restricted_user)
+
+        assert_equal 404, @response.status
+      end
+    end
+
     context "#forward_request CSRF protection" do
       setup do
         ActionController::Base.allow_forgery_protection = true

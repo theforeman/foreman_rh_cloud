@@ -329,6 +329,9 @@ module ForemanRhCloud
       },
     ].freeze
 
+    # Already resolved into organization/location by Foreman's taxonomy resolution; re-forwarding them breaks strict downstream specs (e.g. Vulnerability Engine Manager).
+    FOREMAN_TAXONOMY_PARAMS = %w[organization_id location_id].freeze
+
     def forward_request(original_request, path, controller_name, user, organization, location)
       http_method = original_request.request_method
       pattern = resolve_pattern(path)
@@ -400,7 +403,7 @@ module ForemanRhCloud
     end
 
     def prepare_forward_params(original_request, path, user:, organization:, location:)
-      forward_params = original_request.query_parameters.to_a
+      forward_params = original_request.query_parameters.except(*FOREMAN_TAXONOMY_PARAMS).to_a
 
       tag_name = scope_request?(original_request, path)
       forward_params += prepare_tags(user, organization, location, tag_name) if tag_name
