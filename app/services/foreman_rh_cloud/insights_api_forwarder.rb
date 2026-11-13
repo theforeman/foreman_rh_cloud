@@ -207,9 +207,10 @@ module ForemanRhCloud
           'GET' => :view_compliance,
         },
       },
-      # Vulnerability CVEs list and IDs - GET/POST require view_vulnerability (no tags support per OpenAPI spec)
+      # Vulnerability CVEs list and IDs - GET/POST require view_vulnerability
       {
         test: %r{^api/vulnerability/v1/vulnerabilities/cves(/ids)?$},
+        tag_name: :tags,
         permissions: {
           'GET' => :view_vulnerability,
           'POST' => :view_vulnerability,
