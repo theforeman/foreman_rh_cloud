@@ -150,7 +150,7 @@ module ForemanRhCloud
             url: '/foreman_rh_cloud/insights_cloud',
             url_hash: { controller: :react, action: :index },
             parent: :insights_menu,
-            if: -> { User.current&.can?(:view_advisor) && User.current&.can?(:view_insights_hits) }
+            if: -> { ForemanRhCloud.with_iop_smart_proxy? ? (User.current&.can?(:view_advisor) && User.current&.can?(:view_insights_hits)) : User.current&.can?(:view_insights_hits) }
           menu :top_menu,
             :insights_vulnerability,
             caption: N_('Vulnerability'),
