@@ -64,7 +64,7 @@ module ForemanRhCloud
               '/foreman_rh_cloud/insights_cloud': [:index], # for bookmarks and later for showing the page
               'insights_cloud/hits': [:index, :show, :auto_complete_search, :resolutions],
               'insights_cloud/settings': [:index, :show],
-              'insights_cloud/ui_requests': [:forward_request, :translate_insights_host],
+              'insights_cloud/ui_requests': [:translate_insights_host],
               'react': [:index],
             },
             :resource_type => ::InsightsHit.name
@@ -80,34 +80,34 @@ module ForemanRhCloud
           # Insights Compliance permissions
           permission(
             :view_compliance,
-            {},
+            { 'insights_cloud/ui_requests': [:forward_request] },
             :resource_type => 'ForemanRhCloud'
           )
           permission(
             :edit_compliance,
-            {},
+            { 'insights_cloud/ui_requests': [:forward_request] },
             :resource_type => 'ForemanRhCloud'
           )
           # Insights Vulnerability permissions
           permission(
             :view_vulnerability,
-            {},
+            { 'insights_cloud/ui_requests': [:forward_request] },
             :resource_type => 'ForemanRhCloud'
           )
           permission(
             :edit_vulnerability,
-            {},
+            { 'insights_cloud/ui_requests': [:forward_request] },
             :resource_type => 'ForemanRhCloud'
           )
           # Insights Advisor permissions
           permission(
             :view_advisor,
-            {},
+            { 'insights_cloud/ui_requests': [:forward_request] },
             :resource_type => 'ForemanRhCloud'
           )
           permission(
             :edit_advisor,
-            {},
+            { 'insights_cloud/ui_requests': [:forward_request] },
             :resource_type => 'ForemanRhCloud'
           )
         end
@@ -144,14 +144,20 @@ module ForemanRhCloud
             url_hash: { controller: :react, action: :index },
             parent: :insights_menu,
             if: -> { !ForemanRhCloud.with_iop_smart_proxy? }
-          menu :top_menu, :insights_hits, caption: N_('Recommendations'), url: '/foreman_rh_cloud/insights_cloud', url_hash: { controller: :react, action: :index }, parent: :insights_menu
+          menu :top_menu,
+            :insights_hits,
+            caption: N_('Recommendations'),
+            url: '/foreman_rh_cloud/insights_cloud',
+            url_hash: { controller: :react, action: :index },
+            parent: :insights_menu,
+            if: -> { ForemanRhCloud.with_iop_smart_proxy? ? (User.current&.can?(:view_advisor) && User.current&.can?(:view_insights_hits)) : User.current&.can?(:view_insights_hits) }
           menu :top_menu,
             :insights_vulnerability,
             caption: N_('Vulnerability'),
             url: '/foreman_rh_cloud/insights_vulnerability',
             url_hash: { controller: :react, action: :index },
             parent: :insights_menu,
-            if: -> { ForemanRhCloud.with_iop_smart_proxy? }
+            if: -> { ForemanRhCloud.with_iop_smart_proxy? && User.current&.can?(:view_vulnerability) }
           menu :top_menu,
             :insights_compliance_reports,
             caption: N_('Compliance Reports'),
