@@ -242,9 +242,9 @@ return (
 
 ### Report Generation Flow
 
-1. **Generate** - Creates metadata + slice files (JSON), archives to `tar.xz`
-2. **Queue** - Copies report to upload folder
-3. **Upload** - Uses `uploader.sh` script to send to Red Hat cloud
+1. **Generate** - `GenerateHostReport` creates metadata + slice files (JSON) and archives to `tar.xz`
+2. **Queue** - `QueueForUploadJob` copies the report into the uploads folder
+3. **Upload** - `UploadReportDirectJob` posts the archive to Red Hat cloud (or IoP) via RestClient, then moves it to the done folder
 4. Reports are named `report_for_{org_id}.tar.xz`
 
 ### Recommendations Flow

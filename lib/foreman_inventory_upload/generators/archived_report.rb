@@ -31,11 +31,11 @@ module ForemanInventoryUpload
           Open3.popen2e('tar', '-Jcvf', @target, '-C', tmpdir, '.') do |_in, out, wait_thr|
             @logger.info("tar: #{out.read}")
 
-            if wait_thr.value.success?
-              @logger.info 'Report archived successfully'
-            else
-              @logger.info "Tar command failed: #{$CHILD_STATUS}"
+            unless wait_thr.value.success?
+              raise "Tar command failed while archiving inventory report: #{wait_thr.value}"
             end
+
+            @logger.info 'Report archived'
           end
         end
       end

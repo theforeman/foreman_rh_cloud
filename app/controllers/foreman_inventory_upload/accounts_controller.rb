@@ -62,19 +62,21 @@ module ForemanInventoryUpload
         return task.result
       end
 
-      # For UploadReportDirectJob: only show status if task had upload enabled
+      # For UploadReportDirectJob: only show status if task had upload enabled.
+      # Use the recorded upload result so a skipped upload is not a success
+      # checkmark, and a later unrelated step failure does not hide a completed upload.
       if action_class_name == 'UploadReportDirectJob'
         main_action = task.main_action
         return nil unless main_action.respond_to?(:input)
-
-        # Check if upload was enabled for this task
         return nil unless main_action.input[:upload]
+        return nil unless main_action.respond_to?(:uploaded?)
 
-        # Return the task result
-        return task.result
+        return 'success' if main_action.uploaded?
+        return 'error' if %w[error warning].include?(task.result.to_s)
+
+        # Upload requested but not completed (e.g. skipped due to disconnect/cert)
+        'unknown'
       end
-
-      nil
     rescue StandardError => e
       Rails.logger.warn("Failed to get sub-action status for #{action_class_name} in task #{task.id}: #{e.message}")
       nil
@@ -93,6 +95,7 @@ module ForemanInventoryUpload
         ended_at: task.ended_at,
         duration: task.try(:duration)&.to_f,
         report_file_path: task_report_file_path(task),
+        uploaded: task_uploaded?(task),
       }
     end
 
@@ -107,6 +110,20 @@ module ForemanInventoryUpload
     rescue StandardError => e
       Rails.logger.warn("Failed to get report file path for task #{task.id}: #{e.message}")
       nil
+    end
+
+    def task_uploaded?(task)
+      return false unless task&.state == 'stopped'
+
+      main_action = task.main_action
+      return false unless main_action.respond_to?(:uploaded?)
+
+      # Use the recorded upload completion from this task, not overall task.result
+      # (a later step can fail after upload) and not leftover done-folder files.
+      !!main_action.uploaded?
+    rescue StandardError => e
+      Rails.logger.warn("Failed to determine upload status for task #{task.id}: #{e.message}")
+      false
     end
   end
 end
