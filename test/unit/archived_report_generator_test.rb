@@ -60,4 +60,25 @@ class ArchivedReportGeneratorTest < ActiveSupport::TestCase
       assert_equal "#{tmpdir}/test.tar.gz", files.first
     end
   end
+
+  test 'raises when tar archive fails' do
+    batches = Host.where(id: @host.id).in_batches
+    test_org = FactoryBot.create(:organization)
+
+    ForemanInventoryUpload::Generators::Queries.expects(:for_org).with(test_org.id, hosts_query: '').returns(batches)
+
+    status = stub(success?: false, to_s: 'pid 1 exit 1')
+    wait_thr = stub(value: status)
+    Open3.expects(:popen2e).yields(nil, StringIO.new('tar failed'), wait_thr)
+
+    Dir.mktmpdir do |tmpdir|
+      target = File.join(tmpdir, 'test.tar.xz')
+      generator = ForemanInventoryUpload::Generators::ArchivedReport.new(target, Logger.new(File::NULL))
+
+      error = assert_raises(RuntimeError) do
+        generator.render(organization: test_org.id)
+      end
+      assert_match(/Tar command failed/, error.message)
+    end
+  end
 end

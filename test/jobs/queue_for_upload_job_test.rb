@@ -34,12 +34,15 @@ class QueueForUploadJobTest < ActiveSupport::TestCase
   test 'run method processes file and moves it to uploads folder' do
     ForemanInventoryUpload::Async::QueueForUploadJob.any_instance.stubs(:plan_upload_report)
 
+    enqueued = File.join(uploads_folder, report_file)
+    ForemanInventoryUpload.expects(:log_inventory_report_saved).with(anything, enqueued)
+
     action = create_and_plan_action(ForemanInventoryUpload::Async::QueueForUploadJob, base_folder, report_file, organization.id)
     run_action(action)
 
     # Verify the file was moved
     refute File.exist?(report_path), "Original file should be moved"
-    assert File.exist?(File.join(uploads_folder, report_file)), "File should exist in uploads folder"
+    assert File.exist?(enqueued), "File should exist in uploads folder"
   end
 
   test 'creates necessary folders' do
