@@ -1,5 +1,16 @@
 module InsightsCloud
   class UIRequestsController < ::ApplicationController
+    # This controller proxies both browser (session + CSRF token) and
+    # token-authenticated API requests (e.g. Robottelo). ApplicationController's
+    # unconditional protect_from_forgery rejects the latter with a 422, so swap
+    # in the same session-only CSRF check Foreman's API base controller uses.
+    skip_forgery_protection
+    include Foreman::Controller::ApiCsrfProtection
+
+    protect_from_forgery with: :exception,
+      if: :protect_api_from_forgery?,
+      prepend: true
+
     layout false
 
     before_action :ensure_org, :find_location, :only => [:forward_request]
@@ -18,6 +29,9 @@ module InsightsCloud
           @organization,
           @location
         )
+      rescue ::ForemanRhCloud::InsightsApiForwarder::UnsupportedOperationError => e
+        message = e.message
+        return render json: { message: message, error: message }, status: :not_found
       rescue ::Foreman::PermissionMissingException => e
         logger.warn("Permission denied for forwarding request: #{e}")
         message = e.message
@@ -76,12 +90,15 @@ module InsightsCloud
     end
 
     def translate_insights_host
-      facet = InsightsFacet.find_by(uuid: params[:uuid])
+      # Scope facet lookup to hosts the user can access
+      facet = InsightsFacet.joins(:host).merge(Host.authorized(:view_hosts)).find_by(uuid: params[:uuid])
+
       if facet.present?
         Rails.logger.debug "Found InsightsFacet #{params[:uuid]}"
         redirect_to host_details_page_path(facet.host_id)
       else
-        Rails.logger.error "Could not find InsightsFacet for #{params[:uuid]}"
+        # Don't leak whether the UUID exists - treat unauthorized and non-existent the same
+        Rails.logger.error "Could not find accessible InsightsFacet for #{params[:uuid]}"
         redirect_to '/page-not-found'
       end
     end

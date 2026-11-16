@@ -58,13 +58,19 @@ bundle exec rubocop -a
 
 ### JavaScript Testing
 
-**From `/home/vagrant/foreman_rh_cloud`:**
+**From `/home/vagrant/foreman`** (plugin JS is run through Foreman core, not `tfm-test` in the plugin):
 
 ```bash
-npm test                    # All JS tests
-npm run test:watch          # Watch mode
-npm run test:current        # Current changes only
-npm run lint                # Lint JS code
+npm run test:plugins foreman_rh_cloud              # All JS tests
+npm run test:plugins foreman_rh_cloud -- --watchAll # Watch mode
+npm run test:plugins foreman_rh_cloud -- --watch    # Watch changed tests only
+npm run lint:plugins foreman_rh_cloud               # ESLint (shared Foreman plugin config)
+```
+
+**From `/home/vagrant/foreman_rh_cloud`** (optional):
+
+```bash
+npm run lint:spelling   # Spellcheck only (plugin .eslintrc)
 ```
 
 ### Development Server
@@ -437,12 +443,10 @@ When testing changes that affect Katello integration:
 ### Before Submitting PR:
 ```bash
 cd $GITDIR/foreman
-bundle exec rake test:foreman_rh_cloud  # Run all tests
-bundle exec rubocop --parallel           # Check code style
-
-cd $GITDIR/foreman_rh_cloud
-npm test                                 # Run JS tests
-npm run lint                             # Check JS style
+bundle exec rake test:foreman_rh_cloud       # Run all Ruby tests
+bundle exec rubocop --parallel                # Check Ruby style
+npm run test:plugins foreman_rh_cloud         # Run JS tests
+npm run lint:plugins foreman_rh_cloud         # Check JS style
 ```
 
 ## Important Files
