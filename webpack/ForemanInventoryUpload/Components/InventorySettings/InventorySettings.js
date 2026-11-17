@@ -24,6 +24,9 @@ const InventorySettings = () => {
     state => selectInsightsMinimalDataCollection(state) // Added (state) =>
   );
   const [chosenValue, setChosenValue] = useState(null);
+  const minimalDataCollectionSelected =
+    chosenValue === 'minimal' ||
+    (!chosenValue && insightsMinimalDataCollection);
   const settingKeys = new Set(Object.keys(settingsDict));
 
   if (!subscriptionConnectionEnabled) {
@@ -53,27 +56,25 @@ const InventorySettings = () => {
         );
       })}
       <MinimalInventoryDropdown setChosenValue={setChosenValue} />
-      {Object.keys(childSettingsDict).length > 0 && ( // Only render this section if there are child settings
-        <div className="child-settings">
-          <Flex>
-            <FlexItem flex={{ default: 'flexNone' }}>
-              <span className="child-settings-spacer" />
-            </FlexItem>
-            <FlexItem flex={{ default: 'flex_1' }}>
-              {Object.keys(childSettingsDict).map(key => (
-                <AdvancedSetting
-                  key={key}
-                  setting={key}
-                  settingsDict={childSettingsDict}
-                  isLocked={
-                    chosenValue === 'minimal' || insightsMinimalDataCollection
-                  }
-                />
-              ))}
-            </FlexItem>
-          </Flex>
-        </div>
-      )}
+      {!minimalDataCollectionSelected &&
+        Object.keys(childSettingsDict).length > 0 && (
+          <div className="child-settings">
+            <Flex>
+              <FlexItem flex={{ default: 'flexNone' }}>
+                <span className="child-settings-spacer" />
+              </FlexItem>
+              <FlexItem flex={{ default: 'flex_1' }}>
+                {Object.keys(childSettingsDict).map(key => (
+                  <AdvancedSetting
+                    key={key}
+                    setting={key}
+                    settingsDict={childSettingsDict}
+                  />
+                ))}
+              </FlexItem>
+            </Flex>
+          </div>
+        )}
     </div>
   );
 };
