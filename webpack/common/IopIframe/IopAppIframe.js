@@ -19,12 +19,13 @@ const IopAppIframe = ({
   navigateMessageType,
   className = '',
   testId = 'iop-app-iframe',
+  syncSearch = false,
 }) => {
   const iframeRef = useRef(null);
   const history = useHistory();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const permissions = useInsightsPermissions();
-  const appRoute = getAppRoute(pathname);
+  const appRoute = getAppRoute(`${pathname}${syncSearch ? search : ''}`);
 
   const sendChromeContext = useIopIframeChrome({
     iframeRef,
@@ -39,6 +40,7 @@ const IopAppIframe = ({
     navigateMessageType,
     getForemanPath,
     defaultAppRoute,
+    replaceSearch: syncSearch,
   });
 
   return (
@@ -64,11 +66,13 @@ IopAppIframe.propTypes = {
   navigateMessageType: PropTypes.string.isRequired,
   className: PropTypes.string,
   testId: PropTypes.string,
+  syncSearch: PropTypes.bool,
 };
 
 IopAppIframe.defaultProps = {
   className: '',
   testId: 'iop-app-iframe',
+  syncSearch: false,
 };
 
 export default IopAppIframe;
