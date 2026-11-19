@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { translate as __ } from 'foremanReact/common/I18n';
 import { propsToCamelCase } from 'foremanReact/common/helpers';
 import { CVECountCell } from '../InsightsVulnerabilityHostIndexExtensions/CVECountCell';
+import { CompliancePoliciesCell } from './CompliancePoliciesCell';
 
 const HostedRecommendationsCell = ({ hostDetails }) => {
   const insightsAttributes = propsToCamelCase(
@@ -83,6 +84,27 @@ const hostsIndexColumnExtensions = [
     isRelevant: contextData =>
       // eslint-disable-next-line camelcase
       contextData?.metadata?.foreman_rh_cloud?.iop !== false,
+  },
+  {
+    columnName: 'compliance_policies',
+    title: __('Compliance policies'),
+    wrapper: hostDetails => (
+      <CompliancePoliciesCell hostDetails={hostDetails} />
+    ),
+    weight: 1700,
+    tableName: 'hosts',
+    categoryName: insightsCategoryName,
+    categoryKey: 'insights',
+    isSorted: false,
+    isRelevant: contextData => {
+      const iopEnabled =
+        // eslint-disable-next-line camelcase
+        contextData?.metadata?.foreman_rh_cloud?.iop !== false;
+      const canViewCompliance = contextData?.metadata?.permissions?.has?.(
+        'view_compliance'
+      );
+      return iopEnabled && Boolean(canViewCompliance);
+    },
   },
 ];
 

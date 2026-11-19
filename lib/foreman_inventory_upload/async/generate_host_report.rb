@@ -13,7 +13,12 @@ module ForemanInventoryUpload
       def run
         archived_report_generator = ForemanInventoryUpload::Generators::ArchivedReport.new(input[:target])
         archived_report_generator.render(organization: input[:organization_id], filter: input[:filter])
-        output[:result] = "Generated #{input[:target]} for organization id #{input[:organization_id]}"
+        ForemanInventoryUpload.log_inventory_report_saved(logger, input[:target])
+        output[:result] = "Generated report for organization id #{input[:organization_id]}"
+      end
+
+      def logger
+        Foreman::Logging.logger('background')
       end
     end
   end

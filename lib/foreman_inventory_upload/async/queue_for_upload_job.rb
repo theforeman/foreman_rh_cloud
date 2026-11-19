@@ -13,6 +13,7 @@ module ForemanInventoryUpload
         enqueued_file_name = File.join(uploads_folder, report_file)
         FileUtils.mv(File.join(base_folder, report_file), enqueued_file_name)
         logger.debug("Done copying #{report_file} to #{enqueued_file_name}")
+        ForemanInventoryUpload.log_inventory_report_saved(logger, enqueued_file_name)
 
         output[:enqueued_file_name] = enqueued_file_name
       end
