@@ -27,6 +27,10 @@ module RhCloudHost
     scoped_search :on => :id, :rename => :insights_uuid, :only_explicit => true,
       :ext_method => :search_by_insights_uuid, :complete_value => false
 
+    scoped_search :on => :id, :rename => :compliance_policies_count, :only_explicit => true,
+      :ext_method => :search_by_compliance_policies_count, :complete_value => false,
+      :operators => ['=', '<', '>']
+
     def insights_facet
       insights
     end
@@ -47,6 +51,62 @@ module RhCloudHost
   end
 
   module ClassMethods
+    def search_by_compliance_policies_count(_key, operator, value)
+      unless ForemanRhCloud.with_iop_smart_proxy?
+        raise ScopedSearch::QueryNotSupported.new(
+          _('Searching by compliance policy count is only available in IoP mode.')
+        )
+      end
+
+      unless ['=', '<', '>'].include?(operator)
+        raise ScopedSearch::QueryNotSupported.new(
+          _('Unsupported operator for compliance policy count search: %s') % operator
+        )
+      end
+
+      number = compliance_policy_count_number(value)
+      counts = ForemanRhCloud::CompliancePolicyCounts.fetch(
+        user: User.current,
+        organization: Organization.current,
+        location: Location.current
+      )
+      compliance_policy_count_condition(counts, operator, number)
+    end
+
+    def compliance_policy_count_number(value)
+      Integer(value.to_s.strip)
+    rescue ArgumentError
+      raise ScopedSearch::QueryNotSupported.new(
+        _('Compliance policy count must be a number')
+      )
+    end
+
+    def compliance_policy_count_condition(counts, operator, number)
+      joins = compliance_policy_count_joins(counts)
+      count_sql = joins ? 'COALESCE(compliance_policy_counts.policies_count, 0)' : '0'
+      condition = {
+        conditions: sanitize_sql_for_conditions(["#{count_sql} #{operator} ?", number]),
+      }
+      condition[:joins] = joins if joins
+      condition
+    end
+
+    def compliance_policy_count_joins(counts)
+      return if counts.blank?
+
+      facet_table = Katello::Host::SubscriptionFacet.table_name
+      rows = counts.map do |uuid, policies_count|
+        "(#{connection.quote(uuid)}, #{policies_count.to_i})"
+      end.join(', ')
+
+      <<-SQL.squish
+        LEFT JOIN #{facet_table} compliance_subscription_facets
+          ON compliance_subscription_facets.host_id = #{Host::Managed.table_name}.id
+        LEFT JOIN (VALUES #{rows}) AS compliance_policy_counts(uuid, policies_count)
+          ON compliance_policy_counts.uuid = compliance_subscription_facets.uuid::text
+      SQL
+    end
+
     def search_by_insights_recommendations_count(_key, operator, value)
       if ForemanRhCloud.with_iop_smart_proxy?
         raise ScopedSearch::QueryNotSupported.new(
