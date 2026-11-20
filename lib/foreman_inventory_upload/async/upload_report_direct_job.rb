@@ -66,7 +66,9 @@ module ForemanInventoryUpload
           return
         end
 
-        unless organization.owner_details&.dig('upstreamConsumer', 'idCert')
+        # IoP authenticates with Foreman's certificate; only hosted uploads need the manifest certificate.
+        unless ForemanRhCloud.with_iop_smart_proxy? ||
+               organization.owner_details&.dig('upstreamConsumer', 'idCert')
           logger.info("Skipping organization '#{organization}', no candlepin certificate defined.")
           ForemanInventoryUpload.log_inventory_report_saved(logger, filename)
           done!
