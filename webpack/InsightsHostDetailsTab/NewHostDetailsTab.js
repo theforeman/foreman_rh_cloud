@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import SearchBar from 'foremanReact/components/SearchBar';
 import { translate as __ } from 'foremanReact/common/I18n';
-import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
 import { Grid, GridItem } from '@patternfly/react-core';
 import {
   Dropdown,
@@ -22,9 +21,7 @@ import {
 } from '../InsightsCloudSync/Components/InsightsTable/InsightsTableSelectors';
 import { redHatAdvisorSystems } from '../InsightsCloudSync/InsightsCloudSyncHelpers';
 import { useIopConfig } from '../common/Hooks/ConfigHooks';
-import { generateRuleUrl } from '../InsightsCloudSync/InsightsCloudSync';
-import { createProviderOptions } from '../common/ScalprumModule/ScalprumContext';
-import { useInsightsPermissions } from '../common/Hooks/PermissionsHooks';
+import AdvisorHostDetailsTab from '../InsightsAdvisor/AdvisorHostDetailsTab';
 import {
   isNotRhelHost,
   hasNoInsightsFacet,
@@ -130,25 +127,8 @@ NewHostDetailsTab.defaultProps = {
 };
 
 // Local Insights advisor
-const scope = 'advisor';
-const module = './SystemDetailWrapped';
 
-const IopInsightsTab = props => {
-  // eslint-disable-next-line camelcase
-  const systemId = props.response?.subscription_facet_attributes?.uuid;
-  return (
-    <div className="advisor">
-      <ScalprumComponent
-        key={systemId || props.hostName}
-        scope={scope}
-        module={module}
-        IopRemediationModal={RemediationModal}
-        generateRuleUrl={generateRuleUrl}
-        {...props}
-      />
-    </div>
-  );
-};
+const IopInsightsTab = props => <AdvisorHostDetailsTab response={props.response} />;
 
 IopInsightsTab.propTypes = {
   hostName: PropTypes.string,
@@ -161,12 +141,7 @@ IopInsightsTab.defaultProps = {
 };
 
 const IopInsightsTabWrapped = props => {
-  const permissions = useInsightsPermissions();
-  return (
-    <ScalprumProvider {...createProviderOptions(permissions)}>
-      <IopInsightsTab {...props} />
-    </ScalprumProvider>
-  );
+  return <IopInsightsTab {...props} />;
 };
 
 const InsightsTab = props => {

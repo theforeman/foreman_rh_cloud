@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PageLayout from 'foremanReact/routes/common/PageLayout/PageLayout';
-import { ScalprumComponent, ScalprumProvider } from '@scalprum/react-core';
 import InsightsTable from './Components/InsightsTable';
 import { useIopConfig } from '../common/Hooks/ConfigHooks';
 import { foremanUrl } from '../ForemanRhCloudHelpers';
@@ -14,8 +13,7 @@ import './InsightsCloudSync.scss';
 import Pagination from './Components/InsightsTable/Pagination';
 import ToolbarDropdown from './Components/ToolbarDropdown';
 import InsightsSettings from './Components/InsightsSettings';
-import { createProviderOptions } from '../common/ScalprumModule/ScalprumContext';
-import { useInsightsPermissions } from '../common/Hooks/PermissionsHooks';
+import InsightsAdvisorIframePage from '../InsightsAdvisor/InsightsAdvisorIframePage';
 
 // Hosted Insights advisor
 const InsightsCloudSync = ({ syncInsights, query, fetchInsights }) => {
@@ -61,38 +59,15 @@ InsightsCloudSync.defaultProps = {
 };
 
 // Local Insights advisor
-const scope = 'advisor';
-const module = './ListWrapped';
 
 export const generateRuleUrl = ruleId =>
   foremanUrl(`/foreman_rh_cloud/recommendations/${ruleId}`);
-
-const IopRecommendationsPage = props => (
-  <div className="advisor">
-    <ScalprumComponent
-      scope={scope}
-      module={module}
-      IopRemediationModal={RemediationModal}
-      generateRuleUrl={generateRuleUrl}
-      {...props}
-    />
-  </div>
-);
-
-const IopRecommendationsPageWrapped = props => {
-  const permissions = useInsightsPermissions();
-  return (
-    <ScalprumProvider {...createProviderOptions(permissions)}>
-      <IopRecommendationsPage {...props} />
-    </ScalprumProvider>
-  );
-};
 
 const RecommendationsPage = props => {
   const isIop = useIopConfig();
 
   return isIop ? (
-    <IopRecommendationsPageWrapped {...props} />
+    <InsightsAdvisorIframePage {...props} />
   ) : (
     <InsightsCloudSync {...props} />
   );
