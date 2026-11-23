@@ -8,9 +8,9 @@ module ForemanInventoryUpload
       end
 
       def run
-        logger.debug("Attempting to remove hosts by search term: #{search_term}")
+        logger.debug("Attempting to remove hosts by search term: #{search_term} in organization #{organization&.id}")
 
-        host_uuids = InsightsMissingHost.search_for(search_term).pluck(:insights_id)
+        host_uuids = missing_hosts.pluck(:insights_id)
 
         page_number = 1
         while (current_page = host_uuids.paginate(page: page_number, per_page: page_size)).present?
@@ -42,6 +42,13 @@ module ForemanInventoryUpload
         @organization ||= Organization.find_by(id: input[:organization_id])
       end
 
+      def missing_hosts
+        scope = InsightsMissingHost.where(organization_id: organization&.id)
+        return scope if search_term.blank?
+
+        scope.search_for(search_term)
+      end
+
       def delete_page(host_uuids, organization)
         execute_cloud_request(
           organization: organization,
@@ -56,7 +63,7 @@ module ForemanInventoryUpload
       end
 
       def remove_host_records(uuids)
-        InsightsMissingHost.where(insights_id: uuids).delete_all
+        InsightsMissingHost.where(organization_id: organization&.id, insights_id: uuids).delete_all
       end
 
       def page_size
