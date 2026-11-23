@@ -470,4 +470,58 @@ class RhCloudHostTest < ActiveSupport::TestCase
     assert_not_includes result_ids, host1.id, 'Host with REPORTING status should not be in search results'
     assert_not_includes result_ids, host2.id, 'Host with NO_REPORT status should not be in search results'
   end
+
+  context 'scoped search on compliance_policies_count' do
+    teardown do
+      ForemanRhCloud.unstub(:with_iop_smart_proxy?)
+      ForemanRhCloud::CompliancePolicyCounts.unstub(:fetch)
+    end
+
+    test 'matches hosts by policy count and treats missing systems as zero' do
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+      assigned = FactoryBot.create(:host, :managed, :with_subscription, organization: @org)
+      unassigned = FactoryBot.create(:host, :managed, :with_subscription, organization: @org)
+      without_facet = FactoryBot.create(:host, :managed, organization: @org)
+      ForemanRhCloud::CompliancePolicyCounts.stubs(:fetch).returns(
+        assigned.subscription_facet.uuid => 2,
+        unassigned.subscription_facet.uuid => 0
+      )
+
+      with_policies = Host::Managed.search_for('compliance_policies_count > 0')
+      assert_includes with_policies, assigned
+      assert_not_includes with_policies, unassigned
+      assert_not_includes with_policies, without_facet
+
+      without_policies = Host::Managed.search_for('compliance_policies_count = 0')
+      assert_not_includes without_policies, assigned
+      assert_includes without_policies, unassigned
+      assert_includes without_policies, without_facet
+    end
+
+    test 'requires view_compliance' do
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+      user = FactoryBot.build(:user)
+      user.stubs(:can?).with(:view_compliance).returns(false)
+      User.stubs(:current).returns(user)
+      ForemanRhCloud::CompliancePolicyCounts.expects(:fetch).never
+
+      error = assert_raises(ScopedSearch::QueryNotSupported) do
+        Host::Managed.search_by_compliance_policies_count('compliance_policies_count', '=', '1')
+      end
+
+      assert_match(/view_compliance/, error.message)
+    ensure
+      User.unstub(:current)
+    end
+
+    test 'rejects a non numeric count' do
+      ForemanRhCloud.stubs(:with_iop_smart_proxy?).returns(true)
+
+      error = assert_raises(ScopedSearch::QueryNotSupported) do
+        Host::Managed.search_for('compliance_policies_count = foo')
+      end
+
+      assert_match(/must be a number/, error.message)
+    end
+  end
 end
