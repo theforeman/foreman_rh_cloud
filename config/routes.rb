@@ -46,6 +46,19 @@ Rails.application.routes.draw do
       get 'scappolicies/:policy_id/edit', to: '/react#index'
       get 'scappolicies/:policy_id/delete', to: '/react#index'
     end
+
+    scope 'insights_vulnerability' do
+      get 'cves', to: '/react#index'
+      get 'cves/:cve_id', to: '/react#index'
+      get 'systems', to: '/react#index'
+      get 'systems/:system_id', to: '/react#index'
+    end
+
+    scope 'insights_advisor' do
+      get 'recommendations', to: '/react#index'
+      get 'recommendations/pathways/:slug', to: '/react#index'
+      get 'recommendations/:rule_id', to: '/react#index'
+    end
   end
 
   scope :module => :'insights_cloud/api', :path => :redhat_access do
