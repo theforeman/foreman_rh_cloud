@@ -9,6 +9,7 @@ class RhCloudPermissionsTest < ActiveSupport::TestCase
     [
       'insights_cloud/api/machine_telemetries/forward_request',
       'insights_cloud/api/machine_telemetries/branch_info',
+      'insights_cloud/ui_requests/make_public',
     ],
     skip_patterns: [/^(?!foreman_inventory_upload|insights_cloud|.*rh_cloud).*/]
   ) # include only plugin paths

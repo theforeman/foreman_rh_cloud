@@ -25,6 +25,9 @@ Rails.application.routes.draw do
 
     post ':organization_id/parameter', to: 'settings#set_org_parameter', constraints: { organization_id: %r{[^\/]+} }
 
+    get 'api/vulnerability/v1/openapi.json', to: 'ui_requests#make_public'
+    get 'api/insights/v1/openapi.json', to: 'ui_requests#make_public'
+
     match '/*path', constraints: { path: %r{api/[^\?]+} }, to: 'ui_requests#forward_request', via: :all
   end
 
