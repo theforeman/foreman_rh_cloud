@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Documentation (Swagger / OpenAPI)</title>
+  <link rel="stylesheet" href="swagger-ui.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #fafafa;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    #swagger-ui {
+      max-width: 1460px;
+      margin: 0 auto;
+      padding-bottom: 40px;
+    }
+    #error-box {
+      display: none;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px 24px;
+      background-color: #fff2f0;
+      border: 1px solid #ffccc7;
+      border-radius: 6px;
+      color: #cf1322;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="error-box"></div>
+  <div id="swagger-ui"></div>
+
+  <script src="swagger-ui-bundle.js"></script>
+  <script src="swagger-ui-standalone-preset.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      if (typeof SwaggerUIBundle === 'undefined') {
+        const errorBox = document.getElementById('error-box');
+        errorBox.style.display = 'block';
+        errorBox.innerHTML = '<strong>Failed to load Swagger UI library.</strong>';
+        return;
+      }
+
+      window.ui = SwaggerUIBundle({
+        urls: [
+          { url: "/insights_cloud/api/insights/v1/openapi.json", name: "Advisor" },
+          { url: "/insights_cloud/api/vulnerability/v1/openapi.json", name: "Vulnerability" },
+        ],
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        layout: 'StandaloneLayout'
+      });
+    });
+  </script>
+</body>
+</html>

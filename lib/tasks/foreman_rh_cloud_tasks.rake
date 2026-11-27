@@ -29,6 +29,7 @@ namespace :foreman_rh_cloud do
   end
 end
 
+
 Rake::Task[:test].enhance ['test:foreman_rh_cloud']
 
 load 'tasks/jenkins.rake'

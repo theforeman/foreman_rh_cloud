@@ -17,7 +17,10 @@ upstream_tag_template: '{version}'
 
 actions:
   post-upstream-clone:
-    - "wget https://raw.githubusercontent.com/theforeman/foreman-packaging/rpm/develop/packages/katello/rubygem-foreman_rh_cloud/rubygem-foreman_rh_cloud.spec -O rubygem-foreman_rh_cloud.spec"
+    - "wget https://raw.githubusercontent.com/theforeman/foreman-packaging/rpm/3.18/packages/katello/rubygem-foreman_rh_cloud/rubygem-foreman_rh_cloud.spec -O rubygem-foreman_rh_cloud.spec"
+    - "wget -q https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js -O app/views/apidoc/iop/swagger-ui-bundle.js"
+    - "wget -q https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-standalone-preset.js -O app/views/apidoc/iop/swagger-ui-standalone-preset.js"
+    - "wget -q https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css -O app/views/apidoc/iop/swagger-ui.css"
   get-current-version:
     - ruby -rrubygems -e 'puts Gem::Specification::load(Dir.glob("*.gemspec").first).version'
   create-archive:
@@ -32,9 +35,9 @@ jobs:
       rhel-9:
         additional_modules: "foreman-devel:el9"
         additional_repos:
-          - https://yum.theforeman.org/releases/nightly/el9/x86_64/
-          - https://yum.theforeman.org/plugins/nightly/el9/x86_64/
-          - https://yum.theforeman.org/katello/nightly/katello/el9/x86_64/
+          - https://yum.theforeman.org/releases/3.18/el9/x86_64/
+          - https://yum.theforeman.org/plugins/3.18/el9/x86_64/
+          - https://yum.theforeman.org/katello/4.20/katello/el9/x86_64/
     module_hotfixes: true
 
   - <<: *copr

@@ -2,7 +2,23 @@ module InsightsCloud
   class UIRequestsController < ::ApplicationController
     layout false
 
+    skip_before_action :require_login, :only => [:make_public]
+    skip_before_action :authorize, :only => [:make_public]
+    skip_before_action :check_user_enabled, :only => [:make_public]
     before_action :ensure_org, :find_location, :only => [:forward_request]
+
+    def make_public
+      path_match = request.original_fullpath.match(%r{^/insights_cloud/(?<path>[^?]*)})&.[](:path)
+      path_to_forward = path_match || params.require(:path)
+
+      @cloud_response = ::ForemanRhCloud::InsightsApiForwarder.new.forward_public_request(
+        request,
+        path_to_forward,
+        Organization.unscoped.first
+      )
+
+      render json: @cloud_response, status: @cloud_response.code
+    end
 
     # The method that "proxies" requests over to Cloud
     def forward_request
