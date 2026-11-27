@@ -34,7 +34,7 @@ jobs:
         additional_repos:
           - https://yum.theforeman.org/releases/3.18/el9/x86_64/
           - https://yum.theforeman.org/plugins/3.18/el9/x86_64/
-          - https://yum.theforeman.org/katello/3.18/katello/el9/x86_64/
+          - https://yum.theforeman.org/katello/4.20/katello/el9/x86_64/
     module_hotfixes: true
 
   - <<: *copr
