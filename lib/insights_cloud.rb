@@ -44,4 +44,8 @@ module InsightsCloud
   def self.enable_cloud_remediations_param
     'enable_cloud_remediations'
   end
+
+  def self.vmaas_reposcan_sync_url
+    ForemanRhCloud.iop_smart_proxy.url + '/api/vmaas-reposcan/sync'
+  end
 end
