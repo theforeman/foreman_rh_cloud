@@ -34,20 +34,15 @@ namespace :foreman_rh_cloud do
   task :install_iop_apidoc => :environment do
     require 'fileutils'
 
-    engine_root = ForemanRhCloud::Engine.root
+    source_dir = ForemanRhCloud::Engine.root.join('app', 'views', 'apidoc', 'iop')
     target = Rails.root.join('public', 'apidoc', 'iop')
-    swagger_dist = engine_root.join('node_modules', 'swagger-ui-dist')
-    template_dir = engine_root.join('app', 'views', 'apidoc', 'iop')
 
     FileUtils.mkdir_p(target)
 
-    # Copy swagger-ui dist files
-    %w[swagger-ui-bundle.js swagger-ui-standalone-preset.js swagger-ui.css].each do |file|
-      FileUtils.cp(swagger_dist.join(file), target.join(file))
+    # Copy all IOP apidoc assets (index.html + swagger-ui files)
+    Dir.glob(source_dir.join('*')).each do |file|
+      FileUtils.cp(file, target.join(File.basename(file)))
     end
-
-    # Copy HTML template
-    FileUtils.cp(template_dir.join('index.html'), target.join('index.html'))
 
     puts "IOP API docs installed to #{target}"
   end
