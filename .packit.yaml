@@ -17,7 +17,7 @@ upstream_tag_template: '{version}'
 
 actions:
   post-upstream-clone:
-    - "wget https://raw.githubusercontent.com/theforeman/foreman-packaging/rpm/3.18/packages/katello/rubygem-foreman_rh_cloud/rubygem-foreman_rh_cloud.spec"
+    - "wget https://raw.githubusercontent.com/theforeman/foreman-packaging/rpm/3.18/packages/katello/rubygem-foreman_rh_cloud/rubygem-foreman_rh_cloud.spec -O rubygem-foreman_rh_cloud.spec"
   get-current-version:
     - ruby -rrubygems -e 'puts Gem::Specification::load(Dir.glob("*.gemspec").first).version'
   create-archive:
