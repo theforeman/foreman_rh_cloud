@@ -18,6 +18,4 @@ Gemfile.lock
 .tags*
 .rubocop*--*
 public/
-app/views/apidoc/iop/*.js
-app/views/apidoc/iop/*.css
 .claude

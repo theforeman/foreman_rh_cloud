@@ -29,24 +29,6 @@ namespace :foreman_rh_cloud do
   end
 end
 
-namespace :foreman_rh_cloud do
-  desc 'Install IOP API documentation assets'
-  task :install_iop_apidoc => :environment do
-    require 'fileutils'
-
-    source_dir = ForemanRhCloud::Engine.root.join('app', 'views', 'apidoc', 'iop')
-    target = Rails.root.join('public', 'apidoc', 'iop')
-
-    FileUtils.mkdir_p(target)
-
-    # Copy all IOP apidoc assets (index.html + swagger-ui files)
-    Dir.glob(source_dir.join('*')).each do |file|
-      FileUtils.cp(file, target.join(File.basename(file)))
-    end
-
-    puts "IOP API docs installed to #{target}"
-  end
-end
 
 Rake::Task[:test].enhance ['test:foreman_rh_cloud']
 
