@@ -33,8 +33,18 @@ module ForemanRhCloud
 
     initializer 'foreman_rh_cloud.iop_apidoc' do |app|
       iop_root = ForemanRhCloud::Engine.root.join('app', 'views', 'apidoc', 'iop').to_s
+      file_server = Rack::Files.new(iop_root)
+      iop_app = lambda do |env|
+        unless ForemanRhCloud.with_iop_smart_proxy?
+          body = Rails.root.join('public', '404.html').read rescue 'Not Found'
+          return [404, { 'content-type' => 'text/html' }, [body]]
+        end
+        path = env[Rack::PATH_INFO]
+        env[Rack::PATH_INFO] = '/index.html' if path == '/' || path.empty?
+        file_server.call(env)
+      end
       app.routes.prepend do
-        mount Rack::Files.new(iop_root), at: '/apidoc/iop'
+        mount iop_app, at: '/apidoc/iop'
       end
     end
 
