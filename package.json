@@ -10,7 +10,7 @@
     "test:watch": "tfm-test --plugin --watchAll",
     "test:current": "tfm-test --plugin --watch",
     "publish-coverage": "tfm-publish-coverage",
-    "postinstall": "mkdir -p public/apidoc/iop && cp node_modules/swagger-ui-dist/swagger-ui-bundle.js node_modules/swagger-ui-dist/swagger-ui-standalone-preset.js node_modules/swagger-ui-dist/swagger-ui.css app/views/apidoc/iop/index.html public/apidoc/iop/ 2>/dev/null || true"
+    "postinstall": "cp node_modules/swagger-ui-dist/swagger-ui-bundle.js node_modules/swagger-ui-dist/swagger-ui-standalone-preset.js node_modules/swagger-ui-dist/swagger-ui.css app/views/apidoc/iop/ 2>/dev/null || true"
   },
   "repository": {
     "type": "git",
