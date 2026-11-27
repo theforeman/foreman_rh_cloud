@@ -18,6 +18,9 @@ upstream_tag_template: '{version}'
 actions:
   post-upstream-clone:
     - "wget https://raw.githubusercontent.com/theforeman/foreman-packaging/rpm/3.18/packages/katello/rubygem-foreman_rh_cloud/rubygem-foreman_rh_cloud.spec -O rubygem-foreman_rh_cloud.spec"
+    - "wget -q https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js -O app/views/apidoc/iop/swagger-ui-bundle.js"
+    - "wget -q https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-standalone-preset.js -O app/views/apidoc/iop/swagger-ui-standalone-preset.js"
+    - "wget -q https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css -O app/views/apidoc/iop/swagger-ui.css"
   get-current-version:
     - ruby -rrubygems -e 'puts Gem::Specification::load(Dir.glob("*.gemspec").first).version'
   create-archive:
