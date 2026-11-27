@@ -366,6 +366,17 @@ module ForemanRhCloud
       execute_cloud_request(request_opts)
     end
 
+    def forward_public_request(original_request, path, organization)
+      request_opts = {
+        method: original_request.method,
+        url: "#{InsightsCloud.ui_base_url}/#{path}",
+        headers: { user_agent: http_user_agent(original_request) },
+        organization: organization,
+      }
+
+      execute_cloud_request(request_opts)
+    end
+
     def prepare_tags(user, organization, location, tag_name)
       [
         TagsAuth.auth_tag_for(user, organization, location),

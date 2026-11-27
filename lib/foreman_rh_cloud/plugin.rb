@@ -35,6 +35,14 @@ module ForemanRhCloud
         ]
 
         # Add permissions
+        security_block :foreman_rh_cloud_public do
+          permission(
+            :view_iop_openapi_specs,
+            { 'insights_cloud/ui_requests': [:make_public] },
+            :public => true
+          )
+        end
+
         security_block :foreman_rh_cloud do
           permission(
             :generate_foreman_rh_cloud,
