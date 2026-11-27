@@ -35,7 +35,7 @@ namespace :foreman_rh_cloud do
     require 'fileutils'
 
     engine_root = ForemanRhCloud::Engine.root
-    target = engine_root.join('public', 'apidoc', 'iop')
+    target = Rails.root.join('public', 'apidoc', 'iop')
     swagger_dist = engine_root.join('node_modules', 'swagger-ui-dist')
     template_dir = engine_root.join('app', 'views', 'apidoc', 'iop')
 

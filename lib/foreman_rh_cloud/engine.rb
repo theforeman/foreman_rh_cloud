@@ -32,7 +32,7 @@ module ForemanRhCloud
     end
 
     initializer 'foreman_rh_cloud.iop_apidoc' do |app|
-      iop_root = ForemanRhCloud::Engine.root.join('public', 'apidoc', 'iop').to_s
+      iop_root = Rails.root.join('public', 'apidoc', 'iop').to_s
       app.routes.prepend do
         mount Rack::Files.new(iop_root), at: '/apidoc/iop'
       end
